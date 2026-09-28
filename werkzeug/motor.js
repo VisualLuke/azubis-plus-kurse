@@ -79,21 +79,20 @@ function textEin(blockId, t0, pause = {}) {
     t += el.classList.contains('w') ? .07 : .12;
   }
 }
-// Text im Bild, Motion-Graphics-Variante: jedes Wort steigt aus einer Maske, Wörter in <em> bekommen einen Marker.
+// Text im Bild, Motion-Graphics-Variante: jedes Wort steigt aus einer Maske (kein Marker – nicht CI-konform).
 // zeiten: optional eine Liste von Startzeiten je Wort (für Wörter im Takt der Stimme)
 function titelAkteure(blockId) {
-  const block = document.getElementById(blockId), marker = [];
+  const block = document.getElementById(blockId);
   block.querySelectorAll('.titel,.unter').forEach(z => {
     const teile = [];
     z.childNodes.forEach(n => {
-      const hl = n.nodeName === 'EM';
       n.textContent.split(/(\s+)/).filter(w => w.trim()).forEach(w => teile.push(
-        `<span class="w maske${hl ? ' hl' : ''}">${hl ? '<i class="mk"></i>' : ''}<span class="m"><span class="wi">${w}</span></span></span> `));
+        `<span class="w maske"><span class="m"><span class="wi">${w}</span></span></span> `));
     });
     z.innerHTML = teile.join('');
   });
   const woerter = [...block.querySelectorAll('.w')];
-  woerter.forEach(w => { akteur(w.querySelector('.wi'), { y: 90 }, true); const m = w.querySelector('.mk'); if (m) { akteur(m, { sx: 0 }, true); marker.push(m); } });
+  woerter.forEach(w => akteur(w.querySelector('.wi'), { y: 90 }, true));
   akteur(block, { o: 1 }, true);
   return woerter;
 }
@@ -104,7 +103,6 @@ function titelEin(blockId, t0, zeiten) {
     if (zeiten && zeiten[i] != null) t = zeiten[i];
     else if (w.closest('.unter') && zeiten?.unter && t < zeiten.unter) t = zeiten.unter;
     tw(w.querySelector('.wi'), t, .7, { y: 0 }, 'weich');
-    const m = w.querySelector('.mk'); if (m) tw(m, t + .35, .45, { sx: 1 }, 'inout');
     t += .08;
   });
 }

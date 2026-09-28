@@ -9,6 +9,7 @@
 //   @stimme Erzählerin: oClOrzqamOXmtcB8iqTj (Voice-ID oder Name aus /v1/voices; ohne Angabe: STIMMEN unten)
 //   ### Szene 1
 //   Erzählerin: Satz. Noch ein Satz?        (ohne „Name:“ spricht die einzige/letzte Stimme weiter)
+//   (Pause 3)                               zusätzliche Stille vor dem nächsten Satz, z. B. Denkpause (Sekunden)
 // Absätze werden in Sätze geteilt; jeder Satz ist ein eigener API-Aufruf. Ein Satz, dessen Text, Stimme
 // und Modell gleich bleiben, wird nicht neu erzeugt: aus dem Zwischenspeicher .stimme/ (nicht im Repo)
 // oder, wenn der fehlt, aus der vorhandenen sprache.mp3 geschnitten.
@@ -33,13 +34,16 @@ const STIMMEN = {
   'Jonas': 'K8bIZwDsGMHreGKTIVHN', 'Sabine': 'PcHppp9ymY0Wa5ee6hOQ',
   'Amir': 'hfqsl1OMbiWsgPpht3el', 'Kwame': 'hfqsl1OMbiWsgPpht3el', 'Yusuf': 'hfqsl1OMbiWsgPpht3el',
   'Mai': 'Mac2FKpSgaGIsaNRXt8A', 'Priya': 'Mac2FKpSgaGIsaNRXt8A',
+  // Nebenrollen – treffen sie im selben Video auf dieselbe Stimme, in konzept.md per @stimme umlegen
+  'Küchenchef': 'K8bIZwDsGMHreGKTIVHN', 'Geselle': 'K8bIZwDsGMHreGKTIVHN',
+  'Frau Krause': 'oClOrzqamOXmtcB8iqTj', 'Bäckermeisterin': 'PcHppp9ymY0Wa5ee6hOQ', 'Praxisanleiterin': 'PcHppp9ymY0Wa5ee6hOQ',
 };
 
 /* ---------- Sprechertext lesen ---------- */
 const konzept = readFileSync(ORDNER + 'konzept.md', 'utf8');
 const abschnitt = konzept.split(/^## Sprechertext\s*$/m)[1]?.split(/^## /m)[0];
 if (!abschnitt) throw new Error('konzept.md: Abschnitt „## Sprechertext“ fehlt');
-let modell = MODELL, szene = 0, sprecher = null;
+let modell = MODELL, szene = 0, sprecher = null, extraPause = 0;
 const stimmen = {}, absaetze = [];
 for (const zeile of abschnitt.split('\n').map(z => z.trim())) {
   let m;
@@ -47,7 +51,8 @@ for (const zeile of abschnitt.split('\n').map(z => z.trim())) {
   if ((m = zeile.match(/^@modell\s+(\S+)/))) modell = m[1];
   else if ((m = zeile.match(/^@stimme\s+([^:]+):\s*(.+)$/))) stimmen[m[1].trim()] = m[2].trim();
   else if ((m = zeile.match(/^###\s*Szene\s+(\d+)/i))) szene = +m[1];
-  else if ((m = zeile.match(/^([A-ZÄÖÜ][\wäöüß]*):\s+(.+)$/))) { sprecher = m[1]; absaetze.push({ szene, sprecher, text: m[2] }); }
+  else if ((m = zeile.match(/^\(Pause\s+([\d.,]+)\s*s?\)$/i))) extraPause += +m[1].replace(',', '.');
+  else if ((m = zeile.match(/^([A-ZÄÖÜ][\wäöüß]*(?: [A-ZÄÖÜ][\wäöüß]*)?):\s+(.+)$/))) { sprecher = m[1]; absaetze.push({ szene, sprecher, text: m[2], pause: extraPause }); extraPause = 0; }
   else if (absaetze.length) absaetze.at(-1).text += ' ' + zeile;
 }
 if (!absaetze.length) throw new Error('konzept.md: kein Satz im Sprechertext');
@@ -60,7 +65,7 @@ function saetzeAus(text) {
   for (const t of teile) (aus.length && ABK.test(aus.at(-1)) ? aus[aus.length - 1] += ' ' + t : aus.push(t));
   return aus;
 }
-const SAETZE = absaetze.flatMap(a => saetzeAus(a.text).map(text => ({ szene: a.szene, sprecher: a.sprecher, text })));
+const SAETZE = absaetze.flatMap(a => saetzeAus(a.text).map((text, i) => ({ szene: a.szene, sprecher: a.sprecher, text, pause: i ? 0 : a.pause })));
 
 /* ---------- Stimmen auflösen ---------- */
 const KEY = process.env.ELEVENLABS_API_KEY;
@@ -167,7 +172,7 @@ let pos = 0;
 klips.forEach(({ s, pcm, woerter }, i) => {
   if (i) {
     const v = klips[i - 1].s;
-    const p = v.szene !== s.szene ? PAUSE.szene : v.sprecher !== s.sprecher ? PAUSE.sprecher : PAUSE.satz;
+    const p = (v.szene !== s.szene ? PAUSE.szene : v.sprecher !== s.sprecher ? PAUSE.sprecher : PAUSE.satz) + (s.pause || 0);
     teile.push(new Int16Array(Math.round(p * SR))); pos += Math.round(p * SR);
   }
   const t0 = pos / SR;
