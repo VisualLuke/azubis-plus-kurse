@@ -185,7 +185,7 @@
   <!-- 10 · Umzug -->
   <div class="a buehne" id="bue8"></div>
   <svg class="a" id="pfeil10" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
-    <path class="zeichnen" pathLength="1" d="M1270 560C1350 700 1520 700 1560 590" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 0" fill="none" marker-end="url(#spitze)"/>
+    <path class="zeichnen" pathLength="1" d="M1270 545C1350 680 1520 680 1560 580" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 0" fill="none" marker-end="url(#spitze)"/>
   </svg>
   <div class="a portrait" id="mai10" style="width:250px;height:250px"><div class="figur">
     <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
@@ -246,8 +246,8 @@ const ein = (id, t, basis, von = { y: 80 }) => {
 /* ---------- 1 · Neue Wohnung ---------- */
 const X0 = S(0);
 ein('tuer', A(0.1), { x: X0 + 1170, y: MY }); ein('blatt', A(0.1), { x: X0 + 1170, y: MY }); cue(A(0.1), 'whoosh');
-ein('koffer', A(1.1), { x: X0 + 1580, y: MY + 150 }, { x: 200, s: 1 }); cue(A(1.1), 'whoosh');
-figur('mai1', { x: X0 + 1590, y: MY - 120, s: 0 }); tw('mai1', A(2.35), .5, { s: 1 }, 'back'); cue(A(2.35), 'pop');
+ein('koffer', A(1.1), { x: X0 + 1570, y: MY + 150 }, { x: 200, s: 1 }); cue(A(1.1), 'whoosh');
+figur('mai1', { x: X0 + 1570, y: MY - 90, s: 0 }); tw('mai1', A(2.35), .5, { s: 1 }, 'back'); cue(A(2.35), 'pop');
 // Schlüssel: Spitze ins Schloss (Schloss bei 104|94 der Tür), dann zweimal drehen
 const SX = X0 + 1170 + (104 - 80) * 420 / 160, SY = MY + (94 - 80) * 420 / 160;
 akteur('schluessel', { x: SX - 350, y: SY + 40, o: 0, r: 0 });
@@ -262,8 +262,8 @@ textAkteure('tb1'); textEin('tb1', A(0.3)); textAus('tb1', A(7.6));
 pan(A(7.7), 1); const X1 = S(1);
 ein('rathaus', A(8.0), { x: X1 + 1230, y: MY - 10 });
 pop('schild', A(10.2), { x: X1 + 1230, y: MY - 58 });
-pop('pflicht', A(11.5), { x: X1 + 1580, y: 190 });
-pop('alle', A(12.6), { x: X1 + 1580, y: 262 });
+pop('pflicht', A(11.5), { x: X1 + 1560, y: 225 });
+pop('alle', A(12.6), { x: X1 + 1560, y: 295 });
 // verschiedene Leute gehen ins Bürgeramt
 [['g1', 1660, 12.7], ['g2', 1540, 13.1], ['g3', 1420, 13.5]].forEach(([id, x, a]) => {
   akteur(id, { x: X1 + x + 200, y: 640, o: 0 });
@@ -280,7 +280,7 @@ pan(A(14.45), 2); const X2 = S(2);
   g.innerHTML = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map(w => `<span class="wt">${w}</span>`).join('') +
     '<span></span><span></span>' + Array.from({ length: 30 }, (_, i) => `<span data-tag="${i + 1}">${i + 1}</span>`).join('').replace('>30<', '>30<');
 }
-ein('kalender', A(14.6), { x: X2 + 1250, y: MY + 10 });
+ein('kalender', A(14.6), { x: X2 + 1190, y: MY - 25 });
 const tagZelle = d => $(`#kgrid [data-tag="${d}"]`);
 HOOKS.push(t => {
   for (let d = 1; d <= 30; d++) {
@@ -294,9 +294,9 @@ HOOKS.push(t => {
 });
 cue(A(16.3), 'pop'); cue(A(16.9), 'scan'); cue(A(18.3), 'klick'); cue(A(21.7), 'ding');
 // Einzug am 6. (Mi der 2. Woche), Frist am 20.
-pop('lblEinzug', A(16.4), { x: X2 + 1110, y: MY + 300 });
-pop('lblFrist', A(18.4), { x: X2 + 1300, y: MY + 300 });
-figur('mai3', { x: X2 + 1650, y: MY + 170, s: 0 }); tw('mai3', A(20.5), .5, { s: 1 }, 'back'); cue(A(20.5), 'pop'); froh('mai3', A(21.7));
+pop('lblEinzug', A(16.4), { x: X2 + 1060, y: MY + 250 });
+pop('lblFrist', A(18.4), { x: X2 + 1250, y: MY + 250 });
+figur('mai3', { x: X2 + 1600, y: MY + 110, s: 0 }); tw('mai3', A(20.5), .5, { s: 1 }, 'back'); cue(A(20.5), 'pop'); froh('mai3', A(21.7));
 textAkteure('tb3'); textEin('tb3', A(15.0), { unter: A(21.6) }); textAus('tb3', A(24.1));
 
 /* ---------- 4 · Meldebescheinigung öffnet Türen ---------- */
@@ -307,11 +307,11 @@ akteur('pfeile4', { x: X3 + 960, y: 540 });
   const p = $('#' + id), a = [31.34, 32.32, 33.74][i];
   HOOKS.push(t => { const q = E.out(clamp((t - A(a)) / .4)); p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - q; p.style.opacity = q > 0 ? 1 : 0; });
 });
-ein('bank4', A(31.5), { x: X3 + 1060, y: 250 }, { s: .6, y: 20 }); cue(A(31.5), 'pop');
-pop('lblBank', A(31.7), { x: X3 + 1060, y: 370 });
-pop('abh', A(32.5), { x: X3 + 1090, y: 650 });
-ein('brief4', A(33.9), { x: X3 + 1620, y: MY + 10 }, { s: .6, y: 20 }); cue(A(33.9), 'pop');
-pop('lblId4', A(34.2), { x: X3 + 1620, y: MY + 130 });
+ein('bank4', A(31.5), { x: X3 + 1060, y: 285 }, { s: .6, y: 20 }); cue(A(31.5), 'pop');
+pop('lblBank', A(31.7), { x: X3 + 1060, y: 400 });
+pop('abh', A(32.5), { x: X3 + 1110, y: 640 });
+ein('brief4', A(33.9), { x: X3 + 1600, y: MY + 10 }, { s: .6, y: 20 }); cue(A(33.9), 'pop');
+pop('lblId4', A(34.2), { x: X3 + 1600, y: MY + 130 });
 textAkteure('tb4'); textEin('tb4', A(24.6)); textAus('tb4', A(35.3));
 
 /* ---------- 5 · Termin buchen ---------- */
@@ -342,15 +342,15 @@ textAkteure('tb5'); textEin('tb5', A(35.7), { unter: A(40.8) }); textAus('tb5', 
 /* ---------- 6 · Früh buchen, Bestätigung aufheben ---------- */
 tw('maus', A(46.6), .3, { o: 0 });
 tw('laptop', A(47.0), .7, { x: X4 + 1100, y: MY - 60, s: .66 }, 'inout');
-akteur('mail', { x: X4 + 1110, y: MY + 250, s: 0 }); tw('mail', A(49.9), .5, { s: 1 }, 'back'); cue(A(49.9), 'pop');
-akteur('handy6', { x: X4 + 1600, y: 1250 }); tw('handy6', A(50.0), .7, { y: MY + 20 }, 'back'); cue(A(50.0), 'whoosh');
-akteur('app', { x: X4 + 1600, y: MY + 20, o: 0 }); tw('app', A(50.5), .3, { o: 1 });
-akteur('lblApp', { x: X4 + 1600, y: MY + 250, o: 0 }); tw('lblApp', A(50.6), .4, { o: 1 });
-tw('mail', A(51.1), .6, { x: X4 + 1600, y: MY + 40, s: .3 }, 'inout'); set('mail', A(51.7), { o: 0 }); cue(A(51.1), 'whoosh');
+akteur('mail', { x: X4 + 1120, y: MY + 200, s: 0 }); tw('mail', A(49.9), .5, { s: 1 }, 'back'); cue(A(49.9), 'pop');
+akteur('handy6', { x: X4 + 1590, y: 1250 }); tw('handy6', A(50.0), .7, { y: MY - 15 }, 'back'); cue(A(50.0), 'whoosh');
+akteur('app', { x: X4 + 1590, y: MY - 15, o: 0 }); tw('app', A(50.5), .3, { o: 1 });
+akteur('lblApp', { x: X4 + 1590, y: MY + 215, o: 0 }); tw('lblApp', A(50.6), .4, { o: 1 });
+tw('mail', A(51.1), .6, { x: X4 + 1590, y: MY + 5, s: .3 }, 'inout'); set('mail', A(51.7), { o: 0 }); cue(A(51.1), 'whoosh');
 HOOKS.push(t => { const an = t >= A(51.7); $('#anzT').textContent = an ? '1' : '0';
   $('#rowT').style.borderColor = an ? 'var(--b300)' : 'transparent'; $('#rowT').style.background = an ? 'var(--b50)' : ''; });
 akteur('toast', { s: 0 }, true); tw('toast', A(51.75), .4, { s: 1 }, 'back'); cue(A(51.75), 'erfolg');
-pop('rechtzeitig', A(53.6), { x: X4 + 1110, y: MY + 250 });
+pop('rechtzeitig', A(53.6), { x: X4 + 1120, y: MY + 215 });
 textAkteure('tb6'); textEin('tb6', A(44.5)); textAus('tb6', A(55.8));
 
 /* ---------- 7 · Unterlagen ---------- */
@@ -362,9 +362,9 @@ const MAPPE = [X5 + 1250, MY + 110];
   tw(id, A(a), .55, { x: MAPPE[0] + dx, y: MY - 110, r, o: 1 }); tw(id, A(a) + .6, .3, { y: MAPPE[1] }, 'in');
   cue(A(a), 'whoosh'); cue(A(a) + .9, 'plopp');
 });
-figur('vermieter', { x: X5 + 1640, y: 230, s: 0 }); tw('vermieter', A(65.0), .5, { s: 1 }, 'back'); cue(A(65.0), 'pop');
-akteur('lblVermieter', { x: X5 + 1640, y: 360, o: 0 }); tw('lblVermieter', A(65.2), .4, { o: 1 });
-akteur('wgb', { x: X5 + 1640, y: 470, s: 0, r: 3 }); tw('wgb', A(65.4), .45, { s: 1 }, 'back');
+figur('vermieter', { x: X5 + 1600, y: 290, s: 0 }); tw('vermieter', A(65.0), .5, { s: 1 }, 'back'); cue(A(65.0), 'pop');
+akteur('lblVermieter', { x: X5 + 1600, y: 415, o: 0 }); tw('lblVermieter', A(65.2), .4, { o: 1 });
+akteur('wgb', { x: X5 + 1600, y: 545, s: 0, r: 3 }); tw('wgb', A(65.4), .45, { s: 1 }, 'back');
 froh('vermieter', A(67.3));
 tw('wgb', A(67.6), .6, { x: MAPPE[0] + 100, y: MY - 110, r: 2 }, 'inout'); tw('wgb', A(68.2), .3, { y: MAPPE[1] }, 'in'); cue(A(67.6), 'whoosh'); cue(A(68.5), 'plopp');
 textAkteure('tb7'); textEin('tb7', A(56.3), { liste: [A(59.8), A(61.4), A(63.5), A(65.0)] }); textAus('tb7', A(69.0));
@@ -398,18 +398,18 @@ ein('kasten9', A(78.4), { x: X7 + 1620, y: MY - 70 }); cue(A(78.4), 'pop');
 akteur('brief9', { x: X7 + 1620, y: MY - 110, o: 0, s: .5 });
 tw('brief9', A(80.3), .6, { x: X7 + 1420, y: MY - 180, s: 1, o: 1 }, 'back'); cue(A(80.3), 'whoosh');
 pop('lblId9', A(80.8), { x: X7 + 1420, y: MY - 255 });
-ein('betrieb9', A(81.9), { x: X7 + 1560, y: MY + 210 }, { s: .6, y: 30 });
-tw('brief9', A(82.4), .8, { x: X7 + 1560, y: MY + 150 }, 'inout'); tw('lblId9', A(82.4), .8, { x: X7 + 1560, y: MY + 70 }, 'inout'); cue(A(82.4), 'whoosh');
+ein('betrieb9', A(81.9), { x: X7 + 1560, y: MY + 175 }, { s: .6, y: 30 });
+tw('brief9', A(82.4), .8, { x: X7 + 1560, y: MY + 115 }, 'inout'); tw('lblId9', A(82.4), .8, { x: X7 + 1560, y: MY + 35 }, 'inout'); cue(A(82.4), 'whoosh');
 tw('brief9', A(83.2), .3, { o: 0, s: .5 }); tw('lblId9', A(83.2), .3, { o: 0 }); cue(A(83.3), 'erfolg');
 textAkteure('tb9'); textEin('tb9', A(75.0)); textAus('tb9', A(83.8));
 
 /* ---------- 10 · Umzug ---------- */
 pan(A(83.9), 8); const X8 = S(8);
-figur('mai10', { x: X8 + 1110, y: MY - 110, s: 0 }); tw('mai10', A(84.3), .5, { s: 1 }, 'back'); cue(A(84.3), 'pop');
-ein('karton', A(84.6), { x: X8 + 1120, y: MY + 150 }); cue(A(84.6), 'plopp');
+figur('mai10', { x: X8 + 1110, y: MY - 50, s: 0 }); tw('mai10', A(84.3), .5, { s: 1 }, 'back'); cue(A(84.3), 'pop');
+ein('karton', A(84.6), { x: X8 + 1130, y: MY + 150 }); cue(A(84.6), 'plopp');
 ein('rathaus10', A(86.3), { x: X8 + 1600, y: MY + 20 }, { s: .6, y: 30 });
 akteur('pfeil10', { x: X8 + 960, y: 540, o: 0, draw: 0 }); tw('pfeil10', A(86.6), .8, { o: 1, draw: 1 }); cue(A(86.6), 'whoosh');
-pop('wieder', A(88.3), { x: X8 + 1320, y: 175 });
+pop('wieder', A(88.3), { x: X8 + 1320, y: 205 });
 froh('mai10', A(88.4)); tw('#mai10 .daumen', A(88.4), .5, { y: -32 }, 'back'); cue(A(88.9), 'erfolg');
 document.querySelectorAll('#tb10 .zeile').forEach((z, i) => { akteur(z, { o: 0, y: 40 }, true); tw(z, A([84.3, 86.3, 88.3][i]), .55, { o: 1, y: 0 }, 'back'); });
 
