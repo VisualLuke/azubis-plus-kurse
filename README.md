@@ -1,0 +1,46 @@
+# azubis-plus-kurse
+
+Kursvideos für **Azubis Plus**: kurze, animierte Erklärvideos im App-Design, gerendert aus HTML.
+Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
+
+## Kurse
+
+| Nr. | Thema | Länge | Format |
+| --- | --- | --- | --- |
+| 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:52 | Podcast mit Mai (Azubi) und Jonas (Coach) |
+
+## Ein Kurs entsteht so
+
+1. **Konzept** (`kurse/NN-thema/konzept.md`): Zielgruppe, Länge, Kernbotschaft, Sprechertext – pro Szene
+   eine Aussage, Bilder als Gegenstände beschrieben. Deutsch B1, ~2–2,5 Wörter pro Sekunde.
+2. **Sprachaufnahme** (`sprache.mp3`), z. B. aus ElevenLabs. Erst aufnehmen, dann animieren.
+3. **Zeitleiste** (`film.vorlage.html`): Sätze mit Zeiten aus der Aufnahme (`SAETZE`), dazu die Szenen.
+   Alles wird aus `render(t)` berechnet; Animationen hängen an `A(sekunde_in_der_aufnahme)`.
+4. **Rendern:**
+   ```sh
+   npm i playwright            # oder global vorhanden
+   FFMPEG=/pfad/zu/ffmpeg node werkzeug/rendern.mjs kurse/01-brutto-netto                    # → film.mp4 + film-poster.png
+   node werkzeug/rendern.mjs kurse/01-brutto-netto --standbilder 12,30.5                     # nur Standbilder zum Prüfen
+   node werkzeug/rendern.mjs kurse/01-brutto-netto --nur-html                                # film.html, läuft im Browser
+   ```
+   ffmpeg braucht libx264; `ton.py` braucht numpy.
+
+## Aufbau
+
+```
+werkzeug/motor.js      Tween-Engine: Akteure, Easings, Kamera (pan), Cues für Soundeffekte
+werkzeug/stil.css      gemeinsamer Stil – nur Token-Farben mit Fallback, Schrift Inter
+werkzeug/rendern.mjs   baut film.html, fotografiert jedes Frame mit Chromium, mischt Ton, kodiert H.264
+werkzeug/ton.py        Tonspur: Sprache + leise Musik (unter der Stimme abgesenkt) + Effekte
+werkzeug/bauen.mjs     SVG-Kurzschreibweise → SVG (Kopie aus helperapp_illustrationen, samt liste.mjs)
+teile/*.svg            Bildteile im Stil C der Illustrations-Bibliothek, in Ebenen zum Animieren
+kurse/NN-thema/        konzept.md, sprache.mp3, film.vorlage.html, teile/ (kursspezifisch), film.mp4
+```
+
+## Figuren
+
+Die Gesprächspartner (`teile/figur-*.svg`) sind in Markenfarben gezeichnet – Haut in hellem Lavendel,
+keine realen Hauttöne. Das hält die Token-Regel ein und stellt Herkunft nicht über Aussehen dar.
+Augen und Mund liegen auf eigenen Ebenen (`figur-augen`, `figur-mund-zu`, `figur-mund-auf`);
+der Mund öffnet sich mit dem Pegel der Sprachaufnahme. Die Helper-Illustrationen bleiben ohne Menschen –
+Figuren gibt es nur in Kursvideos.

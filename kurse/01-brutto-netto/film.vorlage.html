@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 1 – Brutto, Netto & deine Gehaltsabrechnung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --surface-2:var(--077b8197-bd4b-4580-a609-33092c57cbb5,#F2F0F7);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-text:var(--0f9fbed2-ba9b-4f0a-81a5-800897634714,#2B6FE0);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+.buehne{width:1040px;height:710px}
+
+/* Kopf */
+#titelzeile{position:absolute;left:120px;top:58px;font:500 28px/36px Inter;color:var(--n500)}
+#titelzeile b{font-weight:800;color:var(--b500);letter-spacing:-.02em;margin-right:14px}
+#podcast{position:absolute;left:auto;right:120px;top:52px;display:flex;align-items:center;gap:10px;padding:8px 20px;border-radius:999px;
+  background:var(--b100);color:var(--b600);font:600 22px/30px Inter;letter-spacing:.08em;text-transform:uppercase}
+#podcast i{width:12px;height:12px;border-radius:999px;background:var(--error);display:block}
+
+/* Kamera: die Bühne ist verkleinert und sitzt oben in der Mitte */
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,-63.5px) scale(.9)}
+
+/* Kapitel oben rechts */
+#kapChip{position:absolute;left:auto;right:300px;top:52px;padding:8px 20px;border-radius:999px;background:var(--surface);
+  font:600 24px/30px Inter;color:var(--n700);box-shadow:0 1px 2px rgba(22,19,37,.06);white-space:nowrap}
+#kapChip b{color:var(--b600);margin-right:10px}
+
+/* Gesprächspartner */
+.portrait{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+#jonas{left:55px;top:490px}
+#mai{left:auto;right:55px;top:490px}
+
+/* Sprechblase */
+#ut{position:absolute;left:500px;right:500px;bottom:40px;height:230px;display:flex;align-items:flex-end;justify-content:center}
+#utBox{position:relative;max-width:920px;padding:24px 38px;border-radius:28px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09);
+  font:500 34px/46px Inter;color:var(--ink);text-align:center}
+#utBox.m{background:var(--b100)}
+#utBox::before{content:"";position:absolute;top:34px;width:0;height:0;border:18px solid transparent}
+#utBox.j::before{left:-32px;border-right:22px solid var(--surface);border-left:0}
+#utBox.m::before{right:-32px;border-left:22px solid var(--b100);border-right:0}
+
+/* Bausteine auf der Bühne */
+.chip{padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.weiss{background:var(--surface);color:var(--ink)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success);color:var(--surface)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error);color:var(--surface);font-size:44px;line-height:52px;padding:14px 34px}
+.chip.hellgruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.ueber{font:700 40px/48px Inter;letter-spacing:-.01em;white-space:nowrap}
+.merk{padding:16px 30px;border-radius:18px;background:var(--surface);font:500 30px/40px Inter;color:var(--n700);white-space:nowrap;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.merk b{color:var(--success-text)}
+#konto{width:170px;text-align:center}
+#konto small{display:block;font:600 18px/24px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase}
+#konto b{display:block;font:800 40px/48px Inter;color:var(--success-text);white-space:nowrap}
+
+.seg{height:84px;display:flex;align-items:center;justify-content:center;font:700 30px/1 Inter;white-space:nowrap}
+#segN{width:695px;border-radius:20px 0 0 20px;background:linear-gradient(135deg,var(--b400),var(--b600));color:var(--surface);transform-origin:0 50%}
+#segS,#segB{width:185px;border-radius:0 20px 20px 0;background:var(--b200);color:var(--b700)}
+#segS.los,#segB{border-radius:20px}
+#segB{background:var(--b300);color:var(--b700)}
+#geist{width:185px;height:84px;border-radius:0 20px 20px 0;border:3px dashed var(--b300)}
+#schale{width:880px;height:250px;border-radius:28px;border:3px dashed var(--b300);background:var(--b50)}
+
+.kachel{width:470px;height:250px;padding:28px 30px;border-radius:24px;background:var(--surface);border:3px solid var(--border);
+  box-shadow:0 1px 2px rgba(22,19,37,.06);display:flex;flex-direction:column;gap:14px}
+.kachel .ic{width:84px;height:84px;border-radius:22px;display:flex;align-items:center;justify-content:center}
+.kachel .ic svg{width:50px}
+.kachel h3{font:700 32px/38px Inter;letter-spacing:-.01em}
+.kachel p{font:400 26px/34px Inter;color:var(--n700)}
+
+#abr{width:560px;padding:26px 24px 20px;border-radius:24px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09);border:2px solid var(--border)}
+#abr .kopfz{display:flex;justify-content:space-between;align-items:baseline;padding:0 16px 16px;border-bottom:2px solid var(--border);margin-bottom:10px}
+#abr .kopfz b{font:700 30px/36px Inter}
+#abr .kopfz span{font:500 22px/28px Inter;color:var(--n500)}
+.zeile{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-radius:12px;font:500 25px/32px Inter;color:var(--n500)}
+.zeile b{font:600 26px/32px Inter;color:var(--ink)}
+.zeile.netto{margin-top:10px;border-top:2px solid var(--border);border-radius:0 0 12px 12px;padding-top:16px}
+.zeile.netto b{font:800 32px/38px Inter;color:var(--success-text)}
+.karte-info{width:400px;padding:22px 26px;border-radius:22px;background:var(--surface);box-shadow:0 1px 2px rgba(22,19,37,.06);border:2px solid var(--border)}
+.karte-info b{display:block;font:700 30px/38px Inter}
+.karte-info span{display:block;font:400 25px/33px Inter;color:var(--n700);margin-top:6px}
+.karte-info.info{background:var(--info-bg);border-color:var(--info-bg)}
+.karte-info.info b{color:var(--info-text)}
+.pruef{width:410px;display:flex;align-items:center;gap:18px;font:600 28px/36px Inter}
+.pruef .box{width:52px;height:52px}
+.hinweis{width:420px;display:flex;align-items:center;gap:18px;padding:18px 24px;border-radius:20px;background:var(--surface);font:600 30px/38px Inter;
+  box-shadow:0 1px 2px rgba(22,19,37,.06);border:2px solid var(--border)}
+.hinweis .ic{width:60px;height:60px;border-radius:16px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.hinweis .ic svg{width:36px}
+.fazit{width:300px;height:400px;border-radius:28px;background:var(--surface);border:3px solid var(--border);box-shadow:0 6px 20px rgba(22,19,37,.09);
+  display:flex;flex-direction:column;align-items:center;padding:30px 24px;text-align:center}
+.fazit .bild{width:170px;height:170px}
+.fazit h3{font:800 48px/56px Inter;letter-spacing:-.02em;margin-top:12px}
+.fazit p{font:500 28px/36px Inter;color:var(--n700);margin-top:8px}
+
+/* Vorspann / Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700))}
+.deckel .ende{padding:0 200px;text-align:center}
+.deckel .eyebrow{color:var(--b200);font-size:30px;line-height:40px}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;margin-top:16px}
+.deckel .klein{font:400 42px/56px Inter;color:var(--b100);margin-top:28px}
+#abspann{clip-path:inset(100% 0 0 0)}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Brutto & Netto -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="zettel0" style="width:360px">{{gehalt}}</div>
+  <div class="a label" id="lblZettel0" style="color:var(--b600)">Dein erstes Gehalt</div>
+  <div class="a chip brand" id="tagBrutto">Brutto</div>
+  <div class="a chip gruen" id="tagNetto">Netto</div>
+  <div class="a" id="vertrag" style="width:360px">{{vertrag}}</div>
+  <div class="a chip weiss" id="betragV">1.000 €</div>
+  <div class="a" id="handy" style="width:520px">{{handy}}</div>
+  <div class="a" id="konto"><small>Gehalt</small><b>+ <span id="kontoBetrag">0</span> €</b></div>
+  <div class="a label" id="lblV">Vertrag</div>
+  <div class="a label" id="lblK">Konto</div>
+  <div class="a merk" id="merk0"><b>Netto</b> = das Geld, das du wirklich bekommst</div>
+
+  <!-- 1 · Sozialversicherung -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a ueber" id="ueb1" style="width:880px">Dein Brutto: 1.000 €</div>
+  <div class="a" id="geist"></div>
+  <div class="a seg" id="segN">Netto ≈ 790 €</div>
+  <div class="a" id="schale"></div>
+  <div class="a label" id="lblSchale" style="color:var(--b600)">Sozialversicherung</div>
+  <div class="a chip gelb" id="pflicht">Pflicht in Deutschland</div>
+  <div class="a seg" id="segS">210 €</div>
+  <div class="a" id="betrieb1" style="width:190px">{{betrieb}}</div>
+  <div class="a seg" id="segB">≈ 210 €</div>
+  <div class="a label" id="lblDu">von dir</div>
+  <div class="a label" id="lblBetrieb">vom Betrieb</div>
+
+  <!-- 2 · Vier Versicherungen -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a ueber" id="ueb2">Vier Versicherungen</div>
+  <div class="a kachel" id="v1"><div class="ic" style="background:var(--error-bg)"><svg viewBox="0 0 48 48"><rect x="18" y="6" width="12" height="36" rx="4" fill="var(--error)"/><rect x="6" y="18" width="36" height="12" rx="4" fill="var(--error)"/></svg></div>
+    <h3>Krankenversicherung</h3><p>bezahlt Arzt und Krankenhaus</p></div>
+  <div class="a kachel" id="v2"><div class="ic" style="background:var(--warning-bg)"><svg viewBox="0 0 48 48"><ellipse cx="24" cy="36" rx="16" ry="6" fill="var(--warning)"/><rect x="8" y="26" width="32" height="10" fill="var(--warning)"/><ellipse cx="24" cy="26" rx="16" ry="6" fill="var(--warning-bg)" stroke="var(--warning)" stroke-width="3"/><ellipse cx="24" cy="16" rx="16" ry="6" fill="var(--warning)"/><rect x="8" y="10" width="32" height="6" fill="var(--warning)"/><ellipse cx="24" cy="10" rx="16" ry="6" fill="var(--warning-bg)" stroke="var(--warning)" stroke-width="3"/></svg></div>
+    <h3>Rentenversicherung</h3><p>spart für dich, wenn du alt bist</p></div>
+  <div class="a kachel" id="v3"><div class="ic" style="background:var(--info-bg)"><svg viewBox="0 0 48 48"><path d="M4 24a20 18 0 0 1 40 0Z" fill="var(--info)"/><path d="M24 24v14a4 4 0 0 1-8 0" stroke="var(--info)" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M24 4v4" stroke="var(--info)" stroke-width="4" stroke-linecap="round"/></svg></div>
+    <h3>Arbeitslosenversicherung</h3><p>hilft, wenn du keine Arbeit hast</p></div>
+  <div class="a kachel" id="v4"><div class="ic" style="background:var(--b100)"><svg viewBox="0 0 48 48"><path d="M24 42S6 31 6 18a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 13-18 24-18 24Z" fill="var(--b500)"/></svg></div>
+    <h3>Pflegeversicherung</h3><p>hilft, wenn jemand Pflege braucht</p></div>
+
+  <!-- 3 · Steuern -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a ueber" id="ueb3">Lohnsteuer</div>
+  <div class="a chip gelb" id="hoch">Sehr hoch?</div>
+  <div class="a" id="diagramm" style="width:880px;height:470px">
+    <svg viewBox="0 0 880 470" style="width:880px;height:470px">
+      <path d="M60 30V420H850" stroke="var(--n300)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="850" y="458" text-anchor="end" font-family="Inter" font-weight="600" font-size="24" fill="var(--n500)">Einkommen →</text>
+      <text x="80" y="40" font-family="Inter" font-weight="600" font-size="24" fill="var(--n500)">Steuer</text>
+      <path id="kurve" class="zeichnen" pathLength="1" d="M60 420H330C520 420 700 280 840 70" stroke="var(--b500)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <g id="punktAzubi"><circle cx="200" cy="420" r="16" fill="var(--success)"/><circle cx="200" cy="420" r="7" fill="var(--surface)"/></g>
+      <g id="punktMehr"><circle r="16" fill="var(--b500)"/><circle r="7" fill="var(--surface)"/></g>
+    </svg>
+  </div>
+  <div class="a chip hellgruen" id="nullSteuer">Azubi: 0 € oder sehr wenig</div>
+  <div class="a chip weiss" id="mehrSteuer">mehr Verdienst → mehr Steuer</div>
+
+  <!-- 4 · Abrechnung -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="abr">
+    <div class="kopfz"><b>Gehaltsabrechnung</b><span>September</span></div>
+    <div class="zeile" data-z="name">Name<b>Mai Tran</b></div>
+    <div class="zeile" data-z="klasse">Steuerklasse<b>1</b></div>
+    <div class="zeile" data-z="id">Steuer-ID<b>12 345 678 901</b></div>
+    <div class="zeile" data-z="brutto">Brutto<b>1.000,00 €</b></div>
+    <div class="zeile" data-z="sv">Sozialversicherung<b>− 210,00 €</b></div>
+    <div class="zeile" data-z="steuer">Lohnsteuer<b>0,00 €</b></div>
+    <div class="zeile netto" data-z="netto">Netto<b>790,00 €</b></div>
+  </div>
+  <div class="a karte-info" id="infoKlasse"><b>Steuerklasse 1</b><span>haben fast alle, die nicht verheiratet sind.</span></div>
+  <div class="a" id="brief" style="width:280px">{{brief}}</div>
+  <div class="a karte-info" id="infoId" style="width:400px"><b>Steuer-ID</b><span>kommt per Post, nachdem du deine Wohnung angemeldet hast.</span></div>
+  <div class="a" id="betrieb4" style="width:230px">{{betrieb}}</div>
+  <div class="a label" id="lblSofort" style="color:var(--b600)">sofort an den Betrieb</div>
+  <div class="a ueber" id="ueb4" style="width:420px">3 Dinge prüfen</div>
+  <div class="a pruef" id="p1"><div class="box">{{kasten}}</div>Dein Name</div>
+  <div class="a pruef" id="p2"><div class="box">{{kasten}}</div>Brutto aus dem Vertrag</div>
+  <div class="a pruef" id="p3"><div class="box">{{kasten}}</div>Deine Steuer-ID</div>
+  <div class="a karte-info info" id="infoFalsch"><b>Etwas falsch?</b><span>Frag im Personalbüro – das ist ganz normal.</span></div>
+
+  <!-- 5 · Aufheben -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a ueber" id="ueb5">Jede Abrechnung aufheben</div>
+  <div class="a" id="eimer" style="width:300px">{{muelleimer}}</div>
+  <div class="a" id="deckel" style="width:300px;transform-origin:22.5% 32.5%">{{muelleimer-deckel}}</div>
+  <div class="a" id="mHinten" style="width:440px">{{mappe-hinten}}</div>
+  <div class="a" id="zettel2" style="width:260px">{{gehalt}}</div>
+  <div class="a" id="zettel3" style="width:260px">{{gehalt}}</div>
+  <div class="a" id="zettel" style="width:320px">{{gehalt}}</div>
+  <div class="a" id="mVorne" style="width:440px">{{mappe-vorne}}</div>
+  <div class="a chip rot" id="nein">Nein!</div>
+  <div class="a hinweis" id="h1"><div class="ic"><svg viewBox="0 0 48 48"><path d="M6 20L24 8l18 12Z" fill="var(--b500)"/><g fill="var(--b400)"><rect x="10" y="22" width="5" height="16"/><rect x="21.5" y="22" width="5" height="16"/><rect x="33" y="22" width="5" height="16"/></g><rect x="6" y="38" width="36" height="5" rx="2" fill="var(--b600)"/></svg></div>Ausländerbehörde</div>
+  <div class="a hinweis" id="h2"><div class="ic"><svg viewBox="0 0 48 48"><path d="M6 22L24 7l18 15v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z" fill="var(--b500)"/><rect x="19" y="28" width="10" height="15" rx="2" fill="var(--b100)"/></svg></div>Neue Wohnung</div>
+
+  <!-- 6 · Zusammenfassung -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a fazit" id="f1"><div class="bild">{{vertrag}}</div><h3>Brutto</h3><p>steht im Vertrag</p></div>
+  <div class="a fazit" id="f2"><div class="bild">{{handy}}</div><h3>Netto</h3><p>kommt aufs Konto</p></div>
+  <div class="a fazit" id="f3"><div class="bild">{{schild}}</div><h3>Der Rest</h3><p>ist deine Versicherung</p></div>
+  <div class="a" id="hakenEnde" style="width:120px">{{haken}}</div>
+</div></div>
+
+<div id="titelzeile" class="a"><b>Azubis Plus</b>Kurs 1 · Brutto, Netto & deine Gehaltsabrechnung</div>
+<div id="podcast" class="a"><i></i>Podcast</div>
+
+<div id="kapChip" class="a"><b>1</b><span>Brutto & Netto</span></div>
+<div class="portrait" id="jonas"><div class="figur">
+    <div class="ebene">{{figur-jonas}}</div>
+    <div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div>
+    <div class="ebene auf">{{figur-mund-auf}}</div></div></div>
+<div class="portrait" id="mai"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div>
+    <div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div>
+    <div class="ebene auf">{{figur-mund-auf}}</div></div></div>
+
+<div id="ut"><div id="utBox"><span></span></div></div>
+
+<div class="deckel" id="vorspann"><div class="ende">
+  <div class="eyebrow a" id="vsEyebrow" style="position:relative">Azubis Plus · Kurs 1 · Podcast</div>
+  <div class="gross a" id="vsTitel" style="position:relative">Brutto, Netto & deine Gehaltsabrechnung</div>
+  <div class="klein a" id="vsUnter" style="position:relative">mit Mai und Jonas</div>
+</div></div>
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="eyebrow a" id="asEyebrow" style="position:relative">Kurs 1 geschafft</div>
+  <div class="gross a" id="asTitel" style="position:relative">Brutto im Vertrag.<br>Netto aufs Konto.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Der Rest ist deine Versicherung.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Sprachaufnahme: Sätze mit Zeiten (aus Pausen + Stimmhöhe ermittelt) ---------- */
+const VERSATZ = 2.4;                      // Sprache beginnt nach dem Vorspann
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;               // Zeit in der Aufnahme → Zeit im Film
+const SAETZE = [
+  [0.08, 4.00, 'J', 'Hallo Mai! Du hast gerade dein erstes Gehalt bekommen. Wie war’s?'],
+  [4.38, 6.46, 'M', 'Ehrlich? Ich war überrascht.'],
+  [7.02, 9.44, 'M', 'In meinem Vertrag stehen 1.000 Euro.'],
+  [10.02, 13.72, 'M', 'Auf meinem Konto waren nur ungefähr 790 Euro.'],
+  [14.20, 17.80, 'J', 'Das ist ganz normal. Die 1.000 Euro sind dein Brutto-Gehalt.'],
+  [18.24, 20.68, 'J', 'Die 790 Euro sind dein Netto-Gehalt.'],
+  [21.10, 23.42, 'J', 'Netto ist das Geld, das du wirklich bekommst.'],
+  [23.84, 26.68, 'M', 'Und wohin gehen die 210 Euro?'],
+  [27.12, 29.90, 'J', 'In die Sozialversicherung. Die ist in Deutschland Pflicht.'],
+  [30.30, 33.28, 'J', 'Und dein Betrieb zahlt noch einmal ungefähr genauso viel dazu.'],
+  [33.80, 35.00, 'M', 'Was bekomme ich dafür?'],
+  [35.36, 39.66, 'J', 'Vier Versicherungen. Die Krankenversicherung bezahlt Arzt und Krankenhaus.'],
+  [40.06, 42.86, 'J', 'Die Rentenversicherung spart Geld für dich, wenn du alt bist.'],
+  [43.28, 46.60, 'J', 'Die Arbeitslosenversicherung hilft, wenn du einmal keine Arbeit hast.'],
+  [47.00, 50.56, 'J', 'Und die Pflegeversicherung hilft, wenn jemand dauerhaft Pflege braucht.'],
+  [51.04, 54.80, 'M', 'Und Steuern? Die sollen in Deutschland sehr hoch sein.'],
+  [55.20, 58.42, 'J', 'Bei vielen Azubis ist die Lohnsteuer null oder sehr klein.'],
+  [58.88, 61.38, 'J', 'Steuern zahlt man erst richtig, wenn man mehr verdient.'],
+  [61.76, 66.10, 'M', 'Auf meiner Abrechnung steht „Steuerklasse 1“. Was heißt das?'],
+  [66.70, 69.84, 'J', 'Steuerklasse 1 haben fast alle, die nicht verheiratet sind.'],
+  [70.24, 71.88, 'J', 'Wichtig ist deine Steuer-ID.'],
+  [72.32, 75.10, 'J', 'Die kommt per Post, nachdem du deine Wohnung angemeldet hast.'],
+  [75.50, 76.96, 'J', 'Gib sie sofort deinem Betrieb.'],
+  [77.40, 79.30, 'M', 'Was soll ich auf der Abrechnung prüfen?'],
+  [79.68, 83.74, 'J', 'Drei Dinge: Stimmt dein Name? Stimmt das Brutto aus deinem Vertrag?'],
+  [84.20, 85.54, 'J', 'Stimmt deine Steuer-ID?'],
+  [86.04, 89.74, 'J', 'Wenn etwas falsch aussieht, frag im Personalbüro. Das ist ganz normal.'],
+  [90.18, 91.96, 'M', 'Und dann kann ich sie wegwerfen?'],
+  [92.34, 94.78, 'J', 'Nein! Heb jede Abrechnung auf.'],
+  [95.20, 98.76, 'J', 'Du brauchst sie zum Beispiel für die Ausländerbehörde oder für eine neue Wohnung.'],
+  [99.26, 104.40, 'M', 'Also: Brutto im Vertrag, Netto aufs Konto, der Rest ist meine Versicherung.'],
+  [104.70, 106.14, 'J', 'Genau. Perfekt!'],
+].map(([a, b, w, t]) => [A(a), A(b), w, t]);
+const ENDE_SPRACHE = A(106.45);
+
+/* ---------- Rahmen: Sprecher, Pegel, Untertitel, Kapitel ---------- */
+const MX = 1280, MY = 505;                // Bühnenmitte
+['bue0', 'bue1', 'bue2', 'bue3', 'bue4', 'bue5', 'bue6'].forEach((id, i) => akteur(id, { x: S(i) + MX, y: MY }));
+const satzBei = t => SAETZE.find(([a, b]) => t >= a - .05 && t <= b + .25);
+// Gesprächspartner: wer spricht, wird etwas größer und bewegt den Mund im Takt der Aufnahme
+akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('mai', { o: 0, y: 60, s: .9 }, true);
+tw('jonas', 1.9, .7, { o: 1, y: 0 }, 'back'); tw('mai', 2.05, .7, { o: 1, y: 0 }, 'back');
+const PERSONEN = [['jonas', 'J', 3, .13], ['mai', 'M', -3, .61]];     // id, Kürzel, Neigung zur Mitte, Blinzel-Phase
+const glatt = { J: 1, M: 1 };
+HOOKS.push(t => {
+  const s = satzBei(t), wer = s && s[2];
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : (s ? .6 + .4 * Math.sin(t * 9) : 0);
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const el = document.getElementById(id), aktiv = wer === w;
+    // sanft zwischen aktiv/inaktiv überblenden (render ist deterministisch: aus t berechnet)
+    const nah = SAETZE.filter(z => z[2] === w).some(([a, b]) => t >= a - .15 && t <= b + .15);
+    const k = SAETZE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .3) / .3, (b + .5 - t) / .3))), 0);
+    const basis = t < 2.6 ? null : .9 + .1 * k;
+    if (basis) el.style.transform = `scale(${basis})`;
+    el.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    el.style.filter = t < 2.6 ? '' : `saturate(${.7 + .3 * k})`;
+    const f = el.querySelector('.figur');
+    const nicken = aktiv ? 1.6 * Math.sin(t * 3.1) * pegel : 0;
+    f.style.transform = `rotate(${neig + nicken}deg)`;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    el.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    el.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    el.querySelector('.zu').style.opacity = auf > .12 ? 0 : 1;
+    const zyklus = (t * .27 + phase) % 1;
+    el.querySelector('.augen').style.transform = `scaleY(${zyklus < .035 ? .12 : 1})`;
+  }
+});
+// Sprechblase – zeigt zum Sprecher, ohne Namen
+let utLetzter = null;
+HOOKS.push(t => {
+  const i = SAETZE.findIndex(([a], k) => t >= a - .1 && (k === SAETZE.length - 1 || t < SAETZE[k + 1][0] - .1));
+  const box = $('#utBox');
+  const zeigen = i >= 0 && t < ENDE_SPRACHE + .3;
+  if (zeigen && utLetzter !== i) {
+    const [, , w, text] = SAETZE[i];
+    box.className = w === 'M' ? 'm' : 'j';
+    box.querySelector('span').textContent = text;
+    utLetzter = i;
+  }
+  const a = i >= 0 ? SAETZE[i][0] - .1 : 0, p = Math.min(1, (t - a) / .18);
+  box.style.opacity = zeigen ? p : 0;
+  box.style.transform = zeigen ? `translateY(${10 * (1 - p)}px) scale(${.97 + .03 * p})` : '';
+});
+// Kapitel oben rechts
+const KAPITEL = [[A(0), 'Brutto & Netto'], [A(23.6), 'Sozialversicherung'], [A(50.8), 'Steuern'], [A(61.5), 'Abrechnung prüfen'], [A(89.95), 'Aufheben'], [A(99.0), 'Zusammenfassung']];
+akteur('kapChip', { o: 0, y: -20 }, true); tw('kapChip', 2.3, .5, { o: 1, y: 0 }, 'back');
+let kapLetztes = -1;
+HOOKS.push(t => {
+  let k = 0; KAPITEL.forEach(([a], i) => { if (t >= a) k = i; });
+  if (k !== kapLetztes) { $('#kapChip b').textContent = k < 5 ? `Kapitel ${k + 1}` : '✓'; $('#kapChip span').textContent = KAPITEL[k][1]; kapLetztes = k; }
+});
+KAPITEL.slice(1).forEach(([a]) => cue(a, 'klick'));
+
+/* ---------- Vorspann ---------- */
+akteur('vsEyebrow', { o: 0, y: 30 }, true); tw('vsEyebrow', .2, .5, { o: 1, y: 0 }, 'back');
+akteur('vsTitel', { o: 0, y: 40 }, true); tw('vsTitel', .35, .6, { o: 1, y: 0 }, 'back');
+akteur('vsUnter', { o: 0, y: 30 }, true); tw('vsUnter', .6, .5, { o: 1, y: 0 }, 'back');
+HOOKS.push(t => { const p = E.inout(clamp((t - 1.8) / .6)); $('#vorspann').style.clipPath = `inset(0 0 ${p * 100}% 0)`; });
+cue(1.8, 'whoosh');
+
+/* ---------- 0 · Brutto & Netto ---------- */
+const X0 = S(0);
+akteur('zettel0', { x: X0 + MX, y: 600, o: 0, r: 6 }); tw('zettel0', A(0.9), .7, { y: 480, o: 1, r: -2 }, 'back'); cue(A(0.9), 'whoosh');
+akteur('lblZettel0', { x: X0 + MX, y: 700, o: 0 }); tw('lblZettel0', A(1.4), .4, { o: 1 });
+tw(['zettel0', 'lblZettel0'], A(6.4), .4, { o: 0, s: .8 }, 'in');
+akteur('vertrag', { x: X0 + 1050, y: 540, o: 0 }); tw('vertrag', A(7.02), .6, { y: 470, o: 1 }, 'back'); cue(A(7.02), 'whoosh');
+akteur('betragV', { x: X0 + 1050, y: 640, s: 0 }); tw('betragV', A(8.2), .45, { s: 1 }, 'back'); cue(A(8.2), 'pop');
+akteur('lblV', { x: X0 + 1050, y: 730, o: 0 }); tw('lblV', A(7.3), .4, { o: 1 });
+akteur('handy', { x: X0 + 1520, y: 800, o: 0 }); tw('handy', A(10.02), .7, { y: 470, o: 1 }, 'back'); cue(A(10.02), 'whoosh');
+akteur('konto', { x: X0 + 1520, y: 440, o: 0 }); tw('konto', A(10.7), .3, { o: 1 });
+HOOKS.push(t => { $('#kontoBetrag').textContent = Math.round(790 * E.out(clamp((t - A(11.2)) / 1.6))); });
+cue(A(12.6), 'muenze');
+akteur('lblK', { x: X0 + 1520, y: 730, o: 0 }); tw('lblK', A(10.3), .4, { o: 1 });
+akteur('tagBrutto', { x: X0 + 1050, y: 215, s: 0 }); tw('tagBrutto', A(16.4), .45, { s: 1 }, 'back'); cue(A(16.4), 'pop');
+akteur('tagNetto', { x: X0 + 1520, y: 215, s: 0 }); tw('tagNetto', A(18.9), .45, { s: 1 }, 'back'); cue(A(18.9), 'pop');
+akteur('merk0', { x: X0 + MX, y: 810, o: 0, y0: 0 }); set('merk0', A(21.1), { y: 840 }); tw('merk0', A(21.1), .5, { o: 1, y: 800 }, 'back');
+tw(['lblV', 'lblK'], A(21.0), .3, { o: 0 });
+tw(['handy', 'konto'], A(21.2), .15, { s: 1.06 }); tw(['handy', 'konto'], A(21.35), .4, { s: 1 }, 'back');
+cue(A(21.2), 'ding');
+
+/* ---------- 1 · Sozialversicherung ---------- */
+pan(A(23.6), 1);
+const X1 = S(1);
+akteur('ueb1', { x: X1 + MX, y: 240, o: 0 }); tw('ueb1', A(24.0), .5, { o: 1 });
+akteur('segN', { x: X1 + 840 + 347.5, y: 330, sx: 0 }); tw('segN', A(24.2), .7, { sx: 1 }, 'out');
+akteur('segS', { x: X1 + 840 + 695 + 92.5, y: 330, o: 0 }); tw('segS', A(24.7), .3, { o: 1 }); cue(A(24.7), 'pop');
+akteur('geist', { x: X1 + 840 + 695 + 92.5, y: 330, o: 0 });
+akteur('schale', { x: X1 + MX, y: 640, o: 0, s: .95 }); tw('schale', A(26.4), .45, { o: 1, s: 1 }, 'back');
+akteur('lblSchale', { x: X1 + 530 + 150, y: 548, o: 0 }); set('lblSchale', 0, { x: X1 + 840 + 30 + 150 }); tw('lblSchale', A(27.12), .4, { o: 1 });
+// die 210 € wandern in die Schale
+tw('segS', A(26.2), .8, { x: X1 + 1050, y: 650 }, 'inout'); cue(A(26.2), 'whoosh');
+HOOKS.push(t => $('#segS').classList.toggle('los', t > A(26.3)));
+tw('geist', A(26.3), .4, { o: 1 });
+akteur('lblDu', { x: X1 + 1050, y: 725, o: 0 }); tw('lblDu', A(27.1), .4, { o: 1 });
+akteur('pflicht', { x: X1 + 1560, y: 548, s: 0 }); tw('pflicht', A(28.9), .45, { s: 1 }, 'back'); cue(A(28.9), 'pop');
+akteur('betrieb1', { x: X1 + 1560, y: 660, o: 0 }); tw('betrieb1', A(30.3), .5, { o: 1, y: 650 }, 'back'); cue(A(30.3), 'pop');
+akteur('segB', { x: X1 + 1560, y: 650, o: 0, s: .4 }); tw('segB', A(31.0), .8, { x: X1 + 1300, s: 1, o: 1 }, 'back'); cue(A(31.0), 'whoosh');
+akteur('lblBetrieb', { x: X1 + 1300, y: 725, o: 0 }); tw('lblBetrieb', A(31.6), .4, { o: 1 });
+tw('betrieb1', A(31.0), .5, { x: X1 + 1590, s: .9 });
+
+/* ---------- 2 · Vier Versicherungen ---------- */
+pan(A(35.1), 2);
+const X2 = S(2);
+akteur('ueb2', { x: X2 + MX, y: 215, o: 0, y0: 0 }); set('ueb2', 0, { y: 240 }); tw('ueb2', A(35.4), .5, { o: 1, y: 215 }, 'back');
+const KACHELN = [['v1', 1035, 405, 36.88, 39.66], ['v2', 1525, 405, 40.06, 42.86], ['v3', 1035, 680, 43.28, 46.60], ['v4', 1525, 680, 47.0, 50.56]];
+KACHELN.forEach(([id, x, y, a]) => {
+  akteur(id, { x: X2 + x, y: y + 40, o: 0, s: .95 });
+  tw(id, A(a), .55, { y, o: 1, s: 1 }, 'back'); cue(A(a), 'pop');
+});
+HOOKS.push(t => KACHELN.forEach(([id, , , a, b]) => {
+  const aktiv = t >= A(a) && t < A(b) + .3;
+  document.getElementById(id).style.borderColor = aktiv ? 'var(--b300)' : '';
+}));
+
+/* ---------- 3 · Steuern ---------- */
+pan(A(50.8), 3);
+const X3 = S(3);
+akteur('ueb3', { x: X3 + 1000, y: 215, o: 0 }); tw('ueb3', A(51.1), .5, { o: 1 });
+akteur('hoch', { x: X3 + 1330, y: 215, s: 0 }); tw('hoch', A(52.8), .45, { s: 1 }, 'back'); cue(A(52.8), 'pop');
+tw('hoch', A(55.3), .3, { o: 0, s: .8 }, 'in');
+akteur('diagramm', { x: X3 + MX, y: 540, o: 0, draw: 0 }); tw('diagramm', A(51.3), .5, { o: 1 });
+tw('diagramm', A(55.3), 1.6, { draw: 1 }, 'inout');
+const kurve = $('#kurve');
+HOOKS.push(t => {
+  const pa = E.back(clamp((t - A(56.9)) / .45));
+  $('#punktAzubi').setAttribute('transform', `translate(200 420) scale(${pa}) translate(-200 -420)`);
+  const L = kurve.getTotalLength(), start = 300 / 860;
+  const p = start + (1 - start - .06) * E.inout(clamp((t - A(59.2)) / 2.0));
+  const pt = kurve.getPointAtLength(p * L);
+  const pm = E.back(clamp((t - A(58.9)) / .4));
+  $('#punktMehr').setAttribute('transform', `translate(${pt.x} ${pt.y}) scale(${pm})`);
+});
+cue(A(56.9), 'pop');
+akteur('nullSteuer', { x: X3 + 840 + 200, y: 300 + 350, s: 0 }); tw('nullSteuer', A(57.2), .45, { s: 1 }, 'back');
+akteur('mehrSteuer', { x: X3 + 1400, y: 330, o: 0 }); tw('mehrSteuer', A(60.3), .5, { o: 1 });
+cue(A(58.9), 'scan');
+
+/* ---------- 4 · Abrechnung ---------- */
+pan(A(61.5), 4);
+const X4 = S(4), RX = X4 + 1575;
+akteur('abr', { x: X4 + 1060, y: MY, o: 0, y0: 0 }); set('abr', 0, { y: MY + 60 }); tw('abr', A(62.0), .6, { o: 1, y: MY }, 'back'); cue(A(62.0), 'whoosh');
+const MARKER = [[65.4, 70.0, 'klasse'], [70.24, 77.2, 'id'], [80.78, 82.0, 'name'], [82.02, 84.1, 'brutto'], [84.2, 86.0, 'id']];
+HOOKS.push(t => document.querySelectorAll('#abr .zeile').forEach(z => {
+  const an = MARKER.some(([a, b, n]) => n === z.dataset.z && t >= A(a) && t < A(b));
+  z.style.background = an ? 'var(--b100)' : '';
+  z.style.boxShadow = an ? 'inset 5px 0 0 var(--b500)' : '';
+}));
+MARKER.forEach(([a]) => cue(A(a), 'klick'));
+akteur('infoKlasse', { x: RX, y: 290, o: 0, x0: 0 }); set('infoKlasse', 0, { x: RX + 40 }); tw('infoKlasse', A(66.9), .5, { o: 1, x: RX }, 'back');
+akteur('brief', { x: RX, y: -200, r: -8 }); tw('brief', A(72.4), .8, { y: 470, r: -2 }, 'back'); cue(A(72.4), 'whoosh'); cue(A(72.95), 'plopp');
+akteur('infoId', { x: RX, y: 470, o: 0 });
+tw('infoKlasse', A(72.3), .3, { o: 0 }, 'in');
+// Brief wird zur Info-Karte über der Steuer-ID, dann geht die ID an den Betrieb
+tw('brief', A(73.4), .35, { y: 290, s: .7 });
+set('infoId', 0, { y: 520 }); tw('infoId', A(73.5), .5, { o: 1, y: 470 }, 'back');
+akteur('betrieb4', { x: RX, y: 760, o: 0 }); tw('betrieb4', A(75.4), .5, { o: 1, y: 740 }, 'back');
+tw('brief', A(75.7), .7, { y: 700, s: .3, o: 0 }, 'in'); cue(A(75.7), 'whoosh');
+akteur('lblSofort', { x: RX, y: 630, o: 0 }); tw('lblSofort', A(75.8), .4, { o: 1 });
+tw(['infoId', 'betrieb4', 'lblSofort'], A(77.3), .35, { o: 0 }, 'in');
+// Prüfliste
+akteur('ueb4', { x: RX, y: 250, o: 0 }); tw('ueb4', A(79.7), .5, { o: 1 });
+[['p1', 80.78], ['p2', 82.02], ['p3', 84.2]].forEach(([id, a], i) => {
+  akteur(id, { x: RX, y: 340 + i * 82, o: 0, x0: 0 }); set(id, 0, { x: RX + 30 });
+  tw(id, A(a), .45, { o: 1, x: RX }, 'back');
+  const b = $('#' + id + ' .box'); const ak = akteur(b, { draw: 0 }, true);
+  tw(b, A(a) + .15, .35, { draw: 1 }); tw(b, A(a) + .15, .15, { s: 1.15 }); tw(b, A(a) + .3, .3, { s: 1 }, 'back');
+  cue(A(a) + .15, 'ding');
+  HOOKS.push(t => { const an = wert(ak, 'draw', t) > .05; b.style.borderColor = an ? 'var(--success)' : ''; b.style.background = an ? 'var(--success-bg)' : ''; });
+});
+akteur('infoFalsch', { x: RX, y: 680, o: 0 }); set('infoFalsch', 0, { y: 720 }); tw('infoFalsch', A(86.2), .5, { o: 1, y: 680 }, 'back'); cue(A(86.2), 'pop');
+
+/* ---------- 5 · Aufheben ---------- */
+pan(A(89.95), 5);
+const X5 = S(5);
+akteur('zettel', { x: X5 + 1100, y: 500, o: 0 }); tw('zettel', A(90.3), .5, { o: 1 });
+akteur('eimer', { x: X5 + 1580, y: 580, o: 0 }); akteur('deckel', { x: X5 + 1580, y: 580, o: 0 });
+tw(['eimer', 'deckel'], A(90.5), .45, { o: 1 }); cue(A(90.5), 'pop');
+tw('deckel', A(91.0), .35, { r: -28 }, 'back');
+tw('zettel', A(91.0), 1.2, { x: X5 + 1470, y: 400, r: 14, s: .7 }, 'inout');
+akteur('nein', { x: X5 + 1580, y: 300, s: 0 }); tw('nein', A(92.4), .4, { s: 1 }, 'back'); cue(A(92.4), 'plopp');
+tw('zettel', A(92.45), .5, { x: X5 + 1100, y: 500, r: 0, s: 1 }, 'back'); cue(A(92.45), 'whoosh');
+tw('deckel', A(92.6), .25, { r: 0 }, 'in');
+tw(['eimer', 'deckel', 'nein'], A(93.15), .3, { o: 0 }, 'in');
+akteur('ueb5', { x: X5 + MX, y: 215, o: 0 }); tw('ueb5', A(93.3), .5, { o: 1 });
+akteur('mHinten', { x: X5 + 1560, y: 600, o: 0, s: .8 }); akteur('mVorne', { x: X5 + 1560, y: 600, o: 0, s: .8 });
+tw(['mHinten', 'mVorne'], A(93.4), .45, { o: 1, s: 1 }, 'back');
+tw('zettel', A(93.8), .5, { x: X5 + 1560, y: 400, s: .8, r: -3 }); tw('zettel', A(94.3), .3, { y: 540 }, 'in'); cue(A(94.55), 'plopp');
+[['zettel2', 94.6, 1510, 4], ['zettel3', 94.9, 1610, -4]].forEach(([id, a, x, r]) => {
+  akteur(id, { x: X5 + x, y: -200, r }); tw(id, A(a), .45, { y: 560 }, 'in'); cue(A(a) + .45, 'plopp');
+});
+akteur('h1', { x: X5 + 1060, y: 440, o: 0 }); set('h1', 0, { x: X5 + 1020 }); tw('h1', A(96.7), .5, { o: 1, x: X5 + 1060 }, 'back'); cue(A(96.7), 'pop');
+akteur('h2', { x: X5 + 1060, y: 580, o: 0 }); set('h2', 0, { x: X5 + 1020 }); tw('h2', A(98.0), .5, { o: 1, x: X5 + 1060 }, 'back'); cue(A(98.0), 'pop');
+
+/* ---------- 6 · Zusammenfassung ---------- */
+pan(A(99.0), 6);
+const X6 = S(6);
+[['f1', 945, 100.04], ['f2', 1280, 101.38], ['f3', 1615, 102.7]].forEach(([id, x, a]) => {
+  akteur(id, { x: X6 + x, y: MY + 40, o: 0, s: .95 }); tw(id, A(a), .55, { o: 1, y: MY - 20, s: 1 }, 'back'); cue(A(a), 'pop');
+});
+akteur('hakenEnde', { x: X6 + MX, y: 790, s: 0 }); tw('hakenEnde', A(104.75), .5, { s: 1 }, 'back'); cue(A(104.75), 'erfolg');
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('asEyebrow', { o: 0, y: 30 }, true); tw('asEyebrow', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .5, .6, { o: 1, y: 0 }, 'back');
+akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + .8, .5, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>
