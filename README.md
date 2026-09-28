@@ -7,7 +7,8 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 
 | Nr. | Thema | Länge | Format |
 | --- | --- | --- | --- |
-| 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:52 | Podcast mit Mai (Azubi) und Jonas (Coach) |
+| 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:52 | Podcast: Mai (Azubi) und Jonas (Coach) im Gespräch |
+| 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:21 | Animationsvideo mit Sprecher, Mai als Figur |
 
 ## Ein Kurs entsteht so
 
@@ -39,8 +40,9 @@ kurse/NN-thema/        konzept.md, sprache.mp3, film.vorlage.html, teile/ (kurss
 
 ## Figuren
 
-Die Gesprächspartner (`teile/figur-*.svg`) sind in Markenfarben gezeichnet – Haut in hellem Lavendel,
+Die Figuren (`teile/figur-*.svg`: Mai, Jonas, Chefin) sind in Markenfarben gezeichnet – Haut in hellem Lavendel,
 keine realen Hauttöne. Das hält die Token-Regel ein und stellt Herkunft nicht über Aussehen dar.
 Augen und Mund liegen auf eigenen Ebenen (`figur-augen`, `figur-mund-zu`, `figur-mund-auf`);
-der Mund öffnet sich mit dem Pegel der Sprachaufnahme. Die Helper-Illustrationen bleiben ohne Menschen –
+der Mund öffnet sich mit dem Pegel der Sprachaufnahme. Dazu `figur-mund-froh` (lachen) und `figur-daumen`
+(Daumen hoch, fährt von unten in den Kreis). Die Helper-Illustrationen bleiben ohne Menschen –
 Figuren gibt es nur in Kursvideos.
