@@ -19,6 +19,11 @@
 | 8 | Handy mit Kassen-App, Adressfeld wird aktualisiert | Änderungen melden |
 | 9 | Figur mit Karte in der Hand, Schutzschild um sie herum | Wählen. Melden. Karte dabei. |
 
+Umsetzung: Text im Bild links, Bühne rechts (wie Kurs 2); jede Animation hängt an einem Wort aus `sprache.json`.
+Abweichungen vom Briefing: Die Kassen-Karten in Szene 3 sind neutral (ohne Namen); jede hüpft, wenn AOK, TK oder Barmer
+genannt wird. In Szene 6 springt von der Krankenkasse ein grüner Haken in jede Leistung. Abspann: „Du bist gut geschützt.“ und
+die Kernbotschaft.
+
 ## Sprechertext
 
 @modell eleven_v4

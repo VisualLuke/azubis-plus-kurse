@@ -12,6 +12,14 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 | 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:20 | Animationsvideo mit Sprecher, Mai als Figur |
 | 4 | [Rechte & Pflichten in der Ausbildung](kurse/04-rechte-pflichten/) | 2:59 | Gespräch: Sabine (Ausbilderin) und Amir (Azubi) |
 
+### Lernvideos (Briefing „30 Lernvideos für internationale Azubis“)
+
+Nummern aus dem Briefing; sie überschneiden sich mit den Kursen 1–4 oben (gleiche Präfixe, andere Ordnernamen).
+
+| Nr. | Thema | Länge | Format |
+| --- | --- | --- | --- |
+| 1 | [Krankenkasse & Versichertenkarte](kurse/01-krankenkasse/) | 1:50 | Erklärvideo, Erzählerin (ElevenLabs v4), Mai als Figur |
+
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine Untertitel – die Kursseite in der
 App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
 
