@@ -19,7 +19,15 @@ App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren 
 
 1. **Konzept** (`kurse/NN-thema/konzept.md`): Zielgruppe, Länge, Kernbotschaft, Sprechertext – pro Szene
    eine Aussage, Bilder als Gegenstände beschrieben. Deutsch B1, ~2–2,5 Wörter pro Sekunde.
-2. **Sprachaufnahme** (`sprache.mp3`), z. B. aus ElevenLabs. Erst aufnehmen, dann animieren.
+2. **Sprachaufnahme** (`sprache.mp3` + `sprache.json`) mit `werkzeug/stimme.mjs`. Erst aufnehmen, dann animieren.
+   Der Sprechertext steht in `konzept.md` im Abschnitt `## Sprechertext` (`### Szene N`, dann `Name: Text`;
+   `@stimme Name: <voice_id>` und `@modell eleven_v4` optional). Jeder Satz wird einzeln mit Zeitstempeln erzeugt;
+   nur geänderte Sätze kosten Credits (Zwischenspeicher `.stimme/`, sonst aus der alten `sprache.mp3` geschnitten).
+   ```sh
+   node werkzeug/stimme.mjs kurse/01-krankenkasse --probe   # zeigt, welche Sätze neu erzeugt würden
+   node werkzeug/stimme.mjs kurse/01-krankenkasse           # braucht ELEVENLABS_API_KEY, ffmpeg mit libmp3lame
+   ```
+   In der Vorlage liefern `wort('Krankenkasse', ab)`, `wortEnde(…)` und `satz(nr)` die Zeiten aus `sprache.json`.
 3. **Zeitleiste** (`film.vorlage.html`): Sätze mit Zeiten aus der Aufnahme (`SAETZE`), dazu die Szenen.
    Alles wird aus `render(t)` berechnet; Animationen hängen an `A(sekunde_in_der_aufnahme)`.
 4. **Rendern:**
@@ -36,6 +44,7 @@ App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren 
 ```
 werkzeug/motor.js      Tween-Engine: Akteure, Easings, Kamera (pan), Cues für Soundeffekte
 werkzeug/stil.css      gemeinsamer Stil – nur Token-Farben mit Fallback, Schrift Inter
+werkzeug/stimme.mjs    Sprechertext aus konzept.md → ElevenLabs Satz für Satz → sprache.mp3 + sprache.json
 werkzeug/rendern.mjs   baut film.html, fotografiert jedes Frame mit Chromium, mischt Ton, kodiert H.264
 werkzeug/ton.py        Tonspur: Sprache + leise Musik (unter der Stimme abgesenkt) + Effekte
 werkzeug/bauen.mjs     SVG-Kurzschreibweise → SVG (Kopie aus helperapp_illustrationen, samt liste.mjs)

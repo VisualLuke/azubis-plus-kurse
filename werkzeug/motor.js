@@ -85,6 +85,25 @@ function render(t) {
   for (const h of HOOKS) h(t);
 }
 
+/* ---------- Sprachdaten: Satz- und Wortzeiten aus sprache.json (werkzeug/stimme.mjs) ---------- */
+// Zeiten sind Sekunden in der Aufnahme – im Film noch A(…) drumherum.
+const SPRACHDATEN = window.SPRACHDATEN || { saetze: [] };
+const satz = nr => SPRACHDATEN.saetze[nr - 1] || (() => { throw new Error('Satz fehlt: ' + nr); })();
+const _norm = w => w.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+// wortZeit('Krankenkasse', ab) → { start, ende } des ersten Worts (oder der Wortfolge „116 117“) ab Sekunde `ab`,
+// das mit dem Muster beginnt. Wirft, wenn es keins gibt – so fällt ein geänderter Text sofort auf.
+function wortZeit(muster, ab = 0) {
+  const teile = muster.split(/\s+/).map(_norm), W = SPRACHDATEN.saetze.flatMap(s => s.woerter);
+  for (let i = 0; i < W.length; i++) {
+    if (W[i].start < ab - 1e-3) continue;
+    if (teile.every((m, k) => W[i + k] && (k === teile.length - 1 ? _norm(W[i + k].w).startsWith(m) : _norm(W[i + k].w) === m)))
+      return { start: W[i].start, ende: W[i + teile.length - 1].ende };
+  }
+  throw new Error(`Wort „${muster}“ ab ${ab} s nicht in sprache.json`);
+}
+const wort = (muster, ab) => wortZeit(muster, ab).start;
+const wortEnde = (muster, ab) => wortZeit(muster, ab).ende;
+
 /* ---------- Kamera: Szenen liegen nebeneinander, die Welt fährt ---------- */
 const kamera = akteur('welt', {}, true);
 const S = i => i * 1920;            // Szenen-Versatz

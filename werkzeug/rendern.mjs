@@ -5,6 +5,7 @@
 // {{teil~2}} dasselbe Teil mit eigenen Verlaufs-ids (zweite Kopie in anderem Farbkontext).
 // window.SPRACHE = { datei, versatz } in der Vorlage legt die Sprachaufnahme unter den Film;
 // ihre Lautstärke je Frame steht der Seite als window.PEGEL zur Verfügung (Sprecher-Pegel).
+// Liegt sprache.json (werkzeug/stimme.mjs) im Ordner, stehen Satz- und Wortzeiten als window.SPRACHDATEN bereit.
 // Braucht playwright (Chromium), python3 mit numpy und ein ffmpeg mit libx264 (FFMPEG=/pfad/zu/ffmpeg).
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -27,6 +28,9 @@ html = html.replace(/\{\{([a-z0-9-]+)(?:~(\w+))?\}\}/g, (_, n, kopie) => {
   return kopie ? svg.replaceAll(`il-${n}-g`, `il-${n}-${kopie}-g`) : svg;
 });
 html = html.replace('.auf-brand{/*AUF_BRAND*/}', aufBrandCss('.auf-brand'));
+// sprache.json (von stimme.mjs) steht der Seite als window.SPRACHDATEN zur Verfügung – vor motor.js
+if (existsSync(ORDNER + 'sprache.json'))
+  html = html.replace(/<script src="[^"]*motor\.js"><\/script>/, m => `<script>window.SPRACHDATEN = ${readFileSync(ORDNER + 'sprache.json', 'utf8')};</script>\n${m}`);
 html = schriftLokal(html);
 writeFileSync(ORDNER + 'film.html', html);
 console.log('ok ' + relative(WURZEL, ORDNER + 'film.html'));
