@@ -10,6 +10,7 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 | 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:51 | Podcast: Mai (Azubi) und Jonas (Coach) im Gespräch |
 | 2 | [Wohnsitz anmelden beim Bürgeramt](kurse/02-wohnsitz-anmelden/) | 1:35 | Animationsvideo mit Sprecher, Mai als Figur |
 | 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:20 | Animationsvideo mit Sprecher, Mai als Figur |
+| 4 | [Rechte & Pflichten in der Ausbildung](kurse/04-rechte-pflichten/) | 2:59 | Gespräch: Sabine (Ausbilderin) und Amir (Azubi) |
 
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine Untertitel – die Kursseite in der
 App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
@@ -44,7 +45,7 @@ kurse/NN-thema/        konzept.md, sprache.mp3, film.vorlage.html, teile/ (kurss
 
 ## Figuren
 
-Die Figuren (`teile/figur-*.svg`: Mai, Jonas, Chefin, Vermieter) sind in Markenfarben gezeichnet – Haut in hellem Lavendel,
+Die Figuren (`teile/figur-*.svg`: Mai, Jonas, Chefin, Vermieter, Sabine, Amir) sind in Markenfarben gezeichnet – Haut in hellem Lavendel,
 keine realen Hauttöne. Das hält die Token-Regel ein und stellt Herkunft nicht über Aussehen dar.
 Augen und Mund liegen auf eigenen Ebenen (`figur-augen`, `figur-mund-zu`, `figur-mund-auf`);
 der Mund öffnet sich mit dem Pegel der Sprachaufnahme. Dazu `figur-mund-froh` (lachen) und `figur-daumen`
