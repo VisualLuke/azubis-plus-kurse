@@ -23,19 +23,10 @@
 .buehne{width:1040px;height:710px}
 
 /* Kopf */
-#titelzeile{position:absolute;left:120px;top:58px;font:500 28px/36px Inter;color:var(--n500)}
-#titelzeile b{font-weight:800;color:var(--b500);letter-spacing:-.02em;margin-right:14px}
-#podcast{position:absolute;left:auto;right:120px;top:52px;display:flex;align-items:center;gap:10px;padding:8px 20px;border-radius:999px;
-  background:var(--b100);color:var(--b600);font:600 22px/30px Inter;letter-spacing:.08em;text-transform:uppercase}
-#podcast i{width:12px;height:12px;border-radius:999px;background:var(--error);display:block}
 
 /* Kamera: die Bühne ist verkleinert und sitzt oben in der Mitte */
-#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,-63.5px) scale(.9)}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,31.5px) scale(.9)}
 
-/* Kapitel oben rechts */
-#kapChip{position:absolute;left:auto;right:300px;top:52px;padding:8px 20px;border-radius:999px;background:var(--surface);
-  font:600 24px/30px Inter;color:var(--n700);box-shadow:0 1px 2px rgba(22,19,37,.06);white-space:nowrap}
-#kapChip b{color:var(--b600);margin-right:10px}
 
 /* Gesprächspartner */
 .portrait{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
@@ -44,17 +35,9 @@
 .portrait .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
 .portrait .augen{transform-origin:50% 45%}
 .portrait .auf{transform-origin:50% 53%}
-#jonas{left:55px;top:490px}
-#mai{left:auto;right:55px;top:490px}
+#jonas{left:55px;top:340px}
+#mai{left:auto;right:55px;top:340px}
 
-/* Sprechblase */
-#ut{position:absolute;left:500px;right:500px;bottom:40px;height:230px;display:flex;align-items:flex-end;justify-content:center}
-#utBox{position:relative;max-width:920px;padding:24px 38px;border-radius:28px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09);
-  font:500 34px/46px Inter;color:var(--ink);text-align:center}
-#utBox.m{background:var(--b100)}
-#utBox::before{content:"";position:absolute;top:34px;width:0;height:0;border:18px solid transparent}
-#utBox.j::before{left:-32px;border-right:22px solid var(--surface);border-left:0}
-#utBox.m::before{right:-32px;border-left:22px solid var(--b100);border-right:0}
 
 /* Bausteine auf der Bühne */
 .chip{padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;box-shadow:0 6px 20px rgba(22,19,37,.09)}
@@ -112,7 +95,18 @@
 .fazit h3{font:800 48px/56px Inter;letter-spacing:-.02em;margin-top:12px}
 .fazit p{font:500 28px/36px Inter;color:var(--n700);margin-top:8px}
 
-/* Vorspann / Abspann */
+/* Helper-App auf dem Handy */
+.app{width:184px;height:330px;border-radius:14px;overflow:hidden;background:var(--bg);padding:12px 10px;display:flex;flex-direction:column;gap:7px}
+.app-kopf small{display:block;font:800 11px/14px Inter;color:var(--b500);letter-spacing:-.01em}
+.app-kopf b{display:block;font:700 19px/24px Inter;color:var(--ink);margin-bottom:4px}
+.app-zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:600 13px/16px Inter;color:var(--ink);
+  box-shadow:0 1px 2px rgba(22,19,37,.06);border:2px solid transparent}
+.app-zeile i{width:24px;height:24px;border-radius:7px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app-zeile i svg{width:14px}
+.app-zeile em{margin-left:auto;font:700 11px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:4px 7px}
+.app-toast{margin-top:auto;align-self:center;padding:7px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter}
+
+/* Abspann */
 .deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700))}
 .deckel .ende{padding:0 200px;text-align:center}
 .deckel .eyebrow{color:var(--b200);font-size:30px;line-height:40px}
@@ -207,11 +201,16 @@
   <div class="a ueber" id="ueb5">Jede Abrechnung aufheben</div>
   <div class="a" id="eimer" style="width:300px">{{muelleimer}}</div>
   <div class="a" id="deckel" style="width:300px;transform-origin:22.5% 32.5%">{{muelleimer-deckel}}</div>
-  <div class="a" id="mHinten" style="width:440px">{{mappe-hinten}}</div>
-  <div class="a" id="zettel2" style="width:260px">{{gehalt}}</div>
-  <div class="a" id="zettel3" style="width:260px">{{gehalt}}</div>
+  <div class="a" id="handy5" style="width:620px">{{handy}}</div>
+  <div class="a app" id="app">
+    <div class="app-kopf"><small>Azubis Plus</small><b>Dokumente</b></div>
+    <div class="app-zeile"><i><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></i><span>Verträge</span><em>2</em></div>
+    <div class="app-zeile"><i><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></i><span>Ausweise</span><em>1</em></div>
+    <div class="app-zeile" id="rowL"><i><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></i><span>Gehalts&shy;abrechnungen</span><em id="anzL">2</em></div>
+    <div class="app-toast" id="toast">✓ Gespeichert</div>
+  </div>
+  <div class="a label" id="lblApp" style="color:var(--b600)">Azubis Plus Helper</div>
   <div class="a" id="zettel" style="width:320px">{{gehalt}}</div>
-  <div class="a" id="mVorne" style="width:440px">{{mappe-vorne}}</div>
   <div class="a chip rot" id="nein">Nein!</div>
   <div class="a hinweis" id="h1"><div class="ic"><svg viewBox="0 0 48 48"><path d="M6 20L24 8l18 12Z" fill="var(--b500)"/><g fill="var(--b400)"><rect x="10" y="22" width="5" height="16"/><rect x="21.5" y="22" width="5" height="16"/><rect x="33" y="22" width="5" height="16"/></g><rect x="6" y="38" width="36" height="5" rx="2" fill="var(--b600)"/></svg></div>Ausländerbehörde</div>
   <div class="a hinweis" id="h2"><div class="ic"><svg viewBox="0 0 48 48"><path d="M6 22L24 7l18 15v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z" fill="var(--b500)"/><rect x="19" y="28" width="10" height="15" rx="2" fill="var(--b100)"/></svg></div>Neue Wohnung</div>
@@ -224,10 +223,7 @@
   <div class="a" id="hakenEnde" style="width:120px">{{haken}}</div>
 </div></div>
 
-<div id="titelzeile" class="a"><b>Azubis Plus</b>Kurs 1 · Brutto, Netto & deine Gehaltsabrechnung</div>
-<div id="podcast" class="a"><i></i>Podcast</div>
 
-<div id="kapChip" class="a"><b>1</b><span>Brutto & Netto</span></div>
 <div class="portrait" id="jonas"><div class="figur">
     <div class="ebene">{{figur-jonas}}</div>
     <div class="ebene augen">{{figur-augen}}</div>
@@ -239,15 +235,8 @@
     <div class="ebene zu">{{figur-mund-zu}}</div>
     <div class="ebene auf">{{figur-mund-auf}}</div></div></div>
 
-<div id="ut"><div id="utBox"><span></span></div></div>
 
-<div class="deckel" id="vorspann"><div class="ende">
-  <div class="eyebrow a" id="vsEyebrow" style="position:relative">Azubis Plus · Kurs 1 · Podcast</div>
-  <div class="gross a" id="vsTitel" style="position:relative">Brutto, Netto & deine Gehaltsabrechnung</div>
-  <div class="klein a" id="vsUnter" style="position:relative">mit Mai und Jonas</div>
-</div></div>
 <div class="deckel" id="abspann"><div class="ende">
-  <div class="eyebrow a" id="asEyebrow" style="position:relative">Kurs 1 geschafft</div>
   <div class="gross a" id="asTitel" style="position:relative">Brutto im Vertrag.<br>Netto aufs Konto.</div>
   <div class="klein a" id="asUnter" style="position:relative">Der Rest ist deine Versicherung.</div>
 </div></div>
@@ -255,7 +244,7 @@
 <script src="../../werkzeug/motor.js"></script>
 <script>
 /* ---------- Sprachaufnahme: Sätze mit Zeiten (aus Pausen + Stimmhöhe ermittelt) ---------- */
-const VERSATZ = 2.4;                      // Sprache beginnt nach dem Vorspann
+const VERSATZ = 0.8;                      // kurzer Auftakt, dann Sprache
 window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
 const A = s => s + VERSATZ;               // Zeit in der Aufnahme → Zeit im Film
 const SAETZE = [
@@ -300,7 +289,7 @@ const MX = 1280, MY = 505;                // Bühnenmitte
 const satzBei = t => SAETZE.find(([a, b]) => t >= a - .05 && t <= b + .25);
 // Gesprächspartner: wer spricht, wird etwas größer und bewegt den Mund im Takt der Aufnahme
 akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('mai', { o: 0, y: 60, s: .9 }, true);
-tw('jonas', 1.9, .7, { o: 1, y: 0 }, 'back'); tw('mai', 2.05, .7, { o: 1, y: 0 }, 'back');
+tw('jonas', 0, .7, { o: 1, y: 0 }, 'back'); tw('mai', .12, .7, { o: 1, y: 0 }, 'back');
 const PERSONEN = [['jonas', 'J', 3, .13], ['mai', 'M', -3, .61]];     // id, Kürzel, Neigung zur Mitte, Blinzel-Phase
 const glatt = { J: 1, M: 1 };
 HOOKS.push(t => {
@@ -309,12 +298,11 @@ HOOKS.push(t => {
   for (const [id, w, neig, phase] of PERSONEN) {
     const el = document.getElementById(id), aktiv = wer === w;
     // sanft zwischen aktiv/inaktiv überblenden (render ist deterministisch: aus t berechnet)
-    const nah = SAETZE.filter(z => z[2] === w).some(([a, b]) => t >= a - .15 && t <= b + .15);
     const k = SAETZE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .3) / .3, (b + .5 - t) / .3))), 0);
-    const basis = t < 2.6 ? null : .9 + .1 * k;
+    const basis = t < .85 ? null : .9 + .1 * k;
     if (basis) el.style.transform = `scale(${basis})`;
     el.style.borderColor = k > .5 ? 'var(--b300)' : '';
-    el.style.filter = t < 2.6 ? '' : `saturate(${.7 + .3 * k})`;
+    el.style.filter = t < .85 ? '' : `saturate(${.7 + .3 * k})`;
     const f = el.querySelector('.figur');
     const nicken = aktiv ? 1.6 * Math.sin(t * 3.1) * pegel : 0;
     f.style.transform = `rotate(${neig + nicken}deg)`;
@@ -326,38 +314,10 @@ HOOKS.push(t => {
     el.querySelector('.augen').style.transform = `scaleY(${zyklus < .035 ? .12 : 1})`;
   }
 });
-// Sprechblase – zeigt zum Sprecher, ohne Namen
-let utLetzter = null;
-HOOKS.push(t => {
-  const i = SAETZE.findIndex(([a], k) => t >= a - .1 && (k === SAETZE.length - 1 || t < SAETZE[k + 1][0] - .1));
-  const box = $('#utBox');
-  const zeigen = i >= 0 && t < ENDE_SPRACHE + .3;
-  if (zeigen && utLetzter !== i) {
-    const [, , w, text] = SAETZE[i];
-    box.className = w === 'M' ? 'm' : 'j';
-    box.querySelector('span').textContent = text;
-    utLetzter = i;
-  }
-  const a = i >= 0 ? SAETZE[i][0] - .1 : 0, p = Math.min(1, (t - a) / .18);
-  box.style.opacity = zeigen ? p : 0;
-  box.style.transform = zeigen ? `translateY(${10 * (1 - p)}px) scale(${.97 + .03 * p})` : '';
-});
-// Kapitel oben rechts
-const KAPITEL = [[A(0), 'Brutto & Netto'], [A(23.6), 'Sozialversicherung'], [A(50.8), 'Steuern'], [A(61.5), 'Abrechnung prüfen'], [A(89.95), 'Aufheben'], [A(99.0), 'Zusammenfassung']];
-akteur('kapChip', { o: 0, y: -20 }, true); tw('kapChip', 2.3, .5, { o: 1, y: 0 }, 'back');
-let kapLetztes = -1;
-HOOKS.push(t => {
-  let k = 0; KAPITEL.forEach(([a], i) => { if (t >= a) k = i; });
-  if (k !== kapLetztes) { $('#kapChip b').textContent = k < 5 ? `Kapitel ${k + 1}` : '✓'; $('#kapChip span').textContent = KAPITEL[k][1]; kapLetztes = k; }
-});
-KAPITEL.slice(1).forEach(([a]) => cue(a, 'klick'));
+// Kapitelwechsel hörbar machen (ohne Anzeige)
+const KAPITEL = [A(23.6), A(50.8), A(61.5), A(89.95), A(99.0)];
+KAPITEL.forEach(a => cue(a, 'klick'));
 
-/* ---------- Vorspann ---------- */
-akteur('vsEyebrow', { o: 0, y: 30 }, true); tw('vsEyebrow', .2, .5, { o: 1, y: 0 }, 'back');
-akteur('vsTitel', { o: 0, y: 40 }, true); tw('vsTitel', .35, .6, { o: 1, y: 0 }, 'back');
-akteur('vsUnter', { o: 0, y: 30 }, true); tw('vsUnter', .6, .5, { o: 1, y: 0 }, 'back');
-HOOKS.push(t => { const p = E.inout(clamp((t - 1.8) / .6)); $('#vorspann').style.clipPath = `inset(0 0 ${p * 100}% 0)`; });
-cue(1.8, 'whoosh');
 
 /* ---------- 0 · Brutto & Netto ---------- */
 const X0 = S(0);
@@ -483,12 +443,18 @@ tw('zettel', A(92.45), .5, { x: X5 + 1100, y: 500, r: 0, s: 1 }, 'back'); cue(A(
 tw('deckel', A(92.6), .25, { r: 0 }, 'in');
 tw(['eimer', 'deckel', 'nein'], A(93.15), .3, { o: 0 }, 'in');
 akteur('ueb5', { x: X5 + MX, y: 215, o: 0 }); tw('ueb5', A(93.3), .5, { o: 1 });
-akteur('mHinten', { x: X5 + 1560, y: 600, o: 0, s: .8 }); akteur('mVorne', { x: X5 + 1560, y: 600, o: 0, s: .8 });
-tw(['mHinten', 'mVorne'], A(93.4), .45, { o: 1, s: 1 }, 'back');
-tw('zettel', A(93.8), .5, { x: X5 + 1560, y: 400, s: .8, r: -3 }); tw('zettel', A(94.3), .3, { y: 540 }, 'in'); cue(A(94.55), 'plopp');
-[['zettel2', 94.6, 1510, 4], ['zettel3', 94.9, 1610, -4]].forEach(([id, a, x, r]) => {
-  akteur(id, { x: X5 + x, y: -200, r }); tw(id, A(a), .45, { y: 560 }, 'in'); cue(A(a) + .45, 'plopp');
+akteur('handy5', { x: X5 + 1580, y: 1250 }); tw('handy5', A(93.3), .7, { y: 540 }, 'back'); cue(A(93.3), 'whoosh');
+akteur('app', { x: X5 + 1580, y: 540, o: 0, s: 1.24 }); tw('app', A(93.75), .3, { o: 1 });
+akteur('lblApp', { x: X5 + 1580, y: 818, o: 0 }); tw('lblApp', A(93.9), .4, { o: 1 });
+tw('zettel', A(94.0), .6, { x: X5 + 1580, y: 580, s: .25, r: 0 }, 'inout'); cue(A(94.0), 'whoosh');
+set('zettel', A(94.6), { o: 0 });
+HOOKS.push(t => {
+  const an = t >= A(94.6);
+  $('#anzL').textContent = an ? '3' : '2';
+  $('#rowL').style.borderColor = an && t < A(97.5) ? 'var(--b300)' : 'transparent';
+  $('#rowL').style.background = an && t < A(97.5) ? 'var(--b50)' : '';
 });
+akteur('toast', { s: 0 }, true); tw('toast', A(94.65), .4, { s: 1 }, 'back'); cue(A(94.65), 'erfolg');
 akteur('h1', { x: X5 + 1060, y: 440, o: 0 }); set('h1', 0, { x: X5 + 1020 }); tw('h1', A(96.7), .5, { o: 1, x: X5 + 1060 }, 'back'); cue(A(96.7), 'pop');
 akteur('h2', { x: X5 + 1060, y: 580, o: 0 }); set('h2', 0, { x: X5 + 1020 }); tw('h2', A(98.0), .5, { o: 1, x: X5 + 1060 }, 'back'); cue(A(98.0), 'pop');
 
@@ -504,7 +470,6 @@ akteur('hakenEnde', { x: X6 + MX, y: 790, s: 0 }); tw('hakenEnde', A(104.75), .5
 const AB = ENDE_SPRACHE + .4;
 HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
 cue(AB, 'whoosh');
-akteur('asEyebrow', { o: 0, y: 30 }, true); tw('asEyebrow', AB + .35, .5, { o: 1, y: 0 }, 'back');
 akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .5, .6, { o: 1, y: 0 }, 'back');
 akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + .8, .5, { o: 1, y: 0 }, 'back');
 

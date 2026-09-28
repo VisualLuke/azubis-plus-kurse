@@ -1,7 +1,7 @@
 # Kurs 1 – Podcast: Brutto, Netto & deine Gehaltsabrechnung
 
 - **Zielgruppe:** Azubis im 1. Lehrjahr, auch international
-- **Länge:** ca. 2 Min. (Aufnahme 1:46, Film 1:52 mit Vor- und Abspann)
+- **Länge:** ca. 2 Min. (Aufnahme 1:46, Film 1:51 mit Abspann)
 - **Sprecher:** Mai (Azubi aus Vietnam) und Jonas (Ausbildungscoach)
 - **Kernbotschaft:** Brutto steht im Vertrag, Netto kommt aufs Konto, und der Unterschied ist deine Versicherung.
 - **Aufnahme:** `sprache.mp3` (ElevenLabs, 28.09.2026)
@@ -50,7 +50,7 @@
 | Sozialversicherung | 23,6–50,8 s | Balken 1.000 €, die 210 € wandern in die Schale „Sozialversicherung“, der Betrieb legt ≈ 210 € dazu; vier Kacheln |
 | Steuern | 50,8–61,5 s | Kurve Lohnsteuer: flach bei kleinem Einkommen (Azubi), steigt danach |
 | Abrechnung prüfen | 61,5–89,95 s | Gehaltsabrechnung mit markierten Zeilen, Steuer-ID per Brief → Betrieb, Prüfliste |
-| Aufheben | 89,95–99 s | Zettel will in den Müll – „Nein!“ – ab in die Mappe; Ausländerbehörde, neue Wohnung |
+| Aufheben | 89,95–99 s | Zettel will in den Müll – „Nein!“ – ab in die Azubis Plus Helper App (Dokumente → Gehaltsabrechnungen); Ausländerbehörde, neue Wohnung |
 | Zusammenfassung | 99 s–Ende | drei Karten Brutto / Netto / Der Rest |
 
 Satzzeiten aus Pausen (`silencedetect`) und Stimmhöhe (Mai ≈ 200 Hz, Jonas ≈ 125 Hz) ermittelt.

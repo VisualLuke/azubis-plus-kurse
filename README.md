@@ -7,8 +7,11 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 
 | Nr. | Thema | Länge | Format |
 | --- | --- | --- | --- |
-| 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:52 | Podcast: Mai (Azubi) und Jonas (Coach) im Gespräch |
-| 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:21 | Animationsvideo mit Sprecher, Mai als Figur |
+| 1 | [Brutto, Netto & deine Gehaltsabrechnung](kurse/01-brutto-netto/) | 1:51 | Podcast: Mai (Azubi) und Jonas (Coach) im Gespräch |
+| 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:20 | Animationsvideo mit Sprecher, Mai als Figur |
+
+Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine Untertitel – die Kursseite in der
+App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
 
 ## Ein Kurs entsteht so
 

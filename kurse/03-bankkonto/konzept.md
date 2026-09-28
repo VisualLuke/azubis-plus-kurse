@@ -1,7 +1,7 @@
 # Kurs 3 – Animationsvideo: Bankkonto eröffnen
 
 - **Zielgruppe:** Azubis im 1. Lehrjahr, auch international
-- **Länge:** geplant ca. 2 Min.; die Aufnahme ist 1:15 (Film 1:21 mit Vor- und Abspann)
+- **Länge:** geplant ca. 2 Min.; die Aufnahme ist 1:15 (Film 1:20 mit Abspann)
 - **Kernbotschaft:** Ohne deutsches Girokonto kein Gehalt, also eröffne es direkt in den ersten Tagen.
 - **Aufnahme:** `sprache.mp3` (ElevenLabs, Stimme „Jonas Berger“, 28.09.2026)
 

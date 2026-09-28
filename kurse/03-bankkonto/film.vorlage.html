@@ -14,15 +14,8 @@
   --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
 }
 .buehne{width:900px;height:660px;border-radius:44px}
-.block{height:880px}
 .titel{font-size:80px;line-height:90px}
 .unter{font-size:36px;line-height:52px}
-#titelzeile{position:absolute;left:140px;top:44px;font:500 26px/34px Inter;color:var(--n500)}
-#titelzeile b{font-weight:800;color:var(--b500);letter-spacing:-.02em;margin-right:12px}
-
-#ut{position:absolute;left:140px;right:140px;bottom:40px;height:150px;display:flex;align-items:center;justify-content:center}
-#utBox{max-width:1400px;padding:18px 34px;border-radius:20px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09);
-  font:500 32px/44px Inter;color:var(--ink);text-align:center}
 
 .chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
   background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
@@ -64,7 +57,6 @@
 .deckel .ende .eyebrow{color:var(--b200);font-size:30px;line-height:40px;margin:0}
 .deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
 .deckel .klein{font:400 42px/56px Inter;color:var(--b100);margin-top:24px}
-#vorspann{clip-path:none}
 </style></head><body>
 
 <div id="welt">
@@ -186,7 +178,6 @@
   <div class="a schirm" id="eingang" style="width:140px;height:250px"><small>Gehalt</small><b>+ 790 €</b></div>
 </div>
 
-<div id="titelzeile" class="a"><b>Azubis Plus</b>Kurs 3 · Bankkonto eröffnen</div>
 
 <div class="block" id="tb1"><div class="titel">Dein erstes Gehalt kommt bald.</div><div class="unter">Aber wohin damit?</div></div>
 <div class="block" id="tb2"><div class="titel">Gehalt = Überweisung aufs Girokonto</div></div>
@@ -200,23 +191,16 @@
 <div class="block" id="tb9"><div class="titel">PIN = geheim!</div><div class="unter">Echte Banken fragen nie danach – nicht am Telefon, nicht per E-Mail.</div></div>
 <div class="block" id="tb10"><div class="zeile a" style="position:relative">Konto eröffnen.</div><div class="zeile a" style="position:relative">IBAN abgeben.</div><div class="zeile fertig a" style="position:relative">Fertig!</div></div>
 
-<div id="ut"><div id="utBox"><span></span></div></div>
 
-<div class="deckel" id="vorspann"><div class="ende">
-  <div class="eyebrow a" id="vsEyebrow" style="position:relative">Azubis Plus · Kurs 3</div>
-  <div class="gross a" id="vsTitel" style="position:relative">Bankkonto eröffnen</div>
-</div></div>
 <div class="deckel" id="abspann"><div class="ende">
   <div class="a auf-brand" id="endBank" style="position:relative;width:240px">{{bank-komplett~2}}</div>
-  <div class="eyebrow a" id="asEyebrow" style="position:relative;margin-top:10px">Kurs 3 geschafft</div>
-  <div class="gross a" id="asTitel" style="position:relative">Dein Konto ist startklar.</div>
-  <div class="klein a" id="asUnter" style="position:relative">Mehr Kurse findest du in Azubis Plus.</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Dein Konto ist startklar.</div>
 </div></div>
 
 <script src="../../werkzeug/motor.js"></script>
 <script>
 /* ---------- Sprachaufnahme (Sätze aus Pausen vermessen) ---------- */
-const VERSATZ = 2.0;
+const VERSATZ = 0.6;
 window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
 const A = s => s + VERSATZ;
 const SAETZE = [
@@ -245,18 +229,9 @@ const SAETZE = [
 ].map(([a, b, t]) => [A(a), A(b), t]);
 const ENDE_SPRACHE = A(75.3);
 const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
 for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
 
-// Untertitel
-let utLetzter = null;
-HOOKS.push(t => {
-  const i = SAETZE.findIndex(([a], k) => t >= a - .1 && (k === SAETZE.length - 1 || t < SAETZE[k + 1][0] - .1));
-  const box = $('#utBox'), zeigen = i >= 0 && t < ENDE_SPRACHE + .3;
-  if (zeigen && utLetzter !== i) { box.querySelector('span').textContent = SAETZE[i][2]; utLetzter = i; }
-  const p = i >= 0 ? Math.min(1, (t - SAETZE[i][0] + .1) / .15) : 0;
-  box.style.opacity = zeigen ? p : 0;
-  box.style.transform = zeigen ? `translateY(${8 * (1 - p)}px)` : '';
-});
 // Figuren blinzeln
 HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
   const z = (t * .27 + i * .37) % 1;
@@ -271,12 +246,6 @@ function figur(id, basis) {
 // set/tw nehmen auch Selektoren
 const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
 
-/* ---------- Vorspann ---------- */
-akteur('vsEyebrow', { o: 0, y: 30 }, true); tw('vsEyebrow', .15, .5, { o: 1, y: 0 }, 'back');
-akteur('vsTitel', { o: 0, y: 40 }, true); tw('vsTitel', .3, .6, { o: 1, y: 0 }, 'back');
-HOOKS.push(t => { const p = E.inout(clamp((t - 1.4) / .6)); $('#vorspann').style.clipPath = `inset(0 0 ${p * 100}% 0)`; });
-cue(1.4, 'whoosh');
-akteur('titelzeile', { o: 0 }, true); tw('titelzeile', 1.8, .5, { o: 1 });
 
 /* ---------- 1 · Gehalt kommt ---------- */
 akteur('gehalt', { x: 1250, y: 1400, r: 10 }); tw('gehalt', A(0.05), .9, { y: 420, r: -2 }, 'back'); cue(A(0.05), 'whoosh'); cue(A(.7), 'pop');
@@ -316,7 +285,7 @@ textAkteure('tb2'); textEin('tb2', A(4.0)); textAus('tb2', A(11.9));
 /* ---------- 3 · Konto für jeden Tag ---------- */
 pan(A(12.0), 2); const X2 = S(2);
 akteur('konto3', { x: X2 + MX, y: MY + 10, s: .5, o: 0 }); tw('konto3', A(12.5), .6, { s: 1, o: 1 }, 'back'); cue(A(12.5), 'pop');
-akteur('rein', { x: X2 + MX, y: -100 }); tw('rein', A(15.9), .6, { y: 195 }, 'back'); cue(A(15.9), 'whoosh');
+akteur('rein', { x: X2 + MX, y: -300 }); tw('rein', A(15.9), .6, { y: 195 }, 'back'); cue(A(15.9), 'whoosh');
 akteur('pfeilRein', { x: X2 + 960, y: 540, o: 0, draw: 0 }); tw('pfeilRein', A(16.4), .5, { o: 1, draw: 1 });
 cue(A(16.9), 'muenze');
 akteur('pfeileRaus', { x: X2 + 960, y: 540, o: 0, draw: 0 }); tw('pfeileRaus', A(18.8), .5, { o: 1, draw: 1 });
@@ -381,7 +350,7 @@ figur('chefin', { x: X7 + 1570, y: MY - 70, s: 0 }); tw('chefin', A(51.4), .5, {
 akteur('lblDu', { x: X7 + 1080, y: MY + 95, o: 0 }); tw('lblDu', A(51.5), .4, { o: 1 });
 akteur('lblChefin', { x: X7 + 1570, y: MY + 95, o: 0 }); tw('lblChefin', A(51.6), .4, { o: 1 });
 akteur('iban', { x: X7 + 1080, y: MY + 195, s: 0, r: -2 }); tw('iban', A(52.9), .45, { s: 1 }, 'back'); cue(A(52.9), 'pop');
-tw('iban', A(53.8), .9, { x: X7 + 1570, y: MY + 195, r: 2 }, 'inout'); cue(A(53.8), 'whoosh');
+tw('iban', A(53.8), .9, { x: X7 + 1530, y: MY + 195, r: 2 }, 'inout'); cue(A(53.8), 'whoosh');
 froh('chefin', A(54.6)); froh('mai8', A(54.7));
 akteur('haken8', { x: X7 + 1680, y: MY - 180, s: 0 }); tw('haken8', A(54.6), .45, { s: 1 }, 'back'); cue(A(54.6), 'erfolg');
 akteur('kontonr', { x: X7 + MX, y: 170, s: 0 }); tw('kontonr', A(55.3), .45, { s: 1 }, 'back'); cue(A(55.3), 'pop');
@@ -418,9 +387,7 @@ const AB = ENDE_SPRACHE + .5;
 HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
 cue(AB, 'whoosh');
 akteur('endBank', { o: 0, y: 40 }, true); tw('endBank', AB + .35, .5, { o: 1, y: 0 }, 'back');
-akteur('asEyebrow', { o: 0, y: 30 }, true); tw('asEyebrow', AB + .45, .5, { o: 1, y: 0 }, 'back');
 akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
-akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + .85, .5, { o: 1, y: 0 }, 'back');
 
 start(AB + 3.4, AB + 1.6);
 </script>

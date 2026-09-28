@@ -16,4 +16,8 @@ Kursvideos für **Azubis Plus**, gerendert aus HTML (Chromium → ffmpeg). Keine
   (Pausen: `ffmpeg -af silencedetect=noise=-38dB:d=0.35`).
 - Vor dem vollen Render mit `--standbilder` prüfen; `film.mp4` und `film-poster.png` werden mit eingecheckt.
 - Inhalte (Beträge, Fristen, Zuständigkeiten) kommen aus dem Konzept – nicht selbst erfinden.
+- **Videos neutral halten:** kein Kopftext (Kursname, Titel, Kapitel, „Podcast“), kein Vorspann mit Titel,
+  keine Untertitel oder Sprechblasen, im Abspann kein „Kurs N geschafft“. Die Seite in der App trägt den Titel.
+  „Text im Bild“ aus dem Konzept ist Inhalt und bleibt.
+- Wo es um Ablage oder Dokumente geht, die **Azubis Plus Helper App** zeigen (Handy mit Bereich „Dokumente“).
 - Sprache: Deutsch, B1, „du“.
