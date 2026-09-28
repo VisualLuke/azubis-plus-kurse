@@ -286,7 +286,8 @@ const ENDE_SPRACHE = A(106.45);
 /* ---------- Rahmen: Sprecher, Pegel, Untertitel, Kapitel ---------- */
 const MX = 1280, MY = 505;                // Bühnenmitte
 ['bue0', 'bue1', 'bue2', 'bue3', 'bue4', 'bue5', 'bue6'].forEach((id, i) => akteur(id, { x: S(i) + MX, y: MY }));
-const satzBei = t => SAETZE.find(([a, b]) => t >= a - .05 && t <= b + .25);
+// nur echte Sprechzeiten: kein Nachlauf, sonst spricht kurz die falsche Person
+const satzBei = t => SAETZE.find(([a, b]) => t >= a - .03 && t <= b + .08);
 // Gesprächspartner: wer spricht, wird etwas größer und bewegt den Mund im Takt der Aufnahme
 akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('mai', { o: 0, y: 60, s: .9 }, true);
 tw('jonas', 0, .7, { o: 1, y: 0 }, 'back'); tw('mai', .12, .7, { o: 1, y: 0 }, 'back');
@@ -298,7 +299,7 @@ HOOKS.push(t => {
   for (const [id, w, neig, phase] of PERSONEN) {
     const el = document.getElementById(id), aktiv = wer === w;
     // sanft zwischen aktiv/inaktiv überblenden (render ist deterministisch: aus t berechnet)
-    const k = SAETZE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .3) / .3, (b + .5 - t) / .3))), 0);
+    const k = SAETZE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .2) / .2, (b + .25 - t) / .25))), 0);
     const basis = t < .85 ? null : .9 + .1 * k;
     if (basis) el.style.transform = `scale(${basis})`;
     el.style.borderColor = k > .5 ? 'var(--b300)' : '';

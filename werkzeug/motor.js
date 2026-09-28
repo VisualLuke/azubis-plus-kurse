@@ -74,7 +74,9 @@ function render(t) {
     const o = g('o');
     a.el.style.opacity = o;
     a.el.style.visibility = o <= 0.001 ? 'hidden' : 'visible';
-    const tr = `translate(${g('x')}px,${g('y')}px)` + (a.rel ? '' : ' translate(-50%,-50%)') +
+    // schweben: sanftes Auf und Ab (Amplitude in px), Phase je Akteur fest -> deterministisch
+    const sw = a.basis.schweben ? a.basis.schweben * Math.sin(t * 1.9 + (a.phase ??= [...(a.el.id || 'x')].reduce((h, c) => h + c.charCodeAt(0), 0) % 7)) : 0;
+    const tr = `translate(${g('x')}px,${g('y') + sw}px)` + (a.rel ? '' : ' translate(-50%,-50%)') +
       ` rotate(${g('r')}deg) scale(${g('s') * g('sx')},${g('s') * g('sy')})`;
     a.el.style.transform = tr;
     if (a.tw.some(w => 'draw' in w.to))
