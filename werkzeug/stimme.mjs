@@ -1,6 +1,6 @@
 // Erzeugt die Sprachaufnahme eines Kurses mit ElevenLabs: jeden Satz einzeln (with-timestamps),
 // zusammengesetzt zu <ordner>/sprache.mp3, Satz- und Wortzeiten in <ordner>/sprache.json.
-// Aufruf: node werkzeug/stimme.mjs kurse/01-krankenkasse [--probe] [--neu]
+// Aufruf: node werkzeug/stimme.mjs lernvideos/01-krankenkasse [--probe] [--neu]
 //   --probe  nur zeigen, welche Sätze neu erzeugt würden (kostet nichts)
 //   --neu    alle Sätze neu erzeugen (sonst nur geänderte)
 //

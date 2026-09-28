@@ -12,13 +12,9 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 | 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:20 | Animationsvideo mit Sprecher, Mai als Figur |
 | 4 | [Rechte & Pflichten in der Ausbildung](kurse/04-rechte-pflichten/) | 2:59 | Gespräch: Sabine (Ausbilderin) und Amir (Azubi) |
 
-### Lernvideos (Briefing „30 Lernvideos für internationale Azubis“)
+### Lernvideos
 
-Nummern aus dem Briefing; sie überschneiden sich mit den Kursen 1–4 oben (gleiche Präfixe, andere Ordnernamen).
-
-| Nr. | Thema | Länge | Format |
-| --- | --- | --- | --- |
-| 1 | [Krankenkasse & Versichertenkarte](kurse/01-krankenkasse/) | 1:50 | Erklärvideo, Erzählerin (ElevenLabs v4), Mai als Figur |
+Die 30 Lernvideos aus dem Briefing liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
 
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine Untertitel – die Kursseite in der
 App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
@@ -32,9 +28,10 @@ App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren 
    `@stimme Name: <voice_id>` und `@modell eleven_v4` optional). Jeder Satz wird einzeln mit Zeitstempeln erzeugt;
    nur geänderte Sätze kosten Credits (Zwischenspeicher `.stimme/`, sonst aus der alten `sprache.mp3` geschnitten).
    ```sh
-   node werkzeug/stimme.mjs kurse/01-krankenkasse --probe   # zeigt, welche Sätze neu erzeugt würden
-   node werkzeug/stimme.mjs kurse/01-krankenkasse           # braucht ELEVENLABS_API_KEY, ffmpeg mit libmp3lame
+   node werkzeug/stimme.mjs lernvideos/01-krankenkasse --probe   # zeigt, welche Sätze neu erzeugt würden
+   node werkzeug/stimme.mjs lernvideos/01-krankenkasse           # braucht ELEVENLABS_API_KEY, ffmpeg mit libmp3lame
    ```
+   Vor dem Render: `node werkzeug/pruefen.mjs <ordner>` (nach `--nur-html`) muss ohne ungewollte Befunde sein.
    In der Vorlage liefern `wort('Krankenkasse', ab)`, `wortEnde(…)` und `satz(nr)` die Zeiten aus `sprache.json`.
 3. **Zeitleiste** (`film.vorlage.html`): Sätze mit Zeiten aus der Aufnahme (`SAETZE`), dazu die Szenen.
    Alles wird aus `render(t)` berechnet; Animationen hängen an `A(sekunde_in_der_aufnahme)`.
@@ -53,6 +50,7 @@ App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren 
 werkzeug/motor.js      Tween-Engine: Akteure, Easings, Kamera (pan), Cues für Soundeffekte
 werkzeug/stil.css      gemeinsamer Stil – nur Token-Farben mit Fallback, Schrift Inter
 werkzeug/stimme.mjs    Sprechertext aus konzept.md → ElevenLabs Satz für Satz → sprache.mp3 + sprache.json
+werkzeug/pruefen.mjs   prüft film.html Frame für Frame: Ruckler, Abstand zur Bühnenkante, Überlappungen
 werkzeug/rendern.mjs   baut film.html, fotografiert jedes Frame mit Chromium, mischt Ton, kodiert H.264
 werkzeug/ton.py        Tonspur: Sprache + leise Musik (unter der Stimme abgesenkt) + Effekte
 werkzeug/bauen.mjs     SVG-Kurzschreibweise → SVG (Kopie aus helperapp_illustrationen, samt liste.mjs)

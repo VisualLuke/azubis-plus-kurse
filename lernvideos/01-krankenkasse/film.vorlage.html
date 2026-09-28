@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Krankenkasse und Versichertenkarte</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:58px;line-height:68px}
+.titel .w.hell{color:var(--b500)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .schal{transform-origin:50% 72%}
+.portrait .daumen{transform-origin:80% 100%}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.ring{border-radius:999px;border:6px solid var(--success);opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* 2 · Gehaltszettel */
+.zettel{width:330px;height:250px;padding:24px 26px 20px;border-radius:18px 18px 0 0;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;flex-direction:column;gap:14px}
+.zettel small{font:700 18px/22px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase}
+.zettel .zeile{display:flex;justify-content:space-between;gap:20px}
+.zettel .zeile i{height:12px;border-radius:6px;background:var(--n200)}
+.zettel .zeile i:last-child{background:var(--b100)}
+.streifen{width:330px;height:76px;padding:0 24px;display:flex;align-items:center;gap:14px;background:var(--surface);border-top:4px dashed var(--n300);
+  border-radius:0 0 18px 18px;box-shadow:0 10px 20px rgba(22,19,37,.08);font:700 24px/28px Inter;color:var(--b600);white-space:nowrap}
+.streifen.betrieb{width:auto;border-top:0;border-radius:16px;height:64px;color:var(--success-text);background:var(--success-bg);box-shadow:0 6px 16px rgba(22,19,37,.08)}
+.streifen b{width:34px;height:34px;flex:none;border-radius:999px;background:var(--b100);display:flex;align-items:center;justify-content:center;font:800 22px/1 Inter;color:var(--b600)}
+.streifen.betrieb b{background:var(--surface);color:var(--success-text)}
+.abdruck{padding:8px 18px;border-radius:10px;border:5px solid var(--b500);color:var(--b500);font:800 30px/34px Inter;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.6)}
+.tinte{width:170px;height:170px;border-radius:999px;border:4px solid var(--b400);opacity:0}
+
+/* 3 · Kassen-Karten */
+.kkarte{width:230px;height:150px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden;border:3px solid transparent}
+.kkarte .band{height:40px;display:flex;align-items:center;padding-left:16px}
+.kkarte .logo{width:22px;height:22px;background:var(--surface)}
+.kkarte .zeilen{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.kkarte .zl{display:flex;align-items:center;gap:8px}
+.kkarte .zl u{width:16px;height:16px;border-radius:999px;background:var(--success);flex:none}
+.kkarte .zl i{height:9px;border-radius:5px;background:var(--n200);flex:1;transform-origin:left center}
+.gleich{font:800 54px/1 Inter;color:var(--b500)}
+
+/* Mitgliedsbescheinigung / Rezept */
+.dokument{width:220px;padding:18px;border-radius:14px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:10px}
+.dokument b{font:700 17px/21px Inter;color:var(--b600);white-space:nowrap}
+.dokument .linie{height:8px;border-radius:4px;background:var(--n200)}
+.dokument .siegel{align-self:flex-end;width:38px;height:38px;border-radius:999px;border:4px solid var(--b300);background:var(--b100);margin-top:2px}
+
+/* Versichertenkarte */
+.vkarte{width:280px;height:176px;border-radius:16px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 8px 24px rgba(58,37,153,.28);overflow:hidden}
+.vkarte.alt{background:linear-gradient(135deg,var(--n300),var(--n500));box-shadow:0 6px 18px rgba(22,19,37,.14)}
+.vk-foto{position:absolute;left:18px;top:34px;width:66px;height:84px;border-radius:9px;background:var(--b100);overflow:hidden}
+.vk-leer{position:absolute;inset:0;border:3px dashed var(--b300);border-radius:9px}
+.vk-bild{position:absolute;left:-16px;top:6px;width:98px;height:98px}
+.vk-chip{position:absolute;left:100px;top:38px;width:42px;height:32px;border-radius:7px;background:linear-gradient(var(--warning-bg),var(--warning))}
+.vk-text{position:absolute;left:100px;right:16px;top:84px}
+.vk-text b{display:block;font:700 15px/18px Inter;color:var(--surface);white-space:nowrap}
+.vk-text em{display:block;font:600 13px/16px Inter;font-style:normal;color:var(--b100);white-space:nowrap;margin-top:2px}
+.vkarte.alt .vk-text em{color:var(--n200)}
+.vk-text i{display:block;height:7px;border-radius:4px;background:var(--b300);margin-top:9px}
+.vkarte.alt .vk-text i,.vkarte.alt .vk-foto{background:var(--n200)}
+.glanz{position:absolute;top:0;bottom:0;width:70px;left:-90px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-12deg)}
+.strich{width:296px;height:12px;border-radius:6px;background:var(--error);transform-origin:left center}
+.blitz{width:120px;height:120px;border-radius:999px;background:radial-gradient(var(--surface),rgba(255,255,255,0) 70%);opacity:0}
+
+/* Kalender (Wochen vergehen) */
+.kal{width:130px;height:140px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.kal .kopf{height:38px;background:var(--b500)}
+.kal .blatt{position:absolute;left:0;right:0;top:38px;bottom:0;background:var(--surface);transform-origin:50% 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px}
+.kal .blatt span{height:14px;border-radius:4px;background:var(--b100)}
+
+/* 6 · Leistungen */
+.kachel{width:250px;height:180px;border-radius:24px;background:var(--surface);border:2px solid var(--border);box-shadow:0 1px 2px rgba(22,19,37,.06);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.kachel .bild{width:112px;height:112px;position:relative}
+.kachel b{font:700 24px/28px Inter;color:var(--ink);white-space:nowrap}
+
+/* 8 · Handy mit Kassen-App */
+.app{width:204px;height:374px;border-radius:18px;overflow:hidden;background:var(--bg);padding:16px 12px;display:flex;flex-direction:column;gap:9px}
+.app small{font:800 11px/14px Inter;color:var(--b500);letter-spacing:.06em;text-transform:uppercase}
+.app h5{font:700 21px/26px Inter;color:var(--ink);margin-bottom:4px}
+.app .feld{padding:7px 10px;border-radius:10px;background:var(--surface);border:2px solid transparent;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.app .feld span{display:block;font:600 11px/14px Inter;color:var(--n400)}
+.app .feld div{font:600 15px/20px Inter;color:var(--ink);white-space:pre;min-height:20px}
+.app .feld.aktiv{border-color:var(--b400)}
+.app .knopf{margin-top:auto;padding:10px;border-radius:12px;background:var(--b500);color:var(--surface);font:700 15px/18px Inter;text-align:center}
+.app .toast{position:absolute;left:12px;right:12px;bottom:66px;padding:8px 10px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;text-align:center}
+.cursor{display:inline-block;width:2px;height:17px;background:var(--b500);vertical-align:-3px;margin-left:1px}
+.finger{width:44px;height:44px;border-radius:999px;background:rgba(90,63,230,.28);border:3px solid var(--b500)}
+.brief-mini{width:64px;height:44px;border-radius:8px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.16)}
+.brief-mini svg{width:64px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+/* 3 · Zwei Wochen */
+.kal2{width:560px;padding:20px 24px 24px;border-radius:24px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.kal2 small{display:block;font:700 18px/22px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px 4px}
+.kal2 .tage{display:grid;grid-template-columns:repeat(7,64px);gap:8px}
+.kal2 .tage span{height:56px;border-radius:12px;background:var(--b50);display:flex;align-items:center;justify-content:center;font:700 20px/1 Inter;color:var(--b300)}
+.kal2 .tage span.an{background:var(--b500);color:var(--surface)}
+.kal2 .tage span.start{background:var(--success);color:var(--surface)}
+.kal2 .tage span.frist{background:var(--warning);color:var(--surface)}
+.zeitbar{width:512px;height:16px;border-radius:999px;background:var(--b100);overflow:hidden}
+.zeitbar i{display:block;height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--b400),var(--b600));transform-origin:left center}
+.kkarte .band b{font:800 20px/1 Inter;color:var(--surface);letter-spacing:.02em}
+.kkarte.aok{border-color:var(--b500)}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Wer bezahlt den Arzt? -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a portrait" id="mai1" style="width:320px;height:320px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene schal">{{figur-schal}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="buerste1" style="width:270px">{{zahnbuerste}}</div>
+  <div class="a" id="pflaster1" style="width:250px">{{pflaster}}</div>
+  <div class="a frage" id="frage1">?</div>
+  <div class="a welle" id="welle1" style="width:260px;height:260px" data-frei></div>
+  <div class="a" id="schild1" style="width:210px">{{schild-kreuz}}</div>
+  <div class="a chip brand" id="chipKasse1">Krankenkasse</div>
+
+  <!-- 2 · Pflicht, Beitrag vom Gehalt -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a zettel" id="zettel2" data-gruppe="zettel"><small>Gehaltsabrechnung</small>
+    <div class="zeile"><i style="width:120px"></i><i style="width:70px"></i></div>
+    <div class="zeile"><i style="width:150px"></i><i style="width:60px"></i></div>
+    <div class="zeile"><i style="width:100px"></i><i style="width:76px"></i></div>
+    <div class="zeile"><i style="width:136px"></i><i style="width:64px"></i></div>
+    <div class="zeile"><i style="width:90px"></i><i style="width:72px"></i></div></div>
+  <div class="a streifen" id="streifen2" data-gruppe="zettel"><b>€</b>Beitrag</div>
+  <div class="a" id="betrieb2" style="width:190px">{{betrieb}}</div>
+  <div class="a streifen betrieb" id="teil2"><b>€</b>Teil vom Betrieb</div>
+  <div class="a welle" id="welle2" style="width:220px;height:220px" data-frei></div>
+  <div class="a" id="schild2" style="width:200px">{{schild-kreuz~2}}</div>
+  <div class="a chip brand klein" id="chipKasse2">Krankenkasse</div>
+  <div class="a tinte" id="tinte2" data-frei></div>
+  <div class="a abdruck" id="pflicht2" data-frei>Pflicht</div>
+  <div class="a" id="stempel2" style="width:170px">{{stempel}}</div>
+
+  <!-- 3 · Zwei Wochen Zeit -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a kal2" id="kal3"><small>Deine ersten 2 Wochen</small><div class="tage" id="tage3"></div></div>
+  <div class="a zeitbar" id="bar3"><i id="barI3"></i></div>
+  <div class="a portrait" id="pin3" style="width:84px;height:84px;border-width:4px" data-frei><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div></div></div>
+  <div class="a chip gruen klein" id="chipStart">Start Ausbildung</div>
+  <div class="a chip brand" id="chip2W">2 Wochen Zeit</div>
+  <div class="a" id="betrieb3" style="width:160px">{{betrieb~3}}</div>
+  <div class="a chip gelb klein" id="chipSonst">sonst wählt dein Betrieb</div>
+
+  <!-- 4 · Kasse wählen -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a kkarte aok" id="kk1"><div class="band" style="background:var(--b500)"><b>AOK</b></div><div class="zeilen"><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div></div></div>
+  <div class="a kkarte" id="kk2"><div class="band" style="background:var(--b300)"><div class="logo" style="border-radius:5px"></div></div><div class="zeilen"><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div></div></div>
+  <div class="a kkarte" id="kk3"><div class="band" style="background:var(--b700)"><div class="logo" style="clip-path:polygon(50% 0,100% 100%,0 100%)"></div></div><div class="zeilen"><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div><div class="zl"><u></u><i></i></div></div></div>
+  <div class="a gleich" id="gl1" data-frei>=</div><div class="a gleich" id="gl2" data-frei>=</div>
+  <div class="a portrait" id="mai4" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a chip klein" id="chipService"><svg viewBox="0 0 30 30"><path d="M6 17v-3a9 9 0 0 1 18 0v3" stroke="var(--b500)" stroke-width="3" fill="none"/><rect x="4" y="15" width="6" height="9" rx="3" fill="var(--b500)"/><rect x="20" y="15" width="6" height="9" rx="3" fill="var(--b500)"/></svg>Service</div>
+  <div class="a chip klein" id="chipApp"><svg viewBox="0 0 30 30"><rect x="8" y="3" width="14" height="24" rx="3" fill="var(--b500)"/><rect x="10.5" y="6.5" width="9" height="15" rx="1.5" fill="var(--b100)"/></svg>App</div>
+  <div class="a chip klein" id="chipSprache"><svg viewBox="0 0 30 30"><path d="M4 7a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-9l-6 5v-5H7a3 3 0 0 1-3-3Z" fill="var(--b500)"/><path d="M9 10h12M9 14h8" stroke="var(--b100)" stroke-width="2.4" stroke-linecap="round"/></svg>Sprache</div>
+  <div class="a" id="lupe4" style="width:150px" data-frei>{{lupe}}</div>
+
+  <!-- 5 · Dem Betrieb Bescheid geben -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a portrait" id="mai5" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="schild5" style="width:96px">{{schild-kreuz~5}}</div>
+  <div class="a" id="betrieb5" style="width:250px">{{betrieb~5}}</div>
+  <div class="a chip brand klein" id="chipPersonal">Personalbüro</div>
+  <div class="a chip gelb" id="chipWichtig">Wichtig!</div>
+  <div class="a chip gelb" id="chipAnfang">gleich am Anfang</div>
+  <div class="a dokument" id="doku5" data-frei><b>Mitgliedsbescheinigung</b><div class="linie"></div><div class="linie" style="width:80%"></div><div class="linie" style="width:60%"></div><div class="siegel"></div></div>
+  <svg class="a" id="bahn5" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1170 520C1260 420 1370 410 1440 470" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze5)"/>
+  </svg>
+  <div class="a plakette gruen" id="ok5" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 6 · Versichertenkarte kommt per Post -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a kal" id="kal6"><div class="kopf"></div>
+    <div class="blatt" id="kb4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="a" id="umOffen" style="width:380px;transform-origin:50% 31.25%" data-gruppe="post">{{umschlag-offen}}</div>
+  <div class="a" id="umHinten" style="width:380px" data-gruppe="post">{{umschlag-hinten}}</div>
+  <div class="a" id="pmHinten" style="width:380px" data-gruppe="post">{{portemonnaie-hinten}}</div>
+  <div class="a vkarte" id="vk6" data-gruppe="post"><div class="vk-foto"><div class="vk-leer" id="vkLeer6"></div><div class="vk-bild" id="vkBild6">{{figur-mai}}</div></div>
+    <div class="vk-chip"></div><div class="vk-text"><b>Versichertenkarte</b><i></i><i style="width:60%"></i></div><div class="glanz" id="glanz6"></div></div>
+  <div class="a blitz" id="blitz6" data-frei></div>
+  <div class="a" id="umVorne" style="width:380px" data-gruppe="post">{{umschlag-vorne}}</div>
+  <div class="a" id="umKlappe" style="width:380px;transform-origin:50% 31.25%" data-gruppe="post">{{umschlag-klappe}}</div>
+  <div class="a" id="pmVorne" style="width:380px" data-gruppe="post">{{portemonnaie-vorne}}</div>
+  <div class="a chip gruen" id="chipDabei"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>zu jedem Arztbesuch</div>
+
+  <!-- 7 · Was bezahlt die Krankenkasse? -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a welle" id="welle7" style="width:160px;height:160px" data-frei></div>
+  <div class="a" id="schild7" style="width:136px">{{schild-kreuz~7}}</div>
+  <div class="a kachel" id="k1"><div class="bild"><div id="ic1">{{stethoskop}}</div><div class="welle" id="puls1a" style="position:absolute;left:78px;top:66px;width:48px;height:48px;border-color:var(--error)"></div><div class="welle" id="puls1b" style="position:absolute;left:78px;top:66px;width:48px;height:48px;border-color:var(--error)"></div></div><b>Arzt</b></div>
+  <div class="a kachel" id="k2"><div class="bild"><div id="ic2">{{krankenhaus}}</div></div><b>Krankenhaus</b></div>
+  <div class="a kachel" id="k3"><div class="bild"><div id="ic3">{{zahn}}</div></div><b>Zahnarzt</b></div>
+  <div class="a kachel" id="k4"><div class="bild"><div id="ic4">{{tabletten}}</div><div id="pille4" style="position:absolute;left:0;top:0;width:112px">{{tablette}}</div></div><b>Medikamente</b></div>
+  <div class="a plakette gruen" id="ok7a" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok7b" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok7c" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok7d" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a dokument" id="rezept7" style="width:170px"><b>Rezept</b><div class="linie"></div><div class="linie" style="width:70%"></div><div class="linie" style="width:85%"></div></div>
+  <div class="a" id="muenze7" style="width:96px" data-dreht>{{muenze}}</div>
+  <div class="a chip gelb" id="chipZuzahlung">Zuzahlung: 5 – 10 €</div>
+
+  <!-- 8 · Alte Versicherung erst kündigen, wenn die neue gilt -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a vkarte alt" id="alt8"><div class="vk-foto"></div><div class="vk-chip" style="background:var(--n200)"></div>
+    <div class="vk-text"><b>Versicherung</b><em>Reise · Incoming</em><i></i></div></div>
+  <div class="a strich" id="strich8" data-frei></div>
+  <div class="a ring" id="glow8" style="width:340px;height:236px;border-radius:30px" data-frei></div>
+  <div class="a vkarte" id="neu8"><div class="vk-foto"><div class="vk-bild">{{figur-mai}}</div></div><div class="vk-chip"></div>
+    <div class="vk-text"><b>Versichertenkarte</b><em>Krankenkasse</em><i></i></div><div class="glanz" id="glanz8"></div></div>
+  <svg class="a" id="pfeil8" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze8" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1275 480H1360" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze8)"/>
+  </svg>
+  <div class="a portrait" id="mai8" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="uhr8" style="width:130px" data-gruppe="uhr">{{uhr}}</div>
+  <div class="a" id="zeiger8" style="width:130px;transform-origin:50% 47.5%" data-gruppe="uhr">{{uhr-zeiger}}</div>
+  <div class="a chip gelb klein" id="chipErst">erst warten</div>
+  <div class="a chip gruen" id="chipGilt"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>gilt</div>
+
+  <!-- 9 · Änderungen melden -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a" id="handy9" style="width:560px" data-gruppe="handy">{{handy}}</div>
+  <div class="a app" id="app9" data-gruppe="handy"><small>Meine Krankenkasse</small><h5>Meine Daten</h5>
+    <div class="feld" id="fName"><span>Name</span><div>Mai</div></div>
+    <div class="feld" id="fAdr"><span>Adresse</span><div id="adr9"></div></div>
+    <div class="feld"><span>Versichertennummer</span><div style="color:var(--n400)">• • • • • •</div></div>
+    <div class="knopf" id="knopf9">Senden</div>
+    <div class="toast" id="toast9">✓ Gesendet</div></div>
+  <div class="a finger" id="finger9" data-gruppe="handy"></div>
+  <div class="a" id="schild9" style="width:130px">{{schild-kreuz~9}}</div>
+  <div class="a brief-mini" id="brief9" data-frei><svg viewBox="0 0 64 44"><path d="M4 6l28 18L60 6" stroke="var(--b300)" stroke-width="3" fill="none" stroke-linejoin="round"/></svg></div>
+  <div class="a chip gruen klein" id="chipEinfach">einfach in der App</div>
+
+  <!-- 10 · Wählen. Melden. Karte dabei. -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a ring" id="ring10" style="width:330px;height:330px;border-width:10px" data-frei></div>
+  <div class="a welle" id="welle10" style="width:330px;height:330px;border-color:var(--success)" data-frei></div>
+  <div class="a portrait" id="mai10" style="width:300px;height:300px" data-gruppe="mai10"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a vkarte" id="vk10" data-gruppe="mai10"><div class="vk-foto"><div class="vk-bild">{{figur-mai}}</div></div><div class="vk-chip"></div>
+    <div class="vk-text"><b>Versichertenkarte</b><i></i><i style="width:60%"></i></div><div class="glanz" id="glanz10"></div></div>
+  <div class="a chip" id="s10a"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">1</text></svg>Wählen</div>
+  <div class="a chip" id="s10b"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">2</text></svg>Melden</div>
+  <div class="a chip" id="s10c"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">3</text></svg>Karte dabei</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Wer bezahlt den <em>Arzt?</em></div></div>
+<div class="block" id="tb2"><div class="titel">Gesetzliche Krankenversicherung = <em>Pflicht</em></div></div>
+<div class="block" id="tb3"><div class="titel">Du wählst deine <em>Krankenkasse</em></div><div class="unter" id="tb3u">innerhalb von 2 Wochen</div></div>
+<div class="block" id="tb5"><div class="titel">Krankenkasse → an deinen <em>Betrieb</em></div></div>
+<div class="block" id="tb6"><div class="titel"><em>Versichertenkarte</em> immer dabei</div></div>
+<div class="block" id="tb7"><div class="titel">Arzt · Krankenhaus · Zahnarzt · Medikamente</div></div>
+<div class="block" id="tb8"><div class="titel">Alte Versicherung erst kündigen, wenn die neue <em>gilt</em></div></div>
+<div class="block" id="tb9"><div class="titel">Änderungen <em>melden</em></div></div>
+<div class="block" id="tb10"><div class="titel"><em>Wählen.</em> <em>Melden.</em> <em>Karte</em> <em>dabei.</em></div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Du bist gut geschützt.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Such dir eine Krankenkasse aus und sag sie deinem Betrieb.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+// W('Wort', n): Filmzeit des Worts im Satz n (oder danach)
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(28);
+const MX = 1320, MY = 540;
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+// kleine Elemente ploppen mit Überschwung, große kommen sanfter
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+// Flugbahn: weicher Bogen, sanft los und sanft ans Ziel
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+
+/* ---------- Figuren: blinzeln, zuhören (leichtes Nicken), froh / staunend schauen ---------- */
+function figur(id, basis) {
+  akteur(id, basis);
+  for (const k of ['froh', 'auf']) { const f = $(`#${id} .${k}`); if (f) akteur(f, { o: 0 }, true); }
+  akteur($(`#${id} .zu`), {}, true);
+}
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) if ($(`#${id} .${m}`)) set(`#${id} .${m}`, t, { o: m === k ? 1 : 0 }); };
+const froh = (id, t) => mund(id, t, 'froh');
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Heranfahren, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  // Tiefe: die Bühne bleibt beim Schwenk etwas zurück, die Gegenstände ziehen schneller vorbei
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < 10; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+// Gegenstände in Ruhe schweben leicht (Amplitude in px)
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+
+/* ---------- 1 · Wer bezahlt den Arzt? ---------- */
+const X0 = S(0);
+titelEin('tb1', W('Wer', 2) - .25);
+figur('mai1', { x: X0 + 1110, y: 540, s: 0 }); tw('mai1', A(-.6), .7, { s: 1 }, 'sanft'); cue(A(-.6), 'pop');
+// Halsschmerzen: Schal wickelt sich um, Mai hustet
+akteur('#mai1 .schal', { o: 0, sx: .2, sy: .6 }, true);
+tw('#mai1 .schal', W('Halsschmerzen', 1), .6, { o: 1, sx: 1, sy: 1 }, 'sanft'); cue(W('Halsschmerzen', 1), 'whoosh');
+wackeln('mai1', W('Halsschmerzen', 1) + .6, 4, 2.5);
+// Zahnarzt: Zahnbürste putzt
+ein('buerste1', W('Zahnarzt', 1), { x: X0 + 1530, y: 350 }, { x: 110 }, 'whoosh');
+HOOKS.push(t => { const d = t - W('Zahnarzt', 1) - .55; if (d > 0 && d < 1.3) $('#buerste1').style.transform += ` translateX(${14 * Math.sin(d * 22) * (1 - d / 1.3) ** 2}px)`; });
+// Unfall: Pflaster klatscht von oben herunter
+akteur('pflaster1', { x: X0 + 1560, y: 300, o: 0 });
+tw('pflaster1', W('Unfall', 1) - .3, .1, { o: 1 }); tw('pflaster1', W('Unfall', 1) - .3, .32, { y: 580 }, 'in');
+tw('pflaster1', W('Unfall', 1) + .02, .09, { sy: .75, sx: 1.14 }, 'out'); tw('pflaster1', W('Unfall', 1) + .11, .5, { sy: 1, sx: 1 }, 'sanft');
+cue(W('Unfall', 1) + .02, 'plopp'); akzent(W('Unfall', 1), .025);
+schweben(['buerste1', 'pflaster1'], 4);
+// Wer bezahlt das eigentlich? Mai staunt, Fragezeichen über ihr
+mund('mai1', W('Wer', 2), 'auf');
+pop('frage1', W('bezahlt', 2), { x: X0 + 1335, y: 335 });
+wackeln('frage1', W('eigentlich', 2), 4, 3);
+wackeln('buerste1', W('eigentlich', 2) + .1, 3, 3); wackeln('pflaster1', W('eigentlich', 2) + .2, 3, 3);
+// Deutschland → deine Krankenkasse: Schild kommt, alles fliegt hinein
+ein('schild1', W('Deutschland', 3), { x: X0 + 1500, y: 720, s: .8 }, { y: 100 }, 'whoosh');
+[['buerste1', 0], ['pflaster1', .15], ['frage1', .3]].forEach(([id, d]) => {
+  const t0 = W('Krankenkasse', 3) - .45 + d;
+  flug(id, t0, .6, X0 + 1500, 705, 110, { s: .2 }); tw(id, t0 + .45, .15, { o: 0 });
+  bump('schild1', t0 + .6, 1.12); cue(t0 + .6, 'plopp');
+});
+mund('mai1', W('Krankenkasse', 3) + .3, 'zu');
+tw('schild1', W('Krankenkasse', 3) + .7, .7, { x: X0 + 1490, y: 490, s: 1.25 }, 'sanft');
+welle('welle1', W('Krankenkasse', 3) + .9, X0 + 1490, 480, 1.1); cue(W('Krankenkasse', 3) + .9, 'erfolg'); akzent(W('Krankenkasse', 3) + .8);
+pop('chipKasse1', W('Krankenkasse', 3) + .85, { x: X0 + 1490, y: 690 }, null);
+froh('mai1', W('Krankenkasse', 3) + .85);
+schweben('schild1', 5);
+textAus('tb1', SE(3) + .15);
+
+/* ---------- 2 · Gesetzliche Krankenversicherung = Pflicht ---------- */
+pan2(SE(3) + .3, 1); const X1 = S(1);
+titelEin('tb2', W('Als', 4) - .2);
+ein('zettel2', W('Als', 4) - .3, { x: X1 + 1110, y: 440 }, { y: 90 }, 'whoosh');
+ein('streifen2', W('Als', 4) - .3, { x: X1 + 1110, y: 603 }, { y: 90 });
+document.querySelectorAll('#zettel2 .zeile i').forEach((z, i) => { akteur(z, { sx: 0 }, true); z.style.transformOrigin = 'left center'; tw(z, W('Azubi', 4) + i * .07, .55, { sx: 1 }, 'weich'); });
+// automatisch versichert: Krankenkasse erscheint
+ein('schild2', W('automatisch', 4), { x: X1 + 1560, y: 420 }, { y: 90 }, 'whoosh');
+pop('chipKasse2', W('gesetzlichen', 4), { x: X1 + 1560, y: 540 });
+schweben('schild2', 4);
+// Pflicht: Stempel schlägt auf
+akteur('stempel2', { x: X1 + 1110, y: 230, o: 0 });
+tw('stempel2', W('Pflicht', 5) - .5, .2, { o: 1 }); tw('stempel2', W('Pflicht', 5) - .5, .3, { y: 260 }, 'sinus');
+tw('stempel2', W('Pflicht', 5) - .18, .16, { y: 370 }, 'in'); tw('stempel2', W('Pflicht', 5) - .02, .5, { y: 270, o: 0 }, 'weich');
+cue(W('Pflicht', 5) - .02, 'plopp'); akzent(W('Pflicht', 5), .045);
+akteur('pflicht2', { x: X1 + 1110, y: 475, o: 0, r: -3, s: 1.4 }); tw('pflicht2', W('Pflicht', 5) - .02, .16, { o: 1, s: 1 }, 'out');
+welle('tinte2', W('Pflicht', 5), X1 + 1110, 475, .7);
+wackeln('zettel2', W('Pflicht', 5), 3, 2); wackeln('streifen2', W('Pflicht', 5), 3, 2);
+// Beitrag vom Gehalt: Streifen reißt ab und fliegt zur Krankenkasse
+bump('streifen2', W('Beitrag', 6), 1.06);
+tw('streifen2', W('abgezogen', 6) - .1, .3, { y: 640, r: -3 }, 'sinus'); cue(W('abgezogen', 6) - .1, 'kritzeln');
+flug('streifen2', W('abgezogen', 6) + .25, .9, X1 + 1560, 430, 120, { s: .3, r: 0 }); tw('streifen2', W('abgezogen', 6) + .95, .2, { o: 0 });
+bump('schild2', W('abgezogen', 6) + 1.1); cue(W('abgezogen', 6) + 1.1, 'muenze');
+tw('zettel2', W('abgezogen', 6) + .3, .6, { y: 470 }, 'inout');
+// Betrieb zahlt auch einen Teil
+ein('betrieb2', W('Betrieb', 6) - .15, { x: X1 + 1560, y: 715 }, { x: 90 }, 'whoosh');
+akteur('teil2', { x: X1 + 1400, y: 740, o: 0, s: .6 }); tw('teil2', W('Betrieb', 6) + .25, .5, { o: 1, x: X1 + 1300, s: 1 }, 'sanft'); cue(W('Betrieb', 6) + .25, 'pop');
+flug('teil2', W('zahlt', 6) + .1, .8, X1 + 1560, 440, 70, { s: .3 }); tw('teil2', W('zahlt', 6) + .7, .2, { o: 0 });
+bump('schild2', W('zahlt', 6) + .9, 1.14); cue(W('zahlt', 6) + .9, 'muenze');
+welle('welle2', W('zahlt', 6) + .95, X1 + 1560, 420, 1.0);
+textAus('tb2', SE(6) + .25);
+
+/* ---------- 3 · Zwei Wochen Zeit ---------- */
+pan2(SE(6) + .35, 2); const X2 = S(2);
+titelEin('tb3', W('Du', 7) - .1, { unter: W('zwei', 8) - .1 });
+$('#tage3').innerHTML = Array.from({ length: 14 }, (_, i) => `<span>${i + 1}</span>`).join('');
+const TAGE = [...document.querySelectorAll('#tage3 span')];
+ein('kal3', W('darfst', 7), { x: X2 + 1320, y: 450 }, { y: 90 }, 'whoosh');
+TAGE.forEach((d, i) => { akteur(d, { s: 0 }, true); tw(d, W('darfst', 7) + .3 + i * .04, .4, { s: 1 }, 'back'); });
+ein('bar3', W('darfst', 7) + .4, { x: X2 + 1320, y: 615 }, { y: 40 });
+akteur('barI3', { sx: 0 }, true);
+const WOCHEN0 = W('zwei', 8), WOCHEN1 = WE('Zeit', 8) + .2;
+tw('barI3', WOCHEN0, WOCHEN1 - WOCHEN0, { sx: 1 }, 'inout'); cue(WOCHEN0, 'scan');
+HOOKS.push(t => TAGE.forEach((d, i) => {
+  const an = t >= WOCHEN0 + (WOCHEN1 - WOCHEN0) * i / 14;
+  d.className = i === 0 && t >= W('Start', 8) - .1 ? 'start' : i === 13 && t >= W('Sonst', 9) ? 'frist' : an ? 'an' : '';
+}));
+// Mai läuft als Marker mit dem Balken
+figur('pin3', { x: X2 + 1064, y: 615, s: 0 }); tw('pin3', WOCHEN0 - .3, .4, { s: 1 }, 'back');
+tw('pin3', WOCHEN0, WOCHEN1 - WOCHEN0, { x: X2 + 1576 }, 'inout');
+for (let i = 0; i < 6; i++) tw('pin3', WOCHEN0 + i * (WOCHEN1 - WOCHEN0) / 6, (WOCHEN1 - WOCHEN0) / 6, { y: 615 }, 'sinus', { bogen: 14 });
+pop('chip2W', W('Wochen', 8), { x: X2 + 1320, y: 310 }); akzent(W('Wochen', 8));
+aus('chip2W', W('Start', 8) - .5, .3);
+pop('chipStart', W('Start', 8) - .2, { x: X2 + 1104, y: 310 });
+HOOKS.push(t => { const d = t - W('Start', 8); if (d > 0 && d < .6) TAGE[0].style.transform += ` scale(${1 + .2 * Math.sin(Math.PI * d / .6)})`; });
+// Sonst wählt dein Betrieb
+ein('betrieb3', W('Sonst', 9) - .1, { x: X2 + 1620, y: 745 }, { x: 80 }, 'whoosh');
+pop('chipSonst', W('wählt', 9), { x: X2 + 1300, y: 745 }); wackeln('chipSonst', W('dich', 9) + .2, 3, 3);
+akteur('tb3u', {}, true); tw('tb3u', SE(9) + .2, .35, { o: 0 });
+
+/* ---------- 4 · Viele Krankenkassen, zum Beispiel die AOK ---------- */
+pan2(SE(9) + .3, 3); const X3 = S(3);
+figur('mai4', { x: X3 + 1015, y: 705, s: 0 }); tw('mai4', W('Es', 10) - .1, .55, { s: 1 }, 'sanft'); cue(W('Es', 10) - .1, 'pop');
+// Es gibt viele: Karten werden ausgeteilt
+const KK = [['kk1', 1070, -3], ['kk2', 1320, 2], ['kk3', 1570, -2]];
+KK.forEach(([id, x, r], i) => {
+  akteur(id, { x: X3 + 1320, y: 580, o: 0, r: 0, s: .6 });
+  const t0 = W('viele', 10) - .2 + i * .15;
+  tw(id, t0, .15, { o: 1 }); tw(id, t0, .6, { x: X3 + x, y: 430, s: 1 }, 'sanft', { bogen: 40 });
+  tw(id, t0, .3, { r }, 'sinus'); tw(id, t0 + .3, .45, { r: 0 }, 'sanft');
+  cue(t0, 'klick');
+});
+// zum Beispiel die AOK: die Karte kommt nach vorn
+tw('kk1', W('AOK', 10) - .15, .5, { s: 1.12, y: 420 }, 'sanft'); cue(W('AOK', 10) - .15, 'pop'); akzent(W('AOK', 10));
+tw('kk1', W('Leistungen', 11) - .2, .5, { s: 1, y: 430 }, 'inout');
+// Leistungen sehr ähnlich: Leistungszeilen füllen sich gleich, Gleichheitszeichen
+document.querySelectorAll('.kkarte .zl').forEach((z, i) => {
+  const t0 = W('Leistungen', 11) + (i % 3) * .14;
+  akteur(z.querySelector('u'), { s: 0 }, true); tw(z.querySelector('u'), t0, .35, { s: 1 }, 'back');
+  akteur(z.querySelector('i'), { sx: 0 }, true); tw(z.querySelector('i'), t0 + .08, .5, { sx: 1 }, 'weich');
+});
+cue(W('Leistungen', 11), 'scan');
+pop('gl1', W('ähnlich', 11) - .1, { x: X3 + 1195, y: 430 }); pop('gl2', W('ähnlich', 11) + .05, { x: X3 + 1445, y: 430 }, null);
+froh('mai4', W('ähnlich', 11));
+// Achte auf Service, App, Sprache: Lupe prüft die Karten, Kriterien erscheinen
+akteur('lupe4', { x: X3 + 1130, y: 650, o: 0, s: .6 });
+tw('lupe4', W('Achte', 12) - .2, .45, { o: 1, s: 1 }, 'sanft');
+[['Service', 1070], ['App', 1320], ['Sprache', 1570]].forEach(([w, x]) => {
+  tw('lupe4', W(w, 12) - .4, .5, { x: X3 + x + 12, y: 445 }, 'inout', { bogen: 30 }); bump('lupe4', W(w, 12) + .1, 1.08);
+});
+tw('lupe4', WE('Sprache', 12) + .25, .5, { x: X3 + 1655, y: 600, o: 0, s: .7 }, 'inout');
+HOOKS.push(t => { const d = t - W('Achte', 12); $('#mai4').style.transform += ` rotate(${d > 0 && d < 3.2 ? 3 * Math.sin(d * 2.2) * Math.sin(Math.PI * d / 3.2) : 0}deg)`; });
+pop('chipService', W('Service', 12), { x: X3 + 1250, y: 705 });
+pop('chipApp', W('App', 12), { x: X3 + 1420, y: 705 });
+pop('chipSprache', W('Sprache', 12), { x: X3 + 1590, y: 705 });
+textAus('tb3', SE(12) + .2);
+
+/* ---------- 5 · Krankenkasse → an deinen Betrieb ---------- */
+pan2(SE(12) + .3, 4); const X4 = S(4);
+titelEin('tb5', W('Wichtig', 13) - .2);
+figur('mai5', { x: X4 + 1050, y: 590, s: 0 }); tw('mai5', W('Wichtig', 13) - .35, .55, { s: 1 }, 'sanft');
+pop('chipWichtig', W('Wichtig', 13), { x: X4 + 1320, y: 300 }); wackeln('chipWichtig', W('Wichtig', 13) + .5, 4, 3); akzent(W('Wichtig', 13));
+ein('betrieb5', W('Betrieb', 13) - .1, { x: X4 + 1585, y: 520 }, { x: 100 }, 'whoosh');
+pop('chipPersonal', W('Betrieb', 13) + .35, { x: X4 + 1585, y: 690 });
+schweben('betrieb5', 3);
+aus('chipWichtig', W('Anfang', 13) - .35, .25); pop('chipAnfang', W('Anfang', 13) - .1, { x: X4 + 1320, y: 300 });
+ein('schild5', W('Krankenkasse', 13) - .1, { x: X4 + 1050, y: 395 }, { y: 50 }, 'pop');
+// Mitgliedsbescheinigung wandert von Mai zum Personalbüro
+akteur('doku5', { x: X4 + 1100, y: 760, o: 0, s: .5 });
+tw('doku5', W('Mitgliedsbescheinigung', 14) - .2, .55, { o: 1, y: 640, s: .8 }, 'sanft'); cue(W('Mitgliedsbescheinigung', 14) - .2, 'whoosh');
+akteur('bahn5', { x: X4 + 960, y: 540, o: 0, draw: 0 }); tw('bahn5', W('Mitgliedsbescheinigung', 14) + .5, .1, { o: 1 }); tw('bahn5', W('Mitgliedsbescheinigung', 14) + .5, .7, { draw: 1 }, 'inout');
+flug('doku5', W('der', 14) - .1, 1.0, X4 + 1585, 560, 160, { s: .3 }); tw('doku5', W('der', 14) + .7, .25, { o: 0 }); cue(W('der', 14), 'whoosh');
+tw('bahn5', W('Kasse', 14) + .5, .3, { o: 0 });
+huepfen('betrieb5', W('der', 14) + .9, 12); cue(W('der', 14) + .95, 'plopp');
+pop('ok5', W('Kasse', 14) + .4, { x: X4 + 1665, y: 405 }, 'erfolg');
+froh('mai5', W('Kasse', 14) + .4);
+textAus('tb5', SE(14) + .25);
+
+/* ---------- 6 · Versichertenkarte kommt per Post ---------- */
+pan2(SE(14) + .35, 5); const X5 = S(5);
+titelEin('tb6', W('Nach', 15) - .1);
+// ein paar Wochen: Kalenderblätter fliegen um
+ein('kal6', W('Nach', 15) - .2, { x: X5 + 1620, y: 345 }, { y: 60 });
+['kb1', 'kb2', 'kb3'].forEach((id, i) => {
+  const t0 = W('paar', 15) + i * .3; akteur(id, {}, true);
+  tw(id, t0, .3, { sy: 0, o: 0 }, 'in'); cue(t0, 'klick');
+});
+aus('kal6', W('Versichertenkarte', 15) + .8);
+// Umschlag fliegt auf einer Bahn herein und landet
+const UX = X5 + 1300, UY = 600, UM = ['umOffen', 'umHinten', 'umVorne', 'umKlappe'];
+UM.forEach(id => akteur(id, { x: X5 + 1760, y: 300, o: 0, s: .5, r: -3 }));
+UM.forEach(id => {
+  tw(id, W('kommt', 15), .2, { o: 1 }); tw(id, W('kommt', 15), 1.0, { x: UX, y: UY, s: 1 }, 'inout', { bogen: 120 }); tw(id, W('kommt', 15), 1.0, { r: 0 }, 'sinus');
+  tw(id, W('kommt', 15) + 1.0, .1, { sy: .9, sx: 1.05 }, 'sinus'); tw(id, W('kommt', 15) + 1.1, .4, { sy: 1, sx: 1 }, 'sanft');
+});
+set('umOffen', 0, { sy: 0 });
+cue(W('kommt', 15), 'whoosh'); cue(W('kommt', 15) + 1.0, 'plopp');
+// per Post: Klappe öffnet sich, Karte kommt heraus
+tw('umKlappe', W('Post', 15) - .2, .22, { sy: 0 }, 'in'); set('umKlappe', W('Post', 15) + .02, { o: 0 });
+tw('umOffen', W('Post', 15) + .02, .28, { sy: 1 }, 'weich'); cue(W('Post', 15) - .2, 'klick');
+akteur('vk6', { x: UX, y: UY + 10, o: 0, s: .95 });
+set('vk6', W('Post', 15) + .1, { o: 1 });
+tw('vk6', W('Post', 15) + .2, .7, { y: UY - 180 }, 'inout'); cue(W('Post', 15) + .25, 'whoosh');
+tw('vk6', W('Dafür', 16) - .15, .7, { x: X5 + 1320, y: 470, s: 1.45 }, 'inout');
+aus(['umOffen', 'umHinten', 'umVorne'], W('Dafür', 16) - .1, .35);
+// Foto: Blitz, Mais Bild erscheint im Fotofeld
+const FX = X5 + 1320 + (18 + 33 - 140) * 1.45, FY = 470 + (34 + 42 - 88) * 1.45;
+akteur('vkBild6', { o: 0, s: .6 }, true);
+tw('vkBild6', W('Foto', 16) + .05, .45, { o: 1, s: 1 }, 'back');
+akteur('vkLeer6', {}, true); tw('vkLeer6', W('Foto', 16) + .05, .2, { o: 0 });
+welle('blitz6', W('Foto', 16), FX, FY, .5); cue(W('Foto', 16), 'klick'); akzent(W('Foto', 16));
+HOOKS.push(t => { const d = (t - W('Foto', 16) - .5) / .7; $('#glanz6').style.left = d > 0 && d < 1 ? -90 + E.inout(d) * 470 + 'px' : '-90px'; });
+// Diese Karte …: ins Portemonnaie
+ein('pmHinten', W('Diese', 17) - .15, { x: X5 + 1320, y: 690 }, { y: 90 }, 'whoosh'); ein('pmVorne', W('Diese', 17) - .15, { x: X5 + 1320, y: 690 }, { y: 90 });
+tw('vk6', W('Karte', 17) + .05, .55, { y: 540, s: 1.05 }, 'inout');
+tw('vk6', W('nimmst', 17) + .15, .4, { y: 658 }, 'in'); cue(W('nimmst', 17) + .5, 'plopp');
+['pmVorne', 'pmHinten', 'vk6'].forEach(id => huepfen(id, W('nimmst', 17) + .55, 10));
+pop('chipDabei', W('Arztbesuch', 17), { x: X5 + 1320, y: 345 }, 'erfolg');
+textAus('tb6', SE(17) + .3);
+
+/* ---------- 7 · Was bezahlt die Krankenkasse? ---------- */
+pan2(SE(17) + .4, 6); const X6 = S(6);
+titelEin('tb7', W('Was', 18) - .1, [W('Hausarzt', 19) - .1, null, W('Krankenhaus', 19) - .1, null, W('Zahnarzt', 19) - .1, null, W('Medikamente', 19) - .1]);
+ein('schild7', W('Krankenkasse', 18) - .1, { x: X6 + 1320, y: 330 }, { y: -60 }, 'pop');
+HOOKS.push(t => { const d = t - W('Was', 18); if (d > 0 && d < 1.2) $('#schild7').style.transform += ` rotate(${3 * Math.sin(d * 12) * (1 - d / 1.2)}deg)`; });
+const KACHELN = [['k1', 1180, 520, 'Hausarzt', 'ok7a'], ['k2', 1460, 520, 'Krankenhaus', 'ok7b'], ['k3', 1180, 722, 'Zahnarzt', 'ok7c'], ['k4', 1460, 722, 'Medikamente', 'ok7d']];
+KACHELN.forEach(([id, x, y, w, ok]) => {
+  const t0 = W(w, 19) - .15;
+  ein(id, t0, { x: X6 + x, y }, { y: 70 }, 'pop');
+  // Krankenkasse zahlt: grüner Haken springt von der Kasse in die Kachel
+  akteur(ok, { x: X6 + 1320, y: 360, o: 0, s: .4 });
+  tw(ok, t0 + .4, .1, { o: 1 }); flug(ok, t0 + .4, .6, X6 + x + 108, y - 72, 60, { s: 1 }); cue(t0 + 1.0, 'ding');
+  bump('schild7', t0 + .4, 1.08);
+});
+HOOKS.push(t => {
+  const d1 = t - W('Fachärzte', 19);
+  ['puls1a', 'puls1b'].forEach((id, i) => { const z = ((d1 + i * .45) / .9) % 1, an = d1 > 0 && d1 < 3.2;
+    $('#' + id).style.opacity = an ? (1 - z) * .9 : 0; $('#' + id).style.transform = `scale(${.6 + z * 1.2})`; });
+  const d2 = t - W('Krankenhaus', 19) - .5;
+  $('#ic2').style.transform = d2 > 0 && d2 < 1.2 ? `scale(${1 + .05 * Math.sin(d2 * 16) * (1 - d2 / 1.2)})` : '';
+  const d3 = t - W('Kontrolle', 19) - .2;
+  $('#ic3').style.transform = d3 > 0 && d3 < 1.3 ? `rotate(${3 * Math.sin(d3 * 18) * (1 - d3 / 1.3)}deg)` : '';
+  const d4 = t - W('Medikamente', 19) - .35, p = E.inout(clamp(d4 / .7));
+  $('#pille4').style.transform = d4 > 0 ? `translate(${34 * p}px,${-46 * Math.sin(Math.PI * p) + 14 * p}px)` : '';
+  $('#pille4').style.opacity = d4 > 0 ? 1 : 0;
+});
+cue(W('Fachärzte', 19), 'scan'); cue(W('Medikamente', 19) + .35, 'pop');
+// Für Medikamente vom Rezept: kleine Zuzahlung
+aus(['k1', 'k2', 'k3', 'ok7a', 'ok7b', 'ok7c'], W('Für', 20) - .1, .4);
+tw('k4', W('Für', 20) - .1, .8, { x: X6 + 1370, y: 565, s: 1.2 }, 'inout');
+tw('ok7d', W('Für', 20) - .1, .8, { x: X6 + 1370 + 140, y: 565 - 98 }, 'inout');
+ein('rezept7', W('Rezept', 20) - .15, { x: X6 + 1085, y: 565 }, { x: -70 }, 'whoosh');
+akteur('muenze7', { x: X6 + 1590, y: 250, o: 0 });
+tw('muenze7', W('Zuzahlung', 20) - .4, .1, { o: 1 }); tw('muenze7', W('Zuzahlung', 20) - .4, .45, { y: 600 }, 'in');
+tw('muenze7', W('Zuzahlung', 20) + .05, .08, { sy: .85 }, 'sinus'); tw('muenze7', W('Zuzahlung', 20) + .13, .35, { sy: 1 }, 'sanft');
+HOOKS.push(t => { const p = t - W('Zuzahlung', 20) - .3; if (p > 0 && p < 1.4) $('#muenze7').style.transform += ` scaleX(${Math.cos(p * Math.PI * 3 * (1 - p / 2.8))})`; });
+cue(W('Zuzahlung', 20) + .05, 'muenze');
+pop('chipZuzahlung', W('fünf', 20) - .1, { x: X6 + 1320, y: 760 }); akzent(W('fünf', 20));
+schweben(['k4', 'rezept7'], 3);
+textAus('tb7', SE(20) + .2);
+
+/* ---------- 8 · Alte Versicherung erst kündigen, wenn die neue gilt ---------- */
+pan2(SE(20) + .3, 7); const X7 = S(7);
+titelEin('tb8', W('Hattest', 21) - .1);
+figur('mai8', { x: X7 + 1320, y: 715, s: 0 }); tw('mai8', W('Hattest', 21), .55, { s: 1 }, 'sanft'); cue(W('Hattest', 21), 'pop');
+ein('alt8', W('Reise', 21) - .1, { x: X7 + 1120, y: 480 }, { x: -80 }, 'whoosh');
+// danach: Pfeil zur neuen Karte (noch grau, gilt noch nicht)
+ein('neu8', W('danach', 22) - .1, { x: X7 + 1530, y: 480 }, { x: 80 }, 'whoosh');
+akteur('pfeil8', { x: X7 + 960, y: 540, o: 0, draw: 0 }); tw('pfeil8', W('danach', 22) + .2, .1, { o: 1 }); tw('pfeil8', W('danach', 22) + .2, .5, { draw: 1 }, 'inout');
+HOOKS.push(t => { const g = E.inout(clamp((t - W('neue', 23)) / .7)); $('#neu8').style.filter = `saturate(${g}) brightness(${1.12 - .12 * g})`; });
+tw('neu8', W('danach', 22) + .45, .35, { o: .55 }, 'sinus');
+tw('alt8', W('nicht', 22), .4, { o: .85 }, 'out');
+// kündige – aber erst warten: Uhr läuft
+pop('chipErst', W('erst', 23) - .05, { x: X7 + 1110, y: 610 }); wackeln('chipErst', W('erst', 23) + .45, 3, 3);
+['uhr8', 'zeiger8'].forEach(id => ein(id, W('kündige', 23), { x: X7 + 1110, y: 725 }, { y: 60 }));
+set('zeiger8', 0, { r: 0 }); tw('zeiger8', W('erst', 23), W('neue', 23) - W('erst', 23), { r: 720 }, 'inout'); cue(W('erst', 23), 'scan');
+// die neue Krankenkasse gilt: Karte leuchtet
+tw('neu8', W('neue', 23), .5, { o: 1 }); bump('neu8', W('Krankenkasse', 23), 1.07);
+akteur('glow8', { x: X7 + 1530, y: 480, o: 0 }); tw('glow8', W('Krankenkasse', 23), .45, { o: 1 }, 'out');
+HOOKS.push(t => { const d = (t - W('Krankenkasse', 23) - .2) / .7; $('#glanz8').style.left = d > 0 && d < 1 ? -90 + E.inout(d) * 470 + 'px' : '-90px'; });
+pop('chipGilt', W('gilt', 23) - .15, { x: X7 + 1610, y: 322 }, 'erfolg'); akzent(W('gilt', 23));
+froh('mai8', W('gilt', 23));
+aus('chipErst', W('gilt', 23) - .2, .25);
+// erst dann: alte Karte wird durchgestrichen
+akteur('strich8', { x: X7 + 1120, y: 480, o: 0, r: -3, sx: 0 });
+tw('strich8', W('gilt', 23) + .05, .01, { o: 1 }); tw('strich8', W('gilt', 23) + .05, .35, { sx: 1 }, 'weich'); cue(W('gilt', 23) + .05, 'kritzeln');
+tw('alt8', W('gilt', 23) + .3, .3, { o: .5 });
+schweben(['alt8', 'neu8', 'glow8'], 3);
+textAus('tb8', SE(23) + .2);
+
+/* ---------- 9 · Änderungen melden ---------- */
+pan2(SE(23) + .3, 8); const X8 = S(8);
+titelEin('tb9', W('Deine', 24) - .1);
+ein('handy9', W('Deine', 24) - .5, { x: X8 + 1300, y: 545 }, { y: 100 });
+ein('app9', W('Deine', 24) - .5, { x: X8 + 1300, y: 545 }, { y: 100 });
+{ // Adresse: alte löschen, neue tippen
+  const ALT = 'Alte Straße 5', NEU = 'Neue Straße 12';
+  const a0 = W('Adresse', 24) + .3, a1 = W('ändert', 24), a2 = a1 + .9;
+  HOOKS.push(t => {
+    let txt = ALT;
+    if (t >= a0) txt = ALT.slice(0, Math.max(0, ALT.length - Math.floor(clamp((t - a0) / .5) * ALT.length)));
+    if (t >= a1) txt = NEU.slice(0, Math.floor(clamp((t - a1) / .9) * NEU.length));
+    $('#adr9').innerHTML = txt + (t >= a0 - .1 && t < a2 + .3 && Math.floor(t * 3) % 2 === 0 ? '<span class="cursor"></span>' : '');
+    $('#fAdr').classList.toggle('aktiv', t >= W('Adresse', 24) && t < a2 + .4);
+    $('#fName').classList.toggle('aktiv', t >= W('Name', 24) && t < W('Name', 24) + .7);
+  });
+  for (let i = 0; i < 6; i++) cue(a1 + i * .15, 'tipp');
+}
+// Sag es deiner Krankenkasse: Senden, Brief fliegt zur Kasse
+ein('schild9', W('Sag', 25) - .2, { x: X8 + 1610, y: 420 }, { x: 70 }, 'whoosh');
+schweben('schild9', 4);
+akteur('finger9', { x: X8 + 1420, y: 820, o: 0 });
+tw('finger9', W('Sag', 25), .5, { o: 1, x: X8 + 1300, y: 690 }, 'inout');
+tw('finger9', W('Krankenkasse', 25) - .06, .1, { s: .8 }, 'in'); tw('finger9', W('Krankenkasse', 25) + .04, .3, { s: 1 }, 'sanft');
+tw('finger9', W('Krankenkasse', 25) + .4, .3, { o: 0 });
+akteur('knopf9', {}, true); tw('knopf9', W('Krankenkasse', 25) - .06, .1, { s: .92 }, 'in'); tw('knopf9', W('Krankenkasse', 25) + .04, .35, { s: 1 }, 'back');
+cue(W('Krankenkasse', 25), 'klick');
+akteur('toast9', { o: 0, y: 12 }, true); tw('toast9', W('Krankenkasse', 25) + .3, .4, { o: 1, y: 0 }, 'sanft');
+akteur('brief9', { x: X8 + 1300, y: 640, o: 0, s: .4 });
+tw('brief9', W('Krankenkasse', 25) + .15, .1, { o: 1 }); flug('brief9', W('Krankenkasse', 25) + .15, .75, X8 + 1610, 440, 140, { s: .9 });
+tw('brief9', W('Krankenkasse', 25) + .8, .15, { o: 0 }); bump('schild9', W('Krankenkasse', 25) + .9); cue(W('Krankenkasse', 25) + .9, 'ding');
+// einfach in der App
+huepfen('handy9', W('einfach', 26) - .1, 16); huepfen('app9', W('einfach', 26) - .1, 16);
+pop('chipEinfach', W('App', 26) - .2, { x: X8 + 1580, y: 570 });
+textAus('tb9', SE(26) + .3);
+
+/* ---------- 10 · Wählen. Melden. Karte dabei. ---------- */
+pan2(SE(26) + .4, 9); const X9 = S(9);
+titelEin('tb10', 0, [W('wählen', 27) - .1, W('Bescheid', 27) - .1, W('Karte', 27) - .1, W('dabeihaben', 27) - .1]);
+figur('mai10', { x: X9 + 1170, y: 545, s: 0 }); tw('mai10', W('Also', 27) - .4, .6, { s: 1 }, 'sanft'); cue(W('Also', 27) - .4, 'pop');
+[['s10a', 'wählen', 400], ['s10b', 'Bescheid', 540], ['s10c', 'Karte', 680]].forEach(([id, w, y]) => {
+  akteur(id, { x: X9 + 1740, y, o: 0 }); tw(id, W(w, 27) - .1, .15, { o: 1 }); tw(id, W(w, 27) - .1, .65, { x: X9 + 1560 }, 'sanft'); cue(W(w, 27) - .1, 'whoosh');
+  bump(id, W(w, 27) + .55, 1.06);
+});
+// Karte in der Hand
+akteur('vk10', { x: X9 + 1100, y: 760, o: 0, s: .5, r: 0 });
+tw('vk10', W('Karte', 27), .15, { o: 1 }); tw('vk10', W('Karte', 27), .6, { x: X9 + 1090, y: 655, s: .72 }, 'sanft'); cue(W('Karte', 27), 'pop');
+HOOKS.push(t => { const d = (t - W('dabeihaben', 27)) / .7; $('#glanz10').style.left = d > 0 && d < 1 ? -90 + E.inout(d) * 470 + 'px' : '-90px'; });
+// gut geschützt: Schutzring
+akteur('ring10', { x: X9 + 1170, y: 545, s: .9, o: 0 }); tw('ring10', W('geschützt', 28) - .1, .3, { o: 1 }); tw('ring10', W('geschützt', 28) - .1, .6, { s: 1.08 }, 'sanft');
+welle('welle10', W('geschützt', 28), X9 + 1170, 545, 1.2); cue(W('geschützt', 28), 'erfolg'); akzent(W('geschützt', 28), .05);
+froh('mai10', W('gut', 28) - .2); huepfen('mai10', W('geschützt', 28) + .15, 14); huepfen('vk10', W('geschützt', 28) + .2, 14);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

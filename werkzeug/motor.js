@@ -10,6 +10,10 @@ const E = {
     if (x < 1 / d) return n * x * x; if (x < 2 / d) return n * (x -= 1.5 / d) * x + .75;
     if (x < 2.5 / d) return n * (x -= 2.25 / d) * x + .9375; return n * (x -= 2.625 / d) * x + .984375; },
   lin: x => x,
+  // sanfter Überschwung (für große Elemente), weiches Auslaufen, weiche Kurve
+  sanft: x => { const c = 1.1; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); },
+  weich: x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x),
+  sinus: x => -(Math.cos(Math.PI * x) - 1) / 2,
 };
 const clamp = x => Math.max(0, Math.min(1, x));
 const STANDARD = { x: 0, y: 0, s: 1, sx: 1, sy: 1, r: 0, o: 1, draw: 0 };
@@ -24,22 +28,31 @@ function akteur(id, basis, rel = false) {
   AKTEURE.set(el, a);
   return a;
 }
-function wert(a, p, t) {
+// Tweens eines Akteurs laufen in zeitlicher Reihenfolge; jeder startet dort, wo der Akteur zu seinem Startzeitpunkt steht –
+// egal, in welcher Reihenfolge sie im Skript stehen. So entstehen keine Sprünge durch später eingefügte, früher startende Tweens.
+function wert(a, p, t, bis = Infinity) {
+  if (a.unsortiert) { a.tw.sort((x, y) => x.t0 - y.t0 || x.nr - y.nr); a.unsortiert = false; }
   let v = a.basis[p];
-  for (const w of a.tw) {
-    if (!(p in w.to) || w.t0 > t) continue;
-    v = w.from[p] + (w.to[p] - w.from[p]) * w.e(clamp((t - w.t0) / w.d));
+  for (let i = 0; i < a.tw.length && i < bis; i++) {
+    const w = a.tw[i];
+    if (w.t0 > t) break;
+    if (!(p in w.to)) continue;
+    const von = w.from[p] ??= wert(a, p, w.t0, i);
+    const u = w.e(clamp((t - w.t0) / w.d));
+    v = von + (w.to[p] - von) * u;
+    if (p === 'y' && w.bogen) v -= w.bogen * 4 * u * (1 - u);      // Flugbahn: Bogen nach oben
   }
   return v;
 }
-// tw(ids, Start, Dauer, Ziel, Easing) – ids als String oder Liste; Start des Tweens = Zustand zum Zeitpunkt t0
-function tw(ids, t0, d, to, e = 'out') {
+// tw(ids, Start, Dauer, Ziel, Easing, { bogen }) – ids als String oder Liste; Start = Zustand des Akteurs zum Zeitpunkt t0
+let TW_NR = 0;
+function tw(ids, t0, d, to, e = 'out', opt = {}) {
   for (const id of [].concat(ids)) {
     const el = typeof id === 'string' ? document.getElementById(id) : id;
     const a = AKTEURE.get(el);
-    const from = {};
-    for (const p in to) from[p] = wert(a, p, t0);
-    a.tw.push({ t0, d: Math.max(d, 1e-4), to, from, e: E[e] });
+    if (!a) throw new Error('Kein Akteur: ' + (el?.id || id));
+    a.tw.push({ t0, d: Math.max(d, 1e-4), to, from: {}, e: E[e], nr: TW_NR++, bogen: opt.bogen || 0 });
+    a.unsortiert = true;
   }
 }
 const set = (ids, t, to) => tw(ids, t, 0, to, 'lin');
@@ -65,6 +78,35 @@ function textEin(blockId, t0, pause = {}) {
     tw(el, t, .6, { o: 1, y: 0 }, 'back');
     t += el.classList.contains('w') ? .07 : .12;
   }
+}
+// Text im Bild, Motion-Graphics-Variante: jedes Wort steigt aus einer Maske, Wörter in <em> bekommen einen Marker.
+// zeiten: optional eine Liste von Startzeiten je Wort (für Wörter im Takt der Stimme)
+function titelAkteure(blockId) {
+  const block = document.getElementById(blockId), marker = [];
+  block.querySelectorAll('.titel,.unter').forEach(z => {
+    const teile = [];
+    z.childNodes.forEach(n => {
+      const hl = n.nodeName === 'EM';
+      n.textContent.split(/(\s+)/).filter(w => w.trim()).forEach(w => teile.push(
+        `<span class="w maske${hl ? ' hl' : ''}">${hl ? '<i class="mk"></i>' : ''}<span class="m"><span class="wi">${w}</span></span></span> `));
+    });
+    z.innerHTML = teile.join('');
+  });
+  const woerter = [...block.querySelectorAll('.w')];
+  woerter.forEach(w => { akteur(w.querySelector('.wi'), { y: 90 }, true); const m = w.querySelector('.mk'); if (m) { akteur(m, { sx: 0 }, true); marker.push(m); } });
+  akteur(block, { o: 1 }, true);
+  return woerter;
+}
+function titelEin(blockId, t0, zeiten) {
+  const woerter = titelAkteure(blockId);
+  let t = t0;
+  woerter.forEach((w, i) => {
+    if (zeiten && zeiten[i] != null) t = zeiten[i];
+    else if (w.closest('.unter') && zeiten?.unter && t < zeiten.unter) t = zeiten.unter;
+    tw(w.querySelector('.wi'), t, .7, { y: 0 }, 'weich');
+    const m = w.querySelector('.mk'); if (m) tw(m, t + .35, .45, { sx: 1 }, 'inout');
+    t += .08;
+  });
 }
 function textAus(blockId, t0) { tw(blockId, t0, .3, { o: 0, y: -40 }, 'in'); }
 
@@ -109,6 +151,17 @@ const kamera = akteur('welt', {}, true);
 const S = i => i * 1920;            // Szenen-Versatz
 const BX = 1320, BY = 560;           // Bühnenmitte jeder Szene
 function pan(t0, i) { tw('welt', t0, .9, { x: -S(i) }, 'inout'); cue(t0, 'whoosh'); }
+// Bewegungsunschärfe beim Schwenk (waagrecht, je nach Geschwindigkeit der Welt)
+function bewegungsunschaerfe(staerke = .12) {
+  document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="0" width="110%" height="100%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+  const welt = document.getElementById('welt'), blur = document.getElementById('wischerBlur');
+  HOOKS.push(t => {
+    const v = Math.abs(wert(kamera, 'x', t) - wert(kamera, 'x', t - 1 / 30));
+    const b = Math.min(22, v * staerke);
+    blur.setAttribute('stdDeviation', `${b.toFixed(2)} 0`);
+    welt.style.filter = b > .3 ? 'url(#wischer)' : '';
+  });
+}
 
 
 function start(dauer, musikEnde) {
