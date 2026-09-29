@@ -54,7 +54,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | 1:58 | fertig |
 | 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | 1:48 | fertig |
 | 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | 1:48 | fertig |
-| 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | – | in Arbeit |
+| 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | 2:10 | fertig |
 | 38 | [Betriebsrat, JAV & Gewerkschaft](38-betriebsrat-jav/) | Podcast | Mai, Jonas | 1:53 | fertig |
 | 39 | [Was würdest du tun? Ein Kunde beschwert sich](39-kunde-beschwert-sich/) | Was würdest du tun? | Erzählerin, Amir, Herr Braun | – | in Arbeit |
 | 40 | [Fachvokabeln: Kfz-Werkstatt](40-vokabeln-kfz/) | Fachvokabeln | Erzähler, Amir, Sabine | – | in Arbeit |
