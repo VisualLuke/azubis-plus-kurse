@@ -54,6 +54,8 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
 - **Keine Regeln für unter 18**, **keine Verweise auf andere Kurse** (streichen), Sprache einfach (B1, „du“).
 - Krankenkassen: nur die AOK als Beispiel nennen.
 - **Kein Kurstitel im Video** – auch nicht, wenn das Briefing ihn als „Text im Bild“ vorgibt (Vorgabe 29.09.2026).
+  Die erste Bühne steht dann in der Bildmitte (bei `x: 1320` mit `kamera.basis.x = -360`), und nichts darf vor dem
+  Auftritt oben/unten ins Bild ragen (Startpositionen außerhalb der Bühne weit genug weg, z. B. `y: -420`).
 - Neutral: kein Kurstitel, kein Vorspann, keine Untertitel/Sprechblasen mit dem gesprochenen Text, kein „Kurs geschafft“.
   Kurze Einblendungen, die das Briefing als „Text im Bild“ oder „Bild“ vorgibt (auch Sprechblasen wie „Mach mal hin!“
   in Kurs 30), sind Inhalt und bleiben.

@@ -339,6 +339,7 @@ const chipHTML = (art, text) => art === 'neutral' ? text : `<b>${art}</b>${text}
 buehne(0);
 {
   const X = S(0);
+  kamera.basis.x = -300;   // ohne Kurstitel: erste Bühne zur Bildmitte, Legende bleibt links
   neu('topf0', kopie('t-topf', '0'), 'width:220px', 'data-gruppe="topf0"');
   ein('topf0', W('Ausbildung', 1) - .2, { x: X + 1060, y: 632 }, { y: 70 }, 'whoosh');
   dampf('dampf0', X + 1060, 505, W('Ausbildung', 1) + .3);
@@ -356,7 +357,7 @@ buehne(0);
   akzent(W('Gastronomie', 1), .035);
   // Farb-Legende der · die · das
   neu('leg0', GENUS.map((g, k) => `<span class="lg ${g}" id="lg0${k}">${g}</span>`).join(''), 'white-space:nowrap');
-  akteur('leg0', { x: X + 140, y: 700 }, true);
+  akteur('leg0', { x: X + 440, y: 700 }, true);
   const tL = [W('wichtigsten', 2), W('Wörter', 2), W('Wörter', 2) + .3];
   GENUS.forEach((g, k) => { akteur('lg0' + k, { s: 0 }, true); tw('lg0' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
   titelEin('tb0', A(.1), [A(.1), W('Gastronomie', 1) - .1]);
