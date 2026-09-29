@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mythos oder Wahrheit: Ausbildung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Text im Bild: links unter der Behauptungs-Kachel */
+.block{justify-content:flex-start;padding-top:420px}
+.block .titel{font-size:60px;line-height:70px}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.chip.leise{background:transparent;box-shadow:none;color:var(--n500)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* ---------- Mythos-Format ---------- */
+/* Quiz-Bühne: groß und dunkel für Behauptung und Urteil, danach hell und klein (Erklärung) */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+/* Behauptungskarte */
+.karte{width:1180px;height:300px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 80px}
+.kchip{display:flex;align-items:center;gap:10px;padding:8px 20px 8px 14px;border-radius:999px;background:var(--b50);
+  color:var(--b600);font:800 20px/26px Inter;letter-spacing:.1em;text-transform:uppercase}
+.kchip svg{width:26px;height:26px}
+.karte .titel{font:700 56px/66px Inter;letter-spacing:-.02em;text-align:center;color:var(--ink)}
+.abdruck{position:absolute;right:36px;bottom:-52px;width:300px;height:96px;border-radius:18px;border:7px solid var(--error);
+  background:var(--error-bg);color:var(--error-text);display:flex;align-items:center;justify-content:center;
+  font:800 50px/1 Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.abdruck.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.abdruck.gross{right:auto;bottom:auto}
+.tinte{border-radius:30px;border:6px solid var(--error);opacity:0}
+.tinte.stimmt{border-color:var(--success)}
+/* Denkpause: Countdown-Ring und die beiden Antworten */
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.pille{display:flex;align-items:center;gap:14px;padding:16px 30px 16px 18px;border-radius:999px;background:var(--surface);
+  font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.pille svg{width:44px;height:44px;flex:none}
+.pille.mythos{color:var(--error-text)} .pille.stimmt{color:var(--success-text)}
+
+
+/* 0 · Intro */
+.titelgross{width:1300px}
+.titelgross .titel{font:800 96px/106px Inter;letter-spacing:-.03em;color:var(--surface);text-align:center}
+.wippe{width:680px;height:130px}
+.wippe .balken0{position:absolute;left:0;right:0;bottom:0;height:18px;border-radius:9px;background:var(--b200);box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.wippe .pille{position:absolute;bottom:26px}
+.wippe #wpDu{left:0} .wippe #wpChef{right:0}
+.pille.brand{color:var(--b600)}
+.drehpunkt{width:90px;height:70px}
+
+/* 1 · Berufsschule */
+.chip.gross{font-size:34px;line-height:40px;padding:14px 30px}
+
+/* 2 · Aufgaben */
+.aufg{width:104px;height:80px;border-radius:14px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.12);padding:14px 14px;display:flex;flex-direction:column;gap:9px}
+.aufg i{height:8px;border-radius:4px;background:var(--b200)} .aufg i:first-child{width:48px;background:var(--b400)}
+.xgross{width:170px;height:170px}
+
+/* 3 · Preisschild */
+.preis{width:210px;height:100px;border-radius:20px 20px 20px 20px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);
+  display:flex;align-items:center;justify-content:center;gap:6px;font:800 50px/1 Inter;color:var(--ink);border:4px solid var(--b200);transform-origin:50% -60px}
+.preis::before{content:"";position:absolute;left:50%;top:-62px;width:4px;height:58px;margin-left:-2px;border-radius:2px;background:var(--n300)}
+.preis::after{content:"";position:absolute;left:50%;top:10px;width:16px;height:16px;margin-left:-8px;border-radius:999px;background:var(--bg);border:3px solid var(--b200)}
+.preis.frei{background:var(--success-bg);color:var(--success-text);border-color:var(--success)}
+.preis b{padding-top:14px}
+
+/* 4 · Berichtsheft und Zeitleiste */
+.bheft{width:250px;height:180px;border-radius:20px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.bheft small{font:800 18px/22px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase}
+.bheft i{height:9px;border-radius:5px;background:var(--b300);transform-origin:left center}
+.seg{height:76px;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:12px;font:800 28px/34px Inter;white-space:nowrap}
+.seg.arbeit{background:var(--b500);color:var(--surface)}
+.seg.frei{background:var(--b700);color:var(--b100)}
+.seg svg{width:40px;height:40px}
+
+/* 5 · Probezeit */
+.spur5{width:720px;height:12px;border-radius:6px;background:var(--b200)}
+.probe5{width:300px;height:12px;border-radius:6px;background:var(--warning);transform-origin:left center}
+.marker{width:40px;height:40px;border-radius:999px;background:var(--surface);border:9px solid var(--b500);box-shadow:0 4px 12px rgba(22,19,37,.2)}
+.chip svg.gewicht{width:34px;height:34px}
+
+/* 6 · Betrieb wechseln */
+.badge{width:52px;height:52px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 28px/52px Inter;text-align:center;box-shadow:0 4px 12px rgba(22,19,37,.2)}
+.pfosten{width:18px;height:96px;border-radius:9px;background:linear-gradient(var(--b600),var(--b700))}
+.baum{width:120px;height:18px;border-radius:9px;transform-origin:right center;
+  background:repeating-linear-gradient(90deg,var(--error) 0 20px,var(--surface) 20px 40px);box-shadow:0 4px 10px rgba(22,19,37,.18)}
+.punkt7{width:30px;height:30px;border-radius:999px;background:var(--b500);border:6px solid var(--surface);box-shadow:0 3px 10px rgba(22,19,37,.2)}
+.punkt7.ok{background:var(--success)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+
+/* 7 · Schluss */
+.mini{width:360px;height:150px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.25);
+  display:flex;align-items:center;justify-content:center;padding:0 28px 18px;font:700 28px/34px Inter;color:var(--ink);text-align:center}
+.mini .abdruck{width:150px;height:46px;border-width:4px;border-radius:10px;font-size:22px;right:18px;bottom:-20px}
+.stand{display:flex;align-items:center;gap:14px;padding:14px 30px 14px 16px;border-radius:999px;background:var(--surface);font:800 38px/44px Inter;white-space:nowrap;
+  box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.stand svg{width:46px;height:46px}
+.stand.mythos{color:var(--error-text)} .stand.stimmt{color:var(--success-text)}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--error)"/><path d="M15 15l14 14M29 15L15 29" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--success)"/><path d="M13 23l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgZitat"><svg viewBox="0 0 26 26"><path d="M4 16c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6H7a3 3 0 0 1-3-2Zm11 0c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6h-3a3 3 0 0 1-3-2Z" fill="var(--b500)"/></svg></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Intro -->
+  <div class="a buehne quiz" id="bue0"><div class="dunkel"></div></div>
+  <div class="a auf-brand" id="d1" style="width:210px">{{werkzeugkoffer}}</div>
+  <div class="a auf-brand" id="d2" style="width:180px">{{buch}}</div>
+  <div class="a auf-brand" id="d3" style="width:160px">{{schraubenschluessel}}</div>
+  <div class="a auf-brand" id="d4" style="width:180px">{{heft}}</div>
+  <div class="a auf-brand" id="d5" style="width:150px">{{stift}}</div>
+  <div class="a auf-brand" id="d6" style="width:210px">{{schule}}</div>
+  <svg class="a drehpunkt" id="dreh0" data-gruppe="wippe" viewBox="0 0 90 70"><path d="M45 4L84 66H6Z" fill="var(--b300)" stroke="var(--b300)" stroke-width="8" stroke-linejoin="round"/></svg>
+  <div class="a wippe" id="wippe0" data-gruppe="wippe"><div class="balken0"></div>
+    <div class="pille brand" id="wpDu">Deine Regeln</div>
+    <div class="pille brand" id="wpChef">Regeln vom Chef</div></div>
+  <div class="a tinte" id="ti0a" style="width:340px;height:136px" data-frei></div>
+  <div class="a tinte stimmt" id="ti0b" style="width:340px;height:136px" data-frei></div>
+  <div class="a abdruck gross" id="ab0a">Mythos</div>
+  <div class="a abdruck gross stimmt" id="ab0b">Stimmt</div>
+  <div class="a titelgross" id="titel0"><div id="tt0"><div class="titel">Mythos oder Wahrheit: Ausbildung</div></div></div>
+
+  <!-- 1 · Berufsschule freiwillig? -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a" id="schule1" style="width:280px">{{schule}}</div>
+  <div class="a chip brand gross" id="chipPflicht">Pflicht</div>
+  <div class="a" id="skarte1" style="width:120px" data-frei>{{stempelkarte}}</div>
+  <div class="a" id="uhr1" style="width:260px" data-gruppe="uhr1">{{stechuhr}}</div>
+  <div class="a" id="zeiger1" style="width:260px;transform-origin:49.4% 35%" data-gruppe="uhr1" data-dreht>{{stechuhr-zeiger}}</div>
+  <div class="a welle" id="welle1" style="width:220px;height:220px;border-color:var(--success)" data-frei></div>
+  <div class="a" id="haken1" style="width:90px">{{haken}}</div>
+  <div class="a chip gruen gross" id="chipArbeit"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Arbeitszeit</div>
+
+  <!-- 2 · Chef darf alles? -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a" id="mappeH" style="width:260px" data-gruppe="mappe">{{mappe-hinten}}</div>
+  <div class="a aufg" id="aufg0" data-gruppe="mappe"><i></i><i></i><i></i></div>
+  <div class="a aufg" id="aufg1" data-gruppe="mappe"><i></i><i></i><i></i></div>
+  <div class="a aufg" id="aufg2" data-gruppe="mappe"><i></i><i></i><i></i></div>
+  <div class="a" id="mappeV" style="width:260px" data-gruppe="mappe">{{mappe-vorne}}</div>
+  <div class="a" id="haken2" style="width:80px" data-gruppe="mappe">{{haken}}</div>
+  <div class="a chip brand" id="chipAusb">Ausbildung</div>
+  <div class="a" id="auto2" style="width:340px">{{auto}}</div>
+  <div class="a" id="schaum2a" style="width:100px" data-frei>{{schaum}}</div>
+  <div class="a" id="schaum2b" style="width:80px" data-frei>{{schaum~b}}</div>
+  <div class="a" id="schaum2c" style="width:90px" data-frei>{{schaum~c}}</div>
+  <div class="a" id="schwamm2" style="width:120px" data-frei>{{schwamm}}</div>
+  <div class="a chip gelb" id="chipPrivat">privat</div>
+  <div class="a xgross" id="x2" data-frei></div>
+
+  <!-- 3 · Material selbst kaufen? -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <div class="a" id="betrieb3" style="width:240px">{{betrieb}}</div>
+  <div class="a" id="koffer3" style="width:220px">{{werkzeugkoffer}}</div>
+  <div class="a" id="buch3" style="width:170px">{{buch}}</div>
+  <div class="a preis" id="preis3"><b id="preisZ">?</b><b>€</b></div>
+  <div class="a welle" id="welle3" style="width:260px;height:260px;border-color:var(--success)" data-frei></div>
+
+  <!-- 4 · Berichtsheft in der Freizeit? -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a" id="uhr4" style="width:170px" data-gruppe="uhr4">{{uhr}}</div>
+  <div class="a" id="zeiger4" style="width:170px;transform-origin:50% 47.5%" data-gruppe="uhr4" data-dreht>{{uhr-zeiger}}</div>
+  <div class="a seg arbeit" id="segA" style="width:440px">Arbeitszeit</div>
+  <div class="a seg frei" id="segF" style="width:290px">{{mond}}Freizeit</div>
+  <div class="a bheft" id="heft4" data-gruppe="heft"><small>Berichtsheft</small><i id="z0"></i><i id="z1"></i><i id="z2"></i><i id="z3"></i></div>
+  <div class="a" id="stift4" style="width:90px" data-gruppe="heft">{{stift}}</div>
+
+  <!-- 5 · Nach der Probezeit geschützt -->
+  <div class="a buehne quiz" id="bue5"><div class="dunkel"></div></div>
+  <div class="a spur5" id="spur5" data-gruppe="spur"></div>
+  <div class="a probe5" id="probe5" data-gruppe="spur"></div>
+  <div class="a chip gelb klein" id="chipProbe">Probezeit</div>
+  <div class="a marker" id="marker5" data-gruppe="spur"></div>
+  <div class="a" id="vertrag5" style="width:240px">{{vertrag}}</div>
+  <div class="a welle" id="welle5" style="width:260px;height:260px" data-frei></div>
+  <div class="a" id="schild5" style="width:260px">{{schild}}</div>
+  <div class="a" id="brief5" style="width:150px" data-frei>{{brief}}</div>
+  <div class="a chip brand gross" id="chipGrund"><svg class="gewicht" viewBox="0 0 34 34"><path d="M11 13V9a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v4" stroke="var(--surface)" stroke-width="3.5" fill="none"/><circle cx="17" cy="21" r="10" fill="var(--surface)"/></svg>schwerer Grund</div>
+
+  <!-- 6 · Betrieb wechseln -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <svg class="a" id="weg6" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path id="wegPfad" class="zeichnen" pathLength="1" d="" stroke="var(--b300)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </svg>
+  <div class="a" id="betA" style="width:200px">{{betrieb}}</div>
+  <div class="a badge" id="badA" data-frei>A</div>
+  <div class="a" id="betB" style="width:200px">{{betrieb~b}}</div>
+  <div class="a badge" id="badB" data-frei>B</div>
+  <div class="a punkt7" id="st1" data-frei></div>
+  <div class="a punkt7" id="st2" data-frei></div>
+  <div class="a chip brand klein" id="chipKammer">Kammer</div>
+  <div class="a chip brand klein" id="chipAP">Azubis Plus</div>
+  <div class="a pfosten" id="pfosten6" data-gruppe="schranke"></div>
+  <div class="a baum" id="baum6" data-gruppe="schranke"></div>
+  <div class="a chip klein" id="du6">Du</div>
+  <div class="a chip gelb" id="bed1">Beruf wechseln</div>
+  <div class="a chip gelb" id="bed2">wichtiger Grund</div>
+  <div class="a chip gelb" id="bed3">Betrieb stimmt zu</div>
+  <div class="a welle" id="welle6" style="width:220px;height:220px;border-color:var(--success)" data-frei></div>
+
+  <!-- 7 · Schluss -->
+  <div class="a buehne quiz" id="bue7"><div class="dunkel"></div></div>
+  <div class="a stand mythos" id="standM"></div>
+  <div class="a stand stimmt" id="standS"></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">MYTHOS – Pflicht und Arbeitszeit</div></div>
+<div class="block" id="tb2"><div class="titel">MYTHOS – nur Aufgaben für die Ausbildung</div></div>
+<div class="block" id="tb3"><div class="titel">MYTHOS – kostenlos vom Betrieb</div></div>
+<div class="block" id="tb4"><div class="titel">MYTHOS – in der Arbeitszeit</div></div>
+<div class="block" id="tb5"><div class="titel">STIMMT – nach der Probezeit gut geschützt</div></div>
+<div class="block" id="tb6"><div class="titel">STIMMT – aber nicht einfach so</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Du hast mehr Rechte, als viele denken.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Und ein paar klare Pflichten.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const Wab = (m, t) => A(wort(m, t - VERSATZ - .01));            // Wort ab Filmzeit t
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+// Landung mit Stauchung (für Gegenstände, die von oben fallen)
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 8;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ================= Mythos-Format ================= */
+// Quiz-Bühne: groß + dunkel (1680×880, Mitte x 960) → ab tK hell + klein (900×720, Mitte x 1320)
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+// Text im Bild: erstes Wort in Stempelfarbe
+function titelUrteil(id, t0, u) {
+  titelEin(id, t0);
+  $(`#${id} .w`).classList.add(u === 'mythos' ? 'rot' : 'gruen');
+}
+// Eine Behauptung: Karte – Denkpause mit Countdown – Stempel – Karte wandert als Kachel nach links oben.
+// c: Satz der Behauptung, v: Satz mit „Mythos!“/„Stimmt!“. Gibt die Zeiten zurück.
+function mythos({ i, c, v, u, tb }) {
+  const X = S(i), CX = X + 960, CY = 440, RY = 790;
+  const text = satz(c).text.replace(/[„“"]/g, '');
+  const rot = u === 'mythos';
+  WELT.insertAdjacentHTML('beforeend', `
+    <div class="a pille mythos" id="pm${i}">${tpl('svgX')}Mythos?</div>
+    <div class="a ring3" id="ring${i}"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+      <circle id="lauf${i}" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer${i}">3</b></div>
+    <div class="a pille stimmt" id="ps${i}">${tpl('svgHaken')}Stimmt?</div>
+    <div class="a karte" id="karte${i}"><div class="kchip" id="kc${i}">${tpl('svgZitat')}Behauptung</div>
+      <div id="kt${i}"><div class="titel">${text}</div></div>
+      <div class="abdruck ${u}" id="abd${i}">${rot ? 'Mythos' : 'Stimmt'}</div></div>
+    <div class="a tinte ${u}" id="tinte${i}" style="width:340px;height:136px" data-frei></div>
+    <div class="a" id="stempel${i}" style="width:360px" data-frei>${tpl(rot ? 'tplRot' : 'tplGruen')}</div>`);
+  const tIn = A(satz(c).start) - .5;
+  const c0 = SE(c) + .15, c1 = A(satz(v).start) - .1, dt = (c1 - c0) / 3;
+  const tV = A(satz(v).woerter[0].start), tK = SE(v) + .05;
+  quiz(i, tK);
+  // Karte fliegt auf einem Bogen herein, die Behauptung steigt Wort für Wort im Takt der Stimme aus der Maske
+  akteur(`karte${i}`, { x: CX, y: CY + 260, o: 0, s: .82 });
+  tw(`karte${i}`, tIn, .3, { o: 1 }); tw(`karte${i}`, tIn, .75, { y: CY, s: 1 }, 'sanft', { bogen: 60 }); cue(tIn, 'whoosh');
+  akteur(`kc${i}`, { s: 0 }, true); tw(`kc${i}`, tIn + .35, .45, { s: 1 }, 'back');
+  const wz = satz(c).woerter.map(w => A(w.start) - .12);
+  titelEin(`kt${i}`, wz[0], wz);
+  // Denkpause: Ring läuft leer, Ziffern 3 – 2 – 1, die Antworten pulsieren im Wechsel
+  pop(`ring${i}`, c0 - .35, { x: CX, y: RY });
+  ein(`pm${i}`, c0 - .3, { x: CX - 330, y: RY }, { x: 60 }); ein(`ps${i}`, c0 - .3, { x: CX + 330, y: RY }, { x: -60 });
+  for (let k = 0; k < 3; k++) { cue(c0 + k * dt, 'klick'); bump(k % 2 ? `ps${i}` : `pm${i}`, c0 + k * dt + .05, 1.08); }
+  HOOKS.push(t => {
+    const p = clamp((t - c0) / (c1 - c0));
+    $(`#lauf${i}`).style.strokeDashoffset = -p;
+    const k = Math.min(2, Math.floor((t - c0) / dt)), f = t - c0 - Math.max(0, k) * dt;
+    const z = $(`#ziffer${i}`);
+    z.textContent = 3 - Math.max(0, k);
+    z.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Urteil: Stempel fällt, schlägt auf, Abdruck + Tinte, Karte wackelt, Kamera-Akzent
+  const IX = CX + 404, IY = CY + 154, SY = IY - 91;
+  akteur(`stempel${i}`, { x: IX, y: SY - 330, o: 0, r: -3 });
+  tw(`stempel${i}`, tV - .6, .2, { o: 1 }); tw(`stempel${i}`, tV - .6, .4, { y: SY - 150 }, 'sanft');
+  tw(`stempel${i}`, tV - .16, .16, { y: SY }, 'in');
+  tw(`stempel${i}`, tV, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(`stempel${i}`, tV + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(`stempel${i}`, tV + .2, .55, { y: SY - 260 }, 'inout'); tw(`stempel${i}`, tV + .45, .3, { o: 0 });
+  akteur(`abd${i}`, { o: 0, s: 1.4, r: -3 }, true);
+  tw(`abd${i}`, tV, .04, { o: 1 }); tw(`abd${i}`, tV, .22, { s: 1 }, 'out');
+  welle(`tinte${i}`, tV, IX, IY, .8); AKTEURE.get(el(`tinte${i}`)).basis.r = -3;
+  cue(tV, 'plopp'); if (!rot) cue(tV + .05, 'erfolg');
+  akzent(tV, .05);
+  tw(`karte${i}`, tV, .07, { y: CY + 10 }, 'sinus'); tw(`karte${i}`, tV + .07, .4, { y: CY }, 'sanft');
+  wackeln(`karte${i}`, tV + .05, 3, 1.2);
+  tw(`ring${i}`, tV - .05, .3, { s: 0, o: 0 }, 'in');
+  huepfen(rot ? `pm${i}` : `ps${i}`, tV + .1, 20); tw(rot ? `ps${i}` : `pm${i}`, tV + .05, .3, { o: .35 });
+  // Erklärung: Karte wird Kachel links oben, Bühne hell und klein, Text im Bild darunter
+  aus([`pm${i}`, `ps${i}`], tK - .15, .3);
+  tw(`karte${i}`, tK, .9, { x: X + 490, y: 250, s: .55 }, 'inout');
+  titelUrteil(tb, tK + .4, u);
+  return { X, tV, tK };
+}
+
+// Schwenk zur nächsten Behauptung: kurz bevor die Stimme sie liest (die Pausen im Sprechertext geben der Erklärung Luft)
+const panVor = (n, i) => pan2(Math.max(SE(n - 1) + .25, A(satz(n).start) - 1.45), i);
+
+/* ---------- 0 · Intro: Ausbildungs-Dinge kreisen, Wippe „Deine Regeln“ / „Regeln vom Chef“, Titel ---------- */
+{
+  const X0 = S(0), MX = X0 + 960, MYI = 520;
+  quiz(0);
+  const DINGE = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'];
+  const T0 = A(0) - .25, TAUS = W('Was', 4) - .45;
+  DINGE.forEach((id, k) => {
+    const start = T0 + k * .12, ph = k * Math.PI / 3 + .5;
+    HOOKS.push(t => {
+      const e = $('#' + id), d = t - start;
+      if (d <= 0) { e.style.opacity = 0; e.style.visibility = 'hidden'; return; }
+      const auf = E.out(clamp(d / 1.4)), weg = E.inout(clamp((t - TAUS - k * .04) / .55));
+      const a = ph + d * .45 + .9 * E.inout(clamp(d / 3));
+      const r = lerp(.2, 1, auf) + .3 * weg;
+      const x = MX + 640 * r * Math.cos(a), y = MYI + 300 * r * Math.sin(a) + 8 * Math.sin(d * 2.3 + k);
+      const o = clamp(d / .35) * (1 - weg);
+      e.style.opacity = o; e.style.visibility = o < .01 ? 'hidden' : 'visible';
+      const s = lerp(.4, 1, auf) * (1 - .6 * weg);
+      e.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${2.5 * Math.sin(d * 1.7 + k)}deg) scale(${s})`;
+    });
+  });
+  cue(T0, 'whoosh');
+  // Wippe: „Deine Regeln?“ kippt nach links – „Nicht ganz.“ – „Regeln vom Chef“ – im Gleichgewicht
+  const WY = 540;
+  ein('dreh0', W('deine', 1) - .45, { x: MX, y: WY + 100 }, { y: 50 });
+  ein('wippe0', W('deine', 1) - .35, { x: MX, y: WY }, { y: 50 }, 'whoosh');
+  akteur('wpDu', { s: 0 }, true); akteur('wpChef', { s: 0 }, true);
+  tw('wpDu', W('deine', 1) - .05, .5, { s: 1 }, 'back'); cue(W('deine', 1), 'pop');
+  tw('wippe0', W('Regeln', 1), .6, { r: -3 }, 'sanft'); cue(W('Regeln', 1), 'klick');
+  wackeln('wpDu', W('Nicht', 2), 3, 3);
+  tw('wpChef', W('Chef', 3) - .1, .5, { s: 1 }, 'back'); cue(W('Chef', 3), 'pop');
+  tw('wippe0', W('Chef', 3), .7, { r: 3 }, 'sanft'); cue(W('Chef', 3) + .1, 'klick');
+  tw('wippe0', W('allein', 3), .8, { r: 0 }, 'sanft'); bump('dreh0', W('allein', 3) + .1, 1.08);
+  akzent(W('allein', 3), .03);
+  aus(['wippe0', 'dreh0'], TAUS, .4);
+  // Was stimmt? Titel steigt aus der Maske, die Stempelabdrücke schlagen auf
+  akteur('titel0', { x: MX, y: 420, o: 0 }); set('titel0', W('Was', 4) - .32, { o: 1 });
+  titelEin('tt0', W('Was', 4) - .3);
+  [['ab0a', 'ti0a', MX - 200, W('Was', 4) + .35], ['ab0b', 'ti0b', MX + 200, W('Was', 4) + .8]].forEach(([ab, ti, x, t]) => {
+    akteur(ab, { x, y: 680, o: 0, s: 1.5, r: -3 });
+    tw(ab, t, .05, { o: 1 }); tw(ab, t, .24, { s: 1 }, 'out');
+    welle(ti, t, x, 680, .8); AKTEURE.get(el(ti)).basis.r = -3;
+    cue(t, 'plopp'); akzent(t, .03);
+  });
+  huepfen('ab0a', W('Was', 4) + 1.35, 20); huepfen('ab0b', W('Was', 4) + 1.5, 20);
+}
+
+/* ---------- 1 · „Die Berufsschule ist freiwillig.“ – Mythos ---------- */
+panVor(5, 1);
+{
+  const { X, tK } = mythos({ i: 1, c: 5, v: 6, u: 'mythos', tb: 'tb1' });
+  const SX = X + 1110, SY = 510, UX = X + 1540, UY = 510;
+  ein('schule1', tK + .25, { x: SX, y: SY }, { y: 90 }, 'whoosh'); schweben('schule1', 3);
+  bump('schule1', W('Berufsschule', 7), 1.08);
+  // Pflicht: der Chip fällt von oben und schlägt unter der Schule auf
+  const tP = W('Pflicht', 7);
+  akteur('chipPflicht', { x: SX, y: 510, o: 0, s: .8 });
+  tw('chipPflicht', tP - .3, .12, { o: 1 }); tw('chipPflicht', tP - .3, .32, { y: 725, s: 1 }, 'in');
+  landen('chipPflicht', tP + .02); wackeln('chipPflicht', tP + .1, 3, 2); cue(tP, 'plopp'); akzent(tP, .04);
+  // Arbeitszeit: Stechuhr kommt, die Stempelkarte fliegt von der Schule in die Uhr, Zeiger dreht, Haken
+  ein('uhr1', W('Und', 8) - .45, { x: UX, y: UY }, { x: 80 }, 'whoosh'); ein('zeiger1', W('Und', 8) - .45, { x: UX, y: UY }, { x: 80 });
+  const tF = W('sie', 8) - .2;
+  akteur('skarte1', { x: SX, y: SY - 20, o: 0, s: .4 });
+  tw('skarte1', tF, .12, { o: 1 }); flug('skarte1', tF, .7, UX, UY - 150, 130, { s: 1 });
+  tw('skarte1', tF + .72, .25, { y: UY - 95 }, 'in'); cue(tF + .95, 'klick');
+  bump('uhr1', tF + .97, 1.06); bump('zeiger1', tF + .97, 1.06);
+  tw('zeiger1', tF + 1.0, 1.1, { r: 360 }, 'inout'); cue(tF + 1.0, 'scan');
+  const tA = W('Arbeitszeit', 8);
+  pop('haken1', tA + .25, { x: UX + 130, y: UY - 130 }, 'erfolg');
+  welle('welle1', tA + .3, UX, UY, 1);
+  pop('chipArbeit', tA + .05, { x: UX, y: 735 }, null); akzent(tA + .2, .04);
+  textAus('tb1', A(satz(9).start) - 1.75);
+}
+
+/* ---------- 2 · „Mein Chef darf mich alles machen lassen.“ – Mythos ---------- */
+panVor(9, 2);
+{
+  const { X, tK } = mythos({ i: 2, c: 9, v: 10, u: 'mythos', tb: 'tb2' });
+  const MX = X + 1110, MY = 555;
+  ein('mappeH', tK + .25, { x: MX, y: MY }, { y: 80 }, 'whoosh'); ein('mappeV', tK + .25, { x: MX, y: MY }, { y: 80 });
+  pop('chipAusb', tK + .55, { x: MX, y: 740 }, null);
+  // Aufgaben: drei Karten ploppen über der Mappe auf …
+  const tAu = W('Aufgaben', 11);
+  ['aufg0', 'aufg1', 'aufg2'].forEach((id, k) => {
+    pop(id, tAu - .1 + k * .14, { x: MX - 125 + k * 125, y: 355, r: (k - 1) * 3 });
+    // … und fallen bei „Ausbildung“ nacheinander in die Mappe
+    const t0 = W('Ausbildung', 11) - .3 + k * .16;
+    flug(id, t0, .55, MX - 20 + k * 20, MY - 10, 70, { r: 0, s: .8 }); tw(id, t0 + .45, .12, { o: 0 });
+    cue(t0 + .5, 'klick');
+  });
+  bump('mappeV', W('Ausbildung', 11) + .45, 1.06); bump('mappeH', W('Ausbildung', 11) + .45, 1.06);
+  pop('haken2', W('gehören', 11), { x: MX + 95, y: MY - 60 }, 'erfolg');
+  bump('chipAusb', W('gehören', 11) + .1, 1.12);
+  // Privat das Auto vom Chef waschen: Auto fährt herein, Schwamm schrubbt, Schaum
+  const AX = X + 1530, AY = 520, tPr = W('Privat', 12);
+  ein('auto2', tPr - .4, { x: AX, y: AY }, { x: 320 }, 'whoosh');
+  HOOKS.push(t => { const d = t - tPr + .4; if (d > 0 && d < .9) $('#auto2').style.transform += ` translateY(${-4 * Math.abs(Math.sin(d * 18)) * (1 - d / .9)}px)`; });
+  pop('chipPrivat', W('Chef', 12), { x: AX, y: 705 });
+  const tW = W('waschen', 12);
+  pop('schwamm2', tW - .25, { x: AX - 40, y: AY + 8 }, 'pop');
+  const tStop = W('nicht', 12);
+  HOOKS.push(t => {
+    const d = t - tW; if (d <= 0 || t > tStop + .1) return;
+    const f = Math.min(1, d / .2) * E.sinus(clamp((tStop + .1 - t) / .3));
+    $('#schwamm2').style.transform += ` translate(${(f * 46 * Math.sin(d * 13)).toFixed(1)}px,${(f * 12 * Math.cos(d * 26)).toFixed(1)}px)`;
+  });
+  cue(tW, 'kritzeln'); cue(tW + .45, 'kritzeln');
+  [['schaum2a', -125, -35], ['schaum2b', 45, -70], ['schaum2c', -15, 35]].forEach(([id, dx, dy], k) => {
+    pop(id, tW + .1 + k * .18, { x: AX + dx, y: AY + dy }, k ? null : 'plopp');
+    aus(id, tStop + .15 + k * .05, .3);
+  });
+  // gehört nicht dazu: rotes X schlägt auf, der Schwamm fällt weg
+  $('#x2').innerHTML = tpl('svgX');
+  akteur('x2', { x: AX, y: AY - 10, o: 0, s: 1.6 });
+  tw('x2', tStop, .05, { o: 1 }); tw('x2', tStop, .25, { s: 1 }, 'out'); cue(tStop, 'plopp'); akzent(tStop, .05);
+  wackeln('auto2', tStop + .05, 3, 1.5);
+  tw('schwamm2', tStop + .05, .5, { y: AY + 260, o: 0, r: 3 }, 'in');
+  wackeln('chipPrivat', W('dazu', 12), 3, 3);
+  textAus('tb2', A(satz(13).start) - 1.75);
+}
+
+/* ---------- 3 · „Werkzeug und Fachbücher muss ich selbst kaufen.“ – Mythos ---------- */
+panVor(13, 3);
+{
+  const { X, tK } = mythos({ i: 3, c: 13, v: 14, u: 'mythos', tb: 'tb3' });
+  const BX3 = X + 1580, BY3 = 490;
+  ein('betrieb3', tK + .3, { x: BX3, y: BY3 }, { x: 80 }, 'whoosh'); schweben('betrieb3', 3);
+  // Koffer (Ausbildung im Betrieb) und Buch (Prüfung) kommen aus dem Betrieb herüber
+  const geben = (id, t, x, y) => {
+    akteur(id, { x: BX3, y: BY3 + 40, o: 0, s: .3 });
+    tw(id, t, .15, { o: 1 }); flug(id, t, .8, x, y, 150, { s: 1 }); landen(id, t + .8);
+    bump('betrieb3', t, 1.06); cue(t, 'whoosh'); cue(t + .8, 'plopp');
+  };
+  geben('koffer3', W('Ausbildung', 15) - .1, X + 1050, 505);
+  geben('buch3', W('Prüfung', 15) - .1, X + 1270, 515);
+  huepfen('koffer3', W('brauchst', 15) + .2, 16); huepfen('buch3', W('brauchst', 15) + .32, 16);
+  // Preisschild schwingt herein, bei „kostenlos“ springt es auf 0 €
+  const tB = W('bekommst', 15), tKo = W('kostenlos', 15), PX = X + 1160, PY = 745;
+  akteur('preis3', { x: PX, y: PY - 90, o: 0, r: -14 });
+  tw('preis3', tB - .35, .2, { o: 1 }); tw('preis3', tB - .35, .45, { y: PY }, 'sanft');
+  [[9, .3], [-5, .3], [2.5, .28], [0, .3]].forEach(([r, d], k) => tw('preis3', tB - .05 + k * .3, d, { r }, 'sinus'));
+  cue(tB - .3, 'whoosh');
+  HOOKS.push(t => { const frei = t >= tKo + .05; $('#preisZ').textContent = frei ? '0' : '?'; $('#preis3').classList.toggle('frei', frei); });
+  bump('preis3', tKo + .05, 1.18); cue(tKo + .05, 'erfolg'); akzent(tKo + .05, .045);
+  welle('welle3', tKo + .1, PX, PY, 1);
+  textAus('tb3', A(satz(16).start) - 1.75);
+}
+
+/* ---------- 4 · „Das Berichtsheft muss ich in meiner Freizeit schreiben.“ – Mythos ---------- */
+panVor(16, 4);
+{
+  const { X, tK } = mythos({ i: 4, c: 16, v: 17, u: 'mythos', tb: 'tb4' });
+  const LY = 760, HY = 545, AXs = X + 1170, FXs = X + 1545;
+  ein('segA', tK + .2, { x: AXs, y: LY }, { y: 50 }, 'whoosh'); ein('segF', tK + .3, { x: FXs, y: LY }, { y: 50 });
+  ['uhr4', 'zeiger4'].forEach(id => ein(id, tK + .35, { x: X + 1110, y: 330 }, { y: 60 }));
+  schweben(['uhr4', 'zeiger4'], 3);
+  // das Heft liegt erst über der Freizeit …
+  ein('heft4', tK + .45, { x: FXs, y: HY }, { y: 70 });
+  const ZL = ['z0', 'z1', 'z2', 'z3'], BR = [190, 150, 180, 110];
+  ZL.forEach((id, k) => { akteur(id, { sx: 0 }, true); $('#' + id).style.width = BR[k] + 'px'; });
+  // … und springt bei „Zeit“ hinüber in die Arbeitszeit
+  const tZ = W('Zeit', 18) - .15;
+  flug('heft4', tZ, .7, AXs, HY, 120); landen('heft4', tZ + .7); cue(tZ, 'whoosh'); cue(tZ + .7, 'plopp');
+  tw('segF', tZ + .1, .4, { o: .45 }); bump('segA', tZ + .72, 1.06);
+  // während der Arbeit: Stift schreibt Zeile für Zeile, die Uhr läuft
+  const tS = tZ + .85, D = .55, tE = tS + ZL.length * D - D / 2;
+  const L = AXs - 125 + 24, O = HY - 90 + 20 + 22 + 16 + 4;       // linke Kante und erste Zeile im Heft
+  const spitze = (x, y) => [x + 33, y - 28];
+  akteur('stift4', { x: spitze(L, O)[0], y: spitze(L, O)[1], o: 0 });
+  tw('stift4', tS - .25, .25, { o: 1 });
+  ZL.forEach((id, k) => {
+    const y = O + k * 25, t0 = tS + k * D, [x1] = spitze(L + BR[k], y);
+    tw('stift4', t0, D / 2, { x: x1 }, 'sinus');
+    tw(id, t0, D / 2, { sx: 1 }, 'sinus'); cue(t0, 'kritzeln');
+    if (k < ZL.length - 1) { const [x0, y0] = spitze(L, y + 25); tw('stift4', t0 + D / 2, D / 2, { x: x0, y: y0 }, 'sinus'); }
+  });
+  tw('stift4', tE, .35, { o: 0, y: spitze(L, O)[1] + 60 }, 'in');
+  tw('zeiger4', tZ + .3, tE - tZ + .3, { r: 540 }, 'inout'); cue(tZ + .3, 'scan');
+  akzent(W('Arbeit', 18), .04); bump('segA', W('Arbeit', 18), 1.08);
+  huepfen('heft4', tE + .2, 14); cue(tE + .2, 'erfolg');
+  textAus('tb4', A(satz(19).start) - 1.75);
+}
+
+/* ---------- 5 · „Nach der Probezeit kann der Betrieb mir nicht einfach kündigen.“ – Stimmt ---------- */
+panVor(19, 5);
+{
+  const { X, tK } = mythos({ i: 5, c: 19, v: 20, u: 'stimmt', tb: 'tb5' });
+  const TY = 330, T0x = X + 960;
+  ein('spur5', tK + .2, { x: X + 1320, y: TY }, { y: 40 }, 'whoosh');
+  akteur('probe5', { x: T0x + 150, y: TY, sx: 0 }); tw('probe5', tK + .35, .5, { sx: 1 }, 'inout');
+  pop('chipProbe', tK + .5, { x: T0x + 150, y: TY - 58 }, null);
+  // Marker läuft durch die Probezeit
+  const tD = W('Dann', 21);
+  pop('marker5', tK + .45, { x: T0x, y: TY }, 'pop');
+  tw('marker5', tD - .5, 1.1, { x: T0x + 340 }, 'inout'); cue(tD - .5, 'scan');
+  tw('chipProbe', tD + .45, .35, { o: .7 });
+  // Vertrag, Schutzschild davor
+  ein('vertrag5', tK + .5, { x: X + 1080, y: 600 }, { y: 70 });
+  const tSch = tD + .45, SX = X + 1330, SY = 590;
+  pop('schild5', tSch, { x: SX, y: SY }, 'pop'); welle('welle5', tSch + .1, SX, SY, 1); schweben('schild5', 3);
+  akzent(tSch + .05, .03);
+  // Kündigung: Brief fliegt heran und prallt am Schild ab
+  const tKd = W('Kündigung', 21) - .1;
+  akteur('brief5', { x: X + 1700, y: 520, o: 0, s: .6 });
+  tw('brief5', tKd, .15, { o: 1 }); tw('brief5', tKd, .55, { x: SX + 125, y: SY - 20, s: 1 }, 'in');
+  bump('schild5', tKd + .55, 1.1); wackeln('schild5', tKd + .55, 3, 2); cue(tKd + .55, 'plopp');
+  tw('brief5', tKd + .55, .8, { x: X + 1640, y: 880, o: 0, s: .7 }, 'out', { bogen: 160 });
+  // nur noch aus einem schweren Grund: der Chip fällt schwer herein
+  const tG = W('schweren', 21);
+  akteur('chipGrund', { x: X + 1480, y: 640, o: 0 });
+  tw('chipGrund', tG - .3, .1, { o: 1 }); tw('chipGrund', tG - .3, .32, { y: 800 }, 'in');
+  tw('chipGrund', tG + .02, .1, { sy: .78, sx: 1.12 }, 'sinus'); tw('chipGrund', tG + .12, .5, { sy: 1, sx: 1 }, 'sanft');
+  cue(tG + .02, 'plopp'); akzent(tG + .02, .05);
+  textAus('tb5', A(satz(22).start) - 1.75);
+}
+
+/* ---------- 6 · „Ich kann meinen Ausbildungsbetrieb wechseln.“ – Stimmt, aber nicht einfach so ---------- */
+panVor(22, 6);
+{
+  const { X, tK } = mythos({ i: 6, c: 22, v: 23, u: 'stimmt', tb: 'tb6' });
+  // Weg von Betrieb A nach Betrieb B (weicher Bogen nach unten)
+  const P = [[X + 1010, 440], [X + 1150, 560], [X + 1490, 560], [X + 1630, 440]];
+  const bez = s => [0, 1].map(k => (1 - s) ** 3 * P[0][k] + 3 * (1 - s) ** 2 * s * P[1][k] + 3 * (1 - s) * s * s * P[2][k] + s ** 3 * P[3][k]);
+  $('#wegPfad').setAttribute('d', `M${P[0][0] - X} ${P[0][1]}C${P[1][0] - X} ${P[1][1]} ${P[2][0] - X} ${P[2][1]} ${P[3][0] - X} ${P[3][1]}`);
+  $('#wegPfad').style.strokeDasharray = '1 1';
+  akteur('weg6', { x: X + 960, y: 540, o: 0, draw: 0 });
+  tw('weg6', tK + .6, .1, { o: 1 }); tw('weg6', tK + .6, .8, { draw: 1 }, 'inout');
+  ein('betA', tK + .3, { x: X + 1010, y: 330 }, { y: 70 }, 'whoosh'); ein('betB', tK + .4, { x: X + 1630, y: 330 }, { y: 70 });
+  pop('badA', tK + .6, { x: X + 1070, y: 270 }, null); pop('badB', tK + .7, { x: X + 1690, y: 270 }, null);
+  // Schranke auf dem Weg
+  const [sx, sy] = bez(.76);
+  pop('pfosten6', tK + .9, { x: sx, y: sy - 30 }, 'pop');
+  akteur('baum6', { x: sx - 60, y: sy - 70, sx: 0 }); tw('baum6', tK + 1.0, .45, { sx: 1 }, 'sanft');
+  // „Du“ geht los und bleibt an der Schranke hängen
+  const auf = s => { const [x, y] = bez(s); return [x, y - 36]; };
+  const hops = (t0, von, bis, n, d = .38) => {
+    for (let k = 1; k <= n; k++) { const [x, y] = auf(lerp(von, bis, k / n)); const t = t0 + (k - 1) * (d + .04);
+      tw('du6', t, d, { x, y }, 'inout', { bogen: 34 }); landen('du6', t + d); cue(t + d, 'klick'); }
+  };
+  const [dx0, dy0] = auf(.06);
+  pop('du6', tK + 1.2, { x: dx0, y: dy0 });
+  hops(W('Probezeit', 24) - .2, .06, .54, 3);
+  const tN = W('nur', 24);
+  wackeln('baum6', tN, 3, 2); wackeln('pfosten6', tN, 3, 1); cue(tN, 'plopp'); akzent(tN, .03);
+  // drei Bedingungen ploppen auf
+  [['bed1', X + 1120, 700, W('Beruf', 24)], ['bed2', X + 1520, 700, W('wichtigen', 24)], ['bed3', X + 1320, 790, W('zustimmt', 24)]].forEach(([id, x, y, t]) => {
+    ein(id, t - .15, { x, y }, { y: 50 }, 'pop'); bump('baum6', t + .1, 1.05);
+  });
+  // Hol dir vorher Rat: Stationen Kammer und Azubis Plus – „Du“ holt sich Rat
+  const tH = W('Hol', 25), tV = W('vorher', 25), tR = W('Rat', 25);
+  const [k1x, k1y] = bez(.3), [k2x, k2y] = bez(.47);
+  pop('st1', tH - .1, { x: k1x, y: k1y }, null); pop('chipKammer', tH, { x: k1x, y: k1y - 100 });
+  pop('st2', tV - .2, { x: k2x, y: k2y }, null); pop('chipAP', tV - .1, { x: k2x + 20, y: k2y + 70 });
+  hops(tH + .2, .54, .3, 1, .5);
+  hops(tV + .1, .3, .47, 1, .45);
+  HOOKS.push(t => { $('#st1').classList.toggle('ok', t >= tH + .7); $('#st2').classList.toggle('ok', t >= tV + .55); });
+  bump('chipKammer', tH + .7, 1.12); cue(tH + .7, 'ding'); bump('chipAP', tV + .55, 1.12); cue(tV + .55, 'ding');
+  // Schranke öffnet sich, „Du“ kommt bei Betrieb B an
+  const tO = tR + .15;
+  tw('baum6', tO, .45, { sx: .12 }, 'inout'); cue(tO, 'scan');
+  hops(tO + .3, .47, .94, 3, .36);
+  const tAn = tO + .3 + 3 * .4;
+  bump('betB', tAn, 1.08); welle('welle6', tAn + .05, X + 1630, 330, 1); cue(tAn, 'erfolg'); akzent(tAn, .04);
+  textAus('tb6', A(satz(26).start) - 1.75);
+}
+
+/* ---------- 7 · Wie viele hattest du richtig? ---------- */
+panVor(26, 7);
+{
+  const X = S(7);
+  quiz(7);
+  const KARTEN = [['Berufsschule freiwillig', 'mythos'], ['Chef darf alles', 'mythos'], ['Material selbst kaufen', 'mythos'],
+    ['Berichtsheft in der Freizeit', 'mythos'], ['Nach der Probezeit geschützt', 'stimmt'], ['Betrieb wechseln', 'stimmt']];
+  $('#standM').innerHTML = `${tpl('svgX')}<span><span id="zM">0</span> × Mythos</span>`;
+  $('#standS').innerHTML = `${tpl('svgHaken')}<span><span id="zS">0</span> × Stimmt</span>`;
+  const t0 = A(satz(26).start) - .55;
+  ein('standM', t0, { x: X + 760, y: 290 }, { y: -50 }, 'whoosh'); ein('standS', t0 + .1, { x: X + 1160, y: 290 }, { y: -50 });
+  const dk = (W('richtig', 26) + .4 - (t0 + .4)) / KARTEN.length, LAND = [];
+  KARTEN.forEach(([txt, u], k) => {
+    const id = 'mini' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a mini" id="${id}">${txt}<div class="abdruck ${u}" id="mab${k}">${u === 'mythos' ? 'Mythos' : 'Stimmt'}</div></div>`);
+    const x = X + 960 + (k % 3 - 1) * 400, y = 525 + Math.floor(k / 3) * 195, ts = t0 + .4 + k * dk;
+    akteur(id, { x: x - 260, y: y + 160, o: 0, s: .6 });
+    tw(id, ts, .15, { o: 1 }); tw(id, ts, .85, { x, y, s: 1 }, 'inout', { bogen: 50 }); cue(ts, 'whoosh');
+    akteur('mab' + k, { o: 0, s: 1.5, r: -3 }, true); tw('mab' + k, ts + .45, .04, { o: 1 }); tw('mab' + k, ts + .45, .2, { s: 1 }, 'out');
+    cue(ts + .45, 'plopp'); LAND.push([ts + .45, u]);
+    bump(u === 'mythos' ? 'standM' : 'standS', ts + .45, 1.08);
+  });
+  HOOKS.push(t => {
+    $('#zM').textContent = LAND.filter(([z, u]) => u === 'mythos' && t >= z).length;
+    $('#zS').textContent = LAND.filter(([z, u]) => u === 'stimmt' && t >= z).length;
+  });
+  const tE = LAND.at(-1)[0] + .4;
+  huepfen('standM', tE, 16); huepfen('standS', tE + .12, 16); cue(tE, 'erfolg'); akzent(tE, .04);
+}
+
+/* ---------- Abspann ---------- */
+const AB = Math.max(ENDE_SPRACHE, 0) + 2.6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
