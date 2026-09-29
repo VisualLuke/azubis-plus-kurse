@@ -16,6 +16,9 @@ node werkzeug/rendern.mjs lernvideos/01-krankenkasse            # film.mp4 + fil
 Stimmen: Erklärvideos meist Erzähler (`K8bIZwDsGMHreGKTIVHN`), einzelne Erzählerin (`oClOrzqamOXmtcB8iqTj`);
 Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 
+**Stand 29.09.2026:** alle 45 fertig. Die aktuelle Fassung jedes Videos ist `film.mp4` im Kursordner (mit `film-poster.png`
+und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
+
 | Nr. | Thema | Format | Stimme | Länge | Status |
 | --- | --- | --- | --- | --- | --- |
 | 1 | [Krankenkasse & Versichertenkarte](01-krankenkasse/) | Erklärvideo | Erzähler | 1:48 | fertig |

@@ -14,9 +14,10 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 
 ### Lernvideos
 
-Die 30 Lernvideos aus dem Briefing liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
+Die 45 Lernvideos aus den Briefings liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
 
-Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine Untertitel – die Kursseite in der
+Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine eingebrannten Untertitel (die gibt es als abschaltbare
+Spur `film.vtt` für den Player) – die Kursseite in der
 App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
 
 ## Ein Kurs entsteht so
