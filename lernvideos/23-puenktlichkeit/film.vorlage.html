@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Heimat vs. Deutschland: Pünktlichkeit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+.block .titel{font-size:64px;line-height:74px}
+
+/* ---------- Format „Heimat vs. Deutschland“: geteilte Bühne ---------- */
+.buehne.geteilt{width:1680px;height:880px;border-radius:48px;overflow:hidden;background:var(--b50)}
+.geteilt .seite{position:absolute;top:0;bottom:0}
+.geteilt .seite.l{left:0;background:linear-gradient(var(--b50),var(--b100))}
+.geteilt .seite.l .warm{position:absolute;inset:0;background:linear-gradient(165deg,var(--warning-bg),var(--b50) 75%)}
+.geteilt .seite.r{right:0;background:linear-gradient(195deg,var(--b100),var(--b50) 80%)}
+.geteilt .eins{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,var(--surface),var(--b50) 45%,var(--b100))}
+.geteilt .matt{position:absolute;top:0;bottom:0;background:var(--surface)}
+.geteilt .linie{position:absolute;top:0;width:60px;height:880px}
+.geteilt .knauf{position:absolute;top:392px;width:96px;height:96px;border-radius:999px;background:var(--surface);
+  box-shadow:0 8px 24px rgba(22,19,37,.14);display:flex;align-items:center;justify-content:center}
+.geteilt .knauf svg{position:absolute;width:52px}
+.geteilt .knauf b{position:absolute;font:800 52px/1 Inter;color:var(--b500)}
+/* Beschriftung der Seiten */
+.seitenchip{display:flex;align-items:center;gap:14px;padding:12px 28px 12px 22px;border-radius:999px;background:var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09);font:700 30px/36px Inter;color:var(--ink);white-space:nowrap}
+.seitenchip i{width:18px;height:18px;border-radius:999px;background:var(--warning)}
+.seitenchip.de i{background:var(--b500)}
+.rechts{left:auto;right:0}
+.kz .titel{font:700 64px/74px Inter;letter-spacing:-.02em;white-space:nowrap}
+.kz.rechts{text-align:right}
+/* Titelplatte */
+.platte{padding:30px 64px 36px;border-radius:36px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.14);text-align:center;white-space:nowrap}
+.platte .unter{font:700 30px/36px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin:0 0 8px}
+.platte .titel{font:800 96px/104px Inter;letter-spacing:-.03em}
+.platte.klein .titel{font-size:76px;line-height:86px}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.lila{background:var(--b500)} .plakette.gelb{background:var(--warning)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait.sitz{position:absolute}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.boegen path{fill:none;stroke-linecap:round}
+
+/* Raum mit Schiebetür (Szene 3) */
+.raum{width:560px;height:330px;border-radius:30px;overflow:hidden;background:linear-gradient(var(--surface),var(--b50));
+  border:10px solid var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.14)}
+.raum .fenster{position:absolute;left:210px;top:26px;width:120px;height:70px;border-radius:12px;background:var(--b100)}
+.raum .tischlang{position:absolute;left:40px;right:40px;bottom:34px;height:30px;border-radius:12px;background:linear-gradient(var(--b300),var(--b400))}
+.raum .tuer{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(var(--b500),var(--b600))}
+.raum .tuer.l{left:0;border-right:3px solid var(--b700)} .raum .tuer.r{right:0;border-left:3px solid var(--b700)}
+.raum .tuer i{position:absolute;top:40px;bottom:40px;width:8px;border-radius:4px;background:var(--b300)}
+.raum .tuer.l i{right:22px} .raum .tuer.r i{left:22px}
+.raum .schildt{position:absolute;left:180px;top:118px;width:180px;padding:12px 0;border-radius:18px;background:var(--surface);
+  box-shadow:0 6px 18px rgba(22,19,37,.2);text-align:center;font:800 40px/44px Inter;color:var(--ink)}
+.raum .schildt small{display:block;font:700 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+
+/* Zeitstrahl (Szene 3) */
+.zeitstrahl{width:1000px;height:120px}
+.zeitstrahl .bar{position:absolute;left:40px;right:40px;top:52px;height:14px;border-radius:7px;background:var(--b200)}
+.zeitstrahl .zone{position:absolute;left:40px;width:613px;top:44px;height:30px;border-radius:15px;background:var(--success-bg);border:4px solid var(--success);transform-origin:right center}
+.zeitstrahl .mk{position:absolute;top:84px;width:120px;margin-left:-60px;text-align:center;font:700 26px/30px Inter;color:var(--n700)}
+.zeitstrahl .strich{position:absolute;top:44px;width:6px;height:30px;margin-left:-3px;border-radius:3px;background:var(--b400)}
+.zeitstrahl .ziel{position:absolute;top:28px;width:16px;height:62px;margin-left:-8px;border-radius:8px;background:var(--b600)}
+.zeitstrahl .mini{position:absolute;top:0;width:60px;height:60px;margin-left:-30px;border-width:4px}
+.zeitstrahl .hak{position:absolute;left:653px;top:-6px;margin-left:-32px}
+
+/* Kalender (Szene 5) */
+.kal{width:240px;height:236px;border-radius:24px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.14);overflow:hidden}
+.kal .kopf{height:46px;background:linear-gradient(var(--b500),var(--b600))}
+.kal .kopf i{position:absolute;top:-8px;width:12px;height:26px;border-radius:6px;background:var(--b700)}
+.kal .reihe{position:absolute;left:18px;right:18px;height:30px;display:flex;gap:6px}
+.kal .reihe u{flex:1;border-radius:7px;background:var(--n200)}
+.kal .reihe .voll{position:absolute;inset:0;border-radius:8px;background:var(--b200);transform-origin:left center}
+.kal .punkt{position:absolute;width:26px;height:26px;border-radius:999px;margin:-13px 0 0 -13px}
+
+/* Handy mit Chat (Szene 6) */
+.schirm{border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.chat{background:var(--b50);padding:14px 12px;gap:12px}
+.chat .kopf{height:38px;border-radius:10px;background:var(--b500);color:var(--surface);font:700 18px/38px Inter;padding-left:14px;white-space:nowrap}
+.blase{max-width:150px;font:700 19px/24px Inter;padding:10px 13px;white-space:pre-wrap}
+.blase.ich{align-self:flex-end;background:var(--b500);color:var(--surface);border-radius:16px 16px 4px 16px;min-height:44px;min-width:40px}
+.blase.du{align-self:flex-start;background:var(--surface);color:var(--ink);border-radius:16px 16px 16px 4px;box-shadow:0 2px 6px rgba(22,19,37,.1)}
+.haken2{align-self:flex-end;font:800 16px/16px Inter;color:var(--success-text);letter-spacing:-3px;margin-top:-6px}
+
+/* Anzeigetafel und Puffer (Szene 7) */
+.tafel{width:620px;height:190px;border-radius:26px;background:linear-gradient(var(--b700),var(--ink));box-shadow:0 14px 40px rgba(22,19,37,.25);
+  padding:26px 30px;display:flex;flex-direction:column;gap:18px}
+.tafel .zl{height:58px;display:flex;align-items:center;gap:20px}
+.tafel .zl svg{width:58px;flex:none}
+.tafel .zl b{font:800 40px/44px Inter;color:var(--surface);width:110px}
+.tafel .zl i{height:12px;width:150px;border-radius:6px;background:var(--b600)}
+.tafel .zl.blass{opacity:.45}
+.tafel .status{margin-left:auto;position:relative;width:170px;height:52px}
+.tafel .status span{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;font:800 28px/1 Inter;white-space:nowrap}
+.tafel .status .alt{background:var(--b600);color:var(--b200);letter-spacing:4px}
+.tafel .status .neu{background:var(--warning);color:var(--ink)}
+.puffer{width:760px;height:100px}
+.puffer .seg{position:absolute;top:30px;height:44px;border-radius:14px;font:700 22px/44px Inter;text-align:center;white-space:nowrap;overflow:hidden}
+.puffer .fahrt{left:0;width:380px;background:var(--b300);color:var(--surface)}
+.puffer .puf{left:388px;width:230px;background:var(--success-bg);border:4px solid var(--success);color:var(--success-text);line-height:36px;transform-origin:left center;text-align:right;padding-right:14px}
+.puffer .spaet{left:394px;width:104px;top:36px;height:32px;line-height:32px;border-radius:10px;line-height:36px;background:var(--warning);color:var(--ink);font-size:20px}
+.puffer .ziel{position:absolute;left:676px;top:6px;width:14px;height:92px;border-radius:7px;background:var(--b600)}
+.puffer .fahne{position:absolute;left:690px;top:6px;width:44px;height:34px;border-radius:0 10px 10px 0;background:var(--b500)}
+.puffer .hak{position:absolute;left:683px;top:26px;margin:-32px 0 0 -32px}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgUhr"><svg viewBox="0 0 40 40"><circle cx="20" cy="21" r="13" fill="var(--surface)"/><path d="M20 21v-7M20 21l5 3" stroke="var(--b600)" stroke-width="3.5" stroke-linecap="round"/></svg></template>
+<template id="svgTel"><svg viewBox="0 0 24 24"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="var(--surface)"/></svg></template>
+<template id="f-mai">{{figur-mai}}</template>
+<template id="f-kwame">{{figur-kwame}}</template>
+<template id="f-jonas">{{figur-jonas}}</template>
+<template id="f-amir">{{figur-amir}}</template>
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne geteilt" id="bue0"></div>
+  <div class="a buehne geteilt" id="bue1"></div>
+  <div class="a buehne geteilt" id="bue2"></div>
+  <div class="a buehne geteilt" id="bue3"></div>
+  <div class="a buehne hell" id="bue4"></div>
+  <div class="a buehne hell" id="bue5"></div>
+  <div class="a buehne hell" id="bue6"></div>
+
+  <!-- 0 · zwei Uhren, die Bühne teilt sich -->
+  <div class="a" id="uhr0L" style="width:240px;height:240px"></div>
+  <div class="a" id="uhr0R" style="width:240px;height:240px"></div>
+  <div class="a platte" id="pl0"><div id="pl0t"><div class="unter">Heimat vs. Deutschland:</div><div class="titel">Pünktlichkeit</div></div></div>
+
+  <!-- 1 · In vielen Ländern: Zeit ist flexibel -->
+  <div class="a kz" id="kz1"><div id="kz1t"><div class="titel">Zeit ist flexibel</div></div></div>
+  <div class="a" id="uhr1L" style="width:210px;height:210px"></div>
+  <div class="a" id="uhr1R" style="width:170px;height:170px"></div>
+  <svg class="a boegen" id="boegen1" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g id="bg1a"><path class="zeichnen" pathLength="1" d="M538 486C556 430 604 416 634 450" stroke="var(--warning)" stroke-width="7"/></g>
+    <g id="bg1b"><path class="zeichnen" pathLength="1" d="M766 450C796 416 844 430 862 486" stroke="var(--warning)" stroke-width="7"/></g></svg>
+  <div class="a portrait" id="mai1" data-figur="mai" style="width:170px;height:170px" data-gruppe="tisch1"></div>
+  <div class="a portrait" id="kwame1" data-figur="kwame" style="width:170px;height:170px" data-gruppe="tisch1"></div>
+  <div class="a portrait" id="jonas1" data-figur="jonas" style="width:170px;height:170px" data-gruppe="tisch1"></div>
+  <div class="a" id="tisch1" style="width:380px" data-gruppe="tisch1">{{tisch}}</div>
+  <div class="a" id="tasse1a" style="width:100px" data-gruppe="tisch1">{{tasse}}</div>
+  <div class="a" id="tasse1b" style="width:100px" data-gruppe="tisch1">{{tasse~b}}</div>
+  <div class="a" id="tasse1c" style="width:100px" data-gruppe="tisch1">{{tasse~c}}</div>
+  <div class="a welle" id="welle1" style="width:560px;height:560px;border-color:var(--warning)" data-frei></div>
+
+  <!-- 2 · In Deutschland: 10 Uhr = 10 Uhr -->
+  <div class="a" id="uhr2L" style="width:170px;height:170px"></div>
+  <div class="a kz rechts" id="kz2"><div id="kz2t"><div class="titel">10 Uhr = 10 Uhr</div></div></div>
+  <div class="a" id="uhr2" style="width:210px;height:210px"></div>
+  <div class="a raum" id="raum2">
+    <div class="portrait sitz" id="mai2" data-figur="mai" style="left:92px;top:40px;width:150px;height:150px"></div>
+    <div class="portrait sitz" id="kwame2" data-figur="kwame" style="left:298px;top:40px;width:150px;height:150px"></div>
+    <div class="tischlang"></div>
+    <div class="tuer l" id="tl2"><i></i></div><div class="tuer r" id="tr2"><i></i></div>
+    <div class="schildt" id="ts2"><small>Treffen</small>10:00</div></div>
+  <div class="a portrait" id="jonas2" data-figur="jonas" style="width:150px;height:150px"></div>
+  <div class="a chip gelb" id="plus2">+5 Min.</div>
+  <div class="a zeitstrahl" id="zeit2"><div class="bar"></div><div class="zone" id="zone2"></div>
+    <div class="strich" style="left:40px"></div><div class="strich" style="left:347px"></div><div class="ziel" style="left:653px"></div><div class="strich" style="left:960px"></div>
+    <div class="mk" style="left:40px">9:50</div><div class="mk" style="left:347px">9:55</div><div class="mk" style="left:653px">10:00</div><div class="mk" style="left:960px">10:05</div>
+    <div class="portrait mini" id="mm2" data-figur="mai" style="left:653px"></div>
+    <div class="portrait mini" id="km2" data-figur="kwame" style="left:653px"></div>
+    <div class="plakette gruen hak" id="ok2"></div></div>
+
+  <!-- 3 · Pünktlich = Respekt -->
+  <div class="a welle" id="welle3" style="width:460px;height:460px;border-color:var(--success)" data-frei></div>
+  <div class="a" id="herz3" style="width:260px" data-gruppe="hu">{{herz}}</div>
+  <div class="a" id="uhr3" style="width:220px;height:220px" data-gruppe="hu"></div>
+  <div class="a portrait" id="mai3" data-figur="mai" style="width:200px;height:200px"></div>
+  <div class="a portrait" id="jonas3" data-figur="jonas" style="width:200px;height:200px"></div>
+  <div class="a platte klein" id="pl3"><div id="pl3t"><div class="titel">Pünktlich = Respekt</div></div></div>
+
+  <!-- 4 · Arbeit, Schule, Arzt, Behörde -->
+  <div class="a" id="uhr4" style="width:110px;height:110px"></div>
+  <div class="a" id="wb4" style="width:250px">{{werkbank}}</div>
+  <div class="a" id="sch4" style="width:250px">{{schule}}</div>
+  <div class="a" id="pr4" style="width:250px">{{praxis}}</div>
+  <div class="a" id="amt4" style="width:250px" data-gruppe="amt">{{amt}}</div>
+  <div class="a" id="tuer4" style="width:250px" data-gruppe="amt"><div id="tuer4i" style="transform-origin:36.25% 50%">{{amt-tuer}}</div></div>
+  <div class="a plakette lila" id="pk4a" data-frei></div>
+  <div class="a plakette lila" id="pk4b" data-frei></div>
+  <div class="a plakette lila" id="pk4c" data-frei></div>
+  <div class="a plakette lila" id="pk4d" data-frei></div>
+  <div class="a portrait" id="amir4" data-figur="amir" style="width:140px;height:140px"></div>
+  <div class="a kal" id="kal4"><div class="kopf"><i style="left:56px"></i><i style="left:172px"></i></div>
+    <div class="reihe" style="top:64px"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><div class="voll" id="r4a"></div></div>
+    <div class="reihe" style="top:104px"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><div class="voll" id="r4b"></div></div>
+    <div class="reihe" style="top:144px"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><div class="voll" id="r4c"></div></div>
+    <div class="reihe" style="top:184px"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><div class="voll" id="r4d"></div></div>
+    <div class="punkt" id="ziel4" style="left:186px;top:199px;background:var(--success)"></div>
+    <div class="punkt" id="lauf4" style="left:0;top:0;background:var(--b600);border:4px solid var(--surface)"></div></div>
+
+  <!-- 5 · Zu spät? Vorher Bescheid geben -->
+  <div class="a" id="uhr5" style="width:180px;height:180px"></div>
+  <div class="a" id="bus5" style="width:380px" data-gruppe="bus">{{bus}}</div>
+  <div class="a portrait" id="amir5" data-figur="amir" style="width:110px;height:110px" data-gruppe="bus"></div>
+  <div class="a" id="handy5" style="width:520px" data-gruppe="handy5">{{handy}}</div>
+  <div class="a schirm chat" id="schirm5" style="width:190px;height:345px" data-gruppe="handy5"><div class="kopf">Betrieb</div>
+    <div class="blase ich" id="blase5"><span id="tipp5"></span></div><div class="haken2" id="hak5">✓✓</div>
+    <div class="blase du" id="antw5">Danke für die Info!</div></div>
+  <div class="a plakette lila" id="ruf5" data-frei></div>
+  <div class="a plakette gruen" id="ok5" data-frei></div>
+  <div class="a welle" id="klingel5" style="width:120px;height:120px" data-frei></div>
+
+  <!-- 6 · Bahn: +15 Min., Puffer -->
+  <div class="a tafel" id="tafel6">
+    <div class="zl"><svg viewBox="0 0 60 60"><rect x="8" y="10" width="44" height="36" rx="10" fill="var(--b400)"/><rect x="14" y="16" width="32" height="12" rx="3" fill="var(--b100)"/><circle cx="20" cy="37" r="3.5" fill="var(--warning)"/><circle cx="40" cy="37" r="3.5" fill="var(--warning)"/><path d="M18 46l-5 8M42 46l5 8" stroke="var(--b400)" stroke-width="4" stroke-linecap="round"/></svg>
+      <b>9:40</b><i></i><div class="status"><span class="alt">· · ·</span><span class="neu" id="neu6">+15 Min.</span></div></div>
+    <div class="zl blass"><svg viewBox="0 0 60 60"><rect x="8" y="10" width="44" height="36" rx="10" fill="var(--b400)"/><rect x="14" y="16" width="32" height="12" rx="3" fill="var(--b100)"/><path d="M18 46l-5 8M42 46l5 8" stroke="var(--b400)" stroke-width="4" stroke-linecap="round"/></svg>
+      <b>9:55</b><i style="width:120px"></i><div class="status"><span class="alt">· · ·</span></div></div></div>
+  <div class="a" id="bahn6" style="width:320px">{{bahn}}</div>
+  <div class="a portrait" id="amir6" data-figur="amir" style="width:150px;height:150px"></div>
+  <div class="a puffer" id="puf6"><div class="seg fahrt" id="fahrt6">Fahrt</div><div class="seg puf" id="pp6">Puffer</div>
+    <div class="ziel"></div><div class="fahne" id="fahne6"></div><div class="seg spaet" id="sp6">+15</div><div class="plakette gruen hak" id="ok6"></div></div>
+</div></div>
+
+<div class="block" id="tb4"><div class="titel">Arbeit · Schule</div><div class="titel">Arzt · Behörde</div></div>
+<div class="block" id="tb5"><div class="titel">Zu spät? Vorher Bescheid geben</div></div>
+<div class="block" id="tb6"><div class="titel">Tipp: immer etwas Puffer einplanen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Ein paar Minuten vorher.</div>
+  <div class="klein" id="asUnter">In Deutschland heißt pünktlich: ein paar Minuten vorher da sein.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const W2 = (m, n) => A(wort(m, wort(m, satz(n).start - .01) + .05));   // zweites Vorkommen
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { if (!AKTEURE.get(el(id))) akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+// Auftritt auf einem Bogen: von (x0,y0) nach basis, mit Stauchen bei der Landung
+const bogenEin = (id, t, basis, x0, y0, h = 90, d = .75, snd = 'whoosh') => {
+  akteur(id, { ...basis, x: x0, y: y0, o: 0, s: (basis.s ?? 1) * .8 });
+  tw(id, t, .3, { o: 1 }); flug(id, t, d, basis.x, basis.y, h, { s: basis.s ?? 1 });
+  tw(id, t + d - .02, .14, { sy: .92, sx: 1.05 }, 'sinus'); tw(id, t + d + .12, .45, { sy: 1, sx: 1 }, 'sanft'); if (snd) cue(t, snd);
+};
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) $('#' + id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+['ok2', 'ok5', 'ok6'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+['pk4a', 'pk4b', 'pk4c', 'pk4d'].forEach(id => el(id).innerHTML = tpl('svgUhr'));
+el('ruf5').innerHTML = tpl('svgTel');
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = `<div class="figur"><div class="ebene">${tpl('f-' + p.dataset.figur)}</div>${tpl('gesicht')}</div>`; });
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente, Tiefe ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 7;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren (nur Porträts): lächeln, blinzeln, nicken, Blick zur Seite; niemand außer dem Erzähler spricht ---------- */
+const FROH = [], BLICK = [];      // [id, von, bis] · [id, von, bis, dx in %]
+HOOKS.push(t => {
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const froh = FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.opacity = 0;
+    p.querySelector('.froh').style.opacity = froh ? 1 : 0;
+    p.querySelector('.zu').style.opacity = froh ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    let dx = 0;
+    for (const [id, a, b, w] of BLICK) if (id === p.id) dx += w * clamp((t - a) / .25) * (1 - clamp((t - b) / .3));
+    p.querySelector('.augen').style.transform = `translateX(${dx.toFixed(2)}%) scaleY(${z < .035 ? .12 : 1})`;
+    const nick = 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+  });
+});
+
+/* ---------- Uhr: kurve(t) → Minuten seit 0 Uhr, sek(t) → Sekunden (Sekundenzeiger) oder null, keil(t) → [ab, deckkraft] ---------- */
+function uhr(id, { ring = 'var(--b500)', kurve, sek = null, keil = null, warmAb = null }) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="${ring}"/>
+    ${warmAb != null ? `<circle id="${id}w" cx="80" cy="80" r="66" fill="var(--warning)"/>` : ''}<circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <circle id="${id}k" cx="80" cy="80" r="25" fill="none" stroke="var(--error-bg)" stroke-width="50" pathLength="1" style="stroke-dasharray:0 1"/>
+    <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/>
+    ${sek ? `<path id="${id}s" d="M80 92V34" stroke="var(--error)" stroke-width="2.6" stroke-linecap="round"/>` : ''}
+    <circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = kurve(t);
+    if (warmAb != null) $(`#${id}w`).style.opacity = clamp((t - warmAb) / .8);
+    $(`#${id}h`).setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+    if (sek) { const s = sek(t), z = $(`#${id}s`); z.style.opacity = s == null ? 0 : 1; if (s != null) z.setAttribute('transform', `rotate(${s * 6} 80 80)`); }
+    const k = $(`#${id}k`);
+    if (keil) { const [ab, o] = keil(t), f = clamp((m - ab) / 60); k.style.strokeDasharray = `${f.toFixed(4)} 1`; k.setAttribute('transform', `rotate(${(ab % 60) * 6 - 90} 80 80)`); k.style.opacity = o; }
+  });
+}
+// Sekundenzeiger im Takt: springt jede Sekunde mit kleinem Überschwung; bei t0 steht er auf 0
+const takt = (t, t0) => { const u = t - t0 + .22, n = Math.floor(u), f = u - n; return n - 1 + E.back(clamp(f / .22)); };
+const tickCues = (von, bis, t0) => { for (let k = Math.ceil(von - t0); t0 + k - .22 < bis; k++) if (t0 + k - .22 >= von) cue(t0 + k - .22, 'klick'); };
+
+/* ================= Format „Heimat vs. Deutschland“: geteilte Bühne ================= */
+// Bühne 1680×880 (Mitte x 960). Links „In vielen Ländern“ (warm), rechts „In Deutschland“ (kühl), dazwischen eine
+// weich geschwungene Linie mit Knauf. Die Linie zeichnet sich, wandert zur Seite, die gerade erzählt wird (die andere
+// Seite wird matt), und löst sich auf, wenn beide Seiten zusammenkommen.
+const TEILE = [];
+function geteilt(i, { teil = 840, linie = 1, warm = 1, mattL = 0, mattR = 0, knauf = 1, chips = true } = {}) {
+  const X = S(i), b = el('bue' + i);
+  b.innerHTML = `<div class="seite l" id="sl${i}"><div class="warm" id="warm${i}"></div></div><div class="seite r" id="sr${i}"></div>
+    <div class="matt" id="ml${i}"></div><div class="matt" id="mr${i}"></div><div class="eins" id="ei${i}"></div>
+    <svg class="linie" id="li${i}" viewBox="0 0 60 880"><path class="zeichnen" pathLength="1" d="M30 0C14 150 46 290 30 440S14 730 30 880" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" fill="none"/></svg>
+    <div class="knauf" id="kn${i}"><svg id="kp${i}" viewBox="0 0 52 52"><path d="M10 19h30m-8-8 8 8-8 8M42 33H12m8-8-8 8 8 8" stroke="var(--b500)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><b id="kf${i}">?</b></div>`;
+  akteur(b, { x: X + 960, y: 540 });
+  const tr = document.createElement('div'); tr.id = 'teil' + i; tr.style.display = 'none'; document.body.appendChild(tr);
+  akteur(tr, { x: teil });
+  akteur('warm' + i, { o: warm }, true); akteur('ml' + i, { o: mattL * .6 }, true); akteur('mr' + i, { o: mattR * .6 }, true);
+  akteur('li' + i, { draw: linie, o: 1 }, true); akteur('ei' + i, { o: 0 }, true); akteur('kn' + i, { s: knauf }, true);
+  akteur('kp' + i, {}, true); akteur('kf' + i, { o: 0, s: .5 }, true);
+  TEILE.push(i);
+  let ch = null;
+  if (chips) {
+    WELT.insertAdjacentHTML('beforeend', `<div class="a seitenchip" id="chL${i}"><i></i>In vielen Ländern</div><div class="a seitenchip de rechts" id="chR${i}"><i></i>In Deutschland</div>`);
+    akteur('chL' + i, { x: X + 180, y: 170, o: 1 - mattL * .55 }, true); akteur('chR' + i, { x: X - 180, y: 170, o: 1 - mattR * .55 }, true);
+    ch = ['chL' + i, 'chR' + i];
+  }
+  return ch;
+}
+HOOKS.push(t => TEILE.forEach(i => {
+  const p = wert(AKTEURE.get(el('teil' + i)), 'x', t);
+  el('sl' + i).style.width = p + 'px'; el('sr' + i).style.width = (1680 - p) + 'px';
+  el('ml' + i).style.left = '0px'; el('ml' + i).style.width = p + 'px';
+  el('mr' + i).style.left = p + 'px'; el('mr' + i).style.width = (1680 - p) + 'px';
+  el('li' + i).style.left = (p - 30) + 'px'; el('kn' + i).style.left = (p - 48) + 'px';
+}));
+// Linie wandert: nach links (rechte Seite erzählt) oder rechts (linke Seite erzählt); die andere Seite wird matt
+function wandern(i, t, teil, { mattL = null, mattR = null, d = 1.1 } = {}) {
+  tw('teil' + i, t, d, { x: teil }, 'inout'); cue(t, 'whoosh');
+  if (mattL != null) { tw('ml' + i, t, d, { o: mattL * .6 }, 'inout'); tw('chL' + i, t, d, { o: 1 - mattL * .55 }, 'inout'); }
+  if (mattR != null) { tw('mr' + i, t, d, { o: mattR * .6 }, 'inout'); tw('chR' + i, t, d, { o: 1 - mattR * .55 }, 'inout'); }
+  tw('kn' + i, t + d * .35, .15, { s: 1.15 }, 'sinus'); tw('kn' + i, t + d * .5, .5, { s: 1 }, 'sanft');
+}
+// Überschrift in einer Seite (Wörter steigen aus der Maske)
+function kopf(id, x, y, zeiten) { akteur(id, { x, y }, true); titelEin(id + 't', zeiten[0], zeiten); }
+
+/* ---------- 0 · Zeit ist überall gleich lang – die Bühne teilt sich ---------- */
+{
+  const X = S(0);
+  const ch = geteilt(0, { linie: 0, warm: 0, knauf: 0 });
+  ch.forEach(c => { AKTEURE.get(el(c)).basis.s = 0; });
+  // zwei gleiche Uhren, beide Zeiger laufen gleich
+  const tA = W('Aber', 2), tS = tA + .1, tR = W('wichtig', 2) - .1, tT = tR + .3;
+  const mG = t => 598 + 4.5 * t;
+  pop('uhr0L', W('Zeit', 1) - .1, { x: X + 820, y: 430 }); pop('uhr0R', W('Zeit', 1) + .05, { x: X + 1100, y: 430 });
+  bump('uhr0L', W('gleich', 1), 1.08); bump('uhr0R', W('gleich', 1), 1.08); akzent(W('lang', 1), .025);
+  // links: ruhig – Zeiger werden langsam und weich; rechts: tickt präzise im Sekundentakt
+  uhr('uhr0L', { warmAb: W('überall', 2), kurve: t => t < tS ? mG(t) : mG(tS) + 1.2 * (t - tS) });
+  const sR = t => Math.max(0, takt(t, tT) + 1);
+  uhr('uhr0R', { kurve: t => t < tR ? mG(t) : mG(tR) + sR(t) / 60, sek: t => t < tR ? null : sR(t) });
+  tickCues(tT, SE(3) + .3, tT);
+  // Aber nicht überall gleich wichtig: die Linie zeichnet sich, Uhren weichen auseinander, links wird es warm
+  tw('li0', tA, 1.0, { draw: 1 }, 'inout'); cue(tA, 'scan');
+  AKTEURE.get(el('ei0')).basis.o = 1; tw('ei0', tA, 1.1, { o: 0 }, 'inout');
+  tw('uhr0L', tS, 1.1, { x: X + 540, s: 1.2 }, 'inout'); tw('uhr0R', tS, 1.1, { x: X + 1380, s: 1.2 }, 'inout');
+  tw('warm0', W('überall', 2), .9, { o: 1 }, 'inout');
+  tw('kn0', W('nicht', 2) + .1, .5, { s: 1 }, 'back'); cue(W('nicht', 2) + .1, 'pop');
+  tw('chL0', W('überall', 2), .5, { s: 1 }, 'back'); cue(W('überall', 2), 'pop');
+  tw('chR0', tR, .5, { s: 1 }, 'back'); cue(tR, 'pop');
+  schweben('uhr0L', 5);
+  // links wiegt sich die Uhr sanft, rechts ruckt sie im Takt
+  HOOKS.push(t => { if (t > tS) $('#uhr0L').style.transform += ` rotate(${(2.5 * Math.sin((t - tS) * 1.6) * clamp((t - tS) / 1.5)).toFixed(2)}deg)`; });
+  akzent(tR + .3, .03);
+  // Heute: Pünktlichkeit – Titelplatte
+  pop('pl0', W('Heute', 3) - .2, { x: X + 960, y: 800 }, 'whoosh', 'sanft');
+  titelEin('pl0t', W('Heute', 3) - .05, [W('Heute', 3) - .05, null, null, W('Pünktlichkeit', 3) - .05]);
+  akzent(W('Pünktlichkeit', 3), .04);
+}
+
+/* ---------- 1 · In vielen Ländern: Zeit ist flexibel ---------- */
+pan2(SE(3) + .5, 1);
+{
+  const X = S(1);
+  geteilt(1);
+  const tW = W('In', 4) - .45;
+  wandern(1, tW, 1160, { mattR: 1 });
+  // rechts, matt: die genaue Uhr tickt leise weiter
+  akteur('uhr1R', { x: X + 1540, y: 540, s: 1, o: 1 });
+  tw('uhr1R', tW, 1.1, { o: .5 }, 'inout');
+  uhr('uhr1R', { kurve: t => 600 + takt(t, 0) / 60, sek: t => takt(t, 0) });
+  // Überschrift
+  kopf('kz1', X + 180, 250, [W('Zeit', 4), null, W('flexibel', 4)]);
+  // die ruhige Uhr: 10 Uhr … kann auch halb elf sein
+  const tU = W('Treffen', 5), tK = W('kann', 5), tE = W('beginnen', 5) + .5;
+  pop('uhr1L', W('Zeit', 4) + .1, { x: X + 1060, y: 330 });
+  uhr('uhr1L', { ring: 'var(--warning)', kurve: t => 600 + rampe(t, tK, tE - tK, 0, 30, 'sinus') });
+  // flexibel: die Uhr wird weich (Gelee)
+  const tF = W('flexibel', 4);
+  tw('uhr1L', tF, .18, { sx: 1.14, sy: .88 }, 'sinus'); tw('uhr1L', tF + .18, .22, { sx: .92, sy: 1.1 }, 'sinus'); tw('uhr1L', tF + .4, .7, { sx: 1, sy: 1 }, 'sanft');
+  cue(tF, 'plopp'); akzent(tF, .03);
+  bump('uhr1L', tU, 1.1); cue(tU, 'klick');
+  // Tisch und Tassen, die drei kommen nacheinander, ganz entspannt
+  ein('tisch1', W('Ein', 5) - .2, { x: X + 700, y: 760 }, { y: 80 }, 'whoosh');
+  const P = [['mai1', X + 470, 560, W('Uhr', 5) - .2, X + 250, 780], ['kwame1', X + 700, 520, W('halb', 5) - .25, X + 700, 830], ['jonas1', X + 930, 560, W('beginnen', 5) - .15, X + 1150, 790]];
+  P.forEach(([id, x, y, t, x0, y0], k) => {
+    bogenEin(id, t, { x, y }, x0, y0, 110, .8);
+    pop(['tasse1a', 'tasse1b', 'tasse1c'][k], t + .6, { x: X + 605 + 95 * k, y: 668 }, 'klick');
+  });
+  // Wichtiger ist Zeit füreinander: niemand schaut auf die Uhr, alle lachen, Bögen verbinden sie
+  const tWi = W('Wichtiger', 6);
+  tw('uhr1L', tWi, .9, { o: .4, s: .8, x: X + 1110, y: 300 }, 'inout');
+  ['mai1', 'kwame1', 'jonas1'].forEach((id, k) => { FROH.push([id, tWi + k * .12, 999]); huepfen(id, tWi + k * .15, 14); });
+  cue(tWi, 'pop');
+  akteur('boegen1', { x: X + 960, y: 540 });
+  akteur('bg1a', { draw: 0 }, true); akteur('bg1b', { draw: 0 }, true);
+  const tFu = W('füreinander', 6);
+  tw('bg1a', tFu - .25, .6, { draw: 1 }, 'inout'); tw('bg1b', tFu + .05, .6, { draw: 1 }, 'inout'); cue(tFu - .25, 'whoosh');
+  welle('welle1', tFu + .3, X + 700, 560, 1.3); akzent(tFu + .2, .035);
+  const tN = W('nimmt', 6);
+  ['tasse1a', 'tasse1b', 'tasse1c'].forEach((id, k) => { huepfen(id, tN + k * .08, 12); });
+  cue(tN + .15, 'ding');
+  schweben(['uhr1L'], 4);
+  HOOKS.push(t => { if (t > tWi) $('#uhr1L').style.transform += ` rotate(${(2.5 * Math.sin((t - tWi) * 1.5)).toFixed(2)}deg)`; });
+}
+
+/* ---------- 2 · In Deutschland: 10 Uhr = 10 Uhr ---------- */
+pan2(SE(6) + .5, 2);
+{
+  const X = S(2);
+  geteilt(2, { teil: 1160, mattR: 1 });
+  const tW = W('In', 7) - .45;
+  wandern(2, tW, 520, { mattL: 1, mattR: 0 });
+  // links, matt: die ruhige Uhr (halb elf) wiegt sich weiter
+  akteur('uhr2L', { x: X + 700, y: 380, s: 1.1 });
+  tw('uhr2L', tW, 1.1, { x: X + 380, y: 540, s: 1, o: .5 }, 'inout');
+  uhr('uhr2L', { ring: 'var(--warning)', kurve: t => 630 + .8 * Math.max(0, t - tW) });
+  HOOKS.push(t => { $('#uhr2L').style.transform += ` rotate(${(2.5 * Math.sin(t * 1.5)).toFixed(2)}deg)`; });
+  // Überschrift rechts
+  const z1 = W('Zehn', 8), z2 = W('Uhr', 8), z3 = W('heißt', 8), z4 = W2('zehn', 8), z5 = W2('Uhr', 8);
+  kopf('kz2', X - 180, 250, [z1, z2, z3, z4, z5]);
+  // genaue Uhr: tickt auf 10:00:00 genau beim ersten „Uhr“, dann springt sie auf 10:05
+  const t0 = z2, tF = W('fünf', 9), tKo = W('kommt', 9);
+  pop('uhr2', W('Deutschland', 7) + .1, { x: X + 820, y: 330 });
+  uhr('uhr2', { kurve: t => 600 + takt(t, t0) / 60 + rampe(t, tF, tKo - tF, 0, 5 - 1 / 60 * 0),
+    sek: t => takt(t, t0), keil: t => [600, clamp((t - tF + .1) / .3)] });
+  tickCues(W('Deutschland', 7) + .6, z2 + .1, t0);
+  bump('uhr2', z2, 1.14); cue(z2, 'ding'); akzent(z2, .04);
+  // Raum mit Schiebetür; Abmachung: Terminschild „Treffen 10:00“ schlägt auf die Tür
+  ein('raum2', W('ist', 7), { x: X + 1230, y: 580 }, { y: 80 }, 'whoosh');
+  const tAb = W('Abmachung', 7);
+  akteur('ts2', { s: 0, o: 1 }, true); tw('ts2', tAb - .1, .45, { s: 1 }, 'back'); cue(tAb, 'plopp');
+  tw('ts2', tAb + .35, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw('ts2', tAb + .43, .4, { sy: 1, sx: 1 }, 'sanft');
+  // 10 Uhr heißt 10 Uhr: Tür fährt auf – alle sind schon da
+  akteur('tl2', {}, true); akteur('tr2', {}, true);
+  tw('tl2', z3, .8, { x: -290 }, 'inout'); tw('tr2', z3, .8, { x: 290 }, 'inout'); cue(z3, 'whoosh');
+  tw('ts2', z3 - .05, .35, { o: 0, s: .8, y: -30 }, 'in');
+  FROH.push(['mai2', z3 + .5, W('schon', 9)], ['kwame2', z3 + .6, W('schon', 9)]);
+  // Wer fünf Minuten zu spät kommt: Jonas kommt um 10:05, die anderen schauen zu ihm
+  bogenEin('jonas2', tKo - .5, { x: X + 1640, y: 620 }, X + 1760, 760, 120, .8);
+  const tSc = W('schon', 9);
+  BLICK.push(['mai2', tSc - .1, W('Viele', 10) + .3, 4.5], ['kwame2', tSc - .05, W('Viele', 10) + .3, 4.5]);
+  pop('plus2', tSc, { x: X + 1640, y: 480 }, 'plopp');
+  wackeln('jonas2', tSc + .15, 3, 3); akzent(tSc, .045); wackeln('uhr2', tF + .1, 3, 2);
+  // Viele kommen sogar 5–10 Minuten früher: Zeitstrahl, grüne Zone, Mai und Kwame rücken nach vorn
+  ein('zeit2', W('Viele', 10) - .3, { x: X + 1220, y: 860 }, { y: 70 }, 'whoosh');
+  akteur('zone2', { sx: 0 }, true); tw('zone2', W('fünf', 10), W('früher', 10) - W('fünf', 10) + .3, { sx: 1 }, 'inout'); cue(W('fünf', 10), 'scan');
+  akteur('mm2', { x: 0 }, true); akteur('km2', { x: 0 }, true);
+  tw('mm2', W('fünf', 10), .6, { x: -306 }, 'inout', { bogen: 40 }); cue(W('fünf', 10), 'pop');
+  tw('km2', W('zehn', 10), .7, { x: -613 }, 'inout', { bogen: 50 }); cue(W('zehn', 10), 'pop');
+  akteur('ok2', { s: 0 }, true); tw('ok2', W('früher', 10) + .2, .5, { s: 1 }, 'back'); cue(W('früher', 10) + .2, 'ding');
+  FROH.push(['mm2', W('früher', 10), 999], ['km2', W('früher', 10), 999], ['mai2', W('früher', 10), 999], ['kwame2', W('früher', 10), 999]);
+  akzent(W('früher', 10), .03);
+  aus('plus2', W('Viele', 10) + .2, .35);
+}
+
+/* ---------- 3 · Pünktlichkeit bedeutet Respekt ---------- */
+pan2(SE(10) + .5, 3);
+{
+  const X = S(3);
+  const ch = geteilt(3, { teil: 520, mattL: 1 });
+  wandern(3, SE(10) + 1.2, 840, { mattL: 0 });
+  // Warum? Knauf wird zum Fragezeichen
+  const tWa = W('Warum', 11);
+  tw('kp3', tWa - .1, .3, { o: 0, s: .5 }, 'in'); tw('kf3', tWa, .45, { o: 1, s: 1 }, 'back'); cue(tWa, 'pop');
+  bump('kn3', W('wichtig', 11), 1.2); akzent(W('wichtig', 11), .03);
+  // Herz links, Uhr rechts
+  pop('herz3', W('Warum', 11) + .2, { x: X + 540, y: 450 });
+  pop('uhr3', W('das', 11), { x: X + 1380, y: 450 });
+  wackeln('herz3', W('Pünktlichkeit', 12), 3, 3); bump('uhr3', W('bedeutet', 12), 1.08);
+  const tZ = W('Zeit', 13);
+  uhr('uhr3', { kurve: t => 600 + takt(t, 0) / 60 + rampe(t, tZ - .1, .9, 0, 60), sek: t => takt(t, 0) });
+  schweben(['herz3'], 4);
+  // Respekt: beide fliegen zur Mitte, die Linie löst sich auf – beide Seiten kommen zusammen
+  const tR = W('Respekt', 12), tL = tR - .9;
+  flug('herz3', tL, .95, X + 870, 440, 90); flug('uhr3', tL, .95, X + 1060, 450, 90); cue(tL, 'whoosh');
+  landen('herz3', tL + .95); landen('uhr3', tL + .95);
+  tw('li3', tL + .2, .9, { draw: 0 }, 'inout'); tw('kn3', tL + .1, .45, { s: 0 }, 'in');
+  tw('ei3', tL + .3, 1.1, { o: 1 }, 'inout'); tw(ch, tL, .6, { o: 0, y: 150 }, 'in');
+  welle('welle3', tR + .05, X + 960, 450, 1.2); cue(tR + .05, 'erfolg'); akzent(tR + .05, .05);
+  pop('pl3', tR + .2, { x: X + 960, y: 800 }, null, 'sanft');
+  titelEin('pl3t', tR + .3, [tR + .3, tR + .42, tR + .55]);
+  // Ich nehme dich und deine Zeit ernst: zwei Menschen, einer nimmt den anderen ernst
+  bogenEin('mai3', W('Wer', 13) - .1, { x: X + 460, y: 470 }, X + 330, 640, 80, .75);
+  bogenEin('jonas3', W('zeigt', 13) - .3, { x: X + 1460, y: 470 }, X + 1590, 640, 80, .75);
+  huepfen('mai3', W('Ich', 13), 14);
+  bump('jonas3', W('dich', 13), 1.1); FROH.push(['jonas3', W('dich', 13), 999]);
+  bump('uhr3', tZ, 1.12); cue(tZ, 'scan');
+  const tE = W('ernst', 13);
+  FROH.push(['mai3', tE - .1, 999]);
+  huepfen('mai3', tE, 10); huepfen('jonas3', tE + .08, 10); bump('herz3', tE, 1.12);
+  welle('welle3', tE + .1, X + 960, 450, 1.2); cue(tE + .1, 'ding');
+}
+
+/* ---------- 4 · Arbeit · Schule · Arzt · Behörde ---------- */
+pan2(SE(13) + .5, 4);
+akteur('bue4', { x: S(4) + 1320, y: 540 });
+{
+  const X = S(4);
+  const tA = W('Arbeit', 14), tS = W('Berufsschule', 14), tAr = W('Arztterminen', 14), tB = W('Behörden', 14);
+  titelEin('tb4', W('Besonders', 14), [tA - .1, tA + .1, tS - .1, tAr - .1, tAr + .1, tB - .1]);
+  pop('uhr4', W('Besonders', 14) - .1, { x: X + 1320, y: 540, s: 1.8 });
+  tw('uhr4', tA - .3, .6, { s: 1 }, 'inout');
+  uhr('uhr4', { kurve: t => 600 + takt(t, 0) / 60, sek: t => takt(t, 0) });
+  akzent(W('wichtig', 14), .03);
+  const G = [['wb4', 1100, 380, tA, 'pk4a'], ['sch4', 1540, 380, tS, 'pk4b'], ['pr4', 1100, 700, tAr, 'pk4c'], ['amt4', 1540, 700, tB, 'pk4d']];
+  G.forEach(([id, x, y, t, pk]) => {
+    ein(id, t - .2, { x: X + x, y }, { y: 80 }, 'whoosh');
+    pop(pk, t + .25, { x: X + x + 105, y: y - 105 }, 'pop'); bump('uhr4', t + .25, 1.12);
+  });
+  ein('tuer4', tB - .2, { x: X + 1540, y: 700 }, { y: 80 });
+  akteur('tuer4i', { sx: .12 }, true);
+  akzent(tB, .03);
+  // Behördentermin: nur das Amt bleibt, wird groß; Amir kommt zu spät, die Tür geht zu
+  const tW = W('Wer', 15) - .2;
+  aus(['uhr4', 'wb4', 'sch4', 'pr4', 'pk4a', 'pk4b', 'pk4c', 'pk4d'], tW, .4);
+  tw(['amt4', 'tuer4'], tW + .2, .9, { x: X + 1200, y: 530, s: 1.6 }, 'inout'); cue(tW + .2, 'whoosh');
+  const tSp = W('spät', 15), tKo = W('kommt', 15);
+  akteur('amir4', { x: X + 1720, y: 660, o: 0 });
+  tw('amir4', W('Behördentermin', 15), .3, { o: 1 });
+  [0, 1, 2].forEach(k => tw('amir4', W('Behördentermin', 15) + k * .33, .33, { x: X + 1720 - (k + 1) * 60 - (k === 2 ? 20 : 0), y: 660 }, 'sinus', { bogen: 14 }));
+  tw('tuer4i', tSp - .1, .4, { sx: 1 }, 'in'); cue(tSp + .3, 'plopp');
+  tw(['amt4', 'tuer4'], tSp + .3, .08, { sy: .97, sx: 1.01 }, 'sinus'); tw(['amt4', 'tuer4'], tSp + .38, .35, { sy: 1, sx: 1 }, 'sanft');
+  landen('amir4', tKo - .05); wackeln('amir4', tKo + .15, 4, 3); akzent(tSp + .3, .045);
+  // einen neuen Termin – das kann Wochen dauern: Kalender, Wochen füllen sich, der Punkt läuft bis zum neuen Termin
+  pop('kal4', W('neuen', 15) - .2, { x: X + 1590, y: 370 }, 'pop');
+  akteur('ziel4', { s: 0 }, true); tw('ziel4', W('neuen', 15) + .1, .45, { s: 1 }, 'back'); cue(W('neuen', 15) + .1, 'ding');
+  const R = ['r4a', 'r4b', 'r4c', 'r4d'], tWo = W('Wochen', 15) - .15, dt = .32;
+  R.forEach((r, k) => { akteur(r, { sx: 0 }, true); tw(r, tWo + k * dt, dt + .05, { sx: 1 }, 'inout'); });
+  akteur('lauf4', { x: 32, y: 79, o: 0 }, true);
+  tw('lauf4', tWo - .1, .15, { o: 1 });
+  R.forEach((r, k) => tw('lauf4', tWo + k * dt, dt, { x: k === 3 ? 186 : 32 + 50 * k, y: 79 + 40 * k }, 'inout', { bogen: 14 }));
+  cue(tWo, 'scan');
+  tw('lauf4', tWo + 4 * dt, .3, { o: 0 }); bump('ziel4', tWo + 4 * dt, 1.4);
+  wackeln('kal4', W('dauern', 15), 3, 2); akzent(W('dauern', 15), .03);
+  textAus('tb4', SE(15) + .2);
+}
+
+/* ---------- 5 · Zu spät? Vorher Bescheid geben ---------- */
+pan2(SE(15) + .5, 5);
+akteur('bue5', { x: S(5) + 1320, y: 540 });
+{
+  const X = S(5);
+  titelEin('tb5', W('zu', 16) - .1, [W('zu', 16) - .1, W('spät', 16), W('vorher', 18) - .1, W('Bescheid', 18) - .1, W('Bescheid', 18) + .2]);
+  // Amir im Bus, die Uhr zeigt: zu spät
+  const tU = W('Und', 16) - .3, BX0 = X + 1110, BY0 = 700;
+  ein('bus5', tU, { x: BX0, y: BY0 }, { x: -120 }, 'whoosh');
+  akteur('amir5', { x: BX0 - 170, y: BY0 - 70, o: 0 }); tw('amir5', tU, .5, { o: 1 }); tw('amir5', tU, .6, { x: BX0 - 50 }, 'sanft');
+  HOOKS.push(t => { for (const id of ['bus5', 'amir5']) $('#' + id).style.transform += ` translateY(${(-2.5 * Math.abs(Math.sin(t * 7))).toFixed(2)}px)`; });
+  const tSp = W('spät', 16);
+  pop('uhr5', W('doch', 16) - .1, { x: X + 1060, y: 370 });
+  uhr('uhr5', { kurve: t => 600 + rampe(t, tSp - .1, 1.2, 0, 10), keil: t => [600, 1 - .5 * clamp((t - W('Kein', 17)) / .6)] });
+  cue(tSp, 'scan'); wackeln('amir5', tSp + .2, 3, 3);
+  // Kein Weltuntergang: Amir lächelt, der Bus hüpft
+  const tK = W('Kein', 17);
+  FROH.push(['amir5', tK, 999]); huepfen('bus5', W('Weltuntergang', 17), 10); huepfen('amir5', W('Weltuntergang', 17), 10); bump('uhr5', tK, 1.06);
+  // Handy: Nachricht tippt sich, wird gesendet; oder Anruf
+  const tH = W('Aber', 18) - .2;
+  ein('handy5', tH, { x: X + 1540, y: 520 }, { x: 110 }, 'whoosh'); ein('schirm5', tH, { x: X + 1540, y: 520 }, { x: 110 });
+  const TXT = 'Bin 10 Minuten später, sorry!', t1 = W('Bescheid', 18), t2 = W('Nachricht', 18) + .35;
+  akteur('blase5', { o: 0, s: .6 }, true); tw('blase5', t1 - .2, .3, { o: 1, s: 1 }, 'back');
+  HOOKS.push(t => { $('#tipp5').textContent = TXT.slice(0, Math.round(TXT.length * clamp((t - t1) / (t2 - t1)))); });
+  for (let n = 0; n < 7; n++) cue(t1 + n * (t2 - t1) / 7, 'tipp');
+  akteur('hak5', { o: 0 }, true); tw('hak5', t2 + .15, .2, { o: 1 }); cue(t2 + .15, 'whoosh'); bump('blase5', t2 + .1, 1.08);
+  const tAn = W('Anruf', 18);
+  pop('ruf5', tAn - .15, { x: X + 1420, y: 330 }, 'pop');
+  [0, .6].forEach(d => welle('klingel5', tAn + d, X + 1420, 330, .8));
+  summen('ruf5', tAn + .2, .9, 5); summen('handy5', tAn + .2, .9, 4); summen('schirm5', tAn + .2, .9, 4);
+  // viel besser: Antwort „Danke für die Info!“, grüner Haken
+  const tB = W('besser', 19);
+  akteur('antw5', { o: 0, y: 20 }, true); tw('antw5', tB - .15, .45, { o: 1, y: 0 }, 'back'); cue(tB - .15, 'ding');
+  pop('ok5', tB + .3, { x: X + 1665, y: 330 }, 'erfolg');
+  akzent(tB, .04); huepfen('amir5', W('aufzutauchen', 19), 12);
+  textAus('tb5', SE(19) + .2);
+}
+
+/* ---------- 6 · Die Bahn: +15 Min. – Puffer einplanen ---------- */
+pan2(SE(19) + .5, 6);
+akteur('bue6', { x: S(6) + 1320, y: 540 });
+{
+  const X = S(6);
+  titelEin('tb6', W('Übrigens', 20), [W('Übrigens', 20), W('Plan', 21) - .1, W('etwas', 21) - .1, W('mehr', 21), W('ein', 21) - .05]);
+  ein('tafel6', W('Übrigens', 20) + .2, { x: X + 1320, y: 330 }, { y: -70 }, 'whoosh');
+  bogenEin('amir6', W('Nur', 20) - .1, { x: X + 1560, y: 590 }, X + 1680, 740, 80, .7);
+  // die Bahn rollt langsam ein
+  const tBa = W('Bahn', 20) - .3;
+  akteur('bahn6', { x: X + 1070, y: 600, o: 0 }); tw('bahn6', tBa, .4, { o: 1 }); tw('bahn6', tBa, 2.2, { x: X + 1160 }, 'out'); cue(tBa, 'whoosh');
+  // nicht immer so genau: Anzeige springt auf „+15 Min.“
+  const tN = W('nicht', 20);
+  akteur('neu6', { sy: 0, o: 0 }, true); tw('neu6', tN - .1, .1, { o: 1 }); tw('neu6', tN - .1, .45, { sy: 1 }, 'back'); cue(tN - .1, 'klick');
+  bump('tafel6', tN + .2, 1.04); akzent(tN, .035);
+  // Amir zuckt lächelnd mit den Schultern
+  const tG = W('genau', 20) - .1;
+  FROH.push(['amir6', tN - .2, 999]);
+  [0, .34].forEach(d => { tw('amir6', tG + d, .14, { y: 574, r: d ? 3 : -3 }, 'sinus'); tw('amir6', tG + d + .14, .2, { y: 590, r: 0 }, 'sinus'); });
+  // Plan mehr Zeit ein: Fahrt + Puffer, die Verspätung passt hinein, grüner Haken am Termin
+  ein('puf6', W('Plan', 21) - .2, { x: X + 1320, y: 790 }, { y: 60 }, 'whoosh');
+  akteur('pp6', { sx: 0 }, true); tw('pp6', W('mehr', 21) - .1, .7, { sx: 1 }, 'sanft'); cue(W('mehr', 21) - .1, 'scan');
+  akteur('sp6', { o: 0, y: -90 }, true);
+  const tSp = W('ein', 21) + .15;
+  tw('sp6', tSp, .2, { o: 1 }); tw('sp6', tSp, .45, { y: 0 }, 'in'); landen('sp6', tSp + .45); cue(tSp + .45, 'plopp');
+  akteur('ok6', { s: 0 }, true); tw('ok6', tSp + .8, .45, { s: 1 }, 'back'); akteur('fahne6', {}, true); tw('fahne6', tSp + .7, .25, { o: 0 }); cue(tSp + .8, 'erfolg');
+  huepfen('amir6', tSp + .85, 12); akzent(tSp + .8, .035);
+  schweben(['tafel6'], 3);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+textAus('tb6', AB);
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
