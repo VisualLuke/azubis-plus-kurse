@@ -104,7 +104,8 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
    Kante und Überlappung müssen 0 sein (gewollte Überdeckungen mit `data-gruppe`/`data-frei` markieren), Ruckler nur
    gewollte Aufschläge. Dann `--standbilder` am Ende jeder Szene und bei jeder Handlung – **Bilder ansehen** (Read) und
    prüfen: Text passt in Karten, nichts verdeckt, Pfeilspitzen frei, richtiger Sprecher, Titel nicht zu lang.
-6. `node werkzeug/rendern.mjs lernvideos/NN-ordner` → `film.mp4`, `film-poster.png`. Aufräumen: `film.html`,
+6. `node werkzeug/rendern.mjs lernvideos/NN-ordner` → `film.mp4`, `film-poster.png`; dann
+   `node werkzeug/untertitel.mjs lernvideos/NN-ordner` → `film.vtt` (Untertitel als eigene Spur, nie ins Bild). Aufräumen: `film.html`,
    `standbild-*.png`, `.frames/` löschen (`.stimme/` bleibt, ist ignoriert).
 
 Fallen aus früheren Kursen:

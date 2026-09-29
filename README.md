@@ -50,6 +50,7 @@ App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren 
 werkzeug/motor.js      Tween-Engine: Akteure, Easings, Kamera (pan), Cues für Soundeffekte
 werkzeug/stil.css      gemeinsamer Stil – nur Token-Farben mit Fallback, Schrift Inter
 werkzeug/stimme.mjs    Sprechertext aus konzept.md → ElevenLabs Satz für Satz → sprache.mp3 + sprache.json
+werkzeug/untertitel.mjs  sprache.json (bzw. untertitel-quelle.json) → film.vtt: abschaltbare Untertitel für den Player
 werkzeug/pruefen.mjs   prüft film.html Frame für Frame: Ruckler, Abstand zur Bühnenkante, Überlappungen
 werkzeug/masken.mjs    prüft Masken-Titel: kein Wort schaut vor seinem Aufstieg aus der Maske
 werkzeug/rendern.mjs   baut film.html, fotografiert jedes Frame mit Chromium, mischt Ton, kodiert H.264
