@@ -36,3 +36,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 16 | [Was würdest du tun? Verschlafen am Berufsschultag](16-verschlafen/) | Was würdest du tun? | Erzähler, Mai | 1:44 | fertig |
 | 17 | [Was würdest du tun? Ein Brief mit „Frist“](17-brief-mit-frist/) | Was würdest du tun? | Erzähler, Amir | 1:56 | fertig |
 | 18 | [Was würdest du tun? Kritik vom Chef](18-kritik-vom-chef/) | Was würdest du tun? | Erzählerin, Priya, Küchenchef | 1:53 | fertig |
+| 19 | [Was würdest du tun? „Ihr Konto wurde gesperrt“](19-konto-gesperrt/) | Was würdest du tun? | Erzähler, Kwame | 1:43 | fertig |
