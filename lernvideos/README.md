@@ -33,3 +33,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 13 | [Mythos oder Wahrheit: Krank sein](13-mythos-krank/) | Mythos oder Wahrheit | Erzählerin | 1:54 | fertig |
 | 14 | [Mythos oder Wahrheit: Ausbildung](14-mythos-ausbildung/) | Mythos oder Wahrheit | Erzähler | 1:54 | fertig |
 | 15 | [Mythos oder Wahrheit: Wohnen & Versicherungen](15-mythos-wohnen/) | Mythos oder Wahrheit | Erzählerin | 2:02 | fertig |
+| 16 | [Was würdest du tun? Verschlafen am Berufsschultag](16-verschlafen/) | Was würdest du tun? | Erzähler, Mai | 1:44 | fertig |
