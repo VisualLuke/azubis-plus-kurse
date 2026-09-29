@@ -24,4 +24,5 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 4 | [Rundfunkbeitrag](04-rundfunkbeitrag/) | Erklärvideo | Erzähler | 1:29 | fertig |
 | 5 | [Aufenthaltstitel verlängern](05-aufenthaltstitel/) | Erklärvideo | Erzählerin | 1:38 | fertig |
 | 6 | [Arbeitsunfall & Wegeunfall](06-arbeitsunfall/) | Erklärvideo | Erzähler | 1:31 | fertig |
+| 7 | [Mietvertrag verstehen](07-mietvertrag/) | Podcast | Mai, Jonas | 1:55 | fertig |
 | 8 | [Nebenjob während der Ausbildung](08-nebenjob/) | Podcast | Kwame, Jonas | 1:39 | fertig |
