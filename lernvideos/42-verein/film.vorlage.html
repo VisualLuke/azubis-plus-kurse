@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was ist ein Verein?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:64px;line-height:76px}
+.titel + .titel{margin-top:4px}
+.unter{font-size:40px;line-height:52px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait.klein{border-width:5px;box-shadow:0 4px 12px rgba(22,19,37,.14)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .augen.li{clip-path:inset(0 50% 0 0)} .portrait .augen.re{clip-path:inset(0 0 0 50%)}
+.portrait.gelb{border-color:var(--warning)} .portrait.gruen{border-color:var(--success)} .portrait.blau{border-color:var(--info)} .portrait.rot{border-color:var(--error)}
+
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.ring{border-radius:999px;border:6px solid var(--b400);box-shadow:0 0 22px rgba(129,99,238,.45)}
+.frage{width:72px;height:72px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 44px/72px Inter;text-align:center;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.plak{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);
+  border:4px solid var(--surface);background:var(--b500);color:var(--surface);font:800 26px/1 Inter}
+.plak svg{width:26px}
+.plak.gruen{background:var(--success)} .plak.rot{background:var(--error)} .plak.klein{width:44px;height:44px;font-size:20px;border-width:3px}
+.etikett{padding:8px 18px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 22px/26px Inter;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(22,19,37,.1)}
+
+/* Vereinsschild auf Pfosten */
+.vschild{padding:18px 38px;border-radius:24px;background:linear-gradient(135deg,var(--b500),var(--b600));color:var(--surface);font:800 56px/64px Inter;
+  letter-spacing:-.01em;white-space:nowrap;box-shadow:0 10px 26px rgba(90,63,230,.3)}
+.vschild::after{content:'';position:absolute;left:50%;top:100%;width:14px;height:120px;margin-left:-7px;background:linear-gradient(var(--b700),var(--b600));
+  border-radius:0 0 6px 6px;z-index:-1}
+.vschild.kurz{padding:16px 34px;font-size:60px;line-height:68px}
+.vschild.kurz::after{height:0}
+
+/* 2 · Karte */
+.symb{width:108px;height:108px;border-radius:999px;background:var(--surface);box-shadow:0 8px 22px rgba(58,37,153,.2);display:flex;align-items:center;justify-content:center}
+.symb .ic{width:82px;height:82px}
+
+/* 3 · Register */
+.register{width:470px;padding:20px 28px 22px;border-radius:26px;background:var(--surface);box-shadow:0 14px 36px rgba(58,37,153,.18)}
+.register small{display:block;font:800 16px/20px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin-bottom:6px}
+.register .zeile{height:44px;border-bottom:2px solid var(--b100);display:flex;align-items:center;gap:14px}
+.register .zeile i{height:10px;border-radius:5px;background:var(--n200)}
+.register .zeile.neu{font:800 28px/34px Inter;color:var(--ink);white-space:pre;border-bottom-color:var(--b300)}
+
+/* 4 · Versammlung */
+.skarte{width:44px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--b400),var(--b600));box-shadow:0 4px 10px rgba(22,19,37,.2);
+  display:flex;align-items:center;justify-content:center;font:800 30px/1 Inter;color:var(--surface)}
+.skarte::after{content:'';position:absolute;left:50%;top:100%;width:6px;height:34px;margin-left:-3px;background:var(--b700);border-radius:0 0 3px 3px}
+.pult{width:420px;height:66px;border-radius:16px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 10px 22px rgba(58,37,153,.2);
+  color:var(--surface);font:800 28px/66px Inter;text-align:center;letter-spacing:.01em}
+.pult span{display:inline-block}
+.platz{border-radius:999px;border:4px dashed var(--b300);background:rgba(255,255,255,.45);color:var(--b300);
+  display:flex;align-items:center;justify-content:center;font:800 38px/1 Inter}
+
+/* 5 · Training */
+.feld{width:760px;height:430px;border-radius:36px;background:var(--success-bg);border:6px solid var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.08)}
+.feld::before{content:'';position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;background:var(--surface)}
+.feld::after{content:'';position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px;border:6px solid var(--surface);border-radius:999px}
+.woche{display:flex;gap:10px}
+.woche i{width:62px;height:46px;border-radius:12px;background:var(--surface);font:800 20px/46px Inter;color:var(--b600);text-align:center;font-style:normal;
+  box-shadow:0 4px 12px rgba(22,19,37,.08)}
+.woche i.an{background:var(--b500);color:var(--surface)}
+.blase5{display:flex;gap:10px;padding:20px 26px;border-radius:26px;background:var(--b500);box-shadow:0 8px 22px rgba(90,63,230,.25)}
+.blase5::after{content:'';position:absolute;left:26px;bottom:-15px;border:11px solid transparent;border-top:17px solid var(--b500);border-bottom:0;transform:skewX(-20deg)}
+.blase5.rechts::after{left:auto;right:26px;transform:skewX(20deg)}
+.blase5 i{width:14px;height:14px;border-radius:999px;background:var(--surface)}
+
+/* 6 · So geht's */
+.schritt{width:62px;height:62px;border-radius:999px;background:var(--b100);color:var(--b600);font:800 28px/62px Inter;text-align:center;
+  border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.schritt.an{background:var(--b500);color:var(--surface)}
+.handy6{width:320px;height:470px;border-radius:46px;background:linear-gradient(135deg,var(--b600),var(--b700));padding:14px;box-shadow:0 18px 40px rgba(58,37,153,.28)}
+.handy6 .schirm{width:100%;height:100%;border-radius:34px;background:var(--b50);padding:44px 14px 14px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.handy6 .kerbe{position:absolute;left:50%;top:14px;width:70px;height:12px;margin-left:-35px;border-radius:6px;background:var(--b700)}
+.such{display:flex;align-items:center;gap:8px;height:54px;border-radius:27px;background:var(--surface);padding:0 14px;box-shadow:0 4px 12px rgba(22,19,37,.08);
+  font:700 18px/22px Inter;color:var(--ink);white-space:pre;border:3px solid var(--b300)}
+.such svg{width:22px;height:22px;flex:none}
+.strich{display:inline-block;width:3px;height:1em;background:var(--b500);margin-left:2px;vertical-align:-.12em}
+.treffer{height:76px;border-radius:18px;background:var(--surface);display:flex;align-items:center;gap:12px;padding:0 14px;box-shadow:0 4px 12px rgba(22,19,37,.08)}
+.treffer .ico{width:50px;height:50px;border-radius:999px;background:var(--b100);flex:none;display:flex;align-items:center;justify-content:center}
+.treffer .ico svg{width:38px;height:38px}
+.treffer .txt{flex:1;display:flex;flex-direction:column;gap:9px}
+.treffer .txt i{height:10px;border-radius:5px;background:var(--n200)} .treffer .txt i:first-child{background:var(--b300);width:78%}
+.treffer .pin{width:22px;height:22px;flex:none}
+.einl{width:380px;padding:24px 28px 26px;border-radius:28px;background:var(--surface);box-shadow:0 14px 36px rgba(58,37,153,.2);display:flex;flex-direction:column;gap:6px}
+.einl small{font:800 16px/20px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.einl b{font:800 38px/46px Inter;color:var(--ink);letter-spacing:-.01em}
+.einl em{font:600 26px/32px Inter;color:var(--n700);font-style:normal}
+.einl .gratis{align-self:flex-start;margin-top:10px;padding:8px 18px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:800 22px/26px Inter}
+.antrag{width:360px;padding:24px 28px 26px;border-radius:26px;background:var(--surface);box-shadow:0 14px 36px rgba(58,37,153,.2);display:flex;flex-direction:column;gap:14px}
+.antrag h5{font:800 28px/34px Inter;color:var(--ink);letter-spacing:-.01em}
+.antrag .fe{display:flex;flex-direction:column;gap:7px}
+.antrag .fe u{display:block;height:8px;border-radius:4px;background:var(--b200)}
+.antrag .fe span{display:block;height:40px;border-radius:10px;background:var(--b50);border:2px solid var(--b100);position:relative;overflow:hidden}
+.antrag .fe span i{position:absolute;left:12px;top:13px;height:11px;border-radius:6px;background:var(--b500);transform-origin:0 50%}
+.antrag .kz{display:flex;align-items:center;gap:12px}
+.antrag .kz b{width:32px;height:32px;border-radius:8px;border:3px solid var(--b300);display:flex;align-items:center;justify-content:center;background:var(--surface)}
+.antrag .kz b svg{width:24px}
+.antrag .kz u{display:block;height:9px;width:170px;border-radius:5px;background:var(--n200)}
+.antrag .us{height:56px;border-bottom:3px solid var(--b200);position:relative}
+.antrag .us svg{position:absolute;left:6px;bottom:4px;width:190px;height:48px}
+
+/* 7 · Gemeinschaftsraum */
+.tisch7{width:600px;height:30px;border-radius:15px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 8px 16px rgba(22,19,37,.1)}
+.tisch7::before,.tisch7::after{content:'';position:absolute;top:24px;width:14px;height:92px;border-radius:0 0 7px 7px;background:var(--b400)}
+.tisch7::before{left:50px} .tisch7::after{right:50px}
+
+/* 8 · Gründung */
+.gruend{width:340px;height:420px;border-radius:22px;background:var(--surface);box-shadow:0 14px 36px rgba(58,37,153,.2);padding:20px 26px}
+.gruend h5{font:800 28px/34px Inter;color:var(--ink);text-align:center;margin-bottom:8px}
+.gruend .zl{height:45px;border-bottom:2px solid var(--b100);display:flex;align-items:flex-end;gap:10px;padding-bottom:4px}
+.gruend .zl b{font:800 16px/20px Inter;color:var(--b400);width:16px;flex:none}
+.gruend .zl svg{width:220px;height:34px}
+.mkarte{width:360px;height:200px;border-radius:26px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 14px 34px rgba(58,37,153,.3);
+  padding:24px 28px;color:var(--surface)}
+.mkarte small{font:800 16px/20px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b100)}
+.mkarte b{display:block;font:800 42px/50px Inter;margin-top:6px;letter-spacing:-.01em}
+.mkarte i{display:block;height:10px;border-radius:5px;background:var(--b300);margin-top:16px;width:170px} .mkarte i + i{width:110px;margin-top:10px}
+.mkarte .ic{position:absolute;right:24px;top:24px;width:70px;height:70px;border-radius:999px;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.mkarte .ic svg{width:56px;height:56px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 44px/58px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Figuren als Porträt-Vorlagen -->
+<template id="f-jonas"><div class="figur"><div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-sabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-vermieter"><div class="figur"><div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-priya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-mai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-ana"><div class="figur"><div class="ebene">{{figur-ana}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kunde"><div class="figur"><div class="ebene">{{figur-kunde}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-lehrerin"><div class="figur"><div class="ebene">{{figur-lehrerin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-stammgast"><div class="figur"><div class="ebene">{{figur-stammgast}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-empfangschefin"><div class="figur"><div class="ebene">{{figur-empfangschefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-geselle"><div class="figur"><div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-praxisanleiterin"><div class="figur"><div class="ebene">{{figur-praxisanleiterin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-baeckermeisterin"><div class="figur"><div class="ebene">{{figur-baeckermeisterin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-chefin"><div class="figur"><div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen li">{{figur-augen}}</div><div class="ebene augen re">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHakenLila"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--b500)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgLupe"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5" stroke="var(--b500)" stroke-width="3" fill="none"/><path d="M15 15l6 6" stroke="var(--b500)" stroke-width="3" stroke-linecap="round"/></svg></template>
+<template id="svgPin"><svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12Z" fill="var(--b300)"/><circle cx="12" cy="10" r="2.6" fill="var(--surface)"/></svg></template>
+<template id="t-muenze">{{muenze}}</template>
+<template id="t-stuhl">{{stuhlvorn}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Der Witz (Bühne mittig) -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="de1" style="width:360px" data-frei>{{deutschland}}</div>
+  <div class="a portrait klein" id="k1a" data-f="priya" style="width:96px;height:96px"></div>
+  <div class="a portrait klein" id="k1b" data-f="amir" style="width:96px;height:96px"></div>
+  <div class="a portrait klein" id="k1c" data-f="ana" style="width:96px;height:96px"></div>
+  <div class="a portrait klein" id="k1d" data-f="kwame" style="width:96px;height:96px"></div>
+  <div class="a vschild" id="schild1">Verein e.V.</div>
+  <div class="a portrait" id="p1a" data-f="jonas" style="width:150px;height:150px"></div>
+  <div class="a portrait" id="p1b" data-f="sabine" style="width:150px;height:150px"></div>
+  <div class="a portrait" id="p1c" data-f="vermieter" style="width:150px;height:150px"></div>
+  <div class="a plak" id="n1a" data-frei>1</div><div class="a plak" id="n1b" data-frei>2</div><div class="a plak" id="n1c" data-frei>3</div>
+
+  <!-- 2 · 600.000 Vereine -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="de2" style="width:613px" data-frei>{{deutschland}}</div>
+  <svg class="a" id="punkte2" viewBox="0 0 160 160" style="width:613px;height:613px" data-frei><g id="punkteG" transform="translate(20 0) scale(0.3441)"><rect x="45" y="6" width="300" height="456" fill="none"/></g></svg>
+  <div class="a welle" id="welle2" data-frei></div>
+  <div class="a symb" id="sy1"><div class="ic">{{fussball}}</div></div>
+  <div class="a symb" id="sy2"><div class="ic">{{trompete}}</div></div>
+  <div class="a symb" id="sy3"><div class="ic">{{maske}}</div></div>
+  <div class="a symb" id="sy4"><div class="ic">{{giesskanne}}</div></div>
+  <div class="a symb" id="sy5"><div class="ic">{{pfote}}</div></div>
+  <div class="a symb" id="sy6"><div class="ic">{{herz}}</div></div>
+  <div class="a symb" id="sy7"><div class="ic">{{narrenkappe}}</div></div>
+
+  <!-- 3 · Gruppe, Beitrag, e.V. -->
+  <div class="a buehne" id="bue2"></div>
+  <svg class="a" id="lin3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none">
+      <path pathLength="1" d="M1050 628C1060 540 1150 470 1262 452"/><path pathLength="1" d="M1230 628C1236 560 1270 500 1296 462"/>
+      <path pathLength="1" d="M1410 628C1404 560 1370 500 1344 462"/><path pathLength="1" d="M1590 628C1580 540 1490 470 1378 452"/></g></svg>
+  <div class="a welle" id="welle3" data-frei></div>
+  <div class="a" id="flag3" style="width:200px">{{flagge}}</div>
+  <div class="a" id="kasse3" style="width:230px">{{kasse}}</div>
+  <div class="a" id="m3a" style="width:104px" data-frei></div><div class="a" id="m3b" style="width:104px" data-frei></div>
+  <div class="a" id="m3c" style="width:104px" data-frei></div><div class="a" id="m3d" style="width:104px" data-frei></div>
+  <div class="a vschild kurz" id="schild3">e.V.</div>
+  <div class="a register" id="reg3"><small>Vereinsregister</small>
+    <div class="zeile"><i style="width:210px"></i><i style="width:90px"></i></div>
+    <div class="zeile"><i style="width:160px"></i><i style="width:120px"></i></div>
+    <div class="zeile neu" id="neu3"></div>
+    <div class="a plak gruen klein" id="ok3" data-frei></div></div>
+  <div class="a portrait" id="g3a" data-f="priya" style="width:130px;height:130px"></div>
+  <div class="a portrait" id="g3b" data-f="kwame" style="width:130px;height:130px"></div>
+  <div class="a portrait" id="g3c" data-f="mai" style="width:130px;height:130px"></div>
+  <div class="a portrait" id="g3d" data-f="yusuf" style="width:130px;height:130px"></div>
+  <div class="a etikett" id="azubi3">Azubi</div>
+
+  <!-- 4 · Mitgliederversammlung -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a welle" id="welle4" data-frei></div>
+  <div class="a platz" id="pl4a" data-gruppe="vorstand" style="width:96px;height:96px">?</div>
+  <div class="a platz" id="pl4b" data-gruppe="vorstand" style="width:96px;height:96px">?</div>
+  <div class="a platz" id="pl4c" data-gruppe="vorstand" style="width:96px;height:96px">?</div>
+  <div class="a portrait klein" id="v4a" data-f="sabine" data-gruppe="vorstand" style="width:96px;height:96px"></div>
+  <div class="a portrait klein" id="v4b" data-f="jonas" data-gruppe="vorstand" style="width:96px;height:96px"></div>
+  <div class="a portrait klein" id="v4c" data-f="empfangschefin" data-gruppe="vorstand" style="width:96px;height:96px"></div>
+  <div class="a pult" id="pult4" data-gruppe="vorstand"><span id="pultTxt">Vorstand</span></div>
+  <div class="a plak gruen klein" id="ok4a" data-gruppe="vorstand"></div><div class="a plak gruen klein" id="ok4b" data-gruppe="vorstand"></div><div class="a plak gruen klein" id="ok4c" data-gruppe="vorstand"></div>
+  <div class="a" id="kal4" style="width:140px" data-gruppe="kal">{{kalender}}</div>
+  <div class="a plak" id="mal4" data-gruppe="kal" style="width:70px;height:56px;border-radius:28px">1×</div>
+  <div id="saal4"></div>
+  <div class="a ring" id="ring4" style="width:124px;height:124px" data-frei></div>
+
+  <!-- 5 · Training und Grillen -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a feld" id="feld5" data-frei></div>
+  <div class="a woche" id="woche5"><i>Mo</i><i id="di5">Di</i><i>Mi</i><i>Do</i><i>Fr</i><i>Sa</i><i>So</i></div>
+  <div class="a" id="tor5" style="width:180px" data-frei>{{tor}}</div>
+  <div class="a welle" id="welle5" data-frei></div>
+  <div class="a" id="grill5" style="width:260px" data-gruppe="grill">{{grill}}</div>
+  <div class="a" id="wurst5a" style="width:96px" data-gruppe="grill">{{bratwurst}}</div>
+  <div class="a" id="wurst5b" style="width:96px" data-gruppe="grill">{{bratwurst}}</div>
+  <div class="a" id="limo5a" style="width:140px">{{limo}}</div>
+  <div class="a" id="limo5b" style="width:140px">{{limo}}</div>
+  <div class="a portrait" id="t5a" data-f="kwame" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="t5b" data-f="amir" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="t5c" data-f="mai" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="y5" data-f="yusuf" style="width:190px;height:190px"></div>
+  <div class="a frage" id="frage5">?</div>
+  <div class="a blase5" id="b5a" data-frei><i></i><i></i><i></i></div>
+  <div class="a blase5 rechts" id="b5b" data-frei><i></i><i></i><i></i></div>
+  <div class="a blase5 rechts" id="b5c" data-frei><i></i><i></i><i></i></div>
+  <div class="a" id="ball5" style="width:82px" data-frei data-dreht>{{fussball}}</div>
+  <div class="a welle" id="welle5b" data-frei></div>
+  <div class="a" id="herz5" style="width:96px">{{herz}}</div>
+
+  <!-- 6 · Suchen, ausprobieren, Mitglied werden -->
+  <div class="a buehne" id="bue5"></div>
+  <svg class="a" id="lin6" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path pathLength="1" d="M1100 270H1540" stroke="var(--b200)" stroke-width="6" stroke-linecap="round" fill="none"/></svg>
+  <div class="a schritt" id="st6a">1</div><div class="a schritt" id="st6b">2</div><div class="a schritt" id="st6c">3</div>
+  <div class="a handy6" id="handy6"><div class="schirm"><div class="kerbe"></div>
+    <div class="such" id="such6"></div>
+    <div class="treffer" id="tr6a"><div class="ico">{{fussball}}</div><div class="txt"><i></i><i></i></div><div class="pin"></div></div>
+    <div class="treffer" id="tr6b"><div class="ico">{{trompete}}</div><div class="txt"><i></i><i></i></div><div class="pin"></div></div>
+    <div class="treffer" id="tr6c"><div class="ico">{{herz}}</div><div class="txt"><i></i><i></i></div><div class="pin"></div></div>
+  </div></div>
+  <div class="a einl" id="einl6"><small>Einladung</small><b>Probetraining</b><em id="schnupper6">oder Schnuppertag</em><span class="gratis" id="gratis6">kostenlos</span></div>
+  <div class="a" id="pfeife6" style="width:92px">{{pfeife}}</div>
+  <div class="a portrait" id="y6" data-f="yusuf" style="width:140px;height:140px"></div>
+  <div class="a" id="ball6" style="width:84px" data-dreht>{{fussball}}</div>
+  <div class="a" id="herz6" style="width:84px">{{herz}}</div>
+  <div class="a antrag" id="antrag6"><h5>Mitgliedsantrag</h5>
+    <div class="fe"><u style="width:70px"></u><span><i id="f6a" style="width:170px"></i></span></div>
+    <div class="fe"><u style="width:96px"></u><span><i id="f6b" style="width:210px"></i></span></div>
+    <div class="fe"><u style="width:60px"></u><span><i id="f6c" style="width:130px"></i></span></div>
+    <div class="kz"><b id="kz6"></b><u></u></div>
+    <div class="us"><svg viewBox="0 0 190 48"><path id="us6" pathLength="1" d="M6 34c10-22 18-26 20-14s-4 22 4 10 14-24 18-10 2 16 10 4 12-16 16-6 6 10 14 2 12-8 18-2 10 6 20-2" stroke="var(--b600)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  </div>
+  <div class="a plak gruen" id="ok6"></div>
+
+  <!-- 7 · Internationale Vereine -->
+  <div class="a buehne" id="bue6"></div>
+  <svg class="a" id="wimpel7" viewBox="0 0 760 130" style="width:760px;height:130px" data-frei></svg>
+  <div class="a tisch7" id="tisch7" data-gruppe="tisch7"></div>
+  <div class="a" id="tasse7a" style="width:112px" data-gruppe="tisch7">{{tasse}}</div>
+  <div class="a" id="tasse7b" style="width:112px" data-gruppe="tisch7">{{tasse}}</div>
+  <div class="a" id="globus7" style="width:146px" data-gruppe="tisch7">{{weltkugel}}</div>
+  <div class="a" id="brief7" style="width:140px" data-gruppe="tisch7">{{brief}}</div>
+  <div class="a plak rot" id="frage7" data-gruppe="tisch7">?</div>
+  <div class="a plak gruen" id="ok7" data-gruppe="tisch7"></div>
+  <svg class="a" id="pfeil7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path id="pfeil7p" pathLength="1" d="M1480 568C1482 608 1458 640 1424 652" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze7)"/></svg>
+  <div class="a welle" id="welle7" data-frei></div>
+  <div class="a portrait gelb" id="i7a" data-f="kwame" style="width:120px;height:120px"></div>
+  <div class="a portrait gelb" id="i7b" data-f="ana" style="width:120px;height:120px"></div>
+  <div class="a portrait gruen" id="i7c" data-f="lehrerin" style="width:120px;height:120px"></div>
+  <div class="a portrait blau" id="i7d" data-f="priya" style="width:120px;height:120px"></div>
+  <div class="a portrait" id="y7" data-f="yusuf" style="width:132px;height:132px"></div>
+
+  <!-- 8 · Selbst gründen – Mach mit -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a gruend" id="gr8"><h5 id="gr8h">Gründung</h5></div>
+  <div id="sieben8"></div>
+  <div class="a welle" id="welle8" data-frei></div>
+  <div class="a mkarte" id="mk8"><small>Verein e.V.</small><b>Mitglied</b><i></i><i></i><div class="ic">{{fussball}}</div></div>
+  <div class="a portrait" id="y8" data-f="yusuf" style="width:190px;height:190px"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Über 600.000 Vereine</div></div>
+<div class="block" id="tb3"><div class="titel">Gemeinsames Ziel</div><div class="titel">kleiner Beitrag</div><div class="titel">e.V.</div></div>
+<div class="block" id="tb4"><div class="titel" style="font-size:56px;line-height:66px;letter-spacing:-.025em">Mitgliederversammlung</div><div class="unter">jede Stimme zählt</div></div>
+<div class="block" id="tb5"><div class="titel">Freunde</div><div class="titel">Deutsch</div><div class="titel">Spaß</div></div>
+<div class="block" id="tb6"><div class="titel">Suchen</div><div class="titel">Ausprobieren</div><div class="titel">Mitglied werden</div></div>
+<div class="block" id="tb7"><div class="titel">Auch internationale Vereine</div></div>
+<div class="block" id="tb8"><div class="titel" style="font-size:96px;line-height:108px">Mach mit!</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Vereine verbinden Menschen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Und jeder darf mitmachen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const MX = 1320, MY = 540;
+const WAB = (m, ab) => A(wort(m, ab)), WEAB = (m, ab) => A(wortEnde(m, ab));
+const T_EINGETRAGEN = wort('eingetragener', satz(7).start);   // „Verein“ danach, nicht „Vereine“
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const WELT = el('welt');
+
+/* ---------- Bauteile, die per Skript entstehen ---------- */
+// 4 · Saal: acht Stühle mit Mitgliedern und Stimmkarten
+const SAAL = [['kunde', 1050, 600], ['lehrerin', 1230, 600], ['stammgast', 1410, 600], ['priya', 1590, 600],
+  ['kwame', 1050, 775], ['yusuf', 1230, 775], ['mai', 1410, 775], ['amir', 1590, 775]];
+el('saal4').outerHTML = SAAL.map(([f], k) =>
+  `<div class="a" id="stuhl4${k}" style="width:130px" data-gruppe="sitz${k}">${tpl('t-stuhl')}</div>` +
+  `<div class="a skarte" id="sk4${k}" data-gruppe="sitz${k}"><b id="eins4${k}">1</b></div>` +
+  `<div class="a portrait klein" id="m4${k}" data-f="${f}" data-gruppe="sitz${k}" style="width:96px;height:96px"></div>`).join('');
+// 8 · sieben Gründungsmitglieder, Zeilen mit Unterschrift
+const SIEBEN = [['praxisanleiterin', 1030, 430], ['geselle', 1030, 580], ['baeckermeisterin', 1030, 730], ['chefin', 1320, 300],
+  ['kunde', 1610, 430], ['stammgast', 1610, 580], ['lehrerin', 1610, 730]];
+el('sieben8').outerHTML = SIEBEN.map(([f], k) =>
+  `<div class="a portrait klein" id="s8${k}" data-f="${f}" data-gruppe="s8${k}" style="width:92px;height:92px"></div>` +
+  `<div class="a plak klein" id="z8${k}" data-gruppe="s8${k}">${k + 1}</div>`).join('');
+{
+  let zufall = 7;
+  const rnd = () => { zufall = (zufall * 16807) % 2147483647; return zufall / 2147483647; };
+  el('gr8').insertAdjacentHTML('beforeend', SIEBEN.map((_, k) => {
+    let d = `M4 ${24 + rnd() * 4}`, x = 4;
+    const n = 5 + Math.floor(rnd() * 3), bis = 120 + rnd() * 90;
+    for (let i = 0; i < n; i++) { const nx = x + bis / n; d += `C${(x + bis / n * .3).toFixed(1)} ${(4 + rnd() * 8).toFixed(1)} ${(x + bis / n * .7).toFixed(1)} ${(28 + rnd() * 6).toFixed(1)} ${nx.toFixed(1)} ${(16 + rnd() * 10).toFixed(1)}`; x = nx; }
+    return `<div class="zl"><b>${k + 1}</b><svg viewBox="0 0 220 34"><path id="sig8${k}" pathLength="1" d="${d}" stroke="var(--b600)" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg></div>`;
+  }).join(''));
+}
+// 7 · Wimpelkette: neutrale bunte Dreiecke, keine Länderflaggen
+const WIMPEL = ['var(--b500)', 'var(--warning)', 'var(--success)', 'var(--error)', 'var(--info)', 'var(--b300)', 'var(--warning)', 'var(--success)', 'var(--b500)'];
+const schnurY = x => 18 + 34 * (1 - ((x - 380) / 380) ** 2);
+el('wimpel7').innerHTML = `<path d="M0 18Q380 86 760 18" stroke="var(--b400)" stroke-width="4" fill="none" stroke-linecap="round"/>` +
+  WIMPEL.map((f, k) => { const x = 60 + k * 80, y = schnurY(x); return `<g id="wi${k}"><path d="M${x - 29} ${y}H${x + 29}L${x} ${y + 64}Z" fill="${f}"/><path d="M${x - 29} ${y}H${x + 29}L${x + 20} ${y + 14}H${x - 20}Z" fill="var(--b700)" opacity=".12"/></g>`; }).join('');
+
+// Porträts und kleine Grafiken aus den Vorlagen füllen
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['ok3', 'ok4a', 'ok4b', 'ok4c', 'ok6', 'ok7'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+['m3a', 'm3b', 'm3c', 'm3d'].forEach(id => { el(id).innerHTML = tpl('t-muenze'); });
+el('kz6').innerHTML = '<span id="kzH6" style="display:block;width:24px">' + tpl('svgHakenLila') + '</span>';
+document.querySelectorAll('.treffer .pin').forEach(p => { p.innerHTML = tpl('svgPin'); });
+
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte, der Schwenk startet von hier
+
+// kleine Elemente ploppen mit Überschwung, große kommen sanfter
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .85 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {   // mehrere Wellen hintereinander mit einem Element
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Text tippt sich: Zeichen je nach Fortschritt
+const TIPPEN = [];
+const tippen = (id, text, t0, t1, strich = false) => {
+  TIPPEN.push([el(id), text, t0, t1, strich]);
+  const n = Math.max(3, Math.round(text.length / 3)); for (let k = 0; k < n; k++) cue(t0 + (t1 - t0) * k / n, 'tipp');
+};
+HOOKS.push(t => TIPPEN.forEach(([e, text, t0, t1, mitStrich]) => {
+  const n = Math.floor(clamp((t - t0) / (t1 - t0)) * text.length);
+  const blink = mitStrich && t > t0 - .6 && (t < t0 || t > t1) ? (Math.floor(t * 2.5) % 2 === 0) : mitStrich && t >= t0 && t <= t1;
+  const html = text.slice(0, n) + (mitStrich && t > t0 - .6 && t < t1 + 1.2 ? `<span class="strich" style="opacity:${blink ? 1 : 0}"></span>` : '');
+  if (e.dataset.h !== html) { e.innerHTML = (e.dataset.vor || '') + html; e.dataset.h = html; }
+}));
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+const ZWINKERN = [];      // [portrait, t0, dauer] – rechtes Auge zu
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1, blinz = `scaleY(${z < .035 ? .12 : 1})`;
+  p.querySelectorAll('.augen').forEach(a => { a.style.transform = blinz; });
+  for (const [q, t0, d] of ZWINKERN) if (q === p && t > t0 && t < t0 + d) {
+    const k = Math.sin(Math.PI * clamp((t - t0) / d)), s = 1 - .9 * Math.min(1, k * 2.2);
+    p.querySelector('.augen.re').style.transform = `scaleY(${s.toFixed(3)})`;
+  }
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+// Schmunzeln: kleines Kichern (Drehen um wenige Grad) in einem Zeitfenster
+const kichern = (id, t0, d, w = 3, f = 11) => HOOKS.push(t => { const x = t - t0; if (x > 0 && x < d) el(id).style.transform += ` rotate(${(w * Math.sin(x * f) * Math.sin(Math.PI * x / d)).toFixed(2)}deg)`; });
+
+/* ---------- Kamera: Schwenk, Szenenwechsel-Atmer, Akzente ---------- */
+const PANS = [], WECHSEL = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const T_RUECK = W('Aber', 25) - .35;      // Szene 8: von der Mitte zurück nach rechts, links erscheint „Mach mit!“
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const p of WECHSEL) z -= .045 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  const wx = wert(kamera, 'x', t), p = -wx;
+  // Bühnenmitte auf dem Bildschirm: 960 (mittig) … 1320 (Bühne rechts)
+  let f;
+  if (p <= S(1)) f = clamp((p - 360) / (S(1) - 360));
+  else if (t < T_RUECK) f = p <= S(6) ? 1 : clamp(1 - (p - S(6)) / (S(7) + 360 - S(6)));
+  else f = clamp((S(7) + 360 - p) / 360);
+  $('#kamera').style.transformOrigin = `${(960 + 360 * f).toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  // Tiefe: die Bühne bleibt beim Schwenk etwas zurück
+  for (let i = 0; i < 8; i++) {
+    const ruhe = i === 0 ? -360 : i === 7 ? -S(7) - 360 : -S(i);
+    if (i === 7 && t >= T_RUECK) continue;
+    $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - ruhe)).toFixed(1)}px)`;
+  }
+});
+
+/* ================= 1 · Der Witz: drei treffen sich, gründen einen Verein (mittig, ohne Titel) ================= */
+const X0 = S(0);
+{
+  // Es gibt einen Witz in Deutschland: die Karte erscheint und kichert
+  pop('de1', W('Es', 1) - .1, { x: X0 + 1320, y: 470 }, 'pop', 'sanft');
+  kichern('de1', W('Witz', 1) - .1, 1.1, 2.5, 9); cue(W('Witz', 1), 'klick');
+  bump('de1', W('Deutschland', 1), 1.08); cue(W('Deutschland', 1), 'plopp');
+  // Wenn sich drei Deutsche treffen: die Karte rückt nach oben, drei Gesichter kommen von drei Seiten
+  tw('de1', W('Wenn', 1) - .1, .6, { y: 330, s: .52 }, 'inout');
+  const P = [['p1a', 1140, 650, { x: -200 }], ['p1b', 1320, 700, { y: 120 }], ['p1c', 1500, 650, { x: 200 }]];
+  P.forEach(([id, x, y, von], i) => {
+    const t0 = W('drei', 1) - .2 + i * .19;
+    akteur(id, { x: X0 + x + (von.x || 0), y: y + (von.y || 0), o: 0, r: (von.x || 0) / 40 });
+    tw(id, t0, .18, { o: 1 }); tw(id, t0, .55, { x: X0 + x, y, r: 0 }, 'inout'); landen(id, t0 + .55, .7); cue(t0, 'whoosh');
+    pop(['n1a', 'n1b', 'n1c'][i], t0 + .42, { x: X0 + x + 56, y: y - 56 }, 'pop');
+  });
+  // treffen: sie rücken zusammen und freuen sich
+  const tT = W('treffen', 1) - .05;
+  ['n1a', 'n1b', 'n1c'].forEach((id, i) => tw(id, tT - .1 + i * .05, .25, { s: 0 }, 'sinus'));
+  tw('p1a', tT, .45, { x: X0 + 1175 }, 'inout', { bogen: 26 }); tw('p1c', tT, .45, { x: X0 + 1465 }, 'inout', { bogen: 26 });
+  huepfen('p1b', tT + .05, 16);
+  ['p1a', 'p1b', 'p1c'].forEach(id => froh(id, tT + .2));
+  // gründen sie einen Verein: das Schild schlägt mit Wackler auf
+  const tS = W('gründen', 1) - .15;
+  tw('de1', tS - .1, .3, { o: 0, s: .35 }, 'in');
+  akteur('schild1', { x: X0 + 1320, y: -260, o: 0 });
+  tw('schild1', tS, .1, { o: 1 }); tw('schild1', tS, .42, { y: 392 }, 'in');
+  landen('schild1', tS + .42, 1); wackeln('schild1', tS + .46, 3, 2.5); cue(tS + .42, 'plopp'); akzent(tS + .42, .045);
+  ['p1a', 'p1b', 'p1c'].forEach((id, i) => huepfen(id, tS + .5 + i * .08, 14));
+  bump('schild1', W('Verein', 1) + .05, 1.06); cue(W('Verein', 1) + .05, 'ding');
+  // Ganz falsch ist das nicht: Schmunzeln, und es kommen noch mehr dazu
+  ['p1a', 'p1b', 'p1c'].forEach((id, i) => kichern(id, W('Ganz', 2) - .1 + i * .07, 1.8, 3.5, 12));
+  [['k1a', 985, 470], ['k1b', 985, 632], ['k1c', 1655, 470], ['k1d', 1655, 632]].forEach(([id, x, y], i) => {
+    const t0 = W('falsch', 2) - .1 + i * .16;
+    pop(id, t0, { x: X0 + x, y }, i % 2 ? null : 'pop'); froh(id, t0 + .1);
+  });
+  bump('schild1', W('nicht', 2), 1.05);
+}
+
+/* ================= 2 · Über 600.000 Vereine ================= */
+const X1 = S(1);
+pan2(SE(2) + .35, 1);
+{
+  titelEin('tb2', W('über', 3) - .1, [W('über', 3) - .1, W('sechshunderttausend', 3) - .05, W('Vereine', 3) - .05]);
+  textAus('tb2', SE(4) + .15);
+  akteur('de2', { x: X1 + 1320, y: 610, o: 0 }); tw('de2', SE(2) + .75, .5, { o: 1 }); tw('de2', SE(2) + .75, .8, { y: 540 }, 'inout');
+  bump('de2', W('Deutschland', 3) + .1, 1.03); cue(W('Deutschland', 3) + .1, 'plopp');
+  // Viele Punkte breiten sich von der Mitte über das ganze Land aus
+  akteur('punkte2', { x: X1 + 1320, y: 540 });
+  const land = el('de2').querySelector('path');
+  let zufall = 42; const rnd = () => { zufall = (zufall * 16807) % 2147483647; return zufall / 2147483647; };
+  const PK = [];
+  for (let v = 0; v < 4000 && PK.length < 150; v++) {
+    const u = 20 + rnd() * 310, w = 10 + rnd() * 450, pt = new DOMPoint(u, w);
+    if (!land.isPointInFill(pt)) continue;
+    const pt2 = [0, 1, 2, 3].map(k => new DOMPoint(u + [9, -9, 0, 0][k], w + [0, 0, 9, -9][k]));
+    if (!pt2.every(q => land.isPointInFill(q))) continue;
+    if (PK.some(([a, b]) => (a - u) ** 2 + (b - w) ** 2 < 22 * 22)) continue;
+    PK.push([u, w]);
+  }
+  const g = el('punkteG'), NS = 'http://www.w3.org/2000/svg';
+  const tP = W('sechshunderttausend', 3) - .1, dmax = Math.max(...PK.map(([u, w]) => Math.hypot(u - 175, w - 230)));
+  const KREISE = PK.map(([u, w]) => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', u); c.setAttribute('cy', w); c.setAttribute('fill', 'var(--b500)'); c.setAttribute('r', 0); g.appendChild(c); return [c, tP + 1.25 * Math.hypot(u - 175, w - 230) / dmax + rnd() * .12]; });
+  HOOKS.push(t => KREISE.forEach(([c, t0]) => { const r = 6.5 * E.back(clamp((t - t0) / .3)); c.setAttribute('r', Math.max(0, r).toFixed(2)); c.setAttribute('opacity', (.62 - .22 * clamp((t - W('Für', 4)) / .6)).toFixed(3)); }));
+  for (let k = 0; k < 8; k++) cue(tP + k * .17, 'tipp');
+  bump('de2', W('Vereine', 3) + .05, 1.04); welle('welle2', W('Vereine', 3) + .05, X1 + 1320, 540, 1.1, 460); cue(W('Vereine', 3) + .05, 'ding'); akzent(W('Vereine', 3) + .05, .03);
+  // Symbole ploppen auf der Karte auf – je beim Wort
+  const SY = [['sy1', 'Sport', 140, 80], ['sy2', 'Musik', 270, 130], ['sy3', 'Kultur', 170, 210], ['sy4', 'Garten', 285, 235],
+    ['sy5', 'Tiere', 120, 330], ['sy6', 'Hilfe', 225, 365], ['sy7', 'Karneval', 50, 225]];
+  SY.forEach(([id, w, u, v], i) => {
+    const x = X1 + 1090.1 + 1.3183 * u, y = 233.5 + 1.3183 * v, t0 = W(w, 4) - .1;
+    akteur(id, { x, y: y - 40, s: 0 });
+    tw(id, t0, .5, { s: 1 }, 'back'); tw(id, t0, .45, { y }, 'weich'); cue(t0, 'pop');
+    const ic = el(id).querySelector('.ic'); akteur(ic, {}, true);
+    wackeln(ic, t0 + .35, 3, 6);
+  });
+  // Karneval: die Kappe wackelt mit ihren Glöckchen
+  const kappe = el('sy7').querySelector('.ic');
+  wackeln(kappe, W('Karneval', 4) + .45, 6, 8); cue(W('Karneval', 4) + .4, 'ding'); akzent(W('Karneval', 4) + .1, .035);
+  bump('sy6', W('andere', 4), 1.08);
+  // zum Schluss eine Welle über alle Symbole
+  SY.forEach(([id], i) => huepfen(id, SE(4) - .2 + i * .06, 10));
+}
+
+/* ================= 3 · Gemeinsames Ziel · kleiner Beitrag · e.V. ================= */
+const X2 = S(2);
+pan2(SE(4) + .3, 2);
+{
+  titelEin('tb3', W('gemeinsamen', 5) - .1, [W('gemeinsamen', 5) - .1, null, W('kleinen', 6) - .1, null, W('E-Vau', 7) - .1]);
+  textAus('tb3', SE(7) + .15);
+  const G = [['g3a', 1050], ['g3b', 1230], ['g3c', 1410], ['g3d', 1590]];
+  G.forEach(([id, x], i) => { ein(id, W('Gruppe', 5) - .2 + i * .1, { x: X2 + x, y: 700 }, { y: 60 }, i ? null : 'whoosh'); froh(id, W('Gruppe', 5)); });
+  G.forEach(([id], i) => huepfen(id, W('Menschen', 5) + i * .07, 12));
+  // gemeinsames Ziel: Linien laufen von allen zur Zielflagge
+  pop('flag3', W('mit', 5) - .1, { x: X2 + 1320, y: 360 }, 'pop', 'sanft');
+  akteur('lin3', { x: X2 + 960, y: 540 });
+  [...el('lin3').querySelectorAll('path')].forEach((p, i) => strich(p, W('gemeinsamen', 5) - .1 + i * .08, .55));
+  cue(W('gemeinsamen', 5), 'scan');
+  bump('flag3', W('Ziel', 5), 1.1); welle('welle3', W('Ziel', 5), X2 + 1320, 360, 1.0, 220); cue(W('Ziel', 5), 'ding'); akzent(W('Ziel', 5), .035);
+  // Beitrag: die Flagge rückt in die Ecke, die Vereinskasse kommt, Münzen fliegen hinein
+  const tB = W('Die', 6) - .15;
+  tw('lin3', tB, .3, { o: 0 }); tw('flag3', tB, .7, { x: X2 + 1005, y: 300, s: .56 }, 'inout');
+  akteur('kasse3', { x: X2 + 1320, y: 200, o: 0 });
+  tw('kasse3', W('Mitglieder', 6) - .1, .12, { o: 1 }); tw('kasse3', W('Mitglieder', 6) - .1, .4, { y: 430 }, 'in');
+  landen('kasse3', W('Mitglieder', 6) + .3); cue(W('Mitglieder', 6) + .3, 'plopp');
+  const muenze = (id, t0, x, s = .7) => {
+    akteur(id, { x: X2 + x, y: 598, s: 0 });
+    tw(id, t0, .4, { s }, 'back'); cue(t0, 'pop');
+  };
+  const einwurf = (id, t0) => {
+    flug(id, t0, .8, X2 + 1320, 395, 100); tw(id, t0 + .7, .12, { o: 0, s: .3 }, 'in');
+    bump('kasse3', t0 + .8, 1.07); cue(t0 + .8, 'muenze');
+  };
+  [['m3a', 1050], ['m3b', 1230], ['m3c', 1410]].forEach(([id, x], i) => {
+    const t0 = W('zahlen', 6) - .25 + i * .3;
+    muenze(id, t0, x); einwurf(id, t0 + .35);
+  });
+  bump('kasse3', W('kleinen', 6), 1.05);
+  // für Azubis oft weniger: Yusufs Münze wird kleiner
+  pop('azubi3', W('Azubis', 6) - .15, { x: X2 + 1590, y: 800 });
+  muenze('m3d', W('Azubis', 6) + .05, 1590);
+  tw('m3d', W('weniger', 6) - .05, .35, { s: .48 }, 'sanft'); cue(W('weniger', 6), 'klick');
+  froh('g3d', W('weniger', 6)); huepfen('g3d', W('weniger', 6) + .1, 10);
+  einwurf('m3d', W('weniger', 6) + .5);
+  // e.V.: die Kasse geht, das Schild kommt, im Vereinsregister wird die Zeile geschrieben
+  const tC = W('Viele', 7) - .2;
+  aus('azubi3', tC, .3);
+  akteur('schild3', { x: X2 + 1320, y: -200, o: 0 });
+  const tS = W('E-Vau', 7) - .45;
+  tw('kasse3', tS - .15, .4, { y: 520, o: 0, s: .8 }, 'in'); aus('flag3', tS - .15, .35);
+  tw('schild3', tS, .1, { o: 1 }); tw('schild3', tS, .4, { y: 318 }, 'in');
+  landen('schild3', tS + .4); wackeln('schild3', tS + .44, 3, 2.5); cue(tS + .4, 'plopp'); akzent(tS + .4, .04);
+  G.forEach(([id], i) => huepfen(id, tS + .5 + i * .06, 10));
+  ein('reg3', W('bedeutet', 7) - .25, { x: X2 + 1320, y: 505 }, { y: 60 }, 'whoosh');
+  tippen('neu3', 'Verein e.V.', W('eingetragener', 7) - .1, WAB('Verein', T_EINGETRAGEN) + .15, true);
+  akteur('ok3', { x: 424, y: 156, s: 0 });
+  tw('ok3', WAB('Verein', T_EINGETRAGEN) + .25, .5, { s: 1 }, 'back'); cue(WAB('Verein', T_EINGETRAGEN) + .25, 'erfolg');
+  bump('schild3', WAB('Verein', T_EINGETRAGEN), 1.06);
+  G.forEach(([id], i) => huepfen(id, WEAB('Verein', T_EINGETRAGEN) + .1 + i * .06, 10));
+}
+
+/* ================= 4 · Mitgliederversammlung ================= */
+const X3 = S(3);
+pan2(SE(7) + .3, 3);
+{
+  titelEin('tb4', W('Mitgliederversammlung', 9) - .5, { unter: W('Jede', 11) - .1 });
+  textAus('tb4', SE(11) + .15);
+  // Ein Verein ist demokratisch: der Saal entsteht
+  SAAL.forEach(([, x, y], k) => {
+    const t0 = W('Ein', 8) - .1 + (k % 4) * .07 + Math.floor(k / 4) * .18;
+    pop('stuhl4' + k, t0, { x: X3 + x, y }, k % 4 ? null : 'pop');
+  });
+  ein('pult4', W('demokratisch', 8) - .2, { x: X3 + 1320, y: 420 }, { y: 50 }, 'whoosh');
+  akteur('pultTxt', { o: 0 }, true);
+  [['pl4a', 1190], ['pl4b', 1320], ['pl4c', 1450]].forEach(([id, x], i) => pop(id, W('demokratisch', 8) + .1 + i * .1, { x: X3 + x, y: 356 }, i ? null : 'pop'));
+  akzent(W('demokratisch', 8) + .2, .03);
+  // Meistens einmal im Jahr: der Kalender blättert, „1×“
+  pop('kal4', W('Meistens', 9) - .15, { x: X3 + 1638, y: 330 }, 'pop', 'sanft');
+  for (let k = 0; k < 4; k++) { const t0 = W('Meistens', 9) + .35 + k * .17; tw('kal4', t0, .08, { sy: .8 }, 'sinus'); tw('kal4', t0 + .08, .09, { sy: 1 }, 'sinus'); cue(t0, 'klick'); }
+  pop('mal4', W('einmal', 9) - .05, { x: X3 + 1582, y: 272 }, 'ding');
+  bump('kal4', W('Jahr', 9), 1.08);
+  // Mitgliederversammlung: alle kommen und setzen sich
+  SAAL.forEach(([, x, y], k) => {
+    const t0 = W('Mitgliederversammlung', 9) - .3 + k * .07;
+    ein('m4' + k, t0, { x: X3 + x, y: y - 30 }, { y: -70 }, k % 3 ? null : 'pop'); landen('m4' + k, t0 + .5, .5);
+    froh('m4' + k, t0 + .3);
+    akteur('sk4' + k, { x: X3 + x + 62, y: y - 22, o: 0 });
+    akteur('eins4' + k, { o: 0 }, true);
+  });
+  // Dort wählen alle Mitglieder den Vorstand
+  [['v4a', 'pl4a', 1190], ['v4b', 'pl4b', 1320], ['v4c', 'pl4c', 1450]].forEach(([id, pl, x], i) => {
+    const t0 = W('wählen', 10) - .15 + i * .1;
+    tw(pl, t0 - .1, .25, { s: 0 }, 'sinus'); pop(id, t0, { x: X3 + x, y: 356 }, i ? null : 'pop');
+  });
+  const hoch = (k, t0) => { tw('sk4' + k, t0, .15, { o: 1 }); tw('sk4' + k, t0, .4, { y: SAAL[k][2] - 88 }, 'back'); };
+  const runter = (k, t0) => tw('sk4' + k, t0, .3, { y: SAAL[k][2] - 58 }, 'inout');
+  SAAL.forEach((_, k) => hoch(k, W('alle', 10) - .15 + k * .06));
+  cue(W('alle', 10) - .15, 'klick'); cue(W('alle', 10) + .15, 'klick'); cue(W('alle', 10) + .35, 'klick');
+  const tV = W('Vorstand', 10);
+  tw('pultTxt', tV - .1, .35, { o: 1 }); bump('pult4', tV - .1, 1.04);
+  [['ok4a', 1234], ['ok4b', 1364], ['ok4c', 1494]].forEach(([id, x], i) => pop(id, tV + .1 + i * .1, { x: X3 + x, y: 318 }, i ? null : 'erfolg'));
+  ['v4a', 'v4b', 'v4c'].forEach((id, i) => { froh(id, tV + .1); huepfen(id, tV + .15 + i * .07, 12); });
+  // und entscheiden gemeinsam: Karten runter, dann alle zugleich hoch
+  SAAL.forEach((_, k) => runter(k, W('entscheiden', 10) - .1 + (k % 4) * .03));
+  SAAL.forEach((_, k) => { tw('sk4' + k, W('gemeinsam', 10) - .05, .4, { y: SAAL[k][2] - 88 }, 'back'); });
+  cue(W('gemeinsam', 10) - .05, 'plopp'); akzent(W('gemeinsam', 10) + .1, .035);
+  welle('welle4', W('gemeinsam', 10) + .1, X3 + 1320, 680, 1.1, 520);
+  // Jede Stimme zählt gleich: jede Karte bekommt eine 1
+  SAAL.forEach((_, k) => { const t0 = W('Stimme', 11) - .05 + k * .06; tw('eins4' + k, t0, .2, { o: 1 }); bump('sk4' + k, t0, 1.15); });
+  for (let k = 0; k < 4; k++) cue(W('Stimme', 11) + k * .12, 'tipp');
+  SAAL.forEach((_, k) => bump('sk4' + k, W('gleich', 11), 1.12)); cue(W('gleich', 11), 'ding');
+  // auch deine: Yusufs Karte leuchtet
+  const tD = W('auch', 11) - .1, [, yx, yy] = SAAL[5];
+  akteur('ring4', { x: X3 + yx, y: yy - 30, o: 0, s: .9 }); tw('ring4', tD, .35, { o: 1, s: 1 }, 'sanft');
+  bump('sk45', W('deine', 11), 1.35); bump('m45', W('deine', 11), 1.08); froh('m45', W('deine', 11));
+  cue(W('deine', 11), 'erfolg'); akzent(W('deine', 11), .03);
+}
+
+/* ================= 5 · Warum? Training, Deutsch, Spaß, Freundschaft ================= */
+const X4 = S(4);
+pan2(SE(11) + .3, 4);
+{
+  titelEin('tb5', W('dieselben', 13) - .1, [W('dieselben', 13) - .1, W('Deutsch', 14) - .1, W('Spaß', 15) - .1]);
+  textAus('tb5', SE(16) + .15);
+  // Warum solltest du in einen Verein gehen?
+  pop('y5', W('Warum', 12) - .25, { x: X4 + 1320, y: 520 }, 'pop', 'sanft');
+  pop('frage5', W('solltest', 12) - .1, { x: X4 + 1448, y: 402 });
+  wackeln('frage5', W('Verein', 12), 4, 8);
+  kichern('y5', W('Warum', 12) + .3, 1.6, 2.5, 6);
+  // Training: Feld, Wochenstreifen, dieselben Menschen
+  const tF = W('Du', 13) - .25;
+  tw('frage5', tF - .1, .25, { s: 0 }, 'sinus');
+  ein('feld5', tF, { x: X4 + 1320, y: 615 }, { y: 50 }, 'whoosh');
+  tw('y5', tF, .7, { x: X4 + 1320, y: 730, s: .59 }, 'inout');
+  pop('woche5', W('jede', 13) - .2, { x: X4 + 1320, y: 300 }, 'pop', 'sanft');
+  const di = el('di5');
+  HOOKS.push(t => di.classList.toggle('an', t >= W('Woche', 13) - .05));
+  [W('Woche', 13) - .05, W('dieselben', 13), W('Menschen', 13)].forEach(t0 => { bump('woche5', t0, 1.04); cue(t0, 'tipp'); });
+  const T5 = [['t5a', 1060, 540], ['t5b', 1580, 540], ['t5c', 1100, 745]];
+  T5.forEach(([id, x, y], i) => { ein(id, W('dieselben', 13) - .2 + i * .12, { x: X4 + x, y }, { y: 50 }, i ? null : 'pop'); froh(id, W('Menschen', 13) + i * .1); });
+  // Ball: Pässe zwischen den Spielern
+  const FUSS = { y5: [1375, 790], t5a: [1112, 594], t5b: [1528, 594], t5c: [1152, 800] };
+  const ball = (t0, von, nach, d = .55, h = 70) => { const [x, y] = FUSS[nach]; tw('ball5', t0, d, { x: X4 + x, y, r: wertBei('ball5', 'r', t0) + 360 }, 'inout', { bogen: h }); cue(t0, 'klick'); };
+  akteur('ball5', { x: X4 + FUSS.y5[0], y: FUSS.y5[1], s: 0 });
+  tw('ball5', W('Menschen', 13) - .2, .35, { s: 1 }, 'back');
+  ball(W('Menschen', 13) + .2, 'y5', 't5a');
+  ball(W('Du', 14) - .05, 't5a', 't5b', .6, 50);
+  // Du sprichst mehr Deutsch: Sprechblasen
+  [['b5a', 1150, 455, 'sprichst'], ['b5b', 1500, 455, 'mehr'], ['b5c', 1290, 640, 'Deutsch']].forEach(([id, x, y, w], i) => {
+    pop(id, W(w, 14) - .1, { x: X4 + x, y }, 'pop'); wackeln(id, W(w, 14) + .3, 2, 3);
+  });
+  ball(W('Deutsch', 14) + .25, 't5b', 'y5', .6, 60);
+  mund('t5a', W('sprichst', 14) - .1, 'auf'); froh('t5a', W('Deutsch', 14) + .3);
+  aus(['b5a', 'b5b', 'b5c'], W('Du', 15) - .15, .3);
+  // Du machst etwas, das dir Spaß macht: Torschuss
+  ein('tor5', W('machst', 15) - .25, { x: X4 + 1320, y: 478 }, { y: -40 }, 'whoosh');
+  const tTor = W('Spaß', 15) - .3;
+  tw('ball5', tTor, .5, { x: X4 + 1320, y: 505, s: .82, r: 720 }, 'in', { bogen: 40 }); cue(tTor, 'whoosh');
+  bump('tor5', tTor + .5, 1.06); welle('welle5', tTor + .5, X4 + 1320, 490, 1.0, 240); cue(tTor + .5, 'erfolg'); akzent(tTor + .5, .045);
+  froh('y5', tTor + .5); huepfen('y5', tTor + .55, 20);
+  T5.forEach(([id], i) => huepfen(id, tTor + .65 + i * .08, 12));
+  // Freundschaften: nach dem Spiel wird gegrillt
+  const tG = W('Und', 16) - .2;
+  aus(['feld5', 'tor5', 'woche5'], tG, .35); tw('ball5', tG, .3, { o: 0, s: .5 }, 'in');
+  const ARC = { t5a: [1080, 470], y5: [1240, 405], t5b: [1400, 405], t5c: [1560, 470] };
+  Object.entries(ARC).forEach(([id, [x, y]], i) => tw(id, tG + .15 + i * .05, .75, { x: X4 + x, y, s: id === 'y5' ? .59 : 1 }, 'inout', { bogen: 40 }));
+  ein('grill5', W('oft', 16) - .05, { x: X4 + 1320, y: 700 }, { y: 70 }, 'whoosh');
+  pop('wurst5a', W('entstehen', 16) - .1, { x: X4 + 1284, y: 646 }, 'plopp');
+  pop('wurst5b', W('entstehen', 16) + .12, { x: X4 + 1358, y: 652 }, 'plopp');
+  schweben(['wurst5a', 'wurst5b'], 1.5);
+  pop('limo5a', W('so', 16) - .05, { x: X4 + 1100, y: 700 }, 'pop', 'sanft');
+  pop('limo5b', W('so', 16) + .12, { x: X4 + 1540, y: 700 }, null, 'sanft');
+  const tH = W('Freundschaften', 16) - .05;
+  pop('herz5', tH, { x: X4 + 1320, y: 296 }, 'erfolg'); welle('welle5b', tH + .05, X4 + 1320, 296, 1.0, 150); akzent(tH + .1, .04);
+  Object.keys(ARC).forEach((id, i) => { froh(id, tH); huepfen(id, tH + .1 + i * .07, 12); });
+  bump('herz5', SE(16) - .1, 1.12);
+}
+
+/* ================= 6 · Suchen · Ausprobieren · Mitglied werden ================= */
+const X5 = S(5);
+pan2(SE(16) + .3, 5);
+{
+  titelEin('tb6', W('Such', 18) - .1, [W('Such', 18) - .1, W('Probetraining', 19) - .1, W('Mitgliedsantrag', 20) - .3, null]);
+  textAus('tb6', SE(20) + .15);
+  // Wie geht das? – drei Schritte
+  akteur('lin6', { x: X5 + 960, y: 540 });
+  strich(el('lin6').querySelector('path'), W('Wie', 17) - .1, .9);
+  [['st6a', 1100, 'Wie'], ['st6b', 1320, 'geht'], ['st6c', 1540, 'das']].forEach(([id, x, w]) => pop(id, W(w, 17) - .1, { x: X5 + x, y: 270 }));
+  const aktiv = (id, t0) => { HOOKS.push(t => el(id).classList.toggle('an', t >= t0)); bump(id, t0, 1.18); cue(t0, 'ding'); };
+  aktiv('st6a', W('Such', 18) - .05); aktiv('st6b', W('Probetraining', 19)); aktiv('st6c', W('Mitgliedsantrag', 20));
+  // Such online …: Handy, Suche tippt sich, Treffer ploppen auf
+  ein('handy6', W('Such', 18) - .35, { x: X5 + 1320, y: 588 }, { y: 90 }, 'whoosh');
+  el('such6').dataset.vor = tpl('svgLupe');
+  el('such6').innerHTML = tpl('svgLupe');
+  tippen('such6', 'Sportverein Würzburg', W('online', 18) - .05, WE('Stadt', 18) - .1, true);
+  ['tr6a', 'tr6b', 'tr6c'].forEach((id, i) => {
+    akteur(id, { o: 0, y: 26 }, true);
+    const t0 = WE('Stadt', 18) + .05 + i * .13;
+    tw(id, t0, .25, { o: 1 }); tw(id, t0, .45, { y: 0 }, 'back'); cue(t0, 'pop');
+  });
+  // Die meisten laden dich … ein: Einladung fliegt aus dem Handy
+  const tL = W('laden', 19) - .35;
+  tw('handy6', tL, .7, { x: X5 + 1075, s: .8 }, 'inout');
+  bump('tr6a', tL + .1, 1.04);
+  akteur('einl6', { x: X5 + 1100, y: 470, s: .3, o: 0 });
+  tw('einl6', tL + .25, .12, { o: 1 }); tw('einl6', tL + .25, .7, { x: X5 + 1508, y: 452, s: 1 }, 'sanft', { bogen: 80 }); cue(tL + .25, 'whoosh');
+  akteur('gratis6', { s: 0 }, true); tw('gratis6', W('kostenlosen', 19) - .05, .45, { s: 1 }, 'back'); cue(W('kostenlosen', 19), 'plopp');
+  akteur('schnupper6', { o: 0, y: 14 }, true); tw('schnupper6', W('oder', 19) + .05, .4, { o: 1, y: 0 }, 'weich');
+  // Probetraining: Yusuf mit Ball, Pfiff
+  pop('y6', W('Probetraining', 19) - .2, { x: X5 + 1508, y: 725 }, 'pop', 'sanft'); froh('y6', W('Probetraining', 19) + .2);
+  pop('pfeife6', W('Probetraining', 19) + .1, { x: X5 + 1368, y: 732 }, null);
+  wackeln('pfeife6', W('Probetraining', 19) + .5, 4, 8); cue(W('Probetraining', 19) + .5, 'klick'); cue(W('Probetraining', 19) + .6, 'klick');
+  akteur('ball6', { x: X5 + 1640, y: 760, s: 0 });
+  tw('ball6', W('Probetraining', 19) + .2, .35, { s: 1 }, 'back');
+  const tBall = W('Probetraining', 19) + .6, tBallEnde = W('Wenn', 20) - .2;
+  HOOKS.push(t => { const d = t - tBall; if (d > 0 && t < tBallEnde) { const k = Math.abs(Math.sin(d * 5.2)); el('ball6').style.transform += ` translateY(${(-38 * k).toFixed(1)}px) rotate(${(d * 160).toFixed(1)}deg)`; } });
+  for (let t0 = tBall + Math.PI / 5.2; t0 < tBallEnde; t0 += Math.PI / 5.2) cue(t0, 'plopp');
+  // Wenn es dir gefällt: Herz; dann der Mitgliedsantrag
+  const tW = W('Wenn', 20) - .2;
+  aus(['einl6', 'handy6', 'pfeife6', 'ball6'], tW, .35);
+  tw('y6', tW + .1, .6, { x: X5 + 1605, y: 668 }, 'inout');
+  pop('herz6', W('gefällt', 20) - .1, { x: X5 + 1605, y: 548 }, 'ding'); froh('y6', W('gefällt', 20));
+  wackeln('herz6', W('gefällt', 20) + .35, 2, 4);
+  ein('antrag6', W('Wenn', 20) + .15, { x: X5 + 1245, y: 592 }, { y: 80 }, 'whoosh');
+  ['f6a', 'f6b', 'f6c'].forEach((id, i) => { akteur(id, { sx: 0 }, true); const t0 = W('füllst', 20) + .05 + i * .3; tw(id, t0, .35, { sx: 1 }, 'inout'); cue(t0, 'kritzeln'); });
+  akteur('kzH6', { s: 0 }, true); tw('kzH6', W('Mitgliedsantrag', 20) + .35, .35, { s: 1 }, 'back'); cue(W('Mitgliedsantrag', 20) + .35, 'klick');
+  strich('us6', W('Mitgliedsantrag', 20) + .55, .6); cue(W('Mitgliedsantrag', 20) + .55, 'kritzeln');
+  pop('ok6', W('aus', 20) - .05, { x: X5 + 1410, y: 368 }, 'erfolg'); akzent(W('aus', 20), .035);
+  huepfen('y6', W('aus', 20) + .05, 14);
+}
+
+/* ================= 7 · Auch internationale Vereine ================= */
+const X6 = S(6);
+pan2(SE(20) + .3, 6);
+{
+  titelEin('tb7', W('auch', 21) - .1, [W('auch', 21) - .1, W('internationale', 21) - .1]);
+  textAus('tb7', SE(22) + .15);
+  // Wimpel fallen nacheinander herunter und pendeln aus
+  akteur('wimpel7', { x: X6 + 1320, y: 292 });
+  const tWi = W('gibt', 21) - .1;
+  const WI = WIMPEL.map((_, k) => [el('wi' + k), tWi + k * .07, 60 + k * 80]);
+  HOOKS.push(t => WI.forEach(([g, t0, x]) => {
+    const y = schnurY(x), d = t - t0;
+    const sy = E.back(clamp(d / .45));
+    const r = d > 0 ? 9 * Math.exp(-d * 2.6) * Math.sin(d * 8) : 0;
+    const bumpS = WIMPEL_BUMP(g, t);
+    g.setAttribute('transform', `translate(${x} ${y}) rotate(${r.toFixed(2)}) scale(${bumpS.toFixed(3)} ${(Math.max(0, sy) * bumpS).toFixed(3)}) translate(${-x} ${-y})`);
+  }));
+  for (let k = 0; k < 9; k += 2) cue(tWi + k * .07, 'tipp');
+  // Tisch mit Tassen
+  ein('tisch7', W('Vereine', 21) - .15, { x: X6 + 1320, y: 700 }, { y: 50 }, 'whoosh');
+  pop('tasse7a', W('Vereine', 21) + .1, { x: X6 + 1110, y: 648 }, 'pop', 'sanft');
+  pop('tasse7b', W('Vereine', 21) + .22, { x: X6 + 1215, y: 648 }, null, 'sanft');
+  // von Menschen aus deinem Land: gleiche Farbe am Rand
+  pop('y7', W('Menschen', 21) - .15, { x: X6 + 1320, y: 480 }, 'pop', 'sanft'); froh('y7', W('Menschen', 21));
+  const tLand = W('Land', 21) - .3;
+  pop('i7a', tLand, { x: X6 + 1150, y: 500 }); pop('i7b', tLand + .12, { x: X6 + 1490, y: 500 }, null);
+  froh('i7a', tLand + .2); froh('i7b', tLand + .3);
+  HOOKS.push(t => el('y7').classList.toggle('gelb', t >= W('Land', 21)));
+  bump('y7', W('Land', 21), 1.08); cue(W('Land', 21), 'ding');
+  // oder internationale Vereine: bunte Ränder, Weltkugel
+  const tI = W('internationale', 21) - .2;
+  pop('i7c', tI, { x: X6 + 995, y: 548 }); pop('i7d', tI + .12, { x: X6 + 1645, y: 548 }, null);
+  froh('i7c', tI + .2); froh('i7d', tI + .3);
+  pop('globus7', W('internationale', 21) + .15, { x: X6 + 1548, y: 629 }, 'plopp', 'sanft');
+  wackeln('globus7', W('Vereine', 21) + .05, 4, 3);
+  akzent(W('internationale', 21) + .2, .035);
+  // gut für den Anfang
+  huepfen('y7', W('gut', 22) - .05, 14);
+  welle('welle7', W('Anfang', 22) - .05, X6 + 1320, 480, 1.0, 180); cue(W('Anfang', 22) - .05, 'ding');
+  // helfen bei Fragen zum Leben in Deutschland: Brief mit Fragezeichen, Hilfe, Haken
+  pop('brief7', W('helfen', 22) - .15, { x: X6 + 1350, y: 646 }, 'plopp', 'sanft');
+  pop('frage7', W('Fragen', 22) - .15, { x: X6 + 1414, y: 590 }, 'pop');
+  wackeln('frage7', W('Fragen', 22) + .3, 4, 8); mund('y7', W('Fragen', 22), 'zu');
+  akteur('pfeil7', { x: X6 + 960, y: 540, o: 0 });
+  tw('pfeil7', W('zum', 22) - .1, .1, { o: 1 }); strich('pfeil7p', W('zum', 22) - .1, .45);
+  huepfen('i7b', W('Leben', 22) - .1, 12);
+  tw('frage7', W('Deutschland', 22) + .05, .2, { s: 0 }, 'sinus'); tw('pfeil7', W('Deutschland', 22) + .4, .3, { o: 0 });
+  pop('ok7', W('Deutschland', 22) + .15, { x: X6 + 1414, y: 590 }, 'erfolg');
+  froh('y7', W('Deutschland', 22) + .2); huepfen('y7', W('Deutschland', 22) + .25, 12);
+  ['i7a', 'i7b', 'i7c', 'i7d'].forEach((id, i) => huepfen(id, W('Deutschland', 22) + .35 + i * .06, 8));
+}
+function WIMPEL_BUMP(g, t) {
+  const k = +g.id.slice(2), tb = W('internationale', 21) + .2 + k * .05;
+  let s = 1; const d = (t - tb) / .45; if (d > 0 && d < 1) s += .12 * Math.sin(Math.PI * d);
+  if (k === 1 || k === 6) { const d2 = (t - W('Land', 21)) / .45; if (d2 > 0 && d2 < 1) s += .18 * Math.sin(Math.PI * d2); }
+  return s;
+}
+
+/* ================= 8 · Selbst gründen – aber erst mal Mitglied ================= */
+const X7 = S(7);
+{
+  const tP = SE(22) + .3;
+  tw('welt', tP, .9, { x: -S(7) - 360 }, 'inout'); cue(tP, 'whoosh'); PANS.push(tP);
+  titelEin('tb8', W('fang', 25) - .1);
+  // Du kannst sogar selbst einen Verein gründen: das Gründungsblatt
+  ein('gr8', W('übrigens', 23) - .1, { x: X7 + 1320, y: 596 }, { y: 90 }, 'whoosh');
+  akteur('gr8h', { s: 1 }, true);
+  bump('gr8h', W('gründen', 23) + .05, 1.15); wackeln('gr8h', W('gründen', 23) + .1, 3, 3); cue(W('gründen', 23) + .05, 'plopp'); akzent(W('gründen', 23) + .1, .03);
+  // Dafür braucht man sieben Mitglieder: sieben kommen und unterschreiben
+  SIEBEN.forEach(([, x, y], k) => {
+    const t0 = W('braucht', 24) - .35 + k * .24;
+    pop('s8' + k, t0, { x: X7 + x, y }, 'pop'); froh('s8' + k, t0 + .15);
+    pop('z8' + k, t0 + .12, { x: X7 + x + 38, y: y - 38 }, null);
+    strich('sig8' + k, t0 + .15, .35); cue(t0 + .15, 'kritzeln');
+  });
+  akzent(W('sieben', 24), .035);
+  SIEBEN.forEach((_, k) => bump('z8' + k, W('Mitglieder', 24) + .1 + k * .04, 1.15)); cue(W('Mitglieder', 24) + .1, 'erfolg');
+  // Aber fang lieber erst mal als Mitglied an: Kamera nach rechts, Yusuf mit Mitgliedskarte, Zwinkern
+  tw('welt', T_RUECK, .9, { x: -S(7) }, 'inout'); cue(T_RUECK, 'whoosh'); WECHSEL.push(T_RUECK);
+  aus(['gr8', ...SIEBEN.flatMap((_, k) => ['s8' + k, 'z8' + k])], T_RUECK - .05, .35);
+  pop('y8', W('lieber', 25) - .1, { x: X7 + 1320, y: 468 }, 'pop', 'sanft'); froh('y8', W('erst', 25));
+  ein('mk8', W('als', 25) - .3, { x: X7 + 1320, y: 710 }, { y: 90 }, 'whoosh');
+  bump('mk8', W('Mitglied', 25) + .05, 1.08); cue(W('Mitglied', 25) + .05, 'erfolg'); akzent(W('Mitglied', 25) + .05, .04);
+  welle('welle8', W('Mitglied', 25) + .1, X7 + 1320, 468, 1.1, 210);
+  ZWINKERN.push([el('y8'), W('an', 25) + .15, .75]); cue(W('an', 25) + .3, 'klick');
+  kichern('y8', W('an', 25) + .1, 1.0, 3, 9);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

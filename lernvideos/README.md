@@ -59,7 +59,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 39 | [Was würdest du tun? Ein Kunde beschwert sich](39-kunde-beschwert-sich/) | Was würdest du tun? | Erzählerin, Amir, Herr Braun | 1:54 | fertig |
 | 40 | [Fachvokabeln: Kfz-Werkstatt](40-vokabeln-kfz/) | Fachvokabeln | Erzähler, Amir, Sabine | 1:54 | fertig |
 | 41 | [Fachvokabeln: Hotel](41-vokabeln-hotel/) | Fachvokabeln | Erzähler, Ana, Empfangschefin | 1:58 | fertig |
-| 42 | [Was ist ein Verein?](42-verein/) | Erklärvideo | Erzähler | – | in Arbeit |
+| 42 | [Was ist ein Verein?](42-verein/) | Erklärvideo | Erzähler | 1:41 | fertig |
 | 43 | [Wie funktioniert die Demokratie?](43-demokratie/) | Erklärvideo | Erzählerin | – | in Arbeit |
 | 44 | [Das Grundgesetz – deine Grundrechte](44-grundgesetz/) | Erklärvideo | Erzähler | – | in Arbeit |
 | 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | – | in Arbeit |
