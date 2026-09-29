@@ -37,4 +37,5 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 17 | [Was würdest du tun? Ein Brief mit „Frist“](17-brief-mit-frist/) | Was würdest du tun? | Erzähler, Amir | 1:56 | fertig |
 | 18 | [Was würdest du tun? Kritik vom Chef](18-kritik-vom-chef/) | Was würdest du tun? | Erzählerin, Priya, Küchenchef | 1:53 | fertig |
 | 19 | [Was würdest du tun? „Ihr Konto wurde gesperrt“](19-konto-gesperrt/) | Was würdest du tun? | Erzähler, Kwame | 1:43 | fertig |
+| 20 | [Der schlechte Tag: Amirs Urlaub](20-amirs-urlaub/) | Der schlechte Tag | Erzählerin, Amir, Sabine | 1:29 | fertig |
 | 21 | [Der schlechte Tag: Mais Post](21-mais-post/) | Der schlechte Tag | Erzähler, Mai | 1:29 | fertig |

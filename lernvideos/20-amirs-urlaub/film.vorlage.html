@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der schlechte Tag: Amirs Urlaub</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+/* schlechter Tag: Bühne etwas trüber */
+.buehne.trueb{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b100),var(--b200))}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:70px}
+.block.gross .titel{font:800 104px/112px Inter;letter-spacing:-.03em}
+.block .titel + .titel{margin-top:10px}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.plakette.gross{width:104px;height:104px;border-width:6px} .plakette.gross svg{width:52px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Handy-Bildschirm: Angebot */
+.schirm{border-radius:14px;overflow:hidden;background:var(--b50)}
+.schirm > *{position:absolute}
+.schirm .nur{left:0;right:0;margin:0 auto;width:max-content;top:14px;padding:5px 12px;border-radius:999px;background:var(--error);color:var(--surface);font:800 15px/18px Inter;white-space:nowrap}
+.schirm .ziel{left:0;right:0;top:170px;text-align:center;font:800 24px/28px Inter;color:var(--ink);white-space:pre;letter-spacing:-.01em}
+.schirm .monat{left:0;right:0;top:200px;text-align:center;font:700 16px/20px Inter;color:var(--b600)}
+.schirm .prozent{right:12px;top:52px;width:44px;height:44px;border-radius:999px;background:var(--warning);color:var(--surface);font:800 22px/44px Inter;text-align:center}
+.schirm .knopf{left:20px;right:20px;top:246px;height:44px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 19px/44px Inter;text-align:center}
+.schirm .knopf.gruen{background:var(--success)}
+.schirm .anruf{inset:0;background:linear-gradient(160deg,var(--b500),var(--b700));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.anruf .av{width:84px;height:84px;border-radius:999px;background:var(--b100);display:flex;align-items:center;justify-content:center}
+.anruf .av svg{width:44px}
+.anruf span{font:800 24px/28px Inter;color:var(--surface)}
+.anruf .kn{display:flex;gap:30px;margin-top:40px}
+.anruf .kn i{width:40px;height:40px;border-radius:999px;background:var(--error)}
+/* Flugticket */
+.ticket{width:250px;height:100px;border-radius:18px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.16);display:flex;align-items:center;gap:14px;padding:0 18px;
+  border-left:14px solid var(--b500)}
+.ticket svg{width:62px;flex:none}
+.ticket div{display:flex;flex-direction:column;gap:6px}
+.ticket b{font:800 24px/26px Inter;color:var(--ink)}
+.ticket i{display:block;height:8px;width:90px;border-radius:4px;background:var(--n200)}
+.ticket small{font:700 16px/18px Inter;color:var(--b600)}
+.ticket.gut{border-left-color:var(--success)}
+
+/* Urlaubsplan (Wandtafel) */
+.plan{width:540px;border-radius:26px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.12);padding:20px 20px}
+.plan > *{position:absolute}
+.plan .kopf{left:22px;top:18px;font:800 20px/24px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase}
+.plan .zelle{width:70px;height:40px;border-radius:10px;border:2px solid var(--b100)}
+.plan .punkt{width:26px;height:26px;border-radius:999px}
+.plan .balken{height:40px;border-radius:10px}
+.plan .monat{font:700 17px/20px Inter;color:var(--n500);text-align:center}
+.plan .ferien{border-radius:12px;background:var(--success-bg)}
+.plan .anfrage{height:40px;border-radius:10px;border:4px dashed var(--b500);background:var(--b50)}
+.plan .anfrage.ok{border:4px solid var(--success);background:var(--success-bg)}
+.plan .schul{width:46px;height:46px}
+/* Karten, Dokumente */
+.karte{border-radius:22px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.14)}
+.urlaub{width:320px;height:170px;padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.urlaub b{font:800 30px/34px Inter;color:var(--ink);display:flex;align-items:center;gap:12px}
+.urlaub b svg{width:52px}
+.urlaub i{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.abdruck{position:absolute;padding:8px 16px;border-radius:12px;border:5px solid var(--error);color:var(--error-text);font:800 26px/30px Inter;white-space:nowrap;
+  background:var(--surface);text-transform:uppercase;letter-spacing:.02em}
+.abdruck.gruen{border-color:var(--success);color:var(--success-text)}
+.formular{width:300px;height:390px;padding:26px 26px;display:flex;flex-direction:column;gap:16px;overflow:visible}
+.formular small{font:800 26px/30px Inter;color:var(--b600);letter-spacing:-.01em;margin-bottom:6px}
+.formular .zl{height:12px;border-radius:6px;background:var(--n200);transform-origin:left center}
+.formular .fe{height:34px;border-radius:10px;border:3px solid var(--b100);display:flex;align-items:center;padding-left:10px}
+.formular .fe i{display:block;height:10px;width:60%;border-radius:5px;background:var(--b300);transform-origin:left center}
+.kal{width:150px;height:160px}
+.kal .blatt{position:absolute;left:0;top:26px;width:150px;height:134px;border-radius:16px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12);
+  display:flex;align-items:center;justify-content:center;font:800 46px/1 Inter;color:var(--b600);transform-origin:50% 0}
+.kal .ring{position:absolute;left:0;top:0;width:150px;height:44px;border-radius:16px 16px 6px 6px;background:linear-gradient(var(--b400),var(--b600))}
+.fkal{width:560px;height:440px;overflow:hidden}
+.fkal .kopfz{height:84px;background:linear-gradient(135deg,var(--b500),var(--b600));display:flex;align-items:center;gap:14px;padding:0 24px;color:var(--surface);font:800 32px/36px Inter}
+.fkal .kopfz svg{width:64px}
+.fkal .reihe{position:absolute;left:24px;right:24px;height:62px;border-radius:14px;display:flex;align-items:center;gap:18px;padding:0 16px}
+.fkal .reihe i{display:block;height:12px;border-radius:6px;background:var(--n200)}
+.fkal .reihe u{display:block;height:24px;border-radius:8px;background:var(--b100);margin-left:auto}
+.fkal .reihe.sommer{background:var(--b50)}
+.fkal .reihe.sommer span{font:800 24px/28px Inter;color:var(--ink)}
+.fkal .reihe.sommer u{background:var(--success)}
+.fkal .glanz{position:absolute;left:24px;right:24px;height:62px;border-radius:14px;border:5px solid var(--success)}
+.kachel{width:128px;height:128px;border-radius:30px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center}
+.kachel svg{width:76px}
+.kachel .nr{position:absolute;left:-12px;top:-12px;width:44px;height:44px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 22px/44px Inter;text-align:center;border:4px solid var(--surface)}
+
+/* ---------- Format „Der schlechte Tag“ ---------- */
+/* Tagesleiste oben links: Wetter-Plakette (Wolke = schlechter Tag, Sonne = richtig), Uhr, Spur mit Abspielkopf und Marken */
+#hud{position:absolute;left:140px;top:84px;width:720px;height:80px}
+#hud .wetter{position:absolute;left:0;top:4px;width:72px;height:72px;border-radius:999px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center}
+#hud .wetter svg{position:absolute;left:50%;top:50%;transform-origin:center}
+#hud #wWolke{margin:-25px 0 0 -25px} #hud #wSonne{margin:-28px 0 0 -28px}
+#hud .uhr{position:absolute;left:88px;top:4px;width:72px;height:72px}
+#hud .spur{position:absolute;left:186px;top:35px;width:520px;height:10px;border-radius:999px;background:var(--b100)}
+#hud .fuell{position:absolute;left:0;top:0;height:10px;border-radius:999px;background:var(--error);width:0}
+#hud .kopfp{position:absolute;top:-11px;width:32px;height:32px;margin-left:-16px;border-radius:999px;background:var(--surface);border:7px solid var(--error);box-shadow:0 3px 10px rgba(22,19,37,.18)}
+#hud .mk{position:absolute;top:-15px;width:40px;height:40px;margin-left:-20px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:4px solid var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.15)}
+#hud .mk svg{width:22px}
+#hud .mk.rot{background:var(--error)} #hud .mk.gruen{background:var(--success)} #hud .mk.leer{background:var(--surface);border-color:var(--b200);box-shadow:none}
+/* Zurückspulen: Tönung, Rauschen/Streifen, Knopf, große Uhr */
+#toenung{position:absolute;inset:0;background:var(--b700);opacity:0}
+#rauschen{position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0}
+#blitz{position:absolute;inset:0;background:var(--surface);opacity:0}
+.rknopf{width:210px;height:210px;border-radius:999px;background:var(--error);border:9px solid var(--surface);box-shadow:0 16px 50px rgba(22,19,37,.35)}
+.rknopf svg{position:absolute;left:50%;top:50%;width:104px;margin:-52px 0 0 -52px}
+.ruhr{width:250px;height:250px}
+#tb4{position:absolute;left:0;top:640px;width:1920px;display:flex;justify-content:center;align-items:center;gap:22px;color:var(--surface)}
+#tb4 .titel{font:800 72px/84px Inter;letter-spacing:-.02em}
+#tb4 .ic{width:86px;height:86px;display:block}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAusruf"><svg viewBox="0 0 40 40"><path d="M20 8v15" stroke="var(--surface)" stroke-width="7" stroke-linecap="round"/><circle cx="20" cy="32" r="4" fill="var(--surface)"/></svg></template>
+<template id="svgFrage"><svg viewBox="0 0 40 40"><path d="M14 15a6 6 0 1 1 9 5c-2 1-3 3-3 5" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="20" cy="32" r="3.5" fill="var(--surface)"/></svg></template>
+<template id="svgPause"><svg viewBox="0 0 40 40"><rect x="11" y="9" width="6" height="22" rx="3" fill="var(--surface)"/><rect x="23" y="9" width="6" height="22" rx="3" fill="var(--surface)"/></svg></template>
+<template id="svgZurueck"><svg viewBox="0 0 40 40"><path d="M14 13l-6 6 6 6" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 19h15a8 8 0 0 1 0 16h-6" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgRueck"><svg viewBox="0 0 100 100"><path d="M48 24v52L10 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/><path d="M90 24v52L52 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/></svg></template>
+<template id="svgFlieger"><svg viewBox="0 0 60 40"><path d="M4 20c0-2 2-4 5-4h36c6 0 11 2 11 4s-5 4-11 4H9c-3 0-5-2-5-4Z" fill="var(--b500)"/><path d="M22 18l11-14h6l-6 14ZM22 22l11 14h6l-6-14Z" fill="var(--b400)"/><path d="M5 19L3 10h5l6 8Z" fill="var(--b400)"/></svg></template>
+<template id="svgFliegerW"><svg viewBox="0 0 60 40"><path d="M4 20c0-2 2-4 5-4h36c6 0 11 2 11 4s-5 4-11 4H9c-3 0-5-2-5-4Z" fill="var(--surface)"/><path d="M22 18l11-14h6l-6 14ZM22 22l11 14h6l-6-14Z" fill="var(--b100)"/><path d="M5 19L3 10h5l6 8Z" fill="var(--b100)"/></svg></template>
+<template id="pAmir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="pSabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen~s}}</div>
+  <div class="ebene zu">{{figur-mund-zu~s}}</div><div class="ebene auf">{{figur-mund-auf~s}}</div><div class="ebene froh">{{figur-mund-froh~s}}</div></div></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+<template id="tplSchule">{{schule~k}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Angebot (schlechter Tag, später Start des richtigen Tags) -->
+  <div class="a buehne trueb" id="bue0"></div>
+  <div class="a portrait" id="amir0" style="width:240px;height:240px" data-sprecher="Amir"></div>
+  <div class="a" id="rahmen0" style="width:170px">{{bilderrahmen}}</div>
+  <div class="a welle" id="summ0" style="width:260px;height:260px" data-frei></div>
+  <div class="a" id="handy0" style="width:460px" data-gruppe="handy0">{{handy}}</div>
+  <div class="a schirm" id="schirm0" style="width:172px;height:310px" data-gruppe="handy0">
+    <div class="nur" id="nur0">Nur heute!</div><div class="prozent" id="proz0">%</div>
+    <div class="ziel" id="ziel0"></div><div class="knopf" id="knopf0">Buchen</div></div>
+  <div class="a" id="flug0" style="width:100px" data-gruppe="handy0">{{flugzeug}}</div>
+  <div class="a welle" id="tap0" style="width:120px;height:120px" data-frei></div>
+  <div class="a ticket" id="ticket0"><svg></svg><div><b>Marokko</b><i></i></div></div>
+  <div class="a plakette lila" id="pause0" data-frei></div>
+
+  <!-- 1 · Werkstatt: Urlaub nicht abgesprochen -->
+  <div class="a buehne trueb" id="bue1"></div>
+  <div class="a karte plan" id="plan1" style="height:250px"></div>
+  <div class="a" id="werk1" style="width:300px">{{werkbank}}</div>
+  <div class="a portrait" id="amir1" style="width:200px;height:200px" data-sprecher="Amir"></div>
+  <div class="a portrait" id="sabine1" style="width:200px;height:200px" data-sprecher="Sabine"></div>
+  <div class="a welle" id="ring1a" style="width:210px;height:90px;border-radius:24px;border-color:var(--error)" data-frei></div>
+  <div class="a plakette rot" id="warn1" data-frei></div>
+
+  <!-- 2 · Folgen: nicht genehmigt, Geld weg -->
+  <div class="a buehne trueb" id="bue2"></div>
+  <div class="a karte urlaub" id="karte2"><b><svg></svg>Urlaub</b><i></i><i style="width:70%"></i><i style="width:84%"></i>
+    <div class="abdruck" id="abdruck2" style="left:30px;top:92px">Nicht genehmigt</div></div>
+  <div class="a" id="stempel2" style="width:200px" data-frei>{{stempel-rot~2}}</div>
+  <div class="a ticket" id="ticket2"><svg></svg><div><b>Marokko</b><i></i></div></div>
+  <div class="a" id="knuell2" style="width:150px">{{knuell}}</div>
+  <div class="a plakette lila gross" id="zurueck2"></div>
+  <div class="a plakette rot" id="x2" data-frei></div>
+  <div class="a" id="geld2" style="width:170px" data-frei>{{geldschein}}</div>
+  <div class="a" id="schule2" style="width:180px">{{schule}}</div>
+  <div class="a" id="warn2" style="width:96px" data-frei>{{warndreieck}}</div>
+  <div class="a" id="kiste2" style="width:240px" data-gruppe="kiste">{{karton}}</div>
+  <div class="a portrait" id="amir2" style="width:170px;height:170px" data-sprecher="Amir" data-gruppe="kiste"></div>
+
+  <!-- 3 · Ferienkalender -->
+  <div class="a buehne hell" id="bue3"></div>
+  <div class="a portrait" id="amir3" style="width:170px;height:170px" data-sprecher="Amir"></div>
+  <div class="a karte fkal" id="fkal3" data-gruppe="fkal"><div class="kopfz"><span id="fschule3" style="display:block;width:64px"></span>Ferienkalender</div>
+    <div class="reihe" style="top:112px"><i style="width:150px"></i><u style="width:120px"></u></div>
+    <div class="reihe" style="top:190px"><i style="width:110px"></i><u style="width:70px"></u></div>
+    <div class="reihe" style="top:268px"><i style="width:140px"></i><u style="width:100px"></u></div>
+    <div class="reihe sommer" style="top:346px"><span>Sommerferien</span><u style="width:170px" id="sbalken3"></u></div>
+    <div class="glanz" id="glanz3" style="top:346px"></div></div>
+  <div class="a" id="lupe3" style="width:150px" data-frei>{{lupe}}</div>
+  <div class="a plakette gruen" id="ok3" data-frei></div>
+
+  <!-- 4 · Werkstatt: fragen -->
+  <div class="a buehne hell" id="bue4"></div>
+  <div class="a karte plan" id="plan4" style="height:290px"></div>
+  <div class="a" id="werk4" style="width:300px">{{werkbank~4}}</div>
+  <div class="a portrait" id="amir4" style="width:200px;height:200px" data-sprecher="Amir"></div>
+  <div class="a portrait" id="sabine4" style="width:200px;height:200px" data-sprecher="Sabine"></div>
+  <div class="a plakette lila" id="frage4" data-frei></div>
+  <div class="a karte" id="mini4" style="width:74px;height:92px;padding:12px 10px;display:flex;flex-direction:column;gap:7px" data-frei>
+    <i style="display:block;height:8px;border-radius:4px;background:var(--b300)"></i><i style="display:block;height:6px;border-radius:3px;background:var(--n200)"></i>
+    <i style="display:block;height:6px;width:70%;border-radius:3px;background:var(--n200)"></i><i style="display:block;height:6px;border-radius:3px;background:var(--n200)"></i></div>
+
+  <!-- 5 · Antrag und Genehmigung -->
+  <div class="a buehne hell" id="bue5"></div>
+  <div class="a portrait" id="amir5" style="width:170px;height:170px" data-sprecher="Amir"></div>
+  <div class="a portrait" id="sabine5" style="width:170px;height:170px" data-sprecher="Sabine"></div>
+  <div class="a karte formular" id="form5"><small>Urlaubsantrag</small>
+    <div class="fe"><i id="f5a"></i></div><div class="fe"><i id="f5b" style="width:44%"></i></div>
+    <div class="zl" id="f5c"></div><div class="zl" id="f5d" style="width:80%"></div><div class="zl" id="f5e" style="width:64%"></div>
+    <svg id="f5sig" viewBox="0 0 120 26" style="width:120px;margin-top:auto"><path class="zeichnen" pathLength="1" d="M4 18c10-14 16-14 18-4s8 8 14-2 10-8 12 2 10 6 20-4" stroke="var(--b400)" stroke-width="3.5" stroke-linecap="round" fill="none" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></svg>
+    <div class="abdruck gruen" id="abdruck5" style="left:40px;top:262px">Genehmigt</div></div>
+  <div class="a" id="stift5" style="width:110px" data-frei>{{stift}}</div>
+  <div class="a" id="stempel5" style="width:200px" data-frei>{{stempel-gruen}}</div>
+  <div class="a kal" id="kal5"><div class="ring"></div><div class="blatt">+2</div><div class="blatt" id="blatt5b">+1</div><div class="blatt" id="blatt5a"></div></div>
+  <div class="a plakette gruen gross" id="ok5" data-frei></div>
+  <div class="a welle" id="welle5" style="width:230px;height:230px;border-color:var(--success)" data-frei></div>
+
+  <!-- 6 · Jetzt buchen -->
+  <div class="a buehne hell" id="bue6"></div>
+  <div class="a portrait" id="amir6" style="width:240px;height:240px" data-sprecher="Amir"></div>
+  <div class="a" id="wolke6" style="width:170px">{{wolke}}</div>
+  <div class="a plakette rot" id="aerger6"></div>
+  <div class="a welle" id="puff6" style="width:180px;height:180px" data-frei></div>
+  <div class="a welle" id="puff6b" style="width:120px;height:120px;border-color:var(--error)" data-frei></div>
+  <div class="a" id="handy6" style="width:460px" data-gruppe="handy6">{{handy~6}}</div>
+  <div class="a schirm" id="schirm6" style="width:172px;height:310px" data-gruppe="handy6">
+    <div style="left:50%;top:60px;width:110px;margin-left:-55px">{{flugzeug~s6}}</div>
+    <div class="ziel">Marokko</div><div class="monat">August</div><div class="knopf" id="knopf6">Buchen</div>
+    <div class="anruf" id="anruf6"><div class="av"><svg viewBox="0 0 40 40"><path d="M20 33c-6-5-14-9-14-16 0-5 4-8 8-8 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 3 8 8 0 7-8 11-14 16Z" fill="var(--error)"/></svg></div><span>Mama</span><div class="kn"><i></i></div></div></div>
+  <div class="a welle" id="tap6" style="width:120px;height:120px" data-frei></div>
+  <div class="a welle" id="ruf6" style="width:260px;height:260px;border-color:var(--success)" data-frei></div>
+  <div class="a welle" id="ruf6b" style="width:260px;height:260px;border-color:var(--success)" data-frei></div>
+  <div class="a ticket gut" id="ticket6"><svg></svg><div><b>Marokko</b><small>August</small></div></div>
+
+  <!-- 7 · Also: fünf Schritte, Flugzeug hebt ab -->
+  <div class="a buehne hell" id="bue7"></div>
+  <svg class="a" id="bahn7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path id="bahn7p" class="zeichnen" pathLength="1" d="" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.02 0.025" fill="none"/></svg>
+  <div class="a" id="piste7" data-gruppe="piste" style="width:420px;height:14px;border-radius:999px;background:var(--b200)"></div>
+  <div class="a" id="flug7" style="width:220px" data-gruppe="piste">{{flugzeug~7}}</div>
+</div></div>
+
+<div class="block gross" id="tb1"><div class="titel">Amirs Urlaub</div></div>
+<div class="block" id="tb2"><div class="titel">Urlaub nicht abgesprochen</div></div>
+<div class="block" id="tb3"><div class="titel">Geld weg · Stress · Ärger</div></div>
+<div class="block" id="tb5"><div class="titel">1. Schulferien checken</div><div class="titel">2. Fragen</div></div>
+<div class="block" id="tb6"><div class="titel">3. Antrag</div><div class="titel">4. Genehmigung</div></div>
+<div class="block" id="tb7"><div class="titel">5. Jetzt buchen</div></div>
+<div class="block" id="tb8"><div class="titel">Erst genehmigt, dann gebucht</div></div>
+
+<!-- Zurückspulen (Echtzeit, über der Welt) -->
+<div id="toenung"></div>
+<svg id="rauschen" viewBox="0 0 1920 1080"><g id="baender"></g><g id="koerner"></g></svg>
+<div class="a rknopf" id="rknopf"><div id="iStopp" style="position:absolute;inset:0"><svg viewBox="0 0 100 100"><rect x="26" y="26" width="48" height="48" rx="8" fill="var(--surface)"/></svg></div>
+  <div id="iRueck" style="position:absolute;inset:0"></div></div>
+<div class="a welle" id="rwelle" style="width:230px;height:230px;border-color:var(--surface)"></div>
+<div class="a ruhr" id="ruhr"></div>
+<div id="tb4"><svg class="ic" id="tb4i" viewBox="0 0 100 100"><path d="M48 24v52L10 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/><path d="M90 24v52L52 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/></svg><div class="titel">Nochmal – aber richtig</div></div>
+<div id="blitz"></div>
+
+<!-- Tagesleiste -->
+<div id="hud">
+  <div class="wetter" id="wetter"><svg id="wWolke" viewBox="0 0 60 60" style="width:50px"><path d="M17 38h26a9 9 0 0 0 1-18 12 12 0 0 0-23-3 10 10 0 0 0-4 21Z" fill="var(--b400)"/><path d="M22 44l-3 7M31 44l-3 7M40 44l-3 7" stroke="var(--b300)" stroke-width="4" stroke-linecap="round"/></svg>
+    <svg id="wSonne" viewBox="0 0 160 160" style="width:56px"><circle cx="80" cy="80" r="30" fill="var(--warning)"/><g stroke="var(--warning)" stroke-width="10" stroke-linecap="round"><path d="M80 22v14M80 124v14M22 80h14M124 80h14M39 39l10 10M111 111l10 10M121 39l-10 10M49 111l-10 10"/></g></svg></div>
+  <div class="uhr" id="huhr"></div>
+  <div class="spur"><div class="fuell" id="hfuell"></div><div id="hmarken"></div><div class="kopfp" id="hkopf"></div></div>
+</div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Erst genehmigt, dann gebucht.</div>
+  <div class="klein" id="asUnter">Erst Urlaub beantragen und genehmigen lassen, dann den Flug buchen – und zwar in den Schulferien.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { if (!AKTEURE.has(el(id))) akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Stempel schlägt auf (Wackler), hebt wieder ab
+function stempeln(id, t, x, y) {
+  akteur(id, { x, y: y - 330, o: 0, r: -3 });
+  tw(id, t - .6, .2, { o: 1 }); tw(id, t - .6, .4, { y: y - 150 }, 'sanft');
+  tw(id, t - .16, .16, { y }, 'in');
+  tw(id, t, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(id, t + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(id, t + .25, .55, { y: y - 260 }, 'inout'); tw(id, t + .5, .3, { o: 0 });
+  cue(t, 'plopp'); akzent(t, .045);
+}
+['x2'].forEach(id => el(id).innerHTML = tpl('svgX'));
+['ok3', 'ok5'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('warn1').innerHTML = tpl('svgAusruf'); el('aerger6').innerHTML = tpl('svgAusruf');
+el('frage4').innerHTML = tpl('svgFrage'); el('pause0').innerHTML = tpl('svgPause'); el('zurueck2').innerHTML = tpl('svgZurueck');
+el('iRueck').innerHTML = tpl('svgRueck');
+el('fschule3').innerHTML = tpl('tplSchule');
+// Ticket-Flugzeuge: kleines Symbol statt Teil (das Teil steht in eigenem svg)
+document.querySelectorAll('.ticket > svg, .urlaub b > svg').forEach(s => { s.outerHTML = tpl('svgFlieger'); });
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl(p.dataset.sprecher === 'Sabine' ? 'pSabine' : 'pAmir'); });
+
+/* ================= Format „Der schlechte Tag“: Zeit der Welt ================= */
+// Die Welt läuft in „Welt-Zeit“ ZT(t): bis „Stopp!“ normal, dann steht sie (Standbild), beim Zurückspulen läuft sie
+// schnell rückwärts bis zum Anfang (TS), danach wieder normal – ab R1 in den Zustand von TS zurückgesetzt.
+const TSTOP = W('Stopp', 13) - .05;
+const R0 = W('Zurückspulen', 15) - .05, R1 = A(satz(16).start) - .45;
+const TS = SE(3) + .3;                                   // Anfang: Amir sieht das Angebot, noch nicht gebucht
+const rueckP = t => clamp((t - R0) / (R1 - R0));
+const RUECK = p => E.sinus(p);
+function ZT(t) {
+  if (t < TSTOP) return t;
+  if (t < R0) return TSTOP;
+  if (t < R1) return TSTOP - (TSTOP - TS) * RUECK(rueckP(t));
+  return t;
+}
+const ECHT = new Set();                                  // Akteure in Echtzeit (Rückspul-Ebene)
+const echt = id => ECHT.add(el(id));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="0" width="110%" height="100%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+HOOKS.push(t => {
+  const v = Math.abs(wert(kamera, 'x', ZT(t)) - wert(kamera, 'x', ZT(t - 1 / 30)));
+  const r = t >= R0 && t < R1 ? 4 * Math.sin(Math.PI * rueckP(t)) : 0;       // beim Zurückspulen zusätzlich verwischt
+  const b = Math.min(22, v * .1 + r);
+  $('#wischerBlur').setAttribute('stdDeviation', `${b.toFixed(2)} ${(r * .15).toFixed(2)}`);
+  WELT.style.filter = b > .3 ? 'url(#wischer)' : '';
+});
+const N = 8;
+HOOKS.push(t => {
+  const tz = ZT(t);
+  let z = 1;
+  if (!(t >= R0 && t < R1)) for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((tz - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= tz));
+  z *= 1 + .03 * E.inout(clamp((tz - letzte - .9) / 11));
+  z *= 1 + .08 * Math.sin(Math.PI * clamp((t - R0 + .15) / (R1 - R0 + .5)));   // Rückspul-Zoom
+  // Standbild: leichtes Zittern wie ein angehaltenes Band
+  const zit = t >= TSTOP && t < R1 ? 1.2 * Math.sin(t * 57) * Math.sin(t * 23) : 0;
+  $('#kamera').style.transform = `translateY(${zit.toFixed(2)}px) scale(${z.toFixed(4)})`;
+  const wx = wert(kamera, 'x', tz);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Zuhörer nickt ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [];      // [id, von, bis] in Welt-Zeit
+HOOKS.push(t => {
+  const tz = ZT(t);
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const hoert = !spricht && SAETZE.some(s => s.w !== p.dataset.sprecher && s.w !== 'Erzählerin' && t >= s.a && t <= s.b + .3);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : hoert ? 3.2 * Math.max(0, Math.sin(t * 3.4 + i)) ** 4 : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick.toFixed(2)}deg) translateY(${nick.toFixed(2)}px)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+// Handy summt (Welt-Zeit)
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = ZT(z) - t; if (p > 0 && p < d) $('#' + id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+
+/* ---------- Uhr (Tagesleiste und große Rückspul-Uhr) ---------- */
+function uhrSvg(id) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <g stroke="var(--b300)" stroke-width="5" stroke-linecap="round"><path d="M80 31v8M80 121v8M31 80h8M121 80h8"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V36" stroke="var(--b600)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="7" fill="var(--b700)"/></svg>`;
+}
+uhrSvg('huhr'); uhrSvg('ruhr');
+const M0 = 8 * 60, MPS = 7;                               // Tageszeit: 8 Uhr, 7 Minuten pro Sekunde
+function minuten(t) {
+  if (t < TSTOP) return M0 + t * MPS;
+  if (t < R0) return M0 + TSTOP * MPS;
+  if (t < R1) return lerp(M0 + TSTOP * MPS, M0 - 12 * 60, RUECK(rueckP(t)));
+  return M0 - 12 * 60 + (t - R1) * MPS;
+}
+HOOKS.push(t => {
+  const m = minuten(t);
+  for (const id of ['huhr', 'ruhr']) {
+    $(`#${id}h`).setAttribute('transform', `rotate(${((m / 60) % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  }
+});
+
+/* ---------- Tagesleiste: Abspielkopf, rote Marken (Fehler), grüne Schritte ---------- */
+const HUD = { schlecht: [], gut: [] };                   // Zeitpunkte der Marken
+const BREITE = 520, TA = A(0);
+function hudFertig() {
+  const box = $('#hmarken');
+  HUD.schlecht.forEach((z, k) => box.insertAdjacentHTML('beforeend', `<div class="mk rot" id="hs${k}" style="left:${(BREITE * (z - TA) / (TSTOP - TA)).toFixed(1)}px">${tpl('svgX')}</div>`));
+  HUD.gut.forEach((z, k) => box.insertAdjacentHTML('beforeend', `<div class="mk leer" id="hg${k}" style="left:${(BREITE * (k + 1) / (HUD.gut.length + .6)).toFixed(1)}px">${tpl('svgHaken')}</div>`));
+  const posStop = 1;
+  HOOKS.push(t => {
+    let pos, gut = t >= R1;
+    if (t < TSTOP) pos = clamp((t - TA) / (TSTOP - TA));
+    else if (t < R0) pos = posStop;
+    else if (t < R1) pos = posStop * (1 - RUECK(rueckP(t)));
+    else pos = 0;
+    const tEff = TA + pos * (TSTOP - TA);                 // Zeit, die der Kopf gerade zeigt (schlechter Tag)
+    HUD.schlecht.forEach((z, k) => {
+      const m = $('#hs' + k), s = gut ? 0 : E.back(clamp((tEff - z) / .4));
+      m.style.transform = `scale(${s.toFixed(3)})`; m.style.opacity = s > .02 ? 1 : 0;
+    });
+    // guter Tag: Kopf springt von Schritt zu Schritt
+    const n = HUD.gut.filter(z => t >= z).length;
+    HUD.gut.forEach((z, k) => {
+      const m = $('#hg' + k), f = clamp((t - z) / .4);
+      m.style.opacity = gut ? clamp((t - R1) / .4) : 0;
+      m.className = 'mk ' + (t >= z ? 'gruen' : 'leer');
+      m.style.transform = `scale(${t >= z ? E.back(f).toFixed(3) : .7})`;
+      m.querySelector('svg').style.opacity = t >= z ? 1 : 0;
+    });
+    if (gut) {
+      const ziel = k => k ? BREITE * k / (HUD.gut.length + .6) : 0;
+      const letzte = HUD.gut[n - 1] ?? R1;
+      pos = lerp(ziel(Math.max(0, n - 1)), ziel(n), E.inout(clamp((t - letzte) / .5))) / BREITE;
+      if (n === 0) pos = 0;
+      if (t >= ENDE_SPRACHE) pos = lerp(pos, 1, E.inout(clamp((t - ENDE_SPRACHE) / .8)));
+    }
+    $('#hfuell').style.width = (pos * BREITE).toFixed(1) + 'px';
+    $('#hkopf').style.left = (pos * BREITE).toFixed(1) + 'px';
+    const farbe = gut ? 'var(--success)' : 'var(--error)';
+    $('#hfuell').style.background = gut ? 'var(--success)' : 'var(--b300)'; $('#hkopf').style.borderColor = farbe;
+    // Wetter: Wolke (schlechter Tag) dreht sich zur Sonne (richtig)
+    const d = clamp((t - (R1 - .35)) / .6), flip = Math.abs(Math.cos(Math.PI * d));
+    $('#wetter').style.transform = `scaleX(${flip.toFixed(3)})`;
+    $('#wWolke').style.opacity = d < .5 ? 1 : 0; $('#wSonne').style.opacity = d < .5 ? 0 : 1;
+    $('#wSonne').style.transform = `rotate(${(t * 20).toFixed(1)}deg)`;
+    $('#hud').style.opacity = 1 - clamp((t - AB) / .4);
+  });
+}
+
+/* ---------- Urlaubsplan (Wandtafel): Zellen, Kollegen-Balken, Monate ---------- */
+const ZX = i => 64 + i * 76, ZB = 68;                     // Spalte i: links; Zellenbreite
+function plan(id, oben, monate) {
+  const p = el(id), zy = r => oben + r * 52;
+  let h = `<div class="kopf">Urlaubsplan</div>`;
+  h += `<div class="ferien" id="${id}fer" style="left:${ZX(2) - 6}px;top:${oben - 36}px;width:${ZX(5) + ZB - ZX(2) + 12}px;height:${3 * 52 + 30}px;opacity:0"></div>`;
+  if (monate) h += `<div class="monat" style="left:${ZX(0)}px;top:${oben - 30}px;width:${ZX(2) + ZB - ZX(0)}px">Juli</div>
+    <div class="monat" id="${id}aug" style="left:${ZX(3)}px;top:${oben - 30}px;width:${ZX(5) + ZB - ZX(3)}px">August</div>`;
+  ['--b300', '--b400', '--b500'].forEach((c, r) => {
+    h += `<div class="punkt" style="left:22px;top:${zy(r) + 7}px;background:var(${c})"></div>`;
+    for (let i = 0; i < 6; i++) h += `<div class="zelle" id="${id}z${r}${i}" style="left:${ZX(i)}px;top:${zy(r)}px;width:${ZB}px"></div>`;
+  });
+  p.innerHTML = h;
+  return zy;
+}
+function balken(planId, id, r, i0, n, zy, farbe, cls = 'balken') {
+  el(planId).insertAdjacentHTML('beforeend', `<div class="${cls}" id="${id}" style="left:${ZX(i0)}px;top:${zy(r)}px;width:${ZX(i0 + n - 1) + ZB - ZX(i0)}px;${farbe ? 'background:var(' + farbe + ')' : ''}"></div>`);
+}
+
+/* ================= Szenen ================= */
+/* ---------- 0 · Das ist Amir. Angebot: Flug nach Marokko ---------- */
+akteur('bue0', { x: 1320, y: 540 });
+{
+  const X = S(0);
+  ein('amir0', A(.05), { x: X + 1060, y: 420 }, { y: 80 }, 'whoosh');
+  huepfen('amir0', W('Amir', 1), 16);
+  titelEin('tb1', W('Amir', 1) - .1);
+  // Er vermisst seine Familie: Bild von Zuhause schwebt herein
+  ein('rahmen0', W('vermisst', 2) - .1, { x: X + 1045, y: 690 }, { y: 60, r: -3 }, 'pop');
+  schweben('rahmen0', 3);
+  bump('rahmen0', W('Familie', 2), 1.08); tw('amir0', W('Familie', 2), .6, { y: 432 }, 'sanft');
+  // Da sieht er ein Angebot: Handy fährt herein, leuchtet, summt
+  const tH = W('sieht', 3) - .1;
+  ein('handy0', tH, { x: X + 1500, y: 540 }, { x: 110 }, 'whoosh'); ein('schirm0', tH, { x: X + 1500, y: 540 }, { x: 110 });
+  akteur('nur0', { s: 0 }, true); akteur('proz0', { s: 0 }, true); akteur('knopf0', { o: 0, y: 20 }, true);
+  const tA = W('Angebot', 3);
+  tw('amir0', tA - .2, .5, { y: 420 }, 'sanft');
+  tw('nur0', tA, .45, { s: 1 }, 'back'); cue(tA, 'pop');
+  summen('handy0', tA, 1); summen('schirm0', tA, 1); welle('summ0', tA + .05, X + 1500, 540, 1);
+  // Flug nach Marokko: Flugzeug fliegt auf einem Bogen in die Anzeige, der Ort tippt sich
+  akteur('flug0', { x: X + 1330, y: 560, o: 0, s: .5, r: -3 });
+  const tF = W('Flug', 3) - .15;
+  tw('flug0', tF, .2, { o: 1 }); tw('flug0', tF, .8, { x: X + 1490, y: 490, s: 1, r: 0 }, 'inout', { bogen: 120 }); cue(tF, 'whoosh');
+  const ZIEL = 'Marokko', tM = W('Marokko', 3), tM2 = WE('Marokko', 3);
+  HOOKS.push(t => { const z = ZT(t); $('#ziel0').textContent = ZIEL.slice(0, Math.round(ZIEL.length * clamp((z - tM) / (tM2 - tM)))); });
+  for (let n = 0; n < 4; n++) cue(tM + n * (tM2 - tM) / 4, 'tipp');
+  // super günstig: Prozent-Zeichen ploppt und wackelt, Knopf „Buchen“ erscheint, Amir freut sich
+  tw('proz0', W('super', 3), .45, { s: 1 }, 'back'); cue(W('super', 3), 'plopp');
+  wackeln('proz0', W('günstig', 3), 3, 6); akzent(W('günstig', 3), .035);
+  tw('knopf0', W('günstig', 3), .45, { o: 1, y: 0 }, 'back');
+  FROH.push(['amir0', W('günstig', 3), 11]); huepfen('amir0', W('günstig', 3) + .1, 14);
+  // Den buche ich sofort! – Klick auf „Buchen“, Ticket springt heraus
+  const tK = W('sofort', 4);
+  tw('knopf0', tK - .05, .08, { sy: .8, sx: 1.05 }, 'sinus'); tw('knopf0', tK + .03, .3, { sy: 1, sx: 1 }, 'sanft');
+  welle('tap0', tK, X + 1500, 647, .7); cue(tK, 'klick');
+  akteur('ticket0', { x: X + 1500, y: 560, o: 0, s: .3 });
+  tw('ticket0', tK + .15, .2, { o: 1 }); flug('ticket0', tK + .15, .75, X + 1250, 795, 140, { s: 1 }); cue(tK + .15, 'whoosh');
+  landen('ticket0', tK + .9);
+  HUD.schlecht.push(tK);
+  textAus('tb1', SE(4) + .05);
+}
+
+/* ---------- 1 · Werkstatt: Urlaub nicht abgesprochen ---------- */
+pan2(SE(4) + .3, 1);
+{
+  const X = S(1), T = SE(4) + .45;
+  akteur('bue1', { x: X + 1320, y: 540 });
+  const zy = plan('plan1', 64, false);
+  balken('plan1', 'p1k0', 0, 2, 2, zy, '--b300'); balken('plan1', 'p1k1', 1, 2, 2, zy, '--b400');
+  balken('plan1', 'p1a', 2, 2, 2, zy, null, 'anfrage');
+  el('plan1').insertAdjacentHTML('beforeend', `<div class="plakette lila" id="p1zeig" style="position:absolute;left:${ZX(0) + 14}px;top:${zy(2)}px;width:40px;height:40px;border-width:3px">${tpl('svgFliegerW').replace('viewBox', 'style="width:28px" viewBox')}</div>`);
+  el('plan1').insertAdjacentHTML('beforeend', `<div class="schul" id="p1s" style="left:${ZX(3) + 8}px;top:${zy(2) - 10}px;width:58px;height:58px">${tpl('tplSchule')}</div>`);
+  ein('plan1', T, { x: X + 1320, y: 390 }, { y: -60 }, 'whoosh');
+  ein('werk1', T + .1, { x: X + 1320, y: 720 }, { y: 60 });
+  ['p1k0', 'p1k1'].forEach(b => akteur(b, { sx: 1 }, true));
+  // Amir kommt herein (hüpft), Sabine auf „Ausbilderin“
+  akteur('amir1', { x: X + 860, y: 660, o: 0 });
+  tw('amir1', W('sagt', 5) - .1, .3, { o: 1 }); tw('amir1', W('sagt', 5) - .1, .9, { x: X + 1040 }, 'inout');
+  for (let n = 0; n < 3; n++) tw('amir1', W('sagt', 5) - .1 + n * .3, .3, { y: 660 }, 'sinus', { bogen: 14 });
+  pop('sabine1', W('Ausbilderin', 5) - .1, { x: X + 1600, y: 660 });
+  // Sabine! In drei Wochen: Zeiger hüpft über die Wochen; zwei Wochen: Balken wächst; nach Hause
+  huepfen('amir1', W('Sabine', 6), 14);
+  akteur('p1zeig', { o: 0, s: .5 }, true);
+  tw('p1zeig', W('fliege', 6), .35, { o: 1, s: 1 }, 'back'); cue(W('fliege', 6), 'pop');
+  const tD = W('drei', 6);
+  for (let n = 0; n < 2; n++) { tw('p1zeig', tD + n * .22, .22, { x: (n + 1) * 76 }, 'inout', { bogen: 16 }); cue(tD + n * .22 + .2, 'tipp'); }
+  akteur('p1a', { sx: 0, o: 0 }, true); el('p1a').style.transformOrigin = 'left center';
+  tw('p1a', W('zwei', 6) - .1, .6, { sx: 1, o: 1 }, 'sanft'); cue(W('zwei', 6), 'scan');
+  tw('p1zeig', W('zwei', 6) - .1, .6, { x: 2 * 76 + 38 }, 'sanft');
+  bump('p1zeig', W('Hause', 6), 1.25); cue(W('Hause', 6), 'ding');
+  // Amir … da haben schon zwei Kollegen Urlaub: Balken der Kollegen pochen, rote Welle
+  const tKo = W('Kollegen', 7);
+  bump('sabine1', W('Amir', 7), 1.05);
+  ['p1k0', 'p1k1'].forEach((b, k) => { akteur(b, {}, true); tw(b, W('zwei', 7) + k * .12, .12, { sy: 1.25 }, 'sinus'); tw(b, W('zwei', 7) + k * .12 + .12, .35, { sy: 1 }, 'sanft'); });
+  welle('ring1a', tKo, X + 1320 - 270 + ZX(2) + 72, 390 - 125 + zy(0) + 20, 1);
+  welle('ring1a', W('Urlaub', 7), X + 1320 - 270 + ZX(2) + 72, 390 - 125 + zy(1) + 20, 1);
+  cue(tKo, 'plopp');
+  // Amirs Balken passt nicht: wird rot, wackelt
+  const tR = W('Urlaub', 7) + .2;
+  HOOKS.push(t => { const z = ZT(t), f = clamp((z - tR) / .3); el('p1a').style.borderColor = f > .5 ? 'var(--error)' : ''; el('p1a').style.background = f > .5 ? 'var(--error-bg)' : ''; });
+  wackeln('p1a', tR, 4, 2.5); wackeln('amir1', tR + .1, 3, 3);
+  HUD.schlecht.push(tR);
+  // Und in der zweiten Woche hast du Berufsschule: Schule fällt in Woche 2 der Reise
+  akteur('p1s', { y: -120, o: 0 }, true);
+  const tS = W('Berufsschule', 8) - .35;
+  tw('p1s', tS, .15, { o: 1 }); tw('p1s', tS, .4, { y: 0 }, 'in'); landen('p1s', tS + .4); cue(tS + .4, 'plopp');
+  pop('warn1', W('Berufsschule', 8) + .3, { x: X + 1320 - 270 + ZX(3) + ZB + 4, y: 390 - 125 + zy(2) - 12 }, 'plopp');
+  akzent(W('Berufsschule', 8) + .1, .04); wackeln('amir1', W('zweiten', 8), 3, 2);
+  titelEin('tb2', W('Kollegen', 7) - .2);
+  document.querySelectorAll('#tb2 .w').forEach((w, i) => { if (i) w.classList.add('rot'); });
+  textAus('tb2', SE(8) + .1);
+}
+
+/* ---------- 2 · Folgen: nicht genehmigt, Flug weg, Geld weg ---------- */
+pan2(SE(8) + .3, 2);
+{
+  const X = S(2), T = SE(8) + .45;
+  akteur('bue2', { x: X + 1320, y: 540 });
+  ein('karte2', T, { x: X + 1330, y: 345 }, { y: -60 }, 'whoosh');
+  akteur('abdruck2', { o: 0, s: 1.6, r: -4 }, true);
+  ein('kiste2', T + .1, { x: X + 1040, y: 740 }, { y: 60 });
+  akteur('amir2', { x: X + 1040, y: 560, o: 0 }); tw('amir2', T + .15, .3, { o: 1 }); tw('amir2', T + .15, .6, { y: 640 }, 'sanft');
+  // Der Urlaub wird nicht genehmigt: Stempel schlägt auf
+  const tG = W('genehmigt', 9);
+  stempeln('stempel2', tG, X + 1330, 330);
+  tw('abdruck2', tG, .05, { o: 1 }); tw('abdruck2', tG, .3, { s: 1 }, 'out');
+  wackeln('karte2', tG + .05, 3, 2); wackeln('amir2', tG + .2, 3, 3);
+  HUD.schlecht.push(tG);
+  // Amir kann den Flug nicht zurückgeben: Ticket fährt zum Zurück-Knopf, prallt ab, wird zerknüllt
+  ein('ticket2', W('Amir', 10) - .2, { x: X + 1320, y: 630 }, { x: -80 }, 'whoosh');
+  pop('zurueck2', W('Flug', 10) - .15, { x: X + 1640, y: 630 });
+  const tZ = W('zurückgeben', 10) - .1;
+  tw('ticket2', tZ, .35, { x: X + 1440 }, 'inout');
+  tw('ticket2', tZ + .35, .5, { x: X + 1320 }, 'inout'); wackeln('ticket2', tZ + .3, 2, 2); cue(tZ + .35, 'plopp');
+  pop('x2', tZ + .35, { x: X + 1676, y: 588 }, null); wackeln('zurueck2', tZ + .35, 3, 4);
+  const tKn = SE(10) - .05;
+  tw('ticket2', tKn, .3, { sx: .2, sy: .5, r: 3, o: 0 }, 'in'); cue(tKn, 'kritzeln');
+  akteur('knuell2', { x: X + 1320, y: 640, s: 0, r: -30 });
+  tw('knuell2', tKn + .15, .5, { s: 1, r: 0 }, 'back');
+  // Das Geld ist weg: Geldschein flattert davon
+  akteur('geld2', { x: X + 1320, y: 620, o: 0, s: .4 });
+  const tW = W('Geld', 11) - .1;
+  tw('geld2', tW, .2, { o: 1 }); tw('geld2', tW, .4, { s: 1, y: 540 }, 'back');
+  tw('geld2', W('weg', 11) - .1, 1.2, { x: X + 1700, y: 190, s: .6 }, 'in', { bogen: -60 });
+  for (let n = 0; n < 4; n++) tw('geld2', W('weg', 11) - .1 + n * .3, .3, { r: n % 2 ? -3 : 3 }, 'sinus');
+  tw('geld2', W('weg', 11) + .7, .4, { o: 0 }); cue(W('weg', 11) - .1, 'whoosh'); akzent(W('weg', 11), .045);
+  tw('amir2', W('weg', 11), .5, { sy: .92, y: 650 }, 'sanft');
+  // Und fast hätte er auch noch die Berufsschule verpasst: Schule mit Warnzeichen
+  ein('schule2', W('fast', 12) - .1, { x: X + 1640, y: 380 }, { y: -60 }, 'whoosh');
+  pop('warn2', W('Berufsschule', 12), { x: X + 1650, y: 480 }, 'plopp');
+  wackeln('warn2', W('verpasst', 12), 4, 3); wackeln('amir2', W('verpasst', 12), 3, 3); akzent(W('verpasst', 12), .04);
+  titelEin('tb3', W('Geld', 11) - .2, [W('Geld', 11) - .2, W('weg', 11) - .1, W('fast', 12) - .2, W('fast', 12) - .1, W('verpasst', 12) - .3, W('verpasst', 12) - .2]);
+  document.querySelectorAll('#tb3 .w').forEach(w => w.classList.add('rot'));
+}
+
+/* ---------- 4 · Stopp! Zurückspulen ---------- */
+{
+  ['rknopf', 'rwelle', 'ruhr'].forEach(echt);
+  // Stopp: Standbild, Tönung, Blitz, Stopp-Knopf
+  HOOKS.push(t => {
+    const ton = t < TSTOP ? 0 : t < R0 ? .32 * clamp((t - TSTOP) / .2) : t < R1 - .2 ? .32 + .18 * clamp((t - R0) / .3) : .5 * (1 - clamp((t - (R1 - .2)) / .45));
+    $('#toenung').style.opacity = ton.toFixed(3);
+    const bl = Math.max(.55 * (1 - clamp((t - TSTOP) / .25)) * (t >= TSTOP), .7 * (1 - clamp((t - R1 + .05) / .35)) * (t >= R1 - .05));
+    $('#blitz').style.opacity = bl.toFixed(3);
+  });
+  akzent(TSTOP + .02, .06); cue(TSTOP, 'klick'); cue(TSTOP, 'plopp');
+  pop('rknopf', TSTOP + .05, { x: 960, y: 440 });
+  bump('rknopf', W('besser', 14), 1.1);
+  // Zurückspulen: Knopf wird zum Rückspul-Zeichen (blau), rückt nach rechts; große Uhr dreht rückwärts
+  const tR = R0;
+  HOOKS.push(t => {
+    const f = clamp((t - tR) / .25);
+    const g = E.back(clamp((t - tR - .1) / .35));
+    $('#iStopp').style.transform = `scale(${Math.max(.001, 1 - f)})`; $('#iStopp').style.opacity = f < 1 ? 1 : 0;
+    $('#iRueck').style.transform = `scale(${Math.max(.001, g)})`; $('#iRueck').style.opacity = g > .01 ? 1 : 0;
+    $('#rknopf').style.background = t >= tR + .1 ? 'var(--b500)' : '';
+    // Rückspul-Zeichen pocht im Takt
+    if (t > tR + .45 && t < R1) $('#iRueck').style.transform = `scale(${1 + .08 * Math.max(0, Math.sin((t - tR) * 11))})`;
+  });
+  tw('rknopf', tR, .5, { x: 1110 }, 'sanft');
+  akteur('ruhr', { x: 800, y: 440, s: 0, r: -8 }); tw('ruhr', tR + .1, .55, { s: 1, r: 0 }, 'back'); cue(tR, 'whoosh');
+  for (let n = 0; n < 4; n++) welle('rwelle', tR + .3 + n * .7, 1110, 440, .8);
+  aus(['rknopf', 'ruhr'], R1 - .3, .3);
+  // Ticken rückwärts
+  for (let z = tR + .2; z < R1 - .2; z += .16) cue(z, 'tipp');
+  cue(tR + .8, 'scan'); cue(tR + 1.9, 'scan'); cue(R1 - .15, 'whoosh');
+  // Text im Bild: ⏪ Nochmal – aber richtig
+  titelEin('tb4', W('Zurückspulen', 15) + .25);
+  akteur('tb4i', { s: 0 }, true); tw('tb4i', W('Zurückspulen', 15) + .15, .45, { s: 1 }, 'back');
+  tw('tb4', R1 - .3, .3, { o: 0 });
+  document.querySelectorAll('#tb4 .wi').forEach(w => echt(w)); ['tb4', 'tb4i'].forEach(echt);
+  // Rauschen: Bänder und Streifen aus Token-Farben, je Frame neu (deterministisch)
+  const FARBEN = ['var(--surface)', 'var(--b200)', 'var(--b300)', 'var(--b100)', 'var(--error-bg)'];
+  const koerner = $('#koerner'), baender = $('#baender');
+  for (let i = 0; i < 70; i++) koerner.insertAdjacentHTML('beforeend', `<rect rx="2" fill="${FARBEN[i % FARBEN.length]}"/>`);
+  for (let i = 0; i < 3; i++) baender.insertAdjacentHTML('beforeend', `<rect x="0" width="1920" fill="${FARBEN[(i + 1) % 3 + 1]}"/>`);
+  const zufall = n => { const x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+  HOOKS.push(t => {
+    const r = t >= R0 && t < R1 + .2 ? Math.min(clamp((t - R0) / .25), 1 - clamp((t - R1 + .1) / .3)) : 0;
+    const s = t >= TSTOP && t < R0 ? .35 : 0;               // Standbild: leichtes Rauschen
+    const o = Math.max(r, s);
+    $('#rauschen').style.opacity = o.toFixed(3);
+    if (o <= 0) return;
+    const fr = Math.round(t * 30), dicht = r > 0 ? 1 : .35;
+    [...koerner.children].forEach((k, i) => {
+      const z = n => zufall(fr * 131 + i * 7 + n);
+      const an = z(1) < dicht;
+      k.setAttribute('x', (z(2) * 1920).toFixed(0)); k.setAttribute('y', (z(3) * 1080).toFixed(0));
+      k.setAttribute('width', (30 + z(4) * (r > 0 ? 380 : 120)).toFixed(0)); k.setAttribute('height', (2 + z(5) * 5).toFixed(0));
+      k.setAttribute('opacity', an ? (.15 + z(6) * .45).toFixed(2) : 0);
+    });
+    [...baender.children].forEach((b, i) => {
+      const y = ((t - R0) * 700 + i * 380) % 1260 - 90;
+      b.setAttribute('y', y.toFixed(0)); b.setAttribute('height', 50 + i * 22); b.setAttribute('opacity', r > 0 ? .22 : 0);
+    });
+  });
+}
+
+HOOKS.push(t => { el('bue0').className = 'a buehne ' + (t >= R1 ? 'hell' : 'trueb'); });
+/* ---------- Zurücksetzen: ab R1 steht die Welt im Zustand des Anfangs (TS) ---------- */
+{
+  const P = ['x', 'y', 's', 'sx', 'sy', 'r', 'o'];
+  for (const a of AKTEURE.values()) {
+    if (ECHT.has(a.el)) continue;
+    const to = {}; P.forEach(p => { to[p] = wert(a, p, TS); });
+    if (a.tw.some(w => 'draw' in w.to)) to.draw = wert(a, 'draw', TS);
+    a.tw.push({ t0: R1, d: 1e-4, to, from: {}, e: E.lin, nr: TW_NR++, bogen: 0 }); a.unsortiert = true;
+  }
+}
+
+/* ---------- 5 · Derselbe Tag, richtig: Angebot → Ferienkalender ---------- */
+{
+  const X = S(0);
+  // Amir sieht das Angebot: Handy pocht, Amir freut sich
+  bump('handy0', W('Angebot', 16) - .1, 1.05); bump('schirm0', W('Angebot', 16) - .1, 1.05); welle('summ0', W('Angebot', 16), X + 1500, 540, 1);
+  bump('nur0', W('sieht', 16), 1.2); FROH.push(['amir0', W('Angebot', 16), W('Aber', 17)]);
+  // Aber bevor er bucht: Pause-Zeichen auf „Buchen“
+  pop('pause0', W('bucht', 17) - .1, { x: X + 1580, y: 640 }, 'klick'); wackeln('amir0', W('Aber', 17), 2, 3);
+  akzent(W('bucht', 17), .03);
+  textAus('tb1', W('Aber', 17));
+}
+pan2(W('schaut', 17) - .35, 3);
+{
+  const X = S(3), T = W('schaut', 17) - .2;
+  akteur('bue3', { x: X + 1320, y: 540 });
+  ein('amir3', T, { x: X + 1010, y: 560 }, { x: -80 });
+  ein('fkal3', W('Ferienkalender', 17) - .45, { x: X + 1400, y: 510 }, { y: 80 }, 'whoosh');
+  akteur('glanz3', { o: 0 }, true); akteur('sbalken3', { sx: .2 }, true); el('sbalken3').style.transformOrigin = 'left center';
+  akteur('fschule3', {}, true); bump('fschule3', W('Berufsschule', 17), 1.25); cue(W('Berufsschule', 17), 'pop');
+  // Lupe fährt die Reihen ab und bleibt bei den Sommerferien
+  const LX = X + 1400 + 150, LY = r => 510 - 220 + 112 + r * 78 + 31;
+  akteur('lupe3', { x: LX + 120, y: LY(0) + 60, o: 0, s: .7 });
+  const tL = W('Ferienkalender', 17) + .15;
+  tw('lupe3', tL, .3, { o: 1, s: 1 }); tw('lupe3', tL, .45, { x: LX, y: LY(0) }, 'sanft');
+  [1, 2, 3].forEach((r, k) => { tw('lupe3', tL + .45 + k * .38, .38, { y: LY(r), x: LX - 40 + (k % 2) * 60 }, 'inout'); cue(tL + .45 + k * .38, 'tipp'); });
+  const tSo = tL + .45 + 3 * .38 + .1;
+  tw('glanz3', tSo, .3, { o: 1 }); tw('sbalken3', tSo, .6, { sx: 1 }, 'sanft'); cue(tSo, 'scan');
+  pop('ok3', tSo + .35, { x: X + 1400 + 250, y: 636 }, 'ding');
+  bump('fkal3', tSo + .3, 1.03); akzent(tSo + .3, .035); huepfen('amir3', tSo + .4, 14);
+  aus('lupe3', W('Dann', 18) - .6, .3);
+  HUD.gut.push(tSo + .35);
+  titelEin('tb5', tSo - .2, [tSo - .2, null, null, W('Sabine', 18) - .1, null]);
+  document.querySelectorAll('#tb5 .w').forEach((w, i) => { if (i === 0 || i === 3) w.classList.add('gruen'); });
+}
+
+/* ---------- 5b · Dann geht er zu Sabine: fragen ---------- */
+pan2(W('Dann', 18) - .25, 4);
+{
+  const X = S(4), T = W('Dann', 18) - .1;
+  akteur('bue4', { x: X + 1320, y: 540 });
+  const zy = plan('plan4', 100, true);
+  balken('plan4', 'p4k0', 0, 1, 2, zy, '--b300'); balken('plan4', 'p4k1', 1, 1, 2, zy, '--b400');
+  balken('plan4', 'p4a', 2, 3, 2, zy, null, 'anfrage');
+  ein('plan4', T, { x: X + 1320, y: 400 }, { y: -60 }, 'whoosh');
+  ein('werk4', T + .1, { x: X + 1320, y: 720 }, { y: 60 });
+  pop('sabine4', T + .2, { x: X + 1600, y: 660 });
+  akteur('amir4', { x: X + 860, y: 660, o: 0 });
+  tw('amir4', W('geht', 18) - .1, .3, { o: 1 }); tw('amir4', W('geht', 18) - .1, .9, { x: X + 1040 }, 'inout');
+  for (let n = 0; n < 3; n++) tw('amir4', W('geht', 18) - .1 + n * .3, .3, { y: 660 }, 'sinus', { bogen: 14 });
+  // Sommerferien: grüner Streifen hinter den Wochen; zwei Wochen: gestrichelte Anfrage; Geht das? – Fragezeichen
+  akteur('plan4fer', { o: 0, sy: .6 }, true);
+  tw('plan4fer', W('Sommerferien', 19) - .1, .5, { o: 1, sy: 1 }, 'sanft'); cue(W('Sommerferien', 19), 'scan');
+  akteur('p4a', { o: 0, y: -50 }, true);
+  tw('p4a', W('zwei', 19) - .1, .3, { o: 1 }); tw('p4a', W('zwei', 19) - .1, .5, { y: 0 }, 'sanft'); cue(W('zwei', 19), 'pop');
+  pop('frage4', W('Geht', 20), { x: X + 1135, y: 575 }, 'plopp'); wackeln('frage4', W('das', 20), 3, 4);
+  huepfen('amir4', W('Sabine', 19), 12);
+  HUD.gut.push(W('Geht', 20));
+  // Stell einen Urlaubsantrag: kleines Formular von Sabine zu Amir
+  akteur('mini4', { x: X + 1460, y: 640, o: 0, s: .5 });
+  const tU = W('Urlaubsantrag', 21) - .1;
+  tw('mini4', tU, .2, { o: 1 }); tw('mini4', tU, .35, { s: 1, y: 610 }, 'back'); cue(tU, 'pop');
+  flug('mini4', tU + .55, .8, X + 1180, 605, 90); cue(tU + .55, 'whoosh');
+  tw('frage4', tU + .4, .3, { o: 0, s: .6 }, 'in');
+  // Die erste Augustwoche ist noch frei: August pocht, Anfrage wird grün
+  akteur('plan4aug', {}, true); bump('plan4aug', W('Augustwoche', 22), 1.3); cue(W('Augustwoche', 22), 'tipp');
+  const tFr = W('frei', 22);
+  HOOKS.push(t => { el('p4a').className = 'anfrage' + (t >= tFr ? ' ok' : ''); });
+  bump('p4a', tFr, 1.12); cue(tFr, 'ding'); akzent(tFr, .03);
+  FROH.push(['amir4', tFr + .2, 99]); FROH.push(['sabine4', W('Die', 22), 99]);
+}
+
+/* ---------- 6 · Antrag und Genehmigung ---------- */
+pan2(W('Amir', 23) - .4, 5);
+textAus('tb5', W('Amir', 23) - .45);
+{
+  const X = S(5), T = W('Amir', 23) - .25;
+  akteur('bue5', { x: X + 1320, y: 540 });
+  ein('form5', T, { x: X + 1280, y: 520 }, { y: 80 }, 'whoosh');
+  pop('amir5', T + .1, { x: X + 1010, y: 640 }); pop('sabine5', T + .2, { x: X + 1620, y: 360 }, null);
+  ein('kal5', T + .25, { x: X + 1620, y: 660 }, { x: 60 });
+  // Amir stellt den Antrag: Felder füllen sich, der Stift schreibt, unterschreibt
+  ['f5a', 'f5b', 'f5c', 'f5d', 'f5e'].forEach(z => akteur(z, { sx: 0 }, true));
+  akteur('f5sig', { draw: 0 }, true);
+  const tS = W('stellt', 23) - .1, FX = X + 1280 - 150, FY = 520 - 195;
+  const ZEILEN = [['f5a', 0, 95], ['f5b', 0, 145], ['f5c', 0, 184], ['f5d', 0, 212], ['f5e', 0, 240]];
+  akteur('stift5', { x: FX + 330, y: FY + 40, o: 0, s: .8 });
+  tw('stift5', tS - .2, .25, { o: 1 }); tw('stift5', tS - .2, .4, { x: FX + 90, y: FY + 61, s: 1 }, 'sanft');
+  ZEILEN.forEach(([z], k) => { const t0 = tS + .2 + k * .22; tw(z, t0, .3, { sx: 1 }, 'inout'); cue(t0, 'tipp'); tw('stift5', t0, .22, { x: FX + 180 + (k % 2) * 40, y: FY + ZEILEN[k][2] - 34 }, 'inout'); });
+  const tU = W('Antrag', 23);
+  tw('stift5', tU - .1, .35, { x: FX + 80, y: FY + 317 }, 'inout'); tw('stift5', tU + .1, .4, { x: FX + 180 }, 'inout'); tw('f5sig', tU, .5, { draw: 1 }, 'inout'); cue(tU, 'kritzeln');
+  tw('stift5', tU + .55, .35, { x: FX + 360, y: FY + 250, o: 0 }, 'in');
+  bump('sabine5', tU + .4, 1.08); bump('form5', tU + .5, 1.03);
+  HUD.gut.push(tU);
+  // Zwei Tage später: zwei Kalenderblätter fliegen ab
+  [['blatt5a', W('Zwei', 24)], ['blatt5b', W('Tage', 24)]].forEach(([b, t0], k) => {
+    akteur(b, {}, true);
+    tw(b, t0, .45, { sy: -.1, y: -30, x: 20 + k * 10, r: 3, o: 0 }, 'in'); cue(t0, 'whoosh');
+  });
+  bump('kal5', W('später', 24), 1.08);
+  // genehmigt: grüner Stempel, Haken, Welle; alle freuen sich
+  const tG = W('genehmigt', 24);
+  akteur('abdruck5', { o: 0, s: 1.6, r: -4 }, true);
+  stempeln('stempel5', tG, X + 1280, 565);
+  tw('abdruck5', tG, .05, { o: 1 }); tw('abdruck5', tG, .3, { s: 1 }, 'out'); cue(tG + .05, 'erfolg');
+  pop('ok5', tG + .35, { x: X + 1420, y: 345 }, null); welle('welle5', tG + .4, X + 1420, 345, 1);
+  FROH.push(['amir5', tG + .2, 99], ['sabine5', tG + .1, 99]); huepfen('amir5', tG + .4, 16);
+  HUD.gut.push(tG);
+  titelEin('tb6', W('Antrag', 23) - .3, [W('Antrag', 23) - .3, null, tG - .3, null]);
+  document.querySelectorAll('#tb6 .w').forEach((w, i) => { if (i === 0 || i === 2) w.classList.add('gruen'); });
+}
+
+/* ---------- 7 · Jetzt buchen, ohne Stress; Anruf bei Mama ---------- */
+pan2(W('Jetzt', 25) - .45, 6);
+textAus('tb6', W('Jetzt', 25) - .5);
+{
+  const X = S(6), T = W('Jetzt', 25) - .3;
+  akteur('bue6', { x: X + 1320, y: 540 });
+  ein('amir6', T, { x: X + 1080, y: 470 }, { x: -80 });
+  ein('handy6', T + .1, { x: X + 1500, y: 540 }, { x: 110 }, 'whoosh'); ein('schirm6', T + .1, { x: X + 1500, y: 540 }, { x: 110 });
+  akteur('anruf6', { o: 0 }, true); akteur('knopf6', {}, true);
+  // Stress-Wolke und Ärger-Zeichen hängen noch da
+  akteur('wolke6', { x: X + 1000, y: 290, o: 0, s: .7 }); tw('wolke6', T + .3, .4, { o: 1, s: 1 }, 'sanft'); schweben('wolke6', 4);
+  akteur('aerger6', { x: X + 1215, y: 300, o: 0, s: .6 }); tw('aerger6', T + .4, .4, { o: 1, s: 1 }, 'back');
+  // bucht: Klick, Knopf wird grün, Ticket springt heraus
+  const tB = W('bucht', 25);
+  tw('knopf6', tB - .05, .08, { sy: .8, sx: 1.05 }, 'sinus'); tw('knopf6', tB + .03, .3, { sy: 1, sx: 1 }, 'sanft');
+  welle('tap6', tB, X + 1500, 647, .7); cue(tB, 'klick');
+  const HAKEN6 = tpl('svgHaken').replace('<svg', '<svg style="width:30px;margin:7px auto 0"');
+  HOOKS.push(t => { el('knopf6').className = 'knopf' + (t >= tB + .05 ? ' gruen' : ''); el('knopf6').innerHTML = t >= tB + .05 ? HAKEN6 : 'Buchen'; });
+  akteur('ticket6', { x: X + 1500, y: 560, o: 0, s: .3 });
+  tw('ticket6', W('Flug', 25) - .2, .2, { o: 1 }); flug('ticket6', W('Flug', 25) - .2, .75, X + 1110, 780, 140, { s: 1 }); cue(W('Flug', 25) - .2, 'whoosh');
+  landen('ticket6', W('Flug', 25) + .55);
+  HUD.gut.push(tB);
+  // Ohne Stress, ohne Ärger: Wolke und Ärger-Zeichen lösen sich auf
+  const tSt = W('Stress', 26), tAe = W('Ärger', 26);
+  tw('wolke6', tSt, .35, { s: 0, o: 0 }, 'in'); welle('puff6', tSt + .1, X + 1000, 290, .7); cue(tSt, 'plopp');
+  tw('aerger6', tAe, .3, { s: 0, o: 0 }, 'in'); welle('puff6b', tAe + .1, X + 1215, 300, .6); cue(tAe, 'plopp');
+  FROH.push(['amir6', tSt, 99]); huepfen('amir6', tAe + .1, 14);
+  // Mama, ich komme im August!: Anruf auf dem Handy
+  const tM = W('Mama', 27) - .35;
+  tw('anruf6', tM, .3, { o: 1 }); cue(tM, 'tipp');
+  [0, .6, 1.2].forEach((d, n) => welle(n % 2 ? 'ruf6b' : 'ruf6', tM + d, X + 1500, 540, .9));
+  bump('handy6', W('August', 27), 1.05); bump('schirm6', W('August', 27), 1.05); bump('ticket6', W('August', 27), 1.1);
+  titelEin('tb7', tB - .1);
+  document.querySelector('#tb7 .w').classList.add('gruen');
+}
+
+/* ---------- 8 · Also: fünf Schritte, dann hebt das Flugzeug ab ---------- */
+pan2(W('Also', 28) - .35, 7);
+textAus('tb7', W('Also', 28) - .4);
+{
+  const X = S(7), T = W('Also', 28) - .2;
+  akteur('bue7', { x: X + 1320, y: 540 });
+  const IC = [
+    tpl('tplSchule'),
+    `<svg viewBox="0 0 60 60"><path d="M10 14a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H26l-10 9v-9a6 6 0 0 1-6-6Z" fill="var(--b500)"/><path d="M25 19a5 5 0 1 1 7 4c-2 1-2 2-2 4" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="30" cy="33" r="2.6" fill="var(--surface)"/></svg>`,
+    `<svg viewBox="0 0 60 60"><rect x="12" y="6" width="36" height="48" rx="6" fill="var(--b100)"/><rect x="18" y="14" width="24" height="5" rx="2.5" fill="var(--b500)"/><rect x="18" y="25" width="24" height="4" rx="2" fill="var(--b300)"/><rect x="18" y="33" width="18" height="4" rx="2" fill="var(--b300)"/><path d="M18 45c4-6 7-6 8-2s4 3 7-1" stroke="var(--b500)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>`,
+    `<svg viewBox="0 0 60 60"><rect x="25" y="8" width="10" height="20" rx="3" fill="var(--b600)"/><ellipse cx="30" cy="9" rx="10" ry="6" fill="var(--b500)"/><rect x="14" y="27" width="32" height="10" rx="3" fill="var(--b500)"/><rect x="10" y="37" width="40" height="6" rx="2" fill="var(--b700)"/><path d="M16 52h28" stroke="var(--success)" stroke-width="5" stroke-linecap="round"/></svg>`,
+    tpl('svgFlieger'),
+  ];
+  const KXs = [990, 1150, 1310, 1470, 1630], KY7 = 690;
+  const TT = [W('Schulferien', 28), W('fragen', 28), W('Antrag', 28), W('Genehmigung', 28), W('buchen', 28)];
+  IC.forEach((ic, k) => {
+    WELT.insertAdjacentHTML('beforeend', `<div class="a kachel" id="kach${k}">${ic}<div class="nr">${k + 1}</div></div><div class="a plakette gruen" id="hak${k}" data-frei>${tpl('svgHaken')}</div>`);
+    ein('kach' + k, T + .1 + k * .1, { x: X + KXs[k], y: KY7 }, { y: 70 }, k ? null : 'whoosh');
+    pop('hak' + k, TT[k], { x: X + KXs[k] + 52, y: KY7 + 52 }, 'ding'); bump('kach' + k, TT[k], 1.08);
+  });
+  // Flugzeug steht auf der Piste, hebt auf „buchen“ ab und fliegt einen Bogen
+  ein('piste7', T, { x: X + 1180, y: 478 }, { x: -60 });
+  ein('flug7', T + .1, { x: X + 1080, y: 420 }, { x: -80 });
+  const tAb = W('dann', 28) - .1;
+  tw('flug7', tAb, .5, { x: X + 1200, r: -3 }, 'in');
+  tw('flug7', tAb + .5, 1.3, { x: X + 1880, y: 180, s: .7 }, 'in', { bogen: 60 });
+  tw('flug7', tAb + 1.5, .3, { o: 0 });
+  cue(tAb, 'whoosh'); cue(tAb + .6, 'whoosh'); akzent(tAb + .6, .045);
+  $('#bahn7p').setAttribute('d', `M${1150} ${420} C ${1380} ${400}, ${1560} ${340}, ${1700} ${260}`);
+  akteur('bahn7', { x: X + 960, y: 540, o: 0, draw: 0 });
+  tw('bahn7', tAb + .5, .1, { o: 1 }); tw('bahn7', tAb + .5, 1.1, { draw: 1 }, 'inout');
+  titelEin('tb8', W('Also', 28) + .1);
+  document.querySelectorAll('#tb8 .w').forEach((w, i) => { if (i === 1 || i === 3) w.classList.add('gruen'); });
+}
+
+/* ---------- Abspann ---------- */
+var AB = ENDE_SPRACHE + 1.7;
+hudFertig();
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+['asTitel', 'asUnter'].forEach(echt);
+textAus('tb8', AB);
+
+/* ---------- eigenes render: Welt-Zeit je Akteur ---------- */
+function renderZ(t) {
+  const tz = ZT(t);
+  for (const a of AKTEURE.values()) {
+    const tt = ECHT.has(a.el) ? t : tz;
+    const g = p => wert(a, p, tt);
+    const o = g('o');
+    a.el.style.opacity = o;
+    a.el.style.visibility = o <= 0.001 ? 'hidden' : 'visible';
+    const sw = a.basis.schweben ? a.basis.schweben * Math.sin(tt * 1.9 + (a.phase ??= [...(a.el.id || 'x')].reduce((h, c) => h + c.charCodeAt(0), 0) % 7)) : 0;
+    a.el.style.transform = `translate(${g('x')}px,${g('y') + sw}px)` + (a.rel ? '' : ' translate(-50%,-50%)') +
+      ` rotate(${g('r')}deg) scale(${g('s') * g('sx')},${g('s') * g('sy')})`;
+    if (a.tw.some(w => 'draw' in w.to))
+      a.el.querySelectorAll('.zeichnen').forEach(p => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - g('draw'); });
+  }
+  for (const h of HOOKS) h(t);
+}
+start(AB + 3.8, AB + 2);
+window.render = renderZ;
+</script>
+</body></html>
