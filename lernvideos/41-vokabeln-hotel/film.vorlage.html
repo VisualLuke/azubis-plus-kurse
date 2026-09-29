@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Hotel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Bühnen: Wand mit Sockelleiste, Boden */
+.buehne.raum{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne.gross{width:1680px;height:880px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne .boden{position:absolute;left:0;right:0;top:520px;bottom:0;background:linear-gradient(var(--b200),var(--b100))}
+.buehne .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:14px;background:var(--b300);opacity:.55}
+.buehne.gross .boden{top:640px}
+.buehne .lampe41{position:absolute;width:170px;transform-origin:50% 0}
+
+/* ================= Format „Fachvokabeln“ (übernommen aus Lernvideo 31) ================= */
+/* Artikel-Farben: der = b500 · die = success · das = warning */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface)}
+.neutral{--f:var(--b200);--ft:var(--b600);--fa:var(--b700)}
+.vk{width:640px;height:340px;border-radius:36px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.10);overflow:hidden;
+  padding:44px 46px 38px;display:flex;flex-direction:column}
+.vk .band{position:absolute;left:0;right:0;top:0;height:14px;background:var(--f)}
+.vk .kopf{display:flex;align-items:center;justify-content:space-between;height:48px;flex:none}
+.vk .art{display:inline-block;padding:4px 22px;border-radius:999px;background:var(--f);color:var(--fa);font:800 32px/40px Inter;white-space:nowrap}
+.vk .punkte{display:flex;gap:9px;align-items:center}
+.vk .punkte i{display:block;width:12px;height:12px;border-radius:99px;background:var(--n200)}
+.vk .punkte i.fertig{background:var(--b200)}
+.vk .punkte i.jetzt{width:40px;background:var(--f);transform-origin:left center}
+.vk .wort{margin-top:22px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.vk.ohne .wort{margin:auto 0}
+.vk .pl{margin-top:auto;display:flex;align-items:baseline;gap:18px;font:600 44px/52px Inter;color:var(--n700);white-space:nowrap}
+.vk .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.sl{width:640px;min-height:152px;padding:26px 32px 28px 148px;border-radius:32px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.09);
+  font:600 34px/45px Inter;color:var(--ink)}
+.sl .sw{display:inline-block;white-space:nowrap}
+.sl u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.sl .sw.lw u{color:var(--ft);font-weight:800}
+.sl .q{color:var(--b300);font-weight:800}
+.lg{display:inline-block;padding:6px 24px;border-radius:999px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;margin-right:16px}
+.chip{display:flex;align-items:center;justify-content:center;height:58px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.chip b{font-weight:600;opacity:.85;margin-right:9px}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.portrait .hand{transform-origin:80% 92%;opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface);
+  font:800 36px/1 Inter;color:var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)}
+.etikett{padding:10px 24px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 26px/32px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.09)}
+.etikett b{font-weight:800;color:var(--ink)}
+.tipp u{display:inline-block;text-decoration:none;white-space:pre}
+
+/* Hotel: Tresen, Schlüsselfach, Schlüsselkarte, Namensschild */
+.tresen{border-radius:20px 20px 10px 10px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 18px 40px rgba(22,19,37,.14);overflow:hidden}
+.tresen::before{content:'';position:absolute;left:0;right:0;top:0;height:26px;background:var(--b700)}
+.tresen::after{content:'';position:absolute;left:0;right:0;top:26px;height:8px;background:var(--b300);opacity:.5}
+.tresen .pan{position:absolute;top:58px;bottom:24px;border-radius:14px;background:var(--b500);box-shadow:inset 0 0 0 3px var(--b300)}
+.fach{border-radius:22px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.10)}
+.fach .slot{position:absolute;width:62px;height:74px;border-radius:12px;background:var(--b50);box-shadow:inset 0 -6px 0 var(--b100)}
+.fach .slot i{position:absolute;left:50%;top:12px;width:12px;height:12px;margin-left:-6px;border-radius:99px;background:var(--b300)}
+.fach .slot .kkarte{position:absolute;left:8px;top:28px}
+.kkarte{width:46px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--b300),var(--b500));box-shadow:0 3px 8px rgba(22,19,37,.18)}
+.kkarte::after{content:'';position:absolute;left:7px;right:7px;top:9px;height:5px;border-radius:3px;background:var(--surface);opacity:.65}
+.kkarte.gross{width:84px;height:56px;border-radius:11px}
+.kkarte.gross::after{left:11px;right:11px;top:15px;height:8px}
+.nschild{display:flex;align-items:stretch;border-radius:18px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.15);overflow:hidden;white-space:nowrap}
+.nschild .band{width:18px;background:var(--b500);flex:none}
+.nschild .tx{padding:12px 28px 14px 20px}
+.nschild b{display:block;font:800 40px/46px Inter;color:var(--ink)}
+.nschild span{display:block;font:700 26px/32px Inter;color:var(--b600);min-height:32px}
+/* Tür mit Blatt, Griff, Nummer */
+.htuer{border-radius:16px 16px 0 0;background:var(--b700)}
+.htuer::before{content:'';position:absolute;inset:0;border-radius:16px 16px 0 0;border:14px solid var(--b300);border-bottom:0}
+.htuer .blatt{position:absolute;left:14px;right:14px;top:14px;bottom:0;border-radius:6px 6px 0 0;background:linear-gradient(var(--b500),var(--b600));transform-origin:0 50%}
+.htuer .blatt::before,.htuer .blatt::after{content:'';position:absolute;left:22px;right:22px;border-radius:10px;border:4px solid var(--b400);opacity:.8}
+.htuer .blatt::before{top:24px;height:34%}
+.htuer .blatt::after{bottom:26px;height:34%}
+.htuer .griff{position:absolute;right:18px;top:52%;width:34px;height:12px;border-radius:6px;background:var(--warning)}
+.htuer .nr{position:absolute;left:50%;top:22px;width:92px;margin-left:-46px;padding:4px 0;border-radius:10px;background:var(--surface);color:var(--b600);font:800 28px/34px Inter;text-align:center;z-index:1}
+/* Türschild „Bitte nicht stören“ */
+.haenger{width:110px;height:210px;border-radius:18px;background:var(--error);box-shadow:0 10px 22px rgba(22,19,37,.2);
+  color:var(--surface);font:800 22px/27px Inter;text-align:center;padding-top:72px;transform-origin:50% 17.6%}
+.haenger .loch{position:absolute;left:50%;top:16px;width:42px;height:42px;margin-left:-21px;border-radius:99px;background:var(--b500)}
+.haenger .loch::before{content:'';position:absolute;left:3px;right:3px;top:50%;height:12px;margin-top:-6px;border-radius:6px;background:var(--warning)}
+.haenger .loch::after{content:'';position:absolute;left:17px;top:-16px;width:8px;height:18px;background:var(--b500)}
+.haenger.klein{width:80px;height:150px;border-radius:14px;font-size:16px;line-height:20px;padding-top:50px;transform-origin:50% 18%}
+.haenger.klein .loch{width:30px;height:30px;margin-left:-15px;top:12px}
+.haenger.klein .loch::before{height:9px;margin-top:-4.5px}
+.haenger.klein .loch::after{left:11px;top:-12px;height:14px}
+.bild41{width:200px;height:140px;border-radius:16px;border:10px solid var(--surface);background:linear-gradient(var(--info-bg),var(--b50));overflow:hidden;box-shadow:0 10px 26px rgba(22,19,37,.10)}
+.bild41 i{position:absolute;bottom:0;background:var(--b300);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.bild41 i.v{background:var(--b400)}
+/* Bildschirm mit Buchungsliste, Tastatur */
+.monitor{width:600px;height:400px;border-radius:26px;background:var(--b700);box-shadow:0 18px 44px rgba(22,19,37,.14)}
+.monitor .scr{position:absolute;inset:16px;border-radius:14px;background:var(--surface);overflow:hidden}
+.monitor .such{position:absolute;left:24px;right:24px;top:20px;height:58px;border-radius:14px;background:var(--b50);border:3px solid var(--b200);
+  font:800 30px/52px Inter;color:var(--ink);padding-left:66px;white-space:nowrap}
+.monitor .such svg{position:absolute;left:16px;top:10px;width:32px}
+.monitor .such .cur{display:inline-block;width:3px;height:30px;background:var(--b500);vertical-align:-5px;margin-left:2px}
+.zeile41{position:absolute;left:24px;right:24px;height:46px;border-radius:12px;background:var(--b50);display:flex;align-items:center;gap:16px;padding:0 18px}
+.zeile41 .dt{width:58px;height:14px;border-radius:7px;background:var(--b200);flex:none}
+.zeile41 .nm{width:140px;height:14px;border-radius:7px;background:var(--n300);flex:none}
+.zeile41 .zi{flex:1;height:14px;border-radius:7px;background:var(--n200)}
+.zeile41 b{width:140px;font:800 26px/30px Inter;color:var(--ink);flex:none}
+.zeile41.treffer{background:var(--success-bg);box-shadow:inset 0 0 0 3px var(--success)}
+.zeile41.treffer b{color:var(--success-text)}
+.fuss41{width:220px;height:80px}
+.fuss41 i{position:absolute;left:80px;top:0;width:60px;height:56px;background:linear-gradient(var(--b600),var(--b700))}
+.fuss41 s{position:absolute;left:0;right:0;bottom:0;height:26px;border-radius:13px;background:var(--b600);text-decoration:none}
+.tasten{width:440px;height:74px;border-radius:16px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.10);padding:12px 16px;display:grid;grid-template-columns:repeat(12,1fr);gap:6px}
+.tasten i{display:block;border-radius:5px;background:var(--b100)}
+.tasten i.an{background:var(--b400)}
+/* Zimmer */
+.zimmer{border-radius:30px;background:linear-gradient(var(--surface) 72%,var(--b100) 72%);box-shadow:0 16px 40px rgba(22,19,37,.10);border:8px solid var(--surface);overflow:hidden}
+.zimmer .ld{position:absolute;right:20px;top:20px;width:28px;height:28px;border-radius:99px;background:var(--n300);box-shadow:inset 0 0 0 5px var(--n200)}
+.zimmer .ld.frei{background:var(--success);box-shadow:inset 0 0 0 5px var(--success-bg)}
+/* Notizzettel */
+.notiz{width:300px;height:190px;border-radius:14px;background:var(--warning-bg);box-shadow:0 12px 28px rgba(22,19,37,.13);padding:28px 26px}
+.notiz::before{content:'';position:absolute;left:50%;top:-12px;width:90px;height:26px;margin-left:-45px;border-radius:6px;background:var(--b200);opacity:.9}
+.notiz .nz{font:800 30px/40px Inter;color:var(--ink);white-space:nowrap;min-height:40px}
+.notiz .nz.rot{color:var(--error)}
+.notiz i{display:block;height:10px;border-radius:5px;background:var(--warning);opacity:.35;margin-top:16px}
+.notiz.leer i{margin-top:22px}
+/* Fenster mit Blick auf den Fluss */
+.aussicht{width:360px;height:280px;border-radius:26px;border:12px solid var(--surface);box-shadow:0 16px 40px rgba(22,19,37,.13);overflow:hidden;
+  background:linear-gradient(var(--info-bg),var(--b50))}
+.aussicht .st{position:absolute;left:50%;bottom:62px;width:220px;margin-left:-110px}
+.aussicht .fluss{position:absolute;left:0;right:0;bottom:0;height:78px;background:linear-gradient(var(--info),var(--b500))}
+.aussicht .wl{position:absolute;height:6px;border-radius:3px;background:var(--surface);opacity:.55}
+.aussicht .kreuz{position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:var(--surface)}
+.aussicht .vh{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(90deg,var(--b300),var(--b200));z-index:2}
+.aussicht .vh.l{left:0;transform-origin:0 50%} .aussicht .vh.r{right:0;transform-origin:100% 50%;background:linear-gradient(270deg,var(--b300),var(--b200))}
+/* Kalenderblätter (Besuche) */
+.kblatt{width:84px;height:96px;border-radius:14px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.10);overflow:hidden}
+.kblatt::before{content:'';position:absolute;left:0;right:0;top:0;height:22px;background:var(--b400)}
+.kblatt i{position:absolute;left:50%;top:38px;width:44px;height:44px;margin-left:-22px;border-radius:99px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.kblatt i svg{width:28px}
+/* Buchungskarte im Schlussdialog */
+.bkarte{width:300px;height:200px;border-radius:22px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.12)}
+.bkarte .zeile41{left:18px;right:18px;height:44px;padding:0 14px;gap:12px}
+.bkarte .zeile41 .dt{width:40px}
+.bkarte .zeile41 b{width:auto;font-size:24px}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgFrage"><svg viewBox="0 0 40 40"><path d="M13 14a7 7 0 1 1 10 6c-2 1-3 3-3 5" stroke="var(--surface)" stroke-width="5.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="33" r="3.4" fill="var(--surface)"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgTraurig"><svg viewBox="0 0 40 40"><circle cx="13.5" cy="15" r="3.4" fill="var(--surface)"/><circle cx="26.5" cy="15" r="3.4" fill="var(--surface)"/><path d="M11.5 30c4.5-6 12.5-6 17 0" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgSuche"><svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="10" stroke="var(--b400)" stroke-width="5" fill="none"/><path d="M25 25l9 9" stroke="var(--b400)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgKreis"><svg viewBox="0 0 100 100"><path d="M78 50a28 28 0 1 1-8-19.8" stroke="var(--b400)" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M67.2 14.4L70 30.2L54.2 27.4" stroke="var(--b400)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgBogen"><svg viewBox="0 0 40 110"><path d="M8 10q30 45 0 90" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none"/></svg></template>
+
+<template id="t-klingel">{{klingel}}</template>
+<template id="t-knopf">{{klingel-knopf}}</template>
+<template id="t-lampe">{{haengelampe}}</template>
+<template id="t-pflanze">{{pflanze}}</template>
+<template id="t-koffer">{{koffer}}</template>
+<template id="t-flugzeug">{{flugzeug}}</template>
+<template id="t-uhr">{{uhr}}</template>
+<template id="t-stunde">{{uhr-stunde}}</template>
+<template id="t-minute">{{uhr-zeiger}}</template>
+<template id="t-lupe">{{lupe}}</template>
+<template id="t-bettE">{{bett-einzel}}</template>
+<template id="t-deckeE">{{decke-einzel}}</template>
+<template id="t-bettD">{{bett-doppel}}</template>
+<template id="t-deckeD">{{decke-doppel}}</template>
+<template id="t-wagen">{{wagen}}</template>
+<template id="t-besen">{{besen}}</template>
+<template id="t-telefon">{{telefon}}</template>
+<template id="t-hoerer">{{hoerer}}</template>
+<template id="t-heizung">{{heizung}}</template>
+<template id="t-thermo">{{thermometer}}</template>
+<template id="t-saeule">{{thermo-saeule}}</template>
+<template id="t-flocke">{{schneeflocke}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-stadt">{{stadt}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Ana">{{figur-ana}}</template>
+<template id="f-Empfangschefin">{{figur-empfangschefin}}</template>
+<template id="f-Stammgast">{{figur-stammgast}}</template>
+<template id="t-hand">{{winkhand}}</template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne gross" id="bue0"></div>
+  <div class="a buehne raum" id="bue1"></div>
+  <div class="a buehne raum" id="bue2"></div>
+  <div class="a buehne raum" id="bue3"></div>
+  <div class="a buehne raum" id="bue4"></div>
+  <div class="a buehne raum" id="bue5"></div>
+  <div class="a buehne raum" id="bue6"></div>
+  <div class="a buehne raum" id="bue7"></div>
+  <div class="a buehne raum" id="bue8"></div>
+  <div class="a buehne gross" id="bue9"></div>
+</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Sicher und freundlich.</div>
+  <div class="klein" id="asUnter">Im Hotel sprichst du jeden Tag mit Gästen. Die richtigen Wörter machen dich sicher und freundlich.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const federn = (id, t) => { tw(id, t, .12, { sy: .96, sx: 1.025 }, 'sinus'); tw(id, t + .12, .4, { sy: 1, sx: 1 }, 'sanft'); };
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '') => { WELT.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const welle = (id, t, x, y, d = .9) => { if (!el(id)) neu(id, '', 'width:160px;height:160px', 'data-frei', 'welle'); akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich'); };
+let WN = 0;
+const wellen = (t, x, y, farbe = null, gr = 160) => { const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle'); welle(id, t, x, y); };
+const plakette = (id, farbe, svg, attr = 'data-frei') => neu(id, svg ? tpl(svg) : '', '', attr, 'plakette ' + farbe);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const summen = (id, t, d = .8, a = 4) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const boden = i => el('bue' + i).insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+// Bildteil als Akteur: Breite in px (SVG 160 × 160)
+const bild = (id, t, breite, attr = '', stil = '') => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr);
+// zwei Ebenen übereinander (z. B. Bett + Decke, Telefon + Hörer): Grundteil und Ebene als eigene Akteure
+const rollen = (id, t, x, d = .7, e = 'sanft') => { tw(id, t, d, { x }, e); const n = Math.max(2, Math.round(d / .18)); for (let k = 0; k < n; k++) tw(id, t + k * d / n, d / n, { r: k % 2 ? -1.2 : 1.2 }, 'sinus'); tw(id, t + d, .25, { r: 0 }, 'sinus'); };
+// Text, der sich Buchstabe für Buchstabe tippt (Platz ist von Anfang an reserviert)
+function tippen(id, text, t0, d, klang = true) {
+  const e = el(id), zeichen = [...text];
+  e.classList.add('tipp');
+  e.innerHTML = zeichen.map(c => `<u>${c}</u>`).join('');
+  const us = [...e.querySelectorAll('u')], z = us.map((u, k) => t0 + d * k / Math.max(1, us.length));
+  HOOKS.push(t => us.forEach((u, k) => { const p = clamp((t - z[k]) / .08); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(6 * (1 - p)).toFixed(1)}px)` : ''; }));
+  if (klang) z.filter((_, k) => k % 2 === 0 && zeichen[k] !== ' ').forEach(tz => cue(tz, 'tipp'));
+  return z;
+}
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 10;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Nicken, froh, winken ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [], WINK = [];   // [id, von, bis] · [id, t0, dauer] · [id, t0, dauer]
+function portrait(id, wer, gr, attr = '') {
+  neu(id, `<div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${tpl('gesicht')}<div class="ebene hand">${kopie('t-hand', id)}</div></div>`,
+    `width:${gr}px;height:${gr}px`, attr, 'portrait');
+  el(id).dataset.sprecher = wer;
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+    // Winken: Hand steigt von unten in den Kreis, schwingt hin und her, sinkt wieder
+    let hy = 60, hr = 0, ho = 0;
+    for (const [id, t0, d] of WINK) {
+      const q = t - t0; if (id !== p.id || q < 0 || q > d) continue;
+      const ein = E.sanft(clamp(q / .35)), weg = E.in(clamp((q - d + .3) / .3));
+      hy = 60 * (1 - ein) + 60 * weg; ho = 1; hr = 16 * Math.sin((q - .2) * 11) * clamp(q / .3) * (1 - weg);
+    }
+    const h = p.querySelector('.hand');
+    h.style.opacity = ho; h.style.transform = `translateY(${hy.toFixed(1)}%) rotate(${hr.toFixed(2)}deg)`;
+  });
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+const winken = (id, t, d = 1.6) => WINK.push([id, t, d]);
+
+/* ================= Format „Fachvokabeln“ ================= */
+const GENUS = ['der', 'die', 'das'];
+const VK_X = 470, VK_Y = 350, SL_X = 150, SL_Y = 578;
+function wortkarte(i, o) {
+  const X = S(i), id = 'vk' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral';
+  const woerter = o.wort.split(' ');
+  neu(id, `<div class="band"></div>
+    <div class="kopf"><span class="art" id="${id}a">${o.chip}</span><span class="punkte">${[1, 2, 3, 4, 5, 6, 7, 8].map(k => `<i class="${k === o.nr ? 'jetzt' : k < o.nr ? 'fertig' : ''}" ${k === o.nr ? `id="${id}d"` : ''}></i>`).join('')}</span></div>
+    <div class="wort" id="${id}wt" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px${o.umbruch ? ';white-space:normal' : ''}">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.zeile ? `<div class="pl" id="${id}p" ${o.plgr ? `style="font-size:${o.plgr}px"` : ''}>${o.zeile[0] ? `<small>${o.zeile[0]}</small>` : ''}<span>${o.zeile[1]}</span></div>` : ''}`, '', '', `vk ${kl}${o.zeile ? '' : ' ohne'}`);
+  const y = o.mitte ? 540 : VK_Y;
+  akteur(id, { x: X + VK_X, y: y + 70, o: 0, s: .96 });
+  akteur(id + 'a', { s: 0 }, true); akteur(id + 'd', { sx: .3 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
+  return {
+    ein: t => { tw(id, t, .45, { o: 1 }); tw(id, t, .7, { y, s: 1 }, 'sanft'); cue(t, 'whoosh'); },
+    chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); cue(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); cue(t0, 'klick'); },
+    zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); cue(t, 'pop'); },
+  };
+}
+// Satzleiste: Beispielsatz tippt sich im Takt der Wortzeiten; Zahlen, die für die Stimme ausgeschrieben sind, stehen als Ziffern
+const ANZEIGE = { zweihundertvierzehn: '214', hundertacht: '108', elf: '11' };
+function satzleiste(i, ns, art, lern) {
+  ns = [].concat(ns);
+  const X = S(i), id = 'sl' + i, kl = GENUS.includes(art) ? art : 'neutral';
+  const teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok: tok.replace(/[\p{L}\p{N}]+/u, m => ANZEIGE[m.toLowerCase()] ?? m), lern: _norm(tok), w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  neu(id, teile.map((p, j) => `<span class="sw${lern.includes(p.lern) ? ' lw' : ''}">${j === 0 ? `<span class="q" id="${id}q1">„</span>` : ''}${[...p.tok].map(c => `<u>${c}</u>`).join('')}${j === teile.length - 1 ? `<span class="q" id="${id}q2">“</span>` : ''}</span>`).join(' '),
+    '', `data-gruppe="${id}"`, `sl ${kl}`);
+  portrait(id + 'p', satz(ns[0]).sprecher, 96, `data-gruppe="${id}"`);
+  const zeiten = [];
+  el(id).querySelectorAll('.sw').forEach((sw, j) => {
+    const w = teile[j].w || teile[j - 1]?.w, us = sw.querySelectorAll('u');
+    const a = A(w.start), d = Math.max(.08, w.ende - w.start);
+    us.forEach((u, c) => zeiten.push([u, a + d * c / us.length]));
+  });
+  zeiten.push([el(id + 'q1'), SA(ns[0]) - .15], [el(id + 'q2'), SE(ns.at(-1))]);
+  el(id + 'q1').style.opacity = 0; el(id + 'q2').style.opacity = 0;
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const p = clamp((t - tc) / .1); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(7 * (1 - p)).toFixed(1)}px)` : ''; } });
+  akteur(id, { x: X + SL_X, y: SL_Y + 50, o: 0 }, true);
+  akteur(id + 'p', { x: X + SL_X + 26 + 48, y: SL_Y + 24 + 48, s: 0 });
+  return { ein: t => { tw(id, t, .4, { o: 1 }); tw(id, t, .6, { y: SL_Y }, 'sanft'); tw(id + 'p', t + .15, .5, { s: 1 }, 'back'); cue(t, 'pop'); } };
+}
+function buehne(i) { boden(i); akteur('bue' + i, { x: S(i) + 1320, y: 540 }); }
+const chipHTML = (art, text) => art ? `<b>${art}</b>${text}` : text;
+
+/* ---------- Hotel-Bausteine ---------- */
+// Empfangstresen mit Paneelen
+const tresen = (id, b, h, attr = '') => { const n = Math.max(2, Math.round(b / 240)), w = (b - 40 - (n - 1) * 20) / n;
+  return neu(id, Array.from({ length: n }, (_, k) => `<div class="pan" style="left:${20 + k * (w + 20)}px;width:${w}px"></div>`).join(''), `width:${b}px;height:${h}px`, attr, 'tresen'); };
+// Schlüsselfach: sp × zl Fächer, in jedem eine Karte (Karten fallen einzeln hinein)
+function schluesselfach(id, sp, zl, attr = '') {
+  const B = 24 + sp * 62 + (sp - 1) * 18 + 24, H = 22 + zl * 74 + (zl - 1) * 16 + 22;
+  let html = '';
+  for (let r = 0; r < zl; r++) for (let c = 0; c < sp; c++) html += `<div class="slot" style="left:${24 + c * 80}px;top:${22 + r * 90}px"><i></i><div class="kkarte" id="${id}k${r * sp + c}"></div></div>`;
+  neu(id, html, `width:${B}px;height:${H}px`, attr, 'fach');
+  const karten = Array.from({ length: sp * zl }, (_, k) => id + 'k' + k);
+  karten.forEach(k => akteur(k, { y: -70, o: 0 }, true));
+  return (t, d = .09) => karten.forEach((k, n) => { tw(k, t + n * d, .2, { o: 1 }); tw(k, t + n * d, .45, { y: 0 }, 'bounce'); cue(t + n * d + .2, 'klick'); });
+}
+// Tischklingel: Knopf drückt, Klingel wippt, Ton und Welle
+function klingel(id, breite, x, y, attr = '') {
+  bild(id, 't-klingel', breite, attr); bild(id + 'k', 't-knopf', breite, attr);
+  return {
+    ein: t => { pop(id, t, { x, y }, 'pop'); pop(id + 'k', t + .08, { x, y }, null); },
+    ding: t => { tw(id + 'k', t, .08, { y: y + breite * .05 }, 'in'); tw(id + 'k', t + .08, .3, { y }, 'sanft'); bump(id, t + .05, 1.06); cue(t + .06, 'ding'); wellen(t + .06, x, y - breite * .12, 'var(--warning)', breite * 1.1); },
+  };
+}
+// Hoteltür: Rahmen, Blatt (schwingt auf), Griff, optional Zimmernummer
+const tuer = (id, b, h, nr = '', attr = '') => neu(id, `<div class="blatt" id="${id}b"><div class="griff"></div></div>${nr ? `<div class="nr">${nr}</div>` : ''}`, `width:${b}px;height:${h}px`, attr, 'htuer');
+const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .3, { sx: .22 }, 'out'); tw(id + 'b', t + d, .35, { sx: 1 }, 'sanft'); cue(t, 'klick'); };
+// Thermometer mit Säule (Säule als Ebene, skaliert von unten)
+function thermo(id, b, x, y, fuell, attr = '') {
+  neu(id, `<div style="position:absolute;left:0;top:0;width:${b}px">${kopie('t-thermo', id)}</div><div id="${id}s" style="position:absolute;left:0;top:0;width:${b}px;transform-origin:50% 78.75%">${kopie('t-saeule', id + 's')}</div>`, `width:${b}px;height:${b}px`, attr);
+  akteur(id + 's', { sy: fuell }, true);
+  return id;
+}
+
+/* ---------- 0 · Intro: Foyer, Ana hinter der Rezeption ---------- */
+el('bue0').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue0', { x: S(0) + 960, y: 540 });
+{
+  const X = S(0);
+  // Hängelampen schwingen von oben herein (Teil der Bühne, von oben angeschnitten)
+  [360, 840, 1320].forEach((lx, n) => {
+    el('bue0').insertAdjacentHTML('beforeend', `<div class="lampe41" id="lp0${n}" style="left:${lx - 85}px;top:-34px">${kopie('t-lampe', 'lp0' + n)}</div>`);
+    akteur('lp0' + n, { y: -260, r: 0 }, true);
+    tw('lp0' + n, .05 + n * .12, .7, { y: 0 }, 'sanft'); pendel('lp0' + n, .6 + n * .12, 7, 5, .4);
+  });
+  cue(.1, 'whoosh');
+  // Tresen, Schlüsselfach, Pflanze, Klingel
+  tresen('tr0', 1000, 220);
+  ein('tr0', .2, { x: X + 960, y: 700 }, { y: 90 }, 'whoosh');
+  const karten0 = schluesselfach('fa0', 3, 2);
+  pop('fa0', .4, { x: X + 600, y: 400 }, 'pop'); karten0(.75, .08);
+  bild('pf0', 't-pflanze', 230);
+  ein('pf0', .5, { x: X + 1640, y: 780 }, { y: 70 });
+  const kl0 = klingel('kl0', 140, X + 1290, 545);
+  kl0.ein(.65);
+  // Koffer rollt herein
+  bild('ko0', 't-koffer', 190);
+  akteur('ko0', { x: X + 200, y: 812, o: 0 });
+  tw('ko0', .55, .3, { o: 1 }); rollen('ko0', .55, X + 330, .9); federn('ko0', 1.45); cue(.55, 'whoosh');
+  // Das ist Ana: sie kommt hinter den Tresen und lächelt
+  const tA = W('Ana', 1);
+  portrait('ana0', 'Ana', 280);
+  ein('ana0', tA - .35, { x: X + 960, y: 440 }, { y: 110 }, 'pop');
+  FROH.push(['ana0', tA + .25, 99]); akzent(tA, .03);
+  // Namensschild fliegt an, die zweite Zeile tippt sich bei „Hotelfachfrau“
+  neu('ns0', '<div class="band"></div><div class="tx"><b>Ana</b><span id="ns0z"></span></div>', '', '', 'nschild');
+  akteur('ns0', { x: X + 1640, y: 180, o: 0, r: -20, s: .7 });
+  const tN = tA + .15;
+  tw('ns0', tN, .2, { o: 1 }); flug('ns0', tN, .7, X + 1290, 352, 90, { r: -2, s: 1 }); landen('ns0', tN + .7); cue(tN, 'whoosh'); cue(tN + .7, 'klick');
+  tw('ns0', tN + .8, .5, { r: 0 }, 'sanft');
+  // aus den Philippinen: Flugzeug fliegt im Bogen über die Bühne
+  bild('fz0', 't-flugzeug', 210, 'data-frei');
+  const tP = W('Philippinen', 1) - .45;
+  akteur('fz0', { x: X + 230, y: 330, o: 0, r: -4 });
+  tw('fz0', tP, .25, { o: 1 }); tw('fz0', tP, 1.7, { x: X + 1700, y: 190, r: 2 }, 'inout', { bogen: 110 }); tw('fz0', tP + 1.45, .25, { o: 0 }); cue(tP, 'whoosh');
+  // Ausbildung zur Hotelfachfrau
+  bump('ana0', W('Ausbildung', 2), 1.05); wellen(W('Ausbildung', 2), X + 960, 440, null, 300);
+  tippen('ns0z', 'Hotelfachfrau', W('Hotelfachfrau', 2) - .05, .8);
+  bump('ns0', WE('Hotelfachfrau', 2), 1.06);
+  kl0.ding(WE('Hotelfachfrau', 2) + .05); akzent(WE('Hotelfachfrau', 2), .03);
+  // Farb-Legende der · die · das
+  neu('leg0', GENUS.map((g, k) => `<span class="lg ${g}" id="lg0${k}">${g}</span>`).join(''), 'white-space:nowrap');
+  akteur('leg0', { x: X + 960 - 158, y: 852 }, true);
+  const tL = [W('mit', 3), W('wichtigsten', 3), W('Wörter', 3)];
+  GENUS.forEach((g, k) => { akteur('lg0' + k, { s: 0 }, true); tw('lg0' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
+  // Lern mit ihr …: Ana winkt und hüpft
+  const tW = W('Wörter', 3) - .1;
+  winken('ana0', tW, 1.8); huepfen('ana0', tW + .15, 16); cue(tW, 'ding'); akzent(tW + .2, .04);
+}
+
+/* ---------- 1 · die Rezeption ---------- */
+const P1 = SE(3) + .3; pan2(P1, 1);
+buehne(1);
+{
+  const X = S(1);
+  const k = wortkarte(1, { art: 'die', chip: 'die', wort: 'Rezeption', nr: 1, gr: 92 });
+  k.ein(P1 + .55); k.chip(W('Die', 4)); k.wort(W('Rezeption', 4));
+  satzleiste(1, 6, 'die', ['rezeption']).ein(SA(6) - .5);
+  const tR = W('Rezeption', 4);
+  tresen('tr1', 500, 180);
+  ein('tr1', tR - .35, { x: X + 1190, y: 650 }, { y: 90 }, 'whoosh');
+  const karten1 = schluesselfach('fa1', 2, 2);
+  pop('fa1', tR - .1, { x: X + 1022, y: 340 }, 'pop'); karten1(tR + .35, .12);
+  const kl1 = klingel('kl1', 130, X + 1380, 519);
+  kl1.ein(tR + .1);
+  ['uhr1', 'std1', 'min1'].forEach((id, n) => bild(id, ['t-uhr', 't-stunde', 't-minute'][n], 170, 'data-gruppe="uhr1"' + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  pop('uhr1', tR + .25, { x: X + 1600, y: 330 }, 'pop');
+  akteur('std1', { x: X + 1600, y: 330, s: 0, r: 250 }); tw('std1', tR + .25, .5, { s: 1 }, 'back'); tw('std1', tR + .8, 8, { r: 262 }, 'lin');
+  akteur('min1', { x: X + 1600, y: 330, s: 0, r: 60 }); tw('min1', tR + .25, .5, { s: 1 }, 'back'); tw('min1', tR + .8, 8, { r: 204 }, 'lin');
+  akzent(tR + .2, .03);
+  // Hier kommen die Gäste an: zwei Koffer rollen von rechts heran
+  const KO = [['ko1a', X + 1540, 715], ['ko1b', X + 1662, 722]];
+  const tK = W('kommen', 5) - .2;
+  KO.forEach(([id, x, y], n) => {
+    bild(id, 't-koffer', 150);
+    akteur(id, { x: x + 130, y, o: 0 });
+    tw(id, tK + n * .3, .3, { o: 1 }); rollen(id, tK + n * .3, x, .8); federn(id, tK + n * .3 + .8); cue(tK + n * .3, 'whoosh');
+  });
+  KO.forEach(([id], n) => bump(id, W('Gäste', 5) + .1 + n * .1, 1.07));
+  wellen(W('an', 5), X + 1600, 690, 'var(--success)', 240);
+  // … und reisen ab: die Koffer rollen hinaus
+  const tAb = W('reisen', 5) - .1;
+  KO.forEach(([id, x], n) => { tw(id, tAb + (1 - n) * .15, .7, { x: x + 170 }, 'in'); tw(id, tAb + (1 - n) * .15 + .3, .4, { o: 0 }); });
+  cue(tAb, 'whoosh');
+  // Ich arbeite heute an der Rezeption: Ana hinter dem Tresen, die Klingel schlägt an
+  portrait('ana1', 'Ana', 200);
+  ein('ana1', SA(6) - .35, { x: X + 1225, y: 450 }, { y: 90 }, 'pop');
+  nicken('ana1', W('heute', 6), 1);
+  kl1.ding(W('Rezeption', 6) + .1); akzent(W('Rezeption', 6) + .1, .04);
+  FROH.push(['ana1', SE(6) + .1, 99]);
+}
+
+/* ---------- 2 · der Check-in – der Check-out ---------- */
+const P2 = SE(6) + .3; pan2(P2, 2);
+buehne(2);
+{
+  const X = S(2);
+  const k = wortkarte(2, { art: 'der', chip: 'der', wort: 'Check-in', zeile: ['und', 'der Check-out'], nr: 2, gr: 104, plgr: 42 });
+  k.ein(P2 + .55); k.chip(W('Der', 7)); k.wort(W('Check-in', 7)); k.zeile(W('Check-out', 7) - .2);
+  satzleiste(2, 9, 'der', ['checkout']).ein(SA(9) - .5);
+  // Hoteltür links, Wanduhr, kleiner Tresen mit Schlüsselkarte rechts
+  const TX = X + 1040, TY = 505;
+  tuer('tu2', 230, 390, '', 'data-gruppe="tu2"');
+  ein('tu2', W('Check-in', 7) - .4, { x: TX, y: TY }, { y: 80 }, 'whoosh');
+  akteur('tu2b', {}, true);
+  tresen('tr2', 260, 170);
+  ein('tr2', W('Check-out', 7) - .4, { x: X + 1580, y: 615 }, { y: 80 }, 'whoosh');
+  neu('kc2', '', '', '', 'kkarte gross');
+  pop('kc2', W('Check-out', 7) - .1, { x: X + 1580, y: 500 }, 'plopp');
+  const UX = X + 1330, UY = 345, UB = 220;
+  ['uhr2', 'std2', 'min2'].forEach((id, n) => bild(id, ['t-uhr', 't-stunde', 't-minute'][n], UB, 'data-gruppe="uhr2"' + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  const tU = W('Check-out', 7) + .1;
+  pop('uhr2', tU, { x: UX, y: UY }, 'pop');
+  akteur('std2', { x: UX, y: UY, s: 0, r: 240 }); tw('std2', tU, .5, { s: 1 }, 'back');
+  akteur('min2', { x: UX, y: UY, s: 0, r: 0 }); tw('min2', tU, .5, { s: 1 }, 'back');
+  // Beim Check-in kommt der Gast an: Tür geht auf, Koffer rollt herein, die Schlüsselkarte fliegt zu ihm
+  const KX = X + 1300, KY = 625;
+  bild('ko2', 't-koffer', 150, 'data-gruppe="ci2"');
+  akteur('ko2', { x: TX, y: KY, o: 0, s: .8 });
+  const tI = W('Check-in', 8) - .2;
+  tuerAuf('tu2', tI - .15, 1.1);
+  tw('ko2', tI, .3, { o: 1 }); tw('ko2', tI, .6, { s: 1 }, 'sanft'); rollen('ko2', tI, KX, .9); federn('ko2', tI + .9); cue(tI, 'whoosh');
+  akzent(W('Check-in', 8), .03);
+  const tKa = W('an', 8) - .2;
+  flug('kc2', tKa, .7, KX, 532, 110, { r: -3 }); landen('kc2', tKa + .7); cue(tKa, 'whoosh'); cue(tKa + .7, 'klick');
+  wellen(tKa + .75, KX, 560, 'var(--success)', 170);
+  // … beim Check-out reist er ab: Karte zurück an den Tresen, Koffer rollt zur Tür hinaus
+  const tO = W('Check-out', 8) - .1;
+  flug('kc2', tO, .7, X + 1580, 500, 110, { r: 0 }); landen('kc2', tO + .7); cue(tO, 'whoosh'); cue(tO + .7, 'klick');
+  akzent(W('Check-out', 8), .03);
+  const tAb = W('reist', 8) - .1;
+  tuerAuf('tu2', tAb + .2, 1.2);
+  rollen('ko2', tAb, TX + 10, .9, 'inout'); tw('ko2', tAb + .55, .45, { o: 0, s: .8 }, 'in'); cue(tAb, 'whoosh');
+  // Check-out ist bis 11 Uhr: Zeiger drehen auf 11:00, Schild
+  bump('uhr2', W('Check-out', 9), 1.05);
+  const tE = W('elf', 9) - .35;
+  tw('std2', tE, 1.0, { r: 330 }, 'inout'); tw('min2', tE, 1.0, { r: 1080 }, 'inout'); cue(tE, 'scan');
+  neu('et2', 'bis <b>11:00</b>', '', '', 'etikett');
+  pop('et2', W('Uhr', 9), { x: UX, y: 505 }, 'ding'); akzent(W('Uhr', 9), .04);
+  bump('uhr2', W('Uhr', 9) + .1, 1.06); wellen(W('Uhr', 9) + .1, UX, UY, null, 260);
+}
+
+/* ---------- 3 · die Buchung – die Buchungen ---------- */
+const P3 = SE(9) + .3; pan2(P3, 3);
+buehne(3);
+{
+  const X = S(3);
+  const k = wortkarte(3, { art: 'die', chip: 'die', wort: 'Buchung', zeile: ['Plural', 'die Buchungen'], nr: 3, gr: 112 });
+  k.ein(P3 + .55); k.chip(W('Die', 10)); k.wort(W('Buchung', 10)); k.zeile(W('Die', 11));
+  satzleiste(3, 12, 'die', ['buchung']).ein(SA(12) - .5);
+  const MX = X + 1320, MY = 440, G = 'data-gruppe="mon3"';
+  const ZY = n => 96 + n * 54;
+  neu('mon3', `<div class="scr"><div class="such" id="su3">${tpl('svgSuche')}<span id="su3t"></span><span class="cur" id="su3c"></span></div>
+    ${[0, 1, 2, 3, 4].map(n => `<div class="zeile41" id="z3${n}" style="top:${ZY(n)}px"><i class="dt"></i>${n === 2 ? '<b>Klein</b>' : '<i class="nm"></i>'}<i class="zi"></i></div>`).join('')}</div>`, '', G, 'monitor');
+  neu('fu3', '<i></i><s></s>', '', G, 'fuss41');
+  const tB = W('Buchung', 10) - .35;
+  ein('mon3', tB, { x: MX, y: MY }, { y: 80 }, 'whoosh'); ein('fu3', tB + .05, { x: MX, y: MY + 237 }, { y: 80 });
+  [0, 1, 2, 3, 4].forEach(n => akteur('z3' + n, { o: 0, x: -30 }, true));
+  const zeileEin = (n, t) => { tw('z3' + n, t, .3, { o: 1 }); tw('z3' + n, t, .5, { x: 0 }, 'sanft'); cue(t, 'pop'); };
+  zeileEin(0, W('Buchung', 10) + .15);
+  // die Buchungen: die Liste füllt sich
+  [1, 2, 3, 4].forEach(n => zeileEin(n, W('Buchungen', 11) - .1 + (n - 1) * .14));
+  akzent(W('Buchungen', 11) + .2, .03);
+  // Tastatur
+  neu('ta3', Array.from({ length: 36 }, (_, n) => `<i id="ta3k${n}"></i>`).join(''), '', '', 'tasten');
+  ein('ta3', SA(12) - .3, { x: MX, y: 790 }, { y: 60 });
+  // Haben Sie eine Buchung auf Ihren Namen? – Cursor blinkt, „Klein“ tippt sich, die Lupe sucht, Treffer leuchtet grün
+  const tS = W('Haben', 12);
+  HOOKS.push(t => { el('su3c').style.opacity = t < tS ? 0 : (Math.floor((t - tS) * 2.5) % 2 ? .15 : 1); el('su3').style.borderColor = t >= tS && t < SE(12) + 1 ? 'var(--b400)' : ''; });
+  const tT = W('Ihren', 12) - .05, dT = WE('Namen', 12) - tT - .1;
+  const zt = tippen('su3t', 'Klein', tT, dT);
+  HOOKS.push(t => { const hit = zt.findIndex(z => t >= z && t < z + .14); document.querySelectorAll('#ta3 i').forEach((e, n) => e.classList.toggle('an', hit >= 0 && n === [14, 21, 3, 19, 28][hit])); });
+  bild('lu3', 't-lupe', 150, 'data-frei');
+  const ZW = n => MY - 200 + 16 + ZY(n) + 23;             // Weltlage der Zeile n (Mitte)
+  const lupe = (x, y) => ({ x: x + 24 / 160 * 150, y: y + 24 / 160 * 150 });
+  akteur('lu3', { ...lupe(MX + 330, ZW(0) + 120), o: 0, s: .7 });
+  const tL = W('Buchung', 12) - .1;
+  tw('lu3', tL, .3, { o: 1 }); tw('lu3', tL, .5, { ...lupe(MX + 120, ZW(0)), s: 1 }, 'sanft'); cue(tL, 'whoosh');
+  [1, 2].forEach(n => tw('lu3', tL + .55 + n * .38, .36, lupe(MX + 120, ZW(n)), 'inout'));
+  const tH = WE('Namen', 12) + .05;
+  HOOKS.push(t => el('z32').classList.toggle('treffer', t >= tH));
+  bump('z32', tH, 1.04); cue(tH, 'ding'); akzent(tH, .04);
+  tw('lu3', tH + .3, .45, { ...lupe(MX + 380, ZW(2) + 140), o: 0, s: .8 }, 'in');
+  plakette('ok3', 'gruen', 'svgHaken');
+  pop('ok3', tH + .15, { x: MX + 262, y: ZW(2) }, null);
+}
+
+/* ---------- 4 · das Einzelzimmer – das Doppelzimmer ---------- */
+const P4 = SE(12) + .3; pan2(P4, 4);
+buehne(4);
+{
+  const X = S(4);
+  const k = wortkarte(4, { art: 'das', chip: 'das', wort: 'Einzelzimmer', zeile: ['und', 'das Doppelzimmer'], nr: 4, gr: 72, plgr: 40 });
+  k.ein(P4 + .55); k.chip(W('Das', 13)); k.wort(W('Einzelzimmer', 13)); k.zeile(W('Doppelzimmer', 13) - .2);
+  satzleiste(4, 15, 'das', ['doppelzimmer']).ein(SA(15) - .5);
+  const RA = { x: X + 1085, y: 520 }, RB = { x: X + 1495, y: 520 };
+  neu('zi4a', '<div class="ld" id="zi4al"></div>', 'width:300px;height:380px', 'data-gruppe="zi4a"', 'zimmer');
+  neu('zi4b', '<div class="ld" id="zi4bl"></div>', 'width:440px;height:380px', 'data-gruppe="zi4b"', 'zimmer');
+  const tE = W('Einzelzimmer', 13) - .35, tD = W('Doppelzimmer', 13) - .35;
+  ein('zi4a', tE, RA, { y: 80 }, 'whoosh'); ein('zi4b', tD, RB, { y: 80 }, 'whoosh');
+  // Betten ploppen, die Decke fällt darauf
+  bild('be4a', 't-bettE', 260, 'data-gruppe="zi4a"'); bild('de4a', 't-deckeE', 260, 'data-gruppe="zi4a"');
+  bild('be4b', 't-bettD', 330, 'data-gruppe="zi4b"'); bild('de4b', 't-deckeD', 330, 'data-gruppe="zi4b"');
+  const bett = (b, d, t, x, y) => {
+    pop(b, t, { x, y }, 'plopp');
+    akteur(d, { x, y: y - 90, o: 0 }); tw(d, t + .35, .15, { o: 1 }); tw(d, t + .35, .4, { y }, 'in'); landen(d, t + .75); cue(t + .75, 'klick');
+  };
+  bett('be4a', 'de4a', tE + .3, RA.x, 590); bett('be4b', 'de4b', tD + .3, RB.x, 566);
+  // eine Person … zwei: Plaketten „1“ und „2“
+  neu('n4a', '1', '', 'data-frei', 'plakette lila'); neu('n4b', '2', '', 'data-frei', 'plakette lila');
+  bump('zi4a', W('Einzelzimmer', 14), 1.03); bump('zi4b', W('Doppelzimmer', 14), 1.03);
+  pop('n4a', W('eine', 14), { x: RA.x, y: 338 }, 'pop'); bump('be4a', W('Person', 14), 1.05);
+  pop('n4b', W('zwei', 14) - .05, { x: RB.x, y: 338 }, 'pop'); bump('be4b', W('zwei', 14) + .1, 1.05);
+  akzent(W('zwei', 14), .03);
+  // Wir haben noch ein Doppelzimmer frei: die Leuchte wird grün, eine Schlüsselkarte fliegt heran
+  const tF = W('Doppelzimmer', 15);
+  HOOKS.push(t => el('zi4bl').classList.toggle('frei', t >= tF));
+  wellen(tF, RB.x + 172, 385, 'var(--success)', 110); cue(tF, 'klick');
+  neu('kc4', '', '', 'data-gruppe="zi4b"', 'kkarte gross');
+  akteur('kc4', { x: X + 1700, y: 250, o: 0, r: 20 });
+  tw('kc4', tF + .1, .2, { o: 1 }); flug('kc4', tF + .1, .7, X + 1400, 410, 80, { r: -3 }); landen('kc4', tF + .8); cue(tF + .1, 'whoosh');
+  plakette('ok4', 'gruen', 'svgHaken');
+  pop('ok4', W('frei', 15), { x: X + 1580, y: 410 }, 'ding'); akzent(W('frei', 15), .04);
+}
+
+/* ---------- 5 · das Housekeeping ---------- */
+const P5 = SE(15) + .3; pan2(P5, 5);
+buehne(5);
+{
+  const X = S(5);
+  const k = wortkarte(5, { art: 'das', chip: 'das', wort: 'Housekeeping', nr: 5, gr: 70 });
+  k.ein(P5 + .55); k.chip(W('Das', 16)); k.wort(W('Housekeeping', 16));
+  satzleiste(5, 18, 'das', ['housekeeping']).ein(SA(18) - .5);
+  // Der Reinigungswagen rollt herein
+  const WX = X + 1070, WY = 600;
+  bild('wa5', 't-wagen', 290, 'data-gruppe="wa5"');
+  akteur('wa5', { x: WX - 150, y: WY, o: 0 });
+  const tH = W('Housekeeping', 16) - .35;
+  tw('wa5', tH, .3, { o: 1 }); rollen('wa5', tH, WX, .9); federn('wa5', tH + .9); cue(tH, 'whoosh'); akzent(W('Housekeeping', 16) + .2, .03);
+  neu('bi5', '<i style="left:-10px;width:130px;height:70px"></i><i class="v" style="left:70px;width:150px;height:92px"></i>', '', '', 'bild41');
+  pop('bi5', P5 + .8, { x: WX, y: 330, r: -1.5 }, 'pop');
+  // die Abteilung, die die Zimmer reinigt: Bett ploppt, der Besen fegt
+  bump('wa5', W('Abteilung', 17), 1.05);
+  const BX = X + 1480, BY = 580;
+  bild('be5', 't-bettD', 360, 'data-gruppe="be5"');
+  ein('be5', W('Zimmer', 17) - .3, { x: BX, y: BY }, { y: 80 }, 'plopp');
+  bild('bs5', 't-besen', 190, 'data-frei', 'transform-origin:50% 12%');
+  const SX = X + 1245, SY = 655;
+  akteur('bs5', { x: SX, y: SY, o: 0, r: -6 });
+  const tR = W('reinigt', 17) - .35;
+  tw('bs5', tR, .25, { o: 1 });
+  for (let n = 0; n < 4; n++) { tw('bs5', tR + n * .32, .32, { x: SX + (n % 2 ? 0 : 36), r: n % 2 ? -6 : 7 }, 'sinus'); cue(tR + n * .32 + .1, 'kritzeln'); }
+  tw('bs5', tR + 1.28, .3, { x: SX, r: 0 }, 'sanft');
+  // Das Housekeeping macht Zimmer 214 gerade fertig: Türschild, die frische Decke fliegt vom Wagen aufs Bett, Haken
+  bump('wa5', W('Housekeeping', 18), 1.05);
+  neu('et5', 'Zimmer <b>214</b>', '', '', 'etikett');
+  pop('et5', W('zweihundertvierzehn', 18) - .05, { x: BX, y: 400 }, 'pop');
+  bild('de5', 't-deckeD', 360, 'data-gruppe="be5"');
+  const tG = W('gerade', 18) - .45;
+  akteur('de5', { x: WX - 5, y: WY - 70, s: 0 });
+  tw('de5', tG - .3, .35, { s: .42 }, 'back'); cue(tG - .3, 'pop');
+  flug('de5', tG + .1, .75, BX, BY, 140, { s: 1 }); landen('de5', tG + .85); cue(tG + .1, 'whoosh'); cue(tG + .85, 'plopp');
+  bump('be5', tG + .9, 1.03);
+  plakette('ok5', 'gruen', 'svgHaken');
+  pop('ok5', W('fertig', 18), { x: BX + 150, y: 470 }, 'ding'); akzent(W('fertig', 18), .04);
+  wellen(W('fertig', 18), BX, BY - 10, 'var(--success)', 300);
+}
+
+/* ---------- 6 · „Bitte nicht stören“ ---------- */
+const P6 = SE(18) + .3; pan2(P6, 6);
+buehne(6);
+{
+  const X = S(6);
+  const k = wortkarte(6, { art: 'neutral', chip: 'Türschild', wort: '„Bitte nicht stören“', nr: 6, gr: 74, umbruch: true });
+  k.ein(P6 + .55); k.chip(W('Bitte', 19) - .15); k.wort([W('Bitte', 19), W('nicht', 19), W('stören', 19)]);
+  satzleiste(6, 20, 'neutral', ['schild']).ein(SA(20) - .5);
+  // Tür 214, das Schild schwingt an die Klinke
+  const TX = X + 1200, TY = 480, TB = 250, TH = 440;
+  tuer('tu6', TB, TH, '214', 'data-gruppe="tu6"');
+  ein('tu6', P6 + .7, { x: TX, y: TY }, { y: 80 }, 'whoosh');
+  akteur('tu6b', {}, true);
+  const GX = TX + TB / 2 - 18 - 17, GY = TY - TH / 2 + .52 * TH + 6;     // Griff
+  neu('hg6', '<div class="loch"></div>Bitte<br>nicht<br>stören', '', 'data-gruppe="tu6" data-dreht', 'haenger');
+  const HX = GX, HY = GY - 37 + 105;
+  akteur('hg6', { x: HX + 260, y: HY - 260, o: 0, r: 40 });
+  const tS = W('Bitte', 19) - .4;
+  tw('hg6', tS, .2, { o: 1 }); flug('hg6', tS, .8, HX, HY, 70, { r: -14 }); cue(tS, 'whoosh'); cue(tS + .8, 'klick');
+  pendel('hg6', tS + .8, 12, 5, .34);
+  akzent(W('stören', 19), .035);
+  // Wenn dieses Schild an der Tür hängt …: das Schild wippt, der Wagen rollt heran und hält
+  bump('hg6', W('Schild', 20), 1.08); wellen(W('Schild', 20), HX, HY - 10, 'var(--error)', 200);
+  const WX = X + 1560, WY = 612;
+  bild('wa6', 't-wagen', 260);
+  akteur('wa6', { x: WX + 150, y: WY, o: 0 });
+  const tW = W('an', 20) - .45;
+  tw('wa6', tW, .3, { o: 1 }); rollen('wa6', tW, WX, .9); federn('wa6', tW + .9); cue(tW, 'whoosh');
+  bump('tu6', W('hängt', 20), 1.02);
+  // … klopfst du nicht: Klopf-Bögen an der Tür, rotes Verbotszeichen, der Wagen fährt weiter
+  const KX = TX + TB / 2 + 45, KY = TY - 60;
+  const tK = W('klopfst', 20) - .1;
+  [0, 1, 2].forEach(n => { neu('kp6' + n, tpl('svgBogen'), `width:${26 + n * 8}px`, 'data-frei'); pop('kp6' + n, tK + n * .12, { x: KX + n * 24, y: KY }, n ? null : 'klick'); cue(tK + n * .12, 'klick'); });
+  plakette('nein6', 'rot', 'svgKreuz');
+  const tN = W('nicht', 20) - .05;
+  aus(['kp60', 'kp61', 'kp62'], tN + .05, .25);
+  pop('nein6', tN, { x: KX + 24, y: KY }, 'plopp'); wackeln('nein6', tN + .45, 3, 6); akzent(tN, .04);
+  const tWe = SE(20) + .15;
+  tw('wa6', tWe, 1.1, { x: X + 880 }, 'inout'); tw('wa6', tWe + .75, .35, { o: 0 }); cue(tWe, 'whoosh');
+  aus('nein6', tWe + .2, .3);
+}
+
+/* ---------- 7 · die Beschwerde – die Beschwerden ---------- */
+const P7 = SE(20) + .3; pan2(P7, 7);
+buehne(7);
+{
+  const X = S(7);
+  const k = wortkarte(7, { art: 'die', chip: 'die', wort: 'Beschwerde', zeile: ['Plural', 'die Beschwerden'], nr: 7, gr: 86 });
+  k.ein(P7 + .55); k.chip(W('Die', 21)); k.wort(W('Beschwerde', 21)); k.zeile(W('Die', 22));
+  satzleiste(7, 24, 'die', ['beschwerde']).ein(SA(24) - .5);
+  // Das Telefon klingelt
+  const PX = X + 1060, PY = 430;
+  bild('tel7', 't-telefon', 230, 'data-gruppe="tel7"'); bild('hr7', 't-hoerer', 230, 'data-gruppe="tel7"');
+  const tT = W('Beschwerde', 21) - .45;
+  tresen('ti7', 250, 190, 'data-gruppe="tel7"');
+  ein('ti7', P7 + .7, { x: PX, y: 600 }, { y: 80 }, 'whoosh');
+  pop('tel7', tT, { x: PX, y: PY }, 'pop'); pop('hr7', tT + .06, { x: PX, y: PY }, null);
+  const klingeln = (t, n = 2) => { for (let r = 0; r < n; r++) { const t0 = t + r * .55; for (let q = 0; q < 4; q++) tw('hr7', t0 + q * .06, .06, { y: PY - 7 - (q % 2) * 3, r: q % 2 ? 4 : -4 }, 'sinus'); tw('hr7', t0 + .24, .16, { y: PY, r: 0 }, 'sinus'); cue(t0, 'ding'); wellen(t0 + .05, PX, PY - 20, null, 230); } };
+  klingeln(tT + .5, 2);
+  // Notizzettel landet, bei „Beschwerden“ zwei weitere dahinter
+  const NX = X + 1400, NY = 400;
+  neu('no7c', '<div class="nz"></div><i></i><i style="width:70%"></i>', '', 'data-gruppe="no7"', 'notiz leer');
+  neu('no7b', '<div class="nz"></div><i></i><i style="width:70%"></i>', '', 'data-gruppe="no7"', 'notiz leer');
+  neu('no7', '<div class="nz" id="no7z1"></div><div class="nz rot" id="no7z2"></div><i style="width:60%"></i>', '', 'data-gruppe="no7"', 'notiz');
+  akteur('no7', { x: NX, y: NY - 240, o: 0, r: -6 });
+  const tN = W('Beschwerde', 21) + .1;
+  tw('no7', tN, .2, { o: 1 }); tw('no7', tN, .5, { y: NY, r: -1.5 }, 'in'); landen('no7', tN + .5); cue(tN + .5, 'plopp'); akzent(tN + .5, .03);
+  const tP = W('Beschwerden', 22) - .1;
+  [['no7b', 50, -12, 3], ['no7c', 100, -24, 6]].forEach(([id, dx, dy, r], n) => {
+    akteur(id, { x: NX, y: NY, o: 0 });
+    set(id, tP + n * .12, { o: 1 }); tw(id, tP + n * .12, .7, { x: NX + dx, y: NY + dy, r }, 'sanft'); cue(tP + n * .12, 'whoosh');
+  });
+  // Wenn ein Gast unzufrieden ist: rote Plakette mit traurigem Gesicht
+  plakette('sad7', 'rot', 'svgTraurig');
+  el('sad7').style.cssText += ';width:96px;height:96px'; el('sad7').querySelector('svg').style.width = '50px';
+  pop('sad7', W('unzufrieden', 23) - .05, { x: PX + 120, y: 290 }, 'plopp'); wackeln('sad7', W('unzufrieden', 23) + .4, 3, 6);
+  klingeln(W('Gast', 23) - .2, 1);
+  // Zimmer 108 hat eine Beschwerde: Die Heizung ist kalt.
+  aus('sad7', SA(24) - .2, .3);
+  tippen('no7z1', 'Zimmer 108', W('Zimmer', 24) - .05, WE('hundertacht', 24) - W('Zimmer', 24));
+  bump('no7', W('Beschwerde', 24), 1.05);
+  tippen('no7z2', 'Heizung', W('Heizung', 24) - .05, .4);
+  bild('hz7', 't-heizung', 260, 'data-gruppe="hz7"');
+  pop('hz7', W('Heizung', 24) - .2, { x: X + 1320, y: 700 }, 'pop');
+  thermo('th7', 190, X + 1520, 700, .78, 'data-gruppe="hz7"');
+  pop('th7', W('Heizung', 24) + .05, { x: X + 1520, y: 700 }, null);
+  const tK = W('kalt', 24) - .2;
+  tw('th7s', tK, .9, { sy: .12 }, 'inout'); cue(tK, 'scan');
+  bild('sf7', 't-flocke', 120, 'data-gruppe="hz7"');
+  pop('sf7', tK + .35, { x: X + 1650, y: 640 }, 'ding');
+  HOOKS.push(t => { const q = t - tK - .35; if (q > 0) el('sf7').style.transform += ` rotate(${(q * 18).toFixed(1)}deg)`; });
+  summen('hz7', tK + .2, 1.2, 4); akzent(W('kalt', 24), .04);
+}
+
+/* ---------- 8 · der Stammgast – die Stammgäste ---------- */
+const P8 = SE(24) + .3; pan2(P8, 8);
+buehne(8);
+{
+  const X = S(8);
+  const k = wortkarte(8, { art: 'der', chip: 'der', wort: 'Stammgast', zeile: ['Plural', 'die Stammgäste'], nr: 8, gr: 94 });
+  k.ein(P8 + .55); k.chip(W('Der', 25)); k.wort(W('Stammgast', 25)); k.zeile(W('Die', 26));
+  satzleiste(8, 28, 'der', ['stammgast']).ein(SA(28) - .5);
+  // Herr Klein kommt mit seinem Koffer, Ana begrüßt ihn, ein Herz ploppt
+  const KX = X + 1100, KY = 460;
+  portrait('kl8', 'Stammgast', 230);
+  const tS = W('Stammgast', 25) - .4;
+  ein('kl8', tS, { x: KX, y: KY }, { x: -90 }, 'pop');
+  bild('ko8', 't-koffer', 150);
+  akteur('ko8', { x: KX + 40, y: 640, o: 0 });
+  tw('ko8', tS + .15, .3, { o: 1 }); rollen('ko8', tS + .15, KX + 170, .8); federn('ko8', tS + .95);
+  portrait('an8', 'Ana', 200);
+  ein('an8', tS + .35, { x: X + 1560, y: 460 }, { y: 80 }, 'pop');
+  FROH.push(['an8', tS + .6, 99]); FROH.push(['kl8', tS + .8, 99]);
+  bild('hz8', 't-herz', 90);
+  pop('hz8', W('Stammgast', 25) + .35, { x: X + 1400, y: 370 }, 'ding');
+  for (let n = 0; n < 3; n++) bump('hz8', W('Stammgast', 25) + .9 + n * .6, 1.15);
+  nicken('an8', W('Stammgast', 25) + .4, 1);
+  // die Stammgäste · ein Gast, der oft wiederkommt: Kalenderblätter, Haken, Kreispfeil
+  const BL = [0, 1, 2, 3, 4].map(n => X + 1030 + n * 112);
+  BL.forEach((x, n) => { neu('kb8' + n, `<i id="kb8h${n}">${tpl('svgHaken')}</i>`, '', '', 'kblatt'); pop('kb8' + n, W('Stammgäste', 26) - .15 + n * .08, { x, y: 772 }, n ? null : 'pop'); akteur('kb8h' + n, { s: 0 }, true); });
+  const tO = W('oft', 27) - .1;
+  BL.forEach((x, n) => { tw('kb8h' + n, tO + n * .16, .4, { s: 1 }, 'back'); cue(tO + n * .16, 'klick'); });
+  neu('kr8', tpl('svgKreis'), 'width:110px', 'data-dreht');
+  pop('kr8', W('wiederkommt', 27) - .15, { x: X + 1640, y: 772 }, 'pop');
+  tw('kr8', W('wiederkommt', 27), 1.1, { r: 360 }, 'inout'); akzent(W('wiederkommt', 27), .03);
+  bump('kl8', W('Gast', 27), 1.04);
+  // Herr Klein ist Stammgast, er mag immer das Zimmer mit Blick auf den Main: Namensschild, Fenster öffnet sich
+  aus(['an8', 'hz8', 'kr8', ...BL.map((x, n) => 'kb8' + n)], SA(28) - .35);
+  neu('et8', 'Herr Klein', '', '', 'etikett');
+  pop('et8', W('Klein', 28) - .05, { x: KX, y: 640 }, 'pop'); bump('kl8', W('Klein', 28), 1.06);
+  nicken('kl8', W('Stammgast', 28), 1);
+  const FX = X + 1500, FY = 500;
+  neu('fe8', `<div class="st">${kopie('t-stadt', 'fe8st')}</div><div class="fluss"></div>${[0, 1, 2, 3, 4, 5].map(n => `<div class="wl" id="fe8w${n}" style="width:${50 + (n % 3) * 20}px;bottom:${14 + (n % 3) * 20}px"></div>`).join('')}<div class="kreuz"></div><div class="vh l" id="fe8l"></div><div class="vh r" id="fe8r"></div>`, '', '', 'aussicht');
+  pop('fe8', W('Zimmer', 28) - .15, { x: FX, y: FY }, 'pop');
+  akteur('fe8l', {}, true); akteur('fe8r', {}, true);
+  const tBl = W('Blick', 28) - .1;
+  tw(['fe8l', 'fe8r'], tBl, .8, { sx: .12 }, 'inout'); cue(tBl, 'whoosh');
+  HOOKS.push(t => [0, 1, 2, 3, 4, 5].forEach(n => { const x = ((t * (26 + (n % 3) * 9) + n * 97) % 460) - 80; el('fe8w' + n).style.transform = `translateX(${x.toFixed(1)}px)`; }));
+  bump('fe8', W('Main', 28), 1.05); wellen(W('Main', 28), FX, FY, 'var(--info)', 330); akzent(W('Main', 28), .04);
+  FROH.push(['kl8', W('Main', 28), 99]);
+}
+
+/* ---------- 9 · Schlussdialog an der Rezeption ---------- */
+const P9 = SE(28) + .35; pan2(P9, 9);
+el('bue9').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue9', { x: S(9) + 960, y: 540 });
+{
+  const X = S(9), FX = X + 960, FY = 370;
+  portrait('ef9', 'Empfangschefin', 280); portrait('an9', 'Ana', 280);
+  ein('ef9', P9 + .5, { x: X + 330, y: 430 }, { y: 90 }, 'pop');
+  ein('an9', P9 + .65, { x: X + 1590, y: 430 }, { y: 90 }, 'pop');
+  neu('fenster9', '', 'width:600px;height:400px;border-radius:40px;background:linear-gradient(var(--surface) 55%,var(--b50));box-shadow:0 18px 50px rgba(22,19,37,.12)', 'data-gruppe="f9"');
+  ein('fenster9', P9 + .6, { x: FX, y: FY }, { y: 80 }, 'whoosh');
+  const G = 'data-gruppe="f9"';
+  const weg = (ids, t) => aus(ids, t, .3);
+  // a) gleich kommt Herr Klein zum Check-in: Herr Klein, Schlüsselkarte fliegt zu ihm
+  const tKl = W('Klein', 29), tCI = W('Check-in', 29);
+  portrait('kl9', 'Stammgast', 190, G);
+  pop('kl9', tKl - .3, { x: FX - 90, y: FY }, 'pop');
+  neu('kc9', '', '', G, 'kkarte gross');
+  akteur('kc9', { x: FX + 330, y: FY - 60, o: 0, r: 20 });
+  tw('kc9', tCI - .3, .2, { o: 1 }); flug('kc9', tCI - .3, .6, FX + 110, FY + 20, 70, { r: -3 }); landen('kc9', tCI + .3); cue(tCI - .3, 'whoosh');
+  nicken('an9', tCI, 1);
+  // b) Er ist Stammgast: Herz
+  const tSt = W('Stammgast', 30);
+  bild('hz9', 't-herz', 80, G);
+  pop('hz9', tSt, { x: FX + 110, y: FY - 90 }, 'ding'); bump('hz9', tSt + .6, 1.15);
+  FROH.push(['kl9', tSt, 99]);
+  // c) Seine Buchung ist ein Einzelzimmer, richtig?
+  const tBu = W('Buchung', 31), tEZ = W('Einzelzimmer', 31);
+  weg(['kl9', 'kc9', 'hz9'], SA(31) - .3);
+  neu('bk9', [0, 1, 2].map(n => `<div class="zeile41${n === 1 ? ' treffer' : ''}" style="top:${18 + n * 56}px"><i class="dt"></i>${n === 1 ? '<b>Klein</b>' : '<i class="nm" style="width:90px"></i>'}<i class="zi"></i></div>`).join(''), '', G, 'bkarte');
+  pop('bk9', tBu - .2, { x: FX - 115, y: FY }, 'pop');
+  bild('be9', 't-bettE', 210, G); bild('de9', 't-deckeE', 210, G);
+  pop('be9', tEZ - .2, { x: FX + 160, y: FY + 10 }, 'plopp');
+  akteur('de9', { x: FX + 160, y: FY - 70, o: 0 }); tw('de9', tEZ + .1, .15, { o: 1 }); tw('de9', tEZ + .1, .35, { y: FY + 10 }, 'in'); landen('de9', tEZ + .45);
+  plakette('fr9', 'lila', 'svgFrage', G);
+  pop('fr9', W('richtig', 31), { x: FX + 225, y: FY - 120 }, 'plopp'); wackeln('fr9', W('richtig', 31) + .4, 3, 5);
+  nicken('ef9', W('richtig', 31) + .3, 1);
+  // d) Ja.
+  const tJa = W('Ja', 32);
+  tw('fr9', tJa - .05, .2, { s: 0 }, 'in');
+  plakette('ok9a', 'gruen', 'svgHaken', G);
+  pop('ok9a', tJa + .05, { x: FX + 225, y: FY - 120 }, 'ding'); FROH.push(['an9', tJa + .1, SA(36) - .3]);
+  // e) Frag bitte beim Housekeeping, ob sein Zimmer fertig ist: Reinigungswagen rollt herein, „?“
+  const tHK = W('Housekeeping', 33);
+  weg(['bk9', 'be9', 'de9', 'ok9a'], W('Frag', 33) - .1);
+  bild('wa9', 't-wagen', 240, G);
+  akteur('wa9', { x: FX - 240, y: FY + 10, o: 0 });
+  tw('wa9', tHK - .45, .3, { o: 1 }); rollen('wa9', tHK - .45, FX - 70, .8); federn('wa9', tHK + .35); cue(tHK - .45, 'whoosh');
+  plakette('fr9b', 'lila', 'svgFrage', G);
+  pop('fr9b', W('fertig', 33) - .05, { x: FX + 150, y: FY - 60 }, 'plopp'); wackeln('fr9b', W('fertig', 33) + .4, 3, 5);
+  nicken('an9', W('fertig', 33), 1);
+  // f) Zimmer 108 hatte eine Beschwerde, die Heizung
+  const tBe = W('Beschwerde', 34);
+  weg(['wa9', 'fr9b'], SA(34) - .25);
+  neu('no9', '<div class="nz" id="no9z1"></div><div class="nz rot" id="no9z2"></div>', 'width:260px;height:150px;padding:24px 22px', G, 'notiz');
+  pop('no9', SA(34), { x: FX - 120, y: FY - 20, r: -2 }, 'pop');
+  tippen('no9z1', 'Zimmer 108', W('Zimmer', 34), WE('hundertacht', 34) - W('Zimmer', 34));
+  bump('no9', tBe, 1.05);
+  tippen('no9z2', 'Heizung', W('Heizung', 34) - .05, .4);
+  bild('hz9b', 't-heizung', 200, G);
+  pop('hz9b', W('Heizung', 34) - .15, { x: FX + 150, y: FY + 50 }, 'pop');
+  summen('hz9b', W('Heizung', 34) + .4, .8, 3);
+  // g) Ist das erledigt?
+  plakette('fr9c', 'lila', 'svgFrage', G);
+  pop('fr9c', W('erledigt', 35), { x: FX + 225, y: FY - 120 }, 'plopp'); wackeln('fr9c', W('erledigt', 35) + .4, 3, 5);
+  nicken('an9', W('erledigt', 35) + .2, 1);
+  // h) Ja, der Techniker war da: Haken
+  const tJ2 = W('Ja', 36);
+  tw('fr9c', tJ2 - .05, .2, { s: 0 }, 'in');
+  plakette('ok9b', 'gruen', 'svgHaken', G);
+  pop('ok9b', tJ2 + .05, { x: FX + 225, y: FY - 120 }, 'ding');
+  bump('hz9b', W('Techniker', 36), 1.06); wellen(W('da', 36), FX + 150, FY + 50, 'var(--success)', 220);
+  FROH.push(['ef9', W('da', 36), SA(37)]);
+  // i) Und bei 214 hängt „Bitte nicht stören“, das Zimmer machen wir später
+  weg(['no9', 'hz9b', 'ok9b'], SA(37) - .2);
+  const T9 = { x: FX - 30, y: FY + 10 };
+  tuer('tu9', 170, 300, '214', G);
+  pop('tu9', W('zweihundertvierzehn', 37) - .1, T9, 'pop');
+  akteur('tu9b', {}, true);
+  neu('hg9', '<div class="loch"></div>Bitte<br>nicht<br>stören', '', G + ' data-dreht', 'haenger klein');
+  const HG = { x: T9.x + 85 - 35, y: T9.y + 12 - 27 + 75 };
+  akteur('hg9', { x: HG.x + 160, y: HG.y - 200, o: 0, r: 30 });
+  const tBi = W('Bitte', 37) - .35;
+  tw('hg9', tBi, .2, { o: 1 }); flug('hg9', tBi, .6, HG.x, HG.y, 60, { r: -12 }); pendel('hg9', tBi + .6, 11, 5, .32); cue(tBi, 'whoosh'); cue(tBi + .6, 'klick');
+  // später: Uhr dreht vor, grüner Haken
+  const tSp = W('später', 37), UX9 = FX + 175, UY9 = FY + 50;
+  ['uhr9', 'std9', 'min9'].forEach((id, n) => bild(id, ['t-uhr', 't-stunde', 't-minute'][n], 170, G + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  const tUh = W('machen', 37) - .35;
+  pop('uhr9', tUh, { x: UX9, y: UY9 }, 'pop');
+  akteur('std9', { x: UX9, y: UY9, s: 0, r: 300 }); tw('std9', tUh, .5, { s: 1 }, 'back'); tw('std9', tSp - .1, .9, { r: 390 }, 'inout');
+  akteur('min9', { x: UX9, y: UY9, s: 0, r: 0 }); tw('min9', tUh, .5, { s: 1 }, 'back'); tw('min9', tSp - .1, .9, { r: 1080 }, 'inout'); cue(tSp - .1, 'scan');
+  plakette('ok9z', 'gruen', 'svgHaken', G);
+  pop('ok9z', tSp + .5, { x: FX + 245, y: FY - 70 }, 'ding'); cue(tSp + .2, 'erfolg'); akzent(tSp, .045);
+  nicken('ef9', tSp - .2, 1.1);
+  FROH.push(['ef9', SE(37) + .1, 99]); FROH.push(['an9', SE(37) + .1, 99]);
+  huepfen('an9', SE(37) + .2, 18); huepfen('ef9', SE(37) + .35, 14);
+  // Wort-Chips: ploppen beim Sprechen auf, blinken, reihen sich unten in zwei Reihen ein
+  const CHIPS = [['der', 'Check-in', 240, tCI], ['der', 'Stammgast', 260, tSt], ['die', 'Buchung', 228, tBu], ['das', 'Einzelzimmer', 310, tEZ],
+                 ['das', 'Housekeeping', 318, tHK], ['die', 'Beschwerde', 282, tBe], ['', '„Bitte nicht stören“', 360, W('Bitte', 37)]];
+  const GAP = 22;
+  [CHIPS.slice(0, 4), CHIPS.slice(4)].forEach((reihe, ri) => {
+    const summe = reihe.reduce((s, c) => s + c[2], 0) + GAP * (reihe.length - 1);
+    let cx = FX - summe / 2;
+    reihe.forEach(([art, text, w, t], n) => {
+      const id = neu(`chip9${ri}${n}`, chipHTML(art, text), `width:${w}px`, '', 'chip ' + (art || 'neutral'));
+      const zx = cx + w / 2; cx += w + GAP;
+      akteur(id, { x: zx, y: FY + 272, s: 0 });
+      tw(id, t - .05, .5, { s: 1.15 }, 'back'); cue(t, 'pop');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      const tF2 = t + .6;
+      flug(id, tF2, .65, zx, 800 + ri * 78, 30, { s: 1 }); landen(id, tF2 + .65); cue(tF2, 'whoosh');
+    });
+  });
+  CHIPS.forEach((c, n) => bump(`chip9${n < 4 ? 0 : 1}${n < 4 ? n : n - 4}`, SE(37) + .45 + n * .07, 1.1));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
