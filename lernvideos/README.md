@@ -51,7 +51,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 31 | [Fachvokabeln: Allgemeine Wörter in der Ausbildung](31-vokabeln-ausbildung/) | Fachvokabeln | Erzählerin, Sabine, Kwame | – | in Arbeit |
 | 32 | [Wer ist wer im Betrieb?](32-wer-ist-wer/) | Erklärvideo | Erzähler | – | in Arbeit |
 | 33 | [Deine erste Woche in der Berufsschule](33-erste-woche-berufsschule/) | Podcast | Priya, Jonas | – | in Arbeit |
-| 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | – | in Arbeit |
+| 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | 1:58 | fertig |
 | 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | – | in Arbeit |
 | 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | – | in Arbeit |
 | 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | – | in Arbeit |
