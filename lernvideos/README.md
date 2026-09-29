@@ -52,7 +52,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 32 | [Wer ist wer im Betrieb?](32-wer-ist-wer/) | Erklärvideo | Erzähler | 1:35 | fertig |
 | 33 | [Deine erste Woche in der Berufsschule](33-erste-woche-berufsschule/) | Podcast | Priya, Jonas | 1:46 | fertig |
 | 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | 1:58 | fertig |
-| 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | – | in Arbeit |
+| 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | 1:48 | fertig |
 | 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | 1:48 | fertig |
 | 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | – | in Arbeit |
 | 38 | [Betriebsrat, JAV & Gewerkschaft](38-betriebsrat-jav/) | Podcast | Mai, Jonas | – | in Arbeit |
