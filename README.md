@@ -16,6 +16,17 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 
 Die 45 Lernvideos aus den Briefings liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
 
+### In der App
+
+Alle 49 Videos (Kurse 1–4 und Lernvideos 1–45) sind seit 29.09.2026 als **Lektionen** in Supabase angelegt: in 8 Abschnitten
+(= Kategorien), mit Titelbild, Untertiteln, Quizfragen und einem Abzeichen je Abschnitt. **Reihenfolge, Kategorie, Position und
+Kurs-ID je Lektion: [`import/lektionen.md`](import/lektionen.md).** Ab jetzt werden die Lektionen im Kurs-Editor gepflegt.
+
+`import/` enthält den Plan (`plan.py` → `plan.md`/`plan.json`), die Anleitungen für Fragen und Titelbilder, die Abzeichen
+(`abzeichen/`, `abzeichen.mjs`), die Kurs-IDs und Storage-Pfade (`ids.json`) und den Datenbau (`daten.py`).
+Je Lektion liegen `fragen.json` (Stand beim Import) und `titelbild.json`/`titelbild.png` (`werkzeug/titelbild.mjs`) im Ordner.
+Ein neues Video kommt über den Kurs-Editor in die App (Video, `.vtt` mit demselben Namen daneben, Schalter „KI“).
+
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine eingebrannten Untertitel (die gibt es als abschaltbare
 Spur `film.vtt` für den Player) – die Kursseite in der
 App trägt Titel und Kontext. Wer spricht, zeigen im Podcast-Format die Figuren selbst (größer, Mund bewegt sich).
@@ -57,6 +68,7 @@ werkzeug/masken.mjs    prüft Masken-Titel: kein Wort schaut vor seinem Aufstieg
 werkzeug/rendern.mjs   baut film.html, fotografiert jedes Frame mit Chromium, mischt Ton, kodiert H.264
 werkzeug/ton.py        Tonspur: Sprache + leise Musik (unter der Stimme abgesenkt) + Effekte
 werkzeug/bauen.mjs     SVG-Kurzschreibweise → SVG (Kopie aus helperapp_illustrationen, samt liste.mjs)
+werkzeug/titelbild.mjs Titelbild einer Lektion (titelbild.json → titelbild.png, 1280×800, Stil C + Kursfigur)
 teile/*.svg            Bildteile im Stil C der Illustrations-Bibliothek, in Ebenen zum Animieren
 kurse/NN-thema/        konzept.md, sprache.mp3, film.vorlage.html, teile/ (kursspezifisch), film.mp4
 ```
