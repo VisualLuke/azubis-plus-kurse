@@ -46,3 +46,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 26 | [Fachvokabeln: Gastronomie](26-vokabeln-gastronomie/) | Fachvokabeln | Erzählerin, Priya, Küchenchef | 1:41 | fertig |
 | 27 | [Fachvokabeln: Bäckerei](27-vokabeln-baeckerei/) | Fachvokabeln | Erzähler, Yusuf, Bäckermeisterin | 1:48 | fertig |
 | 28 | [Fachvokabeln: Pflege](28-vokabeln-pflege/) | Fachvokabeln | Erzähler, Mai, Praxisanleiterin | 1:58 | fertig |
+| 30 | [Fachvokabeln: Was der Chef wirklich meint](30-was-der-chef-meint/) | Fachvokabeln | Erzähler, Sabine, Amir | 2:04 | fertig |
