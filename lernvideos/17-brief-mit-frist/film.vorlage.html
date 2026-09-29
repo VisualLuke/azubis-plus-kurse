@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? Ein Brief mit Frist</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+/* Text im Bild: in der Situation mittig links, beim Durchspielen unter der Karten-Kachel */
+.block{justify-content:flex-start;padding-top:420px}
+.block.mitte{justify-content:center;padding-top:0}
+.block .titel{font-size:60px;line-height:70px}
+.titel .w.hell .wi{color:var(--b500)}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gelb .wi{color:var(--warning-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.frage.gelb{background:var(--warning);box-shadow:0 6px 20px rgba(156,103,18,.3)}
+.blase{width:120px;height:84px;border-radius:30px;background:var(--surface);display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 10px 26px rgba(22,19,37,.18)}
+.blase i{width:14px;height:14px;border-radius:999px;background:var(--b300)}
+.blase::after{content:"";position:absolute;left:22px;bottom:-12px;width:26px;height:26px;background:var(--surface);transform:rotate(45deg);border-radius:4px}
+.blase.brand{background:var(--b500)} .blase.brand::after{background:var(--b500)} .blase.brand i{background:var(--surface)}
+
+/* Figuren als Porträt im Kreis */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+
+/* Brief (Behörde) – feste Größe 360 × 460, skaliert über den Akteur */
+.brief{width:360px;height:460px;border-radius:18px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.16);overflow:hidden}
+.brief > *{position:absolute}
+.brief u{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.brief .b-abs{left:28px;top:28px;display:flex;gap:12px;align-items:center}
+.brief .b-abs i{width:44px;height:44px;border-radius:12px;background:var(--b500);display:block}
+.brief .b-abs span{display:flex;flex-direction:column;gap:9px}
+.brief .b-abs u{background:var(--n300)}
+.brief .b-datum{right:28px;top:40px;width:70px;background:var(--n300)}
+.brief .b-betreff{left:28px;top:104px;width:210px;height:16px;border-radius:8px;background:var(--n700)}
+.brief .b-z1{left:28px;top:140px;display:flex;flex-direction:column;gap:12px}
+.brief .b-frist{left:28px;top:208px;display:flex;align-items:center;gap:14px;height:48px}
+.brief .b-frist strong{font:800 30px/1 Inter;color:var(--ink);letter-spacing:-.01em}
+.brief .b-frist u{width:110px;height:16px;border-radius:8px;background:var(--n300)}
+.brief .b-z2{left:28px;top:272px;display:flex;flex-direction:column;gap:12px}
+.brief .b-auf{left:28px;top:332px;display:flex;flex-direction:column;gap:12px}
+.brief .b-auf u{background:var(--n300);height:12px}
+.brief .b-sig{left:28px;top:410px;width:110px;height:8px;border-radius:4px;background:var(--b200)}
+.brief .mark{border-radius:14px;border:4px solid var(--success);background:var(--success-bg)}
+.brief .mark b{position:absolute;right:-4px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:999px;background:var(--success);
+  color:var(--surface);font:800 20px/34px Inter;text-align:center}
+.brief .scan{left:0;right:0;top:0;height:6px;background:var(--b300);box-shadow:0 0 24px var(--b300)}
+.fristGross{padding:8px 34px 14px;border-radius:30px;background:var(--warning-bg);color:var(--warning-text);font:800 92px/1.05 Inter;letter-spacing:-.02em;
+  white-space:nowrap}
+
+/* ---------- Format „Was würdest du tun?“ ---------- */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+.okarte{width:360px;height:430px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3)}
+.okarte > *{position:absolute}
+.okarte .rahmen{inset:0;border-radius:36px;box-shadow:0 0 0 9px var(--b300);opacity:0}
+.okarte .rahmen.rot{box-shadow:0 0 0 9px var(--error)} .okarte .rahmen.gelb{box-shadow:0 0 0 9px var(--warning)}
+.okarte .rahmen.gruen{box-shadow:0 0 0 9px var(--success),0 0 60px 10px rgba(31,169,113,.45)}
+.okarte .knopf{left:132px;top:28px;width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);
+  font:800 56px/96px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.okarte .sym{left:30px;top:146px;width:300px;height:260px}
+.okarte .sym > *{position:absolute}
+.okarte .marke{right:-24px;top:-24px;width:92px;height:92px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px rgba(22,19,37,.25);font:800 58px/1 Inter;color:var(--surface)}
+.okarte .marke svg{width:46px}
+.okarte .marke.rot{background:var(--error)} .okarte .marke.gelb{background:var(--warning)} .okarte .marke.gruen{background:var(--success)}
+/* A: Ablage mit Stapel */
+.ab-hinten{left:50px;top:120px;width:200px;height:110px;border-radius:16px;background:var(--b200)}
+.ab-vorne{left:40px;top:150px;width:220px;height:96px;border-radius:18px;background:linear-gradient(var(--b400),var(--b600))}
+.ab-vorne i{position:absolute;left:75px;top:20px;width:70px;height:12px;border-radius:6px;background:var(--b200)}
+.papier{width:170px;height:16px;border-radius:4px;background:var(--surface);border:2px solid var(--n300)}
+/* B: Zettel mit Gekritzel */
+.blatt{width:170px;height:220px;border-radius:14px;background:var(--b50);border:3px solid var(--b100)}
+.blatt svg{position:absolute;left:18px;width:130px;height:20px}
+/* Ring der Denkpause */
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.abdruck{padding:12px 26px;border-radius:18px;border:7px solid var(--success);background:var(--success-bg);color:var(--success-text);
+  font:800 40px/1 Inter;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.abdruck.rot{border-color:var(--error);background:var(--error-bg);color:var(--error-text)}
+.tinte{border-radius:30px;border:6px solid var(--success);opacity:0}
+.tinte.rot{border-color:var(--error)}
+
+/* A · Tisch, Kalender */
+.tisch{width:440px;height:130px}
+.tisch .platte{position:absolute;left:0;top:0;width:440px;height:24px;border-radius:12px;background:linear-gradient(var(--b300),var(--b400))}
+.tisch .bein{position:absolute;top:20px;width:18px;height:110px;border-radius:0 0 8px 8px;background:var(--b400)}
+.abreiss{width:170px;height:190px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.12);overflow:hidden}
+.abreiss .kopf{position:absolute;left:0;right:0;top:0;height:42px;background:var(--b500)}
+.seite{width:150px;height:130px;border-radius:14px;background:var(--b50);display:flex;align-items:center;justify-content:center;
+  font:800 64px/1 Inter;color:var(--b600);box-shadow:0 2px 6px rgba(22,19,37,.08)}
+.uhrchen{width:30px;height:30px}
+
+/* C · Handy-Apps */
+.app{width:210px;height:378px;border-radius:18px;overflow:hidden;background:var(--bg);padding:16px 12px;display:flex;flex-direction:column;gap:8px}
+.app small{font:800 11px/14px Inter;color:var(--b500);letter-spacing:.06em;text-transform:uppercase}
+.app h5{font:700 21px/26px Inter;color:var(--ink);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
+.app h5 em{font:800 12px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:5px 8px}
+.app .kasten{padding:9px 10px;border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgba(22,19,37,.06);display:flex;flex-direction:column;gap:7px}
+.app .kasten span{font:700 11px/14px Inter;color:var(--n400)}
+.app .kasten u{display:block;height:8px;border-radius:4px;background:var(--n200);transform-origin:left center}
+.app .kasten.ziel u{background:var(--b300)}
+.app .pfeilchen{align-self:center;font:800 20px/1 Inter;color:var(--b500)}
+.app .zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:600 13px/16px Inter;color:var(--ink);
+  box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.app .zeile i{width:24px;height:24px;border-radius:7px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app .zeile i svg{width:14px}
+.app .zeile.neu{border:2px solid var(--b300)}
+.app .toast{position:absolute;left:12px;right:12px;bottom:16px;padding:8px 10px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;text-align:center}
+
+/* Wichtig · Zeitleisten */
+.spur2{width:900px;height:14px;border-radius:999px;background:var(--b200);overflow:hidden}
+.spur2 i{position:absolute;left:0;top:0;height:14px;width:900px;border-radius:999px;background:var(--b500);transform-origin:left center}
+.spur2 em{position:absolute;top:0;height:14px;border-radius:999px;background:var(--success);transform-origin:left center}
+.fahne{width:130px;height:158px}
+.fahne .stange{position:absolute;left:62px;top:40px;width:6px;height:118px;border-radius:3px;background:var(--b700)}
+.fahne .pille{position:absolute;left:0;top:0;width:130px;height:48px;border-radius:999px;background:var(--warning);color:var(--surface);
+  font:800 26px/48px Inter;text-align:center}
+.fahne .pille.gruen{background:var(--success)}
+.notiz{width:70px;height:88px;border-radius:10px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.16);padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.notiz u{display:block;height:7px;border-radius:4px;background:var(--b300)}
+.notiz.gross{width:92px;height:116px}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><path d="M13 13l18 18M31 13L13 31" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><path d="M11 23l8 8 15-17" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHakenGruen"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgUhr"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="none" stroke="currentColor" stroke-width="3.2"/><path d="M15 8.5V15l4.5 3" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgOrdner"><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></template>
+<template id="tplBrief">{{brief}}</template>
+<template id="tplStift">{{stift}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Situation -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="kasten0" style="width:280px">{{briefkasten}}</div>
+  <div class="a" id="umschlag0" style="width:150px" data-frei>{{brief~0}}</div>
+  <div class="a" id="brief0wrap" data-gruppe="brief0"></div>
+  <div class="a chip klein" id="wort1" data-frei>Bescheid</div>
+  <div class="a chip klein" id="wort2" data-frei>Rechtsbehelfsbelehrung</div>
+  <div class="a chip klein" id="wort3" data-frei>fristgerecht</div>
+  <div class="a welle" id="welle0" style="width:300px;height:300px;border-color:var(--warning)" data-frei></div>
+  <div class="a fristGross" id="frist0" data-frei>Frist</div>
+  <div class="a portrait" id="amir0" style="width:260px;height:260px" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a frage" id="frage0">?</div>
+
+  <!-- 1 · Optionen + Denkpause -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a frage" id="frage1" style="background:var(--surface);color:var(--b500)">?</div>
+
+  <!-- 2 · Option A -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a tisch" id="tisch2" data-gruppe="stapel"><div class="platte"></div><div class="bein" style="left:40px"></div><div class="bein" style="right:40px"></div></div>
+  <div class="a" id="brief2" style="width:170px" data-gruppe="stapel">{{brief~2}}</div>
+  <div class="a abreiss" id="kal2" data-gruppe="kal2"><div class="kopf"></div></div>
+  <div class="a chip klein" id="chip3W">3 Wochen</div>
+  <div class="a chip gelb" id="chipFrist2"><span class="uhrchen" id="uhr2"></span><span>Frist</span></div>
+  <div class="a" id="zweiter2" style="width:270px" data-gruppe="zweiter">{{brief~2b}}</div>
+  <div class="a" id="warn2" style="width:96px" data-frei>{{warndreieck}}</div>
+  <div class="a chip gelb" id="chipGeb">€ Gebühren?</div>
+  <div class="a tinte rot" id="tinte2" style="width:350px;height:92px" data-frei></div>
+  <div class="a abdruck rot" id="abd2" style="font-size:30px;padding:10px 22px" data-frei>Entscheidung</div>
+  <div class="a" id="stempel2" style="width:190px" data-frei>{{stempel}}</div>
+  <div class="a portrait" id="amir2" style="width:170px;height:170px" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a blase" id="blase2"><i></i><i></i><i></i></div>
+  <div class="a plakette rot" id="nein2" data-frei></div>
+
+  <!-- 3 · Option B -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <div class="a" id="amt3" style="width:220px">{{rathaus}}</div>
+  <div class="a chip brand klein" id="chipAmt3">Behörde</div>
+  <div class="a blatt" id="blatt3" style="width:220px;height:280px" data-gruppe="blatt3"></div>
+  <div class="a" id="stift3" style="width:130px" data-gruppe="blatt3" data-dreht>{{stift~3}}</div>
+  <div class="a" id="rueck3" style="width:200px" data-gruppe="rueck3">{{brief~3}}</div>
+  <div class="a frage gelb" id="fr3b" style="width:84px;height:84px;font-size:52px;line-height:84px" data-frei>?</div>
+  <div class="a portrait" id="amir3" style="width:200px;height:200px" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a frage" id="fr3a">?</div>
+  <div class="a" id="warn3" style="width:140px">{{warndreieck~3}}</div>
+  <div class="a welle" id="welle3" style="width:220px;height:220px;border-color:var(--error)" data-frei></div>
+
+  <!-- 4 · Option C -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a" id="handy4" style="width:560px" data-gruppe="handy4">{{handy}}</div>
+  <div class="a app" id="app4" data-gruppe="handy4"><small>Übersetzen</small><h5>Brief</h5>
+    <div class="kasten"><span>Deutsch</span><u style="width:100%"></u><u style="width:85%"></u><u style="width:92%"></u><u style="width:60%"></u></div>
+    <div class="pfeilchen">↓</div>
+    <div class="kasten ziel"><span>Deine Sprache</span><u id="ue1" style="width:100%"></u><u id="ue2" style="width:80%"></u><u id="ue3" style="width:94%"></u><u id="ue4" style="width:55%"></u></div></div>
+  <div class="a" id="brief4wrap" data-gruppe="brief4"></div>
+  <div class="a portrait" id="amir4" style="width:170px;height:170px" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="sabine4" style="width:170px;height:170px" data-sprecher="Sabine"><div class="figur">
+    <div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="helper4" style="width:560px" data-gruppe="helper4">{{handy~4}}</div>
+  <div class="a app" id="happ4" data-gruppe="helper4"><small>Azubis Plus</small><h5>Dokumente <em id="zahl4">2</em></h5>
+    <div class="zeile"><i id="o1"></i><span>Vertrag</span></div>
+    <div class="zeile"><i id="o2"></i><span>Ausweis</span></div>
+    <div class="zeile neu" id="zeileBrief"><i id="o3"></i><span>Brief · Frist</span></div>
+    <div class="toast" id="toast4">✓ Gesendet</div></div>
+  <div class="a" id="mini4" style="width:90px" data-frei>{{brief~4}}</div>
+  <div class="a" id="kasten4" style="width:230px">{{briefkasten~4}}</div>
+  <div class="a" id="antwort4" style="width:110px" data-frei>{{brief~4b}}</div>
+  <div class="a chip gruen" id="chipRecht"><span class="uhrchen" id="h4"></span>rechtzeitig</div>
+
+  <!-- 5 · Wichtig: Fristen -->
+  <div class="a buehne quiz" id="bue5"></div>
+  <div class="a chip gelb" id="chipWichtig">Wichtig!</div>
+  <div class="a" id="amt5" style="width:220px">{{rathaus~5}}</div>
+  <div class="a plakette gruen" id="ok5a" data-frei></div>
+  <div class="a plakette gruen" id="ok5b" data-frei></div>
+  <div class="a spur2" id="spur5a" data-gruppe="reihe1"><i id="fuell5a"></i><em id="ext5a" style="left:700px;width:160px"></em></div>
+  <div class="a fahne" id="fahne5a" data-gruppe="reihe1"><div class="stange"></div><div class="pille" id="pille5a">Frist</div></div>
+  <div class="a portrait" id="amir5a" style="width:110px;height:110px;border-width:5px" data-gruppe="reihe1" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a chip klein" id="chipZeit" data-frei><span class="uhrchen" id="uhr5"></span>mehr Zeit?</div>
+  <div class="a spur2" id="spur5b" data-gruppe="reihe2"><i id="fuell5b"></i></div>
+  <div class="a fahne" id="fahne5b" data-gruppe="reihe2"><div class="stange"></div><div class="pille" id="pille5b">Frist</div></div>
+  <div class="a" id="schloss5" style="width:96px" data-gruppe="reihe2">{{schloss}}</div>
+  <div class="a portrait" id="amir5b" style="width:110px;height:110px;border-width:5px" data-gruppe="reihe2" data-sprecher="Amir"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a chip brand klein" id="chipWid">Widerspruch</div>
+  <div class="a notiz" id="notiz5" data-frei><u></u><u style="width:70%"></u></div>
+  <div class="a chip gruen klein" id="chipKurz"><span class="uhrchen" id="h5a"></span>kurz</div>
+  <div class="a notiz gross" id="notiz5b" data-frei><u></u><u style="width:80%"></u><u></u><u style="width:60%"></u><u style="width:85%"></u></div>
+  <div class="a chip klein" id="chipMehr">später mehr</div>
+
+  <!-- 6 · Auflösung -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <div class="a tinte" id="tinte6" style="width:404px;height:482px;border-radius:40px" data-frei></div>
+  <div class="a" id="umschlag6" style="width:260px">{{brief~6}}</div>
+  <div class="a" id="brief6wrap" data-gruppe="brief6"></div>
+  <div class="a" id="i6a" style="width:150px" data-gruppe="i6a">{{brief~6b}}</div>
+  <div class="a" id="i6b" style="width:140px" data-gruppe="i6b">{{lupe}}</div>
+  <div class="a blase brand" id="i6c" style="width:124px;height:88px" data-gruppe="i6c"><i></i><i></i><i></i></div>
+  <div class="a plakette gruen" id="ok6a" data-gruppe="i6a"></div>
+  <div class="a plakette gruen" id="ok6b" data-gruppe="i6b"></div>
+  <div class="a plakette gruen" id="ok6c" data-gruppe="i6c"></div>
+</div></div>
+
+<div class="block mitte" id="tb0"><div class="titel">Ein Brief mit Frist</div></div>
+<div class="block" id="tb2"><div class="titel">A: Frist verpasst</div></div>
+<div class="block" id="tb3"><div class="titel">B: Antwort passt nicht</div></div>
+<div class="block" id="tb4"><div class="titel">Wer? · Bis wann? ·</div><div class="titel">Was tun?</div></div>
+<div class="block" id="tb6"><div class="titel">Beste Lösung: C</div><div class="titel">Öffnen · Verstehen · Hilfe holen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Briefe nie liegen lassen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Absender, Frist und Aufgabe finden, dann Hilfe holen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WN = (n, k) => A(satz(n).woerter[k].start);              // k-tes Wort in Satz n (für „A“, „B“, „C“)
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Uhr-, Ordner- und Haken-Symbole einsetzen
+document.querySelectorAll('.uhrchen').forEach(u => u.innerHTML = tpl('svgUhr'));
+['o1', 'o2', 'o3'].forEach(id => el(id).innerHTML = tpl('svgOrdner'));
+['ok5a', 'ok5b', 'ok6a', 'ok6b', 'ok6c'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('nein2').innerHTML = tpl('svgX');
+
+/* ---------- Figuren: Mund exakt in den eigenen Sätzen (sprache.json), blinzeln, nicken ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const FROH = {};                       // id → [[von, bis], …]
+const froh = (id, a, b) => (FROH[id] ??= []).push([a, b]);
+HOOKS.push(t => {
+  const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06), wer = ab && ab[2];
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : (wer ? .6 + .4 * Math.sin(t * 9) : 0);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${aktiv ? 0 : nick}px)`;
+  });
+});
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 7;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Brief der Behörde (Baustein) ---------- */
+// Lokale Punkte im Brief (360 × 460) → Weltkoordinaten
+const briefHTML = p => `<div class="brief" id="${p}">
+  <div class="mark" id="${p}M1" style="left:16px;top:16px;width:236px;height:68px"><b>1</b></div>
+  <div class="mark" id="${p}M2" style="left:16px;top:202px;width:262px;height:60px"><b>2</b></div>
+  <div class="mark" id="${p}M3" style="left:16px;top:320px;width:328px;height:76px"><b>3</b></div>
+  <div class="b-abs"><i></i><span><u style="width:130px"></u><u style="width:90px"></u></span></div>
+  <u class="b-datum"></u><div class="b-betreff"></div>
+  <div class="b-z1" id="${p}Z1"><u style="width:300px"></u><u style="width:284px"></u><u style="width:236px"></u></div>
+  <div class="b-frist"><strong id="${p}F">Frist</strong><u></u></div>
+  <div class="b-z2" id="${p}Z2"><u style="width:300px"></u><u style="width:190px"></u></div>
+  <div class="b-auf" id="${p}Z3"><u style="width:270px"></u><u style="width:214px"></u><u style="width:150px"></u></div>
+  <div class="b-sig"></div><div class="scan" id="${p}scan"></div></div>`;
+// Markierungen: erst Rahmen (ploppen), dann gefüllt; Zustand 'aus' | 'fertig'
+function briefMarken(p, zustand) {
+  [1, 2, 3].forEach(k => {
+    const m = el(`${p}M${k}`);
+    m.style.transformOrigin = '50% 50%';
+    akteur(m, zustand === 'fertig' ? {} : { s: .6, o: 0 }, true);
+  });
+  akteur(`${p}scan`, { o: 0, y: -10 }, true);
+}
+const markeEin = (p, k, t) => { tw(`${p}M${k}`, t, .2, { o: 1 }); tw(`${p}M${k}`, t, .5, { s: 1 }, 'back'); cue(t, 'pop'); };
+
+/* ================= Format „Was würdest du tun?“ ================= */
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  if (b.firstElementChild) b.firstElementChild.style.opacity = 1 - p;
+}));
+const FARBE = { A: 'rot', B: 'gelb', C: 'gruen' };
+const KX = [540, 960, 1380], KY = 490;
+// Symbole der Karten: A Ablage mit Stapel, B Zettel mit Gekritzel, C Brief mit drei Markierungen und Hilfe
+const symA = p => `<div class="ab-hinten"></div><div id="${p}br" style="left:70px;top:-10px;width:160px">${tpl('tplBrief')}</div>
+  <div class="papier" id="${p}p1" style="left:62px;top:128px"></div><div class="papier" id="${p}p2" style="left:70px;top:112px"></div>
+  <div class="ab-vorne"><i></i></div>`;
+const KRITZEL = ['M4 12c10-9 16 9 26 0s16 9 26 0 16 9 26 0 16 9 26 0 12 7 18 0', 'M4 10c10-8 16 8 26 0s16 8 26 0 16 8 26 0 14 6 20 0',
+  'M4 12c12-9 18 9 28 0s14 9 24 0 16 9 26 0 18 7 26 0', 'M4 10c10-8 16 8 26 0s18 8 28 0'];
+const symB = p => `<div class="blatt" style="left:36px;top:10px">${KRITZEL.map((d, k) => `<svg id="${p}k${k}" viewBox="0 0 130 20" style="top:${34 + k * 40}px"><path class="zeichnen" pathLength="1" d="${d}" stroke="var(--b400)" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`).join('')}</div>
+  <div id="${p}st" style="left:150px;top:40px;width:110px">${tpl('tplStift')}</div>
+  <div class="frage gelb" id="${p}fr" style="left:196px;top:-8px;width:80px;height:80px;font-size:50px;line-height:80px">?</div>`;
+const symC = p => `<div style="left:48px;top:4px;width:360px;height:460px;transform:scale(.52);transform-origin:0 0">${briefHTML(p + 'b')}</div>
+  <div class="blase brand" id="${p}bl" style="left:196px;top:150px;width:100px;height:70px"><i></i><i></i><i></i></div>`;
+const SYM = { A: symA, B: symB, C: symC };
+// Symbole: animiert (Optionen) oder fertig (Kopien beim Durchspielen)
+function symZustand(p, L, fertig) {
+  if (L === 'A') {
+    akteur(`${p}br`, fertig ? { y: 100 } : { o: 0, y: -60 }, true);
+    akteur(`${p}p1`, fertig ? {} : { o: 0, y: -70 }, true); akteur(`${p}p2`, fertig ? { r: -2 } : { o: 0, y: -70 }, true);
+  } else if (L === 'B') {
+    KRITZEL.forEach((_, k) => akteur(`${p}k${k}`, fertig ? { draw: 1 } : { draw: 0, o: 0 }, true));
+    akteur(`${p}st`, fertig ? { x: 20, y: 150, o: 0 } : { o: 0 }, true);
+    el(`${p}fr`).style.transformOrigin = '50% 50%'; akteur(`${p}fr`, fertig ? {} : { s: 0 }, true);
+  } else {
+    briefMarken(p + 'b', fertig ? 'fertig' : 'aus');
+    el(`${p}bl`).style.transformOrigin = '20% 100%'; akteur(`${p}bl`, fertig ? {} : { s: 0 }, true);
+  }
+}
+const MARKE = { A: () => tpl('svgX'), B: () => '!', C: () => tpl('svgHaken') };
+function karten(i, fertig = true, marken = '') {
+  WELT.insertAdjacentHTML('beforeend', ['A', 'B', 'C'].map(L => {
+    const p = `k${i}${L}`;
+    return `<div class="a okarte" id="${p}"><div class="rahmen" id="${p}r"></div><div class="knopf" id="${p}kn">${L}</div>
+      <div class="sym">${SYM[L](p)}</div><div class="marke ${FARBE[L]}" id="${p}m">${MARKE[L]()}</div></div>`;
+  }).join(''));
+  ['A', 'B', 'C'].forEach((L, k) => {
+    const p = `k${i}${L}`;
+    symZustand(p, L, fertig);
+    el(`${p}m`).style.transformOrigin = '50% 50%'; el(`${p}kn`).style.transformOrigin = '50% 50%';
+    akteur(`${p}m`, marken.includes(L) ? {} : { s: 0, o: 0 }, true);
+    akteur(`${p}r`, marken.includes(L) ? { o: 1 } : { o: 0 }, true);
+    if (marken.includes(L)) el(`${p}r`).classList.add(FARBE[L]);
+    akteur(`${p}kn`, {}, true);
+  });
+}
+// Marke schlägt auf: runder Knopf rechts oben, Rahmen in der Farbe, Karte staucht, Kamera-Akzent
+function markeAuf(p, L, t) {
+  set(`${p}m`, t - .01, { o: 1 }); tw(`${p}m`, t, .45, { s: 1 }, 'back');
+  el(`${p}r`).classList.add(FARBE[L]); tw(`${p}r`, t, .25, { o: 1 });
+  tw(p, t, .08, { sy: .95, sx: 1.03 }, 'sinus'); tw(p, t + .08, .4, { sy: 1, sx: 1 }, 'sanft');
+  wackeln(p, t + .05, 3, 1.5); cue(t, 'plopp'); cue(t + .05, L === 'C' ? 'erfolg' : 'klick'); akzent(t, .045);
+}
+// Durchspielen: Karten liegen auf der dunklen Bühne, die gewählte kommt nach vorn, Marke auf „A/B/C“,
+// dann wird die Bühne hell und klein, die Karte wandert als Kachel nach links oben, der Text im Bild steigt darunter.
+function durchspielen({ i, L, tVor, tMarke, tK, tb, marken }) {
+  const X = S(i);
+  quiz(i, tK);
+  karten(i, true, marken);
+  ['A', 'B', 'C'].forEach((M, k) => akteur(`k${i}${M}`, { x: X + KX[k], y: KY }));
+  const p = `k${i}${L}`, andere = ['A', 'B', 'C'].filter(M => M !== L).map(M => `k${i}${M}`);
+  tw(p, tVor, .7, { s: 1.12, y: KY - 10 }, 'sanft'); cue(tVor, 'whoosh');
+  tw(andere, tVor, .7, { s: .9, o: .45 }, 'inout');
+  bump(`${p}kn`, tMarke - .25, 1.2);
+  markeAuf(p, L, tMarke);
+  aus(andere, tK - .1, .4);
+  tw(p, tK, .9, { x: X + 232, y: 250, s: .5 }, 'inout');
+  titelEin(tb, tK + .4);
+  $(`#${tb} .w`).classList.add(FARBE[L]);
+  return X;
+}
+
+/* ---------- 0 · Situation: Amir kommt nach Hause, ein Brief mit „Frist“ ---------- */
+{
+  const X = S(0);
+  akteur('bue0', { x: X + 1320, y: 540 });
+  // Text im Bild: „Ein Brief mit“ auf „Brief“, „Frist“ genau auf das gesprochene Wort
+  const tFr = W('Frist', 4), tB = WN(2, 5);
+  titelEin('tb0', A(.2), [null, null, null, tFr - .05]);
+  $('#tb0 .w:last-child').classList.add('hell');
+  // Amir kommt nach Hause: hüpft herein
+  ein('amir0', A(-.1), { x: X + 1070, y: 700 }, { x: -60 }, 'pop');
+  huepfen('amir0', W('kommt', 1) + .05, 16); huepfen('amir0', W('Hause', 1), 12);
+  // Briefkasten klappert
+  ein('kasten0', A(.2), { x: X + 1480, y: 520 }, { y: 80 }, 'whoosh');
+  schweben('kasten0', 3);
+  const tK0 = W('Briefkasten', 2);
+  wackeln('kasten0', tK0, 4, 3); cue(tK0, 'klick'); cue(tK0 + .2, 'klick');
+  // der Umschlag schiebt sich aus dem Schlitz und fliegt auf einem Bogen nach vorn
+  const tL = W('liegt', 2);
+  akteur('umschlag0', { x: X + 1473, y: 486, o: 0, s: .35 });
+  tw('umschlag0', tL, .15, { o: 1 }); tw('umschlag0', tL, .55, { y: 380, s: .8 }, 'sanft'); cue(tL, 'pop');
+  const tOff = W('offizieller', 2);
+  tw('kasten0', tOff - .1, .5, { y: 640, o: 0, s: .8 }, 'in');
+  flug('umschlag0', tOff, .75, X + 1480, 520, 60, { s: 1.6 }); cue(tOff, 'whoosh');
+  // Brief faltet sich auf
+  el('brief0wrap').innerHTML = briefHTML('b0'); briefMarken('b0', 'aus');
+  akteur('brief0wrap', { x: X + 1480, y: 520, o: 0, s: .95, sy: .05 });
+  tw('brief0wrap', tB - .05, .15, { o: 1 }); tw('brief0wrap', tB - .05, .6, { sy: 1 }, 'sanft'); cue(tB, 'plopp');
+  tw('umschlag0', tB - .05, .25, { o: 0, s: 1.2 }, 'out');
+  // Viele schwierige Wörter: die Zeilen wachsen, Wörter springen heraus und wackeln
+  document.querySelectorAll('#b0 .b-z1 u, #b0 .b-z2 u, #b0 .b-auf u').forEach((u, k) => {
+    u.style.transformOrigin = 'left center'; akteur(u, { sx: 0 }, true); tw(u, W('Viele', 3) - .2 + k * .06, .45, { sx: 1 }, 'weich');
+  });
+  [['wort1', 1420, 262, 'schwierige'], ['wort2', 1500, 430, 'schwierige'], ['wort3', 1400, 610, 'Wörter']].forEach(([id, x, y, w], k) => {
+    const t0 = W(w, 3) + k * .12 - .05;
+    akteur(id, { x: X + x, y: y + 50, o: 0, s: .5 });
+    tw(id, t0, .2, { o: 1 }); tw(id, t0, .55, { y, s: 1 }, 'back'); cue(t0, 'pop');
+    wackeln(id, t0 + .6, 3, 3);
+    tw(id, W('Und', 4) - .2 + k * .06, .35, { o: 0, s: .6 }, 'in');
+  });
+  schweben(['wort1', 'wort2', 'wort3'], 4);
+  // fett gedruckt: das Wort „Frist“ im Brief pocht, dann wächst es groß heraus und leuchtet
+  const lx = (x, t) => wertBei('brief0wrap', 'x', t) + (x - 180) * .95, ly = (y, t) => wertBei('brief0wrap', 'y', t) + (y - 230) * .95;
+  akteur('b0F', {}, true); el('b0F').style.display = 'inline-block'; el('b0F').style.transformOrigin = '50% 60%';
+  bump('b0F', W('fett', 4), 1.3); bump('b0F', W('gedruckt', 4) + .1, 1.3); cue(W('fett', 4), 'klick');
+  tw('b0F', tFr - .1, .15, { o: 0 });
+  akteur('frist0', { x: lx(66, tFr), y: ly(232, tFr), o: 0, s: .33 });
+  tw('frist0', tFr - .15, .12, { o: 1 }); tw('frist0', tFr - .15, .75, { x: X + 1480, y: 470, s: 1 }, 'sanft', { bogen: 40 });
+  cue(tFr - .1, 'whoosh'); cue(tFr + .4, 'erfolg'); akzent(tFr + .2, .05);
+  welle('welle0', tFr + .5, X + 1480, 470, 1.1);
+  tw('brief0wrap', tFr, .6, { o: .55 }, 'inout');
+  HOOKS.push(t => { const d = t - tFr - .5; if (d > 0) el('frist0').style.boxShadow = `0 0 ${(30 + 26 * (.5 + .5 * Math.sin(d * 4.2))).toFixed(1)}px ${(6 + 8 * (.5 + .5 * Math.sin(d * 4.2))).toFixed(1)}px rgba(224,153,43,.55)`; else el('frist0').style.boxShadow = ''; });
+  // Amir: „Was wollen die von mir?“ – Fragezeichen ploppt, wackelt
+  pop('frage0', W('wollen', 5), { x: X + 1195, y: 500 });
+  wackeln('frage0', W('mir', 5), 4, 4); wackeln('frist0', W('mir', 5) + .1, 3, 2);
+  textAus('tb0', SE(5) + .05);
+}
+
+/* ---------- 1 · Was würdest du tun? Drei Karten, dann die Denkpause ---------- */
+const P1 = SE(5) + .15;
+pan2(P1, 1);
+{
+  const X = S(1);
+  quiz(1);
+  pop('frage1', P1 + .55, { x: X + 960, y: 215 }); schweben('frage1', 5);
+  wackeln('frage1', W('tun', 6) - .1, 3, 4);
+  karten(1, false);
+  // Karten fliegen auf ihrem Buchstaben auf Bögen herein
+  [['A', 7], ['B', 8], ['C', 9]].forEach(([L, n], k) => {
+    const p = `k1${L}`, t0 = SA(n) - .35;
+    akteur(p, { x: X + KX[k] - 120, y: KY + 360, o: 0, s: .75, r: -3 });
+    tw(p, t0, .2, { o: 1 }); tw(p, t0, .85, { x: X + KX[k], y: KY }, 'inout', { bogen: 90 }); tw(p, t0, .85, { r: 0, s: 1 }, 'sanft');
+    cue(t0, 'whoosh'); bump(`${p}kn`, SA(n), 1.25); cue(SA(n), 'pop');
+  });
+  // A: Brief erst mal weglegen – der Umschlag sinkt in die Ablage, Papier fällt darauf
+  const tW = W('weglegen', 7);
+  set('k1Abr', tW - .5, { o: 1, y: -60 }); tw('k1Abr', tW - .5, .35, { o: 1, y: 0 }, 'sanft');
+  tw('k1Abr', tW, .5, { y: 100 }, 'inout'); cue(tW + .3, 'plopp');
+  [['k1Ap1', W('bestimmt', 7)], ['k1Ap2', W('wichtig', 7)]].forEach(([id, t]) => {
+    set(id, t - .3, { o: 1 }); tw(id, t - .3, .35, { y: 0 }, 'in'); landen(id, t + .05); cue(t + .05, 'klick');
+  });
+  tw('k1Ap2', W('wichtig', 7) + .05, .3, { r: -2 }, 'sanft');
+  // B: irgendwie antworten – der Stift kritzelt schnell, dann ein Fragezeichen
+  const tA = W('antworten', 8), tV = W('verstehst', 8);
+  // Stiftspitze (15|89 im Stift) von Zeilenanfang (54) bis Zeilenende (184), Zeile k bei y 54 + 40k
+  akteur('k1Bst', { o: 0, x: -111, y: -75 }, true);
+  set('k1Bst', tA - .3, { o: 1 });
+  KRITZEL.forEach((_, k) => {
+    const t0 = tA + k * .32;
+    set(`k1Bk${k}`, t0, { o: 1 }); tw(`k1Bk${k}`, t0, .3, { draw: 1 }, 'lin');
+    tw('k1Bst', t0, .3, { x: 19, y: -75 + 40 * k }, 'lin');
+    if (k < 3) tw('k1Bst', t0 + .3, .02, { x: -111, y: -35 + 40 * k }, 'lin');
+  });
+  HOOKS.push(t => { const d = t - tA; if (d > 0 && d < 1.3) el('k1Bst').style.transform += ` translateY(${6 * Math.sin(d * 60)}px)`; });
+  cue(tA, 'kritzeln'); cue(tA + .7, 'kritzeln');
+  tw('k1Bst', tA + 1.3, .3, { o: 0 });
+  tw('k1Bfr', tV, .5, { s: 1 }, 'back'); cue(tV, 'pop'); wackeln('k1Bfr', W('geht', 8), 4, 3);
+  // C: übersetzen, Absender, Frist, Aufgabe markieren, Hilfe holen
+  const pC = 'k1Cb';
+  set(`${pC}scan`, W('übersetzen', 9) - .1, { o: 1 }); tw(`${pC}scan`, W('übersetzen', 9) - .1, .75, { y: 450 }, 'inout'); tw(`${pC}scan`, W('übersetzen', 9) + .55, .1, { o: 0 });
+  cue(W('übersetzen', 9), 'scan');
+  markeEin(pC, 1, W('Absender', 9)); markeEin(pC, 2, W('Frist', 9)); markeEin(pC, 3, W('Aufgabe', 9));
+  tw('k1Cbl', W('Hilfe', 9) - .05, .5, { s: 1 }, 'back'); cue(W('Hilfe', 9), 'ding');
+  // Denkpause: Ring läuft leer, ein Lichtrahmen wandert über A → B → C, dann 3 – 2 – 1 auf den gesprochenen Zahlen
+  WELT.insertAdjacentHTML('beforeend', `<div class="a ring3" id="ring1"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+    <circle id="lauf1" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer1">?</b></div>`);
+  const c0 = SE(9) + .3, c1 = WE('Eins', 12) + .25;
+  pop('ring1', SE(9) + .05, { x: X + 960, y: 830 });
+  const ZIFFERN = [[W('Drei', 10), '3'], [W('Zwei', 11), '2'], [W('Eins', 12), '1']];
+  ZIFFERN.forEach(([t], k) => { cue(t, 'klick'); bump(`k1${'ABC'[k]}`, t + .03, 1.05); });
+  HOOKS.push(t => {
+    el('lauf1').style.strokeDashoffset = -clamp((t - c0) / (c1 - c0));
+    let z = '?', seit = t - c0;
+    for (const [tz, n] of ZIFFERN) if (t >= tz) { z = n; seit = t - tz; }
+    const zf = el('ziffer1'); zf.textContent = z;
+    zf.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(seit / .3)))})` : '';
+  });
+  const tLicht = SE(9) + .45, dl = (W('Drei', 10) - .2 - tLicht) / 3;
+  ['A', 'B', 'C'].forEach((L, k) => {
+    const t = tLicht + k * dl;
+    tw(`k1${L}r`, t, .2, { o: 1 }, 'out'); tw(`k1${L}r`, t + dl * .85, .25, { o: 0 }, 'in');
+    bump(`k1${L}`, t, 1.05); cue(t, 'tipp');
+  });
+  aus(['ring1', 'frage1'], c1 + .05, .35);
+}
+
+/* ---------- 2 · Option A: Frist verpasst ---------- */
+const P2 = WE('Eins', 12) + .4;
+pan2(P2, 2);
+{
+  const tMarke = WN(13, 1), tK = W('Der', 13) - .1;
+  const X = durchspielen({ i: 2, L: 'A', tVor: P2 + .35, tMarke, tK, tb: 'tb2', marken: '' });
+  // Amir schaut zu, der Tisch steht bereit
+  ein('amir2', tK + .3, { x: X + 1020, y: 330 }, { x: -50 }, 'pop');
+  ein('tisch2', tK + .4, { x: X + 1240, y: 765 }, { y: 60 });
+  // der Brief fällt auf den Tisch
+  const tLi = W('liegt', 13);
+  akteur('brief2', { x: X + 1180, y: 480, o: 0 });
+  tw('brief2', tLi - .3, .12, { o: 1 }); tw('brief2', tLi - .3, .38, { y: 674 }, 'in'); landen('brief2', tLi + .08); cue(tLi + .08, 'plopp');
+  // drei Wochen: Kalenderblätter fliegen ab, der Papierstapel wächst auf dem Brief
+  const tDr = W('drei', 13), tEnde = W('vorbei', 14) - .2;
+  ein('kal2', tDr - .45, { x: X + 1600, y: 370 }, { y: 60 }, 'whoosh');
+  const SEITEN = 10, dS = (tEnde - tDr) / SEITEN;
+  for (let k = SEITEN; k >= 0; k--) {
+    const tag = Math.round(1 + k * 20 / SEITEN);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a seite" id="seite${k}" data-gruppe="kal2">${tag}</div>`);
+  }
+  for (let k = 0; k <= SEITEN; k++) {
+    const id = `seite${k}`, t0 = tDr + k * dS;
+    akteur(id, { x: X + 1600, y: 391, o: 0 });
+    set(id, tDr - .1, { o: 1 });
+    if (k < SEITEN) {
+      tw(id, t0, .55, { x: X + 1600 + (k % 2 ? 150 : -150), y: 520, r: k % 2 ? 3 : -3, o: 0, s: .7 }, 'inout', { bogen: 70 });
+      cue(t0, 'klick');
+    }
+  }
+  // Blätter sollen über dem Kalender liegen
+  for (let k = SEITEN; k >= 0; k--) WELT.append(el(`seite${k}`));
+  pop('chip3W', W('Wochen', 13), { x: X + 1600, y: 530 }); akzent(W('Wochen', 13), .03);
+  const STAPEL = 7;
+  for (let k = 0; k < STAPEL; k++) {
+    const id = `pap${k}`, t0 = tDr + .1 + k * (tEnde - tDr - .2) / STAPEL;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a papier" id="${id}" style="width:190px;height:15px" data-gruppe="stapel"></div>`);
+    const x = X + 1180 + [0, 8, -6, 10, -8, 4, -4][k], y = 627 - k * 15;
+    akteur(id, { x, y: y - 130, o: 0, r: [-2, 1, 2, -1, 2, -2, 1][k] });
+    tw(id, t0, .1, { o: 1 }); tw(id, t0, .32, { y }, 'in'); landen(id, t0 + .32); cue(t0 + .32, 'klick');
+  }
+  // Die Frist ist vorbei: Chip wird rot, wackelt
+  pop('chipFrist2', W('Frist', 14) - .05, { x: X + 1600, y: 620 });
+  const tVb = W('vorbei', 14);
+  HOOKS.push(t => { const c = el('chipFrist2'); c.classList.toggle('rot', t >= tVb); c.classList.toggle('gelb', t < tVb); });
+  bump('chipFrist2', tVb, 1.15); wackeln('chipFrist2', tVb + .1, 4, 3); cue(tVb, 'plopp'); akzent(tVb, .045);
+  wackeln('amir2', tVb + .2, 3, 1.5);
+  // zweiter Brief mit Warnschild
+  const tJ = W('Jetzt', 15);
+  aus(['kal2', 'chip3W', 'chipFrist2'], tJ - .2, .35);
+  for (let k = 0; k <= SEITEN; k++) tw(`seite${k}`, tJ - .2, .35, { o: 0 });
+  akteur('zweiter2', { x: X + 1760, y: 180, o: 0, s: .6, r: 3 });
+  const tZw = W('zweiter', 15);
+  tw('zweiter2', tZw - .35, .2, { o: 1 }); flug('zweiter2', tZw - .35, .75, X + 1570, 410, 60, { s: 1, r: 0 }); cue(tZw - .35, 'whoosh');
+  landen('zweiter2', tZw + .4); cue(tZw + .4, 'plopp');
+  pop('warn2', W('Brief', 15), { x: X + 1668, y: 345 }); wackeln('warn2', W('Brief', 15) + .45, 4, 3);
+  // vielleicht mit Gebühren
+  const tG = W('Gebühren', 15);
+  pop('chipGeb', tG - .05, { x: X + 1570, y: 620 }); cue(tG, 'muenze'); wackeln('chipGeb', tG + .5, 3, 2);
+  // oder eine Entscheidung ist gefallen: Stempel schlägt auf den zweiten Brief
+  const tE = W('gefallen', 15) - .05, SX = X + 1540, SY = 470;
+  akteur('stempel2', { x: SX, y: SY - 330, o: 0, r: -3 });
+  tw('stempel2', tE - .6, .2, { o: 1 }); tw('stempel2', tE - .6, .4, { y: SY - 180 }, 'sanft');
+  tw('stempel2', tE - .16, .16, { y: SY - 70 }, 'in');
+  tw('stempel2', tE, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw('stempel2', tE + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw('stempel2', tE + .2, .5, { y: SY - 300 }, 'inout'); tw('stempel2', tE + .4, .3, { o: 0 });
+  akteur('abd2', { x: SX, y: SY + 10, o: 0, s: 1.4, r: -3 });
+  tw('abd2', tE, .04, { o: 1 }); tw('abd2', tE, .22, { s: 1 }, 'out');
+  welle('tinte2', tE, SX, SY + 10, .8); AKTEURE.get(el('tinte2')).basis.r = -3;
+  cue(tE, 'plopp'); akzent(tE, .05); wackeln('zweiter2', tE + .05, 3, 1.5);
+  // ohne dass Amir etwas sagen konnte: seine Sprechblase bleibt leer und wird gestrichen
+  pop('blase2', W('ohne', 15), { x: X + 1190, y: 300 });
+  pop('nein2', W('sagen', 15), { x: X + 1235, y: 272 }, 'plopp');
+  tw('blase2', W('sagen', 15) + .1, .4, { o: .45, s: .9 }, 'inout');
+  wackeln('amir2', W('konnte', 15), 3, 1.5);
+  textAus('tb2', SE(15) + .1);
+}
+
+/* ---------- 3 · Option B: Antwort passt nicht ---------- */
+const P3 = SE(15) + .3;
+pan2(P3, 3);
+{
+  const tMarke = WN(16, 1), tK = W('Amir', 16) - .15;
+  const X = durchspielen({ i: 3, L: 'B', tVor: P3 + .35, tMarke, tK, tb: 'tb3', marken: 'A' });
+  ein('amir3', tK + .3, { x: X + 1030, y: 640 }, { x: -50 }, 'pop');
+  ein('amt3', tK + .4, { x: X + 1590, y: 360 }, { x: 60 });
+  pop('chipAmt3', tK + .7, { x: X + 1590, y: 510 }, null);
+  schweben('amt3', 3);
+  // Amir schreibt schnell: Zettel, Stift kritzelt Zeile für Zeile
+  el('blatt3').innerHTML = [0, 1, 2, 3, 4].map(k => `<svg id="bk${k}" viewBox="0 0 130 20" style="top:${40 + k * 44}px;left:26px;width:168px;height:26px"><path class="zeichnen" pathLength="1" d="${KRITZEL[k % 4]}" stroke="var(--b400)" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`).join('');
+  ein('blatt3', tK + .45, { x: X + 1290, y: 540 }, { y: 70 }, 'whoosh');
+  const tS = W('schickt', 16) - .1, dz = (W('Antwort', 16) + .15 - tS) / 5;
+  // Stiftspitze liegt 47 px links, 41 px unter der Mitte; Zeile k: y 453 + 44k, x 1211 … 1369
+  akteur('stift3', { x: X + 1258, y: 412, o: 0 });
+  tw('stift3', tS - .25, .2, { o: 1 });
+  [0, 1, 2, 3, 4].forEach(k => {
+    akteur(`bk${k}`, { draw: 0, o: 0 }, true);
+    const t0 = tS + k * dz;
+    set(`bk${k}`, t0, { o: 1 }); tw(`bk${k}`, t0, dz * .9, { draw: 1 }, 'lin');
+    tw('stift3', t0, dz * .9, { x: X + 1416, y: 412 + k * 44 }, 'lin');
+    if (k < 4) tw('stift3', t0 + dz * .9, dz * .1, { x: X + 1258, y: 412 + (k + 1) * 44 }, 'lin');
+  });
+  tw('stift3', W('Antwort', 16) + .2, .25, { x: X + 1450, y: 380, o: 0 }, 'inout');
+  HOOKS.push(t => { const d = t - tS; if (d > 0 && d < dz * 5) el('stift3').style.transform += ` translateY(${7 * Math.sin(d * 55)}px)`; });
+  cue(tS, 'kritzeln'); cue(tS + .8, 'kritzeln');
+  wackeln('amir3', tS + .1, 4, 2);
+  // Antwort geht an die Behörde
+  const tAb = W('Antwort', 16) + .45;
+  flug('blatt3', tAb, .8, X + 1590, 380, 120, { s: .2 }); tw('blatt3', tAb + .62, .15, { o: 0 }); cue(tAb, 'whoosh');
+  bump('amt3', tAb + .8, 1.08); cue(tAb + .8, 'plopp');
+  // Aber er hat nicht verstanden, was gefragt war
+  pop('fr3a', W('verstanden', 17), { x: X + 1030, y: 470 }); wackeln('fr3a', W('gefragt', 17), 4, 4);
+  // Die Behörde kann nichts damit anfangen: der Brief kommt mit Fragezeichen zurück
+  wackeln('amt3', W('Behörde', 18), 3, 2);
+  const tZ = W('anfangen', 18) - .3;
+  akteur('rueck3', { x: X + 1590, y: 380, o: 0, s: .3 });
+  tw('rueck3', tZ, .15, { o: 1 }); flug('rueck3', tZ, .85, X + 1300, 560, 120, { s: 1 }); landen('rueck3', tZ + .85); cue(tZ, 'whoosh'); cue(tZ + .85, 'plopp');
+  pop('fr3b', tZ + .95, { x: X + 1390, y: 490 }); wackeln('fr3b', tZ + 1.5, 4, 4);
+  // und das Problem bleibt
+  const tP = W('Problem', 18);
+  pop('warn3', tP - .05, { x: X + 1590, y: 690 }, 'plopp'); welle('welle3', tP + .2, X + 1590, 690, 1);
+  wackeln('warn3', W('bleibt', 18) + .1, 4, 3); akzent(tP + .1, .045);
+  tw('fr3a', tP + .3, .4, { o: 0, s: .6 }, 'in');
+  textAus('tb3', SE(18) + .1);
+}
+
+/* ---------- 4 · Option C: übersetzen, markieren, Hilfe holen, rechtzeitig antworten ---------- */
+const P4 = SE(18) + .3;
+pan2(P4, 4);
+{
+  const tMarke = WN(19, 1), tK = W('Amir', 19) - .15;
+  const X = durchspielen({ i: 4, L: 'C', tVor: P4 + .35, tMarke, tK, tb: 'tb4', marken: 'AB' });
+  // Text im Bild im Takt der drei Fragen
+  // (durchspielen hat den Titel schon gestartet – für C setzen wir die Wortzeiten neu)
+  // Handy mit Übersetzungs-App und der Brief
+  ['handy4', 'app4'].forEach(id => ein(id, tK + .3, { x: X + 1060, y: 540 }, { y: 100 }, id === 'app4' ? 'whoosh' : null));
+  el('brief4wrap').innerHTML = briefHTML('b4'); briefMarken('b4', 'aus');
+  ein('brief4wrap', tK + .4, { x: X + 1470, y: 540, s: .8 }, { x: 70 });
+  const tU = W('übersetzt', 19);
+  set('b4scan', tU, { o: 1 }); tw('b4scan', tU, .9, { y: 450 }, 'inout'); tw('b4scan', tU + .8, .1, { o: 0 }); cue(tU, 'scan');
+  ['ue1', 'ue2', 'ue3', 'ue4'].forEach((id, k) => { akteur(id, { sx: 0 }, true); tw(id, W('Brief', 19) + k * .18, .45, { sx: 1 }, 'weich'); });
+  cue(W('App', 19), 'ding'); bump('app4', W('App', 19), 1.04); bump('handy4', W('App', 19), 1.04);
+  // Dann sucht er drei Dinge: Handy geht, der Brief kommt groß nach vorn
+  const tD = W('Dann', 20);
+  tw(['handy4', 'app4'], tD - .1, .5, { x: X + 900, o: 0 }, 'in');
+  tw('brief4wrap', tD, .8, { x: X + 1320, y: 540, s: 1.1 }, 'inout'); cue(tD, 'whoosh');
+  bump('brief4wrap', W('Dinge', 20), 1.03);
+  // Wer schreibt? Bis wann? Was soll ich tun? – je ein Rahmen ploppt
+  markeEin('b4', 1, W('Wer', 20)); markeEin('b4', 2, W('Bis', 21)); markeEin('b4', 3, W('Was', 22));
+  akzent(W('Wer', 20), .025); akzent(W('Bis', 21), .025); akzent(W('Was', 22), .025);
+  // Das markiert er: alle drei Rahmen pochen nacheinander
+  [1, 2, 3].forEach(k => bump(`b4M${k}`, W('markiert', 23) + (k - 1) * .15, 1.08)); cue(W('markiert', 23), 'ding');
+  // Er zeigt den Brief seiner Ausbilderin
+  const tZg = W('zeigt', 24);
+  tw('brief4wrap', tZg - .1, .75, { x: X + 1180, y: 430, s: .6 }, 'inout'); cue(tZg - .1, 'whoosh');
+  ein('amir4', tZg, { x: X + 1010, y: 730 }, { x: -60 }, 'pop');
+  ein('sabine4', W('Ausbilderin', 24) - .15, { x: X + 1245, y: 730 }, { x: 60 }, 'pop');
+  froh('sabine4', W('Ausbilderin', 24) + .4, SE(25) + 2); froh('amir4', W('Azubis', 24), SE(25) + 2);
+  // und schreibt Azubis Plus: Helper App, der Brief landet in „Dokumente“, Nachricht gesendet
+  const tSc = W('schreibt', 24);
+  ['helper4', 'happ4'].forEach(id => ein(id, tSc - .3, { x: X + 1575, y: 540 }, { x: 80 }, id === 'happ4' ? 'whoosh' : null));
+  akteur('zeileBrief', { o: 0, y: 10, s: .9 }, true); akteur('toast4', { o: 0, y: 12 }, true);
+  const tMi = W('Azubis', 24) - .1;
+  akteur('mini4', { x: X + 1180, y: 430, o: 0, s: .6 });
+  tw('mini4', tMi, .15, { o: 1 }); flug('mini4', tMi, .7, X + 1575, 500, 90, { s: .5 }); tw('mini4', tMi + .55, .15, { o: 0 }); cue(tMi, 'whoosh');
+  tw('zeileBrief', tMi + .6, .35, { o: 1, y: 0, s: 1 }, 'back'); cue(tMi + .65, 'ding');
+  HOOKS.push(t => { el('zahl4').textContent = t >= tMi + .65 ? 3 : 2; });
+  tw('toast4', tMi + 1.0, .35, { o: 1, y: 0 }, 'back'); bump('happ4', tMi + 1.0, 1.03); bump('helper4', tMi + 1.0, 1.03); cue(tMi + 1.0, 'erfolg');
+  // Zusammen antworten sie rechtzeitig: App geht, Antwort fliegt in den Briefkasten
+  const tZu = W('Zusammen', 25);
+  tw(['helper4', 'happ4'], tZu - .2, .45, { x: X + 1760, o: 0 }, 'in');
+  ein('kasten4', tZu + .1, { x: X + 1590, y: 560 }, { y: 70 }, 'whoosh');
+  const tAn = W('antworten', 25);
+  akteur('antwort4', { x: X + 1128, y: 650, o: 0, s: .4 });
+  tw('antwort4', tAn - .1, .15, { o: 1 }); tw('antwort4', tAn - .1, .45, { s: 1, y: 600 }, 'back'); cue(tAn - .1, 'pop');
+  flug('antwort4', tAn + .4, .75, X + 1575, 512, 120, { s: .35 }); tw('antwort4', tAn + 1.0, .15, { o: 0 }); cue(tAn + .4, 'whoosh');
+  wackeln('kasten4', tAn + 1.15, 4, 3); cue(tAn + 1.15, 'klick');
+  const tR = W('rechtzeitig', 25);
+  pop('chipRecht', Math.max(tR, tAn + 1.2), { x: X + 1590, y: 760 }, 'erfolg'); akzent(Math.max(tR, tAn + 1.2), .04);
+  huepfen('amir4', Math.max(tR, tAn + 1.2) + .1, 14); huepfen('sabine4', Math.max(tR, tAn + 1.2) + .22, 14);
+  textAus('tb4', SE(25) + .1);
+}
+// Text im Bild für C: jedes Fragepaar auf die gesprochene Frage (statt des Standards aus durchspielen)
+{
+  const ws = [...document.querySelectorAll('#tb4 .w')];
+  const zeiten = [W('Wer', 20), W('Wer', 20) + .1, W('Bis', 21), W('Bis', 21) + .08, W('Bis', 21) + .1, W('Was', 22), W('Was', 22) + .08].map(t => t - .1);
+  ws.forEach((w, k) => {
+    const a = AKTEURE.get(w.querySelector('.wi'));
+    a.tw = []; tw(w.querySelector('.wi'), zeiten[k], .7, { y: 0 }, 'weich');
+  });
+  ws[0].classList.remove('gruen');
+}
+
+/* ---------- 5 · Wichtig: vorher nach mehr Zeit fragen – manche Fristen gehen nicht zu verlängern ---------- */
+const P5 = SE(25) + .25;
+pan2(P5, 5);
+{
+  const X = S(5);
+  quiz(5);
+  const tWi = W('Wichtig', 26);
+  pop('chipWichtig', tWi - .05, { x: X + 960, y: 182 }, 'plopp'); wackeln('chipWichtig', tWi + .4, 3, 3); akzent(tWi, .04);
+  ein('amt5', P5 + .6, { x: X + 1580, y: 560 }, { x: 70 }, 'whoosh'); schweben('amt5', 3);
+  // Reihe 1: Weg bis zur Frist, Amir läuft, fragt vorher nach mehr Zeit, die Frist rückt nach hinten
+  const Y1 = 400, L0 = 360, FX = 1060, FX2 = 1220;
+  ein('spur5a', P5 + .7, { x: X + 810, y: Y1 }, { y: 30 });
+  ein('fahne5a', P5 + .8, { x: X + FX, y: Y1 - 79 }, { y: -40 });
+  akteur('fuell5a', { sx: 0 }, true); akteur('ext5a', { sx: 0 }, true);
+  pop('amir5a', P5 + .9, { x: X + L0 + 60, y: Y1 - 72 });
+  const tWe = W('Wenn', 26), tKa = WE('kann', 26);
+  tw('amir5a', tWe, tKa - tWe, { x: X + 880 }, 'out');
+  for (let k = 0; k < 4; k++) tw('amir5a', tWe + k * (tKa - tWe) / 4, (tKa - tWe) / 4, { y: Y1 - 72 }, 'sinus', { bogen: 12 });
+  HOOKS.push(t => { el('fuell5a').style.transform = `scaleX(${clamp((wertBei('amir5a', 'x', t) - X - L0) / 900).toFixed(4)})`; });
+  bump('fahne5a', W('Frist', 26), 1.1); cue(W('Frist', 26), 'klick');
+  wackeln('amir5a', W('schaffen', 26), 3, 3);
+  // fragt vorher nach mehr Zeit
+  const tFr = W('fragt', 26);
+  akteur('chipZeit', { x: X + 880, y: Y1 - 152, o: 0, s: .4 });
+  tw('chipZeit', tFr, .15, { o: 1 }); tw('chipZeit', tFr, .45, { s: 1 }, 'back'); cue(tFr, 'pop');
+  const tFl = W('mehr', 26) - .2;
+  flug('chipZeit', tFl, .8, X + 1580, 500, 120, { s: .4 }); tw('chipZeit', tFl + .65, .15, { o: 0 }); cue(tFl, 'whoosh');
+  bump('amt5', tFl + .8, 1.08); pop('ok5a', tFl + .9, { x: X + 1655, y: 470 }, 'ding');
+  const tVs = tFl + 1.2;
+  tw('fahne5a', tVs, .7, { x: X + FX2 }, 'inout'); cue(tVs, 'whoosh');
+  tw('ext5a', tVs, .7, { sx: 1 }, 'inout');
+  el('ext5a').style.left = (FX - L0) + 'px'; el('ext5a').style.width = (FX2 - FX) + 'px';
+  tw('amir5a', tVs + .5, .6, { x: X + 1030 }, 'inout', { bogen: 20 });
+  froh('amir5a', tVs + .4, SE(28) + 3);
+  tw('ok5a', W('Aber', 27) - .2, .3, { o: 0 });
+  // Reihe 2: Widerspruch – die Frist ist fest (Schloss), kurze Antwort rechtzeitig, mehr später
+  const Y2 = 760, tAb = W('Aber', 27);
+  ein('spur5b', tAb - .1, { x: X + 810, y: Y2 }, { y: 30 }, 'whoosh');
+  ein('fahne5b', tAb, { x: X + FX, y: Y2 - 79 }, { y: -40 });
+  akteur('fuell5b', { sx: 0 }, true);
+  pop('amir5b', tAb + .1, { x: X + L0 + 60, y: Y2 - 72 });
+  HOOKS.push(t => { el('fuell5b').style.transform = `scaleX(${clamp((wertBei('amir5b', 'x', t) - X - L0) / 900).toFixed(4)})`; });
+  const tVl = W('verlängern', 27);
+  tw('fahne5b', tVl - .1, .3, { x: X + FX + 60 }, 'out'); tw('fahne5b', tVl + .2, .5, { x: X + FX }, 'back'); cue(tVl + .2, 'klick');
+  pop('schloss5', tVl + .45, { x: X + FX + 3, y: Y2 - 50 }, 'plopp'); wackeln('schloss5', tVl + .95, 4, 3); akzent(tVl + .45, .04);
+  pop('chipWid', W('Widerspruch', 27) - .05, { x: X + 520, y: Y2 + 70 }); bump('chipWid', W('Widerspruch', 27) + .5, 1.08);
+  // Dann antwortet er rechtzeitig kurz
+  const tDa = W('antwortet', 28) - .2, tKu = W('kurz', 28);
+  tw('amir5b', tDa, tKu - tDa, { x: X + 880 }, 'inout');
+  for (let k = 0; k < 3; k++) tw('amir5b', tDa + k * (tKu - tDa) / 3, (tKu - tDa) / 3, { y: Y2 - 72 }, 'sinus', { bogen: 12 });
+  akteur('notiz5', { x: X + 880, y: Y2 - 150, o: 0, s: .4 });
+  tw('notiz5', tKu - .15, .15, { o: 1 }); tw('notiz5', tKu - .15, .4, { s: 1 }, 'back'); cue(tKu - .15, 'pop');
+  flug('notiz5', tKu + .3, .75, X + 1580, 560, 140, { s: .4 }); tw('notiz5', tKu + .9, .15, { o: 0 }); cue(tKu + .3, 'whoosh');
+  bump('amt5', tKu + 1.05, 1.08); pop('ok5b', tKu + 1.1, { x: X + 1655, y: 470 }, 'ding');
+  pop('chipKurz', tKu, { x: X + 860, y: Y2 + 70 }, null);
+  el('pille5b').style.transition = 'none';
+  HOOKS.push(t => el('pille5b').classList.toggle('gruen', t >= tKu + 1.1));
+  bump('fahne5b', tKu + 1.1, 1.08);
+  // und erklärt später mehr
+  const tSp = W('später', 28);
+  tw('amir5b', tSp - .3, .7, { x: X + 1190 }, 'inout', { bogen: 20 });
+  akteur('notiz5b', { x: X + 1190, y: Y2 - 170, o: 0, s: .4 });
+  tw('notiz5b', tSp + .25, .15, { o: 1 }); tw('notiz5b', tSp + .25, .4, { s: 1 }, 'back'); cue(tSp + .25, 'pop');
+  flug('notiz5b', tSp + .7, .7, X + 1580, 560, 110, { s: .4 }); tw('notiz5b', tSp + 1.25, .15, { o: 0 }); cue(tSp + .7, 'whoosh');
+  bump('amt5', tSp + 1.4, 1.08); cue(tSp + 1.4, 'plopp');
+  pop('chipMehr', tSp + .1, { x: X + 1190, y: Y2 + 70 }, null);
+  froh('amir5b', tKu + 1.1, SE(28) + 3);
+}
+
+/* ---------- 6 · Auflösung: C ist die beste Wahl – Öffnen, Verstehen, Hilfe holen ---------- */
+const P6 = SE(28) + .2;
+pan2(P6, 6);
+{
+  const X = S(6), tK = W('Merke', 30) - .1;
+  quiz(6, tK);
+  karten(6, true, 'AB');
+  ['A', 'B', 'C'].forEach((M, k) => akteur(`k6${M}`, { x: X + KX[k], y: KY }));
+  const tBe = W('beste', 29), tC = WN(29, 4);
+  tw(['k6A', 'k6B'], tBe, .6, { o: .35, s: .9 }, 'inout');
+  tw('k6C', tBe, .7, { s: 1.12, y: KY - 20 }, 'sanft'); cue(tBe, 'whoosh');
+  bump('k6Ckn', tC - .25, 1.2);
+  markeAuf('k6C', 'C', tC);
+  HOOKS.push(t => { const d = t - tC; if (d > 0) el('k6Cr').style.opacity = .75 + .25 * Math.sin(d * 5); });
+  // grüne Welle um die Karte, Kamera-Akzent
+  akteur('tinte6', { x: X + KX[2], y: KY - 20, o: 0, s: 1.12 });
+  set('tinte6', tC + .05, { o: .9 }); tw('tinte6', tC + .05, 1.1, { o: 0, s: 1.4 }, 'weich');
+  bump('k6Cm', tC + .5, 1.15);
+  // Merke dir: Bühne hell, Kachel C, Text im Bild
+  aus(['k6A', 'k6B'], tK - .1, .4);
+  tw('k6C', tK, .9, { x: X + 232, y: 250, s: .5 }, 'inout');
+  const tOe = W('Öffne', 30), tSu = W('Such', 31), tHi = W('Hilfe', 32);
+  titelEin('tb6', tK + .4, [tK + .4, tK + .48, tK + .56, tOe - .1, tOe, tSu - .1, tSu, tHi - .1, tHi, tHi + .08]);
+  const ws = [...document.querySelectorAll('#tb6 .w')]; ws[2].classList.add('gruen');
+  // Öffne jeden Brief sofort: Umschlag hüpft, der Brief steigt heraus
+  ein('umschlag6', tK + .5, { x: X + 1180, y: 600 }, { y: 70 }, 'whoosh');
+  el('brief6wrap').innerHTML = briefHTML('b6'); briefMarken('b6', 'aus');
+  akteur('brief6wrap', { x: X + 1180, y: 600, o: 0, s: .3 });
+  huepfen('umschlag6', tOe - .35, 16);
+  tw('brief6wrap', tOe, .15, { o: 1 }); tw('brief6wrap', tOe, .8, { y: 530, s: .95 }, 'sanft'); cue(tOe, 'plopp');
+  tw('umschlag6', tOe + .1, .5, { y: 760, o: 0, s: .8 }, 'in');
+  // rechts: drei Häkchen – Öffnen, Verstehen, Hilfe holen
+  const RX = X + 1580, RY = [340, 540, 740];
+  const haken = (ic, ok, y, t, klang) => {
+    ein(ic, t - .3, { x: RX, y }, { x: 60 }, 'whoosh');
+    pop(ok, t + .25, { x: RX + 56, y: y + 40 }, klang);
+  };
+  haken('i6a', 'ok6a', RY[0], W('sofort', 30), 'ding');
+  // Such Absender, Frist und Aufgabe
+  markeEin('b6', 1, W('Absender', 31)); markeEin('b6', 2, W('Frist', 31)); markeEin('b6', 3, W('Aufgabe', 31));
+  haken('i6b', 'ok6b', RY[1], WE('Aufgabe', 31) + .1, 'ding');
+  // Hilfe holen
+  haken('i6c', 'ok6c', RY[2], tHi, 'ding');
+  // bevor die Frist vorbei ist: alle drei Häkchen hüpfen
+  const tV = W('Frist', 32);
+  bump('b6M2', tV, 1.08);
+  ['ok6a', 'ok6b', 'ok6c'].forEach((id, k) => huepfen(id, W('vorbei', 32) + k * .12, 14));
+  cue(W('vorbei', 32) + .1, 'erfolg'); akzent(W('vorbei', 32), .04);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.2;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

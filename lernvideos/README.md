@@ -34,3 +34,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 14 | [Mythos oder Wahrheit: Ausbildung](14-mythos-ausbildung/) | Mythos oder Wahrheit | Erzähler | 1:54 | fertig |
 | 15 | [Mythos oder Wahrheit: Wohnen & Versicherungen](15-mythos-wohnen/) | Mythos oder Wahrheit | Erzählerin | 2:02 | fertig |
 | 16 | [Was würdest du tun? Verschlafen am Berufsschultag](16-verschlafen/) | Was würdest du tun? | Erzähler, Mai | 1:44 | fertig |
+| 17 | [Was würdest du tun? Ein Brief mit „Frist“](17-brief-mit-frist/) | Was würdest du tun? | Erzähler, Amir | 1:56 | fertig |
