@@ -105,7 +105,9 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
    gewollte Aufschläge. Dann `--standbilder` am Ende jeder Szene und bei jeder Handlung – **Bilder ansehen** (Read) und
    prüfen: Text passt in Karten, nichts verdeckt, Pfeilspitzen frei, richtiger Sprecher, Titel nicht zu lang.
 6. `node werkzeug/rendern.mjs lernvideos/NN-ordner` → `film.mp4`, `film-poster.png`; dann
-   `node werkzeug/untertitel.mjs lernvideos/NN-ordner` → `film.vtt` (Untertitel als eigene Spur, nie ins Bild). Aufräumen: `film.html`,
+   `node werkzeug/untertitel.mjs lernvideos/NN-ordner` → `film.vtt` (Untertitel als eigene Spur, nie ins Bild).
+   Was für die Stimme anders geschrieben ist (Zahlen als Wörter, „Ih-Geh-Metall“), in konzept.md unter
+   `## Schreibweise im Untertitel` als „- gesprochen → geschrieben“ eintragen – der Untertitel zeigt dann Ziffern/Abkürzung. Aufräumen: `film.html`,
    `standbild-*.png`, `.frames/` löschen (`.stimme/` bleibt, ist ignoriert).
 
 Fallen aus früheren Kursen:
