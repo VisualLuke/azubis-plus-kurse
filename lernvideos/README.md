@@ -1,6 +1,6 @@
-# Lernvideos – 30 Kurse für internationale Azubis
+# Lernvideos – 45 Kurse für internationale Azubis
 
-Quelle: Briefing „Azubis Plus – 30 Lernvideos für internationale Azubis“. Nummern und Themen aus dem Briefing,
+Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“. Nummern und Themen aus dem Briefing,
 Sprechertext je Kurs in `NN-thema/konzept.md` (Abschnitt `## Sprechertext`), Korrekturen am Briefing in `korrekturen.md`.
 
 Ablauf je Kurs:
@@ -48,3 +48,18 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 28 | [Fachvokabeln: Pflege](28-vokabeln-pflege/) | Fachvokabeln | Erzähler, Mai, Praxisanleiterin | 1:58 | fertig |
 | 29 | [Fachvokabeln: Handwerk & Elektro](29-vokabeln-elektro/) | Fachvokabeln | Erzählerin, Kwame, Geselle | 2:09 | fertig |
 | 30 | [Fachvokabeln: Was der Chef wirklich meint](30-was-der-chef-meint/) | Fachvokabeln | Erzähler, Sabine, Amir | 2:04 | fertig |
+| 31 | [Fachvokabeln: Allgemeine Wörter in der Ausbildung](31-vokabeln-ausbildung/) | Fachvokabeln | Erzählerin, Sabine, Kwame | – | in Arbeit |
+| 32 | [Wer ist wer im Betrieb?](32-wer-ist-wer/) | Erklärvideo | Erzähler | – | in Arbeit |
+| 33 | [Deine erste Woche in der Berufsschule](33-erste-woche-berufsschule/) | Podcast | Priya, Jonas | – | in Arbeit |
+| 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | – | in Arbeit |
+| 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | – | in Arbeit |
+| 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | – | in Arbeit |
+| 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | – | in Arbeit |
+| 38 | [Betriebsrat, JAV & Gewerkschaft](38-betriebsrat-jav/) | Podcast | Mai, Jonas | – | in Arbeit |
+| 39 | [Was würdest du tun? Ein Kunde beschwert sich](39-kunde-beschwert-sich/) | Was würdest du tun? | Erzählerin, Amir, Herr Braun | – | in Arbeit |
+| 40 | [Fachvokabeln: Kfz-Werkstatt](40-vokabeln-kfz/) | Fachvokabeln | Erzähler, Amir, Sabine | – | in Arbeit |
+| 41 | [Fachvokabeln: Hotel](41-vokabeln-hotel/) | Fachvokabeln | Erzähler, Ana, Empfangschefin | – | in Arbeit |
+| 42 | [Was ist ein Verein?](42-verein/) | Erklärvideo | Erzähler | – | in Arbeit |
+| 43 | [Wie funktioniert die Demokratie?](43-demokratie/) | Erklärvideo | Erzählerin | – | in Arbeit |
+| 44 | [Das Grundgesetz – deine Grundrechte](44-grundgesetz/) | Erklärvideo | Erzähler | – | in Arbeit |
+| 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | – | in Arbeit |

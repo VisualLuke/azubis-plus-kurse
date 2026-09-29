@@ -38,13 +38,28 @@ Für jeden, der (Mensch oder Agent) ein Lernvideo aus dem Briefing baut. Vorher 
 | 28 | `28-vokabeln-pflege` | Erzähler, Mai, Praxisanleiterin (PcHpp…) | Mai, Praxisanleiterin |
 | 29 | `29-vokabeln-elektro` | Erzählerin, Kwame, Geselle (K8bIZ…) | Kwame, Geselle |
 | 30 | `30-was-der-chef-meint` | Erzähler, Sabine, Amir | Sabine, Amir |
+| 31 | `31-vokabeln-ausbildung` | Erzählerin, Sabine, Kwame | Sabine, Kwame, `figur-geselle` (Gesellin) |
+| 32 | `32-wer-ist-wer` | Erzähler | Kwame, Frau Krause = `figur-chefin`, Sabine, `figur-geselle` |
+| 33 | `33-erste-woche-berufsschule` | Priya, Jonas | Priya, Jonas |
+| 34 | `34-telefonieren` | Erzähler, Mai, Frau Wolf (oClOr…) | Mai, Frau Wolf = `figur-empfangschefin` nur als Anruferin (Handy) |
+| 35 | `35-kwames-nachrichten` | Erzähler, Kwame | Kwame, Frau Berger = `figur-lehrerin`, Sabine, Herr Schmitt = `figur-vermieter` |
+| 36 | `36-freundschaften` | Erzählerin | Figuren nach Wahl |
+| 37 | `37-mythos-feiertage` | Erzähler | Figuren nach Wahl |
+| 38 | `38-betriebsrat-jav` | Mai, Jonas | Mai, Jonas |
+| 39 | `39-kunde-beschwert-sich` | Erzählerin, Amir, Herr Braun (K8bIZ…) | Amir, Herr Braun = `figur-kunde` |
+| 40 | `40-vokabeln-kfz` | Erzähler, Amir, Sabine | Amir, Sabine |
+| 41 | `41-vokabeln-hotel` | Erzähler, Ana (Mac2F…), Empfangschefin (PcHpp…) | Ana, `figur-empfangschefin`, Herr Klein = `figur-stammgast` |
+| 42 | `42-verein` | Erzähler | Figuren nach Wahl |
+| 43 | `43-demokratie` | Erzählerin | Figuren nach Wahl |
+| 44 | `44-grundgesetz` | Erzähler | Figuren nach Wahl |
+| 45 | `45-pruefungssprache` | Erzählerin | Figur nach Wahl |
 
 Voice-IDs: Erzähler/Jonas `K8bIZwDsGMHreGKTIVHN`, Erzählerin `oClOrzqamOXmtcB8iqTj`, Sabine `PcHppp9ymY0Wa5ee6hOQ`,
-Amir/Kwame/Yusuf `hfqsl1OMbiWsgPpht3el`, Mai/Priya `Mac2FKpSgaGIsaNRXt8A` (Standard in `werkzeug/stimme.mjs`).
+Amir/Kwame/Yusuf `hfqsl1OMbiWsgPpht3el`, Mai/Priya/Ana `Mac2FKpSgaGIsaNRXt8A` (Standard in `werkzeug/stimme.mjs`).
 In `konzept.md` alle Sprecher des Kurses mit `@stimme Name: <id>` festlegen. Keine zwei Rollen eines Videos mit derselben Stimme.
 
-Figuren in `teile/`: `figur-mai`, `-jonas`, `-sabine`, `-amir`, `-kwame`, `-priya`, `-yusuf`, `-chefin`, `-vermieter`,
-`-kuechenchef`, `-geselle`, `-baeckermeisterin`, `-praxisanleiterin`; Ebenen `figur-augen`, `figur-mund-zu`, `-auf`, `-froh`.
+Figuren in `teile/`: `figur-mai`, `-jonas`, `-sabine`, `-amir`, `-kwame`, `-priya`, `-yusuf`, `-ana`, `-chefin`, `-vermieter`,
+`-kuechenchef`, `-geselle`, `-baeckermeisterin`, `-praxisanleiterin`, `-empfangschefin`, `-kunde`, `-lehrerin`, `-stammgast`; Ebenen `figur-augen`, `figur-mund-zu`, `-auf`, `-froh`.
 Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen-Geste (`figur-daumen` nicht verwenden).
 
 ## Inhalt

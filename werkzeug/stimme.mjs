@@ -33,10 +33,11 @@ const STIMMEN = {
   'Erzähler': 'K8bIZwDsGMHreGKTIVHN', 'Erzählerin': 'oClOrzqamOXmtcB8iqTj',
   'Jonas': 'K8bIZwDsGMHreGKTIVHN', 'Sabine': 'PcHppp9ymY0Wa5ee6hOQ',
   'Amir': 'hfqsl1OMbiWsgPpht3el', 'Kwame': 'hfqsl1OMbiWsgPpht3el', 'Yusuf': 'hfqsl1OMbiWsgPpht3el',
-  'Mai': 'Mac2FKpSgaGIsaNRXt8A', 'Priya': 'Mac2FKpSgaGIsaNRXt8A',
+  'Mai': 'Mac2FKpSgaGIsaNRXt8A', 'Priya': 'Mac2FKpSgaGIsaNRXt8A', 'Ana': 'Mac2FKpSgaGIsaNRXt8A',
   // Nebenrollen – treffen sie im selben Video auf dieselbe Stimme, in konzept.md per @stimme umlegen
   'Küchenchef': 'K8bIZwDsGMHreGKTIVHN', 'Geselle': 'K8bIZwDsGMHreGKTIVHN',
-  'Frau Krause': 'oClOrzqamOXmtcB8iqTj', 'Bäckermeisterin': 'PcHppp9ymY0Wa5ee6hOQ', 'Praxisanleiterin': 'PcHppp9ymY0Wa5ee6hOQ',
+  'Frau Krause': 'oClOrzqamOXmtcB8iqTj', 'Frau Wolf': 'oClOrzqamOXmtcB8iqTj', 'Herr Braun': 'K8bIZwDsGMHreGKTIVHN',
+  'Empfangschefin': 'PcHppp9ymY0Wa5ee6hOQ', 'Bäckermeisterin': 'PcHppp9ymY0Wa5ee6hOQ', 'Praxisanleiterin': 'PcHppp9ymY0Wa5ee6hOQ',
 };
 
 /* ---------- Sprechertext lesen ---------- */

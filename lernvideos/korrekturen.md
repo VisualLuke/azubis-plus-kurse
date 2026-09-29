@@ -30,3 +30,28 @@ Vorgaben: **keine Regeln für unter 18** (keine minderjährigen Azubis), **keine
 | 29 | 9–10 | „Freischalten, sichern, prüfen – das sind die ersten drei der fünf Sicherheitsregeln. Als Azubi machst du das nur mit einer Fachkraft.“ Text im Bild: „5 Regeln: freischalten · sichern · prüfen · erden · abdecken“ |
 
 Nicht übernommen (keine Azubis unter 18): Kurs 8 (Ruhezeit unter 18), Kurs 12 (Überstunden unter 18), Kurs 27 (Backstube 3 Uhr bleibt).
+
+## Kurse 31–45 (Briefing „Azubis Plus – Lernvideos 31–45“, Faktencheck 29.09.2026)
+
+Der Rest des Briefings ist sachlich richtig (u. a. Noten 1–6, Assistierte Ausbildung kostenlos, Betriebsrat ab fünf
+Beschäftigten, ver.di/IG Metall/NGG, Tanzverbot Karfreitag in Bayern, privates Feuerwerk nur an Silvester und Neujahr,
+HU meistens alle zwei Jahre, über 600.000 Vereine, sieben Mitglieder für ein e.V., Bundestag alle vier Jahre,
+Grundgesetz seit 1949). Folgende Stellen werden genauer bzw. an die Vorgaben angepasst:
+
+| Kurs | Szene | Änderung |
+| --- | --- | --- |
+| 37 | 2 | „Mythos! Manche Feiertage gelten überall, aber jedes Bundesland hat auch eigene. Bayern hat besonders viele, zum Beispiel Heilige Drei Könige oder Fronleichnam.“ |
+| 42 | 4 | „Meistens einmal im Jahr gibt es die Mitgliederversammlung.“ (Häufigkeit steht in der Satzung) |
+| 44 | 3 | „Der erste Artikel beginnt mit dem wichtigsten Satz: ‚Die Würde des Menschen ist unantastbar.‘“ (vor Artikel 1 steht die Präambel) |
+
+Für alle 31–45 gilt außerdem:
+
+- **Kein Kurstitel im Video.** „Text im Bild“, der nur den Titel wiederholt (z. B. „Wer ist wer im Betrieb?“,
+  „Fachvokabeln: Hotel“, „Mythos oder Wahrheit: Feiertage“, „Kwames Nachrichten“), wird weggelassen. Inhaltliche
+  Einblendungen („Ein Anruf von der Behörde“ ist Situation, nicht Titel) bleiben.
+- **Kein Alkohol im Bild:** Bier bei der Kerwa (37) und „etwas trinken gehen“ (36) nur gesprochen; gezeigt werden Musik,
+  Festzelt, Bratwurst, Limo/Kaffee.
+- **Keine Daumen-Geste:** „Daumen hoch“ (35) und „Daumen mit Argument“ (45) durch Herz/Haken bzw. Sprechblase ersetzen.
+- **Keine Marken und Parteien:** Auto in 40 ohne Logo („der blaue Golf“ bleibt nur gesprochen), in 43 keine Parteinamen,
+  Logos oder echten Politiker, neutrale Farbblöcke.
+- 43, Szene 7 („Wählen … ab 18“) ist das Wahlalter, keine Regel für minderjährige Azubis – bleibt.
