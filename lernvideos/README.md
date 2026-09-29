@@ -39,3 +39,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 19 | [Was würdest du tun? „Ihr Konto wurde gesperrt“](19-konto-gesperrt/) | Was würdest du tun? | Erzähler, Kwame | 1:43 | fertig |
 | 20 | [Der schlechte Tag: Amirs Urlaub](20-amirs-urlaub/) | Der schlechte Tag | Erzählerin, Amir, Sabine | 1:29 | fertig |
 | 21 | [Der schlechte Tag: Mais Post](21-mais-post/) | Der schlechte Tag | Erzähler, Mai | 1:29 | fertig |
+| 22 | [Der schlechte Tag: Kwames erster Arbeitstag](22-kwames-erster-tag/) | Der schlechte Tag | Erzähler, Kwame, Frau Krause, Sabine | 1:36 | fertig |

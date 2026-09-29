@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der schlechte Tag: Kwames erster Arbeitstag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne.abend{width:900px;height:720px;border-radius:48px;background:linear-gradient(160deg,var(--b600),var(--b700));overflow:hidden}
+.buehne .strasse{position:absolute;left:0;right:0;top:612px;height:64px;background:var(--b700);opacity:.55}
+.buehne .strasse i{position:absolute;left:0;right:0;top:29px;height:6px;background:repeating-linear-gradient(90deg,var(--b300) 0 46px,transparent 46px 92px);opacity:.7}
+.buehne .boden{position:absolute;left:0;right:0;top:590px;bottom:0;background:var(--b700);opacity:.35}
+.buehne.hell .boden{background:var(--b200);opacity:.45}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:72px}
+.block .titel + .titel{margin-top:8px}
+.block.gross .titel{font:800 104px/112px Inter;letter-spacing:-.03em}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.chip{display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;font:800 28px/32px Inter;white-space:nowrap;
+  background:var(--b500);color:var(--surface);box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.chip.zeit{font:800 34px/38px Inter;padding:12px 24px;background:var(--surface);color:var(--b700);box-shadow:0 6px 18px rgba(22,19,37,.18)}
+.chip.zeit.rot{background:var(--error);color:var(--surface)}
+.chip.zeit.gruen{background:var(--success);color:var(--surface)}
+.chip.du{background:var(--error-bg);color:var(--error-text);box-shadow:0 6px 16px rgba(226,85,106,.25);font-size:34px;line-height:38px}
+.chip.sie{background:var(--success);color:var(--surface);box-shadow:0 6px 16px rgba(31,169,113,.3);font-size:34px;line-height:38px}
+.chip.leise{background:var(--surface);color:var(--b600);box-shadow:0 6px 16px rgba(22,19,37,.12);font-size:30px;line-height:34px}
+.label{padding:10px 20px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 22px/26px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.1)}
+.warnschild{width:430px;padding:16px 22px;border-radius:18px;background:var(--warning-bg);border:6px solid var(--warning);display:flex;align-items:center;gap:16px;
+  box-shadow:0 10px 26px rgba(22,19,37,.25);font:800 28px/33px Inter;color:var(--ink)}
+.warnschild i{width:78px;height:78px;border-radius:999px;background:var(--surface);flex:none;display:flex;align-items:center;justify-content:center}
+.warnschild i svg{width:62px}
+.absperr{width:30px;height:330px;border-radius:15px;background:repeating-linear-gradient(-45deg,var(--error) 0 22px,var(--surface) 22px 44px);
+  box-shadow:0 6px 16px rgba(22,19,37,.25);transform-origin:50% 100%}
+.tropfen{width:30px;height:40px}
+.tag1{width:170px;height:190px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);overflow:hidden;text-align:center}
+.tag1 .kopf{height:48px;background:var(--b500);color:var(--surface);font:800 24px/48px Inter}
+.tag1 b{display:block;font:800 100px/136px Inter;color:var(--ink);letter-spacing:-.04em}
+.woche{display:flex;gap:14px}
+.woche .t{width:92px;height:96px;border-radius:18px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  font:800 20px/24px Inter;color:var(--b600)}
+.woche .t u{width:40px;height:40px;border-radius:999px;background:var(--n200);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.woche .t u svg{width:26px}
+/* Handy-Bildschirme */
+.schirm{border-radius:14px;overflow:hidden;background:var(--bg)}
+.scr{position:absolute;inset:0;padding:12px 10px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.scr .ak{font:800 12px/15px Inter;color:var(--b500)}
+.scr h4{font:800 20px/24px Inter;color:var(--ink)}
+.fp{display:flex;align-items:center;gap:7px;padding:7px;border-radius:9px;background:var(--surface);box-shadow:0 2px 6px rgba(22,19,37,.08);font:800 13px/16px Inter;color:var(--b600)}
+.fp i{width:22px;height:22px;border-radius:6px;background:var(--b100);flex:none;display:flex;align-items:center;justify-content:center}
+.fp i svg{width:16px}
+.fp s{flex:1;height:7px;border-radius:4px;background:var(--n200);text-decoration:none}
+.fp.an{outline:3px solid var(--b300)}
+.chatkopf{display:flex;align-items:center;gap:8px;margin:-12px -10px 4px;padding:12px;background:var(--b500);color:var(--surface);font:800 16px/18px Inter}
+.chatkopf i{width:28px;height:28px;border-radius:999px;background:var(--b200);overflow:hidden;position:relative}
+.bl{align-self:flex-end;width:132px;background:var(--b500);border-radius:14px 14px 4px 14px;padding:10px;display:flex;flex-direction:column;gap:7px}
+.bl i{display:block;height:8px;border-radius:4px;background:var(--b200);transform-origin:left center}
+.br{align-self:flex-start;width:120px;background:var(--surface);border-radius:14px 14px 14px 4px;padding:8px;box-shadow:0 2px 6px rgba(22,19,37,.1)}
+.hk{align-self:flex-end;font:800 14px/14px Inter;color:var(--success-text);letter-spacing:-3px}
+.kachel{width:130px;height:130px;border-radius:28px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.1);display:flex;align-items:center;justify-content:center}
+.kachel .in{width:96px}
+.kachel b{font:800 44px/1 Inter;color:var(--success-text)}
+.ring{width:150px;height:150px}
+/* Zurückspulen */
+#spul{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#schleier{position:absolute;inset:0;background:var(--b700)}
+.streif{position:absolute;left:0;top:0;border-radius:999px}
+.band{position:absolute;left:0;top:-300px;height:1680px}
+#rTitel{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;align-items:center;gap:26px}
+#rTitel .titel{font:800 76px/88px Inter;letter-spacing:-.02em;color:var(--surface);white-space:nowrap}
+#rTitel .ic{width:92px;height:92px}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgBus"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="12" rx="3" fill="var(--b500)"/><rect x="4" y="5" width="12" height="5" rx="1.5" fill="var(--b100)"/><circle cx="6" cy="16" r="2" fill="var(--ink)"/><circle cx="14" cy="16" r="2" fill="var(--ink)"/></svg></template>
+<template id="svgTropfen"><svg viewBox="0 0 30 40"><path d="M15 2C11 12 4 19 4 27a11 11 0 0 0 22 0c0-8-7-15-11-25Z" fill="var(--info)"/><path d="M10 26a5 5 0 0 0 4 6" stroke="var(--info-bg)" stroke-width="3" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgHand"><svg viewBox="0 0 120 140"><g fill="var(--b50)" stroke="var(--b300)" stroke-width="4" stroke-linejoin="round">
+  <rect x="26" y="20" width="16" height="64" rx="8"/><rect x="44" y="8" width="16" height="74" rx="8"/><rect x="62" y="12" width="16" height="72" rx="8"/><rect x="80" y="26" width="15" height="60" rx="7.5"/>
+  <path d="M24 70c0-8 6-12 14-12h44c10 0 16 6 16 16v18c0 24-14 38-36 38s-34-12-38-30l-6-24c-2-8 8-12 12-4l6 12Z"/></g>
+  <path d="M40 78h40" stroke="var(--b200)" stroke-width="4" stroke-linecap="round"/></svg></template>
+<template id="svgHandschlag"><svg viewBox="0 0 120 120"><circle cx="60" cy="62" r="56" fill="var(--b700)" opacity=".2"/><circle cx="60" cy="60" r="56" fill="var(--surface)"/>
+  <path d="M6 74l24-20 12 14-24 20Z" fill="var(--b500)"/><path d="M114 74l-24-20-12 14 24 20Z" fill="var(--b700)"/>
+  <path d="M34 60c10-10 22-15 34-13l18 10c4 3 4 8 0 10l-6 4c4 4 2 9-3 10l-4 1c1 5-3 8-8 7l-6-1c-1 4-6 6-10 3L36 78Z" fill="var(--b100)" stroke="var(--b300)" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M60 60l13 9M55 68l12 9M50 75l8 6" stroke="var(--b300)" stroke-width="3" stroke-linecap="round"/></svg></template>
+<template id="pKwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="pKrause"><div class="figur"><div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen~k}}</div>
+  <div class="ebene braue"><svg viewBox="0 0 160 160"><rect x="83" y="57.5" width="14" height="8" rx="3" fill="var(--b50)"/>
+    <path class="bp" d="M85 63q5-3 10 0" stroke="var(--ink)" stroke-opacity=".6" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="ebene flach"><svg viewBox="0 0 160 160"><path d="M75 87.5h10" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/></svg></div>
+  <div class="ebene zu">{{figur-mund-zu~k}}</div><div class="ebene auf">{{figur-mund-auf~k}}</div><div class="ebene froh">{{figur-mund-froh~k}}</div></div></template>
+<template id="pSabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen~s}}</div>
+  <div class="ebene zu">{{figur-mund-zu~s}}</div><div class="ebene auf">{{figur-mund-auf~s}}</div><div class="ebene froh">{{figur-mund-froh~s}}</div></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Der Weg: falscher Bus, zu spät -->
+  <div class="a buehne abend" id="bue0"><div class="strasse"><i></i></div></div>
+  <div class="a" id="uhr0" style="width:150px;height:150px"></div>
+  <div class="a chip zeit" id="zeit0">7:00</div>
+  <div class="a" id="halt0" style="width:200px">{{haltestelle}}</div>
+  <div class="a auf-brand" id="betrieb0" style="width:270px" data-gruppe="betrieb0">{{betrieb}}</div>
+  <div class="a plakette" id="blitz0" style="background:var(--warning)" data-gruppe="betrieb0"></div>
+  <div class="a auf-brand" id="bus0" style="width:300px" data-gruppe="bus0">{{bus}}</div>
+  <div class="a portrait" id="kw0" style="width:190px;height:190px" data-sprecher="Kwame" data-gruppe="bus0"></div>
+  <div class="a frage" id="frage0">?</div>
+  <div class="a plakette rot" id="x0" data-frei></div>
+  <div class="a tropfen" id="tr0a" data-frei></div><div class="a tropfen" id="tr0b" data-frei></div><div class="a tropfen" id="tr0c" data-frei></div>
+
+  <!-- 1 · Falsche Schuhe -->
+  <div class="a buehne abend" id="bue1"><div class="boden"></div></div>
+  <div class="a warnschild" id="schild1"><i id="schildI"></i><span>Nur mit Sicherheits&shy;schuhen</span></div>
+  <div class="a portrait" id="kw1" style="width:180px;height:180px" data-sprecher="Kwame"></div>
+  <div class="a" id="sneaker1" style="width:220px">{{sneaker}}</div>
+  <div class="a auf-brand" id="sch1a" style="width:210px">{{sicherheitsschuh}}</div>
+  <div class="a auf-brand" id="sch1b" style="width:210px">{{sicherheitsschuh~b}}</div>
+  <div class="a absperr" id="sperre1"></div>
+  <div class="a plakette rot" id="x1" data-frei></div>
+
+  <!-- 2 · Du statt Sie, Handy in der Einführung -->
+  <div class="a buehne abend" id="bue2"></div>
+  <div class="a portrait" id="kw2" style="width:220px;height:220px" data-sprecher="Kwame" data-gruppe="kwhandy"></div>
+  <div class="a portrait" id="kr2" style="width:220px;height:220px" data-sprecher="Frau Krause"></div>
+  <div class="a label" id="lbl2">Geschäftsführerin</div>
+  <div class="a" id="hand2" style="width:100px;transform-origin:50% 90%"></div>
+  <div class="a chip du" id="du2">Du</div>
+  <div class="a auf-brand" id="flip2" style="width:270px">{{flipchart}}</div>
+  <div class="a portrait" id="sa2" style="width:170px;height:170px" data-sprecher="Sabine"></div>
+  <div class="a chip leise" id="hm2">Hm-hm</div>
+  <div class="a auf-brand" id="handy2" style="width:190px" data-gruppe="kwhandy">{{handy}}</div>
+  <div class="a plakette rot" id="ping2" style="width:44px;height:44px;border-width:3px;font:800 20px/1 Inter;color:var(--surface)" data-gruppe="kwhandy">3</div>
+
+  <!-- 3 · Richtig: Weg vorher testen, früh da sein -->
+  <div class="a buehne hell" id="bue3"></div>
+  <div class="a tag1" id="tag3"><div class="kopf" id="tag3k">Start</div><b id="tag3b">−1</b></div>
+  <div class="a portrait" id="kw3" style="width:170px;height:170px" data-sprecher="Kwame"></div>
+  <div class="a" id="handy3" style="width:290px" data-gruppe="handy3">{{handy~3}}</div>
+  <div class="a schirm" id="schirm3" style="width:109px;height:196px" data-gruppe="handy3">
+    <div class="scr"><div class="ak">Fahrplan</div>
+      <div class="fp"><i class="busI"></i><s></s></div><div class="fp an" id="fp3"><i class="busI"></i><s></s></div><div class="fp"><i class="busI"></i><s></s></div><div class="fp"><i class="busI"></i><s></s></div></div></div>
+  <div class="a" id="halt3" style="width:170px" data-gruppe="halt3">{{haltestelle~3}}</div>
+  <div class="a" id="betrieb3" style="width:220px" data-gruppe="betrieb3">{{betrieb~3}}</div>
+  <div class="a" id="route3" style="width:500px;height:150px" data-frei><svg viewBox="0 0 500 150"><path id="routeP" d="M80 118C170 10 350 10 430 110" stroke="var(--b300)" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 22" fill="none"/></svg></div>
+  <div class="a" id="bus3" style="width:130px" data-frei>{{bus~3}}</div>
+  <div class="a" id="uhr3" style="width:130px;height:130px" data-gruppe="uhr3"></div>
+  <div class="a ring" id="ring3" data-gruppe="uhr3"><svg viewBox="0 0 150 150"><circle id="ring3p" cx="75" cy="75" r="68" stroke="var(--success)" stroke-width="8" fill="none" stroke-linecap="round" transform="rotate(-90 75 75)" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></svg></div>
+  <div class="a chip zeit gruen" id="zeit3">6:50</div>
+  <div class="a plakette gruen" id="ok3" data-frei></div>
+
+  <!-- 4 · Richtig: vorher nach Kleidung fragen -->
+  <div class="a buehne hell" id="bue4"></div>
+  <div class="a woche" id="woche4"></div>
+  <div class="a" id="handy4" style="width:500px" data-gruppe="handy4">{{handy~4}}</div>
+  <div class="a schirm" id="schirm4" style="width:187px;height:337px" data-gruppe="handy4">
+    <div class="scr"><div class="chatkopf"><i id="chatAv"></i><span>Sabine</span></div>
+      <div class="bl" id="bl4"><i id="z4a"></i><i id="z4b" style="width:80%"></i><i id="z4c" style="width:45%"></i></div>
+      <div class="hk" id="hk4">✓✓</div>
+      <div class="br" id="br4"><div id="brSchuh">{{sicherheitsschuh~c}}</div></div></div></div>
+  <div class="a portrait" id="kw4" style="width:190px;height:190px" data-sprecher="Kwame"></div>
+  <div class="a auf-brand" id="betrieb4" style="width:200px">{{betrieb~4}}</div>
+  <div class="a" id="schuhe4" style="width:180px">{{sicherheitsschuh~d}}</div>
+
+  <!-- 5 · Richtig: „Sie“ sagen, Handy in die Tasche -->
+  <div class="a buehne hell" id="bue5"></div>
+  <div class="a portrait" id="kw5" style="width:220px;height:220px" data-sprecher="Kwame"></div>
+  <div class="a portrait" id="kr5" style="width:220px;height:220px" data-sprecher="Frau Krause"></div>
+  <div class="a" id="schlag5" style="width:130px"></div>
+  <div class="a chip sie" id="sie5">Sie</div>
+  <div class="a chip leise" id="du5">Du</div>
+  <div class="a" id="tascheH5" style="width:200px" data-gruppe="tasche5">{{tasche-hinten}}</div>
+  <div class="a" id="handy5" style="width:170px" data-gruppe="tasche5">{{handy~5}}</div>
+  <div class="a" id="tascheV5" style="width:200px" data-gruppe="tasche5">{{tasche-vorne}}</div>
+  <div class="a plakette gruen" id="ok5" data-frei></div>
+
+  <!-- 6 · Also: Sicherungskasten, vier Haken -->
+  <div class="a buehne hell" id="bue6"></div>
+  <div class="a" id="kasten6" style="width:280px" data-gruppe="kasten6">{{sicherungskasten}}</div>
+  <div class="a" id="fokus6" style="width:66px;height:66px;border-radius:14px;border:5px solid var(--success)" data-gruppe="kasten6"></div>
+  <div class="a portrait" id="kw6" style="width:190px;height:190px" data-sprecher="Kwame"></div>
+  <div class="a portrait" id="sa6" style="width:170px;height:170px" data-sprecher="Sabine"></div>
+  <div class="a kachel" id="k6a"><div class="in">{{bus~6}}</div></div>
+  <div class="a kachel" id="k6b"><div class="in">{{sicherheitsschuh~6}}</div></div>
+  <div class="a kachel" id="k6c"><b>Sie</b></div>
+  <div class="a kachel" id="k6d"><div class="in">{{tasche-vorne~6}}</div></div>
+  <div class="a plakette gruen" id="ok6a" data-frei></div><div class="a plakette gruen" id="ok6b" data-frei></div>
+  <div class="a plakette gruen" id="ok6c" data-frei></div><div class="a plakette gruen" id="ok6d" data-frei></div>
+</div></div>
+
+<!-- Zurückspulen: liegt über der Kamera -->
+<div id="spul">
+  <div id="schleier"></div>
+  <div id="streifen"></div>
+  <div class="a" id="pauseIc" style="width:250px;height:250px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <rect x="88" y="78" width="26" height="94" rx="8" fill="var(--b500)"/><rect x="136" y="78" width="26" height="94" rx="8" fill="var(--b500)"/></svg></div>
+  <div class="a" id="rewIc" style="width:250px;height:250px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <g id="rewTri"><path d="M126 82v86l-62-43Z" fill="var(--b500)"/><path d="M190 82v86l-62-43Z" fill="var(--b500)"/></g></svg></div>
+  <div class="a" id="uhrR" style="width:230px;height:230px"></div>
+  <div id="rTitel"><div class="ic" id="rIc"><svg viewBox="0 0 92 92"><path d="M44 18v56L8 46Z" fill="var(--surface)"/><path d="M84 18v56L48 46Z" fill="var(--surface)"/></svg></div>
+    <div class="block" id="tbR" style="position:relative;left:0;width:auto;height:auto"><div class="titel">Nochmal – aber richtig</div></div></div>
+  <div id="wisch"></div>
+</div>
+
+<div class="block gross" id="tb0"><div class="titel">Kwames erster Arbeitstag</div></div>
+<div class="block" id="tb1"><div class="titel">Falsche Schuhe</div></div>
+<div class="block" id="tb2"><div class="titel">Du statt Sie ·</div><div class="titel">Handy</div></div>
+<div class="block" id="tb3"><div class="titel">1. Weg vorher testen ·</div><div class="titel">früh da sein</div></div>
+<div class="block" id="tb4"><div class="titel">2. Vorher nach</div><div class="titel">Kleidung fragen</div></div>
+<div class="block" id="tb5"><div class="titel">3. „Sie“ sagen ·</div><div class="titel">4. Handy weg</div></div>
+<div class="block" id="tb6"><div class="titel">Ein guter Start</div><div class="titel">beginnt am</div><div class="titel">Abend davor</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Dann klappt der erste Tag.</div>
+  <div class="klein" id="asUnter">Ein guter erster Tag beginnt am Abend davor: Weg testen, Kleidung klären, höflich sein.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const schuetteln = (id, t, n = 4, a = 9) => { const x = wertBei(id, 'x', t); for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { x: x + (i % 2 ? a : -a) }, 'sinus'); tw(id, t + n * .09, .2, { x }, 'sinus'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Figur geht: kleine Schritte (Hüpfer) auf dem Weg
+const gehen = (id, t, d, x, y, n = 4, h = 10) => {
+  tw(id, t, d, { x }, 'inout');
+  for (let k = 0; k < n; k++) tw(id, t + k * d / n, d / n, { y: lerp(wertBei(id, 'y', t), y, (k + 1) / n) }, 'sinus', { bogen: h });
+};
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+function titelFarbe(id, t0, zeiten, farben = {}) {
+  titelEin(id, t0, zeiten);
+  const w = [...document.querySelectorAll(`#${id} .w`)];
+  for (const [i, f] of Object.entries(farben)) w[i].classList.add(f);
+}
+['x0', 'x1'].forEach(id => el(id).innerHTML = tpl('svgX'));
+['ok3', 'ok5', 'ok6a', 'ok6b', 'ok6c', 'ok6d'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+['tr0a', 'tr0b', 'tr0c'].forEach(id => el(id).innerHTML = tpl('svgTropfen'));
+document.querySelectorAll('.busI').forEach(i => i.innerHTML = tpl('svgBus'));
+el('hand2').innerHTML = tpl('svgHand'); el('schlag5').innerHTML = tpl('svgHandschlag');
+el('blitz0').innerHTML = '<svg viewBox="0 0 40 40"><path d="M23 4L9 23h10l-3 13 15-20H21Z" fill="var(--surface)"/></svg>';
+el('schildI').innerHTML = el('schuhe4').innerHTML;
+const PT = { 'Kwame': 'pKwame', 'Frau Krause': 'pKrause', 'Sabine': 'pSabine' };
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl(PT[p.dataset.sprecher]); });
+el('chatAv').innerHTML = `<div class="figur" style="position:absolute;inset:0;top:8%">${el('sa2').querySelector('.ebene').innerHTML}</div>`;
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 7;
+const SPUL = { stopp: 0, r: 0, c: 0 };   // Zeiten des Zurückspulens (unten gesetzt)
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  // Zurückspulen: Kamera zieht beim Rücklauf auf und wackelt leicht
+  const rp = clamp((t - SPUL.r) / (SPUL.c - SPUL.r)), rl = t > SPUL.r && t < SPUL.c ? Math.sin(Math.PI * rp) : 0;
+  z -= .12 * rl;
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  const wx = rl ? 5 * rl * Math.sin(t * 38) : 0, wy = rl ? 4 * rl * Math.cos(t * 31) : 0;
+  $('#kamera').style.transform = `translate(${wx.toFixed(2)}px,${wy.toFixed(2)}px) scale(${z})`;
+  // Standbild: Farben gedämpft von „Stopp“ bis zum Wechsel
+  const g = t < SPUL.c ? clamp((t - SPUL.stopp) / .35) : 0;
+  $('#kamera').style.filter = g > 0 ? `saturate(${(1 - .7 * g).toFixed(3)}) brightness(${(1 - .18 * g).toFixed(3)})` : '';
+  const kx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (kx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Zuhörer nickt ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], MUEDE = [], BLICK = [], BRAUE = [], NICK = [];      // [id, von, bis, …]
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const hoert = !spricht && (SAETZE.some(s => s.w !== p.dataset.sprecher && s.w !== 'Erzähler' && t >= s.a && t <= s.b + .3) || NICK.some(([id, a, b]) => id === p.id && t >= a && t < b));
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    const muede = MUEDE.find(([id, a, b]) => id === p.id && t >= a && t < b);
+    const blick = BLICK.find(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    const m = muede ? .55 - .06 * Math.sin(t * 1.7) : 1;
+    let bx = 0, by = 0;
+    if (blick) { const [, a, b, dx, dy] = blick, k = Math.min(clamp((t - a) / .25), clamp((b - t) / .25)); bx = dx * E.sinus(k); by = dy * E.sinus(k); }
+    p.querySelector('.augen').style.transform = `translate(${bx.toFixed(2)}%,${by.toFixed(2)}%) scaleY(${z < .035 ? .12 : m})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : hoert ? 3.2 * Math.max(0, Math.sin(t * 3.4 + i)) ** 4 : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const neig = BRAUE.reduce((v, [id, a, b]) => id === p.id ? v + Math.min(E.sanft(clamp((t - a) / .45)), 1 - E.sinus(clamp((t - b) / .5))) : v, 0);
+    p.querySelector('.figur').style.transform = `rotate(${(nick + 4 * neig).toFixed(2)}deg) translateY(${nick.toFixed(2)}px)`;
+    const bp = p.querySelector('.bp');
+    if (bp) bp.setAttribute('transform', `translate(0 ${(-7 * neig).toFixed(2)}) rotate(${(-12 * neig).toFixed(2)} 90 62)`);
+    const fl = p.querySelector('.flach');
+    if (fl) { const f = neig > .3 && auf <= .12 && !froh; fl.style.opacity = f ? 1 : 0; if (f) p.querySelector('.zu').style.opacity = 0; }
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+// Handy summt
+const summen = (id, t, d = .7, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` rotate(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}deg)`; });
+
+/* ---------- Uhr: kurve(t) → Minuten seit 0 Uhr ---------- */
+function uhr(id, kurve) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = kurve(t);
+    $(`#${id}h`).setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  });
+}
+
+/* ================= 0 · Der Weg: falscher Bus, zu spät ================= */
+akteur('bue0', { x: 1320, y: 540 });
+const BUS0 = { x: 1270, y: 724 }, HALT0 = { x: 1150, y: 600 }, AN0 = { x: 1390, y: 610 };
+{
+  const X = S(0), T0 = A(-.6);
+  ein('halt0', T0, { x: X + 990, y: 640 }, { y: 60 });
+  cue(T0, 'whoosh');
+  // Kwames erster Arbeitstag im Elektrobetrieb
+  const tK = W('Kwames', 1);
+  pop('kw0', tK + .1, { x: X + 1300, y: 560 }, 'pop', 'sanft');
+  titelEin('tb0', tK + .15);
+  document.querySelectorAll('#tb0 .wi').forEach(w => { AKTEURE.get(w).basis.y = 140; });
+  const tE = W('Elektrobetrieb', 1);
+  ein('betrieb0', tE - .15, { x: X + 1600, y: 590 }, { y: 80 }, 'whoosh');
+  pop('blitz0', tE + .35, { x: X + 1668, y: 505 }, 'ding'); wackeln('blitz0', tE + .85, 3, 6);
+  FROH.push(['kw0', tK + .4, W('kennt', 4)]); huepfen('kw0', tE + .2, 12);
+  // Beginn: sieben Uhr – die Uhr kommt, der Chip zeigt 7:00
+  const tB = W('Beginn', 2), tS7 = W('sieben', 2);
+  ein('uhr0', tB - .1, { x: X + 1010, y: 320 }, { y: -60 }, 'whoosh');
+  pop('zeit0', tS7, { x: X + 1170, y: 320 }, 'pop'); akzent(tS7, .03);
+  // um 6:45 los: die Uhr dreht zurück auf 6:45, Kwame geht zur Haltestelle
+  const tF = W('fährt', 3), t645 = W('sechs', 3), t725 = W('sieben', 6), tRueck = W('Zurückspulen', 17);
+  uhr('uhr0', t => rampe(t, t645, .9, 420, 405) + rampe(t, t725, 1.1, 0, 40) - rampe(t, tRueck + 1.2, 1.2, 0, 60));
+  HOOKS.push(t => {
+    const z = el('zeit0'), neu = t >= t725 + .6 && t < tRueck + 1.5 ? '7:25' : t >= t645 + .45 ? '6:45' : '7:00';
+    if (z.textContent !== neu) z.textContent = neu;
+    z.classList.toggle('rot', neu === '7:25');
+  });
+  bump('zeit0', t645 + .45, 1.15); cue(t645 + .45, 'klick');
+  gehen('kw0', tF - .1, .8, X + HALT0.x, HALT0.y, 3, 10);
+  // Er kennt den Weg nicht: Fragezeichen, Kwame schaut sich um
+  const tW = W('kennt', 4);
+  pop('frage0', tW, { x: X + HALT0.x, y: 452 }, 'pop'); wackeln('frage0', W('Weg', 4), 3, 6);
+  BLICK.push(['kw0', tW, tW + .7, -4, 0], ['kw0', tW + .7, tW + 1.4, 4, 0]);
+  // Der Bus fährt woanders hin: Bus hält, Kwame steigt ein, der Bus fährt in die falsche Richtung
+  const tBus = W('Bus', 5) - .45;
+  akteur('bus0', { x: X + 1640, y: BUS0.y, o: 0 });
+  tw('bus0', tBus, .3, { o: 1 }); tw('bus0', tBus, 1, { x: X + BUS0.x }, 'out'); cue(tBus, 'whoosh');
+  tw('bus0', tBus + .85, .15, { r: -2 }, 'sinus'); tw('bus0', tBus + 1, .3, { r: 0 }, 'sanft');
+  aus('frage0', tBus + .6);
+  const WIN = { x: X + BUS0.x - 92, y: BUS0.y - 30 };
+  const tEin = tBus + 1.05;
+  flug('kw0', tEin, .45, WIN.x, WIN.y, 60, { s: .28 }); cue(tEin, 'pop');
+  const tWo = W('woanders', 5);
+  tw('bus0', tWo, 1, { x: X + 960 }, 'in'); tw('bus0', tWo + .65, .35, { o: 0 });
+  tw('kw0', tWo, 1, { x: WIN.x - 310 }, 'in'); tw('kw0', tWo + .65, .35, { o: 0 });
+  cue(tWo, 'whoosh');
+  pop('x0', tWo + .7, { x: X + 1150, y: 560 }, 'plopp'); wackeln('x0', tWo + 1.1, 3, 5);
+  // Er kommt um 7:25 an: Kwame rennt heran, verschwitzt, die Uhr springt auf 7:25 (rot)
+  const tKo = W('kommt', 6) - .3;
+  aus('x0', tKo);
+  set('kw0', tKo - .05, { x: X + 900, y: 770, s: .7, o: 0 });
+  tw('kw0', tKo, .25, { o: 1 }); tw('kw0', tKo, 1.3, { s: 1 }, 'sanft');
+  tw('kw0', tKo, .3, { r: 5 }, 'sinus'); tw('kw0', tKo + 1.1, .4, { r: 0 }, 'sanft');
+  gehen('kw0', tKo, 1.4, X + AN0.x, AN0.y, 6, 16);
+  for (let k = 0; k < 6; k++) cue(tKo + k * .23, 'klick');
+  bump('uhr0', t725 + 1.1, 1.12);
+  const tFz = W('fünfundzwanzig', 6);
+  bump('zeit0', tFz, 1.2); wackeln('zeit0', tFz + .1, 3, 4); cue(tFz, 'plopp'); akzent(tFz, .045);
+  const tAn = W('an', 6) - .1;
+  [['tr0a', 1290, 492], ['tr0b', 1496, 500], ['tr0c', 1286, 596]].forEach(([id, x, y], k) => {
+    pop(id, tAn + k * .12, { x: X + x, y }, k ? null : 'pop');
+    tw(id, tAn + k * .12 + .5, 1.2, { y: y + 26 }, 'sinus');
+  });
+  MUEDE.push(['kw0', tAn, 999]);
+  textAus('tb0', SE(6) + .1);
+}
+
+/* ================= 1 · Falsche Schuhe ================= */
+pan2(SE(6) + .35, 1);
+akteur('bue1', { x: S(1) + 1320, y: 540 });
+{
+  const X = S(1);
+  akteur('kw1', { x: X + 1030, y: 470 });
+  // Er trägt weiße Sneaker: der Sneaker landet, Kwame freut sich
+  const tWs = W('weiße', 7);
+  akteur('sneaker1', { x: X + 1030, y: 520, o: 0 });
+  tw('sneaker1', tWs - .1, .15, { o: 1 }); tw('sneaker1', tWs - .1, .45, { y: 700 }, 'in'); landen('sneaker1', tWs + .35); cue(tWs + .35, 'plopp');
+  bump('sneaker1', W('Sneaker', 7), 1.08);
+  FROH.push(['kw1', W('Sneaker', 7), W('aber', 8)]); huepfen('kw1', W('Sneaker', 7) + .1, 10);
+  titelFarbe('tb1', W('Sneaker', 7), null, { 0: 'rot' });
+  // Auf der Baustelle: zwei schwere Sicherheitsschuhe stampfen herein
+  const tBa = W('Baustelle', 8) - .1;
+  [['sch1a', 1400, 0], ['sch1b', 1620, .28]].forEach(([id, x, d]) => {
+    akteur(id, { x: X + x, y: 360, o: 0 });
+    tw(id, tBa + d, .12, { o: 1 }); tw(id, tBa + d, .38, { y: 690 }, 'in'); landen(id, tBa + d + .38, 1.4); cue(tBa + d + .38, 'plopp');
+  });
+  akzent(tBa + .66, .04); schuetteln('sneaker1', tBa + .45, 3, 4);
+  // … braucht man aber Sicherheitsschuhe: Schild fällt herunter und pendelt aus
+  const tSi = W('Sicherheitsschuhe', 8) - .1;
+  akteur('schild1', { x: X + 1400, y: 150, o: 0 });
+  tw('schild1', tSi, .15, { o: 1 }); tw('schild1', tSi, .6, { y: 350 }, 'sanft'); cue(tSi, 'whoosh');
+  [3, -2, 1, 0].forEach((r, k) => tw('schild1', tSi + .45 + k * .28, .28, { r }, 'sinus'));
+  pop('x1', SE(8) - .1, { x: X + 1130, y: 628 }, 'plopp'); wackeln('x1', SE(8) + .3, 3, 5);
+  BLICK.push(['kw1', tBa, SE(8), 4, 0]);
+  // Heute darf er nur zuschauen: Absperrung fährt hoch, Kwame schaut von draußen zu
+  const tH = W('Heute', 9);
+  akteur('sperre1', { x: X + 1225, y: 610, sy: 0 });
+  tw('sperre1', tH, .5, { sy: 1 }, 'back'); cue(tH, 'klick');
+  tw('kw1', W('nur', 9), .6, { s: .92, y: 482 }, 'sanft');
+  BLICK.push(['kw1', W('nur', 9), 999, 5, 1]); MUEDE.push(['kw1', W('zuschauen', 9), 999]);
+  akzent(W('zuschauen', 9), .03);
+  textAus('tb1', SE(9) + .1);
+}
+
+/* ================= 2 · Du statt Sie, Handy in der Einführung ================= */
+pan2(SE(9) + .3, 2);
+akteur('bue2', { x: S(2) + 1320, y: 540 });
+{
+  const X = S(2);
+  akteur('kw2', { x: X + 1080, y: 470 });
+  // Dann kommt die Geschäftsführerin
+  const tG = W('Geschäftsführerin', 10) - .3;
+  akteur('kr2', { x: X + 1740, y: 470, o: 0, s: .9 });
+  tw('kr2', tG, .3, { o: 1 }); tw('kr2', tG, .9, { s: 1 }, 'sanft'); gehen('kr2', tG, 1, X + 1560, 470, 3, 10); cue(tG, 'whoosh');
+  pop('lbl2', tG + .9, { x: X + 1560, y: 624 }, 'pop');
+  // „Hey, wie geht's dir?“: Kwame winkt
+  const tHe = W('Hey', 11);
+  pop('hand2', tHe - .1, { x: X + 1250, y: 318 }, null);
+  for (let k = 0; k < 4; k++) tw('hand2', tHe + .1 + k * .22, .22, { r: k % 2 ? -14 : 14 }, 'sinus');
+  tw('hand2', tHe + .98, .3, { r: 0 }, 'sanft');
+  huepfen('kw2', tHe, 12);
+  // … dir: rotes „Du“
+  const tDi = W('dir', 11);
+  pop('du2', tDi, { x: X + 1320, y: 470 }, 'pop'); bump('du2', W('Kwame', 12), 1.12);
+  aus('hand2', SE(12) + .2);
+  FROH.push(['kw2', SE(12), W('Guten', 13)]);
+  // Pause: Frau Krause hebt eine Augenbraue und legt den Kopf schief
+  BRAUE.push(['kr2', SE(12) + .2, W('Mensah', 13) + .2]);
+  wackeln('du2', SE(12) + .35, 3, 5); akzent(SE(12) + .3, .04); cue(SE(12) + .3, 'scan');
+  titelEin('tb2', tDi, [tDi, tDi + .08, tDi + .16, tDi + .24, W('Handy', 14)]);
+  // Einführung: Flipchart, Sabine; Kwame schaut ständig aufs Handy
+  const tEi = W('Einführung', 14) - .2;
+  aus(['kr2', 'lbl2', 'du2'], SE(13) + .15);
+  ein('flip2', tEi, { x: X + 1430, y: 610 }, { y: 80 }, 'whoosh');
+  pop('sa2', tEi + .25, { x: X + 1625, y: 470 }, 'pop');
+  tw('kw2', tEi, .6, { x: X + 1060, y: 540, s: .9 }, 'sanft');
+  const tSc = W('schaut', 14) - .15;
+  akteur('handy2', { x: X + 1150, y: 900, o: 0 });
+  tw('handy2', tSc, .15, { o: 1 }); tw('handy2', tSc, .5, { y: 690 }, 'sanft'); cue(tSc, 'whoosh');
+  BLICK.push(['kw2', tSc + .2, 999, 2, 5]);
+  const tSt = W('ständig', 14);
+  [tSt - .1, tSt + .45, W('Handy', 14)].forEach((t, k) => { summen('handy2', t); cue(t, 'klick'); });
+  pop('ping2', tSt - .1, { x: X + 1192, y: 622 }, null); bump('ping2', tSt + .45, 1.25); bump('ping2', W('Handy', 14), 1.25);
+  akzent(W('Handy', 14), .04);
+  // Sabine räuspert sich
+  BLICK.push(['sa2', tEi + .6, 999, -4, 1]);
+  const tHm = SE(14) + .15;
+  pop('hm2', tHm, { x: X + 1625, y: 640 }, 'pop'); huepfen('sa2', tHm, 8); wackeln('hm2', tHm + .45, 3, 4);
+}
+
+/* ================= Zurückspulen ================= */
+{
+  SPUL.stopp = W('Stopp', 15) - .05; SPUL.r = W('Zurückspulen', 17) - .05;
+  const tS = SPUL.stopp, tR = SPUL.r, tC = tR + 2.8; SPUL.c = tC;
+  textAus('tb2', tS - .05);
+  // Stopp: Pause-Zeichen schlägt auf, Schleier, Kamera-Akzent
+  akteur('schleier', { o: 0 }, true); tw('schleier', tS, .35, { o: .58 }); set('schleier', tC, { o: 0 });
+  pop('pauseIc', tS, { x: 820, y: 440 }, 'plopp'); akzent(tS, .07); cue(tS + .02, 'klick');
+  wackeln('pauseIc', W('besser', 16), 3, 3);
+  // Zurückspulen: Pause → Rückspul-Zeichen, Uhr dreht rückwärts
+  tw('pauseIc', tR, .25, { s: 0, o: 0 }, 'in');
+  pop('rewIc', tR + .1, { x: 820, y: 440 }, 'pop'); set('rewIc', tC, { o: 0 });
+  pop('uhrR', tR + .25, { x: 1110, y: 440 }, null); set('uhrR', tC, { o: 0 });
+  uhr('uhrR', t => 445 - 360 * E.inout(clamp((t - tR - .3) / 2.3)) - 180 * clamp((t - tR - 2.6) / .8));
+  HOOKS.push(t => {   // die Dreiecke laufen immer wieder nach links
+    const p = t > tR ? ((t - tR) * 2.2) % 1 : 0;
+    $('#rewTri').setAttribute('transform', `translate(${(-14 * E.out(p)).toFixed(2)} 0)`);
+  });
+  titelEin('tbR', tR + .35); akteur('rIc', { o: 0, x: 30 }, true); tw('rIc', tR + .3, .5, { o: 1, x: 0 }, 'sanft');
+  for (let k = 0; k < 6; k++) cue(tR + .2 + k * .4, k % 2 ? 'whoosh' : 'scan');
+  // Streifen in Token-Farben rauschen durchs Bild (die Zeit läuft zurück)
+  const FARBE = ['var(--b300)', 'var(--b500)', 'var(--b200)', 'var(--surface)', 'var(--b400)', 'var(--b300)'];
+  const ST = Array.from({ length: 16 }, (_, k) => ({ y: 40 + k * 66 + (k * 37 % 23), h: 8 + (k * 13 % 5) * 6, w: 300 + (k * 211 % 520), v: 2600 + (k * 577 % 1400), p: (k * 733) % 2400, f: FARBE[k % 6] }));
+  el('streifen').innerHTML = ST.map((s, k) => `<div class="streif" id="sf${k}" style="top:${s.y}px;height:${s.h}px;width:${s.w}px;background:${s.f}"></div>`).join('');
+  HOOKS.push(t => {
+    const hull = clamp((t - tR) / .3) * (1 - clamp((t - tC + .2) / .3));
+    ST.forEach((s, k) => {
+      const e = el('sf' + k), x = ((s.p + (t - tR) * s.v) % 2800) - 600;
+      e.style.transform = `translateX(${x.toFixed(1)}px)`; e.style.opacity = (hull * (k % 3 ? .55 : .85)).toFixed(3);
+    });
+  });
+  // Die Welt läuft zurück: Kamera fährt über Szene 1 zurück an den Anfang …
+  tw('welt', tR + .15, 1.9, { x: -S(0) }, 'inout');
+  // … und alles läuft rückwärts: Handy fliegt weg, Schuhe steigen auf, Kwame rennt rückwärts, der Bus kommt zurück
+  tw('handy2', tR + .1, .45, { y: 900, o: 0 }, 'in'); tw('ping2', tR + .1, .3, { o: 0 });
+  tw(['flip2', 'hm2', 'sa2'], tR + .15, .4, { o: 0 }, 'in');
+  tw('kw2', tR + .1, .5, { x: S(2) + 1080, y: 470, s: 1 }, 'inout');
+  tw('schild1', tR + .5, .45, { y: 150, o: 0 }, 'in'); tw('sperre1', tR + .5, .4, { sy: 0 }, 'inout');
+  tw(['sch1a', 'sch1b'], tR + .6, .45, { y: 360, o: 0 }, 'in'); tw('x1', tR + .55, .3, { o: 0 });
+  tw('sneaker1', tR + .8, .4, { y: 520, o: 0 }, 'in');
+  const tZ = tR + 1.3;
+  tw(['tr0a', 'tr0b', 'tr0c'], tZ, .3, { o: 0, y: 440 }, 'in');
+  tw('kw0', tZ, .8, { x: S(0) + 950, o: 0 }, 'in');
+  tw('bus0', tZ + .1, .8, { x: S(0) + BUS0.x, o: 1 }, 'out');
+  tw('zeit0', tZ + .2, .2, { s: .8 }, 'sinus'); tw('zeit0', tZ + .4, .3, { s: 1 }, 'sanft');
+  // Wischer: breite Bänder schieben sich über das Bild; darunter springt die Welt zum neuen Tag
+  const BAND = [['var(--b300)', 0], ['var(--b500)', 700], ['var(--b700)', 1400]];
+  el('wisch').innerHTML = BAND.map(([f], k) => `<div class="band" id="bd${k}" style="width:1100px;background:${f}"></div>`).join('');
+  HOOKS.push(t => {
+    const p = clamp((t - (tC - .55)) / 1.1), x = lerp(-3800, 3000, E.inout(p));
+    BAND.forEach(([, o], k) => { el('bd' + k).style.transform = `translateX(${(x + o).toFixed(1)}px) skewX(-14deg)`; el('bd' + k).style.visibility = p > 0 && p < 1 ? 'visible' : 'hidden'; });
+  });
+  set('welt', tC, { x: -S(3) }); cue(tC - .5, 'whoosh'); cue(tC + .1, 'whoosh');
+  textAus('tbR', tC - .05); tw('rIc', tC - .05, .3, { o: 0 });
+}
+
+/* ================= 3 · Richtig: Weg vorher testen, früh da sein ================= */
+akteur('bue3', { x: S(3) + 1320, y: 540 });
+const ROUTE = { x: 1310, y: 710, w: 500, h: 150 };
+{
+  const X = S(3), T = SPUL.c + .15;
+  ein('halt3', T, { x: X + 990, y: 690 }, { y: 60 });
+  ein('betrieb3', T + .1, { x: X + 1640, y: 690 }, { y: 60 });
+  // Am Tag vor dem Start: Kalenderblatt „Start −1“
+  const tT = W('Tag', 18);
+  pop('tag3', tT, { x: X + 1010, y: 330 }, 'pop'); bump('tag3', W('Start', 18), 1.1); cue(W('Start', 18), 'klick');
+  // Kwame, Handy mit Fahrplan
+  pop('kw3', W('Kwame', 18) - .1, { x: X + 1300, y: 350 });
+  const tFa = W('fährt', 18) - .35;
+  ein('handy3', tFa, { x: X + 1620, y: 360 }, { x: 80, y: 0 }, 'whoosh'); ein('schirm3', tFa, { x: X + 1620, y: 360 }, { x: 80, y: 0 });
+  akteur('fp3', {}, true); bump('fp3', W('Weg', 18), 1.08);
+  BLICK.push(['kw3', tFa + .2, W('schaut', 18), 4, 1]);
+  // Den Weg abfahren: Route zeichnet sich, der Bus fährt sie ab
+  ein('route3', W('Weg', 18) - .2, { x: X + ROUTE.x, y: ROUTE.y }, { y: 30 });
+  const P = el('routeP'), L = P.getTotalLength();
+  const FAHRT = [[W('Weg', 18) + .2, 2.7], [W('früher', 19) - .1, 2.9]];
+  FAHRT.forEach(([t]) => cue(t, 'whoosh'));
+  HOOKS.push(t => {
+    const b = el('bus3'); let p = null, o = 0;
+    for (const [a, d] of FAHRT) if (t >= a - .25 && t <= a + d + .35) { p = E.inout(clamp((t - a) / d)); o = Math.min(clamp((t - a + .25) / .25), clamp((a + d + .35 - t) / .25)); }
+    if (p === null) { b.style.opacity = 0; b.style.visibility = 'hidden'; return; }
+    const q = P.getPointAtLength(p * L), q2 = P.getPointAtLength(Math.min(L, p * L + 2)), q1 = P.getPointAtLength(Math.max(0, p * L - 2));
+    const w = Math.atan2(q2.y - q1.y, q2.x - q1.x) * 180 / Math.PI;
+    const x = X + ROUTE.x - ROUTE.w / 2 + q.x, y = ROUTE.y - ROUTE.h / 2 + q.y - 38;
+    b.style.opacity = o; b.style.visibility = o > .001 ? 'visible' : 'hidden';
+    b.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%) rotate(${(w * .2).toFixed(2)}deg)`;
+  });
+  // … und schaut, wie lange er braucht: Uhr mit Ring, der sich während der Fahrt füllt
+  const tSch = W('schaut', 18) - .1;
+  pop('uhr3', tSch, { x: X + 1300, y: 530 }, 'pop'); pop('ring3', tSch + .1, { x: X + 1300, y: 530 }, null);
+  const [f1, d1] = FAHRT[0], [f2, d2] = FAHRT[1];
+  uhr('uhr3', t => 405 + rampe(t, f1, d1, 0, 45) - rampe(t, W('Am', 19), .5, 0, 45) - rampe(t, W('früher', 19) - .5, .6, 0, 15) + rampe(t, f2, d2, 0, 20));
+  HOOKS.push(t => { el('ring3p').style.strokeDashoffset = (1 - rampe(t, f1, d1, 0, 1) + rampe(t, W('Am', 19) - .1, .5, 0, 1)).toFixed(4); });
+  bump('ring3', f1 + d1, 1.08); cue(f1 + d1, 'ding');
+  // Am ersten Tag: das Kalenderblatt dreht um auf „Tag 1“, das Handy geht
+  const tE = W('Tag', 19) - .4;
+  tw('tag3', tE, .2, { sx: 0 }, 'sinus'); tw('tag3', tE + .2, .3, { sx: 1 }, 'sinus'); cue(tE, 'whoosh');
+  HOOKS.push(t => { const n = t >= tE + .2; el('tag3k').textContent = n ? 'Tag' : 'Start'; el('tag3b').textContent = n ? '1' : '−1'; });
+  aus(['handy3', 'schirm3'], W('Am', 19) - .1);
+  // … fährt früher los: Kwame fährt mit, ist zehn Minuten vor sieben da
+  gehen('kw3', f2 + .3, 1.8, X + 1630, 505, 5, 14);
+  const tZe = W('zehn', 19);
+  pop('zeit3', tZe, { x: X + 1140, y: 530 }, 'pop'); bump('uhr3', tZe + .1, 1.1); akzent(W('sieben', 19), .04);
+  FROH.push(['kw3', f2 + 1.2, 999]);
+  pop('ok3', W('da', 19), { x: X + 1552, y: 430 }, 'ding'); huepfen('kw3', W('da', 19) + .05, 12); cue(W('da', 19) + .1, 'erfolg');
+  titelFarbe('tb3', tT, [tT, W('Weg', 18), W('Weg', 18) + .08, W('Weg', 18) + .16, W('Weg', 18) + .24, W('früher', 19), W('früher', 19) + .08, W('früher', 19) + .16], { 0: 'gruen' });
+  textAus('tb3', SE(19) + .15);
+}
+
+/* ================= 4 · Richtig: vorher nach Kleidung fragen ================= */
+pan2(SE(19) + .25, 4);
+akteur('bue4', { x: S(4) + 1320, y: 540 });
+{
+  const X = S(4);
+  el('woche4').innerHTML = Array.from({ length: 7 }, (_, i) => `<div class="t" id="wt${i}">${i === 6 ? 'Tag 1' : '<u id="wu' + i + '"></u>'}</div>`).join('');
+  el('wu0').innerHTML = '<svg viewBox="0 0 26 26"><path d="M4 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-7l-5 4v-4a3 3 0 0 1-3-3Z" fill="var(--surface)"/></svg>';
+  akteur('woche4', { x: X + 1320, y: 300 });
+  const tWo = W('Woche', 20) - .3;
+  for (let i = 0; i < 7; i++) { akteur('wt' + i, { s: 0 }, true); tw('wt' + i, tWo + i * .07, .45, { s: 1 }, 'back'); }
+  cue(tWo, 'pop');
+  const tV = W('vorher', 20);
+  HOOKS.push(t => {
+    el('wt0').style.background = t >= tV ? 'var(--b500)' : ''; el('wu0').style.background = t >= tV ? 'var(--b400)' : '';
+    const g = t >= W('ersten', 22); el('wt6').style.background = g ? 'var(--success)' : ''; el('wt6').style.color = g ? 'var(--surface)' : '';
+  });
+  bump('wt0', tV, 1.15); cue(tV, 'klick');
+  // Kwame fragt per Chat
+  pop('kw4', W('Eine', 20) + .1, { x: X + 1480, y: 470 });
+  const tGe = W('gefragt', 20) - .3;
+  ein('handy4', tGe, { x: X + 1180, y: 620 }, { y: 90 }, 'whoosh'); ein('schirm4', tGe, { x: X + 1180, y: 620 }, { y: 90 });
+  BLICK.push(['kw4', tGe + .3, W('Betrieb', 22) - .2, -4, 2]);
+  ['bl4', 'hk4', 'br4'].forEach(id => akteur(id, { o: 0 }, true));
+  const tWa = W('Was', 20), tAz = W('anziehen', 20) + .3;
+  tw('bl4', tWa - .2, .3, { o: 1 });
+  ['z4a', 'z4b', 'z4c'].forEach((id, k) => { akteur(id, { sx: 0 }, true); tw(id, lerp(tWa, tAz, k / 3), (tAz - tWa) / 3, { sx: 1 }, 'lin'); });
+  for (let k = 0; k < 5; k++) cue(tWa + k * .3, 'klick');
+  tw('hk4', SE(20), .3, { o: 1 }); cue(SE(20), 'pop');
+  // Die Antwort: Sicherheitsschuhe
+  const tAn = W('Antwort', 21);
+  akteur('br4', { o: 0, y: 20 }, true); tw('br4', tAn, .4, { o: 1, y: 0 }, 'sanft'); cue(tAn, 'pop');
+  const tSs = W('Sicherheitsschuhe', 21);
+  bump('br4', tSs, 1.08); akzent(tSs, .035); FROH.push(['kw4', tSs, 999]);
+  // Die stellt der Betrieb: die Schuhe kommen aus dem Betrieb zu Kwame
+  const tBe = W('Betrieb', 22) - .15;
+  pop('betrieb4', tBe, { x: X + 1650, y: 720 }, 'pop');
+  akteur('schuhe4', { x: X + 1650, y: 740, o: 0, s: .4 });
+  tw('schuhe4', tBe + .45, .1, { o: 1 }); flug('schuhe4', tBe + .45, .75, X + 1440, 690, 170, { s: 1 }); landen('schuhe4', tBe + 1.2, 1.3);
+  cue(tBe + .45, 'whoosh'); cue(tBe + 1.2, 'plopp'); huepfen('kw4', tBe + 1.25, 12);
+  // … oder man bekommt sie am ersten Tag: „Tag 1“ wird grün
+  const tEr = W('ersten', 22);
+  bump('wt6', tEr, 1.18); cue(tEr, 'ding'); bump('schuhe4', W('Tag', 22), 1.08);
+  titelFarbe('tb4', W('Eine', 20), [W('Eine', 20), tV, tV + .08, tGe + .2, tGe + .28], { 0: 'gruen' });
+  textAus('tb4', SE(22) + .15);
+}
+
+/* ================= 5 · Richtig: „Sie“ sagen, Handy in die Tasche ================= */
+pan2(SE(22) + .25, 5);
+akteur('bue5', { x: S(5) + 1320, y: 540 });
+{
+  const X = S(5);
+  akteur('kw5', { x: X + 1080, y: 480 }); akteur('kr5', { x: X + 1560, y: 480 });
+  // Guten Morgen, Frau Krause: Kwame nickt höflich
+  const tGu = W('Guten', 23);
+  tw('kw5', tGu, .25, { r: -4, y: 488 }, 'sinus'); tw('kw5', tGu + .25, .45, { r: 0, y: 480 }, 'sanft');
+  FROH.push(['kr5', W('Mensah', 24), 999], ['kw5', SE(24), 999]);
+  // Willkommen: Handschlag
+  const tWi = W('Willkommen', 25);
+  tw('kw5', tWi - .2, .5, { x: X + 1100 }, 'sanft'); tw('kr5', tWi - .2, .5, { x: X + 1540 }, 'sanft');
+  pop('schlag5', tWi, { x: X + 1320, y: 530 }, 'pop');
+  for (let k = 0; k < 3; k++) { tw('schlag5', tWi + .45 + k * .2, .1, { y: 520 }, 'sinus'); tw('schlag5', tWi + .55 + k * .2, .1, { y: 540 }, 'sinus'); }
+  tw('schlag5', tWi + 1.05, .25, { y: 530 }, 'sanft'); cue(tWi + .5, 'erfolg'); akzent(tWi + .1, .04);
+  // Zu Vorgesetzten sagt man „Sie“, bis sie das „Du“ anbieten
+  const tSi = W('Sie', 26), tDu = W('Du', 26);
+  pop('sie5', tSi - .05, { x: X + 1250, y: 318 }, 'ding'); akzent(tSi, .035);
+  pop('du5', tDu - .05, { x: X + 1400, y: 318 }, 'pop'); bump('kr5', W('anbieten', 26), 1.05);
+  // Handy in die Tasche
+  const tHa = W('Handy', 27) - .1, tTa = W('Tasche', 27);
+  ein('tascheH5', tHa - .2, { x: X + 1320, y: 720 }, { y: 60 }); ein('tascheV5', tHa - .2, { x: X + 1320, y: 720 }, { y: 60 });
+  pop('handy5', tHa, { x: X + 1100, y: 700 }, 'pop'); summen('handy5', tHa + .4);
+  flug('handy5', tTa - .75, .8, X + 1320, 745, 170, { s: .8 }); cue(tTa - .75, 'whoosh');
+  tw('handy5', tTa - .2, .22, { o: 0 }, 'in');
+  landen('tascheV5', tTa + .05, 1.2); landen('tascheH5', tTa + .05, 1.2); cue(tTa + .05, 'klick');
+  pop('ok5', tTa + .35, { x: X + 1418, y: 668 }, 'ding');
+  titelFarbe('tb5', W('Frau', 23), [W('Frau', 23), W('Frau', 23) + .08, W('Frau', 23) + .16, W('Frau', 23) + .24, tHa, tHa + .08, tTa], { 0: 'gruen', 4: 'gruen' });
+  textAus('tb5', SE(27) + .15);
+}
+
+/* ================= 6 · Also: am Sicherungskasten, vier Haken ================= */
+pan2(SE(27) + .25, 6);
+akteur('bue6', { x: S(6) + 1320, y: 540 });
+{
+  const X = S(6), T = SE(27) + .25;
+  akteur('kasten6', { x: X + 1110, y: 480 }); akteur('fokus6', { x: X + 1156, y: 506, o: 0 });
+  akteur('kw6', { x: X + 1400, y: 420 }); akteur('sa6', { x: X + 1610, y: 540 });
+  BLICK.push(['kw6', T, W('klappt', 29) - .1, -4, 2], ['sa6', T, 999, -4, 0]);
+  FROH.push(['sa6', T, 999], ['kw6', W('klappt', 29), 999]);
+  NICK.push(['sa6', T + .8, W('klappt', 29) + 1.5]);
+  // Kwame lernt: ein Schalter wird markiert, er schaut genau hin
+  tw('fokus6', T + .8, .4, { o: 1 }, 'out');
+  for (let k = 0; k < 6; k++) bump('fokus6', T + 1 + k * 1.2, 1.12);
+  // Weg testen, nach der Kleidung fragen, „Sie“ sagen, Handy weg: je eine Kachel mit Haken
+  const K = [['k6a', 'ok6a', 1020, W('Weg', 28)], ['k6b', 'ok6b', 1220, W('Kleidung', 28)], ['k6c', 'ok6c', 1420, W('Sie', 28)], ['k6d', 'ok6d', 1620, W('Handy', 28)]];
+  K.forEach(([k, ok, x, t]) => { pop(k, t - .1, { x: X + x, y: 740 }, 'pop'); pop(ok, t + .3, { x: X + x + 56, y: 684 }, 'ding'); });
+  // Dann klappt der erste Tag
+  const tKl = W('klappt', 29);
+  huepfen('kw6', tKl, 14); cue(tKl + .1, 'erfolg'); akzent(W('Tag', 29), .045);
+  K.forEach(([k], i) => bump(k, tKl + .1 + i * .08, 1.06));
+  titelFarbe('tb6', T + .6, null, {});
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+textAus('tb6', AB);
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
