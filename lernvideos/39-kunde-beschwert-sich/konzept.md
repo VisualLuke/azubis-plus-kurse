@@ -47,6 +47,20 @@ steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der Bildmitte 
   nicht sprechen); Wortlaut sonst unverändert.
 - Auto ohne Markenlogo.
 
+- Aussprache: Die Buchstaben der Optionen stehen im Sprechertext deutsch ausgeschrieben („Ah“, „Beh“, „Zeh“), sonst liest
+  das Modell sie englisch; „Option C:“ heißt gesprochen „Und Option Zeh:“ (kein Ein-Wort-Satz). Im Bild und im Untertitel
+  bleiben A, B, C (siehe „Schreibweise im Untertitel“).
+
+## Schreibweise im Untertitel
+
+- Option Ah → Option A
+- Option Beh → Option B
+- Option Zeh → Option C
+- Ah: → A:
+- Beh: → B:
+- Zeh: → C:
+- ist Zeh → ist C
+
 ## Sprechertext
 
 @modell eleven_v4
@@ -59,7 +73,7 @@ Erzählerin: Amir steht an der Annahme der Werkstatt. Ein Kunde kommt herein. Er
 Herr Braun: Mein Auto sollte heute Mittag fertig sein! Jetzt ist es drei Uhr, und keiner hat mich angerufen. Ich brauche das Auto!
 
 ### Szene 2
-Erzählerin: Was würdest du tun? A: „Das ist nicht meine Schuld. Ich bin nur Azubi.“ B: Nichts sagen und hoffen, dass der Chef bald kommt. C: Ruhig zuhören, Verständnis zeigen und eine Lösung suchen.
+Erzählerin: Was würdest du tun? Ah: „Das ist nicht meine Schuld. Ich bin nur Azubi.“ Beh: Nichts sagen und hoffen, dass der Chef bald kommt. Zeh: Ruhig zuhören, Verständnis zeigen und eine Lösung suchen.
 
 ### Szene 3
 (Pause 2)
@@ -70,12 +84,12 @@ Erzählerin: Zwei …
 Erzählerin: Eins …
 
 ### Szene 4
-Erzählerin: Option A: Amir hat recht, es ist nicht seine Schuld. Aber der Kunde hört nur: „Mir ist das egal.“ Er wird noch wütender und beschwert sich beim Chef über Amir.
+Erzählerin: Option Ah: Amir hat recht, es ist nicht seine Schuld. Aber der Kunde hört nur: „Mir ist das egal.“ Er wird noch wütender und beschwert sich beim Chef über Amir.
 (Pause 0.4)
-Erzählerin: Option B: Amir schweigt. Der Kunde fühlt sich ignoriert. Die Stimmung wird immer schlechter.
+Erzählerin: Option Beh: Amir schweigt. Der Kunde fühlt sich ignoriert. Die Stimmung wird immer schlechter.
 
 ### Szene 5
-Erzählerin: Option C:
+Erzählerin: Und Option Zeh:
 Amir: Das tut mir leid, Herr Braun. Ich verstehe, dass Sie das Auto brauchen. Ich schaue sofort nach, wie weit wir sind.
 Erzählerin: Amir fragt in der Werkstatt nach und kommt zurück.
 Amir: Ihr Auto ist in einer Stunde fertig. Wir hätten Sie anrufen müssen, das tut mir leid. Möchten Sie hier warten? Wir haben Kaffee.
@@ -86,4 +100,4 @@ Herr Braun: Na gut. Danke.
 Erzählerin: Diese Sätze helfen bei Beschwerden: „Das tut mir leid.“ „Ich verstehe, dass Sie verärgert sind.“ „Ich kümmere mich sofort darum.“ Und wenn du nicht weiterweißt: „Einen Moment bitte, ich hole eine Kollegin.“
 
 ### Szene 7
-Erzählerin: Die beste Wahl ist C. Der Kunde ist nicht wütend auf dich persönlich. Und Kunden sprichst du immer mit „Sie“ an.
+Erzählerin: Die beste Wahl ist Zeh. Der Kunde ist nicht wütend auf dich persönlich. Und Kunden sprichst du immer mit „Sie“ an.

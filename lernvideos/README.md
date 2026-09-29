@@ -56,7 +56,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | 1:48 | fertig |
 | 37 | [Mythos oder Wahrheit: Feiertage & Traditionen](37-mythos-feiertage/) | Mythos oder Wahrheit | Erzähler | 2:10 | fertig |
 | 38 | [Betriebsrat, JAV & Gewerkschaft](38-betriebsrat-jav/) | Podcast | Mai, Jonas | 1:53 | fertig |
-| 39 | [Was würdest du tun? Ein Kunde beschwert sich](39-kunde-beschwert-sich/) | Was würdest du tun? | Erzählerin, Amir, Herr Braun | 1:54 | fertig |
+| 39 | [Was würdest du tun? Ein Kunde beschwert sich](39-kunde-beschwert-sich/) | Was würdest du tun? | Erzählerin, Amir, Herr Braun | 1:55 | fertig |
 | 40 | [Fachvokabeln: Kfz-Werkstatt](40-vokabeln-kfz/) | Fachvokabeln | Erzähler, Amir, Sabine | 1:54 | fertig |
 | 41 | [Fachvokabeln: Hotel](41-vokabeln-hotel/) | Fachvokabeln | Erzähler, Ana, Empfangschefin | 1:58 | fertig |
 | 42 | [Was ist ein Verein?](42-verein/) | Erklärvideo | Erzähler | 1:41 | fertig |

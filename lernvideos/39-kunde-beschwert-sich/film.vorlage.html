@@ -350,7 +350,7 @@ HOOKS.push(t => {
     p.querySelector('.figur').style.transform = `translateX(${(-24 * weg).toFixed(2)}px) rotate(${(nick - 12 * weg).toFixed(2)}deg) translateY(${aktiv ? 0 : nick}px)`;
     const w = WUT[p.id] ? kurve(WUT[p.id], t) : 0;
     if (p.querySelector('.roete')) {
-      const puls = w * (.8 + .2 * Math.sin(t * (5 + 2 * w)));
+      const puls = w * (.8 + .2 * Math.sin(t * 6));   // feste Frequenz – eine von w abhängige Phase würde bei Wut-Übergängen flackern
       p.querySelector('.roete').style.opacity = (.62 * clamp(puls)).toFixed(3);
       p.querySelector('.brauen').style.opacity = clamp((w - .35) * 3).toFixed(3);
       const b = w > .35 && auf <= .12 && !f;
@@ -687,7 +687,7 @@ pan2(P2, 2);
 const P3 = SE(20) + .3;
 pan2(P3, 3);
 {
-  const tMarke = WN(21, 1), tK = SA(22) - .3;
+  const tMarke = WN(21, 2), tK = SA(22) - .3;
   const X = durchspielen({ i: 3, L: 'C', tVor: P3 + .35, tMarke, tK, tb: 'tb3', marken: 'AB',
     zeiten: [tK + .4, W('leid', 22), W('leid', 22) + .08, W('verstehe', 23), W('verstehe', 23) + .08, W('fertig', 26)] });
   $('#tb3 .w').classList.add('gruen');
