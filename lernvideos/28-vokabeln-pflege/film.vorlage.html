@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln Pflege</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  /* Artikel-Farben (Format Fachvokabeln): der · die · das · Verb */
+  --der:var(--b500); --die:var(--success); --das:var(--warning); --verb:var(--b600);
+  --der-text:var(--b500); --die-text:var(--success-text); --das-text:var(--warning-text);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:44px}
+.buehne.breit{width:1640px;height:820px}
+.buehne .boden{position:absolute;left:0;right:0;bottom:0;height:200px;border-radius:0 0 44px 44px;background:linear-gradient(var(--b100),var(--b200))}
+.buehne .leiste{position:absolute;left:0;right:0;height:14px;border-radius:7px;background:var(--b300);opacity:.7}
+.buehne .fenster{position:absolute;overflow:hidden;border-radius:22px;border:10px solid var(--surface);background:linear-gradient(var(--b100),var(--warning-bg));box-shadow:0 6px 20px rgba(22,19,37,.08)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.chip.art{color:var(--surface);font-size:40px;line-height:48px;padding:12px 34px}
+.chip.der{background:var(--der)} .chip.die{background:var(--die)} .chip.das{background:var(--das)} .chip.verb{background:var(--b100);color:var(--verb)}
+.eyebrow2{font:700 22px/28px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--b600)}
+.plakette{width:60px;height:60px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);background:var(--success)}
+.plakette svg{width:30px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09);transition:none}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+
+/* Wortkarte */
+.karte{width:660px;height:310px;border-radius:32px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.1);overflow:hidden;padding:40px 44px 0}
+.karte.hoch{height:380px}
+.karte .band{position:absolute;left:0;top:0;right:0;height:16px;background:var(--f);transform-origin:left center}
+.karte .kopf{display:flex;align-items:center;gap:16px;height:52px}
+.artikel{display:inline-block;padding:6px 22px;border-radius:999px;background:var(--f);color:var(--surface);font:800 30px/40px Inter}
+.artikel.verb{background:var(--b100);color:var(--verb)}
+.karte .typ{font:600 22px/28px Inter;color:var(--n500);letter-spacing:.06em;text-transform:uppercase}
+.karte .wort{font:800 80px/96px Inter;letter-spacing:-.02em;color:var(--ink);margin-top:8px;white-space:nowrap}
+.m{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .06em .12em;margin:0 -.06em -.12em}
+.wi{display:inline-block}
+.karte .pl{display:flex;align-items:baseline;gap:16px;margin-top:10px;font:600 36px/44px Inter;color:var(--n700);white-space:nowrap}
+.karte .pl small{font:700 20px/24px Inter;color:var(--n500);letter-spacing:.08em;text-transform:uppercase}
+.karte .pl b{font-weight:700}
+.karte .zeile{display:flex;align-items:center;gap:18px;font:800 62px/76px Inter;letter-spacing:-.02em;white-space:nowrap}
+.karte .trenn{height:3px;border-radius:2px;background:var(--border);margin:18px 0 16px}
+.karte .pl .pa{color:var(--n500)}
+
+/* Satzleiste: Porträt + Beispielsatz, der sich tippt */
+.satz{width:660px;height:196px;border-radius:32px;background:var(--b50);border:3px solid var(--b100);display:flex;align-items:center;gap:22px;padding:0 30px 0 22px}
+.satz .portrait{position:relative;width:124px;height:124px;flex:none;border-width:5px}
+.satz .stext{flex:1;display:flex;flex-direction:column;gap:6px}
+.satz .tipp{font:600 30px/40px Inter;color:var(--ink);min-height:120px}
+.satz .tipp b{font-weight:800}
+.cursor{display:inline-block;width:3px;height:30px;background:var(--b500);vertical-align:-5px;margin-left:3px}
+
+/* Kacheln */
+.kachel{width:250px;height:230px;border-radius:28px;background:var(--surface);border:2px solid var(--border);box-shadow:0 1px 2px rgba(22,19,37,.06);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.kachel .bild{width:140px;height:140px;position:relative}
+.kachel .bild > div{position:absolute;left:0;top:0;width:140px}
+.kachel b{font:700 26px/30px Inter;color:var(--ink);white-space:nowrap}
+.kachel.klein{width:236px;height:206px}
+.kachel.klein .bild{width:120px;height:120px}
+.kachel.klein .bild > div{width:120px}
+
+/* Türschild */
+.schildchen{padding:6px 18px;border-radius:12px;background:var(--surface);border:3px solid var(--b300);font:800 32px/38px Inter;color:var(--b600);box-shadow:0 4px 12px rgba(22,19,37,.1)}
+.schildchen.leer{width:64px;height:36px;padding:0}
+.licht{background:linear-gradient(var(--warning-bg),var(--warning));border-radius:6px}
+.rotlicht{width:110px;height:110px;border-radius:999px;background:radial-gradient(circle closest-side,var(--error) 0,var(--error) 72%,rgba(226,85,106,.35) 82%,rgba(226,85,106,0) 100%)}
+.knopf{width:44px;height:44px;border-radius:999px;background:var(--error);box-shadow:inset 0 -5px 0 rgba(22,19,37,.18)}
+.finger{width:52px;height:52px;border-radius:999px;background:rgba(90,63,230,.25);border:3px solid var(--b500)}
+
+/* Klemmbrett-Zeilen */
+.zeilen{display:flex;flex-direction:column;gap:14px;width:106px}
+.zeilen i{display:block;height:10px;border-radius:5px;background:var(--b200);transform-origin:left center}
+
+/* Tablet mit Pflegedokumentation */
+.tablet{width:640px;height:460px;border-radius:40px;background:linear-gradient(135deg,var(--b600),var(--b700));padding:22px;box-shadow:0 12px 30px rgba(58,37,153,.25)}
+.tablet .screen{position:relative;width:100%;height:100%;border-radius:22px;background:var(--bg);padding:22px 26px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.tablet small{font:800 15px/18px Inter;color:var(--b500);letter-spacing:.08em;text-transform:uppercase}
+.tablet h5{font:700 28px/34px Inter;color:var(--ink)}
+.tablet .reihe{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:var(--surface);box-shadow:0 1px 2px rgba(22,19,37,.06);font:600 21px/26px Inter;color:var(--n700)}
+.tablet .reihe u{width:24px;height:24px;border-radius:999px;background:var(--success);flex:none;display:flex;align-items:center;justify-content:center}
+.tablet .reihe u svg{width:15px}
+.tablet .feld{padding:10px 14px;border-radius:14px;background:var(--surface);border:3px solid var(--b400)}
+.tablet .feld span{display:block;font:600 15px/18px Inter;color:var(--n400)}
+.tablet .feld div{font:600 22px/28px Inter;color:var(--ink);white-space:pre;min-height:28px}
+.tablet .speichern{position:absolute;right:26px;bottom:22px;padding:10px 26px;border-radius:14px;background:var(--b500);color:var(--surface);font:700 20px/24px Inter}
+.tablet .toast{position:absolute;left:26px;bottom:24px;padding:8px 18px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 18px/22px Inter}
+.tablet .reihen{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Fortschritt (je Wort ein Punkt) */
+#fort{position:absolute;left:150px;top:150px;display:flex;align-items:center;gap:14px;opacity:0}
+#fort i{display:block;width:18px;height:18px;border-radius:999px;background:var(--b100)}
+
+/* Wort-Chips im Dialog */
+.wchip{justify-content:center;color:var(--surface);font-size:26px;line-height:32px;padding:12px 18px}
+.wchip.der{background:var(--der)} .wchip.die{background:var(--die)} .wchip.das{background:var(--das)} .wchip.verb{background:var(--b100);color:var(--verb)}
+.namechip{font:700 24px/30px Inter;color:var(--b600);background:var(--surface);padding:8px 20px;border-radius:999px;box-shadow:0 4px 12px rgba(22,19,37,.08);white-space:nowrap}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.ende .zeile2{position:relative}
+</style></head><body>
+
+<template id="pMai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="pPA"><div class="figur"><div class="ebene">{{figur-praxisanleiterin}}</div><div class="ebene augen">{{figur-augen~p}}</div>
+  <div class="ebene zu">{{figur-mund-zu~p}}</div><div class="ebene auf">{{figur-mund-auf~p}}</div><div class="ebene froh">{{figur-mund-froh~p}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="tKlemm">{{klemmbrett}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Frühschicht im Pflegeheim -->
+  <div class="a buehne breit" id="bue0"><div class="leiste" style="top:440px"></div><div class="boden" style="height:262px"></div>
+    <div class="fenster" style="left:660px;top:60px;width:320px;height:210px"><div id="sonne1" style="position:absolute;left:90px;top:40px;width:140px">{{sonne}}</div></div></div>
+  <div class="a" id="tuer1a" style="width:240px" data-gruppe="t1a">{{haustuer}}</div>
+  <div class="a" id="blatt1a" style="width:240px;transform-origin:27.5% 50%" data-gruppe="t1a">{{haustuer-blatt}}</div>
+  <div class="a schildchen leer" id="sch1a" data-gruppe="t1a"></div>
+  <div class="a" id="tuer1b" style="width:240px" data-gruppe="t1b">{{haustuer~b}}</div>
+  <div class="a" id="blatt1b" style="width:240px;transform-origin:27.5% 50%" data-gruppe="t1b">{{haustuer-blatt~b}}</div>
+  <div class="a schildchen leer" id="sch1b" data-gruppe="t1b"></div>
+  <div class="a welle" id="welle1" style="width:320px;height:320px" data-frei></div>
+  <div class="a portrait" id="mai1" style="width:300px;height:300px" data-sprecher="Mai"></div>
+  <div class="a chip" id="chipBeruf1">Pflegefachfrau</div>
+  <div class="a eyebrow2" id="leg0">Artikel</div>
+  <div class="a chip art der" id="leg1">der</div>
+  <div class="a chip art die" id="leg2">die</div>
+  <div class="a chip art das" id="leg3">das</div>
+
+  <!-- 2 · die Übergabe -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a karte" id="k2" style="--f:var(--die)"><div class="band" id="k2b"></div>
+    <div class="kopf"><span class="artikel" id="k2a">die</span><span class="typ" id="k2t">Nomen</span></div>
+    <div class="wort"><span class="m"><span class="wi" id="k2w">Übergabe</span></span></div>
+    <div class="pl"><span class="m"><span class="wi" id="k2p"><small>Plural</small> <b><span class="pa">die</span> Übergaben</b></span></span></div></div>
+  <div class="a satz" id="sb2"><div class="portrait" data-p="pPA"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp2"></div></div></div>
+  <div class="a" id="mond2" style="width:130px">{{mond}}</div>
+  <div class="a" id="sonne2" style="width:140px">{{sonne~2}}</div>
+  <div class="a" id="uhr2" style="width:190px" data-gruppe="uhr2">{{uhr}}</div>
+  <div class="a" id="std2" style="width:190px;transform-origin:50% 47.5%" data-gruppe="uhr2" data-dreht>{{uhr-stunde}}</div>
+  <div class="a" id="min2" style="width:190px;transform-origin:50% 47.5%" data-gruppe="uhr2" data-dreht>{{uhr-zeiger}}</div>
+  <div class="a" id="klemmA2" style="width:170px" data-frei>{{klemmbrett~a}}</div>
+  <div class="a" id="klemmB2" style="width:170px" data-frei>{{klemmbrett~b}}</div>
+  <div class="a" id="klemm2" style="width:300px" data-gruppe="klemm2">{{klemmbrett~c}}</div>
+  <div class="a zeilen" id="zeilen2" data-gruppe="klemm2"><i></i><i style="width:80%"></i><i style="width:92%"></i><i style="width:60%"></i></div>
+
+  <!-- 3 · der Bewohner · die Bewohnerin -->
+  <div class="a buehne" id="bue2"><div class="leiste" style="top:380px"></div><div class="boden" style="height:255px"></div></div>
+  <div class="a karte hoch" id="k3" style="--f:var(--der)"><div class="band" id="k3b" style="background:linear-gradient(90deg,var(--der) 50%,var(--die) 50%)"></div>
+    <div class="zeile"><span class="artikel" id="k3a1">der</span><span class="m"><span class="wi" id="k3w1">Bewohner</span></span></div>
+    <div class="pl"><span class="m"><span class="wi" id="k3p1"><small>Plural</small> <b><span class="pa">die</span> Bewohner</b></span></span></div>
+    <div class="trenn" id="k3tr"></div>
+    <div class="zeile"><span class="artikel" id="k3a2" style="background:var(--die)">die</span><span class="m"><span class="wi" id="k3w2">Bewohnerin</span></span></div>
+    <div class="pl"><span class="m"><span class="wi" id="k3p2"><small>Plural</small> <b><span class="pa">die</span> Bewohnerinnen</b></span></span></div></div>
+  <div class="a satz" id="sb3" style="height:196px"><div class="portrait" data-p="pPA"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp3"></div></div></div>
+  <div class="a" id="tuer3l" style="width:190px" data-gruppe="t3l">{{haustuer~l}}</div>
+  <div class="a" id="blatt3l" style="width:190px" data-gruppe="t3l">{{haustuer-blatt~l}}</div>
+  <div class="a" id="tuer3r" style="width:190px" data-gruppe="t3r">{{haustuer~r}}</div>
+  <div class="a" id="blatt3r" style="width:190px" data-gruppe="t3r">{{haustuer-blatt~r}}</div>
+  <div class="a" id="tuer3" style="width:300px" data-gruppe="t3">{{haustuer~m}}</div>
+  <div class="a licht" id="licht3" style="width:142px;height:216px" data-gruppe="t3"></div>
+  <div class="a" id="blatt3" style="width:300px;transform-origin:27.5% 50%" data-gruppe="t3">{{haustuer-blatt~m}}</div>
+  <div class="a schildchen" id="nr3" data-gruppe="t3">12</div>
+  <div class="a chip gruen" id="neu3"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>neu</div>
+
+  <!-- 4 · das Vitalzeichen -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a karte" id="k4" style="--f:var(--das)"><div class="band" id="k4b"></div>
+    <div class="kopf"><span class="artikel" id="k4a">das</span><span class="typ" id="k4t">Nomen</span></div>
+    <div class="wort" style="font-size:74px"><span class="m"><span class="wi" id="k4w">Vitalzeichen</span></span></div>
+    <div class="pl"><span class="m"><span class="wi" id="k4p"><small>Plural</small> <b><span class="pa">die</span> Vitalzeichen</b></span></span></div></div>
+  <div class="a satz" id="sb4"><div class="portrait" data-p="pPA"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp4"></div></div></div>
+  <div class="a kachel" id="v1"><div class="bild"><div>{{manometer~v}}</div><div id="v1z" style="transform-origin:50% 48.75%">{{manometer-zeiger~v}}</div></div><b id="v1l">Blutdruck</b></div>
+  <div class="a kachel" id="v2"><div class="bild"><div id="v2h">{{herz}}</div></div><b id="v2l">Puls</b></div>
+  <div class="a kachel" id="v3"><div class="bild"><div>{{thermometer}}</div><div id="v3s" style="transform-origin:50% 77.5%">{{thermometer-saeule}}</div></div><b id="v3l">Temperatur</b></div>
+  <svg class="a" id="ekg4" viewBox="0 0 700 90" style="width:700px;height:90px" data-frei><path id="ekgP" pathLength="1" d="M0 45H250L270 45L285 15L305 80L320 30L335 45H440L455 45L470 15L490 80L505 30L520 45H700" stroke="var(--error)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a plakette" id="ok4a" data-frei></div><div class="a plakette" id="ok4b" data-frei></div><div class="a plakette" id="ok4c" data-frei></div>
+
+  <!-- 5 · der Blutdruck -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a karte" id="k5" style="--f:var(--der);height:250px"><div class="band" id="k5b"></div>
+    <div class="kopf"><span class="artikel" id="k5a">der</span><span class="typ" id="k5t">Nomen</span></div>
+    <div class="wort"><span class="m"><span class="wi" id="k5w">Blutdruck</span></span></div></div>
+  <div class="a satz" id="sb5"><div class="portrait" data-p="pMai"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp5"></div></div></div>
+  <svg class="a" id="schlauch5" viewBox="0 0 900 720" style="width:900px;height:720px" data-frei>
+    <path d="M258 329C270 520 640 520 680 400" stroke="var(--n300)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M258 329C250 400 250 440 250 500" stroke="var(--n300)" stroke-width="10" stroke-linecap="round" fill="none"/></svg>
+  <div class="a" id="man5" style="width:330px">{{manschette}}</div>
+  <div class="a" id="ball5" style="width:170px;transform-origin:50% 60%">{{pumpball}}</div>
+  <div class="a" id="mano5" style="width:340px" data-gruppe="mano5">{{manometer}}</div>
+  <div class="a" id="zeig5" style="width:340px;transform-origin:50% 48.75%" data-gruppe="mano5">{{manometer-zeiger}}</div>
+  <div class="a chip gelb" id="hoch5"><svg viewBox="0 0 30 30"><path d="M15 24V7M8 13l7-7 7 7" stroke="var(--warning-text)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>etwas hoch</div>
+
+  <!-- 6 · die Grundpflege -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a karte" id="k6" style="--f:var(--die);height:250px"><div class="band" id="k6b"></div>
+    <div class="kopf"><span class="artikel" id="k6a">die</span><span class="typ" id="k6t">Nomen</span></div>
+    <div class="wort" style="font-size:78px"><span class="m"><span class="wi" id="k6w">Grundpflege</span></span></div></div>
+  <div class="a satz" id="sb6"><div class="portrait" data-p="pMai"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp6"></div></div></div>
+  <div class="a kachel klein" id="g1"><div class="bild"><div id="g1i">{{waschlappen}}</div></div><b>Waschen</b></div>
+  <div class="a kachel klein" id="g2"><div class="bild"><div id="g2i" style="transform-origin:50% 12%">{{hemd}}</div></div><b>Anziehen</b></div>
+  <div class="a kachel klein" id="g3"><div class="bild"><div id="g3i">{{zahnbuerste}}</div></div><b>Zähneputzen</b></div>
+  <div class="a kachel klein" id="g4"><div class="bild"><div id="g4i" style="transform-origin:20% 75%">{{loeffel}}</div></div><b>Essen</b></div>
+  <div class="a plakette" id="ok6a" data-frei></div><div class="a plakette" id="ok6b" data-frei></div><div class="a plakette" id="ok6c" data-frei></div><div class="a plakette" id="ok6d" data-frei></div>
+
+  <!-- 7 · lagern -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a karte" id="k7" style="--f:var(--b100);height:250px"><div class="band" id="k7b" style="background:var(--b300)"></div>
+    <div class="kopf"><span class="artikel verb" id="k7a">Verb</span></div>
+    <div class="wort"><span class="m"><span class="wi" id="k7w">lagern</span></span></div></div>
+  <div class="a satz" id="sb7"><div class="portrait" data-p="pPA"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp7"></div></div></div>
+  <div class="a" id="bett7" style="width:600px" data-gruppe="bett">{{bett}}</div>
+  <div class="a" id="kissen7" style="width:190px" data-gruppe="bett">{{kissen}}</div>
+  <div class="a" id="decke7" style="width:420px;transform-origin:50% 68%" data-gruppe="bett">{{decke}}</div>
+  <div class="a" id="lkissen7" style="width:150px;transform-origin:50% 50%" data-gruppe="bett">{{kissen~l}}</div>
+  <svg class="a" id="bogen7" viewBox="0 0 900 720" style="width:900px;height:720px" data-frei>
+    <defs><marker id="spitze7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M390 250C450 170 580 170 630 250" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none" marker-end="url(#spitze7)"/></svg>
+  <div class="a" id="uhr7" style="width:160px" data-gruppe="uhr7">{{uhr~7}}</div>
+  <div class="a" id="zeig7" style="width:160px;transform-origin:50% 47.5%" data-gruppe="uhr7" data-dreht>{{uhr-zeiger~7}}</div>
+  <div class="a chip klein" id="chip2h7">alle 2 Stunden</div>
+  <div class="a chip gruen klein" id="chipDruck7"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>keine Druckstellen</div>
+
+  <!-- 8 · klingeln -->
+  <div class="a buehne" id="bue7"><div class="leiste" style="top:420px"></div><div class="boden" style="height:212px"></div></div>
+  <div class="a karte" id="k8" style="--f:var(--b100)"><div class="band" id="k8b" style="background:var(--b300)"></div>
+    <div class="kopf"><span class="artikel verb" id="k8a">Verb</span></div>
+    <div class="wort"><span class="m"><span class="wi" id="k8w">klingeln</span></span></div>
+    <div class="pl"><span class="m"><span class="wi" id="k8p"><small>Nomen</small> <b><span style="color:var(--die-text)">die</span> Klingel</b></span></span></div></div>
+  <div class="a satz" id="sb8"><div class="portrait" data-p="pMai"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp8"></div></div></div>
+  <div class="a" id="tuer8" style="width:300px" data-gruppe="t8">{{haustuer~8}}</div>
+  <div class="a" id="blatt8" style="width:300px" data-gruppe="t8">{{haustuer-blatt~8}}</div>
+  <div class="a schildchen" id="nr8" data-gruppe="t8">7</div>
+  <div class="a" id="lampe8" style="width:180px" data-gruppe="lampe8">{{lampe}}</div>
+  <div class="a rotlicht" id="rot8" data-gruppe="lampe8"></div>
+  <div class="a welle" id="welle8a" style="width:160px;height:160px;border-color:var(--error)" data-frei></div>
+  <div class="a welle" id="welle8b" style="width:160px;height:160px;border-color:var(--error)" data-frei></div>
+  <div class="a" id="klingel8" style="width:230px" data-gruppe="kl8">{{klingel}}</div>
+  <div class="a knopf" id="knopf8" data-gruppe="kl8"></div>
+  <div class="a finger" id="finger8" data-frei></div>
+
+  <!-- 9 · die Dokumentation -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a karte" id="k9" style="--f:var(--die);height:250px"><div class="band" id="k9b"></div>
+    <div class="kopf"><span class="artikel" id="k9a">die</span><span class="typ" id="k9t">Nomen</span></div>
+    <div class="wort" style="font-size:70px"><span class="m"><span class="wi" id="k9w">Dokumentation</span></span></div></div>
+  <div class="a satz" id="sb9"><div class="portrait" data-p="pPA"></div><div class="stext"><span class="eyebrow2">Beispiel</span><div class="tipp" id="tp9"></div></div></div>
+  <div class="a tablet" id="tab9" data-gruppe="tab"><div class="screen"><small>Pflege-Software</small><h5>Dokumentation</h5>
+    <div class="reihen"><div class="reihe" id="r1"><u></u>Übergabe</div><div class="reihe" id="r2"><u></u>Vitalzeichen</div>
+    <div class="reihe" id="r3"><u></u>Grundpflege</div><div class="reihe" id="r4"><u></u>Lagern</div></div>
+    <div class="feld" id="feld9"><span>Blutdruck</span><div id="bd9"></div></div>
+    <div class="toast" id="toast9">✓ Gespeichert</div><div class="speichern" id="spei9">Speichern</div></div></div>
+  <div class="a finger" id="finger9" data-gruppe="tab"></div>
+
+  <!-- 10 · Dialog -->
+  <div class="a buehne breit" id="bue9"><div class="boden" style="height:150px"></div></div>
+  <div class="a portrait" id="pa10" style="width:300px;height:300px" data-sprecher="Praxisanleiterin"></div>
+  <div class="a portrait" id="mai10" style="width:300px;height:300px" data-sprecher="Mai"></div>
+  <div class="a namechip" id="nPA">Praxisanleiterin</div>
+  <div class="a namechip" id="nMai">Mai</div>
+  <div class="a" id="d1" style="width:250px" data-gruppe="mitte">{{klemmbrett~d}}</div>
+  <div class="a" id="d2" style="width:270px" data-gruppe="mitte">{{manometer~d}}</div>
+  <div class="a" id="d2z" style="width:270px;transform-origin:50% 48.75%" data-gruppe="mitte">{{manometer-zeiger~d}}</div>
+  <div class="a" id="d3" style="width:260px" data-gruppe="mitte">{{waschlappen~d}}</div>
+  <div class="a" id="d4" style="width:300px" data-gruppe="mitte">{{bett~d}}</div>
+  <div class="a" id="d4k" style="width:95px" data-gruppe="mitte">{{kissen~d}}</div>
+  <div class="a" id="d4d" style="width:210px;transform-origin:50% 68%" data-gruppe="mitte">{{decke~d}}</div>
+  <div class="a" id="d5" style="width:280px" data-gruppe="mitte">{{tablet}}</div>
+  <div class="a" id="d6" style="width:200px" data-gruppe="mitte">{{lampe~d}}</div>
+  <div class="a rotlicht" id="d6r" data-gruppe="mitte"></div>
+  <div class="a welle" id="welle10" style="width:170px;height:170px;border-color:var(--error)" data-frei></div>
+  <div class="a chip wchip die" id="c1" style="width:220px">die Übergabe</div>
+  <div class="a chip wchip das" id="c2" style="width:270px">das Vitalzeichen</div>
+  <div class="a chip wchip die" id="c3" style="width:250px">die Grundpflege</div>
+  <div class="a chip wchip verb" id="c4" style="width:140px">lagern</div>
+  <div class="a chip wchip die" id="c5" style="width:280px">die Dokumentation</div>
+  <div class="a chip wchip verb" id="c6" style="width:160px">klingeln</div>
+</div></div>
+
+<div id="fort"></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="zeile2" id="asT"><div class="gross" id="asTitel">Die Wörter müssen sitzen.</div></div>
+  <div class="zeile2" id="asU"><div class="klein" id="asUnter">In der Pflege geht es um Menschen.</div></div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const N_SZ = 10;
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+/* ---------- Porträts befüllen ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  const art = p.dataset.p || (p.dataset.sprecher === 'Mai' ? 'pMai' : 'pPA');
+  p.innerHTML = tpl(art); p.dataset.sprecher = art === 'pMai' ? 'Mai' : 'Praxisanleiterin';
+});
+document.querySelectorAll('.plakette').forEach(p => p.innerHTML = tpl('svgHaken'));
+document.querySelectorAll('.tablet .reihe u').forEach(u => u.innerHTML = tpl('svgHaken'));
+
+/* ---------- Bühnen ---------- */
+for (let i = 0; i < N_SZ; i++) akteur('bue' + i, { x: S(i) + (i === 0 || i === 9 ? 960 : 1320), y: 540 });
+
+/* ---------- Helfer (wie Kurs 1) ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null, q = 1) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: 1 - .07 * q, sx: 1 + .05 * q }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18, q = 1) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: 1 - .06 * q, sx: 1 + .04 * q }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1 + .04 * q, sx: 1 - .03 * q }, 'sinus');
+  tw(id, t + .44, .08, { sy: 1 - .05 * q, sx: 1 + .04 * q }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const welleNochmal = (id, t, d = .9) => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const landen = (id, t, q = 1) => { tw(id, t, .12, { sy: 1 - .12 * q, sx: 1 + .07 * q }, 'sinus'); tw(id, t + .12, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Wort steigt aus der Maske
+const steigt = (id, t, snd = null) => { akteur(id, { y: 110 }, true); tw(id, t, .7, { y: 0 }, 'weich'); if (snd) cue(t, snd); };
+
+/* ---------- Kamera ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N_SZ; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json) ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [];            // [id, von, bis]
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => (id === p.id || id === p.parentElement.id) && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `translateY(${r.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Format Fachvokabeln: Wortkarte, Satzleiste, Tippen ---------- */
+const KX = 470, KY = 405, KYH = 460, SBY = 705;
+// Wortkarte: Karte kommt, Band läuft, Artikel ploppt, Wort steigt aus der Maske
+function wortkarte(nr, i, t, { y = KY, artikel = true } = {}) {
+  ein('k' + nr, t - .45, { x: S(i) + KX, y }, { x: -70 }, 'whoosh');
+  akteur('k' + nr + 'b', { sx: 0 }, true); tw('k' + nr + 'b', t - .2, .8, { sx: 1 }, 'weich');
+  if (artikel) { akteur('k' + nr + 'a', { s: 0 }, true); tw('k' + nr + 'a', t - .05, .5, { s: 1 }, 'back'); cue(t - .05, 'pop'); }
+  if (el('k' + nr + 't')) { akteur('k' + nr + 't', { o: 0 }, true); tw('k' + nr + 't', t + .2, .4, { o: 1 }); }
+  steigt('k' + nr + 'w', t);
+}
+// Beispielsatz tippt sich Buchstabe für Buchstabe im Takt der Wortzeiten
+function tippen(id, n, lern, farbe) {
+  const s = satz(n), toks = s.text.split(/\s+/), W_ = s.woerter;
+  if (toks.length !== W_.length) throw new Error(`Satz ${n}: ${toks.length} Wörter im Text, ${W_.length} in sprache.json`);
+  const box = el(id); let alt = '';
+  HOOKS.push(t => {
+    const ta = t - VERSATZ; let html = '';
+    toks.forEach((tok, k) => {
+      const w = W_[k], p = clamp((ta - w.start + .03) / Math.max(.12, w.ende - w.start));
+      if (p <= 0) return;
+      let txt = tok.slice(0, Math.max(1, Math.round(p * tok.length)));
+      if (k === 0) txt = '„' + txt;
+      if (k === toks.length - 1 && p >= 1) txt += '“';
+      const istLern = lern.some(l => _norm(tok).startsWith(_norm(l)));
+      html += (k ? ' ' : '') + (istLern ? `<b style="color:${farbe}">${txt}</b>` : txt);
+    });
+    const blink = t > A(s.start) - .5 && t < A(s.ende) + .8 && (Math.floor(t * 2.6) % 2 === 0 || t < A(s.ende));
+    html += blink ? '<span class="cursor"></span>' : '';
+    if (html !== alt) { box.innerHTML = html; alt = html; }
+  });
+  for (const w of W_) cue(A(w.start), 'tipp');
+}
+function satzleiste(nr, i, n, lern, farbe) {
+  ein('sb' + nr, SA(n) - .75, { x: S(i) + KX, y: nr === 3 ? 780 : SBY }, { y: 60 }, 'whoosh');
+  const p = $(`#sb${nr} .portrait`); akteur(p, { s: 0 }, true); tw(p, SA(n) - .5, .5, { s: 1 }, 'back');
+  tippen('tp' + nr, n, lern, farbe);
+}
+
+/* ---------- Fortschritt: ein Punkt je Wort ---------- */
+const FORT = [['die', 2], ['der', 3], ['das', 4], ['der', 5], ['die', 6], ['verb', 7], ['verb', 8], ['die', 9]];
+$('#fort').innerHTML = FORT.map(() => '<i></i>').join('');
+const PAN_T = [];   // Startzeit jeder Szene (Index = Szene - 1)
+
+/* ---------- 1 · Frühschicht im Pflegeheim ---------- */
+const X0 = S(0);
+PAN_T[0] = 0;
+akteur('sonne1', { y: 150, s: .8 }, true);
+tw('sonne1', W('Frühschicht', 1) - .3, 1.6, { y: 0, s: 1 }, 'sanft'); cue(W('Frühschicht', 1) - .3, 'whoosh');
+HOOKS.push(t => { const d = t - W('Frühschicht', 1); $('#sonne1').style.transform += ` rotate(${d > 0 ? d * 8 : 0}deg)`; });
+[['tuer1a', 'blatt1a', 'sch1a', 470], ['tuer1b', 'blatt1b', 'sch1b', 1450]].forEach(([tu, bl, sc, x], k) => {
+  const t0 = W('Pflegeheim', 1) - .3 + k * .18;
+  ein(tu, t0, { x: X0 + x, y: 590 }, { y: 80 }, 'whoosh'); ein(bl, t0, { x: X0 + x, y: 590 }, { y: 80 });
+  pop(sc, t0 + .45, { x: X0 + x, y: 445 }, 'klick');
+});
+// Mai springt herein und lächelt
+akteur('mai1', { x: X0 + 960, y: 1180, s: .9 });
+tw('mai1', W('Mai', 2) - .45, .85, { y: 560, s: 1 }, 'inout', { bogen: 50 }); cue(W('Mai', 2) - .45, 'whoosh');
+landen('mai1', W('Mai', 2) + .4, .3);
+FROH.push(['mai1', W('Ausbildung', 2), 99]);
+welle('welle1', W('Pflegefachfrau', 2) - .1, X0 + 960, 560, 1.1);
+pop('chipBeruf1', W('Pflegefachfrau', 2), { x: X0 + 960, y: 790 }); akzent(W('Pflegefachfrau', 2), .03);
+huepfen('mai1', W('Pflegefachfrau', 2) + .2, 16, .35);
+// Wörter: Farb-Legende der · die · das
+aus('chipBeruf1', W('Wörter', 3) - .45, .3);
+pop('leg0', W('Wörter', 3) - .1, { x: X0 + 960, y: 745 }, null);
+[['leg1', 790, 'die'], ['leg2', 960, 'Tag'], ['leg3', 1130, 'braucht']].forEach(([id, x, w], k) => {
+  pop(id, W('Wörter', 3) + k * .16, { x: X0 + x, y: 830 }, 'pop');
+  bump(id, W(w, 3), 1.1);
+});
+akzent(W('Wörter', 3), .03);
+// Türen gehen einen Spalt auf – der Tag beginnt
+set(['blatt1a', 'blatt1b'], 0, { sx: 1 });
+tw('blatt1a', W('jeden', 3), .6, { sx: .82 }, 'sanft'); tw('blatt1b', W('jeden', 3) + .2, .6, { sx: .82 }, 'sanft');
+schweben(['leg1', 'leg2', 'leg3'], 3);
+
+/* ---------- 2 · die Übergabe ---------- */
+PAN_T[1] = SE(3) + .3; pan2(PAN_T[1], 1); const X1 = S(1);
+wortkarte(2, 1, W('Übergabe', 4));
+steigt('k2p', W('Übergaben', 5), 'pop');
+akzent(W('Übergabe', 4));
+// Nacht und Tag, dazwischen die Uhr
+ein('mond2', W('Übergabe', 4) - .2, { x: X1 + 1030, y: 330 }, { y: 60 });
+ein('sonne2', W('Übergabe', 4) + .0, { x: X1 + 1610, y: 330 }, { y: 60 });
+['uhr2', 'std2', 'min2'].forEach(id => ein(id, W('Übergabe', 4) - .1, { x: X1 + 1320, y: 340 }, { y: 60 }));
+set('std2', 0, { r: 150 }); set('min2', 0, { r: 0 });
+ein('klemm2', W('Übergabe', 4) + .1, { x: X1 + 1080, y: 650 }, { y: 80 }, 'whoosh');
+akteur('zeilen2', { x: X1 + 1080, y: 665, o: 0 }); tw('zeilen2', W('Übergabe', 4) + .3, .3, { o: 1 });
+[...el('zeilen2').children].forEach(z => akteur(z, { sx: 0 }, true));
+schweben(['mond2', 'sonne2'], 4);
+// Plural: zwei weitere Übergaben ploppen dazu
+const KL2 = [['klemmA2', 1320], ['klemmB2', 1560]];
+KL2.forEach(([id, x], k) => { pop(id, W('Übergaben', 5) + k * .15, { x: X1 + x, y: 660 }); aus(id, W('Anfang', 6) - .2 + k * .1); });
+// Am Anfang der Schicht: die Nacht erzählt – die Zeilen schreiben sich, das Klemmbrett wandert zur Frühschicht
+[...el('zeilen2').children].forEach((z, k) => tw(z, W('erzählt', 6) + k * .22, .5, { sx: 1 }, 'weich'));
+cue(W('erzählt', 6), 'kritzeln');
+bump('mond2', W('vorige', 6), 1.12);
+['klemm2', 'zeilen2'].forEach(id => flug(id, W('passiert', 6) - .1, 1.0, X1 + 1400 + (id === 'zeilen2' ? 0 : 0), id === 'zeilen2' ? 665 : 650, 120));
+cue(W('passiert', 6) - .1, 'whoosh');
+tw('mond2', W('passiert', 6) + .2, .6, { o: .45, s: .9 }, 'inout');
+bump('sonne2', W('passiert', 6) + .9, 1.15); cue(W('passiert', 6) + .9, 'plopp');
+// „Um sechs Uhr ist Übergabe“: die Uhr springt auf sechs
+satzleiste(2, 1, 7, ['Übergabe'], 'var(--die-text)');
+tw('min2', W('sechs', 7) - .2, .9, { r: 360 }, 'inout'); tw('std2', W('sechs', 7) - .2, .9, { r: 180 }, 'inout'); cue(W('sechs', 7) - .2, 'scan');
+bump('uhr2', W('Uhr', 7) + .1, 1.1); akzent(W('Uhr', 7));
+landen('klemm2', W('Übergabe', 7), .4); bump('zeilen2', W('Übergabe', 7), 1.04);
+
+/* ---------- 3 · der Bewohner · die Bewohnerin ---------- */
+PAN_T[2] = SE(7) + .3; pan2(PAN_T[2], 2); const X2 = S(2);
+ein('k3', W('Bewohner', 8) - .45, { x: X2 + KX, y: 420 }, { x: -70 }, 'whoosh');
+akteur('k3b', { sx: 0 }, true); tw('k3b', W('Bewohner', 8) - .2, .8, { sx: 1 }, 'weich');
+akteur('k3a1', { s: 0 }, true); tw('k3a1', W('Bewohner', 8) - .05, .5, { s: 1 }, 'back'); cue(W('Bewohner', 8) - .05, 'pop');
+steigt('k3w1', W('Bewohner', 8));
+steigt('k3p1', W('Bewohner', 9), 'pop');
+akteur('k3tr', { sx: 0 }, true); tw('k3tr', W('Bewohnerin', 10) - .4, .6, { sx: 1 }, 'weich');
+akteur('k3a2', { s: 0 }, true); tw('k3a2', W('Bewohnerin', 10) - .05, .5, { s: 1 }, 'back'); cue(W('Bewohnerin', 10) - .05, 'pop');
+steigt('k3w2', W('Bewohnerin', 10));
+steigt('k3p2', W('Bewohnerinnen', 11), 'pop');
+akzent(W('Bewohner', 8)); akzent(W('Bewohnerin', 10));
+// Tür 12 im Flur; im Plural kommen Nachbartüren dazu
+['tuer3', 'blatt3'].forEach(id => ein(id, W('Bewohner', 8) - .2, { x: X2 + 1320, y: 520 }, { y: 80 }, id === 'tuer3' ? 'whoosh' : null));
+akteur('licht3', { x: X2 + 1320, y: 524, o: 0 });
+set('blatt3', 0, { sx: 1 });
+[['tuer3l', 'blatt3l', 1020], ['tuer3r', 'blatt3r', 1620]].forEach(([tu, bl, x], k) => {
+  const t0 = W('Bewohner', 9) - .15 + k * .15;
+  ein(tu, t0, { x: X2 + x, y: 560 }, { y: 70 }, 'pop'); ein(bl, t0, { x: X2 + x, y: 560 }, { y: 70 });
+  huepfen(tu, W('Bewohnerinnen', 11) + k * .15, 10); huepfen(bl, W('Bewohnerinnen', 11) + k * .15, 10);
+});
+huepfen('tuer3', W('Bewohnerin', 10), 10); huepfen('blatt3', W('Bewohnerin', 10), 10);
+// … die im Pflegeheim leben: die Tür geht auf, warmes Licht
+tw('licht3', W('leben', 12) - .5, .5, { o: 1 });
+tw('blatt3', W('leben', 12) - .5, .8, { sx: .18 }, 'sanft'); cue(W('leben', 12) - .5, 'klick');
+akzent(W('leben', 12), .025);
+// „Frau Schneider ist neue Bewohnerin auf Zimmer zwölf.“
+satzleiste(3, 2, 13, ['Bewohnerin'], 'var(--die-text)');
+pop('neu3', W('neue', 13), { x: X2 + 1320, y: 800 }, 'ding');
+pop('nr3', W('Zimmer', 13) - .1, { x: X2 + 1320, y: 360 }); bump('nr3', W('zwölf', 13), 1.2); akzent(W('zwölf', 13));
+tw('nr3', W('zwölf', 13) + .6, .3, { s: 1 });
+
+/* ---------- 4 · das Vitalzeichen ---------- */
+PAN_T[3] = SE(13) + .3; pan2(PAN_T[3], 3); const X3 = S(3);
+wortkarte(4, 3, W('Vitalzeichen', 14));
+steigt('k4p', W('Vitalzeichen', 15), 'pop');
+akzent(W('Vitalzeichen', 14));
+// Einzahl: eine Kachel (Puls); Mehrzahl: drei Kacheln
+const VX = [1060, 1320, 1580];
+pop('v2', W('Vitalzeichen', 14) + .1, { x: X3 + 1320, y: 470 }, 'pop', 'sanft');
+pop('v1', W('Vitalzeichen', 15) - .05, { x: X3 + 1060, y: 470 }, 'pop', 'sanft');
+pop('v3', W('Vitalzeichen', 15) + .1, { x: X3 + 1580, y: 470 }, 'pop', 'sanft');
+['v1l', 'v2l', 'v3l'].forEach(id => akteur(id, { o: 0, y: 12 }, true));
+akteur('v1z', { r: -135 }, true); akteur('v3s', { sy: .25 }, true);
+// Blutdruck: Zeiger läuft; Puls: Herz schlägt und die Pulslinie läuft; Temperatur: Säule steigt
+tw('v1l', W('Blutdruck', 16) - .1, .4, { o: 1, y: 0 }, 'sanft'); bump('v1', W('Blutdruck', 16), 1.07);
+tw('v1z', W('Blutdruck', 16), .9, { r: -10 }, 'sanft'); cue(W('Blutdruck', 16), 'scan');
+tw('v2l', W('Puls', 16) - .1, .4, { o: 1, y: 0 }, 'sanft'); bump('v2', W('Puls', 16), 1.07);
+tw('v3l', W('Temperatur', 16) - .1, .4, { o: 1, y: 0 }, 'sanft'); bump('v3', W('Temperatur', 16), 1.07);
+tw('v3s', W('Temperatur', 16), 1.1, { sy: .72 }, 'sanft'); cue(W('Temperatur', 16), 'scan');
+HOOKS.push(t => { const d = t - W('Vitalzeichen', 14) - .3; if (d > 0) { const b = Math.max(0, Math.sin(d * 7.5)) ** 8 * (d > W('Puls', 16) - W('Vitalzeichen', 14) - .3 ? .12 : .05);
+  $('#v2h').style.transform = `scale(${1 + b})`; } });
+akteur('ekg4', { x: X3 + 1320, y: 690, o: 0 });
+tw('ekg4', W('Puls', 16) - .2, .3, { o: 1 });
+HOOKS.push(t => { const d = t - W('Puls', 16) + .2; const p = el('ekgP');
+  p.style.strokeDasharray = '.35 1'; p.style.strokeDashoffset = d > 0 ? (.35 - (d / 1.6) % 1.35).toFixed(3) : .35; });
+cue(W('Puls', 16), 'plopp');
+// „Bitte miss bei Herrn Weber die Vitalzeichen.“ – drei Haken
+satzleiste(4, 3, 17, ['Vitalzeichen'], 'var(--das-text)');
+[['ok4a', 'v1', 1060], ['ok4b', 'v2', 1320], ['ok4c', 'v3', 1580]].forEach(([ok, v, x], k) => {
+  const t0 = W('miss', 17) + k * .3;
+  pop(ok, t0, { x: X3 + x + 100, y: 470 - 92 }, 'ding'); bump(v, t0, 1.05);
+});
+akzent(W('Vitalzeichen', 17));
+
+/* ---------- 5 · der Blutdruck ---------- */
+PAN_T[4] = SE(17) + .3; pan2(PAN_T[4], 4); const X4 = S(4);
+wortkarte(5, 4, W('Blutdruck', 18), { y: 375 });
+akzent(W('Blutdruck', 18));
+// Gerät baut sich auf: Manschette, Pumpball, Anzeige, Schlauch
+ein('man5', W('Blutdruck', 18) - .2, { x: X4 + 1130, y: 410 }, { x: -70 }, 'whoosh');
+ein('mano5', W('Blutdruck', 18) + .05, { x: X4 + 1550, y: 450 }, { x: 70 });
+ein('zeig5', W('Blutdruck', 18) + .05, { x: X4 + 1550, y: 450 }, { x: 70 });
+ein('ball5', W('Blutdruck', 18) + .2, { x: X4 + 1120, y: 720 }, { y: 70 });
+akteur('schlauch5', { x: X4 + 1320, y: 540, o: 0 }); tw('schlauch5', W('Blutdruck', 18) + .3, .5, { o: 1 });
+set('zeig5', 0, { r: -135 });
+// „Der Blutdruck ist heute etwas hoch.“ – pumpen, Manschette füllt sich, Zeiger steigt
+satzleiste(5, 4, 19, ['Blutdruck'], 'var(--der-text)');
+const PUMP = [W('Blutdruck', 19) - .2, W('ist', 19) - .05, W('heute', 19) + .05];
+PUMP.forEach((t0, k) => {
+  tw('ball5', t0, .14, { sy: .78, sx: 1.12 }, 'sinus'); tw('ball5', t0 + .14, .35, { sy: 1, sx: 1 }, 'sanft'); cue(t0, 'plopp');
+  tw('man5', t0 + .1, .35, { s: 1 + .035 * (k + 1) }, 'sanft');
+  tw('zeig5', t0 + .1, .5, { r: -135 + 60 * (k + 1) }, 'sanft');
+});
+tw('zeig5', W('hoch', 19) - .25, .5, { r: 62 }, 'sanft');
+tw('zeig5', W('hoch', 19) + .25, .5, { r: 55 }, 'sanft');
+pop('hoch5', W('etwas', 19), { x: X4 + 1550, y: 720 }, 'ding'); wackeln('hoch5', W('hoch', 19) + .2, 3, 3);
+akzent(W('hoch', 19), .04);
+tw('man5', SE(19) + .3, .6, { s: 1 }, 'inout');
+
+/* ---------- 6 · die Grundpflege ---------- */
+PAN_T[5] = SE(19) + .3; pan2(PAN_T[5], 5); const X5 = S(5);
+wortkarte(6, 5, W('Grundpflege', 20), { y: 375 });
+akzent(W('Grundpflege', 20));
+const GP = [['g1', 1180, 395, 'Waschen', 'ok6a'], ['g2', 1460, 395, 'Anziehen', 'ok6b'], ['g3', 1180, 655, 'Zähneputzen', 'ok6c'], ['g4', 1460, 655, 'Essen', 'ok6d']];
+GP.forEach(([id, x, y, w]) => ein(id, W(w, 21) - .2, { x: X5 + x, y }, { y: 70 }, 'pop'));
+akteur('g1i', {}, true); akteur('g3i', {}, true);
+HOOKS.push(t => {
+  const d1 = t - W('Waschen', 21) - .3; $('#g1i').style.transform = d1 > 0 && d1 < 1.6 ? `translate(${16 * Math.sin(d1 * 9) * Math.sin(Math.PI * d1 / 1.6)}px,${4 * Math.sin(d1 * 18) * Math.sin(Math.PI * d1 / 1.6)}px)` : '';
+  const d2 = t - W('Anziehen', 21) - .3; $('#g2i').style.transform = d2 > 0 && d2 < 1.8 ? `rotate(${8 * Math.sin(d2 * 6) * (1 - d2 / 1.8)}deg)` : '';
+  const d3 = t - W('Zähneputzen', 21) - .3; $('#g3i').style.transform = d3 > 0 && d3 < 1.5 ? `translateX(${12 * Math.sin(d3 * 20) * Math.sin(Math.PI * d3 / 1.5)}px)` : '';
+  const d4 = t - W('Essen', 21) - .3, p4 = clamp(d4 / 1.2); $('#g4i').style.transform = d4 > 0 && d4 < 1.2 ? `translateY(${-14 * Math.sin(Math.PI * p4)}px) rotate(${-12 * Math.sin(Math.PI * p4)}deg)` : '';
+});
+cue(W('Zähneputzen', 21) + .3, 'kritzeln');
+// „Ich mache jetzt die Grundpflege …“ – Haken nacheinander
+satzleiste(6, 5, 22, ['Grundpflege'], 'var(--die-text)');
+GP.forEach(([id, x, y, , ok], k) => { const t0 = W('Grundpflege', 22) - .1 + k * .32; pop(ok, t0, { x: X5 + x + 94, y: y - 80 }, 'ding'); bump(id, t0, 1.05); });
+akzent(W('Grundpflege', 22));
+
+/* ---------- 7 · lagern ---------- */
+PAN_T[6] = SE(22) + .3; pan2(PAN_T[6], 6); const X6 = S(6);
+wortkarte(7, 6, W('Lagern', 23), { y: 375 });
+akzent(W('Lagern', 23));
+ein('bett7', W('Lagern', 23) - .3, { x: X6 + 1320, y: 520 }, { y: 80 }, 'whoosh');
+ein('kissen7', W('Lagern', 23) - .1, { x: X6 + 1175, y: 516 }, { y: -60 });
+ein('decke7', W('Lagern', 23) + .05, { x: X6 + 1362, y: 473 }, { y: -60 });
+// neue Position: Bogen zeigt die Drehung, die Decke neigt sich, Lagerungskissen legt sich an
+akteur('bogen7', { x: X6 + 1320, y: 540, o: 0, draw: 0 });
+tw('bogen7', W('Bett', 24) - .1, .1, { o: 1 }); tw('bogen7', W('Bett', 24) - .1, .8, { draw: 1 }, 'inout'); cue(W('Bett', 24), 'whoosh');
+tw('decke7', W('Position', 24) - .4, 1.0, { r: 3, x: X6 + 1352, sy: 1.06 }, 'inout');
+akteur('lkissen7', { x: X6 + 1680, y: 260, o: 0, r: -20, s: .8 });
+tw('lkissen7', W('neue', 24) - .1, .2, { o: 1 });
+tw('lkissen7', W('neue', 24) - .1, 1.0, { x: X6 + 1470, y: 432, r: -3, s: 1 }, 'inout', { bogen: 90 });
+landen('lkissen7', W('neue', 24) + .9); cue(W('neue', 24) + .9, 'plopp');
+bump('kissen7', W('Position', 24) + .2, 1.06);
+tw('bogen7', W('Druckstellen', 24) - .3, .4, { o: 0 });
+pop('chipDruck7', W('keine', 24), { x: X6 + 1320, y: 820 }, 'erfolg'); akzent(W('Druckstellen', 24), .03);
+// „Herr Weber muss alle zwei Stunden gelagert werden.“ – Uhr läuft zweimal rum
+satzleiste(7, 6, 25, ['gelagert'], 'var(--verb)');
+aus('chipDruck7', W('alle', 25) - .4, .3);
+['uhr7', 'zeig7'].forEach(id => ein(id, W('alle', 25) - .3, { x: X6 + 1600, y: 300 }, { y: 50 }, id === 'uhr7' ? 'pop' : null));
+tw('zeig7', W('zwei', 25), 1.3, { r: 720 }, 'inout'); cue(W('zwei', 25), 'scan');
+pop('chip2h7', W('Stunden', 25) - .1, { x: X6 + 1320, y: 820 }); akzent(W('Stunden', 25));
+tw('decke7', W('gelagert', 25) - .2, .9, { r: -2, x: X6 + 1366, sy: 1 }, 'inout');
+tw('lkissen7', W('gelagert', 25) - .2, .9, { x: X6 + 1440 }, 'inout'); bump('lkissen7', W('gelagert', 25) + .7, 1.05);
+set('bogen7', W('gelagert', 25) - .3, { o: 1, draw: 0 }); tw('bogen7', W('gelagert', 25) - .3, .8, { draw: 1 }, 'inout');
+tw('bogen7', SE(25) + .1, .3, { o: 0 });
+
+/* ---------- 8 · klingeln ---------- */
+PAN_T[7] = SE(25) + .3; pan2(PAN_T[7], 7); const X7 = S(7);
+wortkarte(8, 7, W('Klingeln', 26));
+akzent(W('Klingeln', 26));
+['tuer8', 'blatt8'].forEach(id => ein(id, W('Klingeln', 26) - .4, { x: X7 + 1150, y: 560 }, { y: 80 }, id === 'tuer8' ? 'whoosh' : null));
+pop('nr8', W('Klingeln', 26) - .1, { x: X7 + 1150, y: 398 }, 'klick');
+ein('lampe8', W('Klingeln', 26) - .2, { x: X7 + 1150, y: 300 }, { y: -50 });
+ein('klingel8', W('Klingeln', 26) - .1, { x: X7 + 1560, y: 560 }, { x: 70 }, 'whoosh');
+ein('knopf8', W('Klingeln', 26) - .1, { x: X7 + 1560, y: 556 }, { x: 70 });
+akteur('rot8', { x: X7 + 1150, y: 296, o: 0 });
+akteur('finger8', { x: X7 + 1680, y: 800, o: 0 });
+// drücken → Licht an, Wellen
+const druecken = t0 => {
+  tw('finger8', t0 - .45, .4, { o: 1, x: X7 + 1560, y: 556 }, 'inout');
+  tw('finger8', t0 - .05, .1, { s: .8 }, 'in'); tw('finger8', t0 + .05, .3, { s: 1 }, 'sanft');
+  tw('knopf8', t0 - .05, .1, { s: .82 }, 'in'); tw('knopf8', t0 + .05, .35, { s: 1 }, 'back'); cue(t0, 'klick');
+  tw('finger8', t0 + .45, .35, { o: 0, x: X7 + 1660, y: 740 }, 'inout');
+};
+druecken(W('Klingeln', 26) + .35);
+tw('rot8', W('Klingeln', 26) + .4, .25, { o: 1 }); cue(W('Klingeln', 26) + .45, 'ding');
+HOOKS.push(t => { const d = t - W('Klingeln', 26) - .65; if (d > 0) $('#rot8').style.opacity = (.75 + .25 * Math.cos(d * 5)).toFixed(3); });
+welle('welle8a', W('Klingeln', 26) + .45, X7 + 1150, 296, 1.0);
+akteur('welle8b', { x: X7 + 1150, y: 296, o: 0, s: .8 });
+[W('Hilfe', 27), W('Klingel', 27), W('geklingelt', 28)].forEach((t0, k) => { welleNochmal(k % 2 ? 'welle8b' : 'welle8a', t0 + .2, 1.0); });
+wackeln('klingel8', W('Hilfe', 27), 4, 3); wackeln('knopf8', W('Hilfe', 27), 4, 3);
+druecken(W('drückt', 27) + .1);
+steigt('k8p', W('Klingel', 27) - .05, 'pop'); bump('klingel8', W('Klingel', 27), 1.08); akzent(W('Klingel', 27));
+// „Zimmer sieben hat geklingelt.“
+satzleiste(8, 7, 28, ['geklingelt'], 'var(--verb)');
+bump('nr8', W('sieben', 28), 1.25); cue(W('sieben', 28), 'pop'); akzent(W('sieben', 28));
+bump('lampe8', W('geklingelt', 28), 1.08);
+
+/* ---------- 9 · die Dokumentation ---------- */
+PAN_T[8] = SE(28) + .3; pan2(PAN_T[8], 8); const X8 = S(8);
+wortkarte(9, 8, W('Dokumentation', 29), { y: 375 });
+akzent(W('Dokumentation', 29));
+ein('tab9', W('Dokumentation', 29) - .3, { x: X8 + 1320, y: 520 }, { y: 100 }, 'whoosh', .35);
+// Alles, was du machst, schreibst du auf: Einträge mit Haken
+const REIHEN = ['r1', 'r2', 'r3', 'r4'];
+REIHEN.forEach(id => { akteur(id, { o: 0, x: -30 }, true); akteur($(`#${id} u`), { s: 0 }, true); });
+const RT = [W('Alles', 30), W('machst', 30), W('schreibst', 30), W('auf', 30)];
+REIHEN.forEach((id, k) => { tw(id, RT[k] - .1, .45, { o: 1, x: 0 }, 'sanft'); tw($(`#${id} u`), RT[k] + .2, .45, { s: 1 }, 'back'); cue(RT[k] + .2, 'ding'); });
+akteur('feld9', { o: 0, y: 20 }, true); tw('feld9', SA(31) - .4, .45, { o: 1, y: 0 }, 'sanft');
+akteur('spei9', { o: 0 }, true); tw('spei9', SA(31) - .3, .4, { o: 1 });
+akteur('toast9', { o: 0, y: 12 }, true);
+satzleiste(9, 8, 31, ['Dokumentation'], 'var(--die-text)');
+{ // Blutdruck eintragen: „etwas hoch“ tippt sich
+  const TXT = 'etwas hoch', a1 = W('Blutdruck', 31), a2 = W('eingetragen', 31);
+  HOOKS.push(t => {
+    const n = Math.floor(clamp((t - a1) / (a2 - a1)) * TXT.length);
+    const c = t >= a1 - .2 && t < a2 + .3 && Math.floor(t * 3) % 2 === 0 ? '<span class="cursor" style="height:22px"></span>' : '';
+    const h = TXT.slice(0, n) + c; if ($('#bd9').innerHTML !== h) $('#bd9').innerHTML = h;
+  });
+  for (let k = 0; k < 5; k++) cue(a1 + k * (a2 - a1) / 5, 'tipp');
+  akteur('finger9', { x: X8 + 1700, y: 830, o: 0 });
+  tw('finger9', a2 - .3, .45, { o: 1, x: X8 + 1535, y: 690 }, 'inout');
+  tw('finger9', a2 + .15, .1, { s: .8 }, 'in'); tw('finger9', a2 + .25, .3, { s: 1 }, 'sanft');
+  tw('spei9', a2 + .15, .1, { s: .92 }, 'in'); tw('spei9', a2 + .25, .35, { s: 1 }, 'back'); cue(a2 + .15, 'klick');
+  tw('finger9', a2 + .7, .3, { o: 0 });
+  tw('toast9', a2 + .4, .4, { o: 1, y: 0 }, 'sanft'); cue(a2 + .5, 'erfolg'); akzent(a2 + .3, .03);
+}
+
+/* ---------- 10 · Dialog: alle Wörter ---------- */
+PAN_T[9] = SE(31) + .35; pan2(PAN_T[9], 9); const X9 = S(9);
+akteur('pa10', { x: X9 + 430, y: 450, s: 0 }); tw('pa10', PAN_T[9] + .5, .6, { s: 1 }, 'sanft'); cue(PAN_T[9] + .5, 'pop');
+akteur('mai10', { x: X9 + 1490, y: 450, s: 0 }); tw('mai10', PAN_T[9] + .7, .6, { s: 1 }, 'sanft');
+pop('nPA', PAN_T[9] + .9, { x: X9 + 430, y: 648 }, null); pop('nMai', PAN_T[9] + 1.0, { x: X9 + 1490, y: 648 }, null);
+// Zuhörer lächelt / nickt; Sprecher kommt aus sprache.json
+FROH.push(['mai10', SA(32) + .5, SE(32) + .3], ['pa10', SA(33), SE(34) + .2], ['mai10', SA(36), SE(37) + .2], ['pa10', SA(38), 999]);
+// Bildwechsel in der Mitte + Wort-Chips, die beim Sprechen aufblinken
+const MX = 960, MY = 420;
+const DIALOG = [
+  ['d1', 'c1', 'Übergabe', 32, 'Übergabe'],
+  [['d2', 'd2z'], 'c2', 'Vitalzeichen', 32, 'Vitalzeichen'],
+  ['d3', 'c3', 'Grundpflege', 34, 'Grundpflege'],
+  [['d4', 'd4k', 'd4d'], 'c4', 'gelagert', 36, 'gelagert'],
+  ['d5', 'c5', 'Dokumentation', 37, 'Dokumentation'],
+  ['d6', 'c6', 'geklingelt', 38, 'geklingelt'],
+];
+const OFFS = { d4k: [-75, -2], d4d: [20, -23] };
+const BREITE = [220, 270, 250, 140, 280, 160], LUECKE = 20;
+const GESAMT = BREITE.reduce((a, b) => a + b, 0) + LUECKE * (BREITE.length - 1);
+let rx = MX - GESAMT / 2;
+const REIHE_X = BREITE.map(b => { const x = rx + b / 2; rx += b + LUECKE; return x; });
+DIALOG.forEach(([bild, chip, w, n], k) => {
+  const t0 = W(w, n);
+  // Bild wechselt
+  [].concat(bild).forEach((b, j) => ein(b, t0 - .35, { x: X9 + MX + (OFFS[b]?.[0] || 0), y: MY + (OFFS[b]?.[1] || 0) }, { y: 60 }, j ? null : 'whoosh'));
+  const naechstes = DIALOG[k + 1];
+  if (naechstes) aus(bild, W(naechstes[2], naechstes[3]) - .5, .3);
+  // Wort-Chip ploppt über dem Bild auf, blinkt, reiht sich unten ein
+  pop(chip, t0 - .05, { x: X9 + MX, y: 215 }, 'pop');
+  bump(chip, t0 + .45, 1.12); bump(chip, t0 + .95, 1.08);
+  akzent(t0, .025);
+  const tFlug = naechstes ? Math.min(t0 + 1.6, W(naechstes[2], naechstes[3]) - .35) : t0 + 1.6;
+  flug(chip, tFlug, 1.1, X9 + REIHE_X[k], 862, 60);
+  landen(chip, tFlug + 1.1, .5);
+});
+set('d2z', 0, { r: -135 }); tw('d2z', W('Vitalzeichen', 32) + .1, .9, { r: 20 }, 'sanft');
+tw('d4d', W('gelagert', 36) + .1, .8, { r: 3 }, 'inout'); tw('d4d', W('gelagert', 36) + 1.0, .8, { r: 0 }, 'inout');
+// „Mache ich.“ / „Genau.“ – kurzes Nicken durch Hüpfer
+huepfen('mai10', W('Mache', 33), 10, .35); huepfen('pa10', W('Genau', 35), 10, .35);
+// Klingel: rotes Licht pulsiert, Mai eilt los
+akteur('d6r', { x: X9 + MX, y: MY - 5, o: 0 });
+tw('d6r', W('geklingelt', 38) + .1, .25, { o: 1 });
+HOOKS.push(t => { const d = t - W('geklingelt', 38) - .35; if (d > 0) $('#d6r').style.opacity = (.75 + .25 * Math.cos(d * 5)).toFixed(3); });
+welle('welle10', W('geklingelt', 38) + .15, X9 + MX, MY - 5, 1.0);
+welleNochmal('welle10', W('gehe', 39), 1.0);
+huepfen('mai10', W('schnell', 39) - .1, 18, .35); huepfen('mai10', W('schnell', 39) + .55, 14, .35);
+huepfen('nMai', W('schnell', 39) + .1, 10);
+
+/* ---------- Fortschritt ---------- */
+HOOKS.push(t => {
+  const f = $('#fort');
+  const an = E.inout(clamp((t - PAN_T[1] - .2) / .5)) * (1 - E.inout(clamp((t - PAN_T[9]) / .4)));
+  f.style.opacity = an.toFixed(3);
+  let akt = -1; for (let k = 1; k <= 8; k++) if (t >= PAN_T[k] + .2) akt = k - 1;
+  [...f.children].forEach((d, k) => {
+    const art = FORT[k][0], farbe = art === 'verb' ? 'var(--b300)' : `var(--${art})`;
+    const p = k === akt ? E.inout(clamp((t - PAN_T[k + 1] - .2) / .5)) : 0;
+    d.style.width = (18 + 42 * p).toFixed(1) + 'px';
+    d.style.background = k === akt ? farbe : k < akt ? 'var(--b300)' : 'var(--b100)';
+  });
+});
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
