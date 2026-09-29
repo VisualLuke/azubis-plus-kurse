@@ -53,6 +53,7 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
   keine Beträge, Fristen, Namen, die nicht dort stehen. Beispieladressen o. Ä. als neutrale Platzhalter.
 - **Keine Regeln für unter 18**, **keine Verweise auf andere Kurse** (streichen), Sprache einfach (B1, „du“).
 - Krankenkassen: nur die AOK als Beispiel nennen.
+- **Kein Kurstitel im Video** – auch nicht, wenn das Briefing ihn als „Text im Bild“ vorgibt (Vorgabe 29.09.2026).
 - Neutral: kein Kurstitel, kein Vorspann, keine Untertitel/Sprechblasen mit dem gesprochenen Text, kein „Kurs geschafft“.
   Kurze Einblendungen, die das Briefing als „Text im Bild“ oder „Bild“ vorgibt (auch Sprechblasen wie „Mach mal hin!“
   in Kurs 30), sind Inhalt und bleiben.
@@ -82,6 +83,7 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
      neutrale Beschriftung. Fachvokabeln → Wortkarte (Artikel · Wort · Plural), Bild, Beispielsatz tippt sich; Schlussdialog
      mit den Figuren, jedes Wort blinkt beim Sprechen auf.
 5. `node werkzeug/rendern.mjs lernvideos/NN-ordner --nur-html` und `node werkzeug/pruefen.mjs lernvideos/NN-ordner`:
+   dazu `node werkzeug/masken.mjs lernvideos/NN-ordner` (kein Wort darf vor dem Aufstieg aus seiner Maske schauen).
    Kante und Überlappung müssen 0 sein (gewollte Überdeckungen mit `data-gruppe`/`data-frei` markieren), Ruckler nur
    gewollte Aufschläge. Dann `--standbilder` am Ende jeder Szene und bei jeder Handlung – **Bilder ansehen** (Read) und
    prüfen: Text passt in Karten, nichts verdeckt, Pfeilspitzen frei, richtiger Sprecher, Titel nicht zu lang.

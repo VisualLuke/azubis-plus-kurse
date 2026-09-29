@@ -92,7 +92,11 @@ function titelAkteure(blockId) {
     z.innerHTML = teile.join('');
   });
   const woerter = [...block.querySelectorAll('.w')];
-  woerter.forEach(w => akteur(w.querySelector('.wi'), { y: 90 }, true));
+  // Startversatz aus der Maskenhöhe: bei großer Schrift reichen feste 90 px nicht, sonst schauen Buchstaben oben heraus
+  woerter.forEach(w => {
+    const m = w.querySelector('.m'), fs = parseFloat(getComputedStyle(m).fontSize) || 60;
+    akteur(w.querySelector('.wi'), { y: Math.max(90, Math.ceil(m.offsetHeight + fs * .35)) }, true);
+  });
   akteur(block, { o: 1 }, true);
   return woerter;
 }
