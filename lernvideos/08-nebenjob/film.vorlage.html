@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Nebenjob während der Ausbildung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+.buehne{width:1040px;height:710px}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,31.5px) scale(.9)}
+
+/* Gesprächspartner: Jonas links, Kwame rechts */
+.portrait{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+#jonas{left:55px;top:340px}
+#kwame{left:auto;right:55px;top:340px}
+.mini{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:6px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.mini .ebene{position:absolute;left:0;top:7%;width:100%;height:100%}
+
+/* Text im Bild oben auf der Bühne */
+.ueber{width:900px;text-align:center}
+.ueber .titel{font:700 44px/54px Inter;letter-spacing:-.01em;color:var(--ink)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:84px;height:84px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:40px}
+.plakette.rot{background:var(--error)} .plakette.gruen{background:var(--success)}
+.plakette.gross{width:210px;height:210px} .plakette.gross svg{width:104px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.tisch{width:820px;height:28px;border-radius:14px;background:linear-gradient(var(--b200),var(--b300))}
+.dampf path{fill:none;stroke:var(--b200);stroke-width:5;stroke-linecap:round}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.blasetext{padding:14px 26px;border-radius:24px 24px 24px 6px;background:var(--b500);color:var(--surface);font:800 32px/38px Inter;white-space:nowrap;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+.logo{padding:16px 30px;border-radius:999px;background:linear-gradient(135deg,var(--b500),var(--b700));color:var(--surface);font:800 34px/40px Inter;letter-spacing:-.02em;white-space:nowrap;
+  box-shadow:0 4px 12px rgba(90,63,230,.28)}
+.regel{width:92px;height:92px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 44px/92px Inter;text-align:center;box-shadow:0 6px 20px rgba(90,63,230,.3)}
+
+/* 1 · Jobanzeigen im Handy */
+.app{width:195px;height:351px;border-radius:16px;overflow:hidden;background:var(--bg);padding:14px 12px}
+.app small{display:block;font:800 14px/18px Inter;color:var(--b500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.app .fenster{position:absolute;left:12px;right:12px;top:42px;bottom:0;overflow:hidden}
+.app .liste{display:flex;flex-direction:column;gap:8px}
+.anz{height:80px;border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgba(22,19,37,.06);border:2px solid transparent;display:flex;align-items:center;gap:8px;padding:0 8px}
+.anz u{width:34px;height:34px;border-radius:8px;background:var(--b100);flex:none}
+.anz div{flex:1;display:flex;flex-direction:column;gap:6px}
+.anz i{height:7px;border-radius:4px;background:var(--n200)}
+.anz.treffer{border-color:var(--b500);background:var(--b50)}
+.anz.treffer u{background:var(--b500)}
+.anz b{font:800 16px/19px Inter;color:var(--ink)}
+.anz em{font:600 14px/17px Inter;font-style:normal;color:var(--b600)}
+
+/* 2 · Vertrag, Nein */
+.dokument{width:340px;padding:26px;border-radius:16px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:12px}
+.dokument b{font:700 24px/30px Inter;color:var(--b600)}
+.dokument .linie{height:8px;border-radius:4px;background:var(--n200)}
+.klausel{height:40px;border-radius:10px;background:var(--b50);border:2px solid transparent;padding:0 12px;font:700 20px/36px Inter;color:var(--ink);white-space:pre;overflow:hidden}
+.klausel.an{border-color:var(--b400)}
+.nein{padding:12px 34px;border-radius:18px;border:6px solid var(--error);background:var(--surface);color:var(--error-text);font:800 52px/60px Inter;letter-spacing:.04em;text-transform:uppercase;
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.tinte{width:170px;height:170px;border-radius:999px;border:4px solid var(--error);opacity:0}
+
+/* 3 · Aufenthaltstitel und Zusatzblatt */
+.atk{width:400px;height:252px;border-radius:22px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 10px 28px rgba(58,37,153,.3);overflow:hidden}
+.atk small{position:absolute;left:24px;top:20px;font:800 16px/20px Inter;letter-spacing:.1em;color:var(--b100)}
+.atk .foto{position:absolute;left:24px;top:56px;width:96px;height:120px;border-radius:10px;background:var(--b100);overflow:hidden}
+.atk .foto .bild{position:absolute;left:-22px;top:4px;width:140px;height:140px}
+.atk .chipk{position:absolute;left:142px;top:60px;width:50px;height:38px;border-radius:8px;background:linear-gradient(var(--warning-bg),var(--warning))}
+.atk .zl{position:absolute;left:142px;height:9px;border-radius:5px;background:var(--b300)}
+.glanz{position:absolute;top:0;bottom:0;width:80px;left:-100px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-12deg)}
+.zblatt{width:300px;height:340px;padding:24px;border-radius:14px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:12px}
+.zblatt small{font:800 16px/20px Inter;letter-spacing:.1em;color:var(--b600)}
+.zblatt .linie{height:8px;border-radius:4px;background:var(--n200)}
+.zfeld{padding:8px 12px;border-radius:12px;background:var(--b50);border:3px solid transparent}
+.zfeld span{display:block;font:600 15px/18px Inter;color:var(--n500)}
+.zfeld div{font:800 22px/28px Inter;color:var(--ink);min-height:28px;white-space:pre}
+.zfeld.an{border-color:var(--b400);background:var(--surface)}
+.stundenbar{width:700px;height:40px;border-radius:999px;background:var(--b100);overflow:hidden}
+.stundenbar i{display:block;height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--success),var(--success));transform-origin:left center}
+.grenze{width:8px;height:84px;border-radius:4px;background:var(--ink)}
+
+/* 4 · Uhren, Ruhe */
+.zeichen{font:800 72px/1 Inter;color:var(--b500)}
+.zz{font:800 34px/1 Inter;color:var(--b400)}
+.nacht{border-radius:999px;background:linear-gradient(160deg,var(--b600),var(--b700));box-shadow:0 6px 20px rgba(58,37,153,.25);overflow:hidden}
+.nacht>div{position:absolute;left:14%;top:12%;width:72%}
+.ruhe text{font-family:Inter,sans-serif}
+
+/* 6 · Waage, Noten */
+.noten{width:200px;height:150px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:20px 24px}
+.noten i{display:block;width:34px;border-radius:8px 8px 3px 3px;background:var(--b400);transform-origin:50% 100%}
+
+/* 7 · Zettel mit vier Punkten */
+.liste7{width:410px;padding:24px 26px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:14px}
+.punkt7{display:flex;align-items:center;gap:18px;height:66px}
+.punkt7 .ic{width:66px;height:66px;flex:none;border-radius:16px;background:var(--b50)}
+.punkt7 .zeilen{flex:1;display:flex;flex-direction:column;gap:10px}
+.punkt7 .zeilen i{height:9px;border-radius:5px;background:var(--n200)}
+.punkt7 .kasten{width:52px;height:52px;flex:none;border-radius:14px;border:4px solid var(--b200);background:var(--surface);position:relative}
+.punkt7 .kasten svg{position:absolute;left:-4px;top:-4px;width:52px;height:52px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Pausenecke: Kwame zeigt die Anzeige -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a ueber" id="u1"><div class="titel">Nebenjob in der Ausbildung?</div></div>
+  <div class="a tisch" id="tisch1" data-gruppe="tisch1"></div>
+  <svg class="a dampf" id="dampf1a" viewBox="0 0 60 90" style="width:60px" data-frei><path d="M20 85c-10-12 10-22 0-34s10-22 0-34"/><path d="M40 85c-10-12 10-22 0-34s10-22 0-34"/></svg>
+  <svg class="a dampf" id="dampf1b" viewBox="0 0 60 90" style="width:60px" data-frei><path d="M20 85c-10-12 10-22 0-34s10-22 0-34"/><path d="M40 85c-10-12 10-22 0-34s10-22 0-34"/></svg>
+  <div class="a" id="tasse1a" style="width:150px" data-gruppe="tisch1">{{tasse}}</div>
+  <div class="a" id="tasse1b" style="width:150px" data-gruppe="tisch1">{{tasse}}</div>
+  <div class="a" id="brief1" style="width:220px">{{brief}}</div>
+  <div class="a chip brand klein" id="chipFamilie">Familie</div>
+  <div class="a" id="m1a" style="width:76px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m1b" style="width:76px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m1c" style="width:76px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="handy1" style="width:520px" data-gruppe="handy1">{{handy}}</div>
+  <div class="a app" id="app1" data-gruppe="handy1"><small>Jobs</small><div class="fenster"><div class="liste" id="liste1"></div></div></div>
+  <div class="a plakette gruen" id="ok1" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a regel" id="r1">1</div><div class="a regel" id="r2">2</div><div class="a regel" id="r3">3</div>
+
+  <!-- 2 · Betrieb fragen -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a ueber" id="u2"><div class="titel">1. Betrieb fragen</div></div>
+  <div class="a mini" id="kw2" style="width:170px;height:170px"><div class="ebene">{{figur-kwame}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-froh}}</div></div>
+  <div class="a" id="betrieb2" style="width:230px">{{betrieb}}</div>
+  <div class="a mini" id="sab2" style="width:150px;height:150px"><div class="ebene">{{figur-sabine}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-zu}}</div></div>
+  <div class="a blasetext" id="blase2">Darf ich…?</div>
+  <div class="a dokument" id="doku2"><b>Ausbildungsvertrag</b><div class="linie"></div><div class="linie" style="width:80%"></div>
+    <div class="klausel" id="klausel2"></div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div></div>
+  <div class="a" id="lupe2" style="width:170px" data-frei>{{lupe}}</div>
+  <div class="a tinte" id="tinte2" data-frei></div>
+  <div class="a nein" id="nein2">Nein</div>
+  <div class="a chip rot" id="chipSchadet"><svg viewBox="0 0 30 30"><path d="M8 8l14 14M22 8L8 22" stroke="var(--error)" stroke-width="4" stroke-linecap="round"/></svg>schadet der Ausbildung</div>
+  <div class="a chip rot" id="chipKonkurrenz"><svg viewBox="0 0 30 30"><path d="M8 8l14 14M22 8L8 22" stroke="var(--error)" stroke-width="4" stroke-linecap="round"/></svg>Konkurrenz</div>
+
+  <!-- 3 · Aufenthaltstitel prüfen -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a ueber" id="u3"><div class="titel">2. Aufenthaltstitel prüfen – was ist erlaubt?</div></div>
+  <div class="a zblatt" id="zblatt3" data-gruppe="titel3"><small>ZUSATZBLATT</small><div class="linie"></div><div class="linie" style="width:70%"></div>
+    <div class="zfeld" id="zf1"><span>Beschäftigung erlaubt?</span><div id="zw1"></div></div>
+    <div class="zfeld" id="zf2"><span>Stunden pro Woche</span><div id="zw2"></div></div></div>
+  <div class="a atk" id="atk3" data-gruppe="titel3"><small>AUFENTHALTSTITEL</small>
+    <div class="foto"><div class="bild">{{figur-kwame}}</div></div>
+    <div class="chipk"></div><div class="zl" style="top:116px;width:150px"></div><div class="zl" style="top:134px;width:110px"></div><div class="zl" style="top:152px;width:130px;opacity:.6"></div>
+    <div class="glanz" id="glanz3"></div></div>
+  <div class="a" id="lupe3" style="width:160px" data-frei>{{lupe~3}}</div>
+  <div class="a plakette gruen" id="ok3" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a stundenbar" id="bar3" data-gruppe="bar3"><i id="barI3"></i></div>
+  <div class="a grenze" id="grenze3" data-gruppe="bar3"></div>
+  <div class="a chip gruen klein" id="chipErlaubt3">erlaubt</div>
+  <div class="a" id="warn3" style="width:190px">{{warndreieck}}</div>
+  <div class="a" id="amt3" style="width:260px">{{rathaus}}</div>
+  <div class="a chip brand klein" id="chipAmt3">Ausländerbehörde</div>
+  <div class="a frage" id="frage3">?</div>
+  <div class="a" id="haken3" style="width:120px">{{haken}}</div>
+  <div class="a chip gruen klein" id="chipVorher3">vorher fragen</div>
+
+  <!-- 4 · Stunden zählen zusammen, Ruhezeit -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a ueber" id="u4"><div class="titel">3. Stunden zählen zusammen · Ruhezeit</div></div>
+  <div class="a" id="uhrA" style="width:180px" data-gruppe="uhrA">{{uhr}}</div>
+  <div class="a" id="zgA" style="width:180px;transform-origin:50% 47.5%" data-gruppe="uhrA">{{uhr-zeiger}}</div>
+  <div class="a" id="uhrB" style="width:180px" data-gruppe="uhrB">{{uhr~b}}</div>
+  <div class="a" id="zgB" style="width:180px;transform-origin:50% 47.5%" data-gruppe="uhrB">{{uhr-zeiger}}</div>
+  <div class="a chip klein" id="chipAusb4">Ausbildung</div>
+  <div class="a chip klein" id="chipNeben4">Nebenjob</div>
+  <div class="a zeichen" id="plus4">+</div>
+  <div class="a zeichen" id="gleich4">=</div>
+  <svg class="a" id="bogen4" viewBox="0 0 240 240" style="width:240px" data-gruppe="uhrC"><circle cx="120" cy="120" r="100" fill="none" stroke="var(--b100)" stroke-width="14"/><path class="zeichnen" pathLength="1" d="M120 20a100 100 0 1 1 -0.1 0" fill="none" stroke="var(--warning)" stroke-width="14" stroke-linecap="round"/></svg>
+  <div class="a" id="uhrC" style="width:240px" data-gruppe="uhrC">{{uhr~c}}</div>
+  <div class="a" id="zgC" style="width:240px;transform-origin:50% 47.5%" data-gruppe="uhrC" data-dreht>{{uhr-zeiger}}</div>
+  <div class="a chip brand klein" id="chipZus4">zusammen</div>
+  <div class="a" id="bett4" style="width:300px">{{bett}}</div>
+  <div class="a nacht" id="mond4" style="width:130px;height:130px"><div>{{mond}}</div></div>
+  <div class="a zz" id="z4a" data-frei>z</div><div class="a zz" id="z4b" data-frei>z</div><div class="a zz" id="z4c" data-frei>z</div>
+  <svg class="a ruhe" id="ring4" viewBox="0 0 250 250" style="width:250px">
+    <circle cx="125" cy="125" r="104" fill="var(--surface)" stroke="var(--b100)" stroke-width="18"/>
+    <path class="zeichnen" pathLength="1" d="M125 21a104 104 0 1 1 -0.1 0" fill="none" stroke="var(--b500)" stroke-width="18" stroke-linecap="round"/>
+    <text id="zahl4" x="125" y="146" text-anchor="middle" font-weight="800" font-size="62" fill="var(--ink)">0 h</text></svg>
+  <div class="a chip gruen" id="chipPause4">Pause</div>
+
+  <!-- 5 · Schwarzarbeit -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a ueber" id="u5"><div class="titel">Schwarzarbeit = verboten</div></div>
+  <div class="a" id="vertrag5" style="width:200px">{{vertrag}}</div>
+  <div class="a" id="geld5" style="width:190px" data-gruppe="tisch5">{{geldschein}}</div>
+  <svg class="a" id="tisch5" viewBox="0 0 600 260" style="width:600px" data-gruppe="tisch5">
+    <rect x="70" y="40" width="26" height="220" rx="8" fill="var(--b300)"/><rect x="504" y="40" width="26" height="220" rx="8" fill="var(--b300)"/>
+    <rect x="0" y="6" width="600" height="36" rx="14" fill="var(--b400)"/><rect x="0" y="0" width="600" height="34" rx="14" fill="var(--b200)"/></svg>
+  <div class="a plakette rot gross" id="x5" data-frei><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="pass5" style="width:220px">{{pass}}</div>
+  <div class="a chip brand klein" id="chipVisum5">Visum</div>
+  <div class="a" id="warn5" style="width:130px">{{warndreieck~5}}</div>
+
+  <!-- 6 · Ausbildung geht vor -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a ueber" id="u6"><div class="titel">Ausbildung geht vor</div></div>
+  <svg class="a" id="waage6" viewBox="0 0 600 520" style="width:600px" data-gruppe="waage">
+    <path d="M300 130L270 470h60Z" fill="var(--b300)"/>
+    <rect x="200" y="462" width="200" height="22" rx="10" fill="var(--b400)"/>
+    <g id="balken6"><rect x="62" y="113" width="476" height="14" rx="7" fill="var(--b500)"/></g>
+    <g id="schaleL"><path d="M-80 0L0 -150L80 0" stroke="var(--b300)" stroke-width="4" fill="none"/><path d="M-94 0h188a94 40 0 0 1 -188 0Z" fill="var(--b400)"/></g>
+    <g id="schaleR"><path d="M-80 0L0 -150L80 0" stroke="var(--b300)" stroke-width="4" fill="none"/><path d="M-94 0h188a94 40 0 0 1 -188 0Z" fill="var(--b400)"/></g>
+    <circle cx="300" cy="120" r="16" fill="var(--b700)"/></svg>
+  <div class="a" id="winkel6" style="width:1px;height:1px"></div>
+  <div class="a" id="heft6" style="width:150px" data-gruppe="waage">{{heft}}</div>
+  <div class="a" id="geld6" style="width:150px" data-gruppe="waage">{{geldschein~6}}</div>
+  <div class="a chip brand klein" id="chipAusb6" data-gruppe="waage">Ausbildung</div>
+  <div class="a chip klein" id="chipNeben6" data-gruppe="waage">Nebenjob</div>
+  <div class="a" id="haken6" style="width:80px" data-frei>{{haken~6}}</div>
+  <div class="a nacht" id="mond6" style="width:120px;height:120px"><div>{{mond~6}}</div></div>
+  <div class="a zz" id="z6a" data-frei>z</div><div class="a zz" id="z6b" data-frei>z</div>
+  <div class="a noten" id="noten6"><i id="nb1" style="height:100px"></i><i id="nb2" style="height:100px"></i><i id="nb3" style="height:100px"></i></div>
+  <div class="a chip gruen" id="chipPruef6"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Prüfung</div>
+
+  <!-- 7 · Pausenecke: vier Punkte abhaken -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a ueber" id="u7"><div class="titel">Fragen · Prüfen · Pausen · Vertrag</div></div>
+  <div class="a tisch" id="tisch7" data-gruppe="tisch7"></div>
+  <div class="a liste7" id="liste7" data-gruppe="tisch7"></div>
+  <svg class="a dampf" id="dampf7a" viewBox="0 0 60 90" style="width:60px" data-frei><path d="M20 85c-10-12 10-22 0-34s10-22 0-34"/><path d="M40 85c-10-12 10-22 0-34s10-22 0-34"/></svg>
+  <svg class="a dampf" id="dampf7b" viewBox="0 0 60 90" style="width:60px" data-frei><path d="M20 85c-10-12 10-22 0-34s10-22 0-34"/><path d="M40 85c-10-12 10-22 0-34s10-22 0-34"/></svg>
+  <div class="a" id="tasse7a" style="width:150px" data-gruppe="tisch7">{{tasse}}</div>
+  <div class="a" id="tasse7b" style="width:150px" data-gruppe="tisch7">{{tasse}}</div>
+  <div class="a" id="stift7" style="width:100px" data-frei>{{stift}}</div>
+  <div class="a logo" id="logo7">Azubis Plus</div>
+</div></div>
+
+<div class="portrait" id="jonas"><div class="figur">
+  <div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+<div class="portrait" id="kwame"><div class="figur">
+  <div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Erst fragen, dann jobben.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Ein Nebenjob ist oft möglich – mit Erlaubnis und ohne dass die Ausbildung leidet.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.8;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const N_SAETZE = SPRACHDATEN.saetze.length;
+const ENDE_SPRACHE = SE(N_SAETZE);
+const MX = 1280, MY = 505;
+for (let i = 0; i < 7; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+// Stempel-Aufschlag: groß und durchsichtig → schlägt auf, Wackler
+const schlag = (id, t, basis, snd = 'plopp') => {
+  akteur(id, { ...basis, o: 0, s: 1.7 });
+  tw(id, t - .16, .16, { o: 1, s: basis.s ?? 1 }, 'in'); cue(t, snd); wackeln(id, t + .02, 3, 3);
+};
+// Text im Bild: oben auf der Bühne, links oben verankert (zweizeilig wächst nach unten)
+const ueber = (id, X, zeiten, t0) => { titelEin(id, t0 ?? zeiten[0], zeiten); akteur(id, { x: X + 830, y: 212 }, true); };
+const ueberAus = (id, t) => tw(id, t, .3, { o: 0, y: 190 }, 'in');
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Heranfahren, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `translate(-288px,31.5px) scale(${(.9 * z).toFixed(5)})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < 7; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Gesprächspartner: wer spricht, kommt exakt aus sprache.json ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher, nr: s.nr }));
+// Hervorhebung: aufeinanderfolgende Sätze desselben Sprechers als ein Block (kein Pumpen in Satzpausen)
+const BLOECKE = [];
+for (const s of SAETZE) { const l = BLOECKE.at(-1); if (l && l.w === s.w) l.b = s.b; else BLOECKE.push({ a: s.a, b: s.b, w: s.w }); }
+const froehlich = (von, bis) => [SA(von) - .1, SE(bis) + .3];
+const FROH = { Kwame: [froehlich(3, 4), froehlich(26, 27), [ENDE_SPRACHE + .3, 999]], Jonas: [froehlich(23, 24), [ENDE_SPRACHE + .3, 999]] };
+akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('kwame', { o: 0, y: 60, s: .9 }, true);
+tw('jonas', 0, .7, { o: 1, y: 0 }, 'back'); tw('kwame', .12, .7, { o: 1, y: 0 }, 'back');
+const PERSONEN = [['jonas', 'Jonas', 3, .13], ['kwame', 'Kwame', -3, .61]];
+HOOKS.push(t => {
+  const satzJetzt = SAETZE.find(s => t >= s.a && t <= s.b), wer = satzJetzt && satzJetzt.w;
+  const block = BLOECKE.find(z => t >= z.a - .2 && t <= z.b + .25), redet = block && block.w;
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : (wer ? .6 + .4 * Math.sin(t * 9) : 0);
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const p = document.getElementById(id), aktiv = wer === w;
+    const k = BLOECKE.filter(z => z.w === w).reduce((m, z) => Math.max(m, clamp(Math.min((t - z.a + .2) / .2, (z.b + .25 - t) / .25))), 0);
+    if (t >= .85) { p.style.transform = `scale(${.9 + .1 * k}) translateY(${-6 * k}px)`; p.style.filter = `saturate(${.7 + .3 * k})`; }
+    p.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    // Zuhörer nickt ab und zu, Sprecher bewegt den Kopf mit der Stimme
+    const hoert = redet && redet !== w;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : (hoert ? 1.4 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0);
+    p.querySelector('.figur').style.transform = `rotate(${neig + nick}deg) translateY(${hoert ? 2.5 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0}px)`;
+    // Mund nur im eigenen Satz (Satzgrenzen aus sprache.json), kein Nachlauf
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    const froh = !aktiv && FROH[w].some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || froh ? 0 : 1;
+  }
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const z = (t * .27 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  });
+});
+// Dampf über den Tassen
+HOOKS.push(t => document.querySelectorAll('.dampf path').forEach((p, i) => {
+  p.style.strokeDasharray = '26 18'; p.style.strokeDashoffset = (t * 40 + i * 13) % 44; p.style.opacity = .5 + .3 * Math.sin(t * 2 + i);
+}));
+
+/* ---------- 1 · Pausenecke: Kwame will mehr Geld schicken ---------- */
+const X0 = S(0);
+ueber('u1', X0, [W('Kann', 2) - .1]);
+ein('tisch1', A(-.7), { x: X0 + MX, y: 760 }, { y: 40 });
+ein('tasse1a', A(-.5), { x: X0 + 960, y: 690 }, { x: -110 }); ein('tasse1b', A(-.35), { x: X0 + 1600, y: 690 }, { x: 110 }); cue(A(-.5), 'plopp');
+akteur('dampf1a', { x: X0 + 955, y: 610, o: 0 }); akteur('dampf1b', { x: X0 + 1595, y: 610, o: 0 }); tw(['dampf1a', 'dampf1b'], A(.2), .8, { o: 1 });
+// Familie: Umschlag, Münzen fliegen hinein, dann wird er verschickt
+pop('brief1', W('Familie', 1) - .15, { x: X0 + 1280, y: 440 });
+pop('chipFamilie', W('Familie', 1) + .1, { x: X0 + 1280, y: 560 }, null);
+[['m1a', 0], ['m1b', .18], ['m1c', .36]].forEach(([id, d]) => {
+  const t0 = W('mehr', 1) - .2 + d;
+  akteur(id, { x: X0 + 1700, y: 700, o: 0, s: .8 });
+  tw(id, t0, .1, { o: 1 }); flug(id, t0, .6, X0 + 1290, 430, 140, { s: .45 }); tw(id, t0 + .5, .12, { o: 0 });
+  bump('brief1', t0 + .6, 1.08); cue(t0 + .6, 'muenze');
+});
+HOOKS.push(t => ['m1a', 'm1b', 'm1c'].forEach((id, i) => { const d = t - (W('mehr', 1) - .2 + i * .18); if (d > 0 && d < .7) $('#' + id).style.transform += ` scaleX(${Math.cos(d * 14)})`; }));
+flug('brief1', W('schicken', 1) + .1, .8, X0 + 1720, 250, 90, { s: .45, r: 3 }); tw('brief1', W('schicken', 1) + .7, .2, { o: 0 }); cue(W('schicken', 1) + .1, 'whoosh');
+aus('chipFamilie', W('schicken', 1) + .15, .3);
+// Handy mit Jobanzeigen steigt auf und scrollt
+{
+  const L = $('#liste1');
+  const leer = w => `<div class="anz"><u></u><div><i style="width:${w}%"></i><i style="width:${w - 25}%"></i></div></div>`;
+  L.innerHTML = [leer(90), leer(75), leer(85), leer(70), leer(92),
+    '<div class="anz" id="treffer1"><u></u><div><b>Aushilfe gesucht</b><em>Wochenende</em></div></div>', leer(80), leer(65)].join('');
+}
+const H0 = W('Kann', 2) - .35;
+['handy1', 'app1'].forEach(id => { akteur(id, { x: X0 + 1280, y: 740, o: 0 }); tw(id, H0, .3, { o: 1 }); tw(id, H0, .8, { y: 500 }, 'sanft'); }); cue(H0, 'whoosh');
+const SCROLL0 = W('Wochenende', 2) - .2, SCROLL1 = W('Nebenjob', 2) + .1, ZIEL = 5 * 88 + 40 - 150;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - SCROLL0) / (SCROLL1 - SCROLL0)));
+  const nach = t > SCROLL1 ? 6 * Math.sin(Math.min(1, (t - SCROLL1) / .35) * Math.PI) * Math.exp(-(t - SCROLL1) * 4) : 0;
+  $('#liste1').style.transform = `translateY(${-(p * ZIEL) + nach}px)`;
+  $('#treffer1').classList.toggle('treffer', t >= SCROLL1);
+});
+cue(SCROLL0, 'scan'); cue(SCROLL1, 'ding'); akzent(SCROLL1);
+HOOKS.push(t => { const d = t - SCROLL1; if (d > 0 && d < .6) $('#treffer1').style.transform = `scale(${1 + .06 * Math.sin(Math.PI * d / .6)})`; else $('#treffer1').style.transform = ''; });
+// Kwame zeigt Jonas das Handy: es dreht sich nach links
+const ZEIG = SE(2) + .05;
+tw(['handy1', 'app1'], ZEIG, .7, { x: X0 + 1150, r: -3, s: 1.02 }, 'inout'); cue(ZEIG, 'whoosh');
+pop('ok1', W('möglich', 3), { x: X0 + 1275, y: 320 }, 'erfolg');
+// Aber es gibt ein paar Regeln: drei Nummern
+[['r1', 360], ['r2', 470], ['r3', 580]].forEach(([id, y], i) => pop(id, W('paar', 4) - .1 + i * .18, { x: X0 + 1430, y }, 'pop'));
+[['r1', 0], ['r2', .1], ['r3', .2]].forEach(([id, d]) => huepfen(id, W('Regeln', 4) + .2 + d, 12));
+ueberAus('u1', SE(4) + .1);
+
+/* ---------- 2 · Betrieb fragen ---------- */
+pan2(SE(4) + .2, 1); const X1 = S(1);
+ueber('u2', X1, [W('Erstens', 5) + .25, W('Ausbildungsbetrieb', 5), W('fragen', 6) - .05]);
+pop('kw2', W('Erstens', 5) + .45, { x: X1 + 1000, y: 600 });
+ein('betrieb2', W('Sag', 5) - .2, { x: X1 + 1560, y: 500 }, { x: 110 }, 'whoosh');
+pop('sab2', W('Ausbildungsbetrieb', 5) - .1, { x: X1 + 1560, y: 690 });
+pop('blase2', W('deinem', 5), { x: X1 + 1195, y: 445 });
+huepfen('kw2', W('deinem', 5), 12);
+wackeln('blase2', W('Ausbildungsbetrieb', 5) + .3, 3, 2.5);
+huepfen('sab2', WE('Ausbildungsbetrieb', 5) + .1, 10); bump('betrieb2', WE('Ausbildungsbetrieb', 5) + .1, 1.06);
+aus(['kw2', 'sab2', 'blase2', 'betrieb2'], W('Vertrag', 6) - .5, .3);
+// Oft steht im Vertrag, dass du fragen musst
+ein('doku2', W('Vertrag', 6) - .2, { x: X1 + 1100, y: 560 }, { y: 90 }, 'whoosh');
+{
+  const TXT = 'Nebenjob → fragen', a = W('fragen', 6) - .35;
+  HOOKS.push(t => {
+    $('#klausel2').textContent = TXT.slice(0, Math.floor(clamp((t - a) / .55) * TXT.length));
+    $('#klausel2').classList.toggle('an', t >= W('dass', 6) - .1);
+  });
+  for (let i = 0; i < 5; i++) cue(a + i * .11, 'tipp');
+}
+akteur('lupe2', { x: X1 + 1520, y: 760, o: 0, s: .7 });
+tw('lupe2', W('dass', 6) - .35, .7, { x: X1 + 1180, y: 610, o: 1, s: 1 }, 'inout', { bogen: 60 }); bump('lupe2', W('fragen', 6), 1.1);
+tw('lupe2', W('Der', 7) - .1, .4, { o: 0, x: X1 + 1300, y: 680 }, 'in');
+// Der Betrieb darf Nein sagen
+tw('doku2', W('Der', 7), .6, { x: X1 + 1000, s: .85 }, 'inout');
+schlag('nein2', W('Nein', 7), { x: X1 + 1480, y: 400, r: -3 }); akzent(W('Nein', 7), .045);
+welle('tinte2', W('Nein', 7), X1 + 1480, 400, .7);
+ein('chipSchadet', W('schadet', 7) - .25, { x: X1 + 1480, y: 540 }, { x: 90 }, 'whoosh');
+ein('chipKonkurrenz', W('Konkurrenz', 7) - .25, { x: X1 + 1480, y: 640 }, { x: 90 }, 'whoosh');
+wackeln('chipSchadet', W('schadet', 7) + .35, 3, 2); wackeln('chipKonkurrenz', W('Konkurrenz', 7) + .35, 3, 2);
+bump('nein2', W('Konkurrenz', 7) + .6, 1.06);
+ueberAus('u2', SE(7) + .1);
+
+/* ---------- 3 · Aufenthaltstitel prüfen ---------- */
+pan2(SE(7) + .2, 2); const X2 = S(2);
+ueber('u3', X2, [W('Zweitens', 8) + .2, W('Aufenthaltstitel', 8) - .1, null, W('Zusatzblatt', 9) - .1, W('ob', 9) - .1, null, W('darfst', 9) - .1]);
+// Karte fliegt herein, Glanz
+akteur('atk3', { x: X2 + 1700, y: 300, o: 0, s: .5, r: 3 });
+const K3 = W('Aufenthaltstitel', 8) - .4;
+tw('atk3', K3, .2, { o: 1 }); tw('atk3', K3, .9, { x: X2 + 1150, y: 560, s: 1 }, 'inout', { bogen: 90 }); tw('atk3', K3, .9, { r: 0 }, 'sinus');
+tw('atk3', K3 + .9, .1, { sy: .93, sx: 1.04 }, 'sinus'); tw('atk3', K3 + 1.0, .4, { sy: 1, sx: 1 }, 'sanft');
+cue(K3, 'whoosh'); cue(K3 + .9, 'plopp'); akzent(W('Aufenthaltstitel', 8) + .3);
+HOOKS.push(t => { const d = (t - K3 - 1.1) / .8; $('#glanz3').style.left = d > 0 && d < 1 ? -100 + E.inout(d) * 600 + 'px' : '-100px'; });
+// Zusatzblatt schiebt sich heraus
+akteur('zblatt3', { x: X2 + 1150, y: 560, o: 0, s: .9 });
+set('zblatt3', W('Zusatzblatt', 9) - .3, { o: 1 });
+tw('zblatt3', W('Zusatzblatt', 9) - .3, .8, { x: X2 + 1515, y: 570, s: 1 }, 'sanft'); cue(W('Zusatzblatt', 9) - .3, 'whoosh');
+tw('atk3', W('Zusatzblatt', 9) - .3, .8, { x: X2 + 1110 }, 'sanft');
+HOOKS.push(t => {
+  const a1 = W('ob', 9), a2 = W('Stunden', 9) + .1;
+  $('#zw1').textContent = t >= a1 + .2 ? 'ja / nein' : '';
+  $('#zw2').textContent = '…'.slice(0, t >= a2 + .2 ? 1 : 0);
+  $('#zf1').classList.toggle('an', t >= a1 && t < a2);
+  $('#zf2').classList.toggle('an', t >= a2 && t < SE(9) + .3);
+});
+cue(W('ob', 9) + .2, 'tipp'); cue(W('Stunden', 9) + .3, 'tipp');
+akteur('lupe3', { x: X2 + 1700, y: 780, o: 0, s: .7 });
+tw('lupe3', W('ob', 9) - .45, .6, { x: X2 + 1545, y: 555, o: 1, s: 1 }, 'inout', { bogen: 50 });
+tw('lupe3', W('Stunden', 9) - .3, .5, { y: 640 }, 'inout', { bogen: 30 }); bump('lupe3', W('Stunden', 9) + .2, 1.1);
+tw('lupe3', W('darfst', 9) - .2, .35, { o: 0, x: X2 + 1640, y: 720 }, 'in');
+pop('ok3', W('darfst', 9) - .05, { x: X2 + 1660, y: 610 }, 'ding');
+// Und wenn ich einfach mehr arbeite? Balken läuft über die Grenze
+aus(['ok3', 'zblatt3'], SA(10) - .25, .3);
+tw('atk3', SA(10) - .3, .7, { x: X2 + 1000, y: 440, s: .62 }, 'inout');
+const BX0 = X2 + 930, GRENZE = .58;
+ein('bar3', W('Und', 10), { x: X2 + 1280, y: 680 }, { y: 40 });
+ein('grenze3', W('Und', 10) + .1, { x: BX0 + 700 * GRENZE, y: 680 }, { y: 40 });
+pop('chipErlaubt3', W('wenn', 10) + .1, { x: BX0 + 700 * GRENZE, y: 600 }, null);
+akteur('barI3', { sx: 0 }, true);
+tw('barI3', W('einfach', 10), W('mehr', 10) - W('einfach', 10) + .1, { sx: GRENZE }, 'inout');
+tw('barI3', W('mehr', 10) + .15, .9, { sx: .93 }, 'inout'); cue(W('einfach', 10), 'scan');
+HOOKS.push(t => {
+  const f = wertBei('barI3', 'sx', t), ueb = f > GRENZE + .005;
+  $('#barI3').style.background = ueb ? `linear-gradient(90deg,var(--success) 0,var(--success) ${(GRENZE / f * 100).toFixed(1)}%,var(--error) ${(GRENZE / f * 100).toFixed(1)}%,var(--error) 100%)` : '';
+});
+// Dann riskierst du deinen Aufenthalt: Warnung schlägt auf
+schlag('warn3', W('riskierst', 11), { x: X2 + 1480, y: 425 }); akzent(W('riskierst', 11), .045);
+wackeln('atk3', W('Aufenthalt', 11), 4, 3); wackeln('bar3', W('Aufenthalt', 11) + .1, 3, 1.5); wackeln('grenze3', W('Aufenthalt', 11) + .1, 3, 1.5);
+// Im Zweifel frag die Ausländerbehörde
+aus(['atk3', 'bar3', 'grenze3', 'chipErlaubt3', 'warn3'], W('Im', 12) - .25, .3);
+pop('frage3', W('Zweifel', 12) - .1, { x: X2 + 1010, y: 520 });
+wackeln('frage3', W('Zweifel', 12) + .4, 3, 3);
+ein('amt3', W('Ausländerbehörde', 12) - .35, { x: X2 + 1470, y: 510 }, { x: 110 }, 'whoosh');
+pop('chipAmt3', W('Ausländerbehörde', 12) + .1, { x: X2 + 1470, y: 690 }, null);
+flug('frage3', W('Ausländerbehörde', 12) + .45, .75, X2 + 1440, 470, 130, { s: .35 }); tw('frage3', W('Ausländerbehörde', 12) + 1.05, .15, { o: 0 });
+bump('amt3', W('Ausländerbehörde', 12) + 1.2, 1.06); cue(W('Ausländerbehörde', 12) + 1.2, 'plopp');
+pop('haken3', W('anfängst', 12) - .1, { x: X2 + 1010, y: 500 }, 'erfolg');
+pop('chipVorher3', W('anfängst', 12) + .15, { x: X2 + 1010, y: 640 }, null);
+schweben(['amt3'], 3);
+ueberAus('u3', SE(12) + .1);
+
+/* ---------- 4 · Stunden zählen zusammen · Ruhezeit ---------- */
+pan2(SE(12) + .2, 3); const X3 = S(3);
+ueber('u4', X3, [W('Drittens', 13) + .25, W('Stunden', 14) - .1, null, W('zusammengezählt', 14) - .1, W('Ruhe', 15) - .1, null]);
+ein('uhrA', W('Arbeitszeit', 13) - .2, { x: X3 + 980, y: 470 }, { y: 70 }, 'pop'); ein('zgA', W('Arbeitszeit', 13) - .2, { x: X3 + 980, y: 470 }, { y: 70 });
+ein('uhrB', W('Arbeitszeit', 13) + .15, { x: X3 + 1250, y: 470 }, { y: 70 }, 'pop'); ein('zgB', W('Arbeitszeit', 13) + .15, { x: X3 + 1250, y: 470 }, { y: 70 });
+pop('chipAusb4', W('Arbeitszeit', 13) + .1, { x: X3 + 980, y: 610 }, null);
+pop('chipNeben4', W('Arbeitszeit', 13) + .45, { x: X3 + 1250, y: 610 }, null);
+HOOKS.push(t => {
+  const d = Math.max(0, t - W('Arbeitszeit', 13));
+  $('#zgA').style.transform += ` rotate(${d * 90}deg)`; $('#zgB').style.transform += ` rotate(${40 + d * 120}deg)`;
+});
+pop('plus4', W('Stunden', 14) - .1, { x: X3 + 1115, y: 465 });
+pop('gleich4', W('beiden', 14), { x: X3 + 1390, y: 465 }, null);
+['uhrC', 'zgC'].forEach(id => pop(id, W('Jobs', 14), { x: X3 + 1575, y: 470 }, id === 'uhrC' ? 'pop' : null));
+akteur('bogen4', { x: X3 + 1575, y: 464, s: 0, draw: 0 }); tw('bogen4', W('Jobs', 14), .5, { s: 1 }, 'back');
+set('zgC', 0, { r: 0 });
+pop('chipZus4', W('zusammengezählt', 14), { x: X3 + 1575, y: 640 }, null);
+// Die zwei Uhren fliegen in die große, der Bogen füllt sich
+[['uhrA', 'zgA', 0, .25], ['uhrB', 'zgB', .3, .75]].forEach(([u, z, d, voll]) => {
+  const t0 = W('zusammengezählt', 14) + .1 + d;
+  [u, z].forEach(id => { flug(id, t0 - .1, .7, X3 + 1575, 470, 70, { s: .3 }); tw(id, t0 + .45, .15, { o: 0 }); });
+  bump('uhrC', t0 + .6, 1.08); bump('zgC', t0 + .6, 1.08); bump('bogen4', t0 + .6, 1.08); cue(t0 + .6, 'plopp');
+  tw('bogen4', t0 + .6, .5, { draw: voll }, 'weich'); tw('zgC', t0 + .6, .6, { r: 360 * voll }, 'inout');
+});
+aus(['chipAusb4', 'chipNeben4'], W('zusammengezählt', 14) + .6, .3);
+akzent(W('zusammengezählt', 14) + .7);
+// Du brauchst genug Ruhe: Bett, Mond, z z z
+aus(['plus4', 'gleich4', 'uhrC', 'zgC', 'bogen4', 'chipZus4'], W('Du', 15) - .25, .3);
+ein('bett4', W('brauchst', 15) - .1, { x: X3 + 1130, y: 610 }, { y: 80 }, 'whoosh');
+pop('mond4', W('Ruhe', 15) - .15, { x: X3 + 1030, y: 420 });
+schweben('mond4', 5);
+HOOKS.push(t => ['z4a', 'z4b', 'z4c'].forEach((id, i) => {
+  const a = W('Ruhe', 15) + .2, z = ((t - a) * .45 + i / 3) % 1, an = t >= a && t < W('Zwischen', 16) + 4.5;
+  const e = $('#' + id); e.style.opacity = an ? Math.sin(Math.PI * z) * .9 : 0; e.style.visibility = an ? 'visible' : 'hidden';
+  e.style.transform = `translate(${X3 + 1190 + z * 70 + 8 * Math.sin(z * 9)}px,${540 - z * 120}px) translate(-50%,-50%) scale(${.7 + z * .6})`;
+}));
+// Zwischen zwei Arbeitstagen … elf Stunden Pause
+akteur('ring4', { x: X3 + 1525 + 90, y: 540, o: 0, draw: 0 }); tw('ring4', W('Zwischen', 16) - .1, .5, { o: 1, x: X3 + 1525 }, 'weich'); cue(W('Zwischen', 16) - .1, 'whoosh');
+const R0 = W('mindestens', 16), R1 = W('elf', 16) + .2;
+tw('ring4', R0, R1 - R0, { draw: 1 }, 'inout'); cue(R0, 'scan');
+HOOKS.push(t => { $('#zahl4').textContent = Math.round(11 * E.inout(clamp((t - R0) / (R1 - R0)))) + ' h'; });
+bump('ring4', R1, 1.08); cue(R1, 'ding'); akzent(W('elf', 16), .045);
+pop('chipPause4', W('Pause', 16) - .1, { x: X3 + 1525, y: 740 }, 'erfolg');
+huepfen('bett4', W('Pause', 16), 10);
+ueberAus('u4', SE(16) + .1);
+
+/* ---------- 5 · Schwarzarbeit ---------- */
+pan2(SE(16) + .2, 4); const X4 = S(4);
+ueber('u5', X4, [W('Schwarzarbeit', 19) - .1, W('verboten', 20) - .25, W('verboten', 20) - .1]);
+// ohne Vertrag: der Vertrag fliegt weg
+ein('vertrag5', W('Freund', 17), { x: X4 + 1280, y: 420 }, { y: 70 }, 'whoosh');
+wackeln('vertrag5', W('ohne', 17), 3, 3);
+tw('vertrag5', W('Vertrag', 17) + .3, .6, { y: 330, o: 0, s: .6 }, 'in'); cue(W('Vertrag', 17) + .3, 'whoosh');
+// bar auf die Hand: Tisch, Geldschein wird darunter durchgeschoben
+ein('tisch5', W('arbeiten', 17) - .2, { x: X4 + 1280, y: 620 }, { y: 80 }, 'plopp');
+akteur('geld5', { x: X4 + 1760, y: 670, o: 0 });
+tw('geld5', W('bar', 17) - .1, .15, { o: 1 }); tw('geld5', W('bar', 17) - .1, .9, { x: X4 + 1260 }, 'inout'); cue(W('bar', 17) - .1, 'whoosh');
+tw('geld5', W('Hand', 17), .2, { y: 660 }, 'sinus'); tw('geld5', W('Hand', 17) + .2, .3, { y: 670 }, 'sanft');
+// Finger weg: großes rotes X
+schlag('x5', W('Finger', 18) + .05, { x: X4 + 1280, y: 560 }); akzent(W('Finger', 18), .05);
+tw('geld5', W('weg', 18) + .1, .5, { x: X4 + 1480, o: 0 }, 'in'); cue(W('weg', 18) + .1, 'whoosh');
+// Das ist verboten … gefährlich … mit Visum
+tw(['tisch5', 'x5'], W('verboten', 20) - .2, .7, { x: X4 + 1060, s: .75 }, 'inout');
+bump('x5', W('verboten', 20) + .5, 1.08);
+ein('pass5', W('gefährlich', 20) - .2, { x: X4 + 1540, y: 600 }, { x: 90 }, 'whoosh');
+schlag('warn5', W('gefährlich', 20) + .35, { x: X4 + 1650, y: 430 });
+pop('chipVisum5', W('Visum', 20) - .1, { x: X4 + 1540, y: 740 });
+wackeln('pass5', W('Visum', 20) + .1, 4, 3); akzent(W('Visum', 20), .04);
+ueberAus('u5', SE(20) + .1);
+
+/* ---------- 6 · Ausbildung geht vor: Waage ---------- */
+pan2(SE(20) + .2, 5); const X5 = S(5);
+ueber('u6', X5, [W('Ausbildung', 21) - .1, W('Wichtigste', 21) - .15, null]);
+const WX = X5 + 880, WY = 300, PX = 300, PY = 120, L = 230, HANG = 150;
+ein('waage6', W('Und', 21) - .3, { x: WX + 300, y: WY + 260 }, { y: 80 }, 'whoosh');
+akteur('winkel6', { x: X5 + 900, y: 400, r: 0, o: 0 });
+const winkel = t => wertBei('winkel6', 'r', t);
+const schale = (seite, t) => { const w = winkel(t) * Math.PI / 180; return { x: PX + seite * L * Math.cos(w), y: PY + seite * L * Math.sin(w) + HANG }; };
+HOOKS.push(t => {
+  $('#balken6').setAttribute('transform', `rotate(${winkel(t).toFixed(2)} ${PX} ${PY})`);
+  for (const [id, s] of [['schaleL', -1], ['schaleR', 1]]) { const p = schale(s, t); $('#' + id).setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`); }
+  // Gegenstände und Schilder folgen den Schalen
+  const dl = schale(-1, t).y - (PY + HANG), dr = schale(1, t).y - (PY + HANG);
+  $('#heft6').style.transform += ` translateY(${dl.toFixed(1)}px)`; $('#haken6').style.transform += ` translateY(${dl.toFixed(1)}px)`;
+  $('#chipAusb6').style.transform += ` translateY(${dl.toFixed(1)}px)`;
+  $('#geld6').style.transform += ` translateY(${dr.toFixed(1)}px)`; $('#chipNeben6').style.transform += ` translateY(${dr.toFixed(1)}px)`;
+});
+// Schalen-Ruhelage: links (WX+70, WY+270), rechts (WX+530, WY+270)
+const SLX = WX + PX - L, SRX = WX + PX + L, SY = WY + PY + HANG;
+akteur('geld6', { x: SRX, y: SY - 300, o: 0, r: 2 });
+tw('geld6', W('denk', 21), .15, { o: 1 }); tw('geld6', W('denk', 21), .45, { y: SY - 34 }, 'in'); cue(W('denk', 21) + .45, 'plopp');
+tw('winkel6', W('denk', 21) + .45, .7, { r: 5 }, 'sanft');
+pop('chipNeben6', W('denk', 21) + .5, { x: SRX, y: SY + 70 }, null);
+akteur('heft6', { x: SLX, y: SY - 360, o: 0 });
+tw('heft6', W('Ausbildung', 21) - .35, .15, { o: 1 }); tw('heft6', W('Ausbildung', 21) - .35, .45, { y: SY - 48 }, 'in'); cue(W('Ausbildung', 21) + .1, 'plopp');
+tw('heft6', W('Ausbildung', 21) + .1, .08, { sy: .9, sx: 1.05 }, 'sinus'); tw('heft6', W('Ausbildung', 21) + .18, .35, { sy: 1, sx: 1 }, 'sanft');
+tw('winkel6', W('Ausbildung', 21) + .1, 1.0, { r: -12 }, 'sanft');
+pop('chipAusb6', W('Ausbildung', 21) + .2, { x: SLX, y: SY + 70 }, null);
+bump('heft6', W('Wichtigste', 21), 1.1); bump('chipAusb6', W('Wichtigste', 21) + .05, 1.08); akzent(W('Wichtigste', 21), .04);
+// müde, Noten schlechter, Extra-Geld bringt nichts
+pop('mond6', W('müde', 22) - .1, { x: X5 + 1625, y: 385 });
+HOOKS.push(t => ['z6a', 'z6b'].forEach((id, i) => {
+  const a = W('müde', 22) + .2, z = ((t - a) * .5 + i / 2) % 1, an = t >= a && t < W('Stimmt', 23) - .2;
+  const e = $('#' + id); e.style.opacity = an ? Math.sin(Math.PI * z) * .9 : 0; e.style.visibility = an ? 'visible' : 'hidden';
+  e.style.transform = `translate(${X5 + 1690 + z * 30}px,${370 - z * 70}px) translate(-50%,-50%) scale(${.6 + z * .5})`;
+}));
+ein('noten6', W('Noten', 22) - .25, { x: X5 + 1625, y: 580 }, { x: 80 }, 'whoosh');
+[['nb1', .9], ['nb2', .55], ['nb3', .25]].forEach(([id, h], i) => {
+  akteur(id, { sy: 1 }, true); tw(id, W('schlechter', 22) + i * .15, .55, { sy: h }, 'sanft'); cue(W('schlechter', 22) + i * .15, 'klick');
+});
+tw('geld6', W('Extra', 22) - .1, .6, { o: .35, s: .75 }, 'inout');
+tw('winkel6', W('nichts', 22) - .1, .8, { r: -16 }, 'sanft'); wackeln('chipNeben6', W('nichts', 22), 3, 3);
+// Stimmt. Ich will ja die Prüfung schaffen.
+aus(['mond6', 'noten6'], W('Stimmt', 23) - .1, .3);
+pop('chipPruef6', W('Prüfung', 24) - .1, { x: X5 + 1625, y: 480 }, 'erfolg');
+akteur('haken6', { x: SLX + 62, y: SY - 100, s: 0 }); tw('haken6', W('schaffen', 24) - .1, .5, { s: 1 }, 'back'); cue(W('schaffen', 24) - .1, 'ding');
+bump('heft6', W('schaffen', 24) - .1, 1.08);
+ueberAus('u6', SE(24) + .1);
+
+/* ---------- 7 · Pausenecke: vier Punkte abhaken ---------- */
+pan2(SE(24) + .2, 6); const X6 = S(6);
+ueber('u7', X6, [W('Betrieb', 25) - .1, W('fragen', 25), W('prüfen', 25) - .2, W('prüfen', 25) + .2, W('Stunden', 25) - .2, W('nur', 25) - .1, W('Vertrag', 25) - .1]);
+akteur('tisch7', { x: X6 + MX, y: 760 });
+akteur('tasse7a', { x: X6 + 1485, y: 690 }); akteur('tasse7b', { x: X6 + 1645, y: 690 });
+akteur('dampf7a', { x: X6 + 1480, y: 610 }); akteur('dampf7b', { x: X6 + 1640, y: 610 });
+{
+  const H = '<path class="zeichnen" pathLength="1" d="M14 27l8 8 16-17" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+  const ICON = [
+    '<svg viewBox="0 0 66 66"><rect x="17" y="18" width="32" height="34" rx="3" fill="var(--b400)"/><rect x="14" y="14" width="38" height="6" rx="2" fill="var(--b700)"/><g fill="var(--b100)"><rect x="22" y="25" width="6" height="6" rx="1"/><rect x="38" y="25" width="6" height="6" rx="1"/><rect x="22" y="36" width="6" height="6" rx="1"/><rect x="38" y="36" width="6" height="6" rx="1"/></g><rect x="30" y="40" width="6" height="12" rx="2" fill="var(--b700)"/></svg>',
+    '<svg viewBox="0 0 66 66"><rect x="10" y="17" width="46" height="32" rx="5" fill="var(--b500)"/><rect x="15" y="22" width="12" height="16" rx="2" fill="var(--b100)"/><rect x="31" y="24" width="20" height="4" rx="2" fill="var(--b200)"/><rect x="31" y="32" width="14" height="4" rx="2" fill="var(--b200)"/></svg>',
+    '<svg viewBox="0 0 66 66"><circle cx="33" cy="33" r="20" fill="var(--surface)" stroke="var(--b500)" stroke-width="5"/><path d="M33 33V21M33 33l8 5" stroke="var(--b700)" stroke-width="4" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 66 66"><rect x="17" y="11" width="32" height="44" rx="4" fill="var(--surface)" stroke="var(--b300)" stroke-width="3"/><rect x="23" y="19" width="16" height="4" rx="2" fill="var(--b400)"/><rect x="23" y="28" width="20" height="3" rx="1.5" fill="var(--n300)"/><path d="M23 45c3-5 5-5 6-1s3 3 5-1 4-2 6 0" stroke="var(--b500)" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>'];
+  $('#liste7').innerHTML = ICON.map((ic, i) => `<div class="punkt7"><div class="ic">${ic}</div><div class="zeilen"><i style="width:${[90, 75, 85, 70][i]}%"></i><i style="width:${[60, 50, 65, 45][i]}%"></i></div><div class="kasten"><svg viewBox="0 0 52 52">${H}</svg></div></div>`).join('');
+}
+ein('liste7', SA(25) - .2, { x: X6 + 1080, y: 520 }, { y: 90, r: -3 }, 'whoosh');
+akteur('stift7', { x: X6 + 1500, y: 560, o: 0 });
+const HAKEN7 = [W('fragen', 25), W('prüfen', 25), W('Stunden', 25), W('Vertrag', 25)];
+const PUNKTE7 = [...document.querySelectorAll('#liste7 .punkt7')];
+// Kästchen-Mitte (Zettel 410 breit, Mitte 1080/500; Zeilen 66 hoch, 14 Abstand; Padding 24)
+const KX = X6 + 1080 + 205 - 26 - 26, KY = i => 520 - (4 * 66 + 3 * 14 + 48) / 2 + 24 + 33 + i * 80;
+HAKEN7.forEach((a, i) => {
+  const p = PUNKTE7[i].querySelector('.zeichnen');
+  HOOKS.push(t => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E.out(clamp((t - a) / .35)); });
+  // Stiftspitze liegt 36 px links, 31 px unter der Mitte des Stifts
+  tw('stift7', a - .6, .2, { o: 1 }); tw('stift7', a - .65, .6, { x: KX + 24, y: KY(i) - 31 }, 'inout');
+  tw('stift7', a - .05, .25, { x: KX + 32, y: KY(i) - 22 }, 'inout'); tw('stift7', a + .2, .3, { x: KX + 48, y: KY(i) - 39 }, 'inout');
+  cue(a, 'kritzeln');
+  HOOKS.push(t => { const d = t - a - .3; PUNKTE7[i].querySelector('.ic').style.transform = d > 0 && d < .5 ? `scale(${1 + .12 * Math.sin(Math.PI * d / .5)})` : ''; });
+});
+tw('stift7', HAKEN7[3] + .5, .35, { o: 0, x: KX + 120, y: KY(3) - 80 }, 'in');
+// Perfekt: die Tassen stoßen an
+const P7 = W('Perfekt', 26);
+tw(['dampf7a', 'dampf7b'], P7 - .2, .2, { o: 0 });
+tw('tasse7a', P7 - .1, .45, { x: X6 + 1535, r: 3, y: 660 }, 'inout'); tw('tasse7b', P7 - .1, .45, { x: X6 + 1600, r: -3, y: 660 }, 'inout');
+tw(['tasse7a', 'tasse7b'], P7 + .4, .5, { r: 0, y: 690 }, 'sanft'); cue(P7 + .35, 'ding');
+tw('tasse7a', P7 + .4, .5, { x: X6 + 1485 }, 'sanft'); tw('tasse7b', P7 + .4, .5, { x: X6 + 1645 }, 'sanft');
+tw(['dampf7a', 'dampf7b'], P7 + 1.0, .4, { o: 1 });
+// frag uns: Azubis Plus
+pop('logo7', W('frag', 27) - .1, { x: X6 + 1565, y: 440 }, 'erfolg'); akzent(W('uns', 27), .04);
+huepfen('logo7', W('uns', 27) + .3, 12);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .45, .6, { o: 1, y: 0 }, 'back');
+akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + .8, .5, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
