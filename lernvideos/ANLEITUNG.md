@@ -113,6 +113,12 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
 Fallen aus früheren Kursen:
 - `werkzeug/stil.css` hat allgemeine Klassen (`.schild`, `.unter`, `.ende` …) – eigene Klassen kursspezifisch benennen
   (z. B. `.aushang`), sonst erben sie fremde Stile.
+- **Flackern:** Pulsieren nie mit einer Frequenz, die von einer veränderlichen Größe abhängt (`sin(t * (5 + 2·w))`):
+  jede Änderung von `w` springt die Phase. Feste Frequenz, nur die Stärke variieren (Kurs 39).
+- **Buchstaben und Ein-Wort-Sätze** liest die Stimme gern englisch („Option A“ → „Äi“). Buchstaben ausschreiben
+  („Ah“, „Beh“, „Zeh“), keine Sätze aus nur einem Wort, Rückführung im Abschnitt „Schreibweise im Untertitel“.
+- `wort()`/`W()` suchen per Wortanfang: `W('Verein', n)` trifft auch ein früheres „Vereine“ im selben Satz –
+  im Zweifel über die Wortnummer (`WN`) ankern.
 - Wer `pop()` aus Kurs 1/9 kopiert und ein eigenes `s` mitgibt, muss `{ ...basis, s: 0 }` setzen – sonst ist das Element
   schon vor seinem Auftritt sichtbar.
 
