@@ -107,4 +107,10 @@ Alle in Markenfarben, nur als Porträt im Kreis (wie Kurs 1 und 4). Keine Daumen
 6. `node werkzeug/rendern.mjs lernvideos/NN-ordner` → `film.mp4`, `film-poster.png`. Aufräumen: `film.html`,
    `standbild-*.png`, `.frames/` löschen (`.stimme/` bleibt, ist ignoriert).
 
+Fallen aus früheren Kursen:
+- `werkzeug/stil.css` hat allgemeine Klassen (`.schild`, `.unter`, `.ende` …) – eigene Klassen kursspezifisch benennen
+  (z. B. `.aushang`), sonst erben sie fremde Stile.
+- Wer `pop()` aus Kurs 1/9 kopiert und ein eigenes `s` mitgibt, muss `{ ...basis, s: 0 }` setzen – sonst ist das Element
+  schon vor seinem Auftritt sichtbar.
+
 Geteilte Dateien (`werkzeug/`, `teile/`, `README.md`, andere Kursordner) nicht ändern – Bedarf im Bericht nennen.
