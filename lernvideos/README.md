@@ -18,4 +18,5 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 
 | Nr. | Thema | Format | Stimme | Länge | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | [Krankenkasse & Versichertenkarte](01-krankenkasse/) | Erklärvideo | Erzähler | 1:48 | fertig, wartet auf Freigabe |
+| 1 | [Krankenkasse & Versichertenkarte](01-krankenkasse/) | Erklärvideo | Erzähler | 1:48 | fertig |
+| 4 | [Rundfunkbeitrag](04-rundfunkbeitrag/) | Erklärvideo | Erzähler | 1:29 | fertig |

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Rundfunkbeitrag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:58px;line-height:68px}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.ring{border-radius:999px;border:6px solid var(--success);opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.pulse{width:10px;height:10px}
+.pulse i{position:absolute;left:50%;top:50%;border-radius:999px;border:5px solid var(--b300);opacity:0}
+.abdruck{padding:8px 18px;border-radius:10px;border:5px solid var(--b500);color:var(--b500);font:800 30px/34px Inter;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.6)}
+.abdruck.gruen{border-color:var(--success);color:var(--success-text)}
+.tinte{width:170px;height:170px;border-radius:999px;border:4px solid var(--b400);opacity:0}
+.finger{width:44px;height:44px;border-radius:999px;background:rgba(90,63,230,.28);border:3px solid var(--b500)}
+.check{width:28px;height:28px;flex:none;border-radius:8px;border:3px solid var(--b300);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.check svg{width:20px;opacity:0}
+.check.an{background:var(--success);border-color:var(--success)}
+.check.an svg{opacity:1}
+
+/* Brief vom Beitragsservice */
+.brief{width:280px;height:168px;padding:20px 22px;border-radius:14px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:9px}
+.brief small{font:800 14px/18px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.brief b{font:800 24px/28px Inter;color:var(--ink);white-space:nowrap}
+.brief .linie{height:9px;border-radius:5px;background:var(--n200)}
+.brief .marke{position:absolute;right:18px;top:16px;width:34px;height:40px;border-radius:5px;background:var(--b100);border:3px dashed var(--b300)}
+.brief .euro{position:absolute;right:16px;bottom:14px;border-radius:999px;background:var(--warning);color:var(--surface);font-family:Inter;font-weight:800;display:flex;align-items:center;justify-content:center}
+.brief.klein{width:250px;height:140px;padding:16px 18px;gap:8px}
+.brief.klein b{font-size:20px;line-height:24px}
+
+/* Szene 2 */
+.flimmer{width:94px;height:62px;border-radius:6px;background:repeating-linear-gradient(0deg,var(--b200) 0 7px,var(--b300) 7px 14px)}
+
+/* Szene 3: leere Wand */
+.leer{width:216px;height:146px;border-radius:16px;border:4px dashed var(--b300)}
+
+/* Szene 4: WG */
+.wg{width:780px;height:370px;border-radius:40px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.08)}
+.nummer{padding:9px 14px;border-radius:12px;background:var(--surface);border:3px solid var(--b200);font:700 18px/22px Inter;color:var(--b600);white-space:nowrap;box-shadow:0 4px 12px rgba(22,19,37,.1)}
+.nummer.brand{background:var(--b500);border-color:var(--b500);color:var(--surface)}
+.drittel{width:61px;height:110px;overflow:hidden}
+.drittel div{position:absolute;top:-66px;width:240px}
+
+/* Szene 5: Laptop mit Formular */
+.laptop{width:520px}
+.laptop .schirm{margin:0 30px;height:300px;border-radius:22px 22px 6px 6px;background:linear-gradient(135deg,var(--b600),var(--b700));padding:14px}
+.laptop .fuss{height:22px;border-radius:4px 4px 20px 20px;background:linear-gradient(var(--n200),var(--n300))}
+.form{height:100%;border-radius:10px;background:var(--bg);padding:14px 22px;display:flex;flex-direction:column;gap:10px}
+.form small{font:800 13px/16px Inter;color:var(--b500);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.form h5{font:800 28px/32px Inter;color:var(--ink)}
+.form .reihe{display:flex;align-items:center;gap:12px;padding:6px 12px;border-radius:12px;background:var(--surface);font:600 19px/26px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.form .knopf{margin-top:auto;padding:9px;border-radius:12px;background:var(--b500);color:var(--surface);font:700 18px/22px Inter;text-align:center}
+
+/* Szene 6 */
+.kal{width:130px;height:140px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.kal .kopf{height:38px;background:var(--b500)}
+.kal .blatt{position:absolute;left:0;right:0;top:38px;bottom:0;background:var(--surface);transform-origin:50% 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px}
+.kal .blatt span{height:14px;border-radius:4px;background:var(--b100)}
+.meter{width:64px;height:300px;border-radius:999px;background:var(--n200);overflow:hidden}
+.meter i{position:absolute;left:0;right:0;bottom:0;height:100%;border-radius:999px;background:linear-gradient(0deg,var(--warning),var(--error));transform-origin:50% 100%}
+
+/* Szene 7: Handy, Konto */
+.app{width:204px;height:374px;border-radius:18px;overflow:hidden;background:var(--bg);padding:16px 12px;display:flex;flex-direction:column;gap:9px}
+.app small{font:800 11px/14px Inter;color:var(--b500);letter-spacing:.06em;text-transform:uppercase}
+.app h5{font:700 21px/26px Inter;color:var(--ink);margin-bottom:4px}
+.app .feld{padding:7px 10px;border-radius:10px;background:var(--surface);border:2px solid transparent;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.app .feld span{display:block;font:600 11px/14px Inter;color:var(--n400);white-space:nowrap}
+.app .feld div{font:600 15px/20px Inter;color:var(--ink);white-space:pre;min-height:20px}
+.app .feld.aktiv{border-color:var(--b400)}
+.app .zeile{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:10px;background:var(--surface);font:600 15px/20px Inter;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.schalter{width:42px;height:24px;border-radius:999px;background:var(--n300);position:relative}
+.schalter i{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:999px;background:var(--surface);box-shadow:0 1px 3px rgba(22,19,37,.2)}
+.app .knopf{margin-top:auto;padding:10px;border-radius:12px;background:var(--b500);color:var(--surface);font:700 15px/18px Inter;text-align:center}
+.app .toast{position:absolute;left:12px;right:12px;bottom:66px;padding:8px 10px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;text-align:center}
+.cursor{display:inline-block;width:2px;height:17px;background:var(--b500);vertical-align:-3px;margin-left:1px}
+.konto{width:310px;border-radius:22px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.konto .band{height:50px;background:var(--b500);color:var(--surface);font:700 20px/24px Inter;display:flex;align-items:center;gap:10px;padding:0 20px}
+.konto .band svg{width:26px}
+.konto .buchung{display:flex;align-items:center;gap:12px;height:48px;padding:0 20px;border-top:2px solid var(--border);font:600 18px/22px Inter;color:var(--ink);white-space:nowrap}
+.konto .buchung em{font-style:normal;margin-left:auto;font:700 14px/18px Inter;color:var(--success-text)}
+.konto .buchung u{width:24px;height:24px;border-radius:999px;background:var(--success);flex:none;display:flex;align-items:center;justify-content:center}
+.konto .buchung u svg{width:15px}
+
+/* Szene 8 */
+.formular{width:300px;padding:16px 18px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;flex-direction:column;gap:10px}
+.formular .reihe{display:flex;align-items:center;gap:12px;font:700 22px/28px Inter;color:var(--ink)}
+.rechnung{padding:0 18px;height:72px;border-radius:12px;background:var(--surface);box-shadow:0 4px 14px rgba(22,19,37,.14);display:flex;align-items:center;justify-content:center;gap:8px;font:800 24px/1 Inter;color:var(--warning-text)}
+.rechnung i{width:34px;height:34px;border-radius:999px;background:var(--warning);color:var(--surface);font:800 20px/34px Inter;font-style:normal;text-align:center}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Ein Brief kommt -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="karton1" style="width:240px">{{karton}}</div>
+  <div class="a portrait" id="pri1" style="width:280px;height:280px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="kasten1" style="width:280px">{{briefkasten}}</div>
+  <div class="a brief" id="brief1"><small>Beitragsservice</small><b>Rundfunkbeitrag</b><div class="linie"></div><div class="linie" style="width:62%"></div><div class="marke"></div></div>
+  <div class="a frage" id="frage1">?</div>
+
+  <!-- 2 · Wer wird bezahlt? Jede Wohnung zahlt -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="haus2" style="width:300px">{{haus}}</div>
+  <div class="a" id="mast2" style="width:200px">{{sendemast}}</div>
+  <div class="a pulse" id="funk2" data-frei><i style="width:90px;height:90px"></i><i style="width:90px;height:90px"></i><i style="width:90px;height:90px"></i></div>
+  <div class="a" id="muenze2" style="width:90px" data-frei data-dreht>{{muenze}}</div>
+  <div class="a" id="tv2" style="width:160px" data-gruppe="tv2">{{fernseher}}</div>
+  <div class="a flimmer" id="bild2" data-gruppe="tv2"></div>
+  <div class="a" id="radio2" style="width:160px">{{radio}}</div>
+  <div class="a pulse" id="klang2" data-frei><i style="width:56px;height:56px"></i><i style="width:56px;height:56px"></i></div>
+  <div class="a" id="laptop2" style="width:160px">{{laptop}}</div>
+  <div class="a pulse" id="play2" data-frei><i style="width:50px;height:50px"></i><i style="width:50px;height:50px"></i></div>
+  <svg class="a" id="pfeil2a" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1170 345C1300 350 1380 400 1425 470" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/></svg>
+  <svg class="a" id="pfeil2b" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M1170 550H1420" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/></svg>
+  <svg class="a" id="pfeil2c" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M1170 750C1300 745 1380 700 1425 630" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/></svg>
+  <div class="a welle" id="welle2" style="width:260px;height:260px" data-frei></div>
+  <div class="a tinte" id="tinte2" data-frei></div>
+  <div class="a abdruck" id="pflicht2" data-frei>Pflicht</div>
+  <div class="a" id="stempel2" style="width:170px" data-frei>{{stempel}}</div>
+
+  <!-- 3 · Auch ohne Fernseher -->
+  <div class="a buehne" id="bue2"></div>
+  <svg class="a" id="rahmen3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M1010 812V482L1320 305L1630 482V812M990 812H1650" stroke="var(--b300)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a leer" id="leer3" data-gruppe="tv3"></div>
+  <div class="a" id="tv3" style="width:180px" data-gruppe="tv3">{{fernseher~3}}</div>
+  <svg class="a" id="kreuz3" viewBox="0 0 120 120" style="width:120px" data-gruppe="tv3"><path d="M24 24l72 72M96 24l-72 72" stroke="var(--error)" stroke-width="14" stroke-linecap="round"/></svg>
+  <div class="a" id="pflanze3" style="width:140px">{{pflanze}}</div>
+  <div class="a" id="sofa3" style="width:250px">{{sofa}}</div>
+  <div class="a" id="lampe3" style="width:200px">{{lampe}}</div>
+  <div class="a welle" id="welle3" style="width:200px;height:200px;border-color:var(--success)" data-frei></div>
+  <div class="a plakette gruen" id="ok3" style="width:84px;height:84px"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a" id="muenze3" style="width:84px" data-frei data-dreht>{{muenze~3}}</div>
+  <div class="a chip gelb" id="chip18"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--warning)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">€</text></svg>rund 18 € im Monat</div>
+
+  <!-- 4 · WG: nur einer zahlt -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a wg" id="wg4" data-frei></div>
+  <div class="a chip brand klein" id="chipWG4"><svg viewBox="0 0 30 30"><path d="M4 14L15 5l11 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" fill="var(--surface)"/><rect x="12" y="18" width="6" height="9" rx="1" fill="var(--b500)"/></svg>WG</div>
+  <div class="a ring" id="ring4" style="width:206px;height:206px;border-color:var(--b500)" data-frei></div>
+  <div class="a portrait" id="p4a" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="p4b" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="p4c" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a chip brand klein" id="chipBS4">Beitragsservice</div>
+  <div class="a" id="muenze4" style="width:70px" data-frei data-dreht>{{muenze~4}}</div>
+  <div class="a nummer brand" id="nr4a">Nr. 123 456 789</div>
+  <div class="a nummer" id="nr4b">Nr. 123 456 789</div>
+  <div class="a nummer" id="nr4c">Nr. 123 456 789</div>
+  <div class="a drittel" id="d4a" data-gruppe="schein"><div style="left:-30px">{{geldschein}}</div></div>
+  <div class="a drittel" id="d4b" data-gruppe="schein"><div style="left:-91px">{{geldschein~b}}</div></div>
+  <div class="a drittel" id="d4c" data-gruppe="schein"><div style="left:-152px">{{geldschein~c}}</div></div>
+
+  <!-- 5 · Mit BAB: Befreiung -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a portrait" id="pri5" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="schein5" style="width:150px" data-frei>{{geldschein~5}}</div>
+  <div class="a chip klein" id="chipBAB5"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--success)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">€</text></svg>BAB</div>
+  <div class="a chip klein" id="chipEltern5"><svg viewBox="0 0 30 30"><path d="M4 14L15 5l11 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" fill="var(--b500)"/><rect x="12" y="18" width="6" height="9" rx="1" fill="var(--b100)"/></svg>nicht bei den Eltern</div>
+  <div class="a laptop" id="lap5" data-gruppe="lap5"><div class="schirm"><div class="form">
+    <small>Beitragsservice · online</small><h5 id="titel5">Befreiung</h5>
+    <div class="reihe" id="r5a"><div class="check" id="c5a"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Ich bekomme BAB</div>
+    <div class="reihe" id="r5b"><div class="check" id="c5b"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>nicht bei den Eltern</div>
+    <div class="knopf" id="knopf5">Antrag senden</div></div></div><div class="fuss"></div></div>
+  <div class="a finger" id="finger5" data-gruppe="lap5"></div>
+  <div class="a tinte" id="tinte5" style="border-color:var(--success)" data-frei></div>
+  <div class="a abdruck gruen" id="genehmigt5" data-frei>genehmigt</div>
+  <div class="a" id="stempel5" style="width:170px" data-frei>{{stempel~5}}</div>
+
+  <!-- 6 · Nicht ignorieren -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a portrait" id="pri6" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div></div></div>
+  <div class="a chip gelb" id="chipWichtig6">Ganz wichtig!</div>
+  <div class="a welle" id="welle6" style="width:300px;height:300px;border-color:var(--warning)" data-frei></div>
+  <div class="a brief klein" id="br6a" data-gruppe="stapel"><small>Beitragsservice</small><b>Rundfunkbeitrag</b><div class="linie"></div><div class="linie" style="width:55%"></div></div>
+  <div class="a brief klein" id="br6b" data-gruppe="stapel"><small>Beitragsservice</small><b>Anmeldung</b><div class="linie" style="width:60%"></div><div class="linie" style="width:40%"></div><div class="euro" style="width:34px;height:34px;font-size:18px">€</div></div>
+  <div class="a brief klein" id="br6c" data-gruppe="stapel"><small>Beitragsservice</small><b>Mahnung</b><div class="linie" style="width:55%"></div><div class="linie" style="width:35%"></div><div class="euro" style="width:44px;height:44px;font-size:24px">€</div></div>
+  <div class="a brief klein" id="br6d" data-gruppe="stapel"><small>Beitragsservice</small><b>Mahnung + Gebühr</b><div class="linie" style="width:45%"></div><div class="linie" style="width:30%"></div><div class="euro" style="width:56px;height:56px;font-size:32px;background:var(--error)">€</div></div>
+  <div class="a kal" id="kal6"><div class="kopf"></div>
+    <div class="blatt" id="kb4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="a meter" id="meter6" data-gruppe="meter"><i id="meterI6"></i></div>
+  <div class="a plakette rot" id="euro6" data-gruppe="meter" style="width:72px;height:72px;font:800 36px/1 Inter;color:var(--surface)">€</div>
+
+  <!-- 7 · Anmelden, Lastschrift, fertig -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="handy7" style="width:560px" data-gruppe="handy">{{handy}}</div>
+  <div class="a app" id="app7" data-gruppe="handy"><small>Beitragsservice</small><h5>Anmelden</h5>
+    <div class="feld" id="fName7"><span>Name</span><div id="name7"></div></div>
+    <div class="feld" id="fNr7"><span>Nr. deines Mitbewohners</span><div id="nr7"></div></div>
+    <div class="zeile">Lastschrift<div class="schalter" id="sch7"><i id="schI7"></i></div></div>
+    <div class="knopf" id="knopf7">Fertig</div>
+    <div class="toast" id="toast7">✓ Angemeldet</div></div>
+  <div class="a finger" id="finger7" data-gruppe="handy"></div>
+  <svg class="a" id="pfeil7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1300 610C1340 560 1360 520 1382 492" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#spitze7)"/></svg>
+  <div class="a konto" id="konto7"><div class="band"><svg viewBox="0 0 30 30"><path d="M3 12L15 4l12 8Z" fill="var(--surface)"/><rect x="6" y="13" width="3" height="10" fill="var(--surface)"/><rect x="13.5" y="13" width="3" height="10" fill="var(--surface)"/><rect x="21" y="13" width="3" height="10" fill="var(--surface)"/><rect x="3" y="24" width="24" height="3" rx="1" fill="var(--surface)"/></svg>Mein Konto</div>
+    <div class="buchung" id="bu7a"><u><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u>Rundfunkbeitrag<em>Lastschrift</em></div>
+    <div class="buchung" id="bu7b"><u><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u>Rundfunkbeitrag<em>Lastschrift</em></div>
+    <div class="buchung" id="bu7c"><u><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u>Rundfunkbeitrag<em>Lastschrift</em></div></div>
+  <div class="a portrait" id="pri7" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 8 · Umzug? Ummelden! -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="haus8a" style="width:270px">{{haus~8a}}</div>
+  <div class="a" id="haus8b" style="width:270px">{{haus~8b}}</div>
+  <div class="a" id="karton8" style="width:200px">{{karton~8}}</div>
+  <div class="a" id="flug8" style="width:200px" data-frei>{{flugzeug}}</div>
+  <div class="a formular" id="form8">
+    <div class="reihe"><div class="check" id="c8a"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Ummelden</div>
+    <div class="reihe"><div class="check" id="c8b"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Abmelden</div></div>
+  <div class="a rechnung" id="re8a"><i>€</i>Beitrag</div>
+  <div class="a rechnung" id="re8b"><i>€</i>Beitrag</div>
+  <div class="a chip rot" id="chip2x">2×</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Rundfunkbeitrag – was ist das?</div></div>
+<div class="block" id="tb2"><div class="titel">Pflicht für jede Wohnung</div></div>
+<div class="block" id="tb3"><div class="titel">Auch ohne Fernseher</div></div>
+<div class="block" id="tb4"><div class="titel">WG: nur einer zahlt – ihr teilt</div></div>
+<div class="block" id="tb5"><div class="titel">Mit BAB: Befreiung möglich</div></div>
+<div class="block" id="tb6"><div class="titel">Nicht ignorieren – sonst wird es teurer</div></div>
+<div class="block" id="tb7"><div class="titel">Anmelden · Lastschrift · fertig</div></div>
+<div class="block" id="tb8"><div class="titel">Umzug? Ummelden!</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Pro Wohnung einmal.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Der Rundfunkbeitrag ist Pflicht. Den Brief nie ignorieren.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+// W('Wort', n): Filmzeit des Worts im Satz n (oder danach)
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(21);
+const MX = 1320, MY = 540, SZENEN = 8;
+for (let i = 0; i < SZENEN; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+// kleine Elemente ploppen mit Überschwung, große kommen sanfter
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+// Fällt von oben herein und landet mit Stauchung (Aufschlag ist gewollt)
+const fall = (id, t, basis, h = 200, snd = 'plopp') => {
+  akteur(id, { ...basis, o: 0, y: basis.y - h });
+  tw(id, t, .1, { o: 1 }); tw(id, t, .34, { y: basis.y }, 'in');
+  tw(id, t + .34, .08, { sy: .86, sx: 1.08 }, 'out'); tw(id, t + .42, .45, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t + .34, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+// Flugbahn: weicher Bogen, sanft los und sanft ans Ziel
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+// Ringe, die an einer Stelle pulsieren (Funk, Klang) – innere Elemente, die Hülle steht still
+function pulse(id, x, y, t0, t1, per = 1.1, s0 = .6, s1 = 1.9) {
+  akteur(id, { x, y });
+  const ringe = [...el(id).querySelectorAll('i')];
+  HOOKS.push(t => ringe.forEach((r, i) => {
+    const d = t - t0 - i * per / ringe.length, z = ((d / per) % 1 + 1) % 1, an = d > 0 && t < t1;
+    r.style.opacity = an ? (Math.sin(Math.PI * z) * .85).toFixed(3) : 0;
+    r.style.transform = `translate(-50%,-50%) scale(${(s0 + z * (s1 - s0)).toFixed(3)})`;
+  }));
+}
+// Münze dreht sich um die senkrechte Achse
+const drehen = (id, t0, d = 1.4, n = 3) => HOOKS.push(t => { const p = t - t0; if (p > 0 && p < d) el(id).style.transform += ` scaleX(${Math.cos(p * Math.PI * n * (1 - p / (2 * d))).toFixed(3)})`; });
+// Stempel schlägt auf: Abdruck erscheint mit Tintenring
+function stempeln(stempel, abdruck, tinte, t, x, y, r = -3) {
+  akteur(stempel, { x, y: y - 250, o: 0 });
+  tw(stempel, t - .5, .2, { o: 1 }); tw(stempel, t - .5, .3, { y: y - 215 }, 'sinus');
+  tw(stempel, t - .18, .16, { y: y - 105 }, 'in'); tw(stempel, t - .02, .5, { y: y - 205, o: 0 }, 'weich');
+  cue(t - .02, 'plopp'); akzent(t, .045);
+  akteur(abdruck, { x, y, o: 0, r, s: 1.4 }); tw(abdruck, t - .02, .16, { o: 1, s: 1 }, 'out');
+  welle(tinte, t, x, y, .7);
+}
+const HAKEN = t => cue(t, 'ding');
+
+/* ---------- Figuren: blinzeln, zuhören (leichtes Nicken), froh / staunend schauen ---------- */
+function figur(id, basis) {
+  akteur(id, basis);
+  for (const k of ['froh', 'auf']) { const f = $(`#${id} .${k}`); if (f) akteur(f, { o: 0 }, true); }
+  akteur($(`#${id} .zu`), {}, true);
+}
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) if ($(`#${id} .${m}`)) set(`#${id} .${m}`, t, { o: m === k ? 1 : 0 }); };
+const froh = (id, t) => mund(id, t, 'froh');
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Heranfahren, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  // Tiefe: die Bühne bleibt beim Schwenk etwas zurück, die Gegenstände ziehen schneller vorbei
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < SZENEN; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+// Gegenstände in Ruhe schweben leicht (Amplitude in px)
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+// Tippen: Text erscheint Zeichen für Zeichen, mit blinkendem Cursor
+const tippen = (id, text, t0, d) => {
+  HOOKS.push(t => {
+    const n = Math.floor(clamp((t - t0) / d) * text.length);
+    el(id).innerHTML = (t >= t0 ? text.slice(0, n) : '') + (t >= t0 - .1 && t < t0 + d + .4 && Math.floor(t * 3) % 2 === 0 ? '<span class="cursor"></span>' : '');
+  });
+  for (let i = 0; i < Math.min(6, text.length); i++) cue(t0 + i * d / 6, 'tipp');
+};
+const ankreuzen = (id, t) => { HOOKS.push(u => el(id).classList.toggle('an', u >= t)); bump(akteur(el(id), {}, true).el, t, 1.2); HAKEN(t); };
+
+/* ---------- 1 · Ein Brief kommt: Rundfunkbeitrag – was ist das? ---------- */
+const X0 = S(0);
+titelEin('tb1', W('Rundfunkbeitrag', 1) - .2);
+figur('pri1', { x: X0 + 1110, y: 540, s: 0 }); tw('pri1', A(-.6), .7, { s: 1 }, 'sanft'); cue(A(-.6), 'pop');
+// eingezogen: der Umzugskarton plumpst herunter, Priya hüpft
+fall('karton1', W('gerade', 1) - .1, { x: X0 + 985, y: 715 }, 240);
+froh('pri1', W('eingezogen', 1)); huepfen('pri1', W('eingezogen', 1) + .15, 14);
+// schon kommt ein Brief: Briefkasten ruckelt, der Brief springt heraus und fliegt zu Priya
+ein('kasten1', W('und', 1) - .25, { x: X0 + 1610, y: 600 }, { x: 90 }, 'whoosh');
+mund('pri1', W('kommt', 1), 'zu');
+wackeln('kasten1', W('kommt', 1) - .1, 4, 3); cue(W('kommt', 1) - .1, 'klick');
+akteur('brief1', { x: X0 + 1605, y: 560, o: 0, s: .3 });
+tw('brief1', W('kommt', 1) + .15, .1, { o: 1 }); tw('brief1', W('kommt', 1) + .15, .35, { y: 470, s: .45 }, 'out');
+flug('brief1', W('Brief', 1) - .05, .8, X0 + 1450, 365, 90, { s: 1.1 }); cue(W('Brief', 1) - .05, 'whoosh');
+tw('brief1', W('Brief', 1) - .05, .4, { r: -3 }, 'sinus'); tw('brief1', W('Brief', 1) + .35, .5, { r: 0 }, 'sanft');
+bump('brief1', W('Rundfunkbeitrag', 1) + .1, 1.08); akzent(W('Rundfunkbeitrag', 1) + .1, .03);
+schweben('brief1', 4);
+// Was ist das denn? Priya staunt, Fragezeichen
+mund('pri1', W('Was', 2), 'auf');
+pop('frage1', W('ist', 2), { x: X0 + 1212, y: 342 });
+wackeln('frage1', W('denn', 2), 4, 3); wackeln('brief1', W('denn', 2) + .1, 3, 3);
+wackeln('pri1', W('das', 2), 2, 2);
+textAus('tb1', SE(2) + .15);
+
+/* ---------- 2 · Öffentliche Sender – jede Wohnung zahlt ---------- */
+pan2(SE(2) + .3, 1); const X1 = S(1);
+titelEin('tb2', W('Mit', 3) - .1);
+ein('haus2', W('Rundfunkbeitrag', 3) - .1, { x: X1 + 1580, y: 560 }, { y: 90 }, 'whoosh');
+// öffentliche Sender: Sendemast mit Funkwellen
+ein('mast2', W('öffentliche', 3) - .1, { x: X1 + 1080, y: 540 }, { y: 80 }, 'pop');
+pulse('funk2', X1 + 1080, 482, W('Sender', 3), W('also', 3) + .2);
+// bezahlt: eine Münze fliegt vom Haus zum Sender
+akteur('muenze2', { x: X1 + 1560, y: 520, o: 0, s: .3 });
+tw('muenze2', W('bezahlt', 3) - .2, .12, { o: 1 }); tw('muenze2', W('bezahlt', 3) - .2, .3, { s: .7 }, 'back');
+flug('muenze2', W('bezahlt', 3) + .1, .8, X1 + 1080, 485, 160, { s: .5 }); tw('muenze2', W('bezahlt', 3) + .75, .15, { o: 0 });
+drehen('muenze2', W('bezahlt', 3) + .1, .8, 2);
+bump('mast2', W('bezahlt', 3) + .9, 1.1); cue(W('bezahlt', 3) + .9, 'muenze');
+aus('mast2', W('also', 3) + .1, .3);
+// Fernsehen, Radio, Internetangebote: die Geräte kommen aus dem Sender
+const GERAETE = [['tv2', 'Fernsehen', 330], ['radio2', 'Radio', 540], ['laptop2', 'Internetangebote', 750]];
+GERAETE.forEach(([id, w, y]) => {
+  const t0 = W(w, 3) - .2;
+  akteur(id, { x: X1 + 1080, y: 540, o: 0, s: .3 });
+  tw(id, t0, .12, { o: 1 }); tw(id, t0, .6, { x: X1 + 1080, y, s: 1 }, 'sanft'); cue(t0, 'pop');
+  tw(id, t0 + .55, .1, { sy: .92, sx: 1.05 }, 'sinus'); tw(id, t0 + .65, .35, { sy: 1, sx: 1 }, 'sanft');
+});
+// Fernseher flimmert, Radio klingt, Laptop spielt ab
+akteur('bild2', { x: X1 + 1079, y: 323, o: 0 }); tw('bild2', W('Fernsehen', 3) + .45, .3, { o: 1 });
+HOOKS.push(t => { $('#bild2').style.backgroundPosition = `0 ${(t * 40 % 14).toFixed(1)}px`; });
+pulse('klang2', X1 + 1053, 559, W('Radio', 3) + .45, SE(4) + 1);
+pulse('play2', X1 + 1080, 739, W('Internetangebote', 3) + .5, SE(4) + 1, 1.3, .7, 2.2);
+bump('laptop2', W('Internetangebote', 3) + .5, 1.08);
+// Jede Wohnung: Pfeile von allen Geräten zum Haus
+['pfeil2a', 'pfeil2b', 'pfeil2c'].forEach((id, i) => {
+  akteur(id, { x: X1 + 960, y: 540, o: 0, draw: 0 });
+  const t0 = W('Jede', 4) - .1 + i * .18;
+  tw(id, t0, .1, { o: 1 }); tw(id, t0, .6, { draw: 1 }, 'inout'); cue(t0, 'whoosh');
+});
+bump('haus2', W('Wohnung', 4) + .15, 1.08); welle('welle2', W('Wohnung', 4) + .15, X1 + 1580, 560, 1.0); akzent(W('Wohnung', 4) + .1);
+// muss: Stempel „Pflicht“ auf das Haus
+stempeln('stempel2', 'pflicht2', 'tinte2', W('muss', 4), X1 + 1580, 625);
+wackeln('haus2', W('muss', 4), 3, 2);
+textAus('tb2', SE(4) + .2);
+
+/* ---------- 3 · Auch ohne Fernseher ---------- */
+pan2(SE(4) + .3, 2); const X2 = S(2);
+titelEin('tb3', W('Auch', 5) - .2);
+akteur('rahmen3', { x: X2 + 960, y: 540, draw: 0 }); tw('rahmen3', W('Auch', 5) - .5, 1.1, { draw: 1 }, 'inout'); cue(W('Auch', 5) - .5, 'kritzeln');
+ein('sofa3', W('Auch', 5), { x: X2 + 1235, y: 720 }, { y: 70 }, 'pop');
+ein('pflanze3', W('wenn', 5), { x: X2 + 1068, y: 740 }, { y: 70 });
+ein('lampe3', W('du', 5), { x: X2 + 1545, y: 690 }, { y: 70 }, 'pop');
+ein('leer3', W('keinen', 5) - .3, { x: X2 + 1215, y: 575 }, { y: 40 });
+// keinen Fernseher: das Gerät erscheint nur als Umriss – und wird durchgestrichen
+akteur('tv3', { x: X2 + 1215, y: 572, o: 0, s: .8 });
+tw('tv3', W('Fernseher', 5) - .1, .45, { o: .45, s: 1 }, 'sanft'); cue(W('Fernseher', 5) - .1, 'pop');
+akteur('kreuz3', { x: X2 + 1215, y: 572, o: 0, s: 1.6 });
+tw('kreuz3', W('hast', 5), .12, { o: 1 }); tw('kreuz3', W('hast', 5), .3, { s: 1 }, 'back'); cue(W('hast', 5), 'plopp');
+// nicht um das Gerät: der Fernseher schüttelt den Kopf und verschwindet
+wackeln('tv3', W('Gerät', 6) - .1, 4, 3); wackeln('kreuz3', W('Gerät', 6) - .1, 4, 3);
+aus(['tv3', 'kreuz3'], W('sondern', 6), .3);
+// sondern um die Wohnung: das Haus bekommt trotzdem den Haken
+aus('leer3', W('Wohnung', 6) - .3, .3);
+pop('ok3', W('Wohnung', 6), { x: X2 + 1320, y: 415 }, 'erfolg'); welle('welle3', W('Wohnung', 6), X2 + 1320, 415, 1.0); akzent(W('Wohnung', 6));
+schweben('ok3', 3);
+// rund 18 Euro im Monat: Münze fällt, dreht sich, Chip erscheint
+akteur('muenze3', { x: X2 + 1215, y: 330, o: 0 });
+tw('muenze3', W('18', 7) - .45, .1, { o: 1 }); tw('muenze3', W('18', 7) - .45, .42, { y: 575 }, 'in');
+tw('muenze3', W('18', 7) - .03, .08, { sy: .85 }, 'sinus'); tw('muenze3', W('18', 7) + .05, .35, { sy: 1 }, 'sanft'); cue(W('18', 7) - .03, 'muenze');
+drehen('muenze3', W('18', 7) + .15, 1.2, 3);
+aus('muenze3', W('Monat', 7) - .2, .25);
+pop('chip18', W('Monat', 7) - .15, { x: X2 + 1215, y: 575 }); akzent(W('Euro', 7), .03);
+textAus('tb3', SE(7) + .2);
+
+/* ---------- 4 · WG: nur einer zahlt – ihr teilt ---------- */
+pan2(SE(7) + .3, 3); const X3 = S(3);
+titelEin('tb4', 0, [W('Gute', 8) - .2, W('nur', 8) - .15, null, null, W('Geld', 11) - .1, null, null]);
+ein('wg4', W('Gute', 8) - .2, { x: X3 + 1320, y: 625 }, { y: 90 }, 'whoosh');
+pop('chipWG4', W('WGs', 8) - .1, { x: X3 + 1030, y: 440 });
+const LEUTE = [['p4a', 1110], ['p4b', 1320], ['p4c', 1530]];
+LEUTE.forEach(([id, x], i) => { figur(id, { x: X3 + x, y: 590, s: 0 }); tw(id, W('WGs', 8) + i * .15, .55, { s: 1 }, 'sanft'); cue(W('WGs', 8) + i * .15, 'pop'); });
+// Pro Wohnung zahlt nur eine Person: Priya wird hervorgehoben, die anderen treten zurück
+bump('wg4', W('Pro', 8), 1.03);
+akteur('ring4', { x: X3 + 1110, y: 590, o: 0, s: .85 }); tw('ring4', W('eine', 8) - .1, .3, { o: 1 }); tw('ring4', W('eine', 8) - .1, .55, { s: 1 }, 'back'); cue(W('eine', 8) - .1, 'klick');
+bump('p4a', W('eine', 8) - .1, 1.08); froh('p4a', W('eine', 8));
+tw(['p4b', 'p4c'], W('eine', 8), .4, { o: .45 }, 'inout');
+// zahlt einer: Beitragsservice erscheint, Priyas Münze fliegt hin, sie bekommt die Beitragsnummer
+ein('chipBS4', W('zusammen', 9) - .2, { x: X3 + 1320, y: 330 }, { y: -50 }, 'whoosh');
+akteur('muenze4', { x: X3 + 1110, y: 590, o: 0, s: .4 });
+tw('muenze4', W('zahlt', 9) - .1, .1, { o: 1 }); tw('muenze4', W('zahlt', 9) - .1, .25, { s: 1 }, 'back');
+flug('muenze4', W('zahlt', 9) + .15, .7, X3 + 1320, 335, 90, { s: .5 }); tw('muenze4', W('zahlt', 9) + .7, .15, { o: 0 });
+drehen('muenze4', W('zahlt', 9) + .1, .8, 2);
+bump('chipBS4', W('zahlt', 9) + .85, 1.1); cue(W('zahlt', 9) + .85, 'muenze');
+pop('nr4a', W('einer', 9) + .1, { x: X3 + 1110, y: 752 });
+// Die anderen melden nur dessen Beitragsnummer: Kopien fliegen zu Kwame und Yusuf, sie halten sie hoch
+tw('ring4', W('Die', 10) - .1, .3, { o: 0 });
+tw(['p4b', 'p4c'], W('anderen', 10) - .1, .4, { o: 1 }, 'inout');
+huepfen('p4b', W('anderen', 10), 12); huepfen('p4c', W('anderen', 10) + .1, 12);
+[['nr4b', 1320], ['nr4c', 1530]].forEach(([id, x], i) => {
+  const t0 = W('melden', 10) - .05 + i * .15;
+  akteur(id, { x: X3 + 1110, y: 752, o: 0, s: .6 });
+  tw(id, t0, .1, { o: 1 }); flug(id, t0, .65, X3 + x, 752, 70, { s: 1 }); cue(t0, 'whoosh');
+  tw(id, W('Beitragsnummer', 10) + i * .1, .3, { y: 738 }, 'back'); bump(id, W('Beitragsnummer', 10) + i * .1, 1.08);
+});
+froh('p4b', W('Beitragsnummer', 10)); froh('p4c', W('Beitragsnummer', 10) + .1);
+bump('chipBS4', W('Beitragsnummer', 10) + .4, 1.08); HAKEN(W('Beitragsnummer', 10) + .4);
+// Das Geld könnt ihr euch teilen: der Schein teilt sich in drei Stücke
+aus('chipBS4', W('Das', 11) - .2, .25);
+[['d4a', -1], ['d4b', 0], ['d4c', 1]].forEach(([id, k], i) => {
+  ein(id, W('Geld', 11) - .2, { x: X3 + 1320 + k * 61, y: 330 }, { y: -40 }, i ? null : 'pop');
+  tw(id, W('teilen', 11) - .45, .3, { x: X3 + 1320 + k * 92, r: k * 3 }, 'back'); if (!i) cue(W('teilen', 11) - .45, 'kritzeln');
+  const [pid, px] = LEUTE[i], t0 = W('teilen', 11) - .1 + i * .08;
+  flug(id, t0, .6, X3 + px, 560, 60, { s: .45, r: 0 }); tw(id, t0 + .5, .12, { o: 0 });
+  bump(pid, t0 + .6, 1.08); cue(t0 + .6, 'muenze');
+});
+textAus('tb4', SE(11) + .2);
+
+/* ---------- 5 · Mit BAB: Befreiung möglich ---------- */
+pan2(SE(11) + .3, 4); const X4 = S(4);
+titelEin('tb5', 0, [W('Berufsausbildungsbeihilfe', 12) - .1, W('BAB', 12) - .1, W('befreien', 13) - .1, null]);
+figur('pri5', { x: X4 + 1320, y: 555, s: 0 }); tw('pri5', W('Bekommst', 12) - .3, .6, { s: 1.33 }, 'sanft'); cue(W('Bekommst', 12) - .3, 'pop');
+// Berufsausbildungsbeihilfe: ein Geldschein kommt bei Priya an
+akteur('schein5', { x: X4 + 1680, y: 300, o: 0, s: .6, r: 3 });
+tw('schein5', W('Berufsausbildungsbeihilfe', 12), .15, { o: 1 }); flug('schein5', W('Berufsausbildungsbeihilfe', 12), .9, X4 + 1400, 520, 90, { s: .5, r: 0 });
+tw('schein5', W('Berufsausbildungsbeihilfe', 12) + .75, .15, { o: 0 }); cue(W('Berufsausbildungsbeihilfe', 12), 'whoosh');
+bump('pri5', W('Berufsausbildungsbeihilfe', 12) + .9, 1.06); cue(W('Berufsausbildungsbeihilfe', 12) + .9, 'muenze'); froh('pri5', W('Berufsausbildungsbeihilfe', 12) + .9);
+pop('chipBAB5', W('BAB', 12), { x: X4 + 1320, y: 345 });
+pop('chipEltern5', W('Eltern', 12) - .15, { x: X4 + 1320, y: 765 });
+wackeln('chipBAB5', W('BAB', 12) + .5, 3, 2);
+// Dann kannst du dich befreien lassen: Priya rückt nach oben, der Laptop mit dem Formular „Befreiung“ kommt
+tw('pri5', W('Dann', 13) - .3, .7, { x: X4 + 1030, y: 360, s: 1 }, 'inout');
+tw('chipBAB5', W('Dann', 13) - .25, .7, { x: X4 + 1260, y: 318 }, 'inout');
+tw('chipEltern5', W('Dann', 13) - .2, .7, { x: X4 + 1350, y: 400 }, 'inout', { bogen: 60 });
+ein('lap5', W('kannst', 13) - .05, { x: X4 + 1400, y: 640 }, { y: 100 }, 'whoosh');
+akteur('titel5', {}, true); bump('titel5', W('befreien', 13) + .1, 1.12);
+// Den Antrag …: die Angaben fliegen ins Formular, Kästchen werden angekreuzt
+[['chipBAB5', 1245, 612, 'c5a'], ['chipEltern5', 1245, 664, 'c5b']].forEach(([id, x, y, c], i) => {
+  const t0 = W('Antrag', 14) - .15 + i * .25;
+  flug(id, t0, .55, X4 + x + 60, y, 60, { s: .4 }); tw(id, t0 + .45, .12, { o: 0 }); cue(t0, 'whoosh');
+  ankreuzen(c, t0 + .55);
+});
+// online: Finger tippt auf „Antrag senden“
+akteur('finger5', { x: X4 + 1560, y: 830, o: 0 });
+tw('finger5', W('online', 14) - .35, .45, { o: 1, x: X4 + 1400, y: 718 }, 'inout');
+tw('finger5', W('online', 14) + .1, .1, { s: .8 }, 'in'); tw('finger5', W('online', 14) + .2, .3, { s: 1 }, 'sanft'); cue(W('online', 14) + .1, 'klick');
+tw('finger5', W('beim', 14), .3, { o: 0 });
+akteur('knopf5', {}, true); tw('knopf5', W('online', 14) + .1, .1, { s: .94 }, 'in'); tw('knopf5', W('online', 14) + .2, .35, { s: 1 }, 'back');
+// beim Beitragsservice: Stempel „genehmigt“
+['r5a', 'r5b'].forEach(id => akteur(id, {}, true));
+tw(['r5a', 'r5b', 'knopf5'], W('beim', 14), .3, { o: 0, y: 10 }, 'in');
+stempeln('stempel5', 'genehmigt5', 'tinte5', W('Beitragsservice', 14) + .25, X4 + 1400, 640);
+froh('pri5', W('Beitragsservice', 14) + .3); huepfen('pri5', W('Beitragsservice', 14) + .35, 12);
+textAus('tb5', SE(14) + .2);
+
+/* ---------- 6 · Nicht ignorieren – sonst wird es teurer ---------- */
+pan2(SE(14) + .3, 5); const X5 = S(5);
+titelEin('tb6', 0, [W('Ganz', 15) - .1, null, W('Dann', 17) - .1, null, null, null, null]);
+figur('pri6', { x: X5 + 1010, y: 350, s: 0 }); tw('pri6', W('Ganz', 15) - .4, .55, { s: 1 }, 'sanft');
+pop('chipWichtig6', W('Ganz', 15), { x: X5 + 1330, y: 300 }); wackeln('chipWichtig6', W('wichtig', 15) + .2, 4, 3);
+// der Brief landet
+akteur('br6a', { x: X5 + 1700, y: 420, o: 0, s: .6, r: 3 });
+tw('br6a', W('Ganz', 15) - .3, .15, { o: 1 }); flug('br6a', W('Ganz', 15) - .3, .8, X5 + 1200, 745, 120, { s: 1, r: 0 });
+tw('br6a', W('Ganz', 15) + .5, .08, { sy: .9, sx: 1.05 }, 'sinus'); tw('br6a', W('Ganz', 15) + .58, .4, { sy: 1, sx: 1 }, 'sanft'); cue(W('Ganz', 15) + .5, 'plopp');
+// Ignoriere den Brief nicht: er meldet sich
+mund('pri6', W('Ignoriere', 15), 'auf');
+welle('welle6', W('Brief', 15), X5 + 1200, 745, .9); wackeln('br6a', W('Brief', 15), 4, 1.5); cue(W('Brief', 15), 'klick');
+// Wenn du nicht antwortest: die Zeit vergeht
+aus('chipWichtig6', W('Wenn', 16) - .2, .25);
+ein('kal6', W('Wenn', 16), { x: X5 + 1600, y: 420 }, { y: 60 }, 'pop');
+['kb1', 'kb2', 'kb3'].forEach((id, i) => { const t0 = W('antwortest', 16) + i * .3; akteur(id, {}, true); tw(id, t0, .3, { sy: 0, o: 0 }, 'in'); cue(t0, 'klick'); });
+mund('pri6', W('meldet', 16), 'zu');
+// meldet dich selbst an, Mahnungen, Gebühren: der Stapel wächst, das € wird größer
+const STAPEL = [['br6b', 'meldet', 16, 1210, 698, -2], ['br6c', 'Mahnungen', 17, 1192, 651, 2], ['br6d', 'Gebühren', 17, 1206, 604, -1]];
+STAPEL.forEach(([id, w, n, x, y, r]) => { fall(id, W(w, n) - .2, { x: X5 + x, y, r }, 220); wackeln('br6a', W(w, n) + .14, 2, 1.5); });
+aus('kal6', W('Dann', 17) - .1, .3);
+ein('meter6', W('Dann', 17) + .1, { x: X5 + 1605, y: 600 }, { y: 60 }, 'pop');
+ein('euro6', W('Dann', 17) + .2, { x: X5 + 1605, y: 400 }, { y: 60 });
+akteur('meterI6', { sy: .08 }, true);
+tw('meterI6', W('Mahnungen', 17) + .15, .5, { sy: .4 }, 'sanft');
+tw('meterI6', W('Gebühren', 17) + .15, .5, { sy: .7 }, 'sanft');
+tw('meterI6', W('teurer', 17) - .1, .7, { sy: 1 }, 'sanft'); cue(W('teurer', 17) - .1, 'scan');
+bump('euro6', W('teurer', 17) + .2, 1.2); wackeln('euro6', W('teurer', 17) + .4, 4, 3); akzent(W('teurer', 17), .045);
+['br6a', 'br6b', 'br6c', 'br6d'].forEach((id, i) => wackeln(id, W('immer', 17) + i * .05, 3, 2));
+textAus('tb6', SE(17) + .2);
+
+/* ---------- 7 · Anmelden · Lastschrift · fertig ---------- */
+pan2(SE(17) + .3, 6); const X6 = S(6);
+titelEin('tb7', 0, [W('Anmelden', 18) - .1, W('Lastschrift', 18) - .2, null, W('nie', 19) - .2, null]);
+ein('handy7', W('Am', 18) - .4, { x: X6 + 1150, y: 560 }, { y: 100 }, 'whoosh');
+ein('app7', W('Am', 18) - .4, { x: X6 + 1150, y: 560 }, { y: 100 });
+// Anmelden: Name tippt sich; oder Beitragsnummer des Mitbewohners
+tippen('name7', 'Priya', W('Anmelden', 18), .6);
+tippen('nr7', '123 456 789', W('Beitragsnummer', 18), 1.0);
+HOOKS.push(t => {
+  $('#fName7').classList.toggle('aktiv', t >= W('Anmelden', 18) - .1 && t < W('oder', 18));
+  $('#fNr7').classList.toggle('aktiv', t >= W('Beitragsnummer', 18) - .1 && t < W('angeben', 18) + .3);
+});
+// per Lastschrift: Schalter springt um, Pfeil zum Konto
+const SCH = W('Lastschrift', 18);
+HOOKS.push(t => { const p = E.back(clamp((t - SCH) / .35)); $('#schI7').style.left = (3 + 18 * p).toFixed(1) + 'px'; $('#sch7').style.background = t >= SCH + .1 ? 'var(--success)' : ''; });
+cue(SCH, 'klick');
+ein('konto7', W('dann', 18) - .1, { x: X6 + 1552, y: 420 }, { x: 80 }, 'whoosh');
+akteur('pfeil7', { x: X6 + 960, y: 540, o: 0, draw: 0 }); tw('pfeil7', SCH + .15, .1, { o: 1 }); tw('pfeil7', SCH + .15, .5, { draw: 1 }, 'inout');
+// zahlen: Finger tippt „Fertig“, erste Abbuchung
+akteur('finger7', { x: X6 + 1260, y: 820, o: 0 });
+tw('finger7', W('zahlen', 18) - .35, .4, { o: 1, x: X6 + 1150, y: 700 }, 'inout');
+tw('finger7', W('zahlen', 18) + .05, .1, { s: .8 }, 'in'); tw('finger7', W('zahlen', 18) + .15, .3, { s: 1 }, 'sanft'); cue(W('zahlen', 18) + .05, 'klick');
+tw('finger7', W('zahlen', 18) + .5, .3, { o: 0 });
+akteur('knopf7', {}, true); tw('knopf7', W('zahlen', 18) + .05, .1, { s: .92 }, 'in'); tw('knopf7', W('zahlen', 18) + .15, .35, { s: 1 }, 'back');
+akteur('toast7', { o: 0, y: 12 }, true); tw('toast7', W('zahlen', 18) + .3, .4, { o: 1, y: 0 }, 'sanft');
+// jeden Monat automatisch: Buchungen laufen ein
+[['bu7a', W('zahlen', 18) + .45], ['bu7b', W('nie', 19)], ['bu7c', W('daran', 19)]].forEach(([id, t0]) => {
+  akteur(id, { o: 0, x: 40 }, true); tw(id, t0, .45, { o: 1, x: 0 }, 'sanft');
+  const u = $(`#${id} u`); akteur(u, { s: 0 }, true); tw(u, t0 + .25, .4, { s: 1 }, 'back'); HAKEN(t0 + .25);
+});
+// Priya lehnt sich zurück
+figur('pri7', { x: X6 + 1552, y: 705, s: 0 }); tw('pri7', W('einfachsten', 18) - .1, .55, { s: 1 }, 'sanft'); cue(W('einfachsten', 18) - .1, 'pop');
+mund('pri7', W('Anmelden', 18), 'froh'); mund('pri7', W('oder', 18), 'zu'); huepfen('pri7', W('zahlen', 18) + .2, 10);
+froh('pri7', W('nie', 19)); huepfen('pri7', W('denken', 19), 12);
+tw('pri7', W('wieder', 19), .6, { r: -3 }, 'sinus');
+tw('pri7', W('denken', 19) + .6, .6, { r: 0 }, 'sinus');
+textAus('tb7', SE(19) + .2);
+
+/* ---------- 8 · Umzug? Ummelden! ---------- */
+pan2(SE(19) + .3, 7); const X7 = S(7);
+titelEin('tb8', 0, [W('umziehst', 20) - .1, W('melde', 20) - .1]);
+ein('haus8a', W('Und', 20) - .3, { x: X7 + 1060, y: 500 }, { y: 80 }, 'whoosh');
+ein('karton8', W('Und', 20) - .15, { x: X7 + 1060, y: 720 }, { y: 60 });
+ein('haus8b', W('umziehst', 20) - .1, { x: X7 + 1580, y: 500 }, { y: 80 }, 'pop');
+// umziehen: der Karton hüpft zum neuen Haus
+{ const t0 = W('umziehst', 20) + .25, d = 1.2;
+  tw('karton8', t0, d, { x: X7 + 1580 }, 'inout');
+  for (let i = 0; i < 3; i++) tw('karton8', t0 + i * d / 3, d / 3, { y: 720 }, 'sinus', { bogen: 40 });
+  cue(t0, 'whoosh'); cue(t0 + d, 'plopp'); }
+// Deutschland verlässt: Flugzeug fliegt davon
+akteur('flug8', { x: X7 + 1000, y: 320, o: 0, s: .8 });
+tw('flug8', W('Deutschland', 20), .25, { o: 1 }); tw('flug8', W('Deutschland', 20), 1.3, { x: X7 + 1650, y: 290 }, 'inout'); tw('flug8', W('Deutschland', 20) + 1.05, .25, { o: 0 });
+cue(W('Deutschland', 20), 'whoosh');
+// melde dich um oder ab
+ein('form8', W('melde', 20) - .15, { x: X7 + 1320, y: 745 }, { y: 70 }, 'pop');
+ankreuzen('c8a', W('um', 20) + .05); ankreuzen('c8b', W('ab', 20) + .05);
+// Sonst zahlst du vielleicht doppelt: an beiden Häusern eine Rechnung
+pop('re8a', W('zahlst', 21) - .15, { x: X7 + 1060, y: 330 }); pop('re8b', W('zahlst', 21) + .05, { x: X7 + 1580, y: 330 }, null);
+pop('chip2x', W('doppelt', 21) - .05, { x: X7 + 1320, y: 330 }); akzent(W('doppelt', 21), .045);
+wackeln('chip2x', W('doppelt', 21) + .45, 4, 3); wackeln('re8a', W('doppelt', 21) + .2, 3, 2); wackeln('re8b', W('doppelt', 21) + .25, 3, 2);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
