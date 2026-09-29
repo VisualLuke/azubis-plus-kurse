@@ -50,7 +50,7 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 30 | [Fachvokabeln: Was der Chef wirklich meint](30-was-der-chef-meint/) | Fachvokabeln | Erzähler, Sabine, Amir | 2:04 | fertig |
 | 31 | [Fachvokabeln: Allgemeine Wörter in der Ausbildung](31-vokabeln-ausbildung/) | Fachvokabeln | Erzählerin, Sabine, Kwame | 2:17 | fertig |
 | 32 | [Wer ist wer im Betrieb?](32-wer-ist-wer/) | Erklärvideo | Erzähler | 1:35 | fertig |
-| 33 | [Deine erste Woche in der Berufsschule](33-erste-woche-berufsschule/) | Podcast | Priya, Jonas | – | in Arbeit |
+| 33 | [Deine erste Woche in der Berufsschule](33-erste-woche-berufsschule/) | Podcast | Priya, Jonas | 1:46 | fertig |
 | 34 | [Was würdest du tun? Telefonieren auf Deutsch](34-telefonieren/) | Was würdest du tun? | Erzähler, Mai, Frau Wolf | 1:58 | fertig |
 | 35 | [Der schlechte Tag: Kwames Nachrichten](35-kwames-nachrichten/) | Der schlechte Tag | Erzähler, Kwame | – | in Arbeit |
 | 36 | [Heimat vs. Deutschland: Freundschaften](36-freundschaften/) | Heimat vs. Deutschland | Erzählerin | – | in Arbeit |
