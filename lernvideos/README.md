@@ -30,3 +30,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 10 | [Heimweh & die ersten Monate](10-heimweh/) | Podcast | Mai, Jonas | 1:48 | fertig |
 | 11 | [Nach der Ausbildung](11-nach-der-ausbildung/) | Podcast | Amir, Sabine | 1:39 | fertig |
 | 12 | [Mythos oder Wahrheit: Rund ums Geld](12-mythos-geld/) | Mythos oder Wahrheit | Erzähler | 1:42 | fertig |
+| 13 | [Mythos oder Wahrheit: Krank sein](13-mythos-krank/) | Mythos oder Wahrheit | Erzählerin | 1:54 | fertig |
