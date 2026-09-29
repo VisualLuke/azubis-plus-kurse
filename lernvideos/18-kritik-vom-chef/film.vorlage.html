@@ -194,7 +194,7 @@ const A = s => s + VERSATZ;
 const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
 const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
 const SE = n => A(satz(n).ende);
-const WG = (m, n) => A(satz(n).woerter.find(w => _norm(w.w) === _norm(m)).start);   // genau dieses Wort (A, B, C)
+const WG = (m, n) => A(satz(n).woerter.find(w => _norm(w.w) === _norm(m)).start);   // genau dieses Wort (Ah, Beh, Zeh – im Bild A, B, C)
 const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
 const WELT = document.getElementById('welt');
 
@@ -469,14 +469,14 @@ pan2(SE(6) + .35, 1);
   pop('ring1', W('Was', 7) + .05, { x: X + 960, y: 830 });
   bump('ring1', W('tun', 7), 1.12); akzent(W('tun', 7), .03);
   ids.forEach((id, k) => {
-    const t0 = WG('ABC'[k], 8 + k) - .35;
+    const t0 = WG(['Ah', 'Beh', 'Zeh'][k], 8 + k) - .35;
     akteur(id, { x: X + KX[k] - 120, y: KY + 380, o: 0, s: .7, r: k === 1 ? 0 : (k ? 3 : -3) });
     tw(id, t0, .25, { o: 1 }); tw(id, t0, .9, { x: X + KX[k], y: KY, s: 1, r: 0 }, 'inout', { bogen: 90 }); cue(t0, 'whoosh');
     bump(`${id}k`, t0 + .7, 1.15); cue(t0 + .7, 'pop');
   });
   schweben(ids, 3);
   // A: Nichts sagen – Punkte tippen, Strich durch die Blase; traurig – die Wolke regnet
-  const a = 'k1A', tA = WG('A', 8);
+  const a = 'k1A', tA = WG('Ah', 8);
   ['d1', 'd2', 'd3'].forEach((d, j) => {
     akteur(a + d, {}, true);
     for (let n = 0; n < 2; n++) tw(a + d, tA + .45 + n * .36 + j * .09, .18, { y: -10 }, 'sinus'), tw(a + d, tA + .63 + n * .36 + j * .09, .18, { y: 0 }, 'sinus');
@@ -511,7 +511,7 @@ pan2(SE(6) + .35, 1);
   // Option A: Karte kommt nach vorn, Bühne wird hell
   const tV = W('Option', 15), tK = W('Priya', 15) - .3;
   tw('ring1', tV - .1, .35, { s: 0, o: 0 }, 'in');
-  vorn(1, ids, 'A', tV, tK); bump('k1Ak', WG('A', 15), 1.2);
+  vorn(1, ids, 'A', tV, tK); bump('k1Ak', WG('Ah', 15), 1.2);
   // Priya schneidet neu, Kopf gesenkt; das Messer hackt, wieder ungleiche Stücke
   ein('priyaA', tK + .35, { x: X + 1040, y: 560 }, { y: 70 }, 'pop');
   SENKEN.push(['priyaA', tK + .6, 99]); WANGE.push(['priyaA', tK + .6, 99]);
@@ -554,7 +554,7 @@ pan2(SE(17) + 1, 2);
   const X = S(2);
   const ids = karten(2, { A: 'gelb' }, ['B', 'rot']);
   const tV = W('Option', 18), tK = W('Priya', 18) - .3;
-  vorn(2, ids, 'B', tV, tK); bump('k2Bk', WG('B', 18), 1.2);
+  vorn(2, ids, 'B', tV, tK); bump('k2Bk', WG('Beh', 18), 1.2);
   ein('priyaB', tK + .35, { x: X + 1040, y: 470 }, { y: 70 }, 'pop');
   ein('chefB', tK + .45, { x: X + 1615, y: 470 }, { y: 70 });
   const bB = brett('pB', X + 1320, 715, 380);
@@ -602,7 +602,7 @@ pan2(SE(21) + 1, 3);
   const X = S(3);
   const ids = karten(3, { A: 'gelb', B: 'rot' }, ['C', 'gruen']);
   const tV = W('Option', 22), tK = W('Priya', 22) - .3;
-  vorn(3, ids, 'C', tV, tK); bump('k3Ck', WG('C', 22), 1.2);
+  vorn(3, ids, 'C', tV, tK); bump('k3Ck', WG('Zeh', 22), 1.2);
   ein('priyaC', tK + .35, { x: X + 1025, y: 440 }, { y: 70 }, 'pop');
   ein('chefC', tK + .45, { x: X + 1615, y: 440 }, { y: 70 });
   const bC = brett('pC', X + 1320, 715, 440, 6);
@@ -664,10 +664,10 @@ pan2(SE(30) + 1, 4);
   akteur('glow4', { x: X + KX[2], y: KY, o: 0 });
   const tB = W('beste', 31), tK = W('Kritik', 32) - .1;
   ['k4A', 'k4B'].forEach(id => tw(id, tB, .5, { o: .4, s: .92 }, 'inout'));
-  tw('k4C', W('Wahl', 31) - .1, .6, { s: 1.12, y: KY - 16 }, 'sanft'); bump('k4Ck', WG('C', 31), 1.25);
+  tw('k4C', W('Wahl', 31) - .1, .6, { s: 1.12, y: KY - 16 }, 'sanft'); bump('k4Ck', WG('Zeh', 31), 1.25);
   tw('glow4', W('Wahl', 31) - .1, .6, { o: .75, s: 1.12, y: KY - 16 }, 'sanft');
   HOOKS.push(t => { const d = t - W('Wahl', 31), g = $('#glow4'); if (d > .5) g.style.opacity = (+g.style.opacity * (.8 + .2 * Math.sin(d * 5))).toFixed(3); });
-  cue(WG('C', 31), 'erfolg'); akzent(WG('C', 31), .05);
+  cue(WG('Zeh', 31), 'erfolg'); akzent(WG('Zeh', 31), .05);
   aus(['k4A', 'k4B'], tK - .1, .4); tw('glow4', tK - .1, .4, { o: 0 });
   tw('k4C', tK, .9, { x: X + 490, y: 250, s: .56 }, 'inout'); quiz(4, tK);
   titelEin('tb4', tK + .5);

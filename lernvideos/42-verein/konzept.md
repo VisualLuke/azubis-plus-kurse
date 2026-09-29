@@ -33,7 +33,7 @@ Kamera-Akzente auf Schlüsselwörtern. Abspann (Kernbotschaft): „Vereine verbi
 - Szene 5: Grillen nach dem Spiel mit Würstchen und Limo – kein Alkohol.
 - Szene 6: Suche ohne Suchmaschinen-Marke; Trefferzeilen ohne erfundene Vereinsnamen (Platzhalter-Balken).
 - Szene 7: „Flaggen an der Wand“ als neutrale bunte Wimpel ohne echte Länderflaggen.
-- Stimme: „e.V.“ als „E-Vau“ (Szene 3), „600.000“ als „sechshunderttausend“ (Szene 2) – im Untertitel zurückgeführt (siehe unten).
+- Stimme: „e.V.“ als „Eh-Fau“ (Szene 3), „600.000“ als „sechshunderttausend“ (Szene 2) – im Untertitel zurückgeführt (siehe unten).
 - Kleine Beschriftungen als Bildteile, ohne neue Fakten: „Azubi“, „Vereinsregister“, „Vorstand“, „1×“, Wochentage, „Einladung“,
   „Gründung“, Mitgliedskarte „Verein e.V. – Mitglied“.
 - Szenen 3, 5, 6: Die mit „·“ getrennten Stichworte stehen als Zeilen untereinander und erscheinen, wenn sie gesagt werden.
@@ -50,7 +50,7 @@ Erzähler: Es gibt einen Witz in Deutschland: Wenn sich drei Deutsche treffen, g
 Erzähler: In Deutschland gibt es über sechshunderttausend Vereine. Für Sport, Musik, Kultur, Garten, Tiere, Hilfe für andere, und sogar Karneval.
 
 ### Szene 3
-Erzähler: Ein Verein ist eine Gruppe von Menschen mit einem gemeinsamen Ziel. Die Mitglieder zahlen meistens einen kleinen Beitrag, für Azubis oft weniger. Viele Vereine heißen E-Vau, das bedeutet eingetragener Verein.
+Erzähler: Ein Verein ist eine Gruppe von Menschen mit einem gemeinsamen Ziel. Die Mitglieder zahlen meistens einen kleinen Beitrag, für Azubis oft weniger. Viele Vereine heißen Eh-Fau, das bedeutet eingetragener Verein.
 
 ### Szene 4
 Erzähler: Ein Verein ist demokratisch. Meistens einmal im Jahr gibt es die Mitgliederversammlung. Dort wählen alle Mitglieder den Vorstand und entscheiden gemeinsam. Jede Stimme zählt gleich, auch deine.
@@ -72,4 +72,4 @@ Erzähler: Und übrigens: Du kannst sogar selbst einen Verein gründen. Dafür b
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
 - sechshunderttausend → 600.000
-- E-Vau → e.V.
+- Eh-Fau → e.V.

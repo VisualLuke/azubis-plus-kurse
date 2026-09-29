@@ -32,6 +32,18 @@ Farben der Bewertung: grün = richtig, gelb = geht besser (Problem bleibt), rot 
   rund drei Sekunden läuft; der Ring läuft im Bild mit.
 - Szene 7: Die zwei Sprechblasen zeigen beide Beispielsätze (Briefing „Bild“); die Überschrift ist „Beste Lösung: C“.
 - Die Würfelgröße wird nur gezeigt (Maßpfeile), nicht als Zahl genannt – das Briefing nennt keine.
+- Aussprache: Die Buchstaben der Optionen stehen im Sprechertext deutsch ausgeschrieben („Ah“, „Beh“, „Zeh“), sonst liest
+  das Modell sie englisch. Im Bild und im Untertitel bleiben A, B, C (siehe „Schreibweise im Untertitel“).
+
+## Schreibweise im Untertitel
+
+- Option Ah → Option A
+- Option Beh → Option B
+- Option Zeh → Option C
+- Ah: → A:
+- Beh: → B:
+- Zeh: → C:
+- Wahl ist Zeh → Wahl ist C
 
 ## Sprechertext
 
@@ -46,7 +58,7 @@ Küchenchef: Das ist zu grob. So geht das nicht raus. Nochmal.
 
 ### Szene 2
 (Pause 0.4)
-Erzählerin: Was würdest du tun? A: Nichts sagen, einfach nochmal schneiden und den Rest des Tages traurig sein. B: Sagen: „Das ist unfair, ich habe mir Mühe gegeben!“ C: Ruhig nachfragen: „Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?“
+Erzählerin: Was würdest du tun? Ah: Nichts sagen, einfach nochmal schneiden und den Rest des Tages traurig sein. Beh: Sagen: „Das ist unfair, ich habe mir Mühe gegeben!“ Zeh: Ruhig nachfragen: „Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?“
 
 ### Szene 3
 (Pause 0.8)
@@ -58,17 +70,17 @@ Erzählerin: Eins …
 
 ### Szene 4
 (Pause 0.6)
-Erzählerin: Option A: Priya schneidet neu, aber sie weiß nicht genau, wie es richtig ist. Die Stücke sind wieder falsch. Sie fühlt sich schlecht und denkt, der Chef mag sie nicht.
+Erzählerin: Option Ah: Priya schneidet neu, aber sie weiß nicht genau, wie es richtig ist. Die Stücke sind wieder falsch. Sie fühlt sich schlecht und denkt, der Chef mag sie nicht.
 
 ### Szene 5
 (Pause 0.8)
-Erzählerin: Option B: Priya reagiert beleidigt.
+Erzählerin: Option Beh: Priya reagiert beleidigt.
 Priya: Das ist unfair, ich habe mir Mühe gegeben!
 Erzählerin: Der Chef wird ungeduldig. Jetzt geht es nicht mehr um das Gemüse, sondern um Streit.
 
 ### Szene 6
 (Pause 0.8)
-Erzählerin: Option C: Priya fragt ruhig nach.
+Erzählerin: Option Zeh: Priya fragt ruhig nach.
 Priya: Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?
 Erzählerin: Der Chef zeigt ihr kurz, wie groß die Würfel sein sollen. Beim zweiten Mal passt es. Der Chef nickt:
 Küchenchef: Gut so.
@@ -76,4 +88,4 @@ Erzählerin: In Deutschland ist Kritik oft sehr direkt. Sie meint aber die Arbei
 
 ### Szene 7
 (Pause 0.6)
-Erzählerin: Die beste Wahl ist C. Kritik heißt: Ich soll etwas lernen. Gute Sätze dafür sind: „Können Sie mir das zeigen?“ oder „Was genau soll ich anders machen?“
+Erzählerin: Die beste Wahl ist Zeh. Kritik heißt: Ich soll etwas lernen. Gute Sätze dafür sind: „Können Sie mir das zeigen?“ oder „Was genau soll ich anders machen?“

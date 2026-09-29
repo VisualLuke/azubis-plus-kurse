@@ -115,13 +115,15 @@ function textAus(blockId, t0) { tw(blockId, t0, .3, { o: 0, y: -40 }, 'in'); }
 function render(t) {
   for (const a of AKTEURE.values()) {
     const g = p => wert(a, p, t);
-    const o = g('o');
+    const o = g('o'), skx = g('s') * g('sx'), sky = g('s') * g('sy');
     a.el.style.opacity = o;
-    a.el.style.visibility = o <= 0.001 ? 'hidden' : 'visible';
+    // Auch bei Größe 0 ausblenden: Chromium zeichnet ein Element mit scale(0) beim schnellen Rendern
+    // manchmal ohne jede Transformation (volle Größe, ohne Versatz) – das flackert im Film (Kurs 39).
+    a.el.style.visibility = o <= 0.001 || Math.abs(skx) < 0.001 || Math.abs(sky) < 0.001 ? 'hidden' : 'visible';
     // schweben: sanftes Auf und Ab (Amplitude in px), Phase je Akteur fest -> deterministisch
     const sw = a.basis.schweben ? a.basis.schweben * Math.sin(t * 1.9 + (a.phase ??= [...(a.el.id || 'x')].reduce((h, c) => h + c.charCodeAt(0), 0) % 7)) : 0;
     const tr = `translate(${g('x')}px,${g('y') + sw}px)` + (a.rel ? '' : ' translate(-50%,-50%)') +
-      ` rotate(${g('r')}deg) scale(${g('s') * g('sx')},${g('s') * g('sy')})`;
+      ` rotate(${g('r')}deg) scale(${skx},${sky})`;
     a.el.style.transform = tr;
     if (a.tw.some(w => 'draw' in w.to))
       a.el.querySelectorAll('.zeichnen').forEach(p => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - g('draw'); });
