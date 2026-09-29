@@ -27,4 +27,5 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 7 | [Mietvertrag verstehen](07-mietvertrag/) | Podcast | Mai, Jonas | 1:55 | fertig |
 | 8 | [Nebenjob während der Ausbildung](08-nebenjob/) | Podcast | Kwame, Jonas | 1:39 | fertig |
 | 9 | [Zwischen- und Abschlussprüfung](09-pruefungen/) | Podcast | Priya, Sabine | 1:33 | fertig |
+| 10 | [Heimweh & die ersten Monate](10-heimweh/) | Podcast | Mai, Jonas | 1:48 | fertig |
 | 11 | [Nach der Ausbildung](11-nach-der-ausbildung/) | Podcast | Amir, Sabine | 1:39 | fertig |

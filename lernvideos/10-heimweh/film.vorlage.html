@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Heimweh und die ersten Monate</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+.buehne{width:1040px;height:710px}
+.buehne.herbst{background:linear-gradient(var(--warning-bg),var(--b100))}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,31.5px) scale(.9)}
+
+/* Gesprächspartner: Jonas links, Mai rechts */
+.portrait{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+#jonas{left:55px;top:340px}
+#mai{left:auto;right:55px;top:340px}
+
+/* Text im Bild oben auf der Bühne */
+.ueber .titel{font:700 40px/50px Inter;letter-spacing:-.01em;white-space:nowrap;text-align:center;color:var(--ink)}
+.ueber .unter{font:600 32px/42px Inter;white-space:nowrap;text-align:center;color:var(--b600);margin-top:6px}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)}
+.frage{width:110px;height:110px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 66px/110px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.daemmer{width:1040px;height:710px;border-radius:48px;background:var(--b700);opacity:0}
+.stapel>div{position:absolute;inset:0}
+.mini{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:5px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.16)}
+.mini .ebene{position:absolute;left:0;top:6%;width:100%;height:100%}
+.dampf path{fill:none;stroke:var(--b200);stroke-width:5;stroke-linecap:round}
+
+/* 1 · Handy mit Foto von zu Hause */
+.foto{position:absolute;left:50%;top:50%;width:110px;height:200px;margin:-100px 0 0 -55px;border-radius:9px;overflow:hidden;
+  background:linear-gradient(var(--warning-bg),var(--b100))}
+.foto>svg{position:absolute;left:0;bottom:0;width:110px}
+.foto .herz{position:absolute;left:34px;top:30px;width:42px}
+
+/* 2 · Kurve */
+.kurve .achse{stroke:var(--b200);stroke-width:5;stroke-linecap:round;fill:none}
+.kurve .geist{stroke:var(--b200);stroke-width:5;stroke-linecap:round;stroke-dasharray:2 16;fill:none}
+.kurve .linie{stroke:var(--b500);stroke-width:12;stroke-linecap:round;fill:none}
+.kurve circle{fill:var(--b300);transform-box:fill-box;transform-origin:center}
+.kal{width:120px;height:130px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.kal .kopf{height:36px;background:var(--b500)}
+.kal .blatt{position:absolute;left:0;right:0;top:36px;bottom:0;background:var(--surface);transform-origin:50% 0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:14px}
+.kal .blatt span{height:13px;border-radius:4px;background:var(--b100)}
+
+/* 3 · Tagesplan */
+.kachel{width:200px;height:220px;border-radius:24px;background:var(--surface);border:2px solid var(--border);box-shadow:0 1px 2px rgba(22,19,37,.06);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.kachel .bild{width:140px;height:140px;position:relative}
+.kachel .bild>div{position:absolute;left:0;top:0;width:140px}
+.kachel b{font:700 24px/28px Inter;color:var(--ink);white-space:nowrap}
+.klingel{position:absolute;border-radius:999px;border:4px solid var(--b300);opacity:0}
+.zeitbar{width:740px;height:28px;border-radius:999px;background:var(--b100);overflow:hidden;position:relative}
+.zeitbar i{position:absolute;top:0;bottom:0;left:0;width:100%;transform-origin:left center}
+.zeitbar .fam{background:linear-gradient(90deg,var(--b400),var(--b600));border-radius:999px}
+.zeitbar .hier{background:linear-gradient(90deg,var(--success),var(--success-text))}
+.stopp{width:8px;height:56px;border-radius:4px;background:var(--warning)}
+
+/* 4 · Collage */
+.fk{width:272px;height:296px;padding:16px 16px 0;border-radius:18px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);display:flex;flex-direction:column;align-items:center;gap:12px}
+.fk .bildfeld{width:240px;height:194px;border-radius:12px;background:var(--b50);position:relative;overflow:hidden}
+.fk .bildfeld>div{position:absolute}
+.fk b{font:700 24px/28px Inter;color:var(--ink);white-space:nowrap}
+.fk.gross{width:380px;height:372px}
+.fk.gross .bildfeld{width:348px;height:300px}
+.feld{inset:0;background:linear-gradient(var(--success-bg),var(--success-bg))}
+.feld svg{width:240px;height:194px}
+.wortkarte{padding:6px 12px;border-radius:9px;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.14);font:700 17px/20px Inter;color:var(--b600);white-space:nowrap}
+.woche{display:flex;gap:10px}
+.woche span{width:66px;height:54px;border-radius:14px;background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font:700 20px/1 Inter;color:var(--n500);position:relative}
+.woche span.abend{background:linear-gradient(160deg,var(--b600),var(--b700));border-color:transparent;color:var(--surface)}
+.blase{padding:12px 22px;border-radius:26px 26px 26px 8px;background:var(--b500);color:var(--surface);font:800 34px/40px Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+/* 5 · Reden */
+.sblase{width:170px;height:104px;border-radius:34px 34px 34px 10px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;align-items:center;justify-content:center;gap:14px}
+.sblase.rechts{border-radius:34px 34px 10px 34px;background:var(--b500)}
+.sblase i{width:16px;height:16px;border-radius:999px;background:var(--b300)}
+.sblase.rechts i{background:var(--b100)}
+.kachel.symptom{width:240px;height:230px}
+.kachel.symptom b{font-size:22px}
+.kachel.nacht{background:linear-gradient(160deg,var(--b600),var(--b700));border-color:transparent}
+.kachel.nacht b{color:var(--surface)}
+.kachel.symptom .bild{width:150px;height:150px}
+.kachel.symptom .bild>div{width:150px}
+.akku{position:absolute;left:18px;top:44px;width:104px;height:62px;border-radius:10px;border:6px solid var(--b700);padding:4px}
+.akku::after{content:"";position:absolute;right:-16px;top:12px;width:8px;height:16px;border-radius:0 4px 4px 0;background:var(--b700)}
+.akku i{display:block;height:100%;border-radius:4px;background:var(--success);transform-origin:left center}
+.licht{width:109px;height:167px;border-radius:5px;background:linear-gradient(var(--warning-bg),var(--surface))}
+
+/* 6 · Telefon */
+.anruf{position:absolute;left:50%;top:50%;width:140px;height:252px;margin:-126px 0 0 -70px;border-radius:12px;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;padding-top:30px;gap:6px}
+.anruf small{font:800 14px/18px Inter;letter-spacing:.02em;color:var(--b600);white-space:nowrap;min-height:16px}
+.anruf .nr{font:800 27px/32px Inter;color:var(--ink);white-space:pre;min-height:30px;letter-spacing:.01em}
+.anruf .gruen{margin-top:auto;margin-bottom:22px;width:52px;height:52px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.anruf .gruen svg{width:28px}
+.ring5{border-radius:999px;border:5px solid var(--success);opacity:0}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Parkbank im Herbst -->
+  <div class="a buehne herbst" id="bue0"></div>
+  <div class="a stapel" id="sonne0" style="width:160px;height:160px"><div>{{sonne-strahlen}}</div><div>{{sonne-kern}}</div></div>
+  <div class="a" id="wolke0" style="width:200px" data-frei>{{wolke}}</div>
+  <div class="a" id="baum0" style="width:340px">{{baum}}</div>
+  <div class="a" id="bank0" style="width:440px" data-gruppe="bank0">{{bank}}</div>
+  <div class="a" id="becherJ0" style="width:130px" data-gruppe="bank0">{{becher}}</div>
+  <div class="a" id="becherM0" style="width:130px" data-gruppe="bank0">{{becher~m0}}</div>
+  <div class="a" id="koffer0" style="width:200px">{{koffer}}</div>
+  <div class="a" id="handy0" style="width:300px"><div>{{handy}}</div><div class="foto" id="foto0">
+    <svg viewBox="0 0 94 120"><rect x="0" y="96" width="94" height="24" fill="var(--success-bg)"/><path d="M20 62L47 38l27 24v38H20Z" fill="var(--surface)"/><path d="M14 64L47 34l33 30" stroke="var(--b600)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="40" y="76" width="14" height="24" rx="3" fill="var(--b500)"/><rect x="26" y="68" width="10" height="10" rx="2" fill="var(--b200)"/><rect x="58" y="68" width="10" height="10" rx="2" fill="var(--b200)"/></svg>
+    <div class="herz" id="herz0"><svg viewBox="0 0 40 36"><path d="M20 34C8 25 2 19 2 11 2 6 6 2 11 2c4 0 7 2 9 5 2-3 5-5 9-5 5 0 9 4 9 9 0 8-6 14-18 23Z" fill="var(--error)"/></svg></div></div></div>
+  <div class="a" id="blattLand0" style="width:62px" data-gruppe="bank0">{{blatt}}</div>
+  <div class="a daemmer" id="daemmer0" data-frei></div>
+
+  <!-- 2 · Kurve: erst hoch, dann ein Tal, dann wieder hoch -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a ueber" id="u1"><div id="tb1"><div class="titel">Ein Tief ist normal</div></div></div>
+  <svg class="a kurve" id="kurve1" viewBox="0 0 860 420" style="width:860px" data-frei>
+    <path class="achse" d="M30 400H830"/>
+    <path class="geist" id="geist1" d="M60 250C110 250 130 70 200 70C280 70 330 330 450 330C560 330 620 150 800 110"/>
+    <g id="punkte1"></g>
+    <path class="linie" id="pfad1" d="M60 250C110 250 130 70 200 70C280 70 330 330 450 330C560 330 620 150 800 110"/>
+  </svg>
+  <div class="a chip brand klein" id="chipAuf1">aufregend</div>
+  <div class="a kal" id="kal1"><div class="kopf"></div>
+    <div class="blatt" id="kb3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="a" id="wolke1" style="width:160px">{{wolke~1}}</div>
+  <div class="a chip gelb" id="chipTief1">Tief</div>
+  <div class="a plakette gruen" id="ok1"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a stapel" id="sonne1" style="width:120px;height:120px"><div>{{sonne-strahlen~1}}</div><div>{{sonne-kern~1}}</div></div>
+  <div class="a mini" id="pin1" style="width:84px;height:84px;border-width:4px" data-frei><div class="ebene">{{figur-mai~pin}}</div></div>
+
+  <!-- 3 · Routine · Kontakt nach Hause · Leben hier -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a ueber" id="u2"><div id="tb2"><div class="titel">Routine · Kontakt nach Hause · Leben hier</div></div></div>
+  <div class="a welle" id="welle2" style="width:180px;height:180px" data-frei></div>
+  <div class="a frage" id="frage2" style="width:140px;height:140px;font-size:84px;line-height:140px">?</div>
+  <div class="a kachel" id="k2a"><div class="bild"><div id="bett2">{{bett}}</div><div id="decke2" style="transform-origin:33% 55%">{{decke}}</div><div id="mond2" style="width:54px;left:88px;top:-10px">{{mond-gelb}}</div></div><b>Schlafen</b></div>
+  <div class="a kachel" id="k2b"><div class="bild"><div id="teller2">{{teller}}</div><div id="besteck2">{{besteck}}</div>
+    <svg class="dampf" id="dampf2" viewBox="0 0 60 70" style="position:absolute;left:44px;top:8px;width:54px"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg></div><b>Essen</b></div>
+  <div class="a kachel" id="k2c"><div class="bild"><div id="schuh2">{{laufschuh}}</div></div><b>Bewegen</b></div>
+  <div class="a kachel" id="k2d"><div class="bild"><div class="klingel" id="kl2a" style="left:35px;top:35px;width:70px;height:70px"></div><div class="klingel" id="kl2b" style="left:35px;top:35px;width:70px;height:70px"></div><div id="handy2">{{handy~2}}</div></div><b>Telefonieren</b></div>
+  <div class="a zeitbar" id="bar2" data-gruppe="bar2"><i class="hier" id="hier2"></i><i class="fam" id="fam2"></i></div>
+  <div class="a stopp" id="stopp2" data-gruppe="bar2"></div>
+  <div class="a" id="pinH2" style="width:84px" data-gruppe="bar2">{{pin}}</div>
+  <div class="a chip klein" id="chipFam2"><svg viewBox="0 0 30 30"><rect x="8" y="3" width="14" height="24" rx="3" fill="var(--b500)"/><rect x="10.5" y="6.5" width="9" height="15" rx="1.5" fill="var(--b100)"/></svg>Familie</div>
+  <div class="a chip gruen klein" id="chipHier2">Leben hier</div>
+
+  <!-- 4 · Menschen hier -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a ueber" id="u3"><div id="tb3"><div class="titel">Verein · Sprachcafé · Gemeinschaft · Kollegen</div></div></div>
+  <div class="a fk" id="fk3a"><div class="bildfeld"><div class="feld" id="feld3"><svg viewBox="0 0 218 176" preserveAspectRatio="none"><rect x="14" y="14" width="190" height="148" rx="6" fill="none" stroke="var(--surface)" stroke-width="4"/><path d="M109 14v148" stroke="var(--surface)" stroke-width="4"/><circle cx="109" cy="88" r="26" fill="none" stroke="var(--surface)" stroke-width="4"/><rect x="14" y="62" width="22" height="52" fill="none" stroke="var(--surface)" stroke-width="4"/><rect x="182" y="62" width="22" height="52" fill="none" stroke="var(--surface)" stroke-width="4"/></svg></div>
+    <div id="ball3" style="left:80px;top:57px;width:80px">{{ball}}</div></div><b>Sportverein</b></div>
+  <div class="a fk" id="fk3b"><div class="bildfeld" style="background:var(--warning-bg)"><div id="tasse3a" style="left:16px;top:48px;width:108px">{{tasse}}</div><div id="tasse3b" style="left:116px;top:48px;width:108px">{{tasse~3}}</div>
+    <div class="wortkarte" id="wk3a" style="left:26px;top:22px">Hallo</div><div class="wortkarte" id="wk3b" style="left:136px;top:22px">Danke</div></div><b>Sprachcafé</b></div>
+  <div class="a fk" id="fk3c"><div class="bildfeld" style="background:var(--b100)"><div id="l3a" style="left:92px;top:0;width:80px;transform-origin:50% 100%">{{loeffel}}</div>
+    <div id="topf3" style="left:40px;top:30px;width:160px">{{topf}}</div>
+    <svg class="dampf" viewBox="0 0 60 70" style="position:absolute;left:66px;top:0;width:50px"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg></div><b>Gemeinschaft</b></div>
+  <div class="a chip klein" id="chipAzubis3">andere Azubis</div>
+  <div class="a woche" id="woche3"><span>Mo</span><span>Di</span><span id="mi3">Mi<div id="mondMi3" style="position:absolute;right:-16px;top:-24px;width:44px">{{mond-gelb~3}}</div></span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
+  <div class="a fk gross" id="fk3d"><div class="bildfeld" style="background:var(--b50)"><div id="netz3" style="left:0;right:0;top:196px;height:6px;background:var(--b200)"></div>
+    <div id="schl3" style="left:20px;top:70px;width:190px;transform-origin:50% 90%">{{schlaeger}}</div><div id="feder3" style="left:0;top:0;width:96px">{{federball}}</div></div><b>Badminton</b></div>
+  <div class="a blase" id="blase3">?</div>
+
+  <!-- 5 · Darüber reden -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a ueber" id="u4"><div id="tb4"><div class="titel">Darüber reden ist stark</div></div></div>
+  <div class="a sblase" id="blaseL4"><i></i><i></i><i></i></div>
+  <div class="a sblase rechts" id="blaseR4"><i></i><i></i><i></i></div>
+  <svg class="a" id="bogen4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M1080 380C1180 300 1380 300 1480 380" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14" fill="none"/></svg>
+  <div class="a chip" id="chipFr4"><svg viewBox="0 0 30 30"><circle cx="11" cy="10" r="5" fill="var(--b500)"/><circle cx="20" cy="11" r="4" fill="var(--b300)"/><path d="M2 25a9 9 0 0 1 18 0Z" fill="var(--b500)"/><path d="M16 25a7 7 0 0 1 12 0Z" fill="var(--b300)"/></svg>Freunde</div>
+  <div class="a chip" id="chipAus4"><svg viewBox="0 0 30 30"><rect x="4" y="11" width="22" height="15" rx="3" fill="var(--b500)"/><path d="M11 11V8a4 4 0 0 1 8 0v3" stroke="var(--b500)" stroke-width="3" fill="none"/></svg>Ausbilderin</div>
+  <div class="a chip brand" id="chipUns4">Azubis Plus</div>
+  <div class="a kachel symptom" id="s4a"><div class="bild"><div id="kal4">{{kalender}}</div><div id="wolke4" style="left:66px;top:-10px;width:92px">{{wolke~4}}</div></div><b>traurig</b></div>
+  <div class="a kachel symptom nacht" id="s4b"><div class="bild"><div id="mond4" style="left:4px;top:8px;width:112px;transform-origin:50% 50%">{{mond~4}}</div>
+    <div id="uhr4" style="left:74px;top:70px;width:74px">{{uhr}}</div><div id="zeiger4" style="left:74px;top:70px;width:74px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div></div><b>schlecht schlafen</b></div>
+  <div class="a kachel symptom" id="s4c"><div class="bild"><div class="akku"><i id="akku4"></i></div></div><b>keine Kraft</b></div>
+  <div class="a" id="tuer4" style="width:230px" data-gruppe="praxis4">{{haustuer}}</div>
+  <div class="a licht" id="licht4" data-gruppe="praxis4"></div>
+  <div class="a" id="blatt4" style="width:230px;transform-origin:27.5% 50%" data-gruppe="praxis4">{{haustuer-blatt}}</div>
+  <div class="a" id="kreuz4" style="width:84px" data-gruppe="praxis4">{{kreuz}}</div>
+  <div class="a chip brand klein" id="chipArzt4">Hausarzt</div>
+  <div class="a welle" id="welle4" style="width:240px;height:240px" data-frei></div>
+
+  <!-- 6 · Telefonseelsorge -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a daemmer" id="daemmer5" data-frei></div>
+  <div class="a ueber" id="u5"><div id="tb5"><div class="titel">Telefonseelsorge: 0800 111 0 111</div><div class="unter">kostenlos, 24/7</div></div></div>
+  <div class="a ring5" id="ring5a" style="width:220px;height:220px" data-frei></div>
+  <div class="a ring5" id="ring5b" style="width:220px;height:220px" data-frei></div>
+  <div class="a" id="mond5" style="width:130px" data-frei>{{mond-gelb~5}}</div>
+  <div class="a stapel" id="sonne5" style="width:140px;height:140px" data-frei><div>{{sonne-strahlen~5}}</div><div>{{sonne-kern~5}}</div></div>
+  <div class="a" id="handy5" style="width:380px"><div>{{handy~5}}</div><div class="anruf"><small id="name5"></small><div class="nr" id="nr5a"></div><div class="nr" id="nr5b"></div>
+    <div class="gruen" id="knopf5"><svg viewBox="0 0 30 30"><path d="M8 4c2 0 3 4 4 6 0 2-3 2-3 4 1 3 4 6 7 7 2 0 2-3 4-3 2 1 6 2 6 4 0 3-3 5-6 5C11 27 3 19 3 9c0-3 2-5 5-5Z" fill="var(--surface)"/></svg></div></div></div>
+  <div class="a chip gruen" id="chipKost5">kostenlos</div>
+  <div class="a chip brand klein" id="chipUhr5">rund um die Uhr</div>
+
+  <!-- 7 · Parkbank, die Sonne kommt durch -->
+  <div class="a buehne herbst" id="bue6"></div>
+  <div class="a stapel" id="sonne6" style="width:160px;height:160px"><div>{{sonne-strahlen~6}}</div><div>{{sonne-kern~6}}</div></div>
+  <div class="a welle" id="welle6" style="width:170px;height:170px;border-color:var(--warning)" data-frei></div>
+  <div class="a" id="wolke6" style="width:200px" data-frei>{{wolke~6}}</div>
+  <div class="a" id="baum6" style="width:340px">{{baum~6}}</div>
+  <div class="a" id="bank6" style="width:440px" data-gruppe="bank6">{{bank~6}}</div>
+  <div class="a" id="becherJ6" style="width:130px" data-gruppe="bank6">{{becher~j6}}</div>
+  <div class="a" id="becherM6" style="width:130px" data-gruppe="bank6">{{becher~m6}}</div>
+  <div class="a" id="herz6" style="width:70px"><svg viewBox="0 0 40 36"><path d="M20 34C8 25 2 19 2 11 2 6 6 2 11 2c4 0 7 2 9 5 2-3 5-5 9-5 5 0 9 4 9 9 0 8-6 14-18 23Z" fill="var(--error)"/></svg></div>
+  <div class="a ueber" id="u6"><div id="tb6"><div class="titel">Du bist nicht allein.</div></div></div>
+  <div class="a daemmer" id="daemmer6" data-frei></div>
+</div></div>
+
+<div class="portrait" id="jonas"><div class="figur">
+  <div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+<div class="portrait" id="mai"><div class="figur">
+  <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen~2}}</div>
+  <div class="ebene zu">{{figur-mund-zu~2}}</div><div class="ebene auf">{{figur-mund-auf~2}}</div><div class="ebene froh">{{figur-mund-froh~2}}</div></div></div>
+
+<div style="display:none"><div id="blattGelb">{{blatt}}</div><div id="blattRot">{{blatt-rot}}</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Heimweh ist normal.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Du musst da nicht allein durch.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.8;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const N_SAETZE = SPRACHDATEN.saetze.length;
+const ENDE_SPRACHE = SE(N_SAETZE);
+const MX = 1280, MY = 505, NB = 7;
+for (let i = 0; i < NB; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch (ruhig: etwas längere Wege)
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .6, { o: 1 }, 'out'); tw(id, t, .7, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .35, .14, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .49, .45, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .45) => tw(ids, t, d, { o: 0, s: .88 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .12, .12, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .12, .3, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 16) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .09, { sy: .95, sx: 1.03 }, 'sinus');
+  tw(id, t + .09, .4, { y }, 'sinus', { bogen: h }); tw(id, t + .09, .16, { sy: 1.03, sx: .98 }, 'sinus');
+  tw(id, t + .49, .09, { sy: .96, sx: 1.03 }, 'sinus'); tw(id, t + .58, .35, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.08) => { const s0 = wertBei(id, 's', t); tw(id, t, .14, { s: s0 * s }, 'sinus'); tw(id, t + .14, .45, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = 1.1) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const titel = (outer, inner, x, t0, zeiten, y = 236) => { akteur(outer, { x, y }); titelEin(inner, t0, zeiten); };
+const inner = (sel, basis = {}) => akteur(el(sel), basis, true);
+
+/* ---------- Kamera: ruhiger Schwenk mit Unschärfe, Zoom-Atmer, sanfte Akzente ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .025) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.08);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .05 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.4; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 12));
+  $('#kamera').style.transform = `translate(-288px,31.5px) scale(${.9 * z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < NB; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+HOOKS.push(t => document.querySelectorAll('.dampf path').forEach((p, i) => {
+  p.style.strokeDasharray = '26 18'; p.style.strokeDashoffset = (t * 30 + i * 13) % 44; p.style.opacity = .5 + .3 * Math.sin(t * 1.6 + i);
+}));
+
+/* ---------- Gesprächspartner: Sprecher exakt aus sprache.json ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const ABSCHNITTE = [];          // Hervorhebung: Sätze desselben Sprechers zusammengefasst
+for (const s of SAETZE) { const l = ABSCHNITTE.at(-1); if (l && l.w === s.w && s.a - l.b < .8) l.b = s.b; else ABSCHNITTE.push({ ...s }); }
+const FROH = { Jonas: [], Mai: [] }, NICKEN = { Jonas: [], Mai: [] };
+const PERSONEN = [['jonas', 'Jonas', 3, .13], ['mai', 'Mai', -3, .61]];
+akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('mai', { o: 0, y: 60, s: .9 }, true);
+tw('jonas', .05, .8, { o: 1, y: 0 }, 'sanft'); tw('mai', 0, .8, { o: 1, y: 0 }, 'sanft'); cue(.05, 'pop');
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const p = document.getElementById(id);
+    const spricht = SAETZE.some(s => s.w === w && t >= s.a && t <= s.b);                 // Mund nur im eigenen Satz
+    const k = ABSCHNITTE.filter(z => z.w === w).reduce((m, { a, b }) => Math.max(m, clamp(Math.min((t - a + .2) / .2, (b + .25 - t) / .25))), 0);
+    if (t >= .85) { p.style.transform = `scale(${.9 + .1 * k}) translateY(${-6 * k}px)`; p.style.filter = `saturate(${.7 + .3 * k})`; }
+    p.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    const anderer = SAETZE.some(s => s.w !== w && t >= s.a - .1 && t <= s.b + .3);
+    // Zuhörer nickt: leise im Takt, deutlich auf Schlüsselwörtern
+    let nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : (anderer ? 1.2 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0);
+    let dy = spricht ? 0 : 2 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8;
+    for (const n of NICKEN[w]) { const d = (t - n) / .9; if (d > 0 && d < 1) { const v = Math.sin(Math.PI * 2 * d) * (1 - d); nick += 5 * Math.max(0, v); dy += 7 * Math.max(0, v); } }
+    p.querySelector('.figur').style.transform = `rotate(${neig + nick}deg) translateY(${dy}px)`;
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    const froh = !spricht && FROH[w].some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+  }
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const z = (t * .27 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  });
+});
+
+/* ---------- Herbstlaub: Blätter fallen langsam und pendeln (Szene 1 und 7) ---------- */
+function laub(buehne, n, t0, t1) {
+  const X = S(buehne), welt = $('#welt');
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div');
+    d.className = 'a'; d.dataset.frei = ''; d.id = `laub${buehne}_${i}`;
+    d.style.width = (48 + (i % 3) * 12) + 'px';
+    d.innerHTML = (i % 3 === 1 ? $('#blattRot').innerHTML : $('#blattGelb').innerHTML);
+    welt.appendChild(d);
+    const x0 = X + 860 + ((i * 263) % 860), speed = .085 + (i % 4) * .012, ph = (i * .61) % 1, amp = 26 + (i % 3) * 14;
+    HOOKS.push(t => {
+      const an = t > t0 - 1 && t < t1 + 1;
+      const u = ((t * speed + ph) % 1 + 1) % 1;
+      const o = !an || u < .05 || u > .93 ? 0 : clamp(Math.min((u - .05) / .12, (.93 - u) / .12)) * clamp(Math.min(t - t0 + 1, t1 + 1 - t));
+      const y = 200 + u * 600, x = x0 + amp * Math.sin(u * 9 + i), r = 28 * Math.sin(u * 9 + i + .8);
+      d.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${r}deg)`;
+      d.style.opacity = o; d.style.visibility = o <= .001 ? 'hidden' : 'visible';
+    });
+  }
+}
+const sonnenStrahlen = (id, t0, tempo = 8) => HOOKS.push(t => {
+  let w = (t - t0) * tempo;
+  for (const [a, b, extra] of SONNE_SCHUB.filter(x => x[3] === id)) w += extra * E.inout(clamp((t - a) / (b - a)));
+  $(`#${id} > div:first-child`).style.transform = `rotate(${w}deg)`;
+});
+const SONNE_SCHUB = [];
+
+/* ---------- 1 · Parkbank: Mai ist still ---------- */
+const X0 = S(0);
+laub(0, 7, 0, A(15.2));
+pop('sonne0', A(-.4), { x: X0 + 1650, y: 300 }, null, 'sanft'); sonnenStrahlen('sonne0', 0, 6);
+ein('baum0', A(-.7), { x: X0 + 950, y: 540 }, { y: 50 });
+HOOKS.push(t => { $('#baum0').style.transform += ` rotate(${.8 * Math.sin(t * .9)}deg)`; });
+ein('bank0', A(-.5), { x: X0 + 1340, y: 620 }, { y: 60 }, 'whoosh');
+ein('becherJ0', A(.1), { x: X0 + 1262, y: 596 }, { y: -50 }, 'plopp');
+ein('becherM0', A(.35), { x: X0 + 1440, y: 596 }, { y: -50 }, 'plopp');
+akteur('daemmer0', { x: X0 + MX, y: MY, o: 0 });
+// still: ein Blatt segelt langsam auf die Bank
+{
+  const t0 = W('wirkst', 1) - .3, t1 = W('still', 1) + .5, zx = X0 + 1352, zy = 626;
+  const b = $('#blattLand0');
+  HOOKS.push(t => {
+    const p = clamp((t - t0) / (t1 - t0)), q = E.inout(p);
+    const x = zx - 60 * (1 - q) + 46 * Math.sin(p * 7.5) * (1 - p), y = 250 + (zy - 250) * q;
+    const r = (1 - p) * 30 * Math.sin(p * 7.5 + .6) - 3 * p;
+    b.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${r}deg)`;
+    const o = t < t0 ? 0 : clamp((t - t0) / .4);
+    b.style.opacity = o; b.style.visibility = o <= .001 ? 'hidden' : 'visible';
+  });
+  cue(t1, 'klick');
+}
+// Alles okay? – Jonas schiebt seinen Becher ein Stück zu Mai
+tw('becherJ0', W('Alles', 2) - .1, .7, { x: X0 + 1300 }, 'inout'); huepfen('becherJ0', W('Alles', 2) - .1, 10); cue(W('Alles', 2), 'plopp');
+// Familie: Mai nimmt ihr Handy – Foto von zu Hause
+akteur('handy0', { x: X0 + 1440, y: 590, s: .3, o: 0 });
+tw('handy0', W('vermisse', 3) - .2, .4, { o: 1 }); tw('handy0', W('vermisse', 3) - .2, 1.0, { x: X0 + 1340, y: 385, s: 1 }, 'sanft'); cue(W('vermisse', 3) - .2, 'whoosh');
+inner('foto0', { o: 0, s: .9 }); tw('#foto0', W('Familie', 3) - .1, .7, { o: 1, s: 1 }, 'sanft');
+inner('herz0', { s: 0 }); tw('#herz0', W('Familie', 3) + .2, .6, { s: 1 }, 'back'); cue(W('Familie', 3) + .2, 'ding'); akzent(W('Familie', 3), .02);
+HOOKS.push(t => { const d = t - W('Familie', 3) - .8; if (d > 0) $('#herz0').style.transform += ` scale(${1 + .08 * Math.max(0, Math.sin(d * 4.2)) ** 3})`; });
+schweben('handy0', 3);
+// Am Anfang war alles neu und spannend: der Koffer kommt an
+ein('koffer0', W('Anfang', 4) - .2, { x: X0 + 1655, y: 690 }, { x: 90 }, 'whoosh');
+huepfen('koffer0', W('neu', 4) - .05, 16); cue(W('neu', 4), 'plopp');
+huepfen('koffer0', W('spannend', 4) + .05, 22); akzent(W('spannend', 4), .02);
+SONNE_SCHUB.push([W('spannend', 4), W('spannend', 4) + 1.4, 90, 'sonne0']);
+bump('sonne0', W('spannend', 4), 1.1);
+// Jetzt fühle ich mich oft allein: Handy und Koffer gehen, eine Wolke zieht vor die Sonne
+tw('handy0', W('Jetzt', 5) - .1, .9, { x: X0 + 1440, y: 590, s: .3, o: 0 }, 'inout');
+aus('koffer0', W('Jetzt', 5), .6);
+akteur('wolke0', { x: X0 + 1800, y: 290, o: 0 });
+tw('wolke0', W('fühle', 5) - .2, .8, { o: 1 }); tw('wolke0', W('fühle', 5) - .2, 2.4, { x: X0 + 1630, y: 318 }, 'inout'); cue(W('fühle', 5), 'whoosh');
+tw('daemmer0', W('fühle', 5), 2.2, { o: .12 }, 'inout');
+NICKEN.Jonas.push(W('allein', 5) + .3);
+
+/* ---------- 2 · Ein Tief ist normal ---------- */
+pan2(SE(5) + .65, 1); const X1 = S(1);
+titel('u1', 'tb1', X1 + 1280, 0, [W('Tief', 8) - .12, W('Tief', 8), W('normal', 9) - .12, W('normal', 9)]);
+const KX = X1 + 1280 - 430, KY = 560 - 210;
+akteur('kurve1', { x: X1 + 1280, y: 560, o: 0 }); tw('kurve1', W('Das', 6) - .5, .6, { o: 1 });
+{
+  const pfad = $('#pfad1'), L = pfad.getTotalLength();
+  // Länge am Gipfel und im Tal suchen
+  const naechst = (px, py) => { let best = 0, bd = 1e9; for (let l = 0; l <= L; l += 2) { const q = pfad.getPointAtLength(l), d = (q.x - px) ** 2 + (q.y - py) ** 2; if (d < bd) { bd = d; best = l; } } return best / L; };
+  const P_GIPFEL = naechst(200, 70), P_TAL = naechst(450, 330);
+  // viele: Punkte zeigen, dass der Weg vielen so geht
+  const punkte = $('#punkte1');
+  for (let i = 0; i < 18; i++) {
+    const q = pfad.getPointAtLength(L * (i + .5) / 18);
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', q.x); c.setAttribute('cy', q.y); c.setAttribute('r', 9); punkte.appendChild(c);
+    akteur(c, { s: 0, o: .9 }, true); tw(c, W('viele', 6) - .2 + i * .045, .45, { s: 1 }, 'back');
+    tw(c, W('Am', 7) + .2, .8, { o: .35 }, 'inout');
+  }
+  cue(W('viele', 6) - .2, 'scan');
+  const K = [[W('Am', 7) - .1, WE('aufregend', 7) + .15, 0, P_GIPFEL], [W('Nach', 8), W('Tief', 8) + .35, P_GIPFEL, P_TAL], [W('geht', 9) - .2, WE('vorbei', 9) + .4, P_TAL, 1]];
+  const fortschritt = t => { let p = 0; for (const [a, b, v, z] of K) { if (t >= a) p = v + (z - v) * E.inout(clamp((t - a) / (b - a))); } return p; };
+  const pin = $('#pin1'), t0 = W('Am', 7) - .5;
+  HOOKS.push(t => {
+    const p = fortschritt(t);
+    pfad.style.strokeDasharray = `${L} ${L}`; pfad.style.strokeDashoffset = L * (1 - p);
+    pfad.style.opacity = t < K[0][0] ? 0 : 1;
+    const q = pfad.getPointAtLength(L * p), s = E.back(clamp((t - t0) / .55));
+    pin.style.transform = `translate(${KX + q.x}px,${KY + q.y}px) translate(-50%,-50%) scale(${s})`;
+    pin.style.opacity = t < t0 ? 0 : 1; pin.style.visibility = t < t0 ? 'hidden' : 'visible';
+  });
+  cue(t0, 'pop');
+}
+pop('chipAuf1', W('aufregend', 7) - .1, { x: X1 + 1050, y: 330 });
+akzent(W('aufregend', 7), .02);
+// ein paar Wochen oder Monate: Kalenderblätter fallen
+ein('kal1', W('Wochen', 8) - .35, { x: X1 + 1470, y: 420 }, { y: 50 }, 'whoosh');
+[['kb1', W('Wochen', 8) + .15], ['kb2', W('Monaten', 8) + .1]].forEach(([id, t0]) => { inner(id); tw('#' + id, t0, .35, { sy: 0, o: 0 }, 'in'); cue(t0, 'klick'); });
+// ein Tief: Wolke über dem Tal
+ein('wolke1', W('Tief', 8) - .2, { x: X1 + 1300, y: 555 }, { y: -40 });
+pop('chipTief1', W('Tief', 8) + .1, { x: X1 + 1135, y: 705 }, 'plopp', 'sanft');
+schweben('wolke1', 4);
+// ganz normal: grüner Haken
+pop('ok1', W('normal', 9), { x: X1 + 1040, y: 705 }, 'ding'); akzent(W('normal', 9), .03);
+NICKEN.Mai.push(W('normal', 9) + .2);
+aus('kal1', W('normal', 9) - .2, .5);
+// geht wieder vorbei: Wolke zieht ab, Sonne am Ende der Kurve
+tw('wolke1', W('meisten', 9), 1.2, { x: X1 + 1180, o: 0 }, 'inout');
+pop('sonne1', W('vorbei', 9) - .1, { x: X1 + 1650, y: 350 }, 'erfolg', 'sanft'); sonnenStrahlen('sonne1', 0, 10);
+FROH.Mai.push([W('vorbei', 9) + .4, SA(10) - .3]);
+
+/* ---------- 3 · Was hilft? Routine, Kontakt, Leben hier ---------- */
+pan2(SE(9) + .65, 2); const X2 = S(2);
+titel('u2', 'tb2', X2 + 1280, 0, [W('Alltag', 11), W('telefonier', 13) - .15, W('telefonier', 13), null, null, W('Leben', 14) - .15, W('Leben', 14), W('hier', 14)]);
+akteur('frage2', { x: X2 + 1700, y: 560, s: .4, o: 0 });
+tw('frage2', W('Was', 10) - .2, .3, { o: 1 }); tw('frage2', W('Was', 10) - .2, .9, { x: X2 + 1280, y: 470, s: 1 }, 'inout', { bogen: 80 }); cue(W('Was', 10) - .2, 'whoosh');
+wackeln('frage2', W('denn', 10), 3, 3);
+aus('frage2', W('fester', 11) - .2, .4);
+welle('welle2', W('hilft', 10) + .2, X2 + 1280, 470, 1.2);
+const KA = [['k2a', 925, 'Schlafen'], ['k2b', 1145, 'Essen'], ['k2c', 1365, 'Bewegen'], ['k2d', 1585, 'telefonier']];
+KA.forEach(([id, x], i) => ein(id, W('Alltag', 11) - .2 + i * .12, { x: X2 + x, y: 440 }, { y: 60 }, i ? null : 'whoosh'));
+// Bilder in den Kacheln erst auf das Wort
+['#bett2', '#teller2', '#schuh2', '#handy2'].forEach((sel, i) => { inner(sel, { s: 0 }); tw(sel, W(KA[i][2], i < 3 ? 12 : 13) - .15, .55, { s: 1 }, 'back'); cue(W(KA[i][2], i < 3 ? 12 : 13) - .15, 'pop'); });
+// Schlafen: Decke zieht sich hoch, Mond geht auf
+inner('#decke2', { sx: .1, o: 0 }); tw('#decke2', W('Schlafen', 12) + .2, .1, { o: 1 }); tw('#decke2', W('Schlafen', 12) + .2, .6, { sx: 1 }, 'sanft');
+inner('#mond2', { o: 0, y: 20 }); tw('#mond2', W('Schlafen', 12) + .3, .7, { o: 1, y: 0 }, 'weich');
+// Essen: Besteck schiebt sich dazu, Dampf
+inner('#besteck2', { o: 0, sx: 1.25 }); tw('#besteck2', W('Essen', 12) + .1, .5, { o: 1, sx: 1 }, 'sanft');
+inner('#dampf2', { o: 0 }); tw('#dampf2', W('Essen', 12) + .3, .6, { o: 1 });
+// Bewegen: Laufschuh macht zwei Schritte
+[0, .45].forEach(d => { const t0 = W('Bewegen', 12) + .35 + d; tw('#schuh2', t0, .22, { y: -16, r: -3 }, 'out'); tw('#schuh2', t0 + .22, .2, { y: 0, r: 0 }, 'in'); cue(t0 + .42, 'klick'); });
+// Telefonieren: Handy klingelt
+HOOKS.push(t => {
+  const d0 = t - W('telefonier', 13) - .3;
+  ['kl2a', 'kl2b'].forEach((id, i) => { const z = ((d0 + i * .45) / .9) % 1, an = d0 > 0 && d0 < 2.0;
+    $('#' + id).style.opacity = an ? (1 - z) * .9 : 0; $('#' + id).style.transform = `scale(${.9 + z * 1.2})`; });
+  $('#handy2').style.transform += d0 > 0 && d0 < 1.4 ? ` rotate(${2.5 * Math.sin(d0 * 30) * (1 - d0 / 1.4)}deg)` : '';
+});
+cue(W('telefonier', 13) + .3, 'ding');
+// Freie Zeit: ein Stück für die Familie – aber nicht jede freie Minute
+ein('bar2', W('Familie', 13) - .5, { x: X2 + 1280, y: 680 }, { y: 40 });
+inner('fam2', { sx: 0 }); inner('hier2', { sx: 0 });
+tw('#fam2', W('Familie', 13) - .1, .8, { sx: .3 }, 'inout'); cue(W('Familie', 13), 'scan');
+pop('chipFam2', W('Familie', 13) + .2, { x: X2 + 1021, y: 745 });
+tw('#fam2', W('aber', 13), .45, { sx: .42 }, 'out'); tw('#fam2', W('nicht', 13) + .1, .7, { sx: .3 }, 'sanft');
+pop('stopp2', W('nicht', 13), { x: X2 + 910 + 222, y: 680 }, 'plopp');
+wackeln('stopp2', W('jede', 13), 3, 3);
+// Leben hier: der Rest füllt sich grün, die Stecknadel landet
+tw('#hier2', W('Leben', 14) - .2, 1.1, { sx: 1 }, 'inout'); cue(W('Leben', 14) - .2, 'scan');
+akteur('pinH2', { x: X2 + 1440, y: 480, o: 0 });
+tw('pinH2', W('hier', 14) - .45, .15, { o: 1 }); tw('pinH2', W('hier', 14) - .45, .45, { y: 628 }, 'in');
+tw('pinH2', W('hier', 14), .1, { sy: .8, sx: 1.12 }, 'out'); tw('pinH2', W('hier', 14) + .1, .45, { sy: 1, sx: 1 }, 'sanft'); cue(W('hier', 14), 'plopp');
+pop('chipHier2', W('hier', 14) + .15, { x: X2 + 1440, y: 745 }, 'erfolg'); akzent(W('hier', 14), .025);
+NICKEN.Mai.push(W('hier', 14) + .3);
+FROH.Mai.push([WE('hier', 14) + .1, SE(14) + 1.4]);
+
+/* ---------- 4 · Such dir Menschen hier ---------- */
+pan2(SE(14) + .65, 3); const X3 = S(3);
+titel('u3', 'tb3', X3 + 1280, 0, [W('Sportverein', 16), W('Sprachcafé', 16) - .15, W('Sprachcafé', 16), W('Gemeinschaft', 16) - .15, W('Gemeinschaft', 16), W('Kollege', 18) - .15, W('Kollege', 18)]);
+// Menschen: drei leere Karten fliegen ein
+[['fk3a', 978, -2], ['fk3b', 1280, 1.5], ['fk3c', 1582, -1.5]].forEach(([id, x, r], i) => ein(id, W('Menschen', 15) - .2 + i * .15, { x: X3 + x, y: 470, r }, { y: 90, r: r * 3 }, i ? null : 'whoosh'));
+document.querySelectorAll('#fk3a b, #fk3b b, #fk3c b').forEach(b => { akteur(b, { o: 0, y: 10 }, true); });
+const bildEin = (sels, t, lbl) => { sels.forEach((s, i) => { inner(s, { s: 0 }); tw(s, t + i * .12, .55, { s: 1 }, 'back'); }); tw($(lbl), t + .1, .4, { o: 1, y: 0 }, 'sanft'); cue(t, 'pop'); };
+// Sportverein: Feld, Ball rollt
+bildEin(['#feld3'], W('Sportverein', 16) - .15, '#fk3a b');
+inner('ball3', { x: -70, o: 0 }); tw('#ball3', W('Sportverein', 16) + .2, .2, { o: 1 }); tw('#ball3', W('Sportverein', 16) + .2, 1.4, { x: 40, r: 360 }, 'weich'); cue(W('Sportverein', 16) + .3, 'whoosh');
+// Sprachcafé: Tassen, Wortkarten drehen sich um
+bildEin(['#tasse3a', '#tasse3b'], W('Sprachcafé', 16) - .15, '#fk3b b');
+['#wk3a', '#wk3b'].forEach((s, i) => { inner(s, { sx: 0 }); tw(s, W('Sprachcafé', 16) + .35 + i * .25, .5, { sx: 1 }, 'sanft'); cue(W('Sprachcafé', 16) + .35 + i * .25, 'klick'); });
+// Gemeinschaft: Topf, Löffel rührt
+bildEin(['#topf3'], W('Gemeinschaft', 16) - .15, '#fk3c b');
+inner('l3a', { o: 0 }); tw('#l3a', W('Gemeinschaft', 16) + .2, .3, { o: 1 });
+HOOKS.push(t => { const d = t - W('Gemeinschaft', 16) - .2; if (d > 0) $('#l3a').style.transform += ` rotate(${10 * Math.sin(d * 3.4) * Math.min(1, d)}deg)`; });
+pop('chipAzubis3', W('Azubis', 16) - .1, { x: X3 + 1280, y: 662 });
+// Ein Abend pro Woche: Wochenstreifen, der Mittwochabend leuchtet
+ein('woche3', W('Abend', 17) - .45, { x: X3 + 1280, y: 752 }, { y: 50 }, 'whoosh');
+const TAGE3 = [...document.querySelectorAll('#woche3 > span')];
+HOOKS.push(t => { $('#mi3').className = t >= W('Abend', 17) + .2 ? 'abend' : ''; });
+inner('mondMi3', { s: 0 }); tw('#mondMi3', W('Abend', 17) + .25, .5, { s: 1 }, 'back'); cue(W('Abend', 17) + .25, 'ding');
+TAGE3.forEach((d, i) => { akteur(d, {}, true); const t0 = W('Woche', 17) - .1 + i * .07; tw(d, t0, .15, { y: -8 }, 'sinus'); tw(d, t0 + .15, .3, { y: 0 }, 'sanft'); });
+bump('#mi3', W('viel', 17), 1.14); akzent(W('viel', 17), .02);
+// Mai: Ein Kollege spielt Badminton
+aus(['fk3a', 'fk3b', 'fk3c', 'chipAzubis3', 'woche3'], W('Ein', 18) - .35, .45);
+ein('fk3d', W('Kollege', 18) - .1, { x: X3 + 1280, y: 500 }, { y: 80 }, 'whoosh');
+inner('schl3', {}); inner('feder3', { o: 0 });
+{ // Federball fliegt im Bogen übers Netz und zurück, der Schläger schlägt
+  const b0 = W('Badminton', 18) - .1;
+  HOOKS.push(t => {
+    const f = $('#feder3'), d = t - b0;
+    if (d < 0) { f.style.opacity = 0; return; }
+    const z = (d % 2.2) / 2.2, hin = z < .5, u = E.sinus(hin ? z * 2 : (1 - z) * 2);
+    const x = 120 + u * 160, y = 80 - Math.sin(Math.PI * u) * 60 + 30 * (1 - u);
+    f.style.opacity = clamp(d / .3); f.style.visibility = 'visible'; f.style.transform = `translate(${x}px,${y}px) rotate(${(hin ? 1 : -1) * 3}deg)`;
+    const schlag = Math.max(0, 1 - Math.abs(z - (z < .5 ? 0 : 1)) * 8);
+    $('#schl3').style.transform = `rotate(${-3 + 3 * schlag}deg)`;
+  });
+  cue(b0, 'klick'); cue(b0 + 2.2, 'klick');
+}
+// Vielleicht frage ich ihn: Fragezeichen-Blase, Jonas freut sich
+pop('blase3', W('frage', 19) - .15, { x: X3 + 1560, y: 345 }, 'pop', 'sanft');
+schweben('blase3', 4);
+FROH.Jonas.push([SA(19), SE(19) + 1.0]);
+FROH.Mai.push([SE(19) + .1, SE(19) + 1.2]);
+
+/* ---------- 5 · Darüber reden ist stark ---------- */
+pan2(SE(19) + .65, 4); const X4 = S(4);
+titel('u4', 'tb4', X4 + 1280, 0, [W('darüber', 20) - .1, W('darüber', 20) + .15, W('Schwäche', 23) - .15, W('Schwäche', 23)]);
+// Sprechblasen zwischen Jonas und Mai
+akteur('blaseL4', { x: X4 + 880, y: 420, o: 0, s: .6 });
+tw('blaseL4', W('sprich', 20) - .1, .4, { o: 1 }); tw('blaseL4', W('sprich', 20) - .1, .8, { x: X4 + 990, s: 1 }, 'sanft'); cue(W('sprich', 20), 'pop');
+akteur('blaseR4', { x: X4 + 1680, y: 420, o: 0, s: .6 });
+tw('blaseR4', W('darüber', 20) + .2, .4, { o: 1 }); tw('blaseR4', W('darüber', 20) + .2, .8, { x: X4 + 1570, s: 1 }, 'sanft'); cue(W('darüber', 20) + .3, 'pop');
+HOOKS.push(t => ['blaseL4', 'blaseR4'].forEach((id, k) => document.querySelectorAll(`#${id} i`).forEach((p, i) => {
+  const a = k ? W('darüber', 20) + .6 : W('sprich', 20) + .5;
+  p.style.transform = t > a ? `translateY(${-7 * Math.max(0, Math.sin((t - a) * 5 - i * .9)) ** 2}px)` : '';
+})));
+schweben(['blaseL4', 'blaseR4'], 4);
+akteur('bogen4', { x: X4 + 960, y: 540, o: 0, draw: 0 }); tw('bogen4', W('so', 20), .1, { o: 1 }); tw('bogen4', W('so', 20), .9, { draw: 1 }, 'inout'); cue(W('so', 20), 'scan');
+bump('blaseL4', W('jetzt', 20), 1.08); bump('blaseR4', W('jetzt', 20) + .12, 1.08);
+// Mit Freunden, mit deiner Ausbilderin oder mit uns
+pop('chipFr4', W('Freunden', 21) - .1, { x: X4 + 1000, y: 620 });
+pop('chipAus4', W('Ausbilderin', 21) - .1, { x: X4 + 1275, y: 620 });
+pop('chipUns4', W('uns', 21) - .1, { x: X4 + 1555, y: 620 }, 'ding');
+// Wenn …: drei Zeichen, die ernst zu nehmen sind
+aus(['blaseL4', 'blaseR4', 'bogen4', 'chipFr4', 'chipAus4', 'chipUns4'], W('Wenn', 22) - .2, .45);
+ein('s4a', W('Wochen', 22) - .15, { x: X4 + 1005, y: 450 }, { y: 60 }, 'whoosh');
+inner('wolke4', { x: 30, o: 0 }); tw('#wolke4', W('traurig', 22) - .1, 1.0, { x: 0, o: 1 }, 'inout');
+ein('s4b', W('schlecht', 22) - .15, { x: X4 + 1280, y: 450 }, { y: 60 }, 'whoosh');
+inner('zeiger4', {}); tw('#zeiger4', W('schläfst', 22) - .1, 1.6, { r: 540 }, 'inout'); cue(W('schläfst', 22), 'scan');
+HOOKS.push(t => { const d = t - W('schlecht', 22); if (d > 0) $('#mond4').style.transform += ` rotate(${3 * Math.sin(d * 2)}deg)`; });
+ein('s4c', W('Kraft', 22) - .25, { x: X4 + 1555, y: 450 }, { y: 60 }, 'whoosh');
+{ const t0 = W('Kraft', 22) + .1;
+  inner('akku4', { sx: .85 }); tw('#akku4', t0, 1.1, { sx: .14 }, 'inout');
+  HOOKS.push(t => { const p = clamp((t - t0) / 1.1); $('#akku4').style.background = p < .45 ? 'var(--success)' : p < .8 ? 'var(--warning)' : 'var(--error)'; });
+}
+// geh zu deinem Hausarzt: Zeichen rücken hoch, die Praxistür geht auf
+[['s4a', 1040], ['s4b', 1280], ['s4c', 1520]].forEach(([id, x]) => tw(id, W('geh', 22) - .2, .8, { x: X4 + x, y: 398, s: .8 }, 'inout'));
+['tuer4', 'blatt4'].forEach(id => ein(id, W('Hausarzt', 22) - .6, { x: X4 + 1280, y: 690 }, { y: 50 }));
+akteur('licht4', { x: X4 + 1280, y: 693, o: 0 });
+ein('kreuz4', W('Hausarzt', 22) - .4, { x: X4 + 1420, y: 625 }, { y: 30 }, 'pop');
+pop('chipArzt4', W('Hausarzt', 22), { x: X4 + 1105, y: 700 });
+set('licht4', WE('Hausarzt', 22) + .1, { o: 1 }); tw('blatt4', WE('Hausarzt', 22) + .1, .8, { sx: .2 }, 'inout'); cue(WE('Hausarzt', 22) + .1, 'klick');
+// keine Schwäche: warmes Licht aus der Tür
+welle('welle4', W('Schwäche', 23), X4 + 1280, 690, 1.3); cue(W('Schwäche', 23), 'erfolg'); akzent(W('Schwäche', 23), .03);
+NICKEN.Mai.push(W('Schwäche', 23) + .1);
+
+/* ---------- 6 · Telefonseelsorge ---------- */
+pan2(SE(23) + .65, 5); const X5 = S(5);
+const ZIFF = satz(24).woerter.filter(w => /^(null|acht|eins)$/i.test(w.w)).map(w => A(w.start));   // 0 8 0 0 1 1 1 0 1 1 1
+titel('u5', 'tb5', X5 + 1280, 0, [W('Telefonseelsorge', 24), ZIFF[0], ZIFF[4], ZIFF[7], ZIFF[8], W('kostenlos', 24), W('Uhr', 24)], 258);
+ein('handy5', W('Und', 24) - .3, { x: X5 + 1280, y: 610 }, { y: 70 }, 'whoosh');
+// auch nachts: es wird dunkler, der Mond geht auf
+akteur('daemmer5', { x: X5 + MX, y: MY, o: 0 });
+const MOND_X = X5 + 950, SONNE_X = X5 + 1610, OY = 610, RX = 330, RY = 165;
+akteur('mond5', { x: MOND_X, y: 790, o: 0 });
+tw('mond5', W('nachts', 24) - .2, .8, { o: 1 }); tw('mond5', W('nachts', 24) - .2, 1.2, { y: OY }, 'weich'); cue(W('nachts', 24) - .2, 'whoosh');
+akteur('sonne5', { x: SONNE_X, y: OY, s: 0 }); sonnenStrahlen('sonne5', 0, 12);
+tw('sonne5', W('rund', 24) - .35, .5, { s: 1 }, 'back'); cue(W('rund', 24) - .35, 'pop');
+{ // rund um die Uhr: Sonne und Mond kreisen einmal um das Telefon
+  const o0 = W('rund', 24) + .1, o1 = o0 + 2.5;
+  HOOKS.push(t => {
+    const p = E.inout(clamp((t - o0) / (o1 - o0))), w = -2 * Math.PI * p;
+    if (t > o0) {
+      $('#sonne5').style.transform = `translate(${X5 + 1280 + RX * Math.cos(w)}px,${OY + RY * Math.sin(w)}px) translate(-50%,-50%) scale(${wert(AKTEURE.get($('#sonne5')), 's', t)})`;
+      $('#mond5').style.transform = `translate(${X5 + 1280 - RX * Math.cos(w)}px,${OY - RY * Math.sin(w)}px) translate(-50%,-50%)`;
+    }
+    // Himmel: dunkel, wenn die Sonne unten ist
+    const nacht = t < W('nachts', 24) - .2 ? 0 : .2 * clamp((t - W('nachts', 24) + .2) / 1.2);
+    const tag = .2 * (1 + Math.sin(w)) / 2 * (1 - p);
+    const m = clamp((t - o0) / .5);
+    $('#daemmer5').style.opacity = (t < o0 ? nacht : nacht * (1 - m) + tag * m).toFixed(3);
+    $('#daemmer5').style.visibility = 'visible';
+  });
+  cue(o0, 'whoosh'); cue(o1 - .3, 'ding');
+}
+pop('chipKost5', W('kostenlos', 24) - .1, { x: X5 + 1590, y: 385 }, 'ding');
+pop('chipUhr5', W('rund', 24) - .1, { x: X5 + 975, y: 385 });
+// Nummer tippt sich im Takt der Stimme
+{
+  const NAME = 'Telefonseelsorge', ZEICHEN = ['0', '8', '0', '0', '1', '1', '1', '0', '1', '1', '1'];
+  const tn = W('Telefonseelsorge', 24);
+  HOOKS.push(t => {
+    $('#name5').textContent = NAME.slice(0, Math.floor(clamp((t - tn) / .7) * NAME.length));
+    const n = ZIFF.filter(z => t >= z - .05).length;
+    const s = ZEICHEN.slice(0, n).join('');
+    $('#nr5a').textContent = s.slice(0, 4);
+    $('#nr5b').textContent = n > 4 ? (s.slice(4, 7) + (n > 7 ? ' ' + s.slice(7, 8) : '') + (n > 8 ? ' ' + s.slice(8) : '')) : '';
+  });
+  ZIFF.forEach(z => cue(z - .05, 'tipp'));
+  for (let i = 0; i < 5; i++) cue(tn + i * .14, 'tipp');
+}
+{ // am Ende: der grüne Knopf pulsiert, das Telefon klingelt leise
+  const e0 = ZIFF[10] + .5;
+  inner('knopf5', {}); bump('#knopf5', e0, 1.18); bump('#knopf5', e0 + .8, 1.12);
+  welle('ring5a', e0, X5 + 1280, 610, 1.4); welle('ring5b', e0 + .5, X5 + 1280, 610, 1.4); cue(e0, 'erfolg');
+  akzent(e0, .03);
+}
+
+/* ---------- 7 · Parkbank: die Sonne kommt durch ---------- */
+pan2(SE(24) + .65, 6); const X6 = S(6);
+laub(6, 5, SE(24) + .65, 999);
+akteur('sonne6', { x: X6 + 1650, y: 300 }); sonnenStrahlen('sonne6', 0, 4);
+akteur('baum6', { x: X6 + 950, y: 540 }); HOOKS.push(t => { $('#baum6').style.transform += ` rotate(${.8 * Math.sin(t * .9)}deg)`; });
+akteur('bank6', { x: X6 + 1340, y: 620 });
+akteur('becherJ6', { x: X6 + 1300, y: 596 }); akteur('becherM6', { x: X6 + 1440, y: 596 });
+akteur('wolke6', { x: X6 + 1630, y: 318 }); akteur('daemmer6', { x: X6 + MX, y: MY, o: .12 });
+// Danke, Jonas: Mai hebt ihren Becher ein wenig
+huepfen('becherM6', W('Danke', 25) + .1, 12); cue(W('Danke', 25) + .1, 'plopp');
+// Es tut gut: die Wolke zieht weiter, die Sonne kommt durch
+tw('wolke6', W('tut', 26) - .2, 2.6, { x: X6 + 1400, y: 300, o: 0 }, 'inout'); cue(W('tut', 26), 'whoosh');
+tw('daemmer6', W('tut', 26), 2.2, { o: 0 }, 'inout');
+SONNE_SCHUB.push([W('gut', 26), W('gut', 26) + 2.0, 120, 'sonne6']);
+bump('sonne6', W('gut', 26) + .6, 1.12); welle('welle6', W('gut', 26) + .6, X6 + 1650, 300, 1.6); cue(W('gut', 26) + .6, 'erfolg');
+// nicht die Einzige: die Becher rücken zusammen
+tw('becherJ6', W('Einzige', 26) - .1, .8, { x: X6 + 1318 }, 'inout'); tw('becherM6', W('Einzige', 26) - .1, .8, { x: X6 + 1418 }, 'inout');
+huepfen('becherJ6', W('Einzige', 26) - .1, 10); huepfen('becherM6', W('Einzige', 26), 10);
+FROH.Mai.push([SE(26) + .1, 999]);
+FROH.Jonas.push([SA(25) + .2, SE(26) + .3]);
+NICKEN.Mai.push(W('sicher', 27) + .1);
+// Du bist nicht allein.
+titel('u6', 'tb6', X6 + 1280, 0, [W('du', 28), W('musst', 28), W('nicht', 28), W('allein', 28)]);
+akteur('herz6', { x: X6 + 1368, y: 470, s: 0 });
+tw('herz6', W('allein', 28) - .1, .7, { s: 1 }, 'back'); cue(W('allein', 28) - .1, 'ding'); akzent(W('allein', 28), .03);
+schweben('herz6', 5);
+NICKEN.Mai.push(W('allein', 28) + .2);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .9)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .6, .8, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + 1.0, .7, { o: 1, y: 0 }, 'weich');
+
+start(AB + 4.0, AB + 2.0);
+</script>
+</body></html>
