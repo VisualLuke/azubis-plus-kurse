@@ -62,4 +62,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 42 | [Was ist ein Verein?](42-verein/) | Erklärvideo | Erzähler | 1:41 | fertig |
 | 43 | [Wie funktioniert die Demokratie?](43-demokratie/) | Erklärvideo | Erzählerin | 2:02 | fertig |
 | 44 | [Das Grundgesetz – deine Grundrechte](44-grundgesetz/) | Erklärvideo | Erzähler | 1:39 | fertig |
-| 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | – | in Arbeit |
+| 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | 1:55 | fertig |
