@@ -32,3 +32,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 12 | [Mythos oder Wahrheit: Rund ums Geld](12-mythos-geld/) | Mythos oder Wahrheit | Erzähler | 1:42 | fertig |
 | 13 | [Mythos oder Wahrheit: Krank sein](13-mythos-krank/) | Mythos oder Wahrheit | Erzählerin | 1:54 | fertig |
 | 14 | [Mythos oder Wahrheit: Ausbildung](14-mythos-ausbildung/) | Mythos oder Wahrheit | Erzähler | 1:54 | fertig |
+| 15 | [Mythos oder Wahrheit: Wohnen & Versicherungen](15-mythos-wohnen/) | Mythos oder Wahrheit | Erzählerin | 2:02 | fertig |

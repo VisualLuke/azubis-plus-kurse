@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mythos oder Wahrheit: Wohnen &amp; Versicherungen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Text im Bild: links unter der Behauptungs-Kachel */
+.block{justify-content:flex-start;padding-top:420px}
+.block .titel{font-size:60px;line-height:70px}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.chip.leise{background:transparent;box-shadow:none;color:var(--n500)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* ---------- Mythos-Format ---------- */
+/* Quiz-Bühne: groß und dunkel für Behauptung und Urteil, danach hell und klein (Erklärung) */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+/* Behauptungskarte */
+.karte{width:1180px;height:300px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 80px}
+.kchip{display:flex;align-items:center;gap:10px;padding:8px 20px 8px 14px;border-radius:999px;background:var(--b50);
+  color:var(--b600);font:800 20px/26px Inter;letter-spacing:.1em;text-transform:uppercase}
+.kchip svg{width:26px;height:26px}
+.karte .titel{font:700 56px/66px Inter;letter-spacing:-.02em;text-align:center;color:var(--ink)}
+.abdruck{position:absolute;right:36px;bottom:-52px;width:300px;height:96px;border-radius:18px;border:7px solid var(--error);
+  background:var(--error-bg);color:var(--error-text);display:flex;align-items:center;justify-content:center;
+  font:800 50px/1 Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.abdruck.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.abdruck.gross{right:auto;bottom:auto}
+.tinte{border-radius:30px;border:6px solid var(--error);opacity:0}
+.tinte.stimmt{border-color:var(--success)}
+/* Denkpause: Countdown-Ring und die beiden Antworten */
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.pille{display:flex;align-items:center;gap:14px;padding:16px 30px 16px 18px;border-radius:999px;background:var(--surface);
+  font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.pille svg{width:44px;height:44px;flex:none}
+.pille.mythos{color:var(--error-text)} .pille.stimmt{color:var(--success-text)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+
+/* 7 · Schluss */
+.mini{width:360px;height:150px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.25);
+  display:flex;align-items:center;justify-content:center;padding:0 28px 18px;font:700 28px/34px Inter;color:var(--ink);text-align:center}
+.mini .abdruck{width:150px;height:46px;border-width:4px;border-radius:10px;font-size:22px;right:18px;bottom:-20px}
+.stand{display:flex;align-items:center;gap:14px;padding:14px 30px 14px 16px;border-radius:999px;background:var(--surface);font:800 38px/44px Inter;white-space:nowrap;
+  box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.stand svg{width:46px;height:46px}
+.stand.mythos{color:var(--error-text)} .stand.stimmt{color:var(--success-text)}
+.flach{width:120px;height:30px;border-radius:999px;background:var(--warning);border-bottom:7px solid var(--warning-text);box-shadow:0 3px 8px rgba(22,19,37,.12)}
+:root{--info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6)}
+
+/* 0 · Intro */
+.titelgross{width:1500px}
+.titelgross .titel{font:800 84px/96px Inter;letter-spacing:-.03em;color:var(--surface);text-align:center}
+.licht{width:162px;height:246px;border-radius:6px;background:linear-gradient(var(--warning-bg),var(--warning))}
+
+/* Plaketten (Haken / X), Zahlen */
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.nr{width:48px;height:48px;border-radius:999px;background:var(--b100);color:var(--b600);font:800 24px/48px Inter;text-align:center}
+.nr.bezahlt{background:var(--success);color:var(--surface)}
+.welle.gruen{border-color:var(--success)}
+
+/* Blätter: Nebenkosten, Hausordnung, Rechnung */
+.blatt{width:260px;padding:22px 24px 24px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:12px}
+.blatt small{font:800 18px/24px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.blatt .l{height:10px;border-radius:5px;background:var(--n200)}
+.blatt .zeile{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px;background:var(--b50)}
+.blatt .zeile .l{flex:1;background:var(--b200)}
+.blatt .zeile svg{width:30px;flex:none}
+.blatt .check{width:40px;height:40px;border-radius:10px;border:3px solid var(--b200);background:var(--surface);position:relative;flex:none}
+.blatt .check svg{position:absolute;left:2px;top:2px;width:30px}
+.blatt .euro{font:800 44px/1 Inter;color:var(--error-text);letter-spacing:.08em;text-align:right}
+.nacht{position:absolute;inset:0;background:linear-gradient(170deg,var(--b600),var(--b700));opacity:0}
+.fenster{width:42px;height:38px;border-radius:7px;background:var(--warning)}
+.schall{width:110px;height:140px}
+.tropfen{width:18px;height:24px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--info)}
+.frage{width:90px;height:90px;border-radius:999px;background:var(--surface);color:var(--b500);font:800 56px/90px Inter;text-align:center;box-shadow:0 8px 24px rgba(22,19,37,.18)}
+.tage{display:flex;gap:8px}
+.tage span{width:38px;height:50px;border-radius:10px;background:var(--b100)}
+.tage span.an{background:var(--success)}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--error)"/><path d="M15 15l14 14M29 15L15 29" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--success)"/><path d="M13 23l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgZitat"><svg viewBox="0 0 26 26"><path d="M4 16c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6H7a3 3 0 0 1-3-2Zm11 0c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6h-3a3 3 0 0 1-3-2Z" fill="var(--b500)"/></svg></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+<template id="svgHakenW"><svg viewBox="0 0 32 32"><path d="M8 17l6 6 11-13" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgXW"><svg viewBox="0 0 32 32"><path d="M10 10l12 12M22 10L10 22" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round"/></svg></template>
+<template id="svgHakenZ"><svg viewBox="0 0 30 30"><path class="zeichnen" pathLength="1" d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Intro -->
+  <div class="a buehne quiz" id="bue0"><div class="dunkel"></div></div>
+  <div class="a titelgross" id="titel0"><div id="tt0"><div class="titel">Mythos oder Wahrheit: Wohnen &amp; Versicherungen</div></div></div>
+  <div class="a" id="tuer0" style="width:340px" data-gruppe="tuer">{{haustuer}}</div>
+  <div class="a licht" id="licht0" data-gruppe="tuer"></div>
+  <div class="a" id="blatt0" style="width:340px;transform-origin:27.5% 50%" data-gruppe="tuer">{{haustuer-blatt}}</div>
+  <div class="a" id="key0" style="width:120px" data-frei>{{schluessel}}</div>
+  <div class="a" id="koffer0" style="width:230px" data-gruppe="koffer0">{{aktenkoffer}}</div>
+  <div class="a" id="deckel0" style="width:230px;transform-origin:15% 40%" data-gruppe="koffer0">{{aktenkoffer-deckel}}</div>
+  <div class="a" id="p0a" style="width:130px">{{vertrag}}</div>
+  <div class="a" id="p0b" style="width:140px">{{brief}}</div>
+  <div class="a" id="p0c" style="width:130px">{{vertrag}}</div>
+  <div class="a" id="p0d" style="width:140px">{{brief}}</div>
+  <div class="a" id="p0e" style="width:130px">{{vertrag}}</div>
+  <div class="a" id="p0f" style="width:140px">{{brief}}</div>
+  <div class="a tinte" id="ti0a" style="width:340px;height:136px" data-frei></div>
+  <div class="a tinte stimmt" id="ti0b" style="width:340px;height:136px" data-frei></div>
+  <div class="a abdruck gross" id="ab0a">Mythos</div>
+  <div class="a abdruck gross stimmt" id="ab0b">Stimmt</div>
+
+  <!-- 1 · Kaution nie zurück? -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a" id="pmHinten1" style="width:200px" data-gruppe="pm1">{{portemonnaie-hinten}}</div>
+  <div class="a" id="tresor1" style="width:260px" data-gruppe="tresor1">{{tresor}}</div>
+  <div class="a" id="gs1a" style="width:150px" data-gruppe="tresor1">{{geldschein}}</div>
+  <div class="a" id="gs1b" style="width:150px" data-gruppe="tresor1">{{geldschein}}</div>
+  <div class="a" id="gs1c" style="width:150px" data-gruppe="tresor1">{{geldschein}}</div>
+  <div class="a" id="tuer1" style="width:260px;transform-origin:18.75% 50%" data-gruppe="tresor1">{{tresor-tuer}}</div>
+  <div class="a" id="pmVorne1" style="width:200px" data-gruppe="pm1">{{portemonnaie-vorne}}</div>
+  <div class="a chip brand klein" id="chipKaution1">Kaution</div>
+  <div class="a" id="karton1" style="width:180px">{{karton}}</div>
+  <div class="a chip gruen" id="chipKaputt"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>nichts kaputt</div>
+  <div class="a blatt" id="nk1"><small>Nebenkosten</small><div class="l" style="width:80%"></div><div class="l" style="width:60%"></div>
+    <div class="zeile"><div class="l"></div><div class="check"><svg id="ckNk" viewBox="0 0 30 30"><path class="zeichnen" pathLength="1" d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div></div>
+  <div class="a welle gruen" id="welle1" style="width:240px;height:240px" data-frei></div>
+
+  <!-- 2 · drei Kaltmieten -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a" id="tresor2" style="width:200px" data-gruppe="tresor2">{{tresor~b}}</div>
+  <div class="a" id="tuer2" style="width:200px;transform-origin:18.75% 50%" data-gruppe="tresor2">{{tresor-tuer~b}}</div>
+  <div class="a chip brand klein" id="chipKaution2">Kaution</div>
+  <div class="a grund" id="grund2" style="width:620px;height:6px;border-radius:3px;background:var(--b200)"></div>
+  <div class="a plakette rot" id="x2" data-frei></div>
+
+  <!-- 3 · Nachtruhe -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div><div class="nacht" id="nacht3"></div></div>
+  <div class="a" id="mond3" style="width:130px">{{mond}}</div>
+  <div class="a" id="haus3" style="width:300px" data-gruppe="haus3">{{haus}}</div>
+  <div class="a fenster" id="fe3a" data-gruppe="haus3"></div>
+  <div class="a fenster" id="fe3b" data-gruppe="haus3"></div>
+  <div class="a" id="uhr3" style="width:170px" data-gruppe="uhr3">{{uhr}}</div>
+  <div class="a" id="stunde3" style="width:170px;transform-origin:50% 47.5%" data-gruppe="uhr3" data-dreht>{{uhr-stunde}}</div>
+  <div class="a" id="zeiger3" style="width:170px;transform-origin:50% 47.5%" data-gruppe="uhr3" data-dreht>{{uhr-zeiger}}</div>
+  <div class="a chip" id="chipNacht">22–6 Uhr</div>
+  <div class="a" id="lautsprecher3" style="width:200px">{{lautsprecher}}</div>
+  <svg class="a schall" id="schall3" viewBox="0 0 110 140" data-frei>
+    <path id="sw0" d="M20 50c10 12 10 28 0 40" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path id="sw1" d="M45 32c20 22 20 54 0 76" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path id="sw2" d="M70 14c30 32 30 80 0 112" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+  <div class="a plakette rot" id="stumm3" style="width:84px;height:84px" data-frei><svg viewBox="0 0 32 32" style="width:44px"><path d="M6 12h5l7-6v20l-7-6H6Z" fill="var(--surface)"/><path d="M4 28L28 4" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/></svg></div>
+  <div class="a blatt" id="ho3"><small>Hausordnung</small><div class="l" style="width:85%"></div><div class="l" style="width:65%"></div>
+    <div class="zeile" id="hoZeile"><svg viewBox="0 0 160 160"><path d="M96 30a50 50 0 1 0 38 72A42 42 0 0 1 96 30Z" fill="var(--b400)"/></svg><div class="l"></div></div>
+    <div class="l" style="width:75%"></div></div>
+  <div class="a" id="lupe3" style="width:120px" data-frei>{{lupe}}</div>
+
+  <!-- 4 · jede Versicherung? -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a" id="koffer4" style="width:240px" data-gruppe="koffer4">{{aktenkoffer~b}}</div>
+  <div class="a" id="v4a" style="width:130px" data-gruppe="koffer4">{{vertrag}}</div>
+  <div class="a" id="v4b" style="width:130px" data-gruppe="koffer4">{{vertrag}}</div>
+  <div class="a" id="v4c" style="width:130px" data-gruppe="koffer4">{{vertrag}}</div>
+  <div class="a" id="v4d" style="width:130px" data-gruppe="koffer4">{{vertrag}}</div>
+  <div class="a" id="v4e" style="width:130px" data-gruppe="koffer4">{{vertrag}}</div>
+  <div class="a" id="deckel4" style="width:240px;transform-origin:15% 40%" data-gruppe="koffer4">{{aktenkoffer-deckel~b}}</div>
+  <div class="a" id="stift4" style="width:140px" data-frei>{{stift}}</div>
+  <div class="a plakette rot" id="x4" data-frei></div>
+  <div class="a" id="haus4" style="width:200px">{{haus~b}}</div>
+  <div class="a" id="handy4" style="width:140px">{{handy}}</div>
+  <div class="a frage" id="frage4">?</div>
+
+  <!-- 5 · Haftpflicht -->
+  <div class="a buehne quiz" id="bue5"><div class="dunkel"></div></div>
+  <div class="a" id="handy5" style="width:180px" data-gruppe="handy5">{{handy~b}}</div>
+  <svg class="a" id="riss5" viewBox="0 0 60 90" style="width:60px" data-gruppe="handy5"><path class="zeichnen" pathLength="1" d="M34 4L24 30l14 10-18 22 8 8-6 16" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a" id="glas5" style="width:150px;transform-origin:38.75% 88.75%" data-frei>{{glas}}</div>
+  <div class="a" id="haus5" style="width:220px">{{haus~c}}</div>
+  <div class="a" id="pmHinten5" style="width:190px" data-gruppe="pm5">{{portemonnaie-hinten~b}}</div>
+  <div class="a" id="pmVorne5" style="width:190px" data-gruppe="pm5">{{portemonnaie-vorne~b}}</div>
+  <div class="a blatt" id="rech5" style="width:230px"><small>Rechnung</small><div class="l" style="width:85%"></div><div class="l" style="width:60%"></div><div class="euro">€ € €</div></div>
+  <div class="a welle gruen" id="welle5" style="width:240px;height:240px" data-frei></div>
+  <div class="a" id="schild5" style="width:190px">{{schild}}</div>
+  <div class="a chip brand klein" id="chipHaft">Haftpflicht</div>
+  <div class="a" id="m5a" style="width:64px" data-frei data-dreht>{{muenze}}</div>
+  <div class="a" id="m5b" style="width:64px" data-frei data-dreht>{{muenze}}</div>
+
+  <!-- 6 · Umzug -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <div class="a" id="alt6" style="width:170px">{{haus~d}}</div>
+  <div class="a" id="neu6" style="width:170px">{{haus~e}}</div>
+  <div class="a" id="karton6" style="width:120px">{{karton~b}}</div>
+  <div class="a" id="amt6" style="width:190px">{{rathaus}}</div>
+  <div class="a chip brand klein" id="chipAmt6">Bürgeramt</div>
+  <div class="a" id="meld6" style="width:100px" data-frei>{{meldung}}</div>
+  <div class="a plakette gruen" id="ok6" data-frei></div>
+  <div class="a tage" id="tage6"></div>
+  <div class="a chip gruen" id="chipWochen">2 Wochen</div>
+
+  <!-- 7 · Schluss -->
+  <div class="a buehne quiz" id="bue7"><div class="dunkel"></div></div>
+  <div class="a stand mythos" id="standM"></div>
+  <div class="a stand stimmt" id="standS"></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">MYTHOS – die Kaution kommt zurück</div></div>
+<div class="block" id="tb2"><div class="titel">STIMMT – max. 3 Kaltmieten</div></div>
+<div class="block" id="tb3"><div class="titel">STIMMT – Nachtruhe 22–6 Uhr</div></div>
+<div class="block" id="tb4"><div class="titel">MYTHOS – nie sofort unterschreiben</div></div>
+<div class="block" id="tb5"><div class="titel">STIMMT – Haftpflicht ist wichtig</div></div>
+<div class="block" id="tb6"><div class="titel">STIMMT – neu anmelden</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Kenn die wichtigsten Regeln.</div>
+  <div class="klein" id="asUnter">Dann zahlst du beim Wohnen und bei Versicherungen nicht zu viel.</div>
+</div></div>
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const Wab = (m, t) => A(wort(m, t - VERSATZ - .01));            // Wort ab Filmzeit t
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+// Landung mit Stauchung (für Gegenstände, die von oben fallen)
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 8;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ================= Mythos-Format ================= */
+// Quiz-Bühne: groß + dunkel (1680×880, Mitte x 960) → ab tK hell + klein (900×720, Mitte x 1320)
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+// Text im Bild: erstes Wort in Stempelfarbe
+function titelUrteil(id, t0, u) {
+  titelEin(id, t0);
+  $(`#${id} .w`).classList.add(u === 'mythos' ? 'rot' : 'gruen');
+}
+// Eine Behauptung: Karte – Denkpause mit Countdown – Stempel – Karte wandert als Kachel nach links oben.
+// c: Satz der Behauptung, v: Satz mit „Mythos!“/„Stimmt!“. Gibt die Zeiten zurück.
+function mythos({ i, c, v, u, tb }) {
+  const X = S(i), CX = X + 960, CY = 440, RY = 790;
+  const text = satz(c).text.replace(/[„“"]/g, '');
+  const rot = u === 'mythos';
+  WELT.insertAdjacentHTML('beforeend', `
+    <div class="a pille mythos" id="pm${i}">${tpl('svgX')}Mythos?</div>
+    <div class="a ring3" id="ring${i}"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+      <circle id="lauf${i}" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer${i}">3</b></div>
+    <div class="a pille stimmt" id="ps${i}">${tpl('svgHaken')}Stimmt?</div>
+    <div class="a karte" id="karte${i}"><div class="kchip" id="kc${i}">${tpl('svgZitat')}Behauptung</div>
+      <div id="kt${i}"><div class="titel">${text}</div></div>
+      <div class="abdruck ${u}" id="abd${i}">${rot ? 'Mythos' : 'Stimmt'}</div></div>
+    <div class="a tinte ${u}" id="tinte${i}" style="width:340px;height:136px" data-frei></div>
+    <div class="a" id="stempel${i}" style="width:360px" data-frei>${tpl(rot ? 'tplRot' : 'tplGruen')}</div>`);
+  const tIn = A(satz(c).start) - .5;
+  const c0 = SE(c) + .15, c1 = A(satz(v).start) - .1, dt = (c1 - c0) / 3;
+  const tV = A(satz(v).woerter[0].start), tK = SE(v) + .05;
+  quiz(i, tK);
+  // Karte fliegt auf einem Bogen herein, die Behauptung steigt Wort für Wort im Takt der Stimme aus der Maske
+  akteur(`karte${i}`, { x: CX, y: CY + 260, o: 0, s: .82 });
+  tw(`karte${i}`, tIn, .3, { o: 1 }); tw(`karte${i}`, tIn, .75, { y: CY, s: 1 }, 'sanft', { bogen: 60 }); cue(tIn, 'whoosh');
+  akteur(`kc${i}`, { s: 0 }, true); tw(`kc${i}`, tIn + .35, .45, { s: 1 }, 'back');
+  const wz = satz(c).woerter.map(w => A(w.start) - .12);
+  titelEin(`kt${i}`, wz[0], wz);
+  // Denkpause: Ring läuft leer, Ziffern 3 – 2 – 1, die Antworten pulsieren im Wechsel
+  pop(`ring${i}`, c0 - .35, { x: CX, y: RY });
+  ein(`pm${i}`, c0 - .3, { x: CX - 330, y: RY }, { x: 60 }); ein(`ps${i}`, c0 - .3, { x: CX + 330, y: RY }, { x: -60 });
+  for (let k = 0; k < 3; k++) { cue(c0 + k * dt, 'klick'); bump(k % 2 ? `ps${i}` : `pm${i}`, c0 + k * dt + .05, 1.08); }
+  HOOKS.push(t => {
+    const p = clamp((t - c0) / (c1 - c0));
+    $(`#lauf${i}`).style.strokeDashoffset = -p;
+    const k = Math.min(2, Math.floor((t - c0) / dt)), f = t - c0 - Math.max(0, k) * dt;
+    const z = $(`#ziffer${i}`);
+    z.textContent = 3 - Math.max(0, k);
+    z.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Urteil: Stempel fällt, schlägt auf, Abdruck + Tinte, Karte wackelt, Kamera-Akzent
+  const IX = CX + 404, IY = CY + 154, SY = IY - 91;
+  akteur(`stempel${i}`, { x: IX, y: SY - 330, o: 0, r: -3 });
+  tw(`stempel${i}`, tV - .6, .2, { o: 1 }); tw(`stempel${i}`, tV - .6, .4, { y: SY - 150 }, 'sanft');
+  tw(`stempel${i}`, tV - .16, .16, { y: SY }, 'in');
+  tw(`stempel${i}`, tV, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(`stempel${i}`, tV + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(`stempel${i}`, tV + .2, .55, { y: SY - 260 }, 'inout'); tw(`stempel${i}`, tV + .45, .3, { o: 0 });
+  akteur(`abd${i}`, { o: 0, s: 1.4, r: -3 }, true);
+  tw(`abd${i}`, tV, .04, { o: 1 }); tw(`abd${i}`, tV, .22, { s: 1 }, 'out');
+  welle(`tinte${i}`, tV, IX, IY, .8); AKTEURE.get(el(`tinte${i}`)).basis.r = -3;
+  cue(tV, 'plopp'); if (!rot) cue(tV + .05, 'erfolg');
+  akzent(tV, .05);
+  tw(`karte${i}`, tV, .07, { y: CY + 10 }, 'sinus'); tw(`karte${i}`, tV + .07, .4, { y: CY }, 'sanft');
+  wackeln(`karte${i}`, tV + .05, 3, 1.2);
+  tw(`ring${i}`, tV - .05, .3, { s: 0, o: 0 }, 'in');
+  huepfen(rot ? `pm${i}` : `ps${i}`, tV + .1, 20); tw(rot ? `ps${i}` : `pm${i}`, tV + .05, .3, { o: .35 });
+  // Erklärung: Karte wird Kachel links oben, Bühne hell und klein, Text im Bild darunter
+  aus([`pm${i}`, `ps${i}`], tK - .15, .3);
+  tw(`karte${i}`, tK, .9, { x: X + 490, y: 250, s: .55 }, 'inout');
+  titelUrteil(tb, tK + .4, u);
+  return { X, tV, tK };
+}
+
+// Plakette mit Haken / X füllen
+['x2', 'x4'].forEach(id => { el(id).innerHTML = tpl('svgXW'); });
+el('ok6').innerHTML = tpl('svgHakenW');
+// Schwenk kurz vor der nächsten Behauptung
+const panVor = (c, i) => pan2(A(satz(c).start) - .65, i);
+
+/* ---------- 0 · Intro: Wohnungstür, Schlüssel, Aktenkoffer voller Verträge, Titel, Mythos/Stimmt ---------- */
+{
+  const X0 = S(0), MX = X0 + 960, TY = 645;
+  quiz(0);
+  // Titel steigt aus der Maske
+  akteur('titel0', { x: MX, y: 255 });
+  titelEin('tt0', A(0) + .15);
+  // Tür steht da, Schlüssel fliegt ins Schloss und dreht sich
+  ['tuer0', 'licht0', 'blatt0'].forEach(id => ein(id, A(0) - .1, { x: MX, y: TY }, { y: 80 }, id === 'tuer0' ? 'whoosh' : null));
+  const tW = W('Wohnung', 1);
+  akteur('key0', { x: MX - 520, y: 820, o: 0, s: .7 });
+  tw('key0', W('erste', 1) - .2, .2, { o: 1 });
+  tw('key0', W('erste', 1) - .2, .9, { x: MX + 22, y: TY + 4, s: 1 }, 'inout', { bogen: 140 }); cue(W('erste', 1) - .2, 'whoosh');
+  landen('key0', W('erste', 1) + .7);
+  // Drehen: der Schlüssel klappt zweimal flach (Drehung um die eigene Achse)
+  tw('key0', tW - .45, .18, { sy: .25 }, 'sinus'); tw('key0', tW - .27, .18, { sy: 1 }, 'sinus'); cue(tW - .3, 'klick');
+  // Tür geht auf: warmes Licht
+  tw('key0', tW, .3, { o: 0 });
+  tw('blatt0', tW, .8, { sx: .22 }, 'inout'); cue(tW, 'plopp'); akzent(tW + .2, .03);
+  // plötzlich: Aktenkoffer springt herein, Deckel springt auf, Verträge und Briefe flattern heraus
+  const KX = MX + 430, KY = 770, tP = W('plötzlich', 2) - .15;
+  ['koffer0', 'deckel0'].forEach(id => { akteur(id, { x: KX + 300, y: KY, o: 0 }); tw(id, tP, .2, { o: 1 }); tw(id, tP, .6, { x: KX }, 'sanft', { bogen: 40 }); });
+  cue(tP, 'whoosh'); landen('koffer0', tP + .6);
+  const tAuf = W('wollen', 2) - .1;
+  tw('deckel0', tAuf, .35, { y: KY - 38, r: -12 }, 'back'); cue(tAuf, 'plopp');
+  const DINGE = ['p0a', 'p0b', 'p0c', 'p0d', 'p0e', 'p0f'];
+  const TAUS = W('Was', 3) - .4, OX = MX, OY = 630;
+  DINGE.forEach((id, k) => {
+    const start = tAuf + .1 + k * (W('alle', 2) - tAuf) / 4;
+    HOOKS.push(t => {
+      const e = $('#' + id), d = t - start;
+      if (d <= 0) { e.style.opacity = 0; e.style.visibility = 'hidden'; return; }
+      // aus dem Koffer auf eine Umlaufbahn um die Tür, am Ende wirbeln sie davon
+      const raus = E.out(clamp(d / .9)), weg = E.inout(clamp((t - TAUS - k * .04) / .55));
+      const a = -.45 - k * 1.05 + d * .75;
+      const r = 1 + .35 * weg;
+      const ox = OX + 520 * r * Math.cos(a), oy = OY + 200 * r * Math.sin(a) + 8 * Math.sin(d * 2.3 + k);
+      const x = lerp(KX, ox, raus), y = lerp(KY - 40, oy, raus) - 120 * Math.sin(Math.PI * raus) * (1 - raus);
+      const o = clamp(d / .25) * (1 - weg), s = lerp(.35, 1, raus) * (1 - .6 * weg);
+      e.style.opacity = o; e.style.visibility = o < .01 ? 'hidden' : 'visible';
+      e.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${2.5 * Math.sin(d * 1.7 + k)}deg) scale(${s})`;
+    });
+    cue(start, 'pop');
+  });
+  bump('koffer0', W('alle', 2), 1.08); wackeln('koffer0', W('verkaufen', 2), 3, 2);
+  // Was stimmt? Koffer klappt zu und geht, die Abdrücke schlagen links und rechts der Tür auf
+  tw('deckel0', TAUS - .3, .25, { y: KY, r: 0 }, 'in'); cue(TAUS - .05, 'klick');
+  aus(['koffer0', 'deckel0'], TAUS, .3);
+  [['ab0a', 'ti0a', MX - 440, W('Was', 3)], ['ab0b', 'ti0b', MX + 440, W('stimmt', 3) + .05]].forEach(([ab, ti, x, t]) => {
+    akteur(ab, { x, y: TY, o: 0, s: 1.5, r: -3 });
+    tw(ab, t, .05, { o: 1 }); tw(ab, t, .24, { s: 1 }, 'out');
+    welle(ti, t, x, TY, .8); AKTEURE.get(el(ti)).basis.r = -3;
+    cue(t, 'plopp'); akzent(t, .03);
+  });
+  huepfen('ab0a', SE(3) + .35, 20); huepfen('ab0b', SE(3) + .5, 20); cue(SE(3) + .4, 'erfolg');
+}
+
+/* ---------- 1 · „Die Kaution bekomme ich nie zurück“ – Mythos ---------- */
+panVor(4, 1);
+{
+  const { X, tK } = mythos({ i: 1, c: 4, v: 5, u: 'mythos', tb: 'tb1' });
+  const TX = X + 1180, TY = 470, PX = X + 1590, PY = 725;
+  ['tresor1', 'tuer1'].forEach(id => ein(id, tK + .25, { x: TX, y: TY }, { y: 80 }, id === 'tresor1' ? 'whoosh' : null));
+  const SCHEINE = [['gs1a', TX - 2, TY - 42], ['gs1b', TX + 4, TY - 16], ['gs1c', TX - 4, TY + 8]];
+  SCHEINE.forEach(([id, x, y]) => ein(id, tK + .25, { x, y }, { y: 80 }));
+  pop('chipKaution1', tK + .7, { x: TX, y: TY + 180 }, null);
+  ['pmHinten1', 'pmVorne1'].forEach(id => ein(id, tK + .45, { x: PX, y: PY }, { y: 60 }));
+  // Wenn du ausziehst: der Umzugskarton hüpft herein
+  const tA = W('ausziehst', 6) - .15, KX = X + 1560, KY = 395;
+  akteur('karton1', { x: KX + 200, y: KY, o: 0 });
+  tw('karton1', tA, .15, { o: 1 });
+  [0, 1, 2].forEach(k => { tw('karton1', tA + k * .26, .26, { x: KX + 200 - (k + 1) * 200 / 3 }, 'lin', { bogen: 26 }); cue(tA + (k + 1) * .26, 'klick'); });
+  landen('karton1', tA + .78);
+  // nichts kaputt: Chip mit Haken
+  pop('chipKaputt', W('nichts', 6) - .05, { x: KX, y: KY + 130 }); akzent(W('kaputt', 6), .025);
+  // bekommst du die Kaution zurück: Tür schwingt auf, Scheine fliegen ins Portemonnaie
+  const tB = W('bekommst', 6) - .1;
+  tw('tuer1', tB, .7, { sx: -.55 }, 'inout'); cue(tB, 'plopp');
+  const flieg = (id, t) => {
+    flug(id, t, .9, PX, PY - 40, 150, { s: .8 }); tw(id, t + .75, .15, { o: 0 }); cue(t, 'whoosh'); cue(t + .9, 'muenze');
+    bump('pmVorne1', t + .9, 1.06); bump('pmHinten1', t + .9, 1.06);
+  };
+  flieg('gs1a', W('Kaution', 6) - .1); flieg('gs1b', W('zurück', 6) - .1);
+  akzent(W('zurück', 6) + .3, .04);
+  // Manchmal behält der Vermieter einen Teil: der letzte Schein bleibt und wackelt
+  aus(['karton1', 'chipKaputt'], W('Manchmal', 7), .35);
+  wackeln('gs1c', W('behält', 7), 3, 3); cue(W('behält', 7), 'klick');
+  bump('gs1c', W('Teil', 7), 1.12);
+  // bis die Nebenkosten abgerechnet sind: Abrechnung kommt, wird abgehakt, dann fliegt auch der letzte Schein
+  ein('nk1', W('Nebenkosten', 7) - .3, { x: KX, y: KY + 40 }, { y: 70 }, 'whoosh');
+  akteur('ckNk', { draw: 0 }, true);
+  tw('ckNk', W('abgerechnet', 7) + .1, .4, { draw: 1 }, 'inout'); cue(W('abgerechnet', 7) + .1, 'ding');
+  bump('nk1', W('abgerechnet', 7) + .5, 1.05);
+  const tL = W('abgerechnet', 7) + .5;
+  flieg('gs1c', tL);
+  huepfen('pmVorne1', tL + 1, 14); huepfen('pmHinten1', tL + 1, 14);
+  welle('welle1', tL + 1, PX, PY, 1); cue(tL + 1, 'erfolg');
+  tw('tuer1', SE(7) - .1, .5, { sx: 1 }, 'inout');
+  textAus('tb1', SE(7) + .1);
+}
+
+/* ---------- 2 · „höchstens drei Kaltmieten“ – Stimmt ---------- */
+panVor(8, 2);
+{
+  const { X, tK } = mythos({ i: 2, c: 8, v: 9, u: 'stimmt', tb: 'tb2' });
+  const TX = X + 1580, TY = 380, BASIS = 745, SX = [1060, 1240, 1420], X4 = X + 1600;
+  ['tresor2', 'tuer2'].forEach(id => ein(id, tK + .3, { x: TX, y: TY }, { y: -60 }, id === 'tresor2' ? 'whoosh' : null));
+  pop('chipKaution2', tK + .6, { x: TX, y: TY + 140 }, null);
+  ein('grund2', tK + .15, { x: X + 1240, y: BASIS + 18 }, { y: 30 });
+  // drei Münzstapel wachsen – je einer pro Kaltmiete
+  const STAPEL = [[], [], []];
+  SX.forEach((sx, s) => {
+    WELT.insertAdjacentHTML('beforeend', `<div class="a nr" id="nr2${s}">${s + 1}</div>`);
+    for (let k = 0; k < 5; k++) {
+      const id = `st2${s}${k}`;
+      WELT.insertAdjacentHTML('beforeend', `<div class="a flach" id="${id}" data-gruppe="stapel2${s}"></div>`);
+      const t = tK + .3 + s * .2 + k * .05, y = BASIS - k * 22;
+      akteur(id, { x: X + sx, y: y - 170, o: 0 });
+      tw(id, t, .08, { o: 1 }); tw(id, t, .24, { y }, 'in'); landen(id, t + .24);
+      STAPEL[s].push(id);
+    }
+    cue(tK + .54 + s * .2, 'muenze');
+    pop(`nr2${s}`, tK + .6 + s * .2, { x: X + sx, y: BASIS + 70 }, null);
+  });
+  // ein vierter Stapel? – die Münze prallt ab, rotes X
+  WELT.insertAdjacentHTML('beforeend', '<div class="a flach" id="st4" data-frei></div>');
+  const t4 = tK + 1.15;
+  akteur('st4', { x: X4, y: BASIS - 190, o: 0 });
+  tw('st4', t4, .08, { o: 1 }); tw('st4', t4, .26, { y: BASIS }, 'in');
+  tw('st4', t4 + .26, .5, { x: X4 + 60, y: BASIS - 60, o: 0, s: .6 }, 'out', { bogen: 90 });
+  pop('x2', t4 + .26, { x: X4, y: BASIS - 110 }, 'plopp'); wackeln('x2', t4 + .5, 3, 3);
+  aus('x2', W('drei', 10) - .35, .3);
+  // in drei Raten: die Zahlen leuchten nacheinander, die Stapel wandern einzeln in den Tresor
+  [0, 1, 2].forEach(s => bump(`nr2${s}`, W('drei', 10) + s * .12, 1.2));
+  const tR = W('Raten', 10);
+  tw('tuer2', tR - .25, .6, { sx: -.55 }, 'inout'); cue(tR - .25, 'plopp');
+  const RATEN = [];
+  STAPEL.forEach((ids, s) => {
+    const t = tR + .05 + s * .45;
+    ids.slice().reverse().forEach((id, k) => { flug(id, t + k * .03, .7, TX, TY - 10, 110, { s: .45 }); tw(id, t + k * .03 + .58, .12, { o: 0 }); });
+    cue(t + .7, 'muenze'); bump('tresor2', t + .72, 1.05); RATEN.push(t + .7);
+  });
+  HOOKS.push(t => [0, 1, 2].forEach(s => el(`nr2${s}`).classList.toggle('bezahlt', t >= RATEN[s])));
+  [0, 1, 2].forEach(s => bump(`nr2${s}`, RATEN[s], 1.2));
+  tw('tuer2', RATEN[2] + .25, .5, { sx: 1 }, 'inout'); cue(RATEN[2] + .7, 'erfolg'); akzent(RATEN[2] + .3, .035);
+  aus('grund2', RATEN[2] + .5, .4);
+  textAus('tb2', A(satz(11).start) - .75);
+}
+
+/* ---------- 3 · „Nach 22 Uhr leise“ – Stimmt ---------- */
+panVor(11, 3);
+{
+  const { X, tK } = mythos({ i: 3, c: 11, v: 12, u: 'stimmt', tb: 'tb3' });
+  const HX = X + 1130, HY = 560, LX = X + 1540, LY = 655, UX = X + 1580, UY = 330;
+  ein('haus3', tK + .25, { x: HX, y: HY }, { y: 80 }, 'whoosh');
+  ein('fe3a', tK + .25, { x: HX - 54, y: HY + 45 }, { y: 80 }); ein('fe3b', tK + .25, { x: HX + 54, y: HY + 45 }, { y: 80 });
+  ['uhr3', 'stunde3', 'zeiger3'].forEach(id => ein(id, tK + .35, { x: UX, y: UY }, { y: -60 }));
+  AKTEURE.get(el('stunde3')).basis.r = 0;
+  ein('lautsprecher3', tK + .45, { x: LX, y: LY }, { x: 80 });
+  // der Lautsprecher dröhnt
+  const tStumm = W('Nachtruhe', 13) - .1, tS0 = tK + .8;
+  akteur('schall3', { x: LX + 105, y: LY - 55, o: 0 });
+  tw('schall3', tS0, .2, { o: 1 }); tw('schall3', tStumm, .3, { o: 0, s: .6 }, 'in');
+  HOOKS.push(t => {
+    [0, 1, 2].forEach(k => { el('sw' + k).style.opacity = .25 + .75 * Math.max(0, Math.sin(2 * Math.PI * (t * 2.2 - k * .22))); });
+    if (t > tS0 && t < tStumm) el('lautsprecher3').style.transform += ` scale(${1 + .03 * Math.max(0, Math.sin(2 * Math.PI * t * 4.4))})`;
+  });
+  // Zwischen 22 …: es wird Nacht, der Mond geht auf, die Uhr läuft auf 22 Uhr
+  const t22 = W('22', 13), t6 = Wab('6', t22 + .3);
+  const tN = W('Zwischen', 13) - .15;
+  HOOKS.push(t => { el('nacht3').style.opacity = .92 * E.inout(clamp((t - tN) / .9)); });
+  akteur('mond3', { x: X + 1000, y: 420, o: 0, s: .7 });
+  tw('mond3', tN, .3, { o: 1 }); tw('mond3', tN, 1.1, { y: 318, s: 1 }, 'sanft'); schweben('mond3', 3);
+  tw('zeiger3', t22 - .2, 1, { r: 720 }, 'inout'); tw('stunde3', t22 - .2, 1, { r: 300 }, 'inout'); cue(t22 - .2, 'scan');
+  // … und 6 Uhr: die Uhr läuft weiter bis 6, Chip „22–6 Uhr“
+  tw('zeiger3', t6 - .15, .8, { r: 720 + 2880 }, 'inout'); tw('stunde3', t6 - .15, .8, { r: 540 }, 'inout'); cue(t6 - .15, 'scan');
+  pop('chipNacht', t6 + .5, { x: UX, y: UY + 112 }); akzent(t6 + .5, .03);
+  // Nachtruhe: Ton aus, die Fenster werden dunkel
+  pop('stumm3', tStumm + .1, { x: LX + 100, y: LY - 55 }, 'plopp'); wackeln('stumm3', tStumm + .45, 3, 3);
+  akzent(tStumm + .1, .045);
+  [['fe3a', 0], ['fe3b', .25]].forEach(([id, d]) => { tw(id, tStumm + .3 + d, .35, { o: 0 }, 'inout'); cue(tStumm + .3 + d, 'klick'); });
+  // Was genau gilt, steht in der Hausordnung
+  const tH = W('Was', 14) - .2;
+  aus(['lautsprecher3', 'stumm3'], tH - .15, .35);
+  ein('ho3', tH, { x: X + 1545, y: 660 }, { x: 90 }, 'whoosh');
+  akteur('lupe3', { x: X + 1720, y: 860, o: 0, s: .7 });
+  tw('lupe3', W('genau', 14), .3, { o: 1 }); tw('lupe3', W('genau', 14), .6, { x: X + 1500, y: 620, s: 1 }, 'inout', { bogen: 40 });
+  tw('lupe3', W('gilt', 14) + .1, .5, { y: 690 }, 'inout');
+  HOOKS.push(t => { el('hoZeile').style.background = t > W('steht', 14) ? 'var(--warning-bg)' : ''; });
+  bump('ho3', W('steht', 14), 1.05); cue(W('steht', 14), 'ding');
+  tw('lupe3', W('Hausordnung', 14) + .1, .45, { x: X + 1720, y: 860, o: 0, s: .7 }, 'inout');
+  huepfen('ho3', W('Hausordnung', 14) + .4, 12); akzent(W('Hausordnung', 14), .03);
+  textAus('tb3', SE(14) + .1);
+}
+
+/* ---------- 4 · „Ich brauche jede Versicherung“ – Mythos ---------- */
+panVor(15, 4);
+{
+  const { X, tK } = mythos({ i: 4, c: 15, v: 16, u: 'mythos', tb: 'tb4' });
+  const KX = X + 1120, KY = 720;
+  ['koffer4', 'deckel4'].forEach(id => ein(id, tK + .25, { x: KX, y: KY }, { x: -80 }, id === 'koffer4' ? 'whoosh' : null));
+  const tAuf = tK + .75;
+  tw('deckel4', tAuf, .35, { y: KY - 40, r: -12 }, 'back'); cue(tAuf, 'plopp');
+  // Der Koffer legt einen Stapel Verträge hin – sie fächern sich auf
+  const V = ['v4a', 'v4b', 'v4c', 'v4d', 'v4e'], VX = [1040, 1190, 1340, 1490, 1640];
+  V.forEach((id, k) => {
+    akteur(id, { x: KX, y: KY - 30, o: 0, s: .4 });
+    const t = tAuf + .15 + k * .12;
+    tw(id, t, .1, { o: 1 }); tw(id, t, .75, { x: X + VX[k], y: 420, s: 1 }, 'sinus', { bogen: 80 }); landen(id, t + .75); cue(t, 'pop');
+  });
+  // Viele brauchst du nicht: vier rutschen zurück in den Koffer, einer bleibt
+  const tZ = W('brauchst', 17) - .1;
+  [0, 1, 3, 4].forEach((k, n) => {
+    const t = tZ + n * .14;
+    tw(V[k], t, .8, { x: KX, y: KY - 30, s: .35 }, 'sinus', { bogen: 40 }); tw(V[k], t + .6, .15, { o: 0 }); cue(t, 'whoosh');
+  });
+  const tZu = tZ + .42 + .75;
+  tw('deckel4', tZu, .22, { y: KY, r: 0 }, 'in'); cue(tZu + .2, 'klick'); landen('koffer4', tZu + .22);
+  akzent(W('nicht', 17), .035);
+  tw('v4c', W('nicht', 17) + .1, .7, { x: X + 1330, y: 470, s: 1.6 }, 'inout');
+  // Unterschreib nie sofort: der Stift will unterschreiben – X, der Stift zieht sich zurück
+  const tU = W('Unterschreib', 18) - .2;
+  akteur('stift4', { x: X + 1700, y: 320, o: 0, s: .8 });
+  tw('stift4', tU, .2, { o: 1 }); tw('stift4', tU, .6, { x: X + 1400, y: 470, s: 1 }, 'inout', { bogen: 40 });
+  const tNie = W('nie', 18);
+  pop('x4', tNie, { x: X + 1480, y: 330 }, 'plopp'); akzent(tNie, .045);
+  wackeln('stift4', tNie + .05, 3, 3);
+  tw('stift4', W('sofort', 18) + .15, .55, { x: X + 1700, y: 300, o: 0, s: .8 }, 'inout', { bogen: 30 });
+  wackeln('x4', W('sofort', 18), 2, 3);
+  // Nimm den Vertrag mit nach Hause und frag jemanden
+  aus('x4', W('Nimm', 19) - .2, .3);
+  ein('haus4', W('Nimm', 19) - .1, { x: X + 1600, y: 700 }, { x: 80 }, 'whoosh');
+  const tV = W('Vertrag', 19);
+  flug('v4c', tV, .9, X + 1600, 715, 160, { s: .3 }); tw('v4c', tV + .78, .12, { o: 0 }); cue(tV, 'whoosh');
+  bump('haus4', tV + .9, 1.08); cue(tV + .9, 'plopp');
+  const tF = W('frag', 19) - .15;
+  ein('handy4', tF - .1, { x: X + 1560, y: 420 }, { y: 70 });
+  pop('frage4', tF + .25, { x: X + 1655, y: 330 }); huepfen('frage4', W('jemanden', 19) + .2, 14);
+  wackeln('handy4', W('jemanden', 19), 3, 2); cue(W('jemanden', 19), 'tipp');
+  textAus('tb4', SE(19) + .1);
+}
+
+/* ---------- 5 · „Haftpflicht ist sinnvoll“ – Stimmt ---------- */
+panVor(20, 5);
+{
+  const { X, tK } = mythos({ i: 5, c: 20, v: 21, u: 'stimmt', tb: 'tb5' });
+  const HX = X + 1090, HY = 440, GX = X + 1215, GY = 425, NX = X + 1560, NY = 440;
+  ein('handy5', tK + .25, { x: HX, y: HY }, { y: 70 }, 'whoosh');
+  akteur('riss5', { x: HX, y: HY - 4, draw: 0, o: 0 });
+  ein('glas5', tK + .4, { x: GX, y: GY }, { y: 70 });
+  // aus Versehen etwas kaputt: das Glas kippt auf das Handy, Wasser, Sprung im Display
+  const tKipp = W('Versehen', 22) - .1;
+  tw('glas5', tKipp, .45, { r: -78 }, 'in'); cue(tKipp + .4, 'plopp');
+  for (let k = 0; k < 5; k++) {
+    const id = 'tr5' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a tropfen" id="${id}" data-frei></div>`);
+    const t = tKipp + .4 + k * .08;
+    akteur(id, { x: GX - 70, y: GY + 10, o: 0, s: .6 });
+    tw(id, t, .06, { o: 1 }); tw(id, t, .45, { x: HX - 30 + k * 16, y: HY + 30 + (k % 2) * 20, s: 1 }, 'in', { bogen: 30 }); tw(id, t + .45, .25, { o: 0, s: 1.4 });
+  }
+  const tKa = W('kaputt', 22);
+  set('riss5', tKa, { o: 1 }); tw('riss5', tKa, .35, { draw: 1 }, 'inout'); cue(tKa, 'kritzeln');
+  wackeln('handy5', tKa + .05, 3, 3); wackeln('riss5', tKa + .05, 3, 3); akzent(tKa + .1, .035);
+  tw('glas5', W('Beispiel', 22) - .3, .55, { r: 0 }, 'sanft'); cue(W('Beispiel', 22) - .05, 'klick');
+  bump('handy5', W('Handy', 22), 1.08);
+  // Wasserschaden beim Nachbarn: das Haus nebenan, Wasser tropft aufs Dach
+  ein('haus5', W('oder', 22) - .15, { x: NX, y: NY }, { x: 80 }, 'whoosh');
+  const tWs = W('Wasserschaden', 22) - .1;
+  for (let k = 0; k < 6; k++) {
+    const id = 'tn5' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a tropfen" id="${id}" data-frei></div>`);
+    const t = tWs + k * .12, x = NX - 60 + (k * 37) % 120;
+    akteur(id, { x, y: NY - 190, o: 0 });
+    tw(id, t, .06, { o: 1 }); tw(id, t, .35, { y: NY - 70 - Math.abs(x - NX) * .55 }, 'in'); tw(id, t + .35, .2, { o: 0, s: 1.4 });
+  }
+  wackeln('haus5', W('Nachbarn', 22) - .1, 3, 2.5); cue(W('Nachbarn', 22) - .1, 'plopp');
+  // kann das sehr teuer werden: die Rechnung kommt, das Portemonnaie zittert
+  const tT = W('teuer', 22) - .15;
+  ['pmHinten5', 'pmVorne5'].forEach(id => ein(id, W('kann', 22) - .2, { x: X + 1060, y: 725 }, { y: 60 }));
+  pop('rech5', tT, { x: X + 1580, y: 715 }, 'plopp'); wackeln('rech5', tT + .4, 3, 3); akzent(tT + .2, .045);
+  wackeln('pmVorne5', tT + .5, 4, 2.5); wackeln('pmHinten5', tT + .5, 4, 2.5);
+  // Die Haftpflicht zahlt dann: das Schild fällt dazwischen und fängt die Rechnung ab
+  const tH = W('Haftpflicht', 23) - .25;
+  akteur('schild5', { x: X + 1320, y: 520, o: 0 });
+  tw('schild5', tH, .15, { o: 1 }); tw('schild5', tH, .4, { y: 700 }, 'in'); landen('schild5', tH + .4); cue(tH + .4, 'plopp');
+  pop('chipHaft', tH + .5, { x: X + 1320, y: 815 }, null);
+  const tZ = W('zahlt', 23) - .1;
+  flug('rech5', tZ, .6, X + 1330, 700, 60, { s: .25 }); tw('rech5', tZ + .5, .1, { o: 0 }); cue(tZ, 'whoosh');
+  bump('schild5', tZ + .6, 1.15); welle('welle5', tZ + .62, X + 1320, 700, 1); cue(tZ + .62, 'erfolg'); akzent(tZ + .6, .04);
+  huepfen('pmVorne5', tZ + .9, 14); huepfen('pmHinten5', tZ + .9, 14);
+  // ein paar Euro im Monat: je Monat eine kleine Münze
+  [['m5a', W('Euro', 24) - .35], ['m5b', W('Monat', 24) - .3]].forEach(([id, t]) => {
+    akteur(id, { x: X + 1060, y: 700, o: 0, s: .5 });
+    tw(id, t, .1, { o: 1 }); flug(id, t, .75, X + 1320, 690, 120, { s: 1 }); tw(id, t + .62, .13, { o: 0, s: .6 });
+    HOOKS.push(tt => { const p = tt - t; if (p > 0 && p < .75) el(id).style.transform += ` scaleX(${Math.cos(p * Math.PI * 4)})`; });
+    cue(t + .75, 'muenze'); bump('schild5', t + .75, 1.08);
+  });
+  textAus('tb5', SE(24) + .1);
+}
+
+/* ---------- 6 · „Umziehen: neu anmelden“ – Stimmt ---------- */
+panVor(25, 6);
+{
+  const { X, tK } = mythos({ i: 6, c: 25, v: 26, u: 'stimmt', tb: 'tb6' });
+  const AX = X + 1020, NX = X + 1300, HY = 420, KY = 525, RX = X + 1600, RY = 400;
+  ein('alt6', tK + .25, { x: AX, y: HY }, { y: 70 }, 'whoosh');
+  ein('neu6', tK + .35, { x: NX, y: HY }, { y: 70 });
+  ein('amt6', tK + .45, { x: RX, y: RY }, { x: 80 });
+  pop('chipAmt6', tK + .7, { x: RX, y: RY + 130 }, null);
+  ein('karton6', tK + .5, { x: AX, y: KY }, { y: 50 });
+  // Der Umzugskarton hüpft von der alten zur neuen Wohnung
+  const tI = W('Innerhalb', 27) - .3;
+  [0, 1, 2].forEach(k => { tw('karton6', tI + k * .28, .28, { x: AX + (k + 1) * (NX - AX) / 3 }, 'lin', { bogen: 34 }); cue(tI + (k + 1) * .28, 'klick'); });
+  landen('karton6', tI + .84); huepfen('neu6', tI + .9, 10);
+  // zwei Wochen: 14 Tage laufen ab
+  el('tage6').innerHTML = Array.from({ length: 14 }, () => '<span></span>').join('');
+  const TAGE = [...el('tage6').children];
+  ein('tage6', tK + .6, { x: X + 1320, y: 700 }, { y: 50 });
+  const tZw = W('zwei', 27) - .1, tWo = W('Wochen', 27) + .35;
+  HOOKS.push(t => TAGE.forEach((s, k) => s.classList.toggle('an', t >= tZw + k * (tWo - tZw) / 14)));
+  cue(tZw, 'scan');
+  pop('chipWochen', tWo, { x: X + 1320, y: 790 }); akzent(tWo, .03);
+  // beim Bürgeramt: die Anmeldung fliegt von der neuen Wohnung zum Amt
+  const tB = W('Bürgeramt', 27) - .15;
+  akteur('meld6', { x: NX, y: HY - 20, o: 0, s: .5 });
+  tw('meld6', tB, .12, { o: 1 }); flug('meld6', tB, .8, RX, RY + 10, 130, { s: 1 }); tw('meld6', tB + .68, .12, { o: 0, s: .6 }); cue(tB, 'whoosh');
+  bump('amt6', tB + .8, 1.08); cue(tB + .8, 'plopp');
+  // deiner neuen Stadt: Haken am Amt
+  const tS = W('Stadt', 27) - .1;
+  pop('ok6', tS, { x: RX + 62, y: RY - 70 }, 'erfolg'); akzent(tS, .04);
+  huepfen('neu6', tS + .2, 12); huepfen('karton6', tS + .3, 10);
+  textAus('tb6', A(satz(28).start) - 1.6);
+}
+
+/* ---------- 7 · Wie viele hattest du richtig? ---------- */
+pan2(A(satz(28).start) - 1.2, 7);
+{
+  const X = S(7);
+  quiz(7);
+  const KARTEN = [['Kaution nie zurück', 'mythos'], ['Höchstens 3 Kaltmieten', 'stimmt'], ['Ab 22 Uhr leise', 'stimmt'],
+    ['Jede Versicherung', 'mythos'], ['Haftpflicht sinnvoll', 'stimmt'], ['Umzug: neu anmelden', 'stimmt']];
+  $('#standM').innerHTML = `${tpl('svgX')}<span><span id="zM">0</span> × Mythos</span>`;
+  $('#standS').innerHTML = `${tpl('svgHaken')}<span><span id="zS">0</span> × Stimmt</span>`;
+  const t0 = A(satz(28).start) - .55;
+  ein('standM', t0, { x: X + 760, y: 290 }, { y: -50 }, 'whoosh'); ein('standS', t0 + .1, { x: X + 1160, y: 290 }, { y: -50 });
+  const dk = (W('richtig', 28) + .4 - (t0 + .4)) / KARTEN.length, LAND = [];
+  KARTEN.forEach(([txt, u], k) => {
+    const id = 'mini' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a mini" id="${id}">${txt}<div class="abdruck ${u}" id="mab${k}">${u === 'mythos' ? 'Mythos' : 'Stimmt'}</div></div>`);
+    const x = X + 960 + (k % 3 - 1) * 400, y = 525 + Math.floor(k / 3) * 195, ts = t0 + .4 + k * dk;
+    akteur(id, { x: x - 260, y: y + 160, o: 0, s: .6 });
+    tw(id, ts, .15, { o: 1 }); tw(id, ts, .85, { x, y, s: 1 }, 'inout', { bogen: 50 }); cue(ts, 'whoosh');
+    akteur('mab' + k, { o: 0, s: 1.5, r: -3 }, true); tw('mab' + k, ts + .45, .04, { o: 1 }); tw('mab' + k, ts + .45, .2, { s: 1 }, 'out');
+    cue(ts + .45, 'plopp'); LAND.push([ts + .45, u]);
+    bump(u === 'mythos' ? 'standM' : 'standS', ts + .45, 1.08);
+  });
+  HOOKS.push(t => {
+    $('#zM').textContent = LAND.filter(([z, u]) => u === 'mythos' && t >= z).length;
+    $('#zS').textContent = LAND.filter(([z, u]) => u === 'stimmt' && t >= z).length;
+  });
+  const tE = LAND.at(-1)[0] + .4;
+  huepfen('standM', tE, 16); huepfen('standS', tE + .12, 16); cue(tE, 'erfolg'); akzent(tE, .04);
+}
+
+/* ---------- Abspann ---------- */
+const AB = Math.max(ENDE_SPRACHE, 0) + 2.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
