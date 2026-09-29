@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der schlechte Tag: Mais Post</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+.buehne.abend{width:900px;height:720px;border-radius:48px;background:linear-gradient(160deg,var(--b600),var(--b700))}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:72px}
+.block .titel + .titel{margin-top:8px}
+.block.gross .titel{font:800 104px/112px Inter;letter-spacing:-.03em}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.fenster{width:170px;height:140px;border-radius:18px;border:9px solid var(--b500);background:var(--b300);box-shadow:0 6px 18px rgba(22,19,37,.2);overflow:hidden}
+.fenster .nacht{position:absolute;inset:0;background:linear-gradient(var(--b700),var(--ink))}
+.fenster .kreuz{position:absolute;left:50%;top:0;bottom:0;width:7px;margin-left:-3.5px;background:var(--b500)}
+.umsl{width:150px}
+.namens{width:88px;height:32px;border-radius:6px;background:var(--b100);color:var(--b700);font:800 22px/32px Inter;text-align:center;
+  box-shadow:0 2px 6px rgba(22,19,37,.15)}
+.namens.klein{width:52px;height:22px;font:800 14px/22px Inter;border-radius:4px}
+.leerschild{width:92px;height:34px;border-radius:6px;border:3px dashed var(--error);opacity:0}
+/* Briefe */
+.blatt{width:300px;height:380px;padding:26px 26px;border-radius:18px;background:var(--surface);box-shadow:0 14px 36px rgba(22,19,37,.22);
+  display:flex;flex-direction:column;gap:12px}
+.blatt small{font:700 17px/20px Inter;color:var(--n500);white-space:nowrap}
+.blatt b{font:800 40px/46px Inter;letter-spacing:-.01em;color:var(--ink);display:inline-block;transform-origin:left center}
+.blatt b.rot{color:var(--error-text)}
+.blatt .ln{height:10px;border-radius:5px;background:var(--n200);flex:none}
+.blatt .zeile{display:flex;align-items:center;gap:12px;font:700 22px/28px Inter;color:var(--ink);white-space:nowrap;position:relative}
+.blatt .zeile i{width:30px;height:30px;border-radius:8px;background:var(--b100);flex:none;display:flex;align-items:center;justify-content:center}
+.blatt .zeile i svg{width:18px}
+.blatt .strich{position:absolute;left:-8px;top:0;width:220px;height:28px}
+.gebuehr{padding:10px 20px;border-radius:999px;background:var(--error);color:var(--surface);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 6px 16px rgba(226,85,106,.35)}
+.blatt.klar .kopf{display:flex;align-items:center;gap:12px;height:44px}
+.blatt.klar .kopf u{width:44px;height:44px;border-radius:10px;background:var(--b500);flex:none}
+.blatt.klar .kopf span{display:flex;flex-direction:column;gap:8px;flex:1}
+.blatt.klar .frist{display:flex;align-items:center;gap:12px;height:40px;margin-top:6px}
+.blatt.klar .frist i{width:36px;height:36px;border-radius:9px;background:var(--error-bg);flex:none;display:flex;align-items:center;justify-content:center}
+.blatt.klar .frist i svg{width:22px}
+.blatt.klar .text{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.rahmen{position:absolute;border:5px solid var(--b500);border-radius:14px}
+.chip{display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;font:800 28px/32px Inter;white-space:nowrap;
+  background:var(--b500);color:var(--surface);box-shadow:0 6px 20px rgba(90,63,230,.3)}
+/* Kalender */
+.wochen{width:300px;height:196px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.25);overflow:hidden}
+.wochen .kopf{height:44px;background:var(--b500);display:flex;gap:130px;justify-content:center;align-items:center}
+.wochen .kopf i{width:14px;height:14px;border-radius:999px;background:var(--b700)}
+.wochen .netz{display:grid;grid-template-columns:repeat(7,30px);gap:8px;padding:16px 20px;justify-content:center}
+.wochen .netz s{height:30px;border-radius:8px;background:var(--n200);text-decoration:none}
+.tag1{width:170px;height:190px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);overflow:hidden;text-align:center}
+.tag1 .kopf{height:48px;background:var(--b500);color:var(--surface);font:800 24px/48px Inter}
+.tag1 b{display:block;font:800 100px/136px Inter;color:var(--ink);letter-spacing:-.04em}
+.woche{display:flex;gap:14px}
+.woche .t{width:92px;height:96px;border-radius:18px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  font:800 24px/28px Inter;color:var(--b600)}
+.woche .t u{width:34px;height:34px;border-radius:999px;background:var(--n200);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.woche .t u svg{width:22px}
+/* Handy-Bildschirme */
+.schirm{width:210px;height:378px;border-radius:16px;overflow:hidden;background:var(--bg)}
+.scr{position:absolute;inset:0;padding:14px 12px;display:flex;flex-direction:column;gap:9px;background:var(--bg)}
+.scr .ak{font:800 13px/16px Inter;color:var(--b500)}
+.scr h4{font:800 24px/28px Inter;color:var(--ink)}
+.mon{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.mon s{height:21px;border-radius:5px;background:var(--n200);text-decoration:none}
+.mon s.heute{background:var(--b500)}
+.termin{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);box-shadow:0 2px 6px rgba(22,19,37,.08);font:700 14px/18px Inter;color:var(--ink)}
+.termin i{width:6px;height:28px;border-radius:3px;background:var(--b500)}
+.termin em{margin-left:auto;font-style:normal;width:22px;height:22px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.termin em svg{width:14px}
+.app-zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:600 13px/16px Inter;color:var(--ink);box-shadow:0 2px 6px rgba(22,19,37,.06)}
+.app-zeile i{width:24px;height:24px;border-radius:7px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app-zeile i svg{width:14px}
+.app-zeile em{margin-left:auto;font:700 11px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:4px 7px}
+.app-zeile.wichtig{outline:3px solid var(--b300)}
+.app-toast{margin-top:auto;align-self:center;padding:7px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;white-space:nowrap}
+.chatkopf{display:flex;align-items:center;gap:8px;padding:6px;margin:-14px -12px 4px;padding:12px;background:var(--b500);color:var(--surface);font:800 15px/18px Inter}
+.chatkopf i{width:26px;height:26px;border-radius:999px;background:var(--b200)}
+.bl{align-self:flex-end;width:128px;background:var(--b500);border-radius:14px 14px 4px 14px;padding:9px;display:flex;flex-direction:column;gap:7px}
+.bl i{display:block;height:8px;border-radius:4px;background:var(--b200);transform-origin:left center}
+.bild{align-self:flex-end;width:92px;height:70px;border-radius:12px;background:var(--b500);padding:7px}
+.bild div{width:100%;height:100%;border-radius:6px;background:var(--surface);padding:8px 8px;display:flex;flex-direction:column;gap:5px}
+.bild div s{height:5px;border-radius:3px;background:var(--n300);text-decoration:none}
+.hk{align-self:flex-end;font:800 14px/14px Inter;color:var(--success-text);letter-spacing:-3px}
+.label{padding:10px 20px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 22px/26px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.1)}
+/* Zimmer */
+.regal{width:230px;height:18px;border-radius:6px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 6px 12px rgba(22,19,37,.12)}
+.ordnerschrift{font:800 17px/1 Inter;color:var(--b700);writing-mode:vertical-rl;transform-origin:center;white-space:nowrap}
+.tisch{width:440px;height:160px}
+/* Zurückspulen */
+#spul{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#schleier{position:absolute;inset:0;background:var(--b700)}
+.streif{position:absolute;left:0;top:0;border-radius:999px}
+.band{position:absolute;left:0;top:-300px;height:1680px}
+#rTitel{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;align-items:center;gap:26px}
+#rTitel .titel{font:800 76px/88px Inter;letter-spacing:-.02em;color:var(--surface);white-space:nowrap}
+#rTitel .ic{width:92px;height:92px}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgOrdner"><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></template>
+<template id="svgKal"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="var(--error)"/><rect x="3" y="5" width="18" height="5" rx="2" fill="var(--error-text)"/><path d="M8 3v4M16 3v4" stroke="var(--error-text)" stroke-width="2.4" stroke-linecap="round"/></svg></template>
+<template id="portraitMai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Abend: Mai kommt müde nach Hause, der Briefkasten quillt über -->
+  <div class="a buehne abend" id="bue0"></div>
+  <div class="a fenster" id="fenster0"><div class="nacht" id="nacht0"></div><div class="kreuz"></div>
+    <svg id="mond0" viewBox="0 0 40 40" style="position:absolute;left:22px;top:16px;width:46px"><path d="M26 6a15 15 0 1 0 10 24A13 13 0 0 1 26 6Z" fill="var(--warning-bg)"/></svg></div>
+  <div class="a" id="uhr0" style="width:120px;height:120px"></div>
+  <div class="a auf-brand" id="kasten0" style="width:240px" data-gruppe="kasten0">{{briefkasten-wand}}</div>
+  <div class="a" id="post0" style="width:120px;height:60px;transform-origin:50% 100%" data-gruppe="kasten0"><svg viewBox="0 0 120 60">
+    <rect x="10" y="14" width="44" height="50" rx="4" fill="var(--surface)" transform="rotate(-6 32 40)"/>
+    <rect x="42" y="4" width="40" height="60" rx="4" fill="var(--warning-bg)"/><circle cx="62" cy="20" r="9" fill="var(--error)"/>
+    <rect x="70" y="18" width="42" height="46" rx="4" fill="var(--b100)" transform="rotate(7 90 40)"/></svg></div>
+  <div class="a auf-brand" id="stuhl0" style="width:240px" data-gruppe="stuhl0">{{stuhl}}</div>
+  <div class="a" id="haufen0" style="width:170px;height:84px" data-gruppe="stuhl0"></div>
+  <div class="a umsl" id="fl1" data-frei></div><div class="a umsl" id="fl2" data-frei></div><div class="a umsl" id="fl3" data-frei></div>
+  <div class="a" id="flyer0a" style="width:150px" data-frei>{{flyer}}</div>
+  <div class="a" id="flyer0b" style="width:150px" data-frei>{{flyer~b}}</div>
+  <div class="a portrait" id="mai0" style="width:210px;height:210px"></div>
+
+  <!-- 1 · Drei Wochen später: Briefberg, Mahnung -->
+  <div class="a buehne abend" id="bue1"></div>
+  <div class="a wochen" id="kal1"><div class="kopf"><i></i><i></i></div><div class="netz" id="netz1"></div></div>
+  <div class="a auf-brand" id="stuhl1" style="width:240px" data-gruppe="stapel">{{stuhl~1}}</div>
+  <div class="a portrait" id="mai1" style="width:200px;height:200px"></div>
+  <div class="a" id="umH1" style="width:380px" data-gruppe="post1">{{umschlag-hinten}}</div>
+  <div class="a" id="umO1" style="width:380px;transform-origin:50% 31.25%" data-gruppe="post1">{{umschlag-offen}}</div>
+  <div class="a blatt" id="blatt1" data-gruppe="post1"><small>Rundfunkbeitrag</small><b class="rot" id="mahn1">Mahnung</b>
+    <div class="ln"></div><div class="ln" style="width:86%"></div><div class="ln" style="width:92%"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:78%"></div></div>
+  <div class="a" id="umV1" style="width:380px" data-gruppe="post1">{{umschlag-vorne}}</div>
+  <div class="a" id="umK1" style="width:380px;transform-origin:50% 31.25%" data-gruppe="post1">{{umschlag-klappe}}</div>
+  <div class="a gebuehr" id="geb1" data-gruppe="post1">+ Gebühr</div>
+
+  <!-- 2 · Termin verpasst, Brief verloren -->
+  <div class="a buehne abend" id="bue2"></div>
+  <div class="a blatt" id="blatt2"><small id="abs2">Ausländerbehörde</small><b id="kopf2">Termin</b>
+    <div class="zeile" id="datum2"><i class="kalI"></i><span>Mo · 9:00 Uhr</span>
+      <svg class="strich" id="strich2" viewBox="0 0 220 28"><path class="zeichnen" pathLength="1" d="M4 16L214 12" stroke="var(--error)" stroke-width="7" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></svg></div>
+    <div class="ln"></div><div class="ln" style="width:84%"></div><div class="ln" style="width:92%"></div><div class="ln" style="width:55%"></div></div>
+  <div class="a plakette rot" id="x2" data-frei></div>
+  <div class="a auf-brand" id="kasten2" style="width:240px" data-gruppe="kasten2">{{briefkasten-wand~2}}</div>
+  <div class="a leerschild" id="leer2" data-gruppe="kasten2"></div>
+  <div class="a" id="brief2" style="width:150px" data-frei>{{brief}}</div>
+  <div class="a frage" id="frage2">?</div>
+
+  <!-- 3 · Tag eins, richtig: Name an Briefkasten und Klingel -->
+  <div class="a buehne hell" id="bue3"></div>
+  <div class="a tag1" id="tag3"><div class="kopf">Tag</div><b>1</b></div>
+  <div class="a" id="kasten3" style="width:240px" data-gruppe="kasten3">{{briefkasten-wand~3}}</div>
+  <div class="a" id="klingel3" style="width:260px" data-gruppe="klingel3">{{klingel}}</div>
+  <div class="a" id="karton3" style="width:230px">{{karton}}</div>
+  <div class="a portrait" id="mai3" style="width:200px;height:200px"></div>
+  <div class="a namens" id="nm3a" data-gruppe="kasten3">Mai</div>
+  <div class="a namens klein" id="nm3b" data-gruppe="klingel3">Mai</div>
+
+  <!-- 4 · Jeden Abend: reinschauen, Werbung ins Altpapier, wichtige Briefe sofort öffnen -->
+  <div class="a buehne hell" id="bue4"></div>
+  <div class="a woche" id="woche4"></div>
+  <div class="a" id="kasten4" style="width:240px" data-gruppe="kasten4">{{briefkasten-wand~4}}</div>
+  <div class="a namens" id="nm4" data-gruppe="kasten4">Mai</div>
+  <div class="a" id="tonne4" style="width:220px" data-gruppe="tonne4">{{tonne-blau}}</div>
+  <div class="a" id="deckel4" style="width:220px;transform-origin:21% 28%" data-gruppe="tonne4">{{tonne-deckel}}</div>
+  <div class="a" id="flyer4" style="width:140px" data-frei>{{flyer~4}}</div>
+  <div class="a portrait" id="mai4" style="width:190px;height:190px"></div>
+  <div class="a" id="brief4" style="width:150px" data-frei>{{brief~4}}</div>
+  <div class="a" id="umH4" style="width:360px" data-gruppe="post4">{{umschlag-hinten~4}}</div>
+  <div class="a" id="umO4" style="width:360px;transform-origin:50% 31.25%" data-gruppe="post4">{{umschlag-offen~4}}</div>
+  <div class="a blatt klar" id="blatt4" style="height:320px" data-gruppe="post4">
+    <div class="kopf" id="kopf4"><u></u><span><div class="ln" style="width:80%"></div><div class="ln" style="width:55%"></div></span></div>
+    <div class="frist" id="frist4"><i class="kalI"></i><div class="ln" style="width:120px;background:var(--error-bg);height:14px;border-radius:7px"></div></div>
+    <div class="text" id="text4"><div class="ln"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:94%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:82%"></div></div>
+    <div class="rahmen" id="r4a" style="left:14px;top:18px;width:272px;height:60px"></div>
+    <div class="rahmen" id="r4b" style="left:14px;top:86px;width:190px;height:56px"></div>
+    <div class="rahmen" id="r4c" style="left:14px;top:152px;width:272px;height:112px"></div></div>
+  <div class="a" id="umV4" style="width:360px" data-gruppe="post4">{{umschlag-vorne~4}}</div>
+  <div class="a" id="umK4" style="width:360px;transform-origin:50% 31.25%" data-gruppe="post4">{{umschlag-klappe~4}}</div>
+  <div class="a chip" id="c4a">Wer?</div>
+  <div class="a chip" id="c4b">Bis wann?</div>
+  <div class="a chip" id="c4c">Was tun?</div>
+
+  <!-- 5 · Handy: Termin eintragen, Helper App „Dokumente“, Jonas fragen -->
+  <div class="a buehne hell" id="bue5"></div>
+  <div class="a blatt" id="termin5" style="width:170px;height:210px;padding:16px;gap:8px" data-frei><small style="font-size:12px">Ausländerbehörde</small><b style="font-size:24px;line-height:28px">Termin</b>
+    <div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:60%"></div></div>
+  <div class="a" id="brief5" style="width:170px" data-frei>{{brief~5}}</div>
+  <div class="a portrait" id="mai5" style="width:190px;height:190px"></div>
+  <div class="a frage" id="frage5" data-frei>?</div>
+  <div class="a" id="handy5" style="width:560px" data-gruppe="handy5">{{handy}}</div>
+  <div class="a schirm" id="schirm5" data-gruppe="handy5">
+    <div class="scr" id="scrKal"><div class="ak">Kalender</div><h4>Oktober</h4>
+      <div class="mon" id="mon5"></div>
+      <div class="termin" id="ter5"><i></i><span>Termin</span><em id="terOk"></em></div></div>
+    <div class="scr" id="scrApp"><div class="ak">Azubis Plus</div><h4>Dokumente</h4>
+      <div class="app-zeile"><i></i><span>Verträge</span><em>2</em></div>
+      <div class="app-zeile"><i></i><span>Ausweise</span><em>1</em></div>
+      <div class="app-zeile wichtig" id="rowW"><i></i><span>Wichtig</span><em id="anzW">2</em></div>
+      <div class="app-toast" id="toast5">✓ Gespeichert</div></div>
+    <div class="scr" id="scrChat"><div class="chatkopf"><i></i><span>Jonas</span></div>
+      <div class="bild" id="bild5"><div><s></s><s style="width:70%"></s><s style="width:85%"></s><s style="width:50%"></s></div></div>
+      <div class="bl" id="bl5"><i id="z5a"></i><i id="z5b" style="width:80%"></i><i id="z5c" style="width:55%"></i></div>
+      <div class="hk" id="hk5">✓✓</div></div>
+  </div>
+  <div class="a label" id="lbl5">Azubis Plus Helper</div>
+
+  <!-- 6 · Also: aufgeräumt, Tee, keine bösen Überraschungen -->
+  <div class="a buehne hell" id="bue6"></div>
+  <div class="a" id="kasten6" style="width:220px" data-gruppe="kasten6">{{briefkasten-wand~6}}</div>
+  <div class="a namens" id="nm6" data-gruppe="kasten6">Mai</div>
+  <div class="a regal" id="regal6" data-gruppe="regal6"></div>
+  <div class="a" id="ordner6" style="width:200px" data-gruppe="regal6">{{ordner}}</div>
+  <div class="a ordnerschrift" id="oschrift6" data-gruppe="regal6">Wichtig</div>
+  <div class="a" id="ordner6b" style="width:200px" data-gruppe="regal6">{{ordner~b}}</div>
+  <div class="a portrait" id="mai6" style="width:210px;height:210px"></div>
+  <div class="a tisch" id="tisch6" style="width:540px;height:150px" data-gruppe="tisch6"><svg viewBox="0 0 540 150"><rect x="44" y="20" width="16" height="130" rx="6" fill="var(--b600)"/><rect x="480" y="20" width="16" height="130" rx="6" fill="var(--b600)"/>
+    <rect x="0" y="4" width="540" height="24" rx="10" fill="var(--b700)"/><rect x="0" y="0" width="540" height="22" rx="10" fill="var(--b400)"/></svg></div>
+  <div class="a" id="tasse6" style="width:160px" data-gruppe="tisch6">{{tasse}}</div>
+  <div class="a" id="dampf6" style="width:80px;height:90px" data-gruppe="tisch6"><svg viewBox="0 0 80 90">
+    <path id="d6a" d="M24 84c-10-12 10-20 0-34s10-22 0-40" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path id="d6b" d="M50 84c-10-12 10-20 0-34s10-22 0-40" stroke="var(--b200)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="a blatt" id="blatt6" style="width:150px;height:160px;padding:16px;gap:9px" data-gruppe="tisch6"><div class="ln" style="width:60%;background:var(--b300)"></div>
+    <div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:50%"></div></div>
+  <div class="a plakette gruen" id="ok6a" data-frei></div>
+  <div class="a plakette gruen" id="ok6b" data-frei></div>
+  <div class="a plakette gruen" id="ok6c" data-frei></div>
+</div></div>
+
+<!-- Zurückspulen: liegt über der Kamera -->
+<div id="spul">
+  <div id="schleier"></div>
+  <div id="streifen"></div>
+  <div class="a" id="pauseIc" style="width:250px;height:250px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <rect x="88" y="78" width="26" height="94" rx="8" fill="var(--b500)"/><rect x="136" y="78" width="26" height="94" rx="8" fill="var(--b500)"/></svg></div>
+  <div class="a" id="rewIc" style="width:250px;height:250px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <g id="rewTri"><path d="M126 82v86l-62-43Z" fill="var(--b500)"/><path d="M190 82v86l-62-43Z" fill="var(--b500)"/></g></svg></div>
+  <div class="a" id="uhrR" style="width:230px;height:230px"></div>
+  <div id="rTitel"><div class="ic" id="rIc"><svg viewBox="0 0 92 92"><path d="M44 18v56L8 46Z" fill="var(--surface)"/><path d="M84 18v56L48 46Z" fill="var(--surface)"/></svg></div>
+    <div class="block" id="tbR" style="position:relative;left:0;width:auto;height:auto"><div class="titel">Nochmal – aber richtig</div></div></div>
+  <div id="wisch"></div>
+</div>
+
+<div class="block gross" id="tb0"><div class="titel">Mais Post</div></div>
+<div class="block" id="tb1"><div class="titel">Mahnung + Gebühr</div></div>
+<div class="block" id="tb2"><div class="titel">Termin verpasst ·</div><div class="titel">Brief verloren</div></div>
+<div class="block" id="tb3"><div class="titel">1. Name an Briefkasten</div><div class="titel">&amp; Klingel</div></div>
+<div class="block" id="tb4"><div class="titel">2. Täglich schauen ·</div><div class="titel">3. Wichtiges</div><div class="titel">sofort öffnen</div></div>
+<div class="block" id="tb5"><div class="titel">4. Termine eintragen ·</div><div class="titel">5. Ordner ·</div><div class="titel">6. Fragen</div></div>
+<div class="block" id="tb6"><div class="titel">Name dran ·</div><div class="titel">Reinschauen ·</div><div class="titel">Öffnen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Keine bösen Überraschungen.</div>
+  <div class="klein" id="asUnter">Name an den Briefkasten, Post regelmäßig öffnen und wichtige Briefe sofort bearbeiten.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const schuetteln = (id, t, n = 4, a = 9) => { const x = wertBei(id, 'x', t); for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { x: x + (i % 2 ? a : -a) }, 'sinus'); tw(id, t + n * .09, .2, { x }, 'sinus'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Figur geht: kleine Schritte (Hüpfer) auf dem Weg
+const gehen = (id, t, d, x, y, n = 4, h = 10) => {
+  tw(id, t, d, { x }, 'inout');
+  for (let k = 0; k < n; k++) tw(id, t + k * d / n, d / n, { y: lerp(wertBei(id, 'y', t), y, (k + 1) / n) }, 'sinus', { bogen: h });
+};
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+function titelFarbe(id, t0, zeiten, farben = {}) {
+  titelEin(id, t0, zeiten);
+  const w = [...document.querySelectorAll(`#${id} .w`)];
+  for (const [i, f] of Object.entries(farben)) w[i].classList.add(f);
+}
+// kleiner Briefumschlag (Stapel, Post im Kasten)
+const UMSL = (f = 'var(--surface)', l = 'var(--n300)') => `<svg viewBox="0 0 150 96"><rect x="3" y="6" width="144" height="88" rx="8" fill="${l}"/>
+  <rect x="0" y="2" width="144" height="88" rx="8" fill="${f}"/><path d="M5 9l67 44 67-44" stroke="${l}" stroke-width="4" stroke-linejoin="round" fill="none"/>
+  <rect x="110" y="14" width="22" height="16" rx="3" fill="var(--b200)"/></svg>`;
+['x2'].forEach(id => el(id).innerHTML = tpl('svgX'));
+document.querySelectorAll('.kalI').forEach(i => i.innerHTML = tpl('svgKal')); el('terOk').innerHTML = tpl('svgHaken');
+['ok6a', 'ok6b', 'ok6c'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+document.querySelectorAll('.app-zeile i').forEach(i => i.innerHTML = tpl('svgOrdner'));
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl('portraitMai'); p.dataset.sprecher = 'Mai'; });
+el('fl1').innerHTML = UMSL(); el('fl2').innerHTML = UMSL('var(--b100)', 'var(--b200)'); el('fl3').innerHTML = UMSL('var(--warning-bg)', 'var(--warning)');
+el('haufen0').innerHTML = `<svg viewBox="0 0 170 84">
+  <g transform="rotate(-3 80 60)"><rect x="12" y="44" width="140" height="36" rx="6" fill="var(--b100)"/></g>
+  <g transform="rotate(2 90 50)"><rect x="22" y="30" width="130" height="36" rx="6" fill="var(--warning-bg)"/><circle cx="130" cy="44" r="8" fill="var(--error)"/></g>
+  <g transform="rotate(-1 80 30)"><rect x="8" y="14" width="138" height="38" rx="6" fill="var(--surface)"/><path d="M12 18l65 18 65-18" stroke="var(--n300)" stroke-width="3" fill="none"/></g></svg>`;
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 7;
+const SPUL = { stopp: 0, r: 0, c: 0 };   // Zeiten des Zurückspulens (unten gesetzt)
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  // Zurückspulen: Kamera zieht beim Rücklauf auf und wackelt leicht
+  const rp = clamp((t - SPUL.r) / (SPUL.c - SPUL.r)), rl = t > SPUL.r && t < SPUL.c ? Math.sin(Math.PI * rp) : 0;
+  z -= .12 * rl;
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  const wx = rl ? 5 * rl * Math.sin(t * 38) : 0, wy = rl ? 4 * rl * Math.cos(t * 31) : 0;
+  $('#kamera').style.transform = `translate(${wx.toFixed(2)}px,${wy.toFixed(2)}px) scale(${z})`;
+  // Standbild: Farben gedämpft von „Stopp“ bis zum Wechsel
+  const g = t < SPUL.c ? clamp((t - SPUL.stopp) / .35) : 0;
+  $('#kamera').style.filter = g > 0 ? `saturate(${(1 - .7 * g).toFixed(3)}) brightness(${(1 - .18 * g).toFixed(3)})` : '';
+  const kx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (kx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Mai: Mund nur in ihren eigenen Sätzen (Sprecher exakt aus sprache.json), blinzeln, müde, froh ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], MUEDE = [];      // [id, von, bis]
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    const muede = MUEDE.find(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    const m = muede ? .5 - .06 * Math.sin(t * 1.7) : 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : m})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick + (muede ? 5 : 0)}px)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Uhr: kurve(t) → Minuten seit 0 Uhr ---------- */
+function uhr(id, kurve, hell = true) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = kurve(t);
+    $(`#${id}h`).setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  });
+}
+
+/* ================= 0 · Abend: Mai kommt müde nach Hause ================= */
+akteur('bue0', { x: 1320, y: 540 });
+const K0 = { x: 1030, y: 610 }, SLOT0 = { x: 1030, y: 568 }, STUHL0 = { x: 1600, y: 690 };
+{
+  const X = S(0), T0 = A(-.6);
+  ein('fenster0', T0, { x: X + 1110, y: 320 }, { y: -50 }); akteur('nacht0', { o: 0 }, true); akteur('mond0', { o: 0, s: .4 }, true);
+  ein('uhr0', T0 + .08, { x: X + 1450, y: 310 }, { y: -50 });
+  ein('kasten0', T0 + .12, { x: X + K0.x, y: K0.y }, { y: 60 });
+  akteur('post0', { x: X + SLOT0.x, y: SLOT0.y - 26, sy: .15, o: 0 }); tw('post0', T0 + .2, .3, { o: 1 });
+  ein('stuhl0', T0 + .2, { x: X + STUHL0.x, y: STUHL0.y }, { y: 60 });
+  cue(T0, 'whoosh');
+  // Das ist Mai: sie kommt von rechts herein, mit kleinen Schritten
+  const tM = W('Mai', 1) - .35;
+  akteur('mai0', { x: X + 1720, y: 640, o: 0, s: .9 });
+  tw('mai0', tM, .3, { o: 1 }); tw('mai0', tM, .9, { s: 1 }, 'sanft');
+  gehen('mai0', tM, 1.1, X + 1330, 620, 4, 12); cue(tM, 'whoosh');
+  titelEin('tb0', W('Mai', 1) + .15);
+  document.querySelectorAll('#tb0 .wi').forEach(w => { AKTEURE.get(w).basis.y = 140; });
+  // Sie arbeitet viel: die Uhr läuft von morgens bis abends
+  const tA = W('arbeitet', 2);
+  uhr('uhr0', t => rampe(t, tA, 1.5, 7 * 60, 21 * 60));
+  cue(tA, 'scan'); bump('uhr0', tA + 1.5, 1.1);
+  // abends: das Fenster wird Nacht, der Mond kommt
+  const tAb = W('abends', 2) - .1;
+  tw('nacht0', tAb, .6, { o: 1 }, 'inout'); tw('mond0', tAb + .2, .5, { o: 1, s: 1 }, 'back'); cue(tAb, 'scan');
+  // müde: Augen halb zu, Mai sinkt ein
+  const tMu = W('müde', 2);
+  MUEDE.push(['mai0', tMu, W('Briefkasten', 3) - .1]);
+  tw('mai0', tMu, .7, { y: 636, r: -3, sy: .96 }, 'sinus');
+  // Ihr Briefkasten? Kamera-Akzent, Post drängt aus dem Schlitz
+  const tB = W('Briefkasten', 3);
+  tw('mai0', tB - .15, .5, { y: 620, r: 0, sy: 1 }, 'sanft');
+  akzent(tB, .045); bump('kasten0', tB, 1.06);
+  tw('post0', tB, .5, { sy: 1 }, 'back'); cue(tB, 'pop');
+  // Den öffnet sie nur selten: der Kasten wackelt, Briefe purzeln heraus
+  const tO = W('öffnet', 4);
+  wackeln('kasten0', tO, 4, 2); wackeln('post0', tO, 4, 3); bump('post0', tO + .1, 1.1);
+  const tS = W('selten', 4) - .05, FL = [['fl1', 995, 792, -3], ['fl2', 1110, 800, 2], ['fl3', 1220, 786, -2]];
+  FL.forEach(([id, x, y, r], k) => {
+    const t0 = tS + k * .16;
+    akteur(id, { x: X + SLOT0.x, y: SLOT0.y - 20, o: 0, s: .5, r: 0 });
+    tw(id, t0, .12, { o: 1 }); tw(id, t0, .75, { x: X + x, y, s: .72, r }, 'inout', { bogen: 150 }); landen(id, t0 + .75);
+    cue(t0 + .75, 'plopp');
+  });
+  // Mai: „Werbung, Werbung …“ – sie holt Werbung aus dem Kasten, dann rafft sie alles zusammen
+  const tW1 = A(8.3), tW2 = A(9.55), tSp = W('später', 5);
+  gehen('mai0', tW1 - .35, .6, X + 1260, 630, 2, 8);
+  [['flyer0a', tW1, 1210, 455, -3], ['flyer0b', tW2, 1345, 450, 3]].forEach(([id, t, x, y, r]) => {
+    akteur(id, { x: X + SLOT0.x, y: SLOT0.y - 30, o: 0, s: .4 });
+    tw(id, t, .1, { o: 1 }); tw(id, t, .6, { x: X + x, y, s: 1, r }, 'inout', { bogen: 90 }); cue(t, 'whoosh');
+    tw(id, t + .6, .12, { sy: .92, sx: 1.05 }, 'sinus'); tw(id, t + .72, .3, { sy: 1, sx: 1 }, 'sanft');
+  });
+  bump('post0', tW1, 1.08); bump('post0', tW2, 1.08);
+  schuetteln('mai0', tW2 + .2);
+  // „das mache ich später“: Briefe vom Boden fliegen zu Mai, dann landet alles ungeöffnet auf dem Stuhl
+  const tR = A(10.05);
+  FL.forEach(([id], k) => { flug(id, tR + k * .08, .65, X + 1265, 470, 50, { s: .6, r: 0 }); });
+  const HX = X + STUHL0.x - 5, HY = 652, tWurf = tSp - .55;
+  ['fl1', 'fl2', 'fl3', 'flyer0a', 'flyer0b'].forEach((id, k) => {
+    flug(id, tWurf + k * .05, .8, HX + (k - 2) * 8, HY - 10, 150, { s: .55 }); tw(id, tWurf + .66 + k * .05, .14, { o: 0 });
+  });
+  cue(tWurf, 'whoosh');
+  akteur('haufen0', { x: HX, y: HY, o: 0, sy: .6 });
+  tw('haufen0', tWurf + .62, .1, { o: 1 }); tw('haufen0', tWurf + .62, .5, { sy: 1 }, 'back'); cue(tWurf + .7, 'plopp');
+  wackeln('stuhl0', tWurf + .7, 3, 2);
+  huepfen('mai0', tWurf, 10); akzent(tWurf + .7, .03);
+  textAus('tb0', SE(5) + .1);
+}
+
+/* ================= 1 · Drei Wochen später: Briefberg, Mahnung ================= */
+pan2(SE(5) + .35, 1);
+akteur('bue1', { x: S(1) + 1320, y: 540 });
+const ST1 = { x: 1600, y: 700 }, STAPEL = [];
+{
+  const X = S(1);
+  // Stuhl mit dem Haufen von vorher
+  akteur('stuhl1', { x: X + ST1.x, y: ST1.y });
+  const SITZ = ST1.y + 10, SX = X + ST1.x - 5;
+  const FARBEN = [['var(--b100)', 'var(--b200)'], ['var(--warning-bg)', 'var(--warning)'], ['var(--surface)', 'var(--n300)'], ['var(--info-bg)', 'var(--info)']];
+  for (let k = 0; k < 10; k++) {
+    const id = 'st' + k, [f, l] = FARBEN[k % 4];
+    WELT.insertAdjacentHTML('beforeend', `<div class="a umsl" id="${id}" data-gruppe="stapel">${UMSL(f, l)}</div>`);
+    WELT.insertBefore(el(id), el('mai1'));
+    STAPEL.push({ id, x: SX + [0, 8, -6, 10, -8, 4, -10, 6, -4, 2][k], y: SITZ - 30 - k * 19, r: [-2, 3, -3, 2, -1, 3, -2, 1, -3, 2][k] });
+  }
+  STAPEL.forEach(({ id, x, y, r }, k) => akteur(id, k < 3 ? { x, y, r } : { x, y: 250, r, o: 0 }));
+  // Drei Wochen: Kalender, drei Reihen füllen sich Tag für Tag
+  el('netz1').innerHTML = Array.from({ length: 21 }, (_, i) => `<s id="tz${i}"></s>`).join('');
+  const tD = W('Drei', 6);
+  ein('kal1', tD - .25, { x: X + 1110, y: 330 }, { y: -60 }, 'whoosh');
+  for (let i = 0; i < 21; i++) {
+    const t = tD + .25 + i * .07; akteur('tz' + i, {}, true);
+    tw('tz' + i, t, .15, { s: 1.25 }, 'sinus'); tw('tz' + i, t + .15, .2, { s: 1 }, 'sanft');
+    if (i % 7 === 6) cue(t, 'klick');
+  }
+  HOOKS.push(t => { for (let i = 0; i < 21; i++) el('tz' + i).style.background = t >= tD + .25 + i * .07 ? 'var(--b300)' : ''; });
+  // Mai kommt dazu
+  akteur('mai1', { x: X + 1070, y: 650, s: 0 }); tw('mai1', tD + .1, .6, { s: 1 }, 'sanft');
+  // Der Stapel ist riesig: Brief um Brief fällt auf den Stapel
+  const tSt = W('Stapel', 7) - .2;
+  STAPEL.slice(3).forEach(({ id, y }, k) => {
+    const t0 = tSt + k * .2;
+    tw(id, t0, .08, { o: 1 }); tw(id, t0, .38, { y }, 'in'); landen(id, t0 + .38); cue(t0 + .38, 'plopp');
+  });
+  wackeln('stuhl1', W('riesig', 7), 3, 1.5); akzent(W('riesig', 7) + .2, .04);
+  // Mai öffnet endlich einen Brief: der oberste Brief fliegt nach vorn und geht auf
+  aus('kal1', W('Mai', 8) - .2);
+  const OB = STAPEL[9], UX = X + 1330, UY = 520, tF = W('öffnet', 8) - .1, UM = ['umH1', 'umO1', 'umV1', 'umK1'];
+  UM.forEach(id => akteur(id, { x: OB.x, y: OB.y + 6, o: 0, s: .4, r: OB.r }));
+  UM.forEach(id => { set(id, tF, { o: 1 }); tw(id, tF, .8, { x: UX, y: UY, s: 1, r: 0 }, 'inout', { bogen: 110 }); });
+  set(OB.id, tF, { o: 0 }); cue(tF, 'whoosh');
+  set('umO1', 0, { sy: 0 });
+  huepfen('mai1', W('endlich', 8), 10);
+  const tK = W('einen', 8) + .2;
+  tw('umK1', tK, .22, { sy: 0 }, 'in'); set('umK1', tK + .22, { o: 0 });
+  tw('umO1', tK + .22, .28, { sy: 1 }, 'weich'); cue(tK, 'klick');
+  // Eine Mahnung: das Blatt steigt heraus und kommt nach vorn, „Mahnung“ schlägt rot auf
+  akteur('blatt1', { x: UX, y: UY + 40, o: 0, s: .72 });
+  set('blatt1', tK + .3, { o: 1 }); tw('blatt1', tK + .35, .6, { y: UY - 120 }, 'inout'); cue(tK + .4, 'whoosh');
+  const tMa = W('Mahnung', 9);
+  tw('blatt1', tMa - .45, .7, { y: 500, s: 1 }, 'inout');
+  aus(['umH1', 'umO1', 'umV1'], tMa - .4, .3);
+  akteur('mahn1', { o: 0, s: 1.8 }, true); tw('mahn1', tMa, .06, { o: 1 }); tw('mahn1', tMa, .25, { s: 1 }, 'in');
+  wackeln('blatt1', tMa + .25, 3, 1.5); akzent(tMa + .25, .05); cue(tMa + .25, 'plopp');
+  // mit Gebühr: roter Zettel fällt aufs Blatt
+  const tG = W('Gebühr', 9) - .15;
+  akteur('geb1', { x: X + 1400, y: 300, o: 0, r: -3 });
+  tw('geb1', tG, .1, { o: 1 }); tw('geb1', tG, .4, { y: 632, r: -2 }, 'in'); landen('geb1', tG + .4); cue(tG + .4, 'plopp'); akzent(tG + .45, .03);
+  // Mai: „Was?“ – sie schreckt hoch; „Davon wusste ich nichts!“ – sie wackelt
+  huepfen('mai1', W('Was', 10) - .08, 40); akzent(W('Was', 10), .05);
+  wackeln('mai1', W('Davon', 11), 5, 3); bump('geb1', W('nichts', 11), 1.12);
+  titelFarbe('tb1', tMa - .1, [tMa - .1, tG - .05, tG + .03], { 0: 'rot' });
+  textAus('tb1', SE(11) + .1);
+}
+
+/* ================= 2 · Termin verpasst, Brief verloren ================= */
+pan2(SE(11) + .25, 2);
+akteur('bue2', { x: S(2) + 1320, y: 540 });
+const K2 = { x: 1520, y: 610 };
+{
+  const X = S(2);
+  // Darunter: ein Termin bei der Ausländerbehörde
+  const tD = W('Darunter', 12);
+  akteur('blatt2', { x: X + 1120, y: 740, o: 0, r: -3, s: 1 });
+  tw('blatt2', tD, .3, { o: 1 }); tw('blatt2', tD, .8, { y: 520, r: 0, s: 1.1 }, 'sanft'); cue(tD, 'whoosh');
+  ['kopf2', 'abs2', 'datum2'].forEach(id => akteur(id, {}, true));
+  bump('kopf2', W('Termin', 12), 1.15); cue(W('Termin', 12), 'pop');
+  bump('abs2', W('Ausländerbehörde', 12), 1.12);
+  bump('datum2', W('Ausländerbehörde', 12) + .7, 1.08);
+  // Der war gestern: der rote Strich zieht durch das Datum, rotes Kreuz
+  const tG = W('gestern', 13);
+  akteur('strich2', { draw: 0 }, true); tw('strich2', tG - .05, .4, { draw: 1 }, 'inout'); cue(tG, 'kritzeln');
+  pop('x2', tG + .35, { x: X + 1272, y: 342 }, 'plopp'); wackeln('blatt2', tG + .35, 3, 1.5); akzent(tG + .35, .05);
+  // Und ein Brief ist gar nicht angekommen: der Brief kommt, findet keinen Namen und fliegt wieder weg
+  ein('kasten2', W('Und', 14) - .2, { x: X + K2.x, y: K2.y }, { x: 80 }, 'whoosh');
+  akteur('leer2', { x: X + K2.x - 1.5, y: K2.y + 12, o: 0 });
+  const tB = W('Brief', 14) - .1, BX0 = X + 1560, BY0 = 420;
+  akteur('brief2', { x: X + 1820, y: 240, o: 0, s: .7, r: 3 });
+  tw('brief2', tB, .2, { o: 1 }); tw('brief2', tB, .9, { x: BX0, y: BY0, s: 1, r: 0 }, 'inout', { bogen: 60 }); cue(tB, 'whoosh');
+  const tAn = W('angekommen', 14);
+  tw('brief2', tAn, .3, { y: BY0 + 70, s: .9 }, 'in'); tw('brief2', tAn + .3, .45, { y: BY0, s: 1 }, 'sanft'); cue(tAn + .3, 'plopp');
+  wackeln('brief2', tAn + .4, 3, 3); wackeln('kasten2', tAn + .3, 2, 1.5);
+  schweben('brief2', 3);
+  // kein Name: das leere Schild blinkt rot, Fragezeichen
+  const tN = W('kein', 14);
+  for (let k = 0; k < 3; k++) { tw('leer2', tN + k * .3, .15, { o: 1 }); tw('leer2', tN + k * .3 + .15, .15, { o: k === 2 ? 1 : .25 }); }
+  pop('frage2', W('Name', 14), { x: X + 1360, y: 420 }, 'plopp'); wackeln('frage2', W('steht', 14), 3, 4); akzent(W('Name', 14), .04);
+  const tW = W('steht', 14) + .2;
+  tw('brief2', tW, .9, { x: X + 1840, y: 250, s: .6, r: 3, o: 0 }, 'in', { bogen: 40 }); cue(tW, 'whoosh');
+  titelFarbe('tb2', tG - .1, [tG - .1, tG, tG + .08, W('kein', 14) - .1, W('kein', 14)], { 1: 'rot', 4: 'rot' });
+}
+
+/* ================= Zurückspulen ================= */
+{
+  SPUL.stopp = W('Stopp', 15) - .05; SPUL.r = W('Zurückspulen', 17) - .05;
+  const tS = SPUL.stopp, tR = SPUL.r, tC = tR + 2.8; SPUL.c = tC;
+  textAus('tb2', tS - .05);
+  // Stopp: Pause-Zeichen schlägt auf, Schleier, Kamera-Akzent
+  akteur('schleier', { o: 0 }, true); tw('schleier', tS, .35, { o: .58 }); set('schleier', tC, { o: 0 });
+  pop('pauseIc', tS, { x: 960, y: 440 }, 'plopp'); akzent(tS, .07); cue(tS + .02, 'klick');
+  wackeln('pauseIc', W('besser', 16), 3, 3);
+  // Zurückspulen: Pause → Rückspul-Zeichen, Uhr dreht rückwärts
+  tw('pauseIc', tR, .25, { s: 0, o: 0 }, 'in');
+  pop('rewIc', tR + .1, { x: 820, y: 440 }, 'pop'); set('rewIc', tC, { o: 0 });
+  pop('uhrR', tR + .25, { x: 1110, y: 440 }, null); set('uhrR', tC, { o: 0 });
+  uhr('uhrR', t => 720 - 360 * E.inout(clamp((t - tR - .3) / 2.3)) - 180 * clamp((t - tR - 2.6) / .8));
+  HOOKS.push(t => {   // die Dreiecke laufen immer wieder nach links
+    const p = t > tR ? ((t - tR) * 2.2) % 1 : 0;
+    $('#rewTri').setAttribute('transform', `translate(${(-14 * E.out(p)).toFixed(2)} 0)`);
+  });
+  titelEin('tbR', tR + .35); akteur('rIc', { o: 0, x: 30 }, true); tw('rIc', tR + .3, .5, { o: 1, x: 0 }, 'sanft');
+  for (let k = 0; k < 6; k++) cue(tR + .2 + k * .4, k % 2 ? 'whoosh' : 'scan');
+  // Streifen in Token-Farben rauschen von links nach rechts (die Zeit läuft zurück)
+  const FARBE = ['var(--b300)', 'var(--b500)', 'var(--b200)', 'var(--surface)', 'var(--b400)', 'var(--b300)'];
+  const ST = Array.from({ length: 16 }, (_, k) => ({ y: 40 + k * 66 + (k * 37 % 23), h: 8 + (k * 13 % 5) * 6, w: 300 + (k * 211 % 520), v: 2600 + (k * 577 % 1400), p: (k * 733) % 2400, f: FARBE[k % 6] }));
+  el('streifen').innerHTML = ST.map((s, k) => `<div class="streif" id="sf${k}" style="top:${s.y}px;height:${s.h}px;width:${s.w}px;background:${s.f}"></div>`).join('');
+  HOOKS.push(t => {
+    const hull = clamp((t - tR) / .3) * (1 - clamp((t - tC + .2) / .3));
+    ST.forEach((s, k) => {
+      const e = el('sf' + k), x = ((s.p + (t - tR) * s.v) % 2800) - 600;
+      e.style.transform = `translateX(${x.toFixed(1)}px)`; e.style.opacity = (hull * (k % 3 ? .55 : .85)).toFixed(3);
+    });
+  });
+  // Die Welt läuft zurück: Kamera fährt über Szene 1 zurück an den Anfang
+  tw('welt', tR + .15, 1.9, { x: -S(0) }, 'inout');
+  // … und die Dinge laufen rückwärts: Briefberg schrumpft, der Haufen fliegt zurück in den Kasten, Mai geht rückwärts hinaus
+  tw('blatt2', tR + .1, .5, { y: 760, o: 0 }, 'in'); tw(['kasten2', 'frage2', 'x2', 'leer2'], tR + .1, .4, { o: 0 }, 'in');
+  tw('blatt1', tR + .5, .45, { x: S(1) + ST1.x, y: STAPEL[9].y, s: .3, o: 0 }, 'in'); tw('geb1', tR + .5, .4, { o: 0, y: 300 }, 'in');
+  STAPEL.slice(3, 9).forEach(({ id }, k) => tw(id, tR + .55 + k * .06, .6, { y: 250, o: 0 }, 'inout'));
+  const tZ = tR + 1.55;
+  tw('haufen0', tZ, .65, { x: S(0) + SLOT0.x, y: SLOT0.y - 10, s: .3, o: 0 }, 'inout', { bogen: 140 });
+  tw('post0', tZ + .4, .3, { sy: .1 }, 'in');
+  tw('mai0', tZ, .7, { x: S(0) + 1700, o: 0 }, 'in');
+  tw('nacht0', tZ + .1, .5, { o: 0 }); tw('mond0', tZ + .1, .4, { o: 0 });
+  // Wischer: breite Bänder schieben sich über das Bild; darunter springt die Welt zum neuen Tag
+  const BAND = [['var(--b300)', 0], ['var(--b500)', 700], ['var(--b700)', 1400]];
+  el('wisch').innerHTML = BAND.map(([f], k) => `<div class="band" id="bd${k}" style="width:1100px;background:${f}"></div>`).join('');
+  HOOKS.push(t => {
+    const p = clamp((t - (tC - .55)) / 1.1), x = lerp(-3800, 3000, E.inout(p));
+    BAND.forEach(([, o], k) => { el('bd' + k).style.transform = `translateX(${(x + o).toFixed(1)}px) skewX(-14deg)`; el('bd' + k).style.visibility = p > 0 && p < 1 ? 'visible' : 'hidden'; });
+  });
+  set('welt', tC, { x: -S(3) }); cue(tC - .5, 'whoosh'); cue(tC + .1, 'whoosh');
+  textAus('tbR', tC - .05); tw('rIc', tC - .05, .3, { o: 0 });
+}
+
+/* ================= 3 · Tag eins, richtig: Name an Briefkasten und Klingel ================= */
+akteur('bue3', { x: S(3) + 1320, y: 540 });
+const K3 = { x: 1080, y: 600 }, KL3 = { x: 1580, y: 440 };
+{
+  const X = S(3), T = SPUL.c + .15;
+  ein('kasten3', T, { x: X + K3.x, y: K3.y }, { y: 60 });
+  ein('klingel3', T + .1, { x: X + KL3.x, y: KL3.y }, { y: 60 });
+  // Tag eins: Kalenderblatt „Tag 1“
+  pop('tag3', W('Tag', 18), { x: X + 1080, y: 338 }, 'pop'); bump('tag3', W('eins', 18), 1.1);
+  // in der neuen Wohnung: Umzugskarton landet
+  const tW = W('neuen', 18) - .1;
+  akteur('karton3', { x: X + 1628, y: 480, o: 0 }); tw('karton3', tW, .1, { o: 1 }); tw('karton3', tW, .45, { y: 712 }, 'in'); landen('karton3', tW + .45); cue(tW + .45, 'plopp');
+  // Mai kommt, klebt ihr Namensschild auf den Briefkasten
+  pop('mai3', W('Mai', 18) - .1, { x: X + 1330, y: 650 });
+  const tK = W('klebt', 18);
+  gehen('mai3', tK - .1, .5, X + 1280, 640, 2, 8);
+  const PL = { x: X + K3.x - 1.5, y: K3.y + 12 };
+  akteur('nm3a', { x: X + 1215, y: 520, s: 0, r: -3 });
+  tw('nm3a', tK + .1, .45, { s: 1.3 }, 'back'); cue(tK + .1, 'pop');
+  const tN = W('Namen', 18);
+  flug('nm3a', tN, .7, PL.x, PL.y, 60, { s: 1, r: 0 }); cue(tN, 'whoosh');
+  const tL = W('Briefkasten', 18) - .05;
+  tw('nm3a', tL, .1, { sy: .8, sx: 1.12 }, 'sinus'); tw('nm3a', tL + .1, .4, { sy: 1, sx: 1 }, 'sanft'); cue(tL, 'klick');
+  bump('kasten3', tL, 1.05); akzent(tL, .035);
+  // … und an die Klingel
+  const tKl = W('Klingel', 18);
+  gehen('mai3', W('und', 18) - .1, .5, X + 1390, 600, 2, 8);
+  const KP = { x: X + KL3.x - 1.6, y: KL3.y - 66 };
+  akteur('nm3b', { x: X + 1440, y: 480, s: 0, r: 3 });
+  tw('nm3b', W('und', 18) + .1, .4, { s: 1.4 }, 'back'); cue(W('und', 18) + .1, 'pop');
+  flug('nm3b', tKl - .25, .6, KP.x, KP.y, 50, { s: 1.3, r: 0 });
+  tw('nm3b', tKl + .35, .1, { sy: .8, sx: 1.12 }, 'sinus'); tw('nm3b', tKl + .45, .4, { sy: 1, sx: 1 }, 'sanft'); cue(tKl + .35, 'klick');
+  bump('klingel3', tKl + .35, 1.05);
+  FROH.push(['mai3', tL, 999]); huepfen('mai3', tKl + .5, 14); cue(tKl + .6, 'erfolg');
+  titelFarbe('tb3', W('Tag', 18) + .1, [W('Tag', 18) + .1, W('klebt', 18) - .1, W('klebt', 18), tL - .1, tL, W('Klingel', 18) - .1], { 0: 'gruen' });
+  textAus('tb3', SE(18) + .15);
+}
+
+/* ================= 4 · Jeden Abend: reinschauen, Werbung weg, Wichtiges sofort öffnen ================= */
+pan2(SE(18) + .25, 4);
+akteur('bue4', { x: S(4) + 1320, y: 540 });
+const K4 = { x: 1060, y: 610 }, TO4 = { x: 1600, y: 650 };
+{
+  const X = S(4);
+  akteur('kasten4', { x: X + K4.x, y: K4.y }); akteur('nm4', { x: X + K4.x - 1.5, y: K4.y + 12 });
+  akteur('tonne4', { x: X + TO4.x, y: TO4.y }); akteur('deckel4', { x: X + TO4.x, y: TO4.y });
+  akteur('mai4', { x: X + 1330, y: 660 });
+  // Jeden Abend: eine Woche, Tag für Tag ein Haken
+  const TAGE = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
+  el('woche4').innerHTML = TAGE.map((d, k) => `<div class="t" id="wt${k}">${d}<u id="wu${k}"></u></div>`).join('');
+  pop('woche4', W('Jeden', 19) - .2, { x: X + 1320, y: 300 }, 'whoosh', 'sanft');
+  const tJ = W('Jeden', 19) + .2;
+  TAGE.forEach((_, k) => {
+    const t = tJ + k * .3; akteur('wt' + k, {}, true);
+    tw('wt' + k, t, .12, { y: -8 }, 'sinus'); tw('wt' + k, t + .12, .3, { y: 0 }, 'sanft'); cue(t, 'klick');
+  });
+  HOOKS.push(t => TAGE.forEach((_, k) => { const an = t >= tJ + k * .3 + .05; const u = el('wu' + k); u.style.background = an ? 'var(--success)' : ''; u.innerHTML = an ? tpl('svgHaken') : ''; }));
+  // schaut sie kurz in den Briefkasten: Mai hüpft hin, Post kommt heraus
+  const tS = W('schaut', 19);
+  gehen('mai4', tS - .1, .6, X + 1250, 650, 2, 8);
+  bump('kasten4', W('Briefkasten', 19), 1.06); cue(W('Briefkasten', 19), 'klick');
+  const SL = { x: X + K4.x, y: K4.y - 42 };
+  akteur('flyer4', { x: SL.x, y: SL.y, o: 0, s: .4 }); akteur('brief4', { x: SL.x, y: SL.y, o: 0, s: .4 });
+  const tP = W('Briefkasten', 19) + .2;
+  tw('flyer4', tP, .1, { o: 1 }); tw('flyer4', tP, .6, { x: X + 1180, y: 440, s: 1, r: -2 }, 'inout', { bogen: 80 }); cue(tP, 'whoosh');
+  tw('brief4', tP + .15, .1, { o: 1 }); tw('brief4', tP + .15, .6, { x: X + 1000, y: 430, s: 1, r: 2 }, 'inout', { bogen: 80 });
+  // Werbung kommt direkt ins Altpapier: Deckel auf, Werbung fliegt in die blaue Tonne, Deckel zu
+  bump('flyer4', W('Werbung', 20), 1.12); cue(W('Werbung', 20), 'pop');
+  const tA = W('direkt', 20) - .1;
+  tw('deckel4', tA - .2, .35, { r: -38 }, 'back'); cue(tA - .2, 'klick');
+  flug('flyer4', tA, .75, X + TO4.x, TO4.y - 70, 160, { s: .45, r: 3 }); tw('flyer4', tA + .62, .12, { o: 0 }); cue(tA, 'whoosh');
+  tw('deckel4', tA + .75, .25, { r: 0 }, 'in'); cue(tA + 1, 'plopp');
+  bump('tonne4', tA + 1, 1.06); wackeln('deckel4', tA + 1, 2, 2); akzent(W('Altpapier', 20) + .4, .035);
+  huepfen('mai4', W('Altpapier', 20) + .1, 10);
+  // Wichtige Briefe öffnet sie sofort: der Brief kommt nach vorn, geht auf, das Blatt steigt heraus
+  const tWi = W('Wichtige', 21);
+  bump('brief4', tWi, 1.12);
+  aus(['woche4', 'tonne4', 'deckel4', 'kasten4', 'nm4'], W('Briefe', 21), .4);
+  gehen('mai4', W('Briefe', 21), .7, X + 1020, 680, 3, 8);
+  const UX = X + 1320, UY = 540, tO = W('öffnet', 21) - .35, UM = ['umH4', 'umO4', 'umV4', 'umK4'];
+  UM.forEach(id => akteur(id, { x: X + 1000, y: 430, o: 0, s: .42, r: 2 }));
+  UM.forEach(id => { set(id, tO, { o: 1 }); tw(id, tO, .6, { x: UX, y: UY, s: 1, r: 0 }, 'inout', { bogen: 60 }); });
+  set('brief4', tO, { o: 0 }); cue(tO, 'whoosh'); set('umO4', 0, { sy: 0 });
+  const tK = W('sofort', 21) - .1;
+  tw('umK4', tK, .2, { sy: 0 }, 'in'); set('umK4', tK + .2, { o: 0 }); tw('umO4', tK + .2, .26, { sy: 1 }, 'weich'); cue(tK, 'klick');
+  akteur('blatt4', { x: UX, y: UY + 40, o: 0, s: .7 });
+  set('blatt4', tK + .25, { o: 1 }); tw('blatt4', tK + .3, .55, { y: UY - 110 }, 'inout'); cue(tK + .3, 'whoosh');
+  tw('blatt4', W('sucht', 21) - .3, .6, { x: X + 1300, y: 540, s: 1 }, 'inout');
+  aus(['umH4', 'umO4', 'umV4'], W('sucht', 21) - .25, .3);
+  // Wer schreibt? Bis wann? Was soll ich tun? – drei Markierungen
+  const M = [['r4a', 'c4a', W('Wer', 21), 400], ['r4b', 'c4b', W('Bis', 22), 468], ['r4c', 'c4c', W('Was', 23), 580]];
+  M.forEach(([r, c, t, y]) => {
+    akteur(r, { o: 0, s: 1.15 }, true); tw(r, t - .1, .3, { o: 1, s: 1 }, 'sanft');
+    pop(c, t, { x: X + 1590, y }, 'pop'); akzent(t + .1, .025);
+  });
+  titelFarbe('tb4', W('Jeden', 19) - .1, [W('Jeden', 19) - .1, W('Jeden', 19), W('schaut', 19), null, tWi - .1, tWi, W('öffnet', 21), W('sofort', 21)], { 0: 'gruen', 4: 'gruen' });
+  textAus('tb4', SE(23) + .1);
+}
+
+/* ================= 5 · Handy: Termin eintragen, Ordner in der Helper App, Jonas fragen ================= */
+pan2(SE(23) + .25, 5);
+akteur('bue5', { x: S(5) + 1320, y: 540 });
+{
+  const X = S(5), HX = X + 1440, HY = 520;
+  akteur('handy5', { x: HX, y: HY }); akteur('schirm5', { x: HX, y: HY });
+  el('mon5').innerHTML = Array.from({ length: 28 }, (_, i) => `<s ${i === 17 ? 'class="heute" id="heute5"' : ''}></s>`).join('');
+  // Bildschirme liegen nebeneinander und schieben sich weiter
+  akteur('scrKal', {}, true); akteur('scrApp', { x: 210 }, true); akteur('scrChat', { x: 210 }, true);
+  // Termine trägt sie gleich ins Handy ein: der Terminbrief fliegt ins Handy, der Termin steht im Kalender
+  const tT = W('Termine', 24);
+  pop('termin5', tT - .1, { x: X + 1060, y: 430, r: -2 }, 'pop');
+  akteur('heute5', { s: 1 }, true); akteur('ter5', { o: 0, y: 14 }, true); akteur('terOk', { s: 0 }, true);
+  const tF = W('trägt', 24);
+  flug('termin5', tF, .8, HX, HY - 40, 120, { s: .3, r: 0 }); tw('termin5', tF + .65, .15, { o: 0 }); cue(tF, 'whoosh');
+  bump('handy5', tF + .8, 1.03); bump('schirm5', tF + .8, 1.03);
+  tw('heute5', W('Handy', 24) - .1, .15, { s: 1.5 }, 'sinus'); tw('heute5', W('Handy', 24) + .05, .3, { s: 1 }, 'sanft');
+  tw('ter5', W('Handy', 24), .4, { o: 1, y: 0 }, 'back'); cue(W('Handy', 24), 'pop');
+  tw('terOk', W('ein', 24) + .05, .4, { s: 1 }, 'back'); cue(W('ein', 24) + .05, 'ding');
+  // Wichtige Briefe kommen in einen Ordner: Helper App, Bereich „Dokumente“, Ordner „Wichtig“
+  const tW = W('Wichtige', 25);
+  tw('scrKal', tW - .1, .5, { x: -210 }, 'inout'); tw('scrApp', tW - .1, .5, { x: 0 }, 'inout'); cue(tW - .1, 'whoosh');
+  ein('lbl5', tW + .2, { x: HX, y: 805 }, { y: 30 });
+  pop('brief5', tW, { x: X + 1060, y: 520, r: 2 }, 'pop');
+  const tK = W('kommen', 25);
+  akteur('rowW', {}, true); akteur('toast5', { o: 0, y: 10 }, true);
+  flug('brief5', tK, .8, HX, HY + 10, 120, { s: .3, r: 0 }); tw('brief5', tK + .65, .15, { o: 0 }); cue(tK, 'whoosh');
+  const tO = W('Ordner', 25);
+  tw('rowW', tO - .1, .15, { s: 1.08 }, 'sinus'); tw('rowW', tO + .05, .35, { s: 1 }, 'sanft'); cue(tO - .1, 'plopp');
+  HOOKS.push(t => { el('anzW').textContent = t >= tO - .05 ? '3' : '2'; });
+  tw('toast5', tO + .2, .4, { o: 1, y: 0 }, 'back'); cue(tO + .25, 'ding'); akzent(tO, .03);
+  // Und wenn sie etwas nicht versteht, fragt sie nach: Chat mit Jonas
+  const tU = W('Und', 26);
+  tw('scrApp', tU - .1, .5, { x: -210 }, 'inout'); tw('scrChat', tU - .1, .5, { x: 0 }, 'inout'); cue(tU - .1, 'whoosh');
+  aus('lbl5', tU - .1, .3);
+  pop('mai5', tU, { x: X + 1070, y: 580 }, 'pop');
+  pop('frage5', W('nicht', 26), { x: X + 1070, y: 380 }, 'plopp'); wackeln('frage5', W('versteht', 26), 3, 4);
+  wackeln('mai5', W('versteht', 26), 3, 2);
+  const tFr = W('fragt', 26);
+  flug('frage5', tFr, .7, HX, HY - 60, 90, { s: .3 }); tw('frage5', tFr + .55, .15, { o: 0 }); cue(tFr, 'whoosh');
+  huepfen('mai5', tFr, 12);
+  // Mai spricht: die Nachricht an Jonas tippt sich, ein Foto vom Brief hängt dran, gesendet
+  akteur('bild5', { o: 0, s: .6 }, true); akteur('bl5', { o: 0 }, true); akteur('hk5', { o: 0 }, true);
+  const tJ = W('Jonas', 27);
+  tw('bl5', tJ, .25, { o: 1 });
+  [['z5a', tJ + .1, .7], ['z5b', W('kannst', 27), .7], ['z5c', W('diesen', 27), .5]].forEach(([z, t, d]) => { akteur(z, { sx: 0 }, true); tw(z, t, d, { sx: 1 }, 'inout'); cue(t, 'tipp'); });
+  tw('bild5', W('Brief', 27) - .05, .45, { o: 1, s: 1 }, 'back'); cue(W('Brief', 27), 'pop');
+  const tSe = SE(27) - .1;
+  tw('hk5', tSe, .2, { o: 1 }); cue(tSe, 'ding'); bump('handy5', tSe, 1.03); bump('schirm5', tSe, 1.03);
+  FROH.push(['mai5', tSe, 999]);
+  titelFarbe('tb5', W('Termine', 24) - .1, [W('Termine', 24) - .1, W('Termine', 24), W('trägt', 24), null, tO - .25, tO - .15, null, tFr - .1, tFr], { 0: 'gruen', 4: 'gruen', 7: 'gruen' });
+  textAus('tb5', SE(27) + .1);
+}
+
+/* ================= 6 · Also: aufgeräumt, Tee, keine bösen Überraschungen ================= */
+pan2(SE(27) + .25, 6);
+akteur('bue6', { x: S(6) + 1320, y: 540 });
+{
+  const X = S(6), K6 = { x: X + 1010, y: 480 };
+  akteur('kasten6', K6); akteur('nm6', { x: K6.x - 1.4, y: K6.y + 11 });
+  akteur('regal6', { x: X + 1600, y: 420 });
+  akteur('ordner6', { x: X + 1560, y: 330 }); akteur('oschrift6', { x: X + 1560, y: 306 }); akteur('ordner6b', { x: X + 1630, y: 330 });
+  akteur('tisch6', { x: X + 1330, y: 770 });
+  akteur('tasse6', { x: X + 1150, y: 640 }); akteur('dampf6', { x: X + 1143, y: 530, o: 0 });
+  akteur('blatt6', { x: X + 1520, y: 612, r: 2 });
+  akteur('mai6', { x: X + 1330, y: 575 }); FROH.push(['mai6', 0, 999]); schweben('mai6', 3);
+  // Dampf steigt aus dem Tee
+  tw('dampf6', SE(27) + .8, .6, { o: 1 });
+  HOOKS.push(t => ['d6a', 'd6b'].forEach((d, k) => {
+    const p = ((t * .55 + k * .5) % 1);
+    el(d).setAttribute('transform', `translate(0 ${(-14 * p).toFixed(2)})`); el(d).style.opacity = (Math.sin(Math.PI * p) * .9).toFixed(3);
+  }));
+  // Name dran · täglich reinschauen · wichtige Briefe sofort öffnen: je ein Haken
+  const tN = W('Name', 28), tR = W('täglich', 28), tO = W('öffnen', 28);
+  bump('nm6', tN - .1, 1.2); pop('ok6a', tN, { x: K6.x + 90, y: K6.y - 80 }, 'ding');
+  bump('kasten6', tR, 1.06); pop('ok6b', tR + .3, { x: K6.x + 80, y: K6.y + 132 }, 'ding');
+  wackeln('blatt6', W('wichtige', 28), 2, 2); pop('ok6c', tO, { x: X + 1590, y: 540 }, 'ding');
+  bump('ordner6', W('Briefe', 28), 1.05); akzent(tO, .03);
+  // Dann gibt es keine bösen Überraschungen: Mai lehnt sich zurück, der Tee dampft
+  huepfen('mai6', W('keine', 29), 12); bump('tasse6', W('bösen', 29), 1.08); cue(W('Überraschungen', 29), 'erfolg'); akzent(W('Überraschungen', 29), .04);
+  titelFarbe('tb6', tN - .15, [tN - .15, tN, tN + .05, tR, tR + .08, tO - .1], {});
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+textAus('tb6', AB);
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>
