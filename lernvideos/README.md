@@ -43,3 +43,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 23 | [Heimat vs. Deutschland: Pünktlichkeit](23-puenktlichkeit/) | Heimat vs. Deutschland | Erzähler | 1:30 | fertig |
 | 24 | [Heimat vs. Deutschland: Direkte Kritik & Hierarchie](24-kritik-und-hierarchie/) | Heimat vs. Deutschland | Erzählerin | 1:30 | fertig |
 | 25 | [Heimat vs. Deutschland: Sonntag & Hausordnung](25-sonntag-hausordnung/) | Heimat vs. Deutschland | Erzähler | 1:32 | fertig |
+| 26 | [Fachvokabeln: Gastronomie](26-vokabeln-gastronomie/) | Fachvokabeln | Erzählerin, Priya, Küchenchef | 1:41 | fertig |
