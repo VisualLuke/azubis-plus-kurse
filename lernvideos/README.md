@@ -23,3 +23,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 3 | [Mülltrennung](03-muelltrennung/) | Erklärvideo | Erzählerin | 1:52 | fertig |
 | 4 | [Rundfunkbeitrag](04-rundfunkbeitrag/) | Erklärvideo | Erzähler | 1:29 | fertig |
 | 5 | [Aufenthaltstitel verlängern](05-aufenthaltstitel/) | Erklärvideo | Erzählerin | 1:38 | fertig |
+| 6 | [Arbeitsunfall & Wegeunfall](06-arbeitsunfall/) | Erklärvideo | Erzähler | 1:31 | fertig |
