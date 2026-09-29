@@ -72,3 +72,11 @@ Erzähler: Zu Vorgesetzten sagt man ‚Sie‘, bis sie das ‚Du‘ anbieten. Un
 
 ### Szene 8
 Erzähler: Also: Weg testen, nach der Kleidung fragen, ‚Sie‘ sagen, Handy weg. Dann klappt der erste Tag.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- sechs Uhr fünfundvierzig → 6:45 Uhr
+- sieben Uhr fünfundzwanzig → 7:25 Uhr
+- Beginn: sieben Uhr → Beginn: 7 Uhr

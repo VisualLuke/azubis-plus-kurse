@@ -58,3 +58,10 @@ Erzähler: Du willst trotzdem feiern, zum Beispiel deinen Geburtstag? Dann häng
 ### Szene 7
 (Pause 1.0)
 Erzähler: Und das Schöne am deutschen Sonntag? Spazieren gehen, Freunde treffen, ausruhen. Probier es aus!
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- zweiundzwanzig Uhr → 22 Uhr
+- zwischen zweiundzwanzig und sechs Uhr → zwischen 22 und 6 Uhr

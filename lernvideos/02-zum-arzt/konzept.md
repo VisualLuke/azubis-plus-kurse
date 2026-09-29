@@ -58,3 +58,10 @@ Erzähler: Medikamente bekommst du in der Apotheke. Auch nachts hat immer eine A
 
 ### Szene 9
 Erzähler: Also: normal krank – Hausarzt. Nachts oder am Wochenende – eins-eins-sechs eins-eins-sieben. Lebensgefahr – eins-eins-zwei.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- eins-eins-sechs eins-eins-sieben → 116 117
+- eins-eins-zwei → 112

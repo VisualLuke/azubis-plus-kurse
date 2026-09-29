@@ -63,3 +63,9 @@ Sabine: Am Prüfungstag hast du frei. Und vor der schriftlichen Abschlussprüfun
 Priya: Und wenn ich durchfalle?
 Sabine: Dann kannst du die Prüfung wiederholen, bis zu zweimal. Auf deinen Wunsch wird die Ausbildung verlängert, bis zur nächsten Prüfung, höchstens ein Jahr. Sprich dann auch früh mit der Ausländerbehörde, damit dein Aufenthalt passt.
 Priya: Okay. Das beruhigt mich.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- Teil eins → Teil 1

@@ -62,3 +62,10 @@ Jonas: Dann kündigst du schriftlich, meistens mit drei Monaten Frist. Schriftli
 ### Szene 7
 Jonas: Und noch ein Tipp: Überweise nie Geld, bevor du die Wohnung gesehen und den Vertrag hast. Das ist oft Betrug.
 Mai: Gut zu wissen. Jetzt verstehe ich meinen Vertrag!
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- vierhundert Euro → 400 Euro
+- fünfhundertzwanzig Euro → 520 Euro

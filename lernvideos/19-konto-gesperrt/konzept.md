@@ -72,3 +72,9 @@ Erzähler: Option C: Kwame klickt nichts an. Er öffnet selbst seine Bank-App: A
 ### Szene 7
 (Pause 0.6)
 Erzähler: Die beste Wahl ist C. Eine echte Bank fragt nie per SMS, E-Mail oder Telefon nach PIN, Passwort oder Codes. Und wenn du doch schon geklickt hast: Ruf sofort deine Bank an oder den Sperr-Notruf eins-eins-sechs eins-eins-sechs.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- eins-eins-sechs eins-eins-sechs → 116 116

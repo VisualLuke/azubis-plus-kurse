@@ -5,6 +5,12 @@
 // per Forced Alignment für ältere Aufnahmen), verschoben um VERSATZ aus film.vorlage.html
 // (dort beginnt die Sprache im Film). Lange Sätze werden an Wortgrenzen geteilt, höchstens zwei Zeilen.
 //
+// Schreibweise: Was für die Stimme anders geschrieben ist als im Bild (Ziffern, Abkürzungen), steht in
+// konzept.md im Abschnitt „## Schreibweise im Untertitel“ als Liste „- gesprochen → geschrieben“, z. B.
+//   - Ih-Geh-Metall → IG Metall
+//   - dreiundzwanzig Uhr → 23 Uhr
+// stimme.mjs liest nur „## Sprechertext“ und sieht diesen Abschnitt nicht.
+//
 // Aufruf: node werkzeug/untertitel.mjs lernvideos/01-krankenkasse [weitere Ordner …]
 //         node werkzeug/untertitel.mjs --alle
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
@@ -56,9 +62,12 @@ function teilen(satz) {
   for (const t of token) {
     const n = norm(t);
     if (!n) { zeiten.push(null); continue; }
-    while (k < satz.woerter.length && !norm(satz.woerter[k].w)) k++;
-    const w = satz.woerter[k];
-    zeiten.push(w && (norm(w.w) === n || n.startsWith(norm(w.w)) || norm(w.w).startsWith(n)) ? (k++, w) : null);
+    // Ersetzte Stellen (Schreibweise im Untertitel) passen nicht Wort für Wort – kurz vorausschauen
+    const passt = w => w && norm(w.w) && (norm(w.w) === n || n.startsWith(norm(w.w)) || norm(w.w).startsWith(n));
+    let j = k;
+    while (j < Math.min(k + 4, satz.woerter.length) && !passt(satz.woerter[j])) j++;
+    if (j < satz.woerter.length && passt(satz.woerter[j])) { zeiten.push(satz.woerter[j]); k = j + 1; }
+    else zeiten.push(null);
   }
   const anzahl = Math.ceil(text.length / (ZEILE * ZEILEN));
   const ziel = text.length / anzahl;
@@ -82,13 +91,29 @@ function teilen(satz) {
   }));
 }
 
+// Ersetzungen aus konzept.md („## Schreibweise im Untertitel“, Zeilen „- gesprochen → geschrieben“)
+function schreibweisen(o) {
+  const datei = join(o, 'konzept.md');
+  if (!existsSync(datei)) return [];
+  const teil = readFileSync(datei, 'utf8').split(/^## Schreibweise im Untertitel\s*$/m)[1]?.split(/^## /m)[0] ?? '';
+  return teil.split('\n').map(z => z.match(/^\s*-\s*(.+?)\s*(?:→|->)\s*(.+?)\s*$/)).filter(Boolean)
+    .map(m => [m[1], m[2]]).sort((a, b) => b[0].length - a[0].length);   // längere zuerst
+}
+
 for (const o of ordner) {
+  if (!existsSync(join(o, 'film.vorlage.html'))) { console.log(`– ${o.replace(ROOT, '')}: noch keine film.vorlage.html`); continue; }
   const vorlage = readFileSync(join(o, 'film.vorlage.html'), 'utf8');
   const versatz = +(vorlage.match(/VERSATZ\s*=\s*([\d.]+)/)?.[1] ?? NaN);
   if (!Number.isFinite(versatz)) throw new Error(`${o}: VERSATZ nicht gefunden`);
   const quelle = ['sprache.json', 'untertitel-quelle.json'].map(f => join(o, f)).find(existsSync);
   if (!quelle) { console.log(`– ${o.replace(ROOT, '')}: keine Satzzeiten (sprache.json / untertitel-quelle.json)`); continue; }
-  const saetze = JSON.parse(readFileSync(quelle, 'utf8')).saetze;
+  const ersetzen = schreibweisen(o);
+  const saetze = JSON.parse(readFileSync(quelle, 'utf8')).saetze.map(s => {
+    if (!ersetzen.length) return s;
+    let text = s.text;
+    for (const [von, zu] of ersetzen) text = text.split(von).join(zu);
+    return text === s.text ? s : { ...s, text };
+  });
 
   const cues = saetze.flatMap(teilen).map(c => ({ ...c, start: c.start + versatz, ende: c.ende + versatz }));
   // Stehenlassen, damit man zu Ende lesen kann – aber nie in den nächsten Untertitel hinein

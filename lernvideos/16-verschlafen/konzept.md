@@ -91,3 +91,11 @@ Erzähler: Sie fährt los und entschuldigt sich kurz bei der Lehrerin. Unangeneh
 ### Szene 7
 (Pause 0.6)
 Erzähler: Die beste Wahl ist B. Und damit es nicht wieder passiert: zwei Wecker stellen, das Handy weit weg vom Bett legen und am Abend vorher die Tasche packen.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- acht Uhr fünfzehn → 8:15 Uhr
+- um acht Uhr → um 8 Uhr
+- dreißig Minuten → 30 Minuten

@@ -80,3 +80,10 @@ Erzähler: Und wenn du doch zu spät bist? Kein Weltuntergang. Aber sag vorher B
 ### Szene 7
 (Pause 1.4)
 Erzähler: Übrigens: Nur die Bahn nimmt es in Deutschland mit der Zeit nicht immer so genau. Plan deshalb lieber etwas mehr Zeit ein.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- um zehn Uhr → um 10 Uhr
+- Zehn Uhr heißt zehn Uhr → 10 Uhr heißt 10 Uhr

@@ -79,3 +79,12 @@ Kwame: Guten Tag Herr Schmitt, in meiner Küche tropft der Wasserhahn, siehe Fot
 
 ### Szene 8
 Erzähler: Also: Anrede, Grund, Bitte, Gruß und Name. Und nicht mitten in der Nacht.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- dreiundzwanzig Uhr → 23 Uhr
+- Klasse E eins → Klasse E1
+- siebzehn Uhr → 17 Uhr
+- zweiter Stock → 2. Stock

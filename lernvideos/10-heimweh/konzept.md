@@ -64,3 +64,9 @@ Jonas: Und wenn es dir mal richtig schlecht geht, auch nachts: Die Telefonseelso
 (Pause 1)
 Mai: Danke, Jonas. Es tut gut, dass ich nicht die Einzige bin.
 Jonas: Bist du ganz sicher nicht. Und du musst da nicht allein durch.
+
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- null acht null null, eins eins eins, null, eins eins eins → 0800 111 0 111
