@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Das Grundgesetz – deine Grundrechte</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:58px;line-height:68px}
+.unter{font-size:38px;line-height:50px}
+#tb3 .unter{font:700 48px/60px Inter;color:var(--b600);margin-top:20px}
+#tb8 .titel{font-size:54px;line-height:66px}
+#tb8 .titel + .titel{color:var(--b600)}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:6px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.ring{border-radius:999px;border:6px solid var(--b400);box-shadow:0 0 22px rgba(129,99,238,.45)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:26px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.plakette.brand{background:var(--b500);color:var(--surface);font:800 34px/1 Inter}
+.label{padding:8px 18px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 22px/26px Inter;white-space:nowrap;box-shadow:0 4px 14px rgba(90,63,230,.25)}
+.chip{display:flex;align-items:center;gap:12px;padding:10px 22px 10px 14px;border-radius:999px;font:700 26px/32px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.chip svg{width:34px;height:34px;flex:none}
+
+/* Das Buch „Grundgesetz“ */
+.gg{width:220px;height:290px;border-radius:12px 22px 22px 12px;background:linear-gradient(145deg,var(--b400),var(--b600) 55%,var(--b700));
+  box-shadow:0 20px 44px rgba(58,37,153,.3);overflow:hidden}
+.gg::before{content:'';position:absolute;left:0;top:0;bottom:0;width:30px;background:linear-gradient(90deg,var(--b700),var(--b600))}
+.gg .rahmen{position:absolute;left:46px;right:16px;top:18px;bottom:18px;border:3px solid rgba(255,255,255,.3);border-radius:12px}
+.gg .gt{position:absolute;left:30px;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  color:var(--surface);font:800 25px/30px Inter;letter-spacing:.01em}
+.gg .gt s{display:block;width:96px;height:4px;border-radius:2px;background:var(--b200)}
+.gg .glanz{position:absolute;top:-60px;left:0;width:70px;height:420px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0))}
+.licht{width:560px;height:520px;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);transform-origin:50% 0;
+  background:linear-gradient(rgba(255,255,255,.95),rgba(255,255,255,.35) 70%,rgba(255,255,255,0))}
+.regel{width:120px;height:150px;border-radius:18px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.14);
+  display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:9px}
+.regel b{font:800 58px/62px Inter;color:var(--b500)}
+.regel i{display:block;width:74px;height:8px;border-radius:4px;background:var(--n200)} .regel i:last-child{width:50px}
+
+/* 2 · Jahreszahl und Gesetzbücher */
+.jahr{width:270px;height:120px;border-radius:28px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.12);
+  display:flex;align-items:center;justify-content:center;font:800 92px/110px Inter;letter-spacing:-.02em;color:var(--b600);font-variant-numeric:tabular-nums}
+.jahr .rolle{display:inline-block;height:110px;overflow:hidden;vertical-align:top}
+.jahr .rolle b{display:block;font-weight:800}
+.gb{width:80px;height:108px;border-radius:8px 12px 12px 8px;box-shadow:0 6px 16px rgba(22,19,37,.16);display:flex;align-items:center;justify-content:center;
+  font:800 38px/1 Inter;color:var(--surface)}
+.gb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:13px;border-radius:8px 0 0 8px;background:rgba(22,19,37,.22)}
+.gb .ok{position:absolute;right:-12px;bottom:-12px;width:36px;height:36px;border-radius:999px;background:var(--success);border:3px solid var(--surface);
+  display:flex;align-items:center;justify-content:center}
+.gb .ok svg{width:20px}
+
+/* 3 · Aufgeschlagenes Buch */
+.offen{width:480px;height:290px}
+.offen .halb{position:absolute;top:0;width:240px;height:290px}
+.offen .h{position:absolute;top:-10px;bottom:-12px;background:linear-gradient(145deg,var(--b500),var(--b700))}
+.offen .seite{position:absolute;top:0;width:240px;height:290px;background:linear-gradient(var(--surface),var(--b50));padding:30px 26px}
+.offen .seite i{display:block;height:9px;border-radius:5px;background:var(--n200);margin-bottom:15px}
+.offen .art{display:inline-block;padding:5px 14px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 20px/24px Inter;margin-bottom:16px}
+.offen .klappe{position:absolute;left:240px;top:-10px;width:252px;height:312px;border-radius:0 20px 20px 0;
+  background:linear-gradient(145deg,var(--b400),var(--b600) 55%,var(--b700));display:flex;align-items:center;justify-content:center;
+  color:var(--surface);font:800 24px/30px Inter;transform-origin:0 50%}
+.kuppel{pointer-events:none}
+.preis{width:112px;height:64px}
+
+/* 4 · Waage */
+.waage svg{overflow:visible}
+
+/* 5 · Gotteshäuser */
+.boden{width:780px;height:10px;border-radius:5px;background:var(--b200)}
+.spot{width:150px;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(129,99,238,.55),rgba(129,99,238,0))}
+.haus{transform-origin:50% 89%}
+
+/* 6 · Sprechblasen */
+.sprech{width:148px;height:80px;border-radius:24px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.13);padding:18px 20px;
+  display:flex;flex-direction:column;gap:10px}
+.sprech::after{content:'';position:absolute;left:24px;bottom:-16px;border:11px solid transparent;border-top:18px solid var(--surface);border-bottom:0;transform:skewX(-18deg)}
+.sprech i{display:block;height:9px;border-radius:5px;background:var(--b200);transform-origin:0 50%}
+.sprech i + i{background:var(--n200)}
+.sprech.kritik{width:84px;background:var(--b500);align-items:center;justify-content:center;padding:0;font:800 46px/1 Inter;color:var(--surface)}
+.sprech.kritik::after{border-top-color:var(--b500)}
+.sprech.boese{width:156px;background:var(--error-bg);align-items:center;justify-content:center;padding:0;font:800 34px/1 Inter;color:var(--error-text);letter-spacing:.04em}
+.sprech.boese::after{border-top-color:var(--error-bg);left:auto;right:30px;transform:skewX(18deg)}
+.rotstrich{width:190px;height:9px;border-radius:5px;background:var(--error);transform-origin:0 50%}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px;text-wrap:balance}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Figuren als Porträt-Vorlagen -->
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-mai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-ana"><div class="figur"><div class="ebene">{{figur-ana}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-jonas"><div class="figur"><div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-sabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-priya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-lehrerin"><div class="figur"><div class="ebene">{{figur-lehrerin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-chefin"><div class="figur"><div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-vermieter"><div class="figur"><div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kunde"><div class="figur"><div class="ebene">{{figur-kunde}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-stammgast"><div class="figur"><div class="ebene">{{figur-stammgast}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-empfangschefin"><div class="figur"><div class="ebene">{{figur-empfangschefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="buch"><i class="rahmen"></i><div class="gt"><s></s>Grundgesetz<s></s></div><i class="glanz"></i></template>
+<template id="herz">{{herz}}</template>
+<template id="blitz"><svg viewBox="0 0 60 90"><path d="M36 2L8 50h18l-8 38 36-54H34L44 2Z" fill="var(--error)" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round"/></svg></template>
+
+<!-- unsichtbare Hilfs-Akteure (Drehwinkel der Waagen) -->
+<div id="dreh4" hidden></div><div id="dreh7" hidden></div>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Jedes Land hat Regeln (mittig, ohne Titel) -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a licht" id="licht1" data-frei></div>
+  <div class="a" id="land1" style="width:330px" data-frei>{{deutschland}}</div>
+  <div class="a welle" id="welle1" data-frei></div>
+  <div class="a gg" id="buch1" data-gruppe="buch1"></div>
+  <div class="a regel" id="rg1a" data-gruppe="buch1"><b>§</b><i></i><i></i><i></i></div>
+  <div class="a regel" id="rg1b" data-gruppe="buch1"><b>§</b><i></i><i></i><i></i></div>
+  <div class="a regel" id="rg1c" data-gruppe="buch1"><b>§</b><i></i><i></i><i></i></div>
+
+  <!-- 2 · Verfassung seit 1949 -->
+  <div class="a buehne" id="bue1"></div>
+  <svg class="a" id="lin2" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none">
+      <path pathLength="1" d="M1180 588V686"/><path pathLength="1" d="M1180 686H1000"/><path pathLength="1" d="M1180 686H1360"/>
+      <path pathLength="1" d="M1000 686V698M1120 686V698M1240 686V698M1360 686V698"/>
+      <path pathLength="1" d="M1290 440C1420 440 1580 440 1580 524" stroke="var(--b400)"/></g></svg>
+  <div class="a welle" id="welle2" data-frei></div>
+  <div class="a gg" id="buch2"></div>
+  <div class="a" id="land2" style="width:190px">{{deutschland}}</div>
+  <div class="a jahr" id="jahr2"><span class="rolle"><b></b></span><span class="rolle"><b></b></span><span class="rolle"><b></b></span><span class="rolle"><b></b></span></div>
+  <div class="a gb" id="gb2a" style="background:linear-gradient(145deg,var(--b300),var(--b500))">§<span class="ok"></span></div>
+  <div class="a gb" id="gb2b" style="background:linear-gradient(145deg,var(--b400),var(--b600))">§<span class="ok"></span></div>
+  <div class="a gb" id="gb2c" style="background:linear-gradient(145deg,var(--b500),var(--b700))">§<span class="ok"></span></div>
+  <div class="a gb" id="gb2d" style="background:linear-gradient(145deg,var(--b300),var(--b600))">§<span class="ok"></span></div>
+  <div class="a" id="staat2" style="width:230px;transform-origin:50% 90%" data-gruppe="staat2">{{rathaus}}</div>
+  <div class="a plakette gruen" id="ok2" data-gruppe="staat2"></div>
+
+  <!-- 3 · Artikel 1 -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a offen" id="offen3">
+    <div class="halb" id="lg3"><div class="h" style="left:-12px;right:0;border-radius:20px 0 0 20px"></div>
+      <div class="seite" style="left:0;border-radius:12px 0 0 12px;box-shadow:inset -14px 0 18px -14px rgba(58,37,153,.35)"><i style="width:60%;background:var(--b200)"></i><i></i><i></i><i style="width:80%"></i><i></i><i style="width:70%"></i><i></i><i style="width:55%"></i></div></div>
+    <div class="halb" style="left:240px"><div class="h" style="left:0;right:-12px;border-radius:0 20px 20px 0"></div>
+      <div class="seite" id="sR3" style="left:0;border-radius:0 12px 12px 0;box-shadow:inset 14px 0 18px -14px rgba(58,37,153,.35)"><span class="art" id="art3">Artikel 1</span>
+        <i class="z3" style="width:100%;background:var(--b300)"></i><i class="z3" style="width:88%;background:var(--b300)"></i><i class="z3" style="width:94%;background:var(--b300)"></i>
+        <i class="z3" style="width:60%;background:var(--b300)"></i><i></i><i style="width:76%"></i></div></div>
+    <div class="klappe" id="kl3">Grundgesetz</div>
+  </div>
+  <div class="a welle" id="welle3" data-frei></div>
+  <svg class="a kuppel" id="kup3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="fuell" d="M930 832C930 560 1710 560 1710 832Z" fill="var(--b100)" opacity="0"/>
+    <path class="bogen" pathLength="1" d="M930 832C930 560 1710 560 1710 832" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+  <div class="a portrait" id="p3a" data-f="ana" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3b" data-f="vermieter" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3c" data-f="priya" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3d" data-f="kwame" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3e" data-f="chefin" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3f" data-f="jonas" style="width:84px;height:84px"></div>
+  <div class="a portrait" id="p3g" data-f="sabine" style="width:84px;height:84px"></div>
+  <div class="a" id="h3a" style="width:48px" data-frei></div><div class="a" id="h3b" style="width:48px" data-frei></div><div class="a" id="h3c" style="width:48px" data-frei></div>
+  <div class="a" id="h3d" style="width:48px" data-frei></div><div class="a" id="h3e" style="width:48px" data-frei></div><div class="a" id="h3f" style="width:48px" data-frei></div>
+  <div class="a" id="h3g" style="width:48px" data-frei></div>
+  <div class="a" id="bz3a" style="width:54px" data-frei></div><div class="a" id="bz3b" style="width:54px" data-frei></div>
+  <div class="a preis" id="preis3" data-gruppe="preis3"><svg viewBox="0 0 112 64"><path d="M4 32L26 6h78a6 6 0 0 1 6 6v40a6 6 0 0 1-6 6H26Z" fill="var(--surface)" stroke="var(--n300)" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="28" cy="32" r="6" fill="var(--b200)"/><g fill="var(--ink)" opacity=".7"><rect x="48" y="18" width="4" height="28"/><rect x="56" y="18" width="2" height="28"/><rect x="62" y="18" width="5" height="28"/><rect x="71" y="18" width="2" height="28"/><rect x="77" y="18" width="4" height="28"/><rect x="85" y="18" width="2" height="28"/><rect x="91" y="18" width="4" height="28"/></g></svg></div>
+  <div class="a plakette rot" id="x3" data-gruppe="preis3"></div>
+
+  <!-- 4 · Gleichheit -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a waage" id="waage4" style="width:600px;height:460px" data-gruppe="waage4">
+    <svg viewBox="0 0 600 460" style="width:600px;height:460px">
+      <defs><linearGradient id="wb4" x2="0" y2="1"><stop offset="0" stop-color="var(--b500)"/><stop offset="1" stop-color="var(--b700)"/></linearGradient></defs>
+      <ellipse cx="300" cy="446" rx="110" ry="9" fill="var(--b700)" opacity=".12"/>
+      <rect x="291" y="100" width="18" height="326" rx="6" fill="url(#wb4)"/>
+      <path d="M222 444c0-18 34-26 78-26s78 8 78 26Z" fill="url(#wb4)"/>
+      <g class="schaleL"><path d="M60 100L-16 262M60 100l76 162" stroke="var(--b300)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M-24 260h168c0 22-36 34-84 34s-84-12-84-34Z" fill="var(--b200)"/><path d="M-24 260h168" stroke="var(--b400)" stroke-width="6" stroke-linecap="round"/></g>
+      <g class="schaleR"><path d="M540 100L464 262M540 100l76 162" stroke="var(--b300)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M456 260h168c0 22-36 34-84 34s-84-12-84-34Z" fill="var(--b200)"/><path d="M456 260h168" stroke="var(--b400)" stroke-width="6" stroke-linecap="round"/></g>
+      <g class="balken"><rect x="46" y="92" width="508" height="16" rx="8" fill="url(#wb4)"/><circle cx="60" cy="100" r="9" fill="var(--b700)"/><circle cx="540" cy="100" r="9" fill="var(--b700)"/></g>
+      <circle cx="300" cy="100" r="15" fill="var(--b700)"/><circle cx="300" cy="100" r="6" fill="var(--b100)"/>
+      <circle cx="300" cy="44" r="32" fill="var(--b500)" stroke="var(--surface)" stroke-width="5"/>
+      <text x="300" y="60" text-anchor="middle" font-family="Inter" font-weight="800" font-size="42" fill="var(--surface)">§</text></svg></div>
+  <div class="a portrait" id="mann4" data-f="amir" data-gruppe="waage4" style="width:110px;height:110px"></div>
+  <div class="a portrait" id="frau4" data-f="mai" data-gruppe="waage4" style="width:110px;height:110px"></div>
+  <div class="a plakette brand" id="gleich4" data-gruppe="waage4">=</div>
+  <div class="a" id="pfeil4" style="width:64px" data-gruppe="waage4"><svg viewBox="0 0 64 90"><path d="M20 4h24v46h16L32 86 4 50h16Z" fill="var(--error)" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round"/></svg></div>
+  <div class="a plakette rot" id="x4" data-gruppe="waage4"></div>
+  <div class="a plakette gruen" id="ok4" data-gruppe="waage4"></div>
+  <div class="a portrait" id="m4a" data-f="kunde" style="width:72px;height:72px"></div>
+  <div class="a portrait" id="m4b" data-f="ana" style="width:72px;height:72px"></div>
+  <div class="a portrait" id="m4c" data-f="kwame" style="width:72px;height:72px"></div>
+  <div class="a portrait" id="m4d" data-f="lehrerin" style="width:72px;height:72px"></div>
+  <div class="a portrait" id="m4e" data-f="yusuf" style="width:72px;height:72px"></div>
+  <div class="a chip" id="c4a"><svg viewBox="0 0 34 34"><path d="M17 3a10 10 0 0 0-10 10c0 8 10 18 10 18s10-10 10-18A10 10 0 0 0 17 3Z" fill="var(--b500)"/><circle cx="17" cy="13" r="4" fill="var(--surface)"/></svg>Herkunft</div>
+  <div class="a chip" id="c4b"><svg viewBox="0 0 34 34"><path d="M6 5h22a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H14l-7 6v-6H6a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z" fill="var(--b500)"/><text x="17" y="20" text-anchor="middle" font-family="Inter" font-weight="800" font-size="12" fill="var(--surface)">Aa</text></svg>Sprache</div>
+  <div class="a chip" id="c4c"><svg viewBox="0 0 34 34"><path d="M17 3c4 5 5 8 5 10a5 5 0 0 1-10 0c0-2 1-5 5-10Z" fill="var(--warning)"/><rect x="11" y="16" width="12" height="16" rx="3" fill="var(--b500)"/></svg>Religion</div>
+  <div class="a chip" id="c4d"><svg viewBox="0 0 34 34"><circle cx="12" cy="13" r="8" fill="var(--b200)"/><circle cx="22" cy="13" r="8" fill="var(--b400)" opacity=".9"/><circle cx="17" cy="22" r="8" fill="var(--b600)" opacity=".85"/></svg>Hautfarbe</div>
+
+  <!-- 5 · Religionsfreiheit -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a boden" id="boden5" data-frei></div>
+  <div class="a spot" id="spot5" data-frei></div>
+  <div class="a haus" id="kirche5" style="width:200px">{{kirche}}</div>
+  <div class="a haus" id="moschee5" style="width:200px">{{moschee}}</div>
+  <div class="a haus" id="synagoge5" style="width:200px">{{synagoge}}</div>
+  <div class="a haus" id="tempel5" style="width:200px">{{tempel}}</div>
+  <div class="a ring" id="ring5" style="width:166px;height:166px" data-frei></div>
+  <div class="a portrait" id="fig5" data-f="mai" style="width:140px;height:140px"></div>
+  <div class="a" id="h5a" style="width:46px" data-frei></div><div class="a" id="h5b" style="width:46px" data-frei></div><div class="a" id="h5c" style="width:46px" data-frei></div>
+  <div class="a" id="h5d" style="width:46px" data-frei></div><div class="a" id="h5e" style="width:46px" data-frei></div>
+
+  <!-- 6 · Meinungsfreiheit -->
+  <div class="a buehne" id="bue5"></div>
+  <svg class="a" id="grenze6" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path pathLength="1" d="M1452 470V842" stroke="var(--error)" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+  <div class="a welle" id="welle6" style="border-color:var(--error)" data-frei></div>
+  <div class="a" id="reg6" style="width:200px" data-gruppe="reg6">{{regierung}}</div>
+  <div class="a sprech kritik" id="bK6" data-gruppe="reg6">!</div>
+  <div class="a plakette gruen" id="ok6" data-gruppe="reg6"></div>
+  <div class="a portrait" id="pA6" data-f="kwame" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="pB6" data-f="sabine" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="pC6" data-f="jonas" style="width:112px;height:112px"></div>
+  <div class="a portrait" id="pD6" data-f="priya" style="width:112px;height:112px"></div>
+  <div class="a sprech" id="bA6"><i style="width:80%"></i><i style="width:60%"></i></div>
+  <div class="a sprech" id="bB6"><i style="width:70%"></i><i style="width:85%"></i></div>
+  <div class="a sprech" id="bC6"><i style="width:90%"></i><i style="width:50%"></i></div>
+  <div class="a sprech boese" id="bR6" data-gruppe="boese">#!@%</div>
+  <div class="a rotstrich" id="st6" data-gruppe="boese"></div>
+  <div class="a plakette rot" id="x6" data-gruppe="boese"></div>
+
+  <!-- 7 · Grundrechte gelten auch für dich -->
+  <div class="a buehne" id="bue6"></div>
+  <svg class="a" id="strahl7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="5" stroke-linecap="round" stroke-dasharray="0" fill="none"></g></svg>
+  <svg class="a" id="weg7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1236 588C1256 540 1276 506 1300 474" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze7)"/></svg>
+  <div class="a" id="gericht7" style="width:240px">{{gericht}}</div>
+  <div class="a waage" id="waage7" style="width:300px;height:200px">
+    <svg viewBox="0 0 300 200" style="width:300px;height:200px">
+      <defs><linearGradient id="wb7" x2="0" y2="1"><stop offset="0" stop-color="var(--b500)"/><stop offset="1" stop-color="var(--b700)"/></linearGradient></defs>
+      <rect x="145" y="40" width="10" height="140" rx="4" fill="url(#wb7)"/>
+      <path d="M110 190c0-10 16-14 40-14s40 4 40 14Z" fill="url(#wb7)"/>
+      <g class="schaleL"><path d="M40 40L0 118M40 40l40 78" stroke="var(--b300)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M-6 116h92c0 14-20 22-46 22s-46-8-46-22Z" fill="var(--b200)"/><path d="M-6 116h92" stroke="var(--b400)" stroke-width="5" stroke-linecap="round"/></g>
+      <g class="schaleR"><path d="M260 40L220 118M260 40l40 78" stroke="var(--b300)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M214 116h92c0 14-20 22-46 22s-46-8-46-22Z" fill="var(--b200)"/><path d="M214 116h92" stroke="var(--b400)" stroke-width="5" stroke-linecap="round"/></g>
+      <g class="balken"><rect x="30" y="34" width="240" height="12" rx="6" fill="url(#wb7)"/></g>
+      <circle cx="150" cy="40" r="11" fill="var(--b700)"/><circle cx="150" cy="40" r="4" fill="var(--b100)"/></svg></div>
+  <div class="a" id="staat7" style="width:190px">{{rathaus}}</div>
+  <div class="a portrait" id="m7a" data-f="mai" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7b" data-f="stammgast" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7c" data-f="ana" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7d" data-f="jonas" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7e" data-f="empfangschefin" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7f" data-f="amir" style="width:80px;height:80px"></div>
+  <div class="a portrait" id="m7g" data-f="lehrerin" style="width:80px;height:80px"></div>
+  <div class="a ring" id="ring7" style="width:164px;height:164px" data-frei></div>
+  <div class="a portrait" id="du7" data-f="kwame" style="width:140px;height:140px" data-gruppe="du7"></div>
+  <div class="a" id="schild7" style="width:180px" data-gruppe="du7">{{schutzschild}}</div>
+  <div class="a label" id="lab7" data-gruppe="du7">Grundrechte</div>
+  <div class="a" id="bz7" style="width:58px" data-frei></div>
+
+  <!-- 8 · Deine Rechte · die Rechte der anderen -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a licht" id="licht8" style="width:720px;height:560px" data-frei></div>
+  <svg class="a kuppel" id="kup8" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="fuell" d="M930 832C930 560 1710 560 1710 832Z" fill="var(--b100)" opacity="0"/>
+    <path class="bogen" pathLength="1" d="M930 832C930 560 1710 560 1710 832" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+  <svg class="a" id="haende8" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b500)" stroke-width="8" stroke-linecap="round" fill="none"></g></svg>
+  <div class="a gg" id="buch8"></div>
+  <div class="a welle" id="welle8" data-frei></div>
+  <div class="a ring" id="ring8" style="width:132px;height:132px" data-frei></div>
+  <div class="a portrait" id="r8a" data-f="yusuf" style="width:88px;height:88px"></div>
+  <div class="a portrait" id="r8b" data-f="lehrerin" style="width:88px;height:88px"></div>
+  <div class="a portrait" id="r8c" data-f="amir" style="width:88px;height:88px"></div>
+  <div class="a portrait" id="r8d" data-f="kwame" style="width:108px;height:108px"></div>
+  <div class="a portrait" id="r8e" data-f="mai" style="width:88px;height:88px"></div>
+  <div class="a portrait" id="r8f" data-f="vermieter" style="width:88px;height:88px"></div>
+  <div class="a portrait" id="r8g" data-f="priya" style="width:88px;height:88px"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Verfassung</div><div class="unter">seit 1949</div></div>
+<div class="block" id="tb3"><div class="titel">Artikel 1:</div><div class="unter">Die Würde des Menschen ist unantastbar.</div></div>
+<div class="block" id="tb4"><div class="titel">Gleichheit · Gleichberechtigung</div></div>
+<div class="block" id="tb5"><div class="titel">Religionsfreiheit</div></div>
+<div class="block" id="tb6"><div class="titel">Meinungsfreiheit</div><div class="unter">– mit Grenzen</div></div>
+<div class="block" id="tb7"><div class="titel">Grundrechte gelten auch für dich</div></div>
+<div class="block" id="tb8"><div class="titel">Deine Rechte ·</div><div class="titel">die Rechte der anderen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Würde und Freiheit für jeden Menschen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Das Grundgesetz schützt alle in Deutschland – auch dich.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const MX = 1320, MY = 540, N_BUEHNEN = 8;
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.gg').forEach(b => { b.innerHTML = tpl('buch'); });
+['ok2', 'ok4', 'ok6'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.gb .ok').forEach(o => { o.innerHTML = tpl('svgHaken'); });
+['x3', 'x4', 'x6'].forEach(id => { el(id).innerHTML = tpl('svgX'); });
+[...'abcdefg'].forEach(k => { el('h3' + k).innerHTML = tpl('herz'); });
+[...'abcde'].forEach(k => { el('h5' + k).innerHTML = tpl('herz'); });
+['bz3a', 'bz3b', 'bz7'].forEach(id => { el(id).innerHTML = tpl('blitz'); });
+
+for (let i = 0; i < N_BUEHNEN; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte, der Schwenk startet von hier
+
+/* ---------- Helfer (wie Kurs 1 und 32) ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const weg = (ids, t, d = .3) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .6 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([pfad, t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Glanz über den Buchdeckel
+const glanz = (buch, t) => { const g = el(buch).querySelector('.glanz'); if (!AKTEURE.get(g)) akteur(g, { x: -130, r: 18 }, true); tw(g, t, .75, { x: 320 }, 'inout'); };
+// Waage: Balken dreht sich um den Drehpunkt, Schalen hängen senkrecht, Anhang (Porträts, Pfeil) wandert mit der Schale
+function waage(id, dreh, px, py, L, anhang = { L: [], R: [] }) {
+  const svg = el(id), g = svg.querySelector('.balken'), sl = svg.querySelector('.schaleL'), sr = svg.querySelector('.schaleR');
+  akteur(dreh, { r: 0 });
+  HOOKS.push(t => {
+    const a = wertBei(dreh, 'r', t), rad = a * Math.PI / 180, c = L * (1 - Math.cos(rad)), s = L * Math.sin(rad);
+    g.setAttribute('transform', `rotate(${a.toFixed(3)} ${px} ${py})`);
+    sl.setAttribute('transform', `translate(${c.toFixed(2)} ${(-s).toFixed(2)})`);
+    sr.setAttribute('transform', `translate(${(-c).toFixed(2)} ${s.toFixed(2)})`);
+    anhang.L.forEach(k => { el(k).style.transform = `translate(${c.toFixed(2)}px,${(-s).toFixed(2)}px) ` + el(k).style.transform; });
+    anhang.R.forEach(k => { el(k).style.transform = `translate(${(-c).toFixed(2)}px,${s.toFixed(2)}px) ` + el(k).style.transform; });
+  });
+}
+// gedämpftes Pendeln zu einem Zielwinkel (amp mit Vorzeichen: Überschwung in Bewegungsrichtung)
+const pendeln = (dreh, t, ziel, amp, d = .34) => {
+  tw(dreh, t, d, { r: ziel + amp }, 'sinus'); tw(dreh, t + d, d, { r: ziel - amp * .45 }, 'sinus');
+  tw(dreh, t + 2 * d, d, { r: ziel + amp * .18 }, 'sinus'); tw(dreh, t + 3 * d, d * 1.2, { r: ziel }, 'sinus');
+};
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+// Sprechen: Mund folgt dem Pegel (Sprechblasen in Szene 6)
+const SPRICHT = [];
+const sprechen = (id, t0, t1) => SPRICHT.push([el(id), t0, t1]);
+HOOKS.push(t => SPRICHT.forEach(([p, t0, t1]) => {
+  if (t < t0 || t > t1) return;
+  const f = Math.floor(t * 30), lvl = window.PEGEL ? (window.PEGEL[f] || 0) : .5 + .5 * Math.sin(t * 22);
+  const auf = lvl > .35;
+  p.querySelector('.auf').style.opacity = auf ? 1 : 0; p.querySelector('.zu').style.opacity = auf ? 0 : 1;
+  p.querySelector('.froh').style.opacity = 0;
+}));
+
+/* ---------- Kamera: Schwenk, Akzente, Tiefe ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const RUHE = Array.from({ length: N_BUEHNEN }, (_, i) => i ? -S(i) : -360);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  const wx = wert(kamera, 'x', t);
+  const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  for (let i = 0; i < N_BUEHNEN; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE[i])).toFixed(1)}px)`;
+});
+
+/* ================= 1 · Jedes Land hat Regeln – ein kleines Buch (mittig, ohne Titel) ================= */
+{
+  const X = S(0);
+  // Jedes Land hat Regeln: drei Regel-Karten ploppen auf
+  const RG = [['rg1a', 1100, 530, -3], ['rg1b', 1320, 470, 0], ['rg1c', 1540, 530, 3]];
+  RG.forEach(([id, x, y, r], i) => { pop(id, W('Jedes', 1) - .2 + i * .22, { x: X + x, y, r, s: 1.25 }, i === 1 ? 'pop' : 'plopp'); });
+  schweben(['rg1a', 'rg1b', 'rg1c'], 3);
+  RG.forEach(([id], i) => wackeln(id, W('Regeln', 1) + i * .08, 3, 3));
+  cue(W('Regeln', 1), 'klick');
+  // die wichtigsten Regeln: die Karten heben sich hervor
+  RG.forEach(([id], i) => bump(id, W('wichtigsten', 2) + i * .1, 1.12));
+  // in Deutschland: der Umriss erscheint, die Karten fliegen darauf
+  const tD = W('Deutschland', 2) - .25;
+  akteur('land1', { x: X + 1320, y: 560, o: 0, s: .7 });
+  tw('land1', tD, .3, { o: 1 }); tw('land1', tD, .7, { s: 1 }, 'sanft'); cue(tD, 'whoosh');
+  const ZIEL = [[1265, 500], [1370, 580], [1290, 650]];
+  RG.forEach(([id], i) => { const t0 = tD + .3 + i * .12; flug(id, t0, .6, X + ZIEL[i][0], ZIEL[i][1], 70, { s: .6, r: 0 }); cue(t0 + .6, 'plopp'); });
+  // stehen in einem kleinen Buch: das Buch fällt herein, die Karten fliegen hinein
+  const tB = W('stehen', 2) - .15;
+  akteur('buch1', { x: X + 1320, y: 330, o: 0 });
+  tw('buch1', tB, .12, { o: 1 }); tw('buch1', tB, .42, { y: 560 }, 'in'); landen('buch1', tB + .42, .9); cue(tB + .42, 'plopp');
+  tw('land1', tB + .3, .5, { o: .45, s: .92 }, 'inout');
+  RG.forEach(([id], i) => {
+    const t0 = W('kleinen', 2) - .25 + i * .17;
+    flug(id, t0, .45, X + 1320, 540, 60, { s: .15 }); tw(id, t0 + .33, .12, { o: 0 });
+    bump('buch1', t0 + .45, 1.06); cue(t0 + .45, 'plopp');
+  });
+  tw('land1', W('Buch', 2) - .1, .45, { o: 0, s: .85 }, 'in');
+  // dem Grundgesetz: Licht fällt darauf, das Buch schwebt
+  const tL = W('dem', 2) - .15;
+  akteur('licht1', { x: X + 1320, y: 492, o: 0, sy: .4 });
+  tw('licht1', tL, .6, { o: 1, sy: 1 }, 'out');
+  tw('buch1', tL, .9, { y: 500, s: 1.15 }, 'sanft'); cue(tL, 'whoosh');
+  schweben('buch1', 5);
+  glanz('buch1', W('Grundgesetz', 2) - .05);
+  wellen('welle1', [W('Grundgesetz', 2), W('Grundgesetz', 2) + .55], X + 1320, 500, 1.1, 260);
+  cue(W('Grundgesetz', 2), 'ding'); akzent(W('Grundgesetz', 2), .045);
+}
+
+/* ================= 2 · Verfassung seit 1949 ================= */
+pan2(SE(2) + .3, 1);
+{
+  const X = S(1);
+  titelEin('tb2', W('Verfassung', 3) - .25, { unter: W('seit', 4) - .1 });
+  ein('buch2', W('Das', 3) - .35, { x: X + 1320, y: 480, s: 1.05 }, { y: 90 }, 'whoosh');
+  tw('buch2', W('seit', 4) - .45, .8, { x: X + 1180, y: 440, s: .9 }, 'inout');
+  schweben('buch2', 3);
+  bump('buch2', W('Verfassung', 3), 1.08); welle('welle2', W('Verfassung', 3), X + 1320, 480, 1.0, 280); cue(W('Verfassung', 3), 'ding');
+  glanz('buch2', W('Verfassung', 3) + .1); akzent(W('Verfassung', 3), .03);
+  // von Deutschland
+  pop('land2', W('Deutschland', 3) - .15, { x: X + 1570, y: 335 }, 'pop', 'sanft');
+  // seit 1949: die Jahreszahl rollt ein
+  tw('land2', W('seit', 4) - .3, .3, { s: 0 }, 'sinus');
+  pop('jahr2', W('seit', 4) - .05, { x: X + 1570, y: 330 }, 'pop', 'sanft');
+  const ROLLEN = [...el('jahr2').querySelectorAll('.rolle b')];
+  const ZIEL = [1, 9, 4, 19];
+  ROLLEN.forEach((b, i) => { b.innerHTML = Array.from({ length: ZIEL[i] + 1 }, (_, k) => k % 10).join('<br>'); });
+  const tR = W('neunzehn', 4) - .1;
+  const ENDE = ZIEL.map((_, i) => tR + .5 + i * .32);
+  HOOKS.push(t => ROLLEN.forEach((b, i) => {
+    const p = E.out(clamp((t - tR) / (ENDE[i] - tR)));
+    b.style.transform = `translateY(${(-p * ZIEL[i] * 110).toFixed(1)}px)`;
+  }));
+  ENDE.forEach((t, i) => cue(t, i === 3 ? 'klick' : 'tipp'));
+  bump('jahr2', ENDE[3] + .02, 1.1); akzent(ENDE[3], .035);
+  // Alle Gesetze: kleine Gesetzbücher fliegen schief herein …
+  const GB = [['gb2a', 1000, -12, 14], ['gb2b', 1120, 9, -10], ['gb2c', 1240, -7, 18], ['gb2d', 1360, 13, -6]];
+  GB.forEach(([id, x, r, dy], i) => ein(id, W('Gesetze', 5) - .25 + i * .1, { x: X + x, y: 760 + dy, r }, { y: 110, r: r * 2 }, i ? null : 'whoosh'));
+  // … müssen dazu passen: eine Linie vom Grundgesetz, sie richten sich aus
+  akteur('lin2', { x: X + 960, y: 540 });
+  const L = [...el('lin2').querySelectorAll('path')];
+  const tP = W('dazu', 5) - .15;
+  strich(L[0], tP, .3); strich(L[1], tP + .25, .35); strich(L[2], tP + .25, .35); strich(L[3], tP + .55, .2); cue(tP, 'scan');
+  GB.forEach(([id], i) => {
+    const t0 = W('passen', 5) - .3 + i * .15;
+    tw(id, t0, .35, { r: 0, y: 760 }, 'sanft'); cue(t0 + .2, 'klick');
+    const ok = el(id).querySelector('.ok'); akteur(ok, { s: 0 }, true); tw(ok, t0 + .25, .4, { s: 1 }, 'back');
+  });
+  // und auch der Staat selbst muss sich daran halten
+  ein('staat2', W('Staat', 5) - .3, { x: X + 1580, y: 630 }, { x: 90 }, 'whoosh');
+  strich(L[4], W('selbst', 5) - .1, .5); cue(W('selbst', 5) - .1, 'scan');
+  tw('staat2', W('muss', 5) - .15, .25, { sy: .9, sx: 1.04 }, 'sinus'); tw('staat2', W('muss', 5) + .1, .45, { sy: 1, sx: 1 }, 'sanft');
+  bump('buch2', W('muss', 5) - .15, 1.05);
+  pop('ok2', W('daran', 5) - .1, { x: X + 1672, y: 556 }, 'erfolg'); akzent(W('daran', 5), .03);
+  textAus('tb2', SE(5) + .15);
+}
+
+/* ================= 3 · Artikel 1: Die Würde des Menschen ist unantastbar ================= */
+pan2(SE(5) + .35, 2);
+{
+  const X = S(2);
+  const Z = ['Die', 'Würde', 'des', 'Menschen', 'ist', 'unantastbar'].map(w => W(w, 6) - .08);
+  titelEin('tb3', W('Artikel', 6) - .2, [W('Artikel', 6) - .2, W('Artikel', 6) - .1, ...Z]);
+  // Das Buch kommt zugeklappt und schlägt auf
+  ein('offen3', W('Der', 6) - .3, { x: X + 1320, y: 386 }, { y: 90 }, 'whoosh');
+  akteur('lg3', { sx: 0 }, true); el('lg3').style.transformOrigin = '100% 50%';
+  akteur('kl3', { sx: 1 }, true);
+  const tA = W('Artikel', 6) - .1;
+  tw('kl3', tA, .22, { sx: 0 }, 'in'); tw('lg3', tA + .22, .3, { sx: 1 }, 'out'); cue(tA, 'whoosh');
+  landen('offen3', tA + .5, .4);
+  akteur('art3', { s: 0 }, true); tw('art3', W('erste', 6) + .55, .45, { s: 1 }, 'back'); cue(W('erste', 6) + .55, 'ding');
+  // Der Satz schreibt sich auf die Seite, im Takt der Wörter
+  const ZEILEN = [...el('sR3').querySelectorAll('.z3')];
+  ZEILEN.forEach(z => { akteur(z, { sx: 0 }, true); });
+  [[0, 'Die', 'Würde'], [1, 'des', 'Menschen'], [2, 'ist', 'unantastbar'], [3, 'unantastbar', null]].forEach(([i, a, b]) => {
+    const t0 = W(a, 6) - .05, t1 = b ? W(b, 6) + .25 : W(a, 6) + .8;
+    tw(ZEILEN[i], t0, t1 - t0, { sx: 1 }, 'inout'); cue(t0, 'tipp');
+  });
+  welle('welle3', W('unantastbar', 6) + .3, X + 1440, 386, 1.1, 300); cue(W('unantastbar', 6) + .3, 'erfolg'); akzent(W('unantastbar', 6) + .2, .045);
+  bump('offen3', W('unantastbar', 6) + .3, 1.04);
+  // Jeder Mensch hat einen Wert: viele verschiedene Menschen, über jedem ein Herz
+  const P = ['p3a', 'p3b', 'p3c', 'p3d', 'p3e', 'p3f', 'p3g'], H = ['h3a', 'h3b', 'h3c', 'h3d', 'h3e', 'h3f', 'h3g'];
+  const PX = i => X + 1320 + (i - 3) * 96;
+  [3, 2, 4, 1, 5, 0, 6].forEach((k, j) => { pop(P[k], W('Jeder', 7) - .2 + j * .08, { x: PX(k), y: 752 }, j % 2 ? null : 'pop'); froh(P[k], W('Jeder', 7) + j * .08); });
+  P.forEach((p, i) => huepfen(p, W('Mensch', 7) + i * .05, 10));
+  H.forEach((h, i) => { pop(h, W('Wert', 7) - .15 + i * .06, { x: PX(i), y: 664 }, i ? null : 'ding'); });
+  H.forEach((h, i) => bump(h, W('Wert', 7) + .6 + i * .06, 1.18));
+  akzent(W('Wert', 7), .03);
+  // Niemand darf …: die Herzen sinken in die Menschen, ein Schutzbogen spannt sich
+  H.forEach((h, i) => { const t0 = SE(7) + .1 + i * .03; tw(h, t0, .35, { y: 750, s: .2 }, 'in'); tw(h, t0 + .25, .1, { o: 0 }); });
+  akteur('kup3', { x: X + 960, y: 540 });
+  const bogen3 = el('kup3').querySelector('.bogen'), fuell3 = el('kup3').querySelector('.fuell');
+  strich(bogen3, W('Niemand', 8) - .1, .6); cue(W('Niemand', 8) - .1, 'scan');
+  const FUELL3 = [[W('darf', 8), .35]];
+  // gequält, gedemütigt: rote Blitze prallen am Bogen ab
+  const blitz = (id, t, x0, y0, x1, y1) => {
+    akteur(id, { x: X + x0, y: y0, o: 0, r: x1 < x0 ? 20 : -20 });
+    tw(id, t, .1, { o: 1 }); tw(id, t, .28, { x: X + x1, y: y1 }, 'in');
+    tw(id, t + .28, .45, { x: X + x0 + (x1 - x0) * .25, y: y0 + 50, r: x1 < x0 ? -30 : 30 }, 'out'); tw(id, t + .5, .25, { o: 0 });
+    cue(t + .28, 'klick'); FUELL3.push([t + .28, .7]);
+  };
+  blitz('bz3a', W('gequält', 8) - .25, 1690, 500, 1600, 640);
+  blitz('bz3b', W('gedemütigt', 8) - .25, 950, 500, 1040, 640);
+  HOOKS.push(t => {
+    let o = 0;
+    for (const [t0, h] of FUELL3) { if (t < t0) continue; o = h === .35 ? Math.max(o, .35 * E.out(clamp((t - t0) / .4))) : Math.max(o, .35 + .35 * Math.max(0, 1 - (t - t0) / .5)); }
+    fuell3.setAttribute('opacity', o.toFixed(3));
+  });
+  [['p3f', 'gequält'], ['p3b', 'gedemütigt']].forEach(([p, w]) => huepfen(p, W(w, 8) + .1, 8));
+  // … wie ein Gegenstand: ein Preisschild will sich an einen Menschen hängen – verboten
+  const tG = W('wie', 8) - .2;
+  akteur('preis3', { x: X + 1640, y: 450, o: 0, r: 20 });
+  tw('preis3', tG, .15, { o: 1 }); flug('preis3', tG, .55, X + 1470, 592, 40, { r: -3 }); cue(tG, 'whoosh');
+  landen('preis3', tG + .55, .6); cue(tG + .55, 'klick');
+  pop('x3', W('Gegenstand', 8) + .15, { x: X + 1522, y: 616 }, 'klick'); wackeln('preis3', W('Gegenstand', 8) + .2, 4, 5);
+  const tW = W('behandelt', 8) + .15;
+  flug(['preis3', 'x3'], tW, .55, X + 1640, 470, 50, { r: 25 }); tw(['preis3', 'x3'], tW + .3, .25, { o: 0 }); cue(tW, 'whoosh');
+  P.forEach((p, i) => { froh(p, W('werden', 8)); huepfen(p, W('werden', 8) + i * .05, 10); });
+  textAus('tb3', SE(8) + .15);
+}
+
+/* ================= 4 · Gleichheit · Gleichberechtigung ================= */
+pan2(SE(8) + .35, 3);
+{
+  const X = S(3);
+  titelEin('tb4', W('Alle', 9) - .1, [W('Alle', 9) - .1, W('Alle', 9) + .05, W('Männer', 10) - .1]);
+  waage('waage4', 'dreh4', 300, 100, 240, { L: ['mann4'], R: ['frau4', 'pfeil4', 'x4'] });
+  // Alle Menschen sind vor dem Gesetz gleich: die Waage kommt schief und pendelt ein
+  set('dreh4', 0, { r: 12 });
+  akteur('waage4', { x: X + 1320, y: 550, o: 0 }); tw('waage4', W('Alle', 9) - .35, .45, { o: 1 }, 'out'); tw('waage4', W('Alle', 9) - .35, .8, { y: 460 }, 'weich'); cue(W('Alle', 9) - .35, 'whoosh');
+  tw('dreh4', W('Alle', 9) + .3, 1.0, { r: 8 }, 'sinus');
+  const M = ['m4a', 'm4b', 'm4c', 'm4d', 'm4e'];
+  M.forEach((m, i) => { pop(m, W('Menschen', 9) - .1 + i * .07, { x: X + 1120 + i * 100, y: 792 }, i ? null : 'pop'); froh(m, W('Menschen', 9) + .2); });
+  bump('waage4', W('Gesetz', 9) - .05, 1.04); cue(W('Gesetz', 9), 'ding');
+  pendeln('dreh4', W('gleich', 9) - .3, 0, -5);
+  M.forEach(m => huepfen(m, W('gleich', 9) + .25, 14)); akzent(W('gleich', 9), .03);
+  // Männer und Frauen: der Mann fällt in die linke Schale (kippt), die Frau in die rechte (gerade)
+  const fall = (id, t, x) => {
+    akteur(id, { x: X + x, y: 250, o: 0 });
+    tw(id, t, .12, { o: 1 }); tw(id, t, .34, { y: 435 }, 'in'); landen(id, t + .34, .8); cue(t + .34, 'plopp');
+  };
+  const tM = W('Männer', 10) - .3, tF = W('Frauen', 10) - .3;
+  fall('mann4', tM, 1080); tw('dreh4', tM + .34, .45, { r: -11 }, 'out');
+  fall('frau4', tF, 1560); pendeln('dreh4', tF + .34, 0, 5, .3);
+  froh('mann4', tF + .6); froh('frau4', tF + .6);
+  pop('gleich4', W('gleichen', 10) - .05, { x: X + 1320, y: 452 }, 'ding'); akzent(W('Rechte', 10), .04);
+  huepfen('mann4', W('Rechte', 10), 10); huepfen('frau4', W('Rechte', 10) + .08, 10);
+  // Niemand darf wegen …: die Merkmale erscheinen
+  M.forEach((m, i) => tw(m, W('Niemand', 11) - .3 + i * .04, .3, { s: 0 }, 'sinus'));
+  const C = [['c4a', 'Herkunft', 1170, 736], ['c4b', 'Sprache', 1470, 736], ['c4c', 'Religion', 1170, 804], ['c4d', 'Hautfarbe', 1470, 804]];
+  C.forEach(([id, w, x, y]) => ein(id, W(w, 11) - .15, { x: X + x, y }, { y: 40 }, 'pop'));
+  // … benachteiligt: ein roter Pfeil drückt auf eine Schale – wird gestoppt, die Waage bleibt gerade
+  const tN = W('benachteiligt', 11) - .35;
+  akteur('pfeil4', { x: X + 1560, y: 230, o: 0 });
+  tw('pfeil4', tN, .12, { o: 1 }); tw('pfeil4', tN, .3, { y: 318 }, 'in'); cue(tN + .3, 'plopp');
+  tw('dreh4', tN + .3, .3, { r: 5 }, 'out');
+  mund('frau4', tN + .3, 'auf');
+  pop('x4', W('werden', 11) - .25, { x: X + 1590, y: 300 }, 'klick'); wackeln('pfeil4', W('werden', 11) - .2, 3, 6);
+  const tO = W('werden', 11) + .15;
+  tw(['pfeil4', 'x4'], tO, .4, { y: 200, o: 0 }, 'in');
+  pendeln('dreh4', tO + .05, 0, -3, .26);
+  froh('frau4', tO + .1);
+  pop('ok4', tO + .15, { x: X + 1320, y: 540 }, 'erfolg');
+  C.forEach(([id], i) => bump(id, tO + .2 + i * .06, 1.08));
+  textAus('tb4', SE(11) + .15);
+}
+
+/* ================= 5 · Religionsfreiheit ================= */
+pan2(SE(11) + .35, 4);
+{
+  const X = S(4);
+  titelEin('tb5', W('Es', 12) - .1);
+  akteur('boden5', { x: X + 1320, y: 679, sx: 0 }); tw('boden5', W('Es', 12) - .3, .6, { sx: 1 }, 'inout'); cue(W('Es', 12) - .3, 'scan');
+  // Gotteshäuser wachsen gleichzeitig und gleich groß aus dem Boden
+  const HAUS = [['kirche5', 1000], ['moschee5', 1160], ['synagoge5', 1480], ['tempel5', 1640]];
+  const tH = W('gibt', 12) - .05;
+  HAUS.forEach(([id, x], i) => {
+    const t0 = tH + [0, .06, .03, .09][i];
+    akteur(id, { x: X + x, y: 596, sy: 0, o: 0 }); tw(id, t0, .1, { o: 1 }); tw(id, t0, .6, { sy: 1 }, 'sanft');
+  });
+  cue(tH, 'whoosh');
+  HAUS.forEach(([id]) => bump(id, W('Religionsfreiheit', 12) + .35, 1.06)); cue(W('Religionsfreiheit', 12) + .35, 'ding'); akzent(W('Religionsfreiheit', 12) + .3, .035);
+  // Du darfst glauben, was du willst: frei wählen – oder gar nichts
+  pop('fig5', W('Du', 13) - .15, { x: X + 1320, y: 605 }, 'pop', 'sanft'); froh('fig5', W('Du', 13));
+  akteur('spot5', { x: X + 1320, y: 679, o: 0 });
+  tw('spot5', W('glauben', 13) - .3, .25, { o: 1 });
+  const HOP = [[W('glauben', 13) + .05, 1000, 'kirche5'], [W('was', 13) + .05, 1160, 'moschee5'], [W('willst', 13) - .05, 1480, 'synagoge5'], [W('willst', 13) + .42, 1640, 'tempel5']];
+  let vorher = W('glauben', 13) - .05;
+  HOP.forEach(([t, x, id]) => { tw('spot5', t - .38, .38, { x: X + x }, 'sinus'); huepfen(id, t, 12); cue(t, 'pop'); vorher = t; });
+  tw('spot5', W('gar', 13) - .3, .42, { x: X + 1320 }, 'sinus');
+  tw('spot5', W('nichts', 13) + .1, .3, { o: 0 });
+  pop('ring5', W('nichts', 13) - .05, { x: X + 1320, y: 605 }, 'ding', 'sanft');
+  huepfen('fig5', W('nichts', 13), 14); akzent(W('nichts', 13), .03);
+  // Und du darfst deine Religion ausüben: alle friedlich nebeneinander
+  tw('ring5', W('Und', 14), .35, { o: 0 });
+  const HZ = [['h5a', 1000], ['h5b', 1160], ['h5c', 1320], ['h5d', 1480], ['h5e', 1640]];
+  HZ.forEach(([id, x], i) => pop(id, W('ausüben', 14) - .2 + i * .09, { x: X + x, y: 445 }, i ? null : 'erfolg'));
+  [...HAUS.map(h => h[0]).slice(0, 2), 'fig5', ...HAUS.map(h => h[0]).slice(2)].forEach((id, i) => huepfen(id, W('deine', 14) + i * .1, 10));
+  HZ.forEach(([id], i) => bump(id, W('ausüben', 14) + .6 + i * .05, 1.15));
+  textAus('tb5', SE(14) + .15);
+}
+
+/* ================= 6 · Meinungsfreiheit – mit Grenzen ================= */
+pan2(SE(14) + .35, 5);
+{
+  const X = S(5);
+  titelEin('tb6', W('Es', 15) - .1, { unter: W('Grenzen', 17) - .2 });
+  const PP = [['pA6', 1000], ['pB6', 1160], ['pC6', 1320]];
+  PP.forEach(([id, x], i) => { pop(id, W('Es', 15) - .2 + i * .1, { x: X + x, y: 770 }, i ? null : 'pop', 'sanft'); froh(id, W('Es', 15)); });
+  // Sprechblasen ploppen auf und schreiben sich
+  const BB = [['bA6', 1020], ['bB6', 1180], ['bC6', 1340]];
+  const TIPP = [[W('sagen', 16) - .1, W('was', 16)], [W('was', 16), W('denkst', 16)], [W('denkst', 16) - .05, W('denkst', 16) + .5]];
+  BB.forEach(([id, x], i) => pop(id, i ? TIPP[i][0] - .3 : W('Meinungsfreiheit', 15) + .2, { x: X + x, y: 632 }, 'pop'));
+  BB.forEach(([id], i) => {
+    const [t0, t1] = TIPP[i];
+    [...el(id).querySelectorAll('i')].forEach((z, k) => { akteur(z, { sx: .001 }, true); tw(z, t0 + k * (t1 - t0) / 2, (t1 - t0) / 2 + .05, { sx: 1 }, 'inout'); });
+    cue(t0, 'tipp'); sprechen(PP[i][0], t0 - .05, t1 + .05); froh(PP[i][0], t1 + .1);
+  });
+  // auch Kritik an der Regierung: eine Kritik-Blase fliegt zum Regierungsgebäude
+  ein('reg6', W('auch', 16) - .2, { x: X + 1580, y: 330 }, { x: 80 }, 'whoosh');
+  const tK = W('Kritik', 16) - .15;
+  pop('bK6', tK, { x: X + 1330, y: 520 }, 'pop'); sprechen('pC6', tK, W('Regierung', 16) + .4);
+  flug('bK6', W('an', 16) - .05, .6, X + 1440, 336, 90); cue(W('an', 16) - .05, 'whoosh');
+  landen('bK6', W('an', 16) + .55, .6); bump('reg6', W('an', 16) + .55, 1.05); cue(W('an', 16) + .55, 'plopp');
+  pop('ok6', W('Regierung', 16) + .45, { x: X + 1476, y: 296 }, 'ding');
+  froh('pC6', W('Regierung', 16) + .5);
+  // Aber die Freiheit hat Grenzen: eine rote Linie zeichnet sich
+  akteur('grenze6', { x: X + 960, y: 540 });
+  strich(el('grenze6').querySelector('path'), W('Grenzen', 17) - .35, .55); cue(W('Grenzen', 17) - .35, 'scan'); akzent(W('Grenzen', 17), .035);
+  pop('pD6', W('Grenzen', 17) + .2, { x: X + 1600, y: 770 }, 'pop', 'sanft'); froh('pD6', W('Grenzen', 17) + .3);
+  // Beleidigungen und Hetze: die Blase „#!@%“ will hinüber, prallt an der Grenze ab und wird gestrichen
+  const tB = W('Beleidigungen', 17) - .15;
+  pop('bR6', tB, { x: X + 1180, y: 520 }, 'pop'); wackeln('bR6', tB + .4, 4, 4);
+  mund('pD6', tB + .3, 'zu');
+  const tH = W('Hetze', 17) - .2;
+  tw('bR6', tH, .32, { x: X + 1368 }, 'in'); cue(tH + .32, 'klick');
+  welle('welle6', tH + .32, X + 1452, 520, .8, 150);
+  tw('bR6', tH + .32, .45, { x: X + 1320 }, 'out');
+  const tV = W('verboten', 17) - .15;
+  akteur('st6', { x: X + 1320, y: 520, r: -12, sx: 0, o: 0 }); set('st6', tV, { o: 1 }); tw('st6', tV, .3, { sx: 1 }, 'out'); cue(tV, 'kritzeln');
+  pop('x6', tV + .2, { x: X + 1395, y: 480 }, 'klick'); akzent(W('verboten', 17), .04);
+  const tF = W('verboten', 17) + .45;
+  tw(['bR6', 'st6', 'x6'], tF, .45, { y: 600, o: 0 }, 'in');
+  froh('pD6', tF); huepfen('pD6', tF + .1, 10);
+  textAus('tb6', SE(17) + .15);
+}
+
+/* ================= 7 · Grundrechte gelten auch für dich – vor Gericht, auch gegen den Staat ================= */
+pan2(SE(17) + .35, 6);
+{
+  const X = S(6);
+  titelEin('tb7', W('Grundrechte', 18) - .2, [W('Grundrechte', 18) - .2, W('gelten', 18) - .1, W('auch', 18) - .1]);
+  // Schutzschild „Grundrechte“
+  pop('schild7', W('Grundrechte', 18) - .2, { x: X + 1320, y: 372 }, 'pop', 'sanft');
+  ein('lab7', W('Grundrechte', 18) + .1, { x: X + 1320, y: 476 }, { y: 30 });
+  schweben(['schild7'], 3);
+  // … gelten für alle Menschen: Porträts im Bogen, Strahlen vom Schild
+  const MM = ['m7a', 'm7b', 'm7c', 'm7d', 'm7e', 'm7f', 'm7g'];
+  const MX7 = i => 1320 + (i - 3) * 105, MY7 = i => 664 + 34 * ((i - 3) / 3) ** 2;
+  [3, 2, 4, 1, 5, 0, 6].forEach((k, j) => { pop(MM[k], W('alle', 18) - .25 + j * .06, { x: X + MX7(k), y: MY7(k) }, j % 2 ? null : 'pop'); froh(MM[k], W('Menschen', 18)); });
+  akteur('strahl7', { x: X + 960, y: 540 });
+  const G7 = el('strahl7').querySelector('g');
+  MM.forEach((_, i) => { if (i === 3) return; const x = MX7(i), y = MY7(i) - 48; G7.insertAdjacentHTML('beforeend', `<path pathLength="1" d="M${1320 + (x - 1320) * .12} 504L${x} ${y}"/>`); });
+  [...G7.querySelectorAll('path')].forEach((p, i) => strich(p, W('Menschen', 18) - .1 + i * .05, .45));
+  cue(W('Menschen', 18) - .1, 'scan');
+  MM.forEach((m, i) => huepfen(m, W('Deutschland', 18) + Math.abs(i - 3) * .07, 10));
+  // … auch für dich: du trittst hervor
+  const tD = W('auch', 18) - .15;
+  tw('strahl7', tD, .35, { o: 0 });
+  tw('m7d', tD, .25, { s: 0 }, 'sinus');
+  tw('m7c', tD, .4, { x: X + MX7(2) - 22 }, 'inout'); tw('m7e', tD, .4, { x: X + MX7(4) + 22 }, 'inout');
+  pop('du7', tD + .1, { x: X + 1320, y: 676 }, 'pop', 'sanft'); froh('du7', tD + .2);
+  pop('ring7', W('dich', 18) - .1, { x: X + 1320, y: 676 }, 'ding', 'sanft'); akzent(W('dich', 18), .04);
+  bump('schild7', W('dich', 18), 1.1);
+  // Und wenn du glaubst …: die anderen treten zurück, du mit Schild nach links
+  const tU = W('Und', 19) - .2;
+  MM.forEach((m, i) => { if (m !== 'm7d') tw(m, tU + Math.abs(i - 3) * .03, .3, { s: 0, o: 0 }, 'in'); });
+  tw('ring7', tU, .25, { o: 0 });
+  tw('du7', tU + .1, .7, { x: X + 1180, y: 650 }, 'inout');
+  flug('schild7', tU + .15, .7, X + 1305, 690, 60, { s: .8 }); tw('lab7', tU, .3, { o: 0, y: 500 }, 'in'); cue(tU + .1, 'whoosh');
+  // … deine Rechte verletzt werden: ein Blitz trifft das Schild
+  const tV = W('verletzt', 19) - .25;
+  akteur('bz7', { x: X + 1480, y: 520, o: 0, r: -25 });
+  tw('bz7', tV, .1, { o: 1 }); tw('bz7', tV, .26, { x: X + 1340, y: 640 }, 'in');
+  tw('bz7', tV + .26, .4, { x: X + 1440, y: 580, r: 10 }, 'out'); tw('bz7', tV + .45, .2, { o: 0 });
+  cue(tV + .26, 'klick'); wackeln('schild7', tV + .26, 4, 6); mund('du7', tV + .26, 'auf');
+  // … kannst du vor Gericht gehen: das Gericht erscheint, der Weg zeichnet sich
+  ein('gericht7', W('Gericht', 19) - .35, { x: X + 1320, y: 356 }, { y: -40 }, 'whoosh');
+  mund('du7', W('kannst', 19), 'zu');
+  akteur('weg7', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('weg7', W('gehen', 19) - .35, .1, { o: 1 }); tw('weg7', W('gehen', 19) - .35, .55, { draw: 1 }, 'inout');
+  { const pw = el('weg7').querySelector('path'), tSp = W('gehen', 19) + .15; HOOKS.push(t => { if (t >= tSp) pw.setAttribute('marker-end', 'url(#spitze7)'); else pw.removeAttribute('marker-end'); }); }
+  cue(W('gehen', 19) - .35, 'scan');
+  huepfen('du7', W('gehen', 19) - .1, 14); huepfen('du7', W('gehen', 19) + .4, 10); froh('du7', W('gehen', 19));
+  // Auch gegen den Staat: der Staat kommt auf die andere Seite, die Waage des Gerichts pendelt gerade
+  tw('weg7', W('Auch', 20) - .45, .3, { o: 0 });
+  tw('du7', W('Auch', 20) - .4, .6, { x: X + 1030, y: 690 }, 'inout');
+  flug('schild7', W('Auch', 20) - .35, .6, X + 1120, 724, 40, { s: .55 });
+  waage('waage7', 'dreh7', 150, 40, 110);
+  set('dreh7', 0, { r: 12 });
+  pop('waage7', W('Auch', 20) - .15, { x: X + 1320, y: 610 }, 'pop', 'sanft');
+  ein('staat7', W('gegen', 20) - .15, { x: X + 1580, y: 690 }, { x: 90 }, 'whoosh');
+  pendeln('dreh7', W('Staat', 20) - .1, 0, -5, .26);
+  bump('gericht7', W('Staat', 20) + .25, 1.05); cue(W('Staat', 20) + .25, 'ding'); akzent(W('Staat', 20) + .2, .035);
+  huepfen('du7', W('Staat', 20) + .5, 10);
+  textAus('tb7', SE(20) + .15);
+}
+
+/* ================= 8 · Deine Rechte · die Rechte der anderen ================= */
+pan2(SE(20) + .35, 7);
+{
+  const X = S(7);
+  titelEin('tb8', W('schützt', 21) - .15, [W('schützt', 21) - .15, null, null, W('Rechte', 22) - .2]);
+  // Das Grundgesetz schwebt im Licht über allen
+  const tB = W('Das', 21) - .35;
+  akteur('licht8', { x: X + 1320, y: 512, o: 0, sy: .4 }); tw('licht8', tB, .7, { o: .85, sy: 1 }, 'out');
+  akteur('buch8', { x: X + 1320, y: 250, o: 0, s: .6 }); tw('buch8', tB, .2, { o: 1 }); tw('buch8', tB, .8, { y: 340 }, 'sanft'); cue(tB, 'whoosh');
+  schweben('buch8', 4); glanz('buch8', W('Grundgesetz', 21));
+  const R = ['r8a', 'r8b', 'r8c', 'r8d', 'r8e', 'r8f', 'r8g'];
+  const RX = i => 1320 + (i - 3) * 100;
+  [3, 2, 4, 1, 5, 0, 6].forEach((k, j) => { pop(R[k], W('Grundgesetz', 21) - .15 + j * .07, { x: X + RX(k), y: 750 }, j % 2 ? null : 'pop', 'sanft'); froh(R[k], W('Grundgesetz', 21) + .3); });
+  // schützt dich: ein Schutzbogen spannt sich, du in der Mitte leuchtest
+  akteur('kup8', { x: X + 960, y: 540 });
+  const bogen8 = el('kup8').querySelector('.bogen'), fuell8 = el('kup8').querySelector('.fuell');
+  strich(bogen8, W('schützt', 21) - .15, .6); cue(W('schützt', 21) - .15, 'scan');
+  const tF8 = W('schützt', 21) + .2, tP8 = W('respektierst', 22);
+  HOOKS.push(t => { const o = .3 * E.out(clamp((t - tF8) / .5)) + .25 * Math.sin(Math.PI * clamp((t - tP8) / .9)); fuell8.setAttribute('opacity', o.toFixed(3)); });
+  pop('ring8', W('dich', 21) - .1, { x: X + 1320, y: 750 }, 'ding', 'sanft'); bump('r8d', W('dich', 21), 1.1); akzent(W('dich', 21), .035);
+  // Und es erwartet …: von dir aus verbinden sich die Hände nach außen
+  bump('buch8', W('erwartet', 22), 1.08); tw('ring8', W('erwartet', 22) + .3, .3, { o: 0 });
+  akteur('haende8', { x: X + 960, y: 540 });
+  const G8 = el('haende8').querySelector('g');
+  for (let i = 0; i < 6; i++) { const a = RX(i) + 30, b = RX(i + 1) - 30; G8.insertAdjacentHTML('beforeend', `<path pathLength="1" d="M${a} 784Q${(a + b) / 2} 822 ${b} 784"/>`); }
+  const HP = [...G8.querySelectorAll('path')];
+  [[2, 3, W('Rechte', 22) - .1], [1, 4, W('anderen', 22) - .15], [0, 5, W('genauso', 22) - .15]].forEach(([l, r, t]) => {
+    strich(HP[l], t, .4); strich(HP[r], t, .4); cue(t, 'pop');
+    huepfen(R[l], t + .3, 10); huepfen(R[r + 1], t + .3, 10);
+  });
+  // respektierst: eine Welle geht durch alle
+  R.forEach((r, i) => huepfen(r, W('respektierst', 22) + i * .07, 14));
+  welle('welle8', W('respektierst', 22), X + 1320, 340, 1.1, 220); cue(W('respektierst', 22), 'erfolg'); akzent(W('respektierst', 22), .045);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
