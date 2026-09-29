@@ -41,4 +41,5 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 21 | [Der schlechte Tag: Mais Post](21-mais-post/) | Der schlechte Tag | Erzähler, Mai | 1:29 | fertig |
 | 22 | [Der schlechte Tag: Kwames erster Arbeitstag](22-kwames-erster-tag/) | Der schlechte Tag | Erzähler, Kwame, Frau Krause, Sabine | 1:36 | fertig |
 | 23 | [Heimat vs. Deutschland: Pünktlichkeit](23-puenktlichkeit/) | Heimat vs. Deutschland | Erzähler | 1:30 | fertig |
+| 24 | [Heimat vs. Deutschland: Direkte Kritik & Hierarchie](24-kritik-und-hierarchie/) | Heimat vs. Deutschland | Erzählerin | 1:30 | fertig |
 | 25 | [Heimat vs. Deutschland: Sonntag & Hausordnung](25-sonntag-hausordnung/) | Heimat vs. Deutschland | Erzähler | 1:32 | fertig |
