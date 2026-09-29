@@ -22,3 +22,4 @@ Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 | 2 | [Zum Arzt gehen](02-zum-arzt/) | Erklärvideo | Erzähler | 1:42 | fertig |
 | 3 | [Mülltrennung](03-muelltrennung/) | Erklärvideo | Erzählerin | 1:52 | fertig |
 | 4 | [Rundfunkbeitrag](04-rundfunkbeitrag/) | Erklärvideo | Erzähler | 1:29 | fertig |
+| 5 | [Aufenthaltstitel verlängern](05-aufenthaltstitel/) | Erklärvideo | Erzählerin | 1:38 | fertig |
