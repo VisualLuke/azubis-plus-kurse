@@ -42,7 +42,7 @@
 .tuer78 .off{position:absolute;inset:8px 8px 0 8px;border-radius:7px 7px 0 0;background:linear-gradient(var(--warning-bg),var(--surface));overflow:hidden}
 .tuer78 .blatt{position:absolute;inset:8px 8px 0 8px;border-radius:7px 7px 0 0;background:linear-gradient(135deg,var(--b400),var(--b600));transform-origin:0 50%}
 .tuer78 .blatt::after{content:'';position:absolute;right:12%;top:52%;width:14%;aspect-ratio:1;border-radius:50%;background:var(--warning-bg)}
-.tuer78 .schein{position:absolute;left:-40%;right:-40%;bottom:-18%;height:30%;border-radius:50%;background:radial-gradient(ellipse,color-mix(in srgb,var(--warning-bg) 95%,transparent),transparent 70%);opacity:0}
+.tuer78 .schein{position:absolute;left:-30%;right:-30%;bottom:-14%;height:26%;border-radius:50%;background:radial-gradient(ellipse,var(--warning-bg) 0 35%,transparent 70%);opacity:0}
 
 /* Familienhaus im Querschnitt */
 .fh{width:500px;height:490px;transform-origin:50% 100%}
@@ -61,9 +61,9 @@
 .h4 .hk{position:absolute;left:10px;width:200px;border-radius:10px;background:var(--b300)}
 .h4 .hi{position:absolute;left:10px;top:10px;right:10px;bottom:10px;border-radius:7px;background:linear-gradient(var(--surface),var(--b50));overflow:hidden}
 .h4 .hb{position:absolute;left:0;right:0;bottom:0;height:26px;background:var(--b100);border-top:4px solid var(--b200)}
-.h4 .tuer{position:absolute;left:14px;width:58px;height:104px;border-radius:9px 9px 0 0;background:linear-gradient(135deg,var(--b400),var(--b600))}
-.h4 .tuer::after{content:'';position:absolute;right:8px;top:54px;width:9px;height:9px;border-radius:50%;background:var(--warning-bg)}
-.h4 .ringpl{position:absolute;left:5px;top:12px;width:48px;height:48px;border-radius:50%;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.2);padding:2px}
+.h4 .tuer{position:absolute;left:12px;width:64px;height:120px;border-radius:9px 9px 0 0;background:linear-gradient(135deg,var(--b400),var(--b600))}
+.h4 .tuer::after{content:'';position:absolute;right:9px;top:62px;width:9px;height:9px;border-radius:50%;background:var(--warning-bg)}
+.h4 .ringpl{position:absolute;left:4px;top:10px;width:56px;height:56px;border-radius:50%;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.2);padding:2px}
 .h4 .regal{position:absolute;left:94px;width:82px;height:6px;border-radius:3px;background:var(--b300)}
 .h4 .tl{position:absolute}
 .h4 .f4{position:absolute;left:104px;top:22px;width:62px;height:58px;border-radius:9px;background:var(--surface);box-shadow:inset 0 0 0 5px var(--surface),0 3px 8px rgba(22,19,37,.08)}
@@ -391,16 +391,16 @@ HOOKS.push(t => {
     const dr = wertBei(id + 'R', 'x', t), h = wertBei(id + 'R', 'y', t), dk = wertBei(id + 'R', 's', t);
     const [k, b, kern] = svg.querySelectorAll('path');
     k.setAttribute('d', d); b.setAttribute('d', d); kern.setAttribute('d', d);
-    k.style.strokeDashoffset = 1 - dr; k.setAttribute('stroke-width', (4 + 3 * h) * dk);
+    k.style.strokeDashoffset = 1 - dr; k.setAttribute('stroke-width', (5 + 3 * h) * dk);
     const ob = clamp((dr - .85) / .15);
-    b.setAttribute('stroke-width', (10 + 5 * h) * dk); kern.setAttribute('stroke-width', (3 + 3 * h) * dk);
+    b.setAttribute('stroke-width', (13 + 5 * h) * dk); kern.setAttribute('stroke-width', (4 + 3 * h) * dk);
     b.style.opacity = ob; kern.style.opacity = ob * (.25 + .75 * h);
     const lauf = (-(t * .018) % .055).toFixed(4); b.style.strokeDashoffset = lauf; kern.style.strokeDashoffset = lauf;
     svg.style.filter = h > .02 ? `drop-shadow(0 0 ${((3 + 11 * h) * dk).toFixed(1)}px var(--b300))` : '';
   }
 });
 const REISEN = [];
-function reise(sid, t, t0, d, rueck = false, gr = 64) {
+function reise(sid, t, t0, d, rueck = false, gr = 84) {
   const id = 'tk' + WN++;
   neu(id, kopie(t, id), `width:${gr}px`, 'data-frei');
   REISEN.push({ el: el(id), sid, t0, d, rueck, gr });
@@ -451,19 +451,19 @@ neu('wgDach', `<svg viewBox="0 0 812 180">${tpl('svgDach').replace(/^<svg[^>]*>|
 ['sg1', 'sg2', 'sg3'].forEach((id, i) => neu(id, `<div>${kopie(['t-koffer', 't-buch', 't-laptop'][i], id)}</div>`, '', '', 'plak'));
 
 // Schnur zwischen Haus und Zimmer, Herz in der Mitte
-schnur('schnurA', 0, 0, [792, 690], [1252, 800], [0, 62]);
+schnur('schnurA', 0, 0, [792, 690], [1250, 820], [0, 62]);
 bild('herzA', 't-herz', 116, 'data-frei');
 
 /* ==================== Bühne B: eine Reihe verschiedener Häuser (Szene 4) ==================== */
 const XB = 1920;
 bue('bueB', XB + 960, 630);
 const H4 = [
-  { dach: 'giebel', dh: 84, kh: 250, x: 330, det: 'ring' },
-  { dach: 'flach', dh: 26, kh: 268, x: 550, det: 'tuer' },
-  { dach: 'steil', dh: 112, kh: 232, x: 850, det: 'kinder' },
-  { dach: 'pult', dh: 70, kh: 258, x: 1070, det: 'regal' },
-  { dach: 'bogen', dh: 60, kh: 236, x: 1370, det: 'becher1' },
-  { dach: 'flach2', dh: 26, kh: 300, x: 1590, det: 'becher2' },
+  { dach: 'giebel', dh: 84, kh: 330, x: 330, det: 'ring' },
+  { dach: 'flach', dh: 26, kh: 348, x: 550, det: 'tuer' },
+  { dach: 'steil', dh: 112, kh: 312, x: 850, det: 'kinder' },
+  { dach: 'pult', dh: 70, kh: 338, x: 1070, det: 'regal' },
+  { dach: 'bogen', dh: 60, kh: 316, x: 1370, det: 'becher1' },
+  { dach: 'flach2', dh: 26, kh: 380, x: 1590, det: 'becher2' },
 ];
 const DACH4 = {
   giebel: h => `<path d="M0 ${h}L110 4l110 ${h - 4}Z" fill="var(--b700)"/><path d="M18 ${h}L110 16l92 ${h - 16}Z" fill="var(--b600)"/>`,
@@ -478,24 +478,25 @@ H4.forEach((h, i) => {
   let det = '';
   if (h.det === 'ring' || h.det === 'tuer') det = `<div class="ringpl" id="${id}ring" style="${h.det === 'tuer' ? 'display:none' : ''}">${kopie('t-ringe', id)}</div>`;
   let rechts = '';
-  if (h.det === 'kinder' || h.det === 'regal') rechts = `<div class="regal" style="top:${unten - 58}px"></div><div class="tl" style="left:96px;top:${unten - 58 - 74}px;width:80px">${kopie('t-schuhe', id + 's')}</div>` +
-    (h.det === 'kinder' ? `<div class="tl" id="${id}ks" style="left:98px;top:${unten - 78}px;width:84px">${kopie('t-kschuhe', id)}</div>` : '');
-  if (h.det === 'becher1' || h.det === 'becher2') rechts = `<div class="regal" style="top:${unten - 104}px"></div><div class="tl" id="${id}b" style="left:104px;top:${unten - 104 - 74}px;width:74px">${kopie(h.det === 'becher1' ? 't-becher1' : 't-becher2', id)}</div>`;
-  if (h.det === 'ring' || h.det === 'tuer') rechts = `<div class="tl" style="left:94px;top:${unten - 92}px;width:92px">${kopie('t-pflanze', id + 'p')}</div>`;
+  if (h.det === 'kinder' || h.det === 'regal') rechts = `<div class="regal" style="top:${unten - 62}px"></div><div class="tl" style="left:90px;top:${unten - 62 - 84}px;width:92px">${kopie('t-schuhe', id + 's')}</div>` +
+    (h.det === 'kinder' ? `<div class="tl" id="${id}ks" style="left:88px;top:${unten - 92}px;width:100px">${kopie('t-kschuhe', id)}</div>` : '');
+  if (h.det === 'becher1' || h.det === 'becher2') rechts = `<div class="regal" style="top:${unten - 120}px"></div><div class="tl" id="${id}b" style="left:96px;top:${unten - 120 - 84}px;width:86px">${kopie(h.det === 'becher1' ? 't-becher1' : 't-becher2', id)}</div>`;
+  if (h.det === 'ring' || h.det === 'tuer') rechts = `<div class="tl" style="left:88px;top:${unten - 104}px;width:104px">${kopie('t-pflanze', id + 'p')}</div>`;
   neu(id, `<svg class="hd" viewBox="0 ${h.dach === 'flach2' ? -16 : 0} 220 ${h.dh + 10}" style="height:${h.dh + 10}px;${h.dach === 'flach2' ? 'top:-16px' : ''}">${DACH4[h.dach](h.dh + 6)}</svg>
     <div class="hk" style="top:${h.dh}px;height:${h.kh}px"><div class="hi"><div class="f4"><b></b><i id="${id}w"></i><u></u></div>${rechts}
-    <div class="tuer" id="${id}t" style="top:${unten - 104}px">${det}</div><div class="hb"></div></div></div>`, `height:${H}px;transform-origin:50% 100%`, 'data-frei', 'h4');
+    <div class="tuer" id="${id}t" style="top:${unten - 120}px">${det}</div><div class="hb"></div></div></div>`, `height:${H}px;transform-origin:50% 100%`, 'data-frei', 'h4');
   h.H = H; h.id = id;
 });
 
 /* ==================== Bühne C: Warum? und die geteilte Bühne (Szenen 5–6) ==================== */
 const XC = 3840;
-bue('bueC', XC + 960, 630, 1640, 760, 80, `<div class="rechts" id="rechtsC"><i></i></div>`);
+bue('bueC', XC + 960, 630, 1640, 760, 80, `<div class="feld" id="feldC" style="position:absolute;left:0;right:0;top:350px;bottom:80px;background:linear-gradient(var(--b50),color-mix(in srgb,var(--b100) 70%,var(--b50)));border-top:4px solid var(--b200)"></div><div class="rechts" id="rechtsC"><i></i></div>`);
+akteur('feldC', {}, true);
 akteur('rechtsC', { o: 0, x: 120 }, true);
 // Weg in die Ferne
-neu('wegC', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><defs><clipPath id="wegClip"><rect id="wegRect" x="1040" y="560" width="0" height="420"/></clipPath></defs>
-  <g clip-path="url(#wegClip)"><path d="M1060 932C1250 930 1420 880 1540 616L1580 616C1470 900 1300 948 1060 958Z" fill="var(--b100)" stroke="var(--b200)" stroke-width="4"/>
-  <path d="M1070 944C1280 930 1420 870 1560 616" fill="none" stroke="var(--surface)" stroke-width="6" stroke-dasharray="22 18" stroke-linecap="round"/></g></svg>`, 'width:1920px;height:1080px', 'data-frei');
+neu('wegC', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><defs><clipPath id="wegClip"><rect id="wegRect" x="1100" y="590" width="0" height="400"/></clipPath></defs>
+  <g clip-path="url(#wegClip)"><path d="M1120 930C1270 860 1430 700 1502 604L1528 604C1478 720 1388 870 1300 930Z" fill="var(--surface)" stroke="var(--b200)" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M1210 926C1330 850 1450 700 1515 608" fill="none" stroke="var(--b200)" stroke-width="5" stroke-dasharray="20 16" stroke-linecap="round"/></g></svg>`, 'width:1920px;height:1080px', 'data-frei');
 akteur('wegC', { x: XC + 960, y: 540, o: 0 });
 // Gleis und Zug in einer Maske (der Zug kommt aus der Bühnenkante)
 deko('clipC', '', `left:${XC + 140}px;top:250px;width:1640px;height:760px;overflow:hidden;border-radius:48px`);
@@ -503,8 +504,8 @@ neu('gleisC', '', 'width:1540px', 'data-frei', 'gleis', 'clipC');
 neu('zugC', `<div style="position:absolute;left:0;top:0;width:220px">${kopie('t-zug', 'zug')}</div><div class="wagen" style="position:absolute;left:226px;top:138px"></div>`, 'width:430px;height:210px', 'data-frei', '', 'clipC');
 zimmer('zZug', fenster(300, 60, 140, 140) + moebel('t-laptop', 400, 474, 260, 'zz'), 'data-frei', true);
 el('zugC').appendChild(el('zZug'));
-akteur('gleisC', { x: 820, y: 357, o: 0 });
-akteur('zugC', { x: -400, y: 279 });
+akteur('gleisC', { x: 820, y: 397, o: 0 });
+akteur('zugC', { x: -400, y: 319 });
 akteur('zZug', { x: 326, y: 138 - ZM, s: .2 });
 dachDa('zZug');
 bild('stadtC', 't-stadt', 190, 'data-frei');
@@ -513,10 +514,11 @@ zimmer('zimC', fenster(56, 60, 150, 140) + moebel('t-bett', 160, 470, 250, 'zc')
   `<div class="tuer78" id="tuerC" style="left:584px;top:226px;width:118px;height:210px"><div class="off"></div><div class="blatt" id="blattC"></div><div class="schein" id="scheinC"></div></div>`);
 dachDa('zimC');
 akteur('fhC', { x: XC + 560, y: 685 });
-akteur('zimC', { x: XC + 930, y: 930 - ZM, s: .4 });
+const ZCX = 1000;
+akteur('zimC', { x: XC + ZCX, y: 930 - ZM, s: .4 });
 akteur('blattC', {}, true); akteur('scheinC', { o: 0 }, true);
 neu('frage5', '?', '', '', 'frage78');
-bild('bundC', 't-bund', 130, 'data-frei');
+bild('bundC', 't-bund', 150, 'data-frei');
 bild('keyC', 't-schluessel', 80, 'data-frei');
 portrait('maiC', 'Mai', 170);
 [['Ehrlichkeit', 400], ['Selbstständigkeit', 330], ['Verlässlichkeit', 324]].forEach(([w, b], i) => neu('rang' + (i + 1), `<b>${i + 1}</b>${w}`, `width:${b}px`, 'data-gruppe="rang"', 'rang' + (i === 1 ? ' top' : '')));
@@ -526,11 +528,12 @@ neu('chipDE', 'In Deutschland', '', '', 'chip78 brand');
 neu('chipDu', 'Bei dir?', '', '', 'chip78 strich');
 neu('umriss', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><polygon id="umrissP" fill="color-mix(in srgb,var(--surface) 70%,transparent)" stroke="var(--b400)" stroke-width="7" stroke-dasharray="20 14" stroke-linejoin="round"/>
   <path id="umrissK" fill="none" stroke="var(--b300)" stroke-width="6" stroke-dasharray="4 14" stroke-linecap="round"/></svg>`, 'width:1920px;height:1080px', 'data-frei');
-neu('frageC', '?', 'font:800 170px/1 Inter;color:var(--b500)', 'data-frei');
+neu('frageC', '?', 'font:800 190px/1 Inter;color:var(--b500)', 'data-frei');
 ['dz1', 'dz2', 'dz3'].forEach(id => neu(id, '', 'width:84px;height:62px', 'data-frei', 'leerraum'));
 neu('dzKlein', '', 'width:130px;height:110px', 'data-frei', 'leerraum');
 neu('fkReise', '?', '', 'data-frei', 'frageklein');
-schnur('schnurC', XC, 0, [438, 806], [624, 846], [0, 26]);
+schnur('schnurC', XC, 0, [488, 774], [609, 850], [0, 30]);
+WELT.appendChild(el('maiC'));
 // Gedankenblase
 neu('gedanke', `<svg viewBox="0 0 360 260"><path d="M84 214c-40 4-70-22-62-56-30-14-26-60 10-66 0-36 40-60 74-42 18-34 74-38 96-6 30-22 84-6 86 34 40 4 54 50 26 74 18 34-14 70-54 60-14 30-66 36-90 10-28 20-74 14-86-8Z" fill="var(--surface)" stroke="var(--b200)" stroke-width="6"/></svg>`, 'width:380px;height:274px', 'data-gruppe="denk"', 'gedanke');
 neu('pb1', '', 'width:26px;height:26px', 'data-gruppe="denk"', 'punktblase');
@@ -559,11 +562,11 @@ akteur('fhD', { x: XD + 1648, y: YD + 860 - 245, s: .3 });
 zimmer('zimD', [400, 530, 660].map((x, i) => `<div class="tuer78" id="tD${i}" style="left:${x - 52}px;top:226px;width:104px;height:206px"><div class="off" id="tDo${i}"></div><div class="blatt" id="tDb${i}"></div><div class="schein" id="tDs${i}"></div></div>`).join(''));
 dachDa('zimD');
 portrait('maiD', 'Mai', 196, 'zimD');
-el('zimD').insertAdjacentHTML('beforeend', moebel('t-tisch', 200, 474, 270, 'zd'));
+el('zimD').insertAdjacentHTML('beforeend', moebel('t-tisch', 200, 476, 250, 'zd'));
 bild('handyD', 't-handy', 84, 'data-frei', '', 'zimD');
 akteur('zimD', { x: XD + 1240, y: YD + 860 - ZM, s: .75 });
-akteur('maiD', { x: 196, y: 286 });
-akteur('handyD', { x: 312, y: 266 });
+akteur('maiD', { x: 196, y: 238 });
+akteur('handyD', { x: 306, y: 286 });
 // in den Türen: Freunde (Jonas), Ausbilderin (Betrieb), Beratungsstelle (Gespräch)
 portrait('jonasD', 'Jonas', 80, 'tDo0');
 neu('betriebD', `<div style="width:84px">${kopie('t-betrieb', 'bD')}</div>`, 'width:84px', 'data-frei', '', 'tDo1');
@@ -661,7 +664,7 @@ const T3 = SE(9) + .3;
 tw('zR1', T3, .7, { x: 2150, o: 0 }, 'in');
 ['zR2', 'zR3', 'zK', 'wgDach'].forEach(id => tw(id, T3 + .12, .7, { x: wertBei(id, 'x', T3) + 700, o: 0 }, 'in'));
 cue(T3, 'whoosh');
-tw('zimA', W('Selbstständig', 10) - .1, .8, { x: 1380, s: .34 }, 'inout'); landen('zimA', W('Selbstständig', 10) + .7, .6);
+tw('zimA', W('Selbstständig', 10) - .1, .8, { x: 1420, s: .46 }, 'inout'); landen('zimA', W('Selbstständig', 10) + .7, .6);
 titelEin('tb3', W('Selbstständig', 10) - .2, [null, null, W('Familie', 10) - .1, null, null]);
 el('tb3').querySelectorAll('.w')[4].classList.add('hell');
 // die Schnur spannt sich auf „Familie“
@@ -725,7 +728,7 @@ textAus('tb4', SE(13) + .2);
 
 /* ---------- Blende: durch die Tür in die nächste Szene ---------- */
 const TIRIS = SE(13) + .4;
-const TUER43 = [XB + H4[2].x - 110 + 10 + 10 + 14 + 29, 930 - H4[2].kh + 10 + (H4[2].kh - 46) - 52];
+const TUER43 = [XB + H4[2].x - 110 + 10 + 10 + 12 + 32, 930 - H4[2].kh + 10 + (H4[2].kh - 46) - 60];
 fahrt(TIRIS, TUER43[0], TUER43[1], 1.6, .62, 0, 'whoosh');
 akteur('h43t', {}, true); el('h43t').style.transformOrigin = '0 50%';
 tw('h43t', TIRIS + .05, .3, { sx: .2 }, 'in');
@@ -739,7 +742,7 @@ HOOKS.push(t => {
   el('irisB').style.width = el('irisB').style.height = `${(2 * r).toFixed(1)}px`;
   el('irisB').style.marginLeft = el('irisB').style.marginTop = `${(-r).toFixed(1)}px`;
 });
-const TUERC = [XC + 930 - 370 * .4 + 643 * .4, 930 - (528 - 331) * .4];
+const TUERC = [XC + ZCX + (643 - 370) * .4, 930 - (528 - 331) * .4];
 sprung(IRIS2, TUERC[0], TUERC[1], 1.6);
 fahrt(IRIS2 + .02, XC + 960, 540, 1, .8, 0, null);
 
@@ -754,7 +757,7 @@ hausLicht('fhC', W('Eltern', 15) - .2);
 schweben('bundC', 5);
 { for (let k = 0; k < 4; k++) tw('bundC', W('Eltern', 15) + .6 + k * .32, .32, { r: (k % 2 ? -1 : 1) * 8 * Math.pow(.55, k) }, 'sinus'); tw('bundC', W('Eltern', 15) + 1.9, .3, { r: 0 }, 'sinus'); }
 // … gibt einen Schlüssel an Mais Tür ab (Klick)
-const KEYZ = [XC + 930 + (677 - 370) * .4 - 24, 930 - (528 - 339) * .4];
+const KEYZ = [XC + ZCX + (677 - 370) * .4 - 24, 930 - (528 - 339) * .4];
 akteur('keyC', { x: XC + 900, y: 540, o: 0, s: .6 });
 tw('keyC', W('Kinder', 15) - .45, .15, { o: 1 }); flug('keyC', W('Kinder', 15) - .45, .65, KEYZ[0] - 26, KEYZ[1], 80, { s: 1 }); cue(W('Kinder', 15) - .45, 'whoosh');
 tw('keyC', W('Kinder', 15) + .2, .14, { x: KEYZ[0] }, 'in');
@@ -765,8 +768,8 @@ tw('bundC', W('ihren', 15), .6, { x: XC + 470, y: 820, s: .3, o: 0 }, 'inout');
 tw('keyC', W('eigenen', 15) - .2, .25, { o: 0 });
 tw('blattC', W('eigenen', 15) - .2, .4, { sx: .12 }, 'inout'); cue(W('eigenen', 15) - .2, 'klick');
 tw('wegC', W('Weg', 15) - .45, .2, { o: 1 });
-{ const t0 = W('Weg', 15) - .45; HOOKS.push(t => { const q = E.inout(clamp((t - t0) / 1.1)); el('wegRect').setAttribute('width', (q * 560).toFixed(1)); }); cue(t0, 'scan'); }
-const WEGP = u => { const P0 = [1090, 905], C = [1400, 900], P2 = [1560, 610], v = 1 - u; return [XC + v * v * P0[0] + 2 * u * v * C[0] + u * u * P2[0], v * v * P0[1] + 2 * u * v * C[1] + u * u * P2[1] - 62]; };
+{ const t0 = W('Weg', 15) - .45; HOOKS.push(t => { const q = E.inout(clamp((t - t0) / 1.1)); el('wegRect').setAttribute('width', (q * 440).toFixed(1)); }); cue(t0, 'scan'); }
+const WEGP = u => { const P0 = [1200, 925], C = [1420, 800], P2 = [1515, 600], v = 1 - u; return [XC + v * v * P0[0] + 2 * u * v * C[0] + u * u * P2[0], v * v * P0[1] + 2 * u * v * C[1] + u * u * P2[1] - 62]; };
 akteur('maiC', { x: TUERC[0], y: 850, s: 0 });
 tw('maiC', W('Weg', 15) - .4, .45, { s: .65 }, 'back'); cue(W('Weg', 15) - .4, 'pop');
 froh('maiC', W('Weg', 15), SA(18));
@@ -786,15 +789,16 @@ wellen(W('Erziehungszielen', 16) + .05, XC + 1290 + 40, 425, 90);
 // … und für die Arbeit in eine andere Stadt
 aus(['rang1', 'rang2', 'rang3'], W('Und', 17) - .15, .3);
 tw('gleisC', W('Und', 17), .4, { o: 1 });
-pop('stadtC', W('andere', 17) - .2, { x: XC + 1610, y: 600 - 95 + 10 }, 'pop', 'sanft');
+pop('stadtC', W('andere', 17) - .2, { x: XC + 1640, y: 640 - 95 + 10 }, 'pop', 'sanft');
 tw('zugC', W('Arbeit', 17) - .3, 3.0, { x: 2150 }, 'inout'); cue(W('Arbeit', 17) - .3, 'whoosh');
 for (let k = 0; k < 6; k++) cue(W('Arbeit', 17) + k * .38, 'klick');
 
 /* ---------- 6 · Und bei dir? Die Bühne teilt sich ---------- */
 const T6 = SE(17) + .15;
-ausS(['wegC', 'gleisC', 'stadtC', 'zugC'], T6, .4);
-tw('fhC', T6, .8, { x: XC + 320, s: .5 }, 'inout');
-tw('zimC', T6, .8, { x: XC + 720, s: .26 }, 'inout'); cue(T6, 'whoosh');
+textAus('tb5', T6 - .1);
+ausS(['wegC', 'gleisC', 'stadtC', 'zugC'], T6, .4); tw('feldC', T6, .5, { o: 0 }, 'inout');
+tw('fhC', T6, .8, { x: XC + 345, s: .62 }, 'inout');
+tw('zimC', T6, .8, { x: XC + 720, s: .3 }, 'inout'); cue(T6, 'whoosh');
 tw('maiC', T6 + .1, .8, { x: XC + 960, y: 865, s: 1 }, 'inout');
 akteur('teilerC', { x: XC + 960, y: 630, draw: 0 });
 tw('teilerC', T6 + .25, .6, { draw: 1 }, 'inout'); cue(T6 + .25, 'kritzeln');
@@ -803,9 +807,9 @@ pop('chipDE', T6 + .55, { x: XC + 540, y: 330 });
 pop('chipDu', T6 + .75, { x: XC + 1370, y: 330 });
 // gestrichelter Haus-Umriss mit großem Fragezeichen
 const FORM = {
-  start: [[1190, 930], [1470, 930], [1470, 680], [1470, 680], [1330, 560], [1190, 680], [1190, 680]],
-  aehnlich: [[1205, 930], [1455, 930], [1455, 712], [1455, 712], [1330, 598], [1205, 712], [1205, 712]],
-  anders: [[1160, 930], [1500, 930], [1500, 650], [1352, 650], [1352, 584], [1160, 584], [1160, 584]],
+  start: [[1175, 930], [1485, 930], [1485, 650], [1485, 650], [1330, 505], [1175, 650], [1175, 650]],
+  aehnlich: [[1190, 930], [1470, 930], [1470, 680], [1470, 680], [1330, 548], [1190, 680], [1190, 680]],
+  anders: [[1172, 930], [1500, 930], [1500, 612], [1362, 612], [1362, 520], [1172, 520], [1172, 520]],
 };
 regler('formR', { x: 0, y: 0 });
 akteur('umriss', { x: XC + 960, y: 540, o: 0 });
@@ -819,10 +823,10 @@ HOOKS.push(t => {
   const x0 = P[1][0] + 6, d = `M${x0.toFixed(1)} 770Q${((x0 + 1585) / 2).toFixed(1)} 860 1585 845`;
   el('umrissK').setAttribute('d', d); el('umrissK').style.opacity = wertBei('kordelR', 'x', t).toFixed(3);
 });
-pop('frageC', W('Wohnt', 18) - .2, { x: XC + 1330, y: 790 });
+pop('frageC', W('Wohnt', 18) - .2, { x: XC + 1330, y: 752 });
 puls('frageC', W('Wohnt', 18) + .4, SA(22) - .2, .06, 1.5);
 // lange zusammen? – gestrichelte Zimmer
-[['dz1', 1268, 880], ['dz2', 1392, 880], ['dz3', 1330, 650]].forEach(([id, x, y], i) => pop(id, W('lange', 18) - .1 + i * .13, { x: XC + x, y }, 'pop'));
+[['dz1', 1252, 886], ['dz2', 1408, 886], ['dz3', 1330, 602]].forEach(([id, x, y], i) => pop(id, W('lange', 18) - .1 + i * .13, { x: XC + x, y }, 'pop'));
 ['dz1', 'dz2', 'dz3'].forEach((id, i) => bump(id, W('zusammen', 18) + i * .08, 1.12));
 bump('fhC', W('Familie', 18), 1.05);
 // wie oft meldet ihr euch? – gestrichelte Schnur mit Fragezeichen; links reist ein Zeichen
@@ -865,8 +869,8 @@ reise('schnurD', 't-handy', W('rufe', 23), 1.0, false, 50);
 tw('schnurDR', W('rufe', 23) + .2, .5, { y: 1 }, 'out'); tw('schnurDR', W('an', 23) + .4, .6, { y: .35 }, 'inout');
 hausLicht('fhD', W('Hause', 23));
 // Wenn ich mich allein fühle: der Kalender wandert an die Wand, das Zimmer wird grau
-const KAL = [XD + 1240 + (186 - 370) * .75, YD + 860 + (92 - 528) * .75];
-tw('woche', W('Wenn', 24) - .2, .85, { x: KAL[0], y: KAL[1], s: .2 }, 'inout', { bogen: 60 }); cue(W('Wenn', 24) - .2, 'whoosh');
+const KAL = [XD + 1240 + (196 - 370) * .75, YD + 860 + (78 - 528) * .75];
+tw('woche', W('Wenn', 24) - .2, .85, { x: KAL[0], y: KAL[1], s: .27 }, 'inout', { bogen: 60 }); cue(W('Wenn', 24) - .2, 'whoosh');
 titelEin('tb7', W('allein', 24) - .15, [W('allein', 24) - .15, W('spreche', 24) - .15, null, null]);
 el('tb7').querySelector('.w').classList.add('hell');
 regler('grauR', { x: 0 });
@@ -904,7 +908,7 @@ huepfen('zimD', W('Hilfe', 27) - .1, 10);
 /* ---------- Schluss: Kamera fährt zurück, viele Häuser, jedes mit eigener Schnur ---------- */
 const TZ = W('Anders', 28) - .2;
 tw('tb7', TZ - .1, .4, { o: 0 }, 'in');
-fahrt(TZ, XD + 1340, YD + 600, .5, 2.2, 0, 'whoosh');
+fahrt(TZ, XD + 1340, YD + 525, .55, 2.2, 0, 'whoosh');
 tw('bueD', TZ + .2, .9, { o: 0 }, 'inout');
 tw('bodenD', TZ + .3, .9, { o: 1 }, 'inout');
 PAARE.forEach((sx, i) => {

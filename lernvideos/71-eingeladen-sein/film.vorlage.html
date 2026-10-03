@@ -25,6 +25,8 @@
 .dach svg,.raum svg.bg,.huelle svg{overflow:visible}
 .a.buehne.raum{border-radius:8px;background:none;overflow:hidden}
 .raum .tapete{position:absolute;inset:0;background:linear-gradient(var(--surface),var(--b50))}
+#rT .tapete{background:repeating-linear-gradient(90deg,transparent 0 58px,var(--b50) 58px 64px),linear-gradient(var(--surface),var(--b50))}
+#rF .tapete{background:radial-gradient(circle,var(--b100) 3px,transparent 4px) 0 0/56px 56px,linear-gradient(var(--surface),var(--b50))}
 .raum .fussboden{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(var(--b100),var(--b200));border-top:5px solid var(--b200)}
 .raum svg.bg{position:absolute;left:0;top:0}
 .inhalt{position:absolute;inset:0}
@@ -99,11 +101,11 @@
   box-shadow:0 8px 24px rgba(22,19,37,.16)}
 .platz{width:118px;height:66px;border-radius:10px;background:var(--surface);border:4px solid var(--b200);box-shadow:0 5px 0 var(--b200)}
 .platz::before{content:'';position:absolute;left:22px;right:22px;top:24px;height:8px;border-radius:4px;background:var(--b300)}
-.bon{width:112px;height:226px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12);transform-origin:50% 100%;
+.bon{width:112px;height:200px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12);transform-origin:50% 100%;
   clip-path:polygon(0 8px,10% 0,20% 8px,30% 0,40% 8px,50% 0,60% 8px,70% 0,80% 8px,90% 0,100% 8px,100% 100%,0 100%)}
 .bon i,.bonh i{position:absolute;left:16px;height:9px;border-radius:5px;background:var(--n200)}
 .bon u,.bonh u{position:absolute;left:16px;right:16px;height:12px;border-radius:6px;background:var(--b500)}
-.bonh{width:112px;height:108px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12)}
+.bonh{width:112px;height:96px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12)}
 .bonh.oben{clip-path:polygon(0 8px,10% 0,20% 8px,30% 0,40% 8px,50% 0,60% 8px,70% 0,80% 8px,90% 0,100% 8px,100% 92%,90% 100%,80% 92%,70% 100%,60% 92%,50% 100%,40% 92%,30% 100%,20% 92%,10% 100%,0 92%)}
 .bonh.unten{clip-path:polygon(0 0,10% 8px,20% 0,30% 8px,40% 0,50% 8px,60% 0,70% 8px,80% 0,90% 8px,100% 0,100% 100%,0 100%)}
 .zettel{width:190px;height:250px;border-radius:16px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);overflow:hidden}
@@ -118,9 +120,9 @@
 .abz.geist .ic{opacity:.3}
 .riesen{width:300px;height:300px;border-radius:999px;border:8px dashed var(--b300);background:var(--surface);
   font:800 220px/284px Inter;color:var(--b500);text-align:center}
-.denk{width:400px;height:280px;border-radius:140px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14)}
+.denk{width:440px;height:300px;border-radius:150px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14)}
 .denk i{position:absolute;border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(22,19,37,.12)}
-.denk .ds{position:absolute;width:104px;height:104px}
+.denk .ds{position:absolute;width:120px;height:120px}
 .dampf path{fill:none;stroke-linecap:round}
 .band{width:520px;height:900px;z-index:15;background:linear-gradient(90deg,transparent,var(--surface),transparent)}
 .endplatte{z-index:25;padding:26px 70px 34px;border-radius:40px;background:var(--surface);border-top:9px solid var(--b500);
@@ -142,6 +144,7 @@
 <template id="t-deckel">{{topf-deckel}}</template>
 <template id="t-handy">{{handy}}</template>
 <template id="t-uhr">{{uhr}}</template>
+<template id="t-uhrs">{{uhrsymbol}}</template>
 <template id="f-amir">{{figur-amir}}</template>
 <template id="f-jonas">{{figur-jonas}}</template>
 <template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
@@ -153,7 +156,7 @@
 
   <!-- linke Haushälfte: Treppenhaus + Flur -->
   <div class="huelle" id="hausL">
-    <div class="dach" id="dachL" style="left:0;top:0"><svg width="0" height="0" style="position:absolute">
+    <div class="dach" id="dachL" style="left:0;top:0"><svg viewBox="-160 -400 2460 460" style="position:absolute;left:-160px;top:-400px;width:2460px;height:460px">
       <path d="M-140 50L1910-360L2290-284V50Z" fill="var(--b500)"/>
       <path d="M-140 50L1910-360L2290-284" stroke="var(--b300)" stroke-width="10" fill="none" stroke-linejoin="round"/>
       <path d="M115 50L1910-309L2290-233V50Z" fill="var(--b50)"/>
@@ -180,11 +183,11 @@
     <div class="a buehne raum" id="rF" style="left:1360px;top:110px;width:900px;height:860px">
       <div class="tapete"></div><div class="fussboden"></div>
       <svg class="bg" width="900" height="860" viewBox="0 0 900 860">
-        <rect x="690" y="200" width="150" height="14" rx="7" fill="var(--b400)"/>
-        <g fill="var(--b500)"><circle cx="712" cy="222" r="7"/><circle cx="765" cy="222" r="7"/><circle cx="818" cy="222" r="7"/></g>
-        <path d="M712 222c-26 10-34 40-34 70v80h68v-80c0-30-8-60-34-70Z" fill="var(--b300)"/>
-        <path d="M712 222v150" stroke="var(--b400)" stroke-width="4"/>
-        <path d="M818 222c-20 8-26 32-26 56v60h52v-60c0-24-6-48-26-56Z" fill="var(--b200)"/>
+        <rect x="716" y="232" width="150" height="14" rx="7" fill="var(--b400)"/>
+        <g fill="var(--b500)"><circle cx="738" cy="254" r="7"/><circle cx="791" cy="254" r="7"/><circle cx="844" cy="254" r="7"/></g>
+        <path d="M762 254c-26 10-34 40-34 70v80h68v-80c0-30-8-60-34-70Z" fill="var(--b300)"/>
+        <path d="M762 254v150" stroke="var(--b400)" stroke-width="4"/>
+        <path d="M844 254c-18 8-22 32-22 56v60h36v-60c0-24-2-48-14-56Z" fill="var(--b200)"/>
         <rect x="360" y="600" width="240" height="190" rx="10" fill="var(--b200)"/>
         <rect x="374" y="616" width="212" height="160" rx="6" fill="var(--b50)"/>
         <rect x="360" y="596" width="240" height="16" rx="7" fill="var(--b400)"/>
@@ -196,7 +199,7 @@
 
   <!-- rechte Haushälfte: Küche -->
   <div class="huelle" id="hausR">
-    <div class="dach" id="dachR" style="left:0;top:0"><svg width="0" height="0" style="position:absolute">
+    <div class="dach" id="dachR" style="left:0;top:0"><svg viewBox="2280 -400 1700 460" style="position:absolute;left:2280px;top:-400px;width:1700px;height:460px">
       <rect x="3190" y="-190" width="96" height="140" rx="6" fill="var(--b400)"/><rect x="3178" y="-200" width="120" height="22" rx="6" fill="var(--b500)"/>
       <path d="M2290-284L3960 50H2290Z" fill="var(--b500)"/>
       <path d="M2290-284L3960 50" stroke="var(--b300)" stroke-width="10" fill="none"/>
@@ -238,7 +241,7 @@
 
   <!-- Restaurant (Szene 4), rechts neben dem Haus -->
   <div class="schale" style="left:4240px;width:1720px;border-radius:14px"></div>
-  <svg style="position:absolute;left:0;top:0;width:0;height:0;overflow:visible">
+  <svg viewBox="4190 -20 1820 90" style="position:absolute;left:4190px;top:-20px;width:1820px;height:90px">
     <path d="M4200 60L4250-10H5950L6000 60Z" fill="var(--b500)"/>
     <g fill="var(--surface)" opacity=".9"><path d="M4330-10h90l-10 70h-100Z M4510-10h90l-10 70h-100Z M4690-10h90l-10 70h-100Z M4870-10h90l-10 70h-100Z M5050-10h90l-10 70h-100Z M5230-10h90l-10 70h-100Z M5410-10h90l-10 70h-100Z M5590-10h90l-10 70h-100Z M5770-10h90l-10 70h-100Z"/></g>
   </svg>
@@ -259,23 +262,22 @@
     <div class="inhalt" id="tischR">
       <svg class="bg" width="1600" height="860" viewBox="0 0 1600 860">
         <rect x="324" y="640" width="24" height="150" rx="6" fill="var(--b500)"/><rect x="892" y="640" width="24" height="150" rx="6" fill="var(--b500)"/>
-        <path d="M282 556h676v26l-20 90H302l-20-90Z" fill="var(--surface)"/>
-        <g fill="var(--b100)"><rect x="282" y="556" width="676" height="16"/><path d="M330 572h40v100h-40ZM450 572h40v100h-40ZM570 572h40v100h-40ZM690 572h40v100h-40ZM810 572h40v100h-40Z"/></g>
-        <rect x="282" y="552" width="676" height="8" rx="4" fill="var(--b200)"/>
+        <path d="M282 556h676v24l-14 92H296l-14-92Z" fill="var(--surface)"/>
+        <path d="M290 650h660l-6 22H296Z" fill="var(--b200)"/>
+        <g stroke="var(--b100)" stroke-width="5" stroke-linecap="round"><path d="M420 586v56M620 586v56M820 586v56"/></g>
+        <rect x="282" y="552" width="676" height="10" rx="5" fill="var(--b200)"/>
       </svg>
     </div>
   </div>
 
   <div class="fassade" id="fasL">
-    <div class="haustuer" style="left:330px;top:640px;width:220px;height:332px"><i></i></div>
-    <div class="fenster" style="left:200px;top:180px;width:240px;height:300px"><div class="glas"></div><div class="licht"></div></div>
-    <div class="fenster" style="left:760px;top:180px;width:240px;height:300px"><div class="glas"></div><div class="licht"></div></div>
-    <div class="fenster" style="left:860px;top:560px;width:240px;height:260px"><div class="glas"></div><div class="licht"></div></div>
-    <div class="fenster" style="left:1600px;top:260px;width:300px;height:340px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="haustuer" style="left:330px;top:612px;width:230px;height:360px"><i></i></div>
+    <div class="fenster" style="left:860px;top:220px;width:180px;height:440px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:1580px;top:290px;width:320px;height:320px"><div class="glas"></div><div class="licht"></div></div>
   </div>
   <div class="fassade" id="fasR">
-    <div class="fenster" style="left:260px;top:260px;width:320px;height:340px"><div class="glas"></div><div class="licht"></div></div>
-    <div class="fenster" style="left:960px;top:260px;width:320px;height:340px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:260px;top:290px;width:320px;height:320px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:960px;top:290px;width:320px;height:320px"><div class="glas"></div><div class="licht"></div></div>
   </div>
 </div></div>
 
@@ -540,7 +542,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // „aber er hat auch ein paar Fragen“: Kopf schief
   neigen(AMIR, tAb2 + .3, WI(3, 0) - .2, -8); blick(AMIR, tAb2 + .3, WI(3, 0) - .2, -4);
   // Drei Fragen: Uhr, Geschenk, Schuh – je ein Symbol mit Fragezeichen
-  const SYM = [['symA', 't-uhr', 120, 600, WI(3, 3)], ['symB', 't-pralinen', 300, 540, WI(4, 2)], ['symC', 't-schuhe', 480, 600, WI(5, 6)]];
+  const SYM = [['symA', 't-uhrs', 120, 600, WI(3, 3)], ['symB', 't-pralinen', 300, 540, WI(4, 2)], ['symC', 't-schuhe', 480, 600, WI(5, 6)]];
   SYM.forEach(([id, t, x, y, tz], k) => {
     neu(id, `<div class="ic">${kopie(t, id)}</div><div class="fz" id="${id}q">?</div>`, '', 'data-frei', 'sym flieg');
     pop(id, tz - .15, { x, y, s: k === 1 ? .88 : 1 }, 'pop');
@@ -587,7 +589,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   bump('uhr', WI(6, 11), 1.12); ton(WI(6, 11), 'ding');
   // „Viel zu früh“: Kamera zeigt auch die Küche; der Zeiger läuft vor die Zwölf, roter Bogen
   const tV = WI(7, 0), tFr = WI(7, 2);
-  kam(tV - .25, 1.1, 1820, 540, .82);
+  kam(tV - .25, 1.1, 1700, 540, .8);
   versetzen(JONAS, WI(6, 2), ...WP('K', 220, 320));
   uhrAuf(tFr - .1, 1125, .8); tw('keilOk', tFr - .1, .4, { o: 0 }); tw('keilFr', tFr, .8, { x: 15, o: 1 }, 'inout'); ton(tFr, 'scan');
   wackeln('uhr', WI(7, 5), 4, 5); ton(WI(7, 5), 'klick');
@@ -613,7 +615,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   neu('nachr', `<div class="ic">${kopie('t-uhr', 'nachr')}</div><i></i><i></i><i></i>`, '', 'data-frei', 'nachricht flieg');
   el('nachr').querySelector('.ic svg').classList.add('auf-brand');
   pop('nachr', tN - .05, { x: 700, y: 470 }, 'pop');
-  flug('nachr', tN + .3, .9, WP('K', 220, 0)[0] + 10, 300, 300); ton(tN + .3, 'whoosh');
+  flug('nachr', tN + .3, .9, WP('K', 220, 0)[0] + 10, 300, 160); ton(tN + .3, 'whoosh');
   bump(JONAS, tN + 1.2, 1.08); nicken(JONAS, tN + 1.25, 1.1);
   aus('nachr', WI(9, 0) - .1, .3);
   welle(tR, 700, 612, 'var(--b500)', 120, .8); welle(tR + .3, 700, 612, 'var(--b500)', 120, .8); ton(tR, 'klick'); summen('handyA', tR, .6, 4);
@@ -622,12 +624,12 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   kam(tKl - .3, 1.0, 780, 540, 1.05);
   aus(['handyA', 'loeffel'], tKl - .2, .3); uhrAuf(tKl - .2, 1140, .6);
   froh(AMIR, WI(9, 4) - .1, WI(9, 7));
-  bild('blumen', 't-blumen', 120, 'data-gruppe="amir"'); el('blumen').classList.add('flieg');
-  bild('pral', 't-pralinen', 100, 'data-gruppe="amir"'); el('pral').classList.add('flieg');
-  akteur('blumen', { x: 690, y: 596, s: 0, sy: 0 });
+  bild('blumen', 't-blumen', 150, 'data-gruppe="amir"'); el('blumen').classList.add('flieg');
+  bild('pral', 't-pralinen', 118, 'data-gruppe="amir"'); el('pral').classList.add('flieg');
+  akteur('blumen', { x: 676, y: 580, s: 0, sy: 0 });
   tw('blumen', tB - .1, .55, { s: 1 }, 'back'); tw('blumen', tB - .1, .7, { sy: 1 }, 'sanft'); ton(tB - .1, 'pop');
   bump('blumen', tB + .55, 1.08);
-  pop('pral', tSu - .05, { x: 852, y: 604 }, 'plopp'); wackeln('pral', tSu + .4, 3, 3);
+  pop('pral', tSu - .05, { x: 858, y: 600 }, 'plopp'); wackeln('pral', tSu + .4, 3, 3);
   // „Ein Muss ist es aber nicht“: Amir nickt, lächelt
   nicken(AMIR, WI(10, 1), 1.1); froh(AMIR, WI(10, 3), WI(11, 2));
   huepfen('blumen', WI(10, 5) - .1, 10); huepfen('pral', WI(10, 5), 10);
@@ -640,8 +642,8 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   tuerAuf(t0);
   const [ax, ay] = WP('F', 205, 640);
   fliegen(AMIR, t0 + .3, .85, ax, ay, 160);
-  fliegen('blumen', t0 + .38, .85, ...WP('F', 430, 552), 140, { s: 110 / 120 });
-  fliegen('pral', t0 + .46, .85, ...WP('F', 548, 564), 130);
+  fliegen('blumen', t0 + .38, .85, ...WP('F', 430, 552), 140, { s: 110 / 150 });
+  fliegen('pral', t0 + .46, .85, ...WP('F', 548, 564), 130, { s: 100 / 118 });
   tausch('blumen', 'blumenF', t0 + 2.0); tausch('pral', 'pralF', t0 + 2.0);
   kam(t0 + .25, 1.0, 1810, 540, 1.0);
   tuerZu(t0 + 1.35);
@@ -669,7 +671,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // „Und am Tisch“: Kamera in die Küche, beide an den Tisch (Jonas links, Amir rechts)
   const tT = WI(13, 2), tGi = WI(13, 3), tNe = WI(13, 6), tH = WI(13, 8), tWi = WI(13, 9);
   aus('blaseF', tT - .5, .3); tafelAus('tF', tT);
-  kam(tT - .2, 1.0, 3260, 540, 1.0);
+  kam(tT - .2, 1.0, 3070, 540, 1.0);
   fliegen(AMIR, tT - .15, .95, ...WP('K', 1250, 430), 150);
   fliegen(JONAS, tT - .05, .95, ...WP('K', 930, 430), 120);
   // Jonas bietet an: kleine Blase mit Schüssel, die Schüssel schiebt sich zu Amir
@@ -705,38 +707,38 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   akteur('tischR', { x: 760, o: 0 }, true); tw('tischR', t0 + 1.25, .3, { o: 1 }); tw('tischR', t0 + 1.25, .8, { x: 0 }, 'sanft'); ton(t0 + 1.25, 'whoosh');
   portrait('jonasR', 'jonas', 160, 'data-gruppe="kartenJ"', 'rR'); portrait('amirR', 'amir', 160, 'data-gruppe="kartenA"', 'rR');
   const tRe = WI(15, 2);
-  pop('jonasR', tRe - .1, { x: 430, y: 440 }); pop('amirR', tRe + .08, { x: 790, y: 440 }, null);
+  pop('jonasR', tRe - .1, { x: 430, y: 410 }); pop('amirR', tRe + .08, { x: 790, y: 410 }, null);
   froh('jonasR', tRe, WI(16, 3)); froh('amirR', tRe + .1, WI(16, 3));
   neu('platzJ', '', '', 'data-gruppe="kartenJ"', 'platz', 'rR'); neu('platzA', '', '', 'data-gruppe="kartenA"', 'platz', 'rR');
-  pop('platzJ', SE(15) - .1, { x: 430, y: 532 }, 'klick'); pop('platzA', SE(15), { x: 790, y: 532 }, null);
+  pop('platzJ', SE(15) - .1, { x: 430, y: 592 }, 'klick'); pop('platzA', SE(15), { x: 790, y: 592 }, null);
   // „Bedienung“: die Kasse; „oft“: ein Bon rollt heraus
   const tB = WI(16, 3), tO = WI(16, 4), tZ = WI(16, 5);
-  bild('kasse', 't-kasse', 210, '', 'rR'); ein('kasse', tB - .15, { x: 1300, y: 470 }, { x: 260 }, 'whoosh');
-  neu('bon', '<i style="top:28px;width:70px"></i><i style="top:50px;width:52px"></i><i style="top:72px;width:66px"></i><i style="top:104px;width:56px"></i><i style="top:126px;width:72px"></i><i style="top:148px;width:48px"></i><u style="top:186px"></u>', '', '', 'bon', 'rR');
-  akteur('bon', { x: 1300, y: 292, sy: 0, o: 0 });
+  bild('kasse', 't-kasse', 260, '', 'rR'); ein('kasse', tB - .15, { x: 1300, y: 455 }, { x: 260 }, 'whoosh');
+  neu('bon', '<i style="top:26px;width:70px"></i><i style="top:46px;width:52px"></i><i style="top:66px;width:66px"></i><i style="top:110px;width:56px"></i><i style="top:130px;width:72px"></i><u style="top:162px"></u>', '', '', 'bon', 'rR');
+  akteur('bon', { x: 1300, y: 280, sy: 0, o: 0 });
   set('bon', tO + .05, { o: 1 }); tw('bon', tO + .05, .95, { sy: 1 }, 'inout');
   for (let k = 0; k < 6; k++) ton(tO + .1 + k * .14, 'tipp');
   blick('jonasR', tB, tZ + 1.2, 6); blick('amirR', tB + .1, tZ + 1.2, 6);
-  tafel('tZ', 'rR', 1150, 118, 'Zusammen oder getrennt?');
+  tafel('tZ', 'rR', 1150, 110, 'Zusammen oder getrennt?');
   tafelEin('tZ', tZ - .2, [WI(16, 5), WI(16, 6), WI(16, 7)]);
   // „Viele zahlen getrennt“: der Bon reißt in zwei Hälften, jede fliegt zu einer Platzkarte
   const tG = WI(17, 2);
-  neu('bonO', '<i style="top:28px;width:70px"></i><i style="top:50px;width:52px"></i><i style="top:72px;width:66px"></i>', '', 'data-gruppe="kartenJ"', 'bonh oben', 'rR');
-  neu('bonU', '<i style="top:14px;width:56px"></i><i style="top:36px;width:72px"></i><u style="top:74px"></u>', '', 'data-gruppe="kartenA"', 'bonh unten', 'rR');
-  akteur('bonO', { x: 1300, y: 233, o: 0 }); akteur('bonU', { x: 1300, y: 351, o: 0 });
+  neu('bonO', '<i style="top:26px;width:70px"></i><i style="top:46px;width:52px"></i><i style="top:66px;width:66px"></i>', '', 'data-gruppe="kartenJ"', 'bonh oben', 'rR');
+  neu('bonU', '<i style="top:22px;width:56px"></i><i style="top:42px;width:72px"></i><u style="top:70px"></u>', '', 'data-gruppe="kartenA"', 'bonh unten', 'rR');
+  akteur('bonO', { x: 1300, y: 228, o: 0 }); akteur('bonU', { x: 1300, y: 332, o: 0 });
   set(['bonO', 'bonU'], tG - .05, { o: 1 }); set('bon', tG - .05, { o: 0 }); ton(tG - .05, 'kritzeln');
-  tw('bonO', tG - .03, .2, { y: 215, r: -3 }, 'out'); tw('bonU', tG - .03, .2, { y: 370, r: 3 }, 'out');
-  fliegen('bonO', tG + .22, .7, 430, 512, 170, { r: 0 }); fliegen('bonU', tG + .32, .7, 790, 512, 150, { r: 0 }); ton(tG + .22, 'whoosh');
+  tw('bonO', tG - .03, .2, { y: 212, r: -3 }, 'out'); tw('bonU', tG - .03, .2, { y: 350, r: 3 }, 'out');
+  fliegen('bonO', tG + .22, .7, 430, 584, 170, { r: 0 }); fliegen('bonU', tG + .32, .7, 790, 584, 150, { r: 0 }); ton(tG + .22, 'whoosh');
   nicken('jonasR', tG + 1.0, 1); nicken('amirR', tG + 1.1, 1);
   // „Wer einlädt, zahlt aber meistens alles“: Herz auf Jonas' Seite, der ganze Bon wandert zu ihm
   const tW = WI(18, 0), tE = WI(18, 1), tZa = WI(18, 2), tAl = WI(18, 5);
-  tafelAus('tZ', tW - .15);
+  tafelAus('tZ', tW - .45);
   tafel('tW', 'rR', 620, 130, 'Wer einlädt, zahlt');
-  tafelEin('tW', tW - .1, [WI(18, 0), WI(18, 1), WI(18, 2)]);
+  tafelEin('tW', tW + .05, [WI(18, 0) + .2, WI(18, 1), WI(18, 2)]);
   bild('herzR', 't-herz', 72, 'data-gruppe="kartenJ"', 'rR');
-  pop('herzR', tE + .05, { x: 318, y: 520 }, 'ding'); bump('herzR', tE + .6, 1.18);
+  pop('herzR', tE + .05, { x: 330, y: 596 }, 'ding'); bump('herzR', tE + .6, 1.18);
   froh('jonasR', tE, SE(18) + 1.2);
-  fliegen('bonU', tZa + .05, .7, 438, 500, 130); ton(tZa + .05, 'whoosh'); ton(tZa + .75, 'plopp');
+  fliegen('bonU', tZa + .05, .7, 442, 572, 130); ton(tZa + .05, 'whoosh'); ton(tZa + .75, 'plopp');
   bump('bonO', tAl, 1.12); bump('bonU', tAl + .05, 1.12); ton(tAl, 'muenze');
   froh('amirR', tAl - .1, SE(18) + 1.2); huepfen('jonasR', tAl + .05, 12); nicken('amirR', tAl + .2, 1);
 }
@@ -744,7 +746,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
 /* ================= Szene 4b · „Warum?“ zurück ins Haus: Planen und direkt sagen ================= */
 {
   const tWa = WI(19, 0);
-  kam(tWa - .15, 1.0, 3260, 540, 1.0);
+  kam(tWa - .15, 1.0, 3070, 540, 1.0);
   tw('fasR', tWa + .7, .7, { sx: 0 }, 'inout'); ton(tWa + .7, 'whoosh');
   neigen(AMIR, tWa + .9, SE(19) + .4, -7);
   // „Gastgeber planen gern genau“: ein Einkaufszettel hakt sich Zeile für Zeile ab
@@ -771,7 +773,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
 {
   const t0 = SE(22) + .2, tIn = WI(23, 0);
   aus('blaseD', t0, .3);
-  kam(t0 + .25, 1.3, 2590, 470, .6);
+  kam(t0 + .25, 1.3, 2290, 440, .66);
   aus(JONAS, t0 + .4, .35);
   fliegen(AMIR, t0 + .55, .95, 2290, 700, 130, { s: 1.2 });
   const tT = tIn - .3;
@@ -780,7 +782,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // links: „In Deutschland“ mit Uhr, Blumen, Hausschuhen
   tafel('tDE', 'rF', 450, 150, 'In Deutschland', 74);
   tafelEin('tDE', tIn + .8, [tIn + 1.15, tIn + 1.35]);
-  const ABZ = [['abz1', 't-uhr', 200], ['abz2', 't-blumen', 450], ['abz3', 't-hausschuhe', 700]];
+  const ABZ = [['abz1', 't-uhrs', 160], ['abz2', 't-blumen', 390], ['abz3', 't-hausschuhe', 620]];
   ABZ.forEach(([id, t, x], k) => { neu(id, `<div class="ic">${kopie(t, id)}</div>`, '', '', 'abz', 'rF'); pop(id, WI(23, 4) + k * .2, { x, y: 345 }, k === 1 ? 'pop' : 'klick'); });
   // rechts: die Küche leert sich zu einem leeren Raum
   const tB = WI(23, 4);
@@ -788,29 +790,29 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   tw('kLeer', tB + .3, .7, { o: 1 }, 'inout');
   // „ähnlich“: blasse Kopien der Symbole tauchen rechts auf; „ganz anders“: sie wirbeln davon, ein großes Fragezeichen bleibt
   const tAe = WI(24, 5), tV = WI(24, 6), tGa = WI(24, 7);
-  const GE = [['ge1', 't-uhr', 480, -260, 640, -40], ['ge2', 't-blumen', 750, 0, 760, 30], ['ge3', 't-hausschuhe', 1020, 260, 640, 40]];
+  const GE = [['ge1', 't-uhrs', 300, -200, 640, -40], ['ge2', 't-blumen', 520, 0, 740, 30], ['ge3', 't-hausschuhe', 740, 280, 640, 40]];
   GE.forEach(([id, t, x], k) => { neu(id, `<div class="ic">${kopie(t, id)}</div>`, '', '', 'abz geist', 'rK'); pop(id, tAe - .1 + k * .14, { x, y: 345 }, k ? null : 'pop'); });
   ABZ.forEach(([id], k) => bump(id, tAe - .1 + k * .14, 1.1));
   GE.forEach(([id], k) => wackeln(id, tV + k * .1, 3, 6));
   GE.forEach(([id, , x, dx, y, r]) => tw(id, tGa, .6, { x: x + dx, y, r, o: 0, s: .6 }, 'in')); ton(tGa, 'whoosh');
-  neu('frage', '?', '', '', 'riesen', 'rK'); pop('frage', WI(24, 8) + .1, { x: 750, y: 470 }, 'pop');
+  neu('frage', '?', '', '', 'riesen', 'rK'); pop('frage', WI(24, 8) + .1, { x: 520, y: 470 }, 'pop');
   // „Und wie ist das bei dir?“: Amir tritt auf die Schwelle, „Bei dir?“ hängt rechts
   tw(AMIR, WI(25, 0), .6, { s: 1.35, y: 690 }, 'inout');
-  tafel('tB', 'rK', 750, 150, 'Bei dir?', 80);
+  tafel('tB', 'rK', 520, 150, 'Bei dir?', 80);
   tafelEin('tB', WI(25, 3) - .15, [WI(25, 4), WI(25, 5)]);
   bump('frage', WI(25, 5) + .05, 1.12); ton(WI(25, 5) + .05, 'ding');
   // Denkpause: Gedankenbläschen füllt sich mit neutralen Symbolen, das Fragezeichen pulsiert, Amir grübelt
   const tP = SE(25) + .1, tEnde = WI(26, 0) - .55;
-  neu('denk', `<i style="left:150px;top:262px;width:56px;height:56px"></i><i style="left:132px;top:322px;width:32px;height:32px"></i>
-    ${[['ds1', 't-teller', 78, 30], ['ds2', 't-uhr', 218, 30], ['ds3', 't-pralinen', 78, 146], ['ds4', 't-herz', 218, 146]].map(([id, t, x, y]) => `<div class="ds" id="${id}" style="left:${x}px;top:${y}px">${kopie(t, id)}</div>`).join('')}`,
+  neu('denk', `<i style="left:170px;top:292px;width:60px;height:60px"></i><i style="left:150px;top:358px;width:34px;height:34px"></i>
+    ${[['ds1', 't-teller', 85, 25], ['ds2', 't-uhrs', 235, 25], ['ds3', 't-pralinen', 85, 155], ['ds4', 't-herz', 235, 155]].map(([id, t, x, y]) => `<div class="ds" id="${id}" style="left:${x}px;top:${y}px">${kopie(t, id)}</div>`).join('')}`,
     '', '', 'denk', 'rS');
-  pop('denk', tP, { x: 300, y: 270 }, 'pop');
+  pop('denk', tP, { x: 300, y: 280 }, 'pop');
   ['ds1', 'ds2', 'ds3', 'ds4'].forEach((id, k) => { const t = tP + .4 + k * .6; akteur(id, { s: 0 }, true); tw(id, t, .45, { s: 1 }, 'back'); ton(t, k % 2 ? 'klick' : 'pop'); });
-  kam(tP, tEnde - tP + .3, 2590, 480, .66, 'inout', null, false);
+  kam(tP, tEnde - tP + .3, 2330, 450, .74, 'inout', null, false);
   neigen(AMIR, tP, tEnde, -9); blick(AMIR, tP, tP + 1.4, 7); blick(AMIR, tP + 1.6, tP + 2.4, -5);
   froh(AMIR, tEnde - .5, WI(26, 0) + .2);
   HOOKS.push(t => { const a = clamp((t - tP) / .4) * (1 - clamp((t - tEnde) / .3)); if (a > 0) el('frage').style.transform += ` scale(${(1 + .06 * a * Math.sin(2 * Math.PI * 1.6 * (t - tP))).toFixed(4)})`; });
-  welle(tP + 1.0, ...WP('K', 750, 470).map((v, k) => v + (k ? 0 : 300)), 'var(--b300)', 300, 1.2);
+  welle(tP + 1.0, ...WP('K', 520, 470).map((v, k) => v + (k ? 0 : 300)), 'var(--b300)', 300, 1.2);
 }
 
 /* ================= Szene 6 · Haus schließt sich: Amirs Tipp, die Schüssel kommt zurück, um sieben klingelt er ================= */
@@ -820,7 +822,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   tafelAus('tB', tZu); tafelAus('tDE', tZu + .05);
   tw('hausL', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('hausR', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('rS', tZu + .1, 1.1, { sx: 0 }, 'inout'); ton(tZu + .1, 'whoosh');
   tw('kLeer', tZu + .2, .5, { o: 0 }); tw('kInhalt', tZu + .5, .7, { y: 0, o: 1 }, 'out');
-  kam(tZu + .1, 1.2, 3260, 540, 1.0, 'inout', null);
+  kam(tZu + .1, 1.2, 3070, 540, 1.0, 'inout', null);
   fliegen(AMIR, tZu + .3, .95, ...WP('K', 1250, 430), 120, { s: 1 });
   tw(JONAS, tZu + .9, .5, { o: 1, s: 1 }, 'back'); ton(tZu + .9, 'pop'); froh(JONAS, tZu + 1, WI(27, 0));
   // „sag es vorher freundlich“: Tafel
@@ -859,8 +861,8 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   uhrAuf(tS7 + .05, 1140, .45, 'back'); bump('uhr', WI(29, 2) + .1, 1.25); ton(WI(29, 2) + .1, 'ding'); akzent(WI(29, 2), .04, 1035, 250);
   wackeln('klingel', tKl, 4, 12); welle(tKl + .05, 905, 490, 'var(--b500)', 110, .8); welle(tKl + .35, 905, 490, 'var(--b500)', 110, .8); ton(tKl + .05, 'ding');
   froh(AMIR, tKl + .2, SE(31) + 3);
-  bild('blumen2', 't-blumen', 120, 'data-frei'); el('blumen2').classList.add('flieg');
-  akteur('blumen2', { x: 690, y: 596, s: 0, sy: 0 });
+  bild('blumen2', 't-blumen', 150, 'data-frei'); el('blumen2').classList.add('flieg');
+  akteur('blumen2', { x: 676, y: 580, s: 0, sy: 0 });
   tw('blumen2', tBl - .1, .55, { s: 1 }, 'back'); tw('blumen2', tBl - .1, .7, { sy: 1 }, 'sanft'); ton(tBl - .1, 'pop');
   bump('blumen2', tHa, 1.1);
   // „Jonas freut sich über den Besuch“: Tür auf, Jonas steht im Türrahmen, beide hüpfen; dann gemeinsam an den Tisch
@@ -871,12 +873,12 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   huepfen(AMIR, tFe + .05, 16); huepfen(JONAS, tFe + .15, 16); ton(tFe + .05, 'pop');
   fliegen(AMIR, tBe - .1, 1.0, ...WP('K', 1250, 430), 220);
   fliegen(JONAS, tBe, 1.0, ...WP('K', 930, 430), 200);
-  fliegen('blumen2', tBe + .05, 1.0, ...WP('K', 1362, 516), 200, { s: 100 / 120 });
+  fliegen('blumen2', tBe + .05, 1.0, ...WP('K', 1375, 503), 200, { s: 130 / 150 });
   tuerZu(tBe + .6);
   // „Du darfst auch fragen“: kleine Fragezeichen-Blase bei Amir, Jonas nickt
   const tDu = WI(31, 0), tFg = WI(31, 3);
-  neu('blaseA', `<b>?</b>`, '', '', 'blase bild flieg');
-  pop('blaseA', tDu + .05, { x: WP('K', 1290, 0)[0], y: 392 }, 'pop');
+  neu('blaseA', `<div class="q">?</div>`, '', '', 'blase gross r flieg');
+  pop('blaseA', tDu + .05, { x: WP('K', 1290, 0)[0], y: 380 }, 'pop');
   bump('blaseA', tFg, 1.12); nicken(JONAS, tFg - .05, 1.1); ton(tFg, 'klick');
   // „Anders ist nicht falsch“: Welle durchs Haus, die weiße Platte steigt auf
   const tAn = WI(32, 0);
@@ -886,15 +888,15 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   akteur('band', { x: -300, y: 540, o: 0 }); tw('band', tAn - .1, .3, { o: .55 }); tw('band', tAn - .1, 1.7, { x: 4100 }, 'inout'); tw('band', tAn + 1.3, .3, { o: 0 });
   welle(tAn + .05, ...WP('K', 1090, 470), 'var(--b300)', 420, 1.3); welle(tAn + .45, ...WP('K', 1090, 470), 'var(--b300)', 420, 1.3);
   neu('endplatte', `<div id="endplatteT"><div class="titel">Anders ist nicht falsch</div></div>`, '', '', 'endplatte');
-  akteur('endplatte', { x: 1960, y: 1520, o: 0 });
-  tw('endplatte', tAn - .2, .3, { o: 1 }); tw('endplatte', tAn - .2, .85, { y: 1150 }, 'sanft'); ton(tAn - .2, 'whoosh');
+  akteur('endplatte', { x: 1960, y: 1560, o: 0 });
+  tw('endplatte', tAn - .2, .3, { o: 1 }); tw('endplatte', tAn - .2, .85, { y: 1190 }, 'sanft'); ton(tAn - .2, 'whoosh');
   titelEin('endplatteT', WI(32, 0), [WI(32, 0), WI(32, 1), WI(32, 2), WI(32, 3)]);
   huepfen(AMIR, WI(32, 3), 14); huepfen(JONAS, WI(32, 3) + .1, 14); ton(WI(32, 3) + .1, 'erfolg');
 }
 
 /* ---------- Abspann: das Puppenhaus schließt sich, es wird Abend, die Fenster leuchten ---------- */
 const AB = ENDE_SPRACHE + 1.0;
-kam(AB - .2, 1.7, 1960, 430, .44);
+kam(AB - .2, 1.7, 1960, 400, .44);
 tw('fasL', AB, 1.2, { sx: 1 }, 'inout'); tw('fasR', AB + .1, 1.2, { sx: 1 }, 'inout'); ton(AB, 'whoosh');
 tw('himmel', AB + .5, 1.5, { o: 1 }, 'inout'); tw('nacht', AB + .5, 1.5, { o: .9 }, 'inout');
 document.querySelectorAll('.licht').forEach((l, k) => { akteur(l, { o: 0 }, true); tw(l, AB + 1.3 + k * .14, .6, { o: 1 }, 'inout'); });

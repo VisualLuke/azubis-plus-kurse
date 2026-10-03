@@ -67,7 +67,7 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
 /* 4 · Automat */
 .klappe{width:150px;height:150px;border-radius:999px;background:radial-gradient(circle at 40% 35%,var(--b200),var(--b400));box-shadow:inset 0 0 0 5px var(--b300)}
 .scan{width:200px;height:14px;border-radius:7px;background:var(--b300);box-shadow:0 0 22px 6px rgba(164,139,244,.55)}
-.anzeige{width:150px;height:58px;font:800 30px/58px Inter;color:var(--b200);text-align:center}
+.anzeige{width:150px;height:58px;border-radius:12px;background:var(--b700);font:800 30px/58px Inter;color:var(--b200);text-align:center}
 .bon{width:104px;height:150px;background:var(--surface);border-radius:6px 6px 0 0;box-shadow:0 8px 20px rgba(22,19,37,.14);padding:16px 14px;display:flex;flex-direction:column;gap:9px;transform-origin:50% 100%}
 .bon i{display:block;height:7px;border-radius:4px;background:var(--n200)}
 .bon b{font:800 24px/28px Inter;color:var(--b700);text-align:right;margin-top:auto}
@@ -120,7 +120,7 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
 
 <div id="kamera"><div id="welt">
   <!-- Stationen (Hintergrund) -->
-  <div class="station" id="st1"><div class="leiste"></div><div class="boden"></div></div>
+  <div class="station" id="st1"><svg class="hg" style="left:760px;top:120px;width:260px;height:250px" viewBox="0 0 260 250"><rect x="0" y="0" width="260" height="250" rx="22" fill="var(--surface)"/><rect x="14" y="14" width="232" height="222" rx="14" fill="var(--b100)"/><path d="M14 170C70 140 120 175 170 150S230 140 246 150V236H14Z" fill="var(--b200)"/><rect x="123" y="14" width="14" height="222" fill="var(--surface)"/><rect x="14" y="118" width="232" height="14" fill="var(--surface)"/><path d="M40 90l40-40M60 100l30-30" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" opacity=".7"/></svg><div class="leiste"></div><div class="boden"></div></div>
   <div class="station" id="st2"><div class="leiste"></div><div class="boden"></div></div>
   <div class="station" id="st3"><div class="leiste"></div><div class="boden"></div></div>
   <div class="station" id="st4"><div class="leiste"></div><div class="boden"></div></div>
@@ -176,8 +176,6 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
   <div class="a teil" id="tasse1" style="width:130px" data-gruppe="tisch1">{{tasse}}</div>
   <div class="a portrait" id="yus1" style="width:300px;height:300px" data-gruppe="yus1"></div>
   <div class="a frage" id="frage1" data-gruppe="yus1">?</div>
-  <div class="a teil" id="fl" data-gruppe="fl"><svg viewBox="0 0 160 160"><svg>{{pet-flasche}}</svg><g clip-path="url(#clipFl)"><svg>{{pet-flasche-voll}}</svg></g>
-    <g transform="translate(80 70)"><g class="mi" id="flCoin"></g></g></svg></div>
   <div class="a welle gold" id="welle1" data-frei></div>
   <div class="a sprech" id="halt1">Halt, da ist <b>Pfand</b> drauf!</div>
 
@@ -197,6 +195,8 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
   <div class="a welle" id="welle2" data-frei></div>
   <div class="a" id="tb2w"><div class="etikett" id="tb2"><div class="titel">Einweg-Pfand: meist <span class="akz">25 Cent</span></div><div class="unter">Zeichen auf dem Etikett</div></div></div>
 
+  <div class="a teil" id="fl" data-gruppe="fl"><svg viewBox="0 0 160 160"><svg>{{pet-flasche}}</svg><g clip-path="url(#clipFl)"><svg>{{pet-flasche-voll}}</svg></g>
+    <g transform="translate(80 70)"><g class="mi" id="flCoin"></g></g></svg></div>
   <!-- ============ 3 · Mehrweg-Schleife ============ -->
   <svg class="a regal3" id="regal3" viewBox="0 0 240 270" data-gruppe="glas"><rect x="6" y="0" width="228" height="26" rx="10" fill="var(--b300)"/><rect x="6" y="0" width="228" height="16" rx="8" fill="var(--b200)"/>
     <rect x="14" y="20" width="20" height="250" rx="8" fill="var(--b300)"/><rect x="206" y="20" width="20" height="250" rx="8" fill="var(--b300)"/><rect x="34" y="26" width="172" height="240" fill="var(--b100)" opacity=".55"/></svg>
@@ -812,7 +812,7 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   // Eintauchen über der Wiese
   const tT = W('So', 20) - .2;
   kam(tT, 1.5, ...MITTE(5), 1); cue(tT, 'whoosh');
-  etikett('tb5w', 'tb5', 5, 110, 850, tT + 1.1,
+  etikett('tb5w', 'tb5', 5, 110, 815, tT + 1.1,
     [tT + 1.3, W('weniger', 20) + .1, W('Flaschen', 20) + .1, W('in', 20), W('der', 20), W('Natur', 20) - .05, W('Rohstoffe', 23) - .05, W('Rohstoffe', 23) + .2], ['Natur']);
   // Herumliegende Flaschen und Dosen werden von der Bahn eingesammelt; die Wiese wird sauber
   const LIT = [['lit1', 360, 650], ['lit2', 560, 740], ['lit3', 790, 640], ['lit4', 1010, 740], ['lit5', 1190, 650]];
