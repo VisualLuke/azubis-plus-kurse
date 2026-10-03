@@ -26,10 +26,11 @@ meta = {'abschnitte': [{'name': a['name']}],
                        'icon_path': ids['_abzeichen'][a['abzeichen']]}]}
 json.dump(meta, open(os.path.join(aus, 'meta.json'), 'w'), ensure_ascii=False, indent=1)
 for n, l in enumerate(plan['lektionen'], 1):
-    o, e = l['ordner'], ids[l['schluessel']]
+    o, e = l['ordner'], ids.get(l['schluessel'], {})
     fr = json.load(open(os.path.join(ROOT, o, 'fragen.json')))
     assert fr['ordner'] == o and fr['titel'] == l['titel'], o
-    assert e.get('video') and e.get('vtt') and e.get('titelbild'), f'{o}: Upload fehlt'
+    if not (e.get('video') and e.get('vtt') and e.get('titelbild')):
+        print(f'– {o}: Upload fehlt noch, übersprungen'); continue
     kurs = {'id': e['kurs_id'], 'schluessel': l['schluessel'], 'titel': l['titel'], 'beschreibung': fr['beschreibung'],
             'content_url': e['video'], 'content_text': sprechertext(o), 'titelbild_path': e['titelbild'],
             'abschnitt': l['abschnitt'], 'abzeichen': l['abzeichen'], 'sort': l['sort'], 'punkte': l['punkte'],
