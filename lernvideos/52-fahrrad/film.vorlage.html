@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mythos oder Wahrheit: Fahrrad fahren</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Text im Bild: links unter der Behauptungs-Kachel */
+.block{justify-content:flex-start;padding-top:420px}
+.block .titel{font-size:60px;line-height:70px}
+.block.mitte{justify-content:center;padding-top:0}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.gelb{border-color:var(--warning)} .welle.rot{border-color:var(--error)} .welle.weiss{border-color:var(--surface)}
+
+/* ---------- Mythos-Format ---------- */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+.buehne .nacht{position:absolute;inset:0;background:linear-gradient(170deg,var(--b600),var(--b700));opacity:0}
+.karte{width:1180px;height:300px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 80px}
+.kchip{display:flex;align-items:center;gap:10px;padding:8px 20px 8px 14px;border-radius:999px;background:var(--b50);
+  color:var(--b600);font:800 20px/26px Inter;letter-spacing:.1em;text-transform:uppercase}
+.kchip svg{width:26px;height:26px}
+.karte .titel{font:700 56px/66px Inter;letter-spacing:-.02em;text-align:center;color:var(--ink)}
+.abdruck{position:absolute;right:36px;bottom:-52px;width:300px;height:96px;border-radius:18px;border:7px solid var(--error);
+  background:var(--error-bg);color:var(--error-text);display:flex;align-items:center;justify-content:center;
+  font:800 50px/1 Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.abdruck.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.abdruck.gross{right:auto;bottom:auto}
+.tinte{border-radius:30px;border:6px solid var(--error);opacity:0}
+.tinte.stimmt{border-color:var(--success)}
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.pille{display:flex;align-items:center;gap:14px;padding:16px 30px 16px 18px;border-radius:999px;background:var(--surface);
+  font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.pille svg{width:44px;height:44px;flex:none}
+.pille.mythos{color:var(--error-text)} .pille.stimmt{color:var(--success-text)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+
+/* Plaketten */
+.plakette{width:84px;height:84px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:44px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* Fahrrad mit Fahrer (Porträt über dem Sattel) */
+.fahrer{width:300px;height:300px}
+.fahrer>svg{position:absolute;left:0;top:0;width:300px;height:300px}
+.fahrer .portrait{position:absolute;left:66px;top:28px;width:120px;height:120px;border-width:6px}
+
+/* 2 · Gesetzbuch */
+.gbuch{width:540px;height:340px}
+.gseite{position:absolute;top:0;width:270px;height:340px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14);
+  padding:32px 30px;display:flex;flex-direction:column;gap:14px}
+.gseite.l{left:0;border-radius:22px 4px 4px 22px;transform-origin:100% 50%} .gseite.r{left:270px;border-radius:4px 22px 22px 4px}
+.gseite i{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.gseite .para{font:800 44px/48px Inter;color:var(--b500)}
+.gseite b{font:800 40px/46px Inter;color:var(--ink)}
+.gseite .leer{flex:1;border-radius:14px;border:3px dashed var(--n300)}
+.gseite .xp{position:absolute;left:96px;top:170px;width:84px;height:84px}
+.gdeckel{position:absolute;left:270px;top:0;width:270px;height:340px;border-radius:4px 22px 22px 4px;transform-origin:0 50%;
+  background:linear-gradient(155deg,var(--b500),var(--b700));display:flex;align-items:center;justify-content:center;
+  font:800 130px/1 Inter;color:var(--b200);box-shadow:0 12px 30px rgba(22,19,37,.18)}
+
+/* 3/4 · Straße */
+.strasse{width:800px;height:80px}
+/* 3 · Akku */
+.akku{display:flex;align-items:center;gap:14px;padding:12px 24px 12px 16px;border-radius:999px;background:var(--surface);
+  font:800 28px/34px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 8px 24px rgba(22,19,37,.25)}
+.batt{position:relative;width:74px;height:38px;border:5px solid var(--ink);border-radius:10px;padding:3px;display:flex;gap:3px}
+.batt::after{content:'';position:absolute;right:-12px;top:8px;width:7px;height:12px;border-radius:0 4px 4px 0;background:var(--ink)}
+.batt i{flex:1;border-radius:3px;background:var(--success)}
+/* 4 · Handy */
+.handy{width:80px;height:140px;border-radius:18px;background:linear-gradient(155deg,var(--b600),var(--b700));padding:8px 7px;
+  box-shadow:0 8px 20px rgba(22,19,37,.2)}
+.handy .schirm{position:relative;width:100%;height:100%;border-radius:11px;background:var(--b100);overflow:hidden}
+.handy .schirm .gruen{position:absolute;inset:0;background:var(--success-bg)}
+.handy .sym{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.handy .sym svg{width:46px}
+
+/* 5/6 · Wege */
+.wege{width:780px;border-radius:28px;overflow:hidden}
+.weg{position:relative;width:100%}
+.weg.geh{background:var(--n200);background-image:repeating-linear-gradient(90deg,transparent 0 76px,var(--n300) 76px 80px)}
+.weg.rad{background:var(--b200)}
+.weg.str{background:var(--n700)}
+.weg .mitte{position:absolute;left:0;right:0;top:50%;height:8px;margin-top:-4px;background:repeating-linear-gradient(90deg,var(--surface) 0 50px,transparent 50px 96px);opacity:.75}
+.weg .glanz{position:absolute;inset:0;background:var(--success);opacity:0}
+.wegchip{padding:8px 18px;border-radius:999px;background:var(--surface);font:800 24px/30px Inter;color:var(--ink);white-space:nowrap;
+  box-shadow:0 4px 12px rgba(22,19,37,.14)}
+
+/* 8 · Notizzettel */
+.zettel{width:440px;padding:26px 30px 28px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:14px}
+.zettel .zeile{font:800 34px/42px Inter;color:var(--ink);white-space:pre;min-height:42px}
+.zettel .zeile .cursor{display:inline-block;width:4px;height:34px;margin-left:3px;vertical-align:-5px;background:var(--b500)}
+.zettel .platz{display:flex;gap:10px}
+.zettel .platz i{width:44px;height:16px;border-radius:8px;background:var(--n200)}
+
+/* 9 · Schluss */
+.mini{width:360px;height:150px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.25);
+  display:flex;align-items:center;justify-content:center;padding:0 28px 18px;font:700 28px/34px Inter;color:var(--ink);text-align:center}
+.mini .abdruck{width:150px;height:46px;border-width:4px;border-radius:10px;font-size:22px;right:18px;bottom:-20px}
+.stand{display:flex;align-items:center;gap:14px;padding:14px 30px 14px 16px;border-radius:999px;background:var(--surface);font:800 38px/44px Inter;white-space:nowrap;
+  box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.stand svg{width:46px;height:46px}
+.stand.mythos{color:var(--error-text)} .stand.stimmt{color:var(--success-text)}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--error)"/><path d="M15 15l14 14M29 15L15 29" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--success)"/><path d="M13 23l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgZitat"><svg viewBox="0 0 26 26"><path d="M4 16c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6H7a3 3 0 0 1-3-2Zm11 0c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6h-3a3 3 0 0 1-3-2Z" fill="var(--b500)"/></svg></template>
+<template id="svgHakenW"><svg viewBox="0 0 32 32"><path d="M8 17l6 6 11-13" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgXW"><svg viewBox="0 0 32 32"><path d="M10 10l12 12M22 10L10 22" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round"/></svg></template>
+<template id="svgChat"><svg viewBox="0 0 46 40"><path d="M6 4h34a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H18l-9 7v-7H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" fill="var(--surface)"/><circle cx="14" cy="17" r="3" fill="var(--b500)"/><circle cx="23" cy="17" r="3" fill="var(--b500)"/><circle cx="32" cy="17" r="3" fill="var(--b500)"/></svg></template>
+<template id="svgHoerer"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="var(--b500)"/><path d="M15 12c2-1 4 0 5 2l1 3c1 2 0 3-1 4l-1 1c1 3 3 5 6 6l1-1c1-1 2-2 4-1l3 1c2 1 3 3 2 5-1 3-4 4-7 3-7-2-12-7-14-14-1-3 0-6 1-9Z" fill="var(--surface)"/></svg></template>
+<template id="svgHakenG"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="var(--success)"/><path d="M13 24l7 7 13-15" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<!-- Hilfsgrößen: gefahrene Strecke der Räder (unsichtbar) -->
+<div id="v3" style="display:none"></div><div id="v4" style="display:none"></div><div id="v7" style="display:none"></div>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Intro: Rad, Helm, Lampe, Handy, Schloss -->
+  <div class="a buehne quiz" id="bue0"><div class="dunkel"></div></div>
+  <div class="a" id="helm0" style="width:170px">{{titelbild-fahrradhelm}}</div>
+  <div class="a" id="lampe0" style="width:160px">{{lampe-rad}}</div>
+  <div class="a" id="handy0" style="width:170px">{{handy}}</div>
+  <div class="a" id="schloss0" style="width:170px">{{buegelschloss}}</div>
+  <div class="a fahrer" id="r0" data-rad="r0"><div class="portrait" id="py0" data-f="yusuf"></div></div>
+  <div class="a welle gelb" id="wk0" style="width:110px;height:110px" data-frei></div>
+  <div class="a tinte" id="ti0a" style="width:340px;height:136px" data-frei></div>
+  <div class="a tinte stimmt" id="ti0b" style="width:340px;height:136px" data-frei></div>
+  <div class="a abdruck gross" id="ab0a">Mythos</div>
+  <div class="a abdruck gross stimmt" id="ab0b">Stimmt</div>
+
+  <!-- 2 · Helmpflicht – Mythos -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a gbuch" id="buch2">
+    <div class="gseite r"><b>Helm</b><div class="leer"></div><div class="plakette rot xp" id="xp2"></div></div>
+    <div class="gseite l" id="seiteL2"><div class="para">§</div><i style="width:90%"></i><i></i><i style="width:75%"></i><i></i><i style="width:60%"></i><i style="width:85%"></i></div>
+    <div class="gdeckel" id="deckel2">§</div>
+  </div>
+  <div class="a" id="lupe2" style="width:150px" data-frei>{{lupe}}</div>
+  <div class="a welle gruen" id="schutz2" style="width:330px;height:330px" data-frei></div>
+  <div class="a portrait" id="p2" data-f="yusuf" style="width:240px;height:240px" data-gruppe="kopf2"></div>
+  <div class="a" id="helm2" style="width:135px" data-gruppe="kopf2">{{titelbild-fahrradhelm~b}}</div>
+  <svg class="a" id="stoss2" viewBox="0 0 120 40" style="width:120px;height:40px" data-frei><path d="M110 20H22" stroke="var(--error)" stroke-width="8" stroke-linecap="round"/><path d="M30 6L10 20l20 14" stroke="var(--error)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a plakette gruen" id="ok2"></div>
+
+  <!-- 3 · Licht – Stimmt -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div><div class="nacht" id="nacht2"></div></div>
+  <div class="a" id="mond2" style="width:110px">{{mond}}</div>
+  <svg class="a strasse" id="str3" viewBox="0 0 800 80" data-frei></svg>
+  <svg class="a" id="kegel3" viewBox="0 0 370 210" style="width:370px;height:210px;transform-origin:0 10px" data-frei>
+    <defs><linearGradient id="kegelG" x2="1"><stop offset="0" stop-color="var(--surface)" stop-opacity=".85"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></linearGradient></defs>
+    <path d="M0 4L370 112V206L0 16Z" fill="url(#kegelG)"/></svg>
+  <div class="a fahrer" id="r3"><div class="portrait" id="py3" data-f="yusuf"></div></div>
+  <div class="a welle weiss" id="wv3" style="width:120px;height:120px" data-frei></div>
+  <div class="a welle rot" id="wh3" style="width:120px;height:120px" data-frei></div>
+  <div class="a" id="akkulampe3" style="width:90px" data-frei>{{lampe-rad~b}}</div>
+  <div class="a akku" id="akku3"><span class="batt"><i></i><i></i><i></i><i></i></span>Akku</div>
+  <div class="a plakette gruen" id="ok3"></div>
+  <div class="a" id="zettel3" style="width:150px">{{strafzettel}}</div>
+
+  <!-- 4 · Handy – Stimmt -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <svg class="a strasse" id="str4" viewBox="0 0 800 80" data-frei></svg>
+  <svg class="a" id="linie4" viewBox="0 0 100 100" style="width:100px;height:100px" data-frei><path id="linie4p" d="M78 14L22 86" stroke="var(--error)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10" fill="none"/></svg>
+  <div class="a fahrer" id="r4" data-gruppe="r4"><div class="portrait" id="py4" data-f="yusuf"></div></div>
+  <div class="a welle" id="wh4" style="width:170px;height:170px" data-frei></div>
+  <div class="a handy" id="handy4" data-gruppe="r4"><div class="schirm"><div class="gruen" id="hg4"></div>
+    <div class="sym" id="hs4a"></div><div class="sym" id="hs4b"></div><div class="sym" id="hs4c"></div></div></div>
+  <div class="a plakette rot" id="x4" data-frei></div>
+
+  <!-- 5 · Gehweg – Mythos -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a wege" id="wege5" data-frei>
+    <div class="weg geh" style="height:140px"><div class="glanz" id="gl5g"></div></div>
+    <div class="weg rad" style="height:120px"><div class="glanz" id="gl5r"></div></div>
+    <div class="weg str" style="height:210px"><div class="mitte"></div><div class="glanz" id="gl5s"></div></div>
+  </div>
+  <svg class="a" id="spuren5" viewBox="0 0 420 90" style="width:420px;height:90px" data-frei></svg>
+  <div class="a wegchip" id="wc5g" data-frei>Gehweg</div>
+  <div class="a wegchip" id="wc5r" data-frei>Radweg</div>
+  <div class="a wegchip" id="wc5s" data-frei>Straße</div>
+  <div class="a" id="zusatz5" style="width:170px;transform-origin:50% 27%">{{zusatzschild}}</div>
+  <div class="a fahrer" id="r5" data-frei><div class="portrait" id="py5" data-f="yusuf"></div></div>
+  <div class="a plakette rot" id="x5" data-frei></div>
+
+  <!-- 6 · Radweg-Pflicht – Mythos -->
+  <div class="a buehne quiz" id="bue5"><div class="dunkel"></div></div>
+  <div class="a wege" id="wege6" data-frei>
+    <div class="weg rad" style="height:130px"><div class="glanz" id="gl6r"></div></div>
+    <div class="weg str" style="height:230px"><div class="mitte"></div><div class="glanz" id="gl6s"></div></div>
+  </div>
+  <div class="a wegchip" id="wc6r" data-frei>Radweg</div>
+  <div class="a wegchip" id="wc6s" data-frei>Straße</div>
+  <div class="a" id="schild6" style="width:180px;transform-origin:50% 95%">{{schild-radweg}}</div>
+  <div class="a chip brand" id="pflicht6">Pflicht</div>
+  <svg class="a" id="pfeile6" viewBox="0 0 640 300" style="width:640px;height:300px" data-frei>
+    <g id="pz6" stroke="var(--b500)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pz6p" pathLength="1" d="M20 250C150 250 170 70 300 70"/><path id="pz6k" d="M276 44l30 26-30 26"/></g>
+    <g id="pa6" stroke="var(--surface)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pa6p" pathLength="1" d="M20 250C150 250 170 70 300 70"/><path id="pa6k" d="M276 44l30 26-30 26"/></g>
+    <g id="pb6" stroke="var(--surface)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pb6p" pathLength="1" d="M20 250H560"/><path id="pb6k" d="M534 224l30 26-30 26"/></g>
+  </svg>
+  <div class="a fahrer" id="r6" data-frei><div class="portrait" id="py6" data-f="yusuf"></div></div>
+  <div class="a plakette gruen" id="ok6"></div>
+
+  <!-- 7 · Nebeneinander – Stimmt -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <svg class="a" id="str7" viewBox="0 0 800 270" style="width:800px;height:270px" data-frei></svg>
+  <div class="a" id="auto7" style="width:260px">{{auto}}</div>
+  <div class="a fahrer" id="rk7" data-gruppe="duo7"><div class="portrait" id="pk7" data-f="kwame"></div></div>
+  <div class="a fahrer" id="ry7" data-gruppe="duo7"><div class="portrait" id="py7" data-f="yusuf"></div></div>
+  <div class="a welle gelb" id="wk7a" style="width:90px;height:90px" data-frei></div>
+  <div class="a welle gelb" id="wk7b" style="width:90px;height:90px" data-frei></div>
+  <div class="a" id="warn7" style="width:120px">{{warndreieck}}</div>
+  <div class="a plakette gruen" id="ok7"></div>
+
+  <!-- 8 · Tipp: Rahmen anschließen -->
+  <div class="a buehne" id="bue7" style="width:900px;height:720px"></div>
+  <div class="a" id="stand8a" style="width:200px" data-gruppe="rad8a">{{fahrradstaender}}</div>
+  <div class="a" id="stand8b" style="width:200px" data-gruppe="rad8b">{{fahrradstaender~b}}</div>
+  <div class="a fahrer" id="r8a" data-gruppe="rad8a"></div>
+  <div class="a fahrer" id="r8b" data-gruppe="rad8b"></div>
+  <svg class="a" id="vr8b" viewBox="0 0 80 80" style="width:85px;height:85px" data-gruppe="rad8b"></svg>
+  <div class="a" id="kleinschloss8" style="width:62px" data-gruppe="rad8b">{{schloss}}</div>
+  <div class="a" id="buegel8" style="width:120px" data-gruppe="rad8a">{{buegelschloss~b}}</div>
+  <div class="a" id="schluessel8" style="width:80px;transform-origin:30% 50%" data-frei>{{schluessel}}</div>
+  <div class="a welle" id="welle8" style="width:220px;height:220px" data-frei></div>
+  <div class="a plakette rot" id="x8"></div>
+  <div class="a plakette gruen" id="ok8a"></div>
+  <div class="a zettel" id="zettel8"><div class="zeile" id="tipp8"></div><div class="platz" id="platz8"><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="a" id="stift8" style="width:100px" data-frei>{{stift}}</div>
+  <div class="a plakette gruen" id="ok8b"></div>
+
+  <!-- 9 · Schluss -->
+  <div class="a buehne quiz" id="bue8"><div class="dunkel"></div></div>
+  <div class="a stand mythos" id="standM"></div>
+  <div class="a stand stimmt" id="standS"></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">MYTHOS – keine Pflicht, aber klug</div></div>
+<div class="block" id="tb2"><div class="titel">STIMMT – vorne weiß, hinten rot</div></div>
+<div class="block" id="tb3"><div class="titel">STIMMT – erst anhalten</div></div>
+<div class="block" id="tb4"><div class="titel">MYTHOS – Straße oder Radweg</div></div>
+<div class="block" id="tb5"><div class="titel">MYTHOS – nur mit blauem Schild</div></div>
+<div class="block" id="tb6"><div class="titel">STIMMT – wenn niemand behindert wird</div></div>
+<div class="block mitte" id="tb7"><div class="titel">Tipp: Rahmen anschließen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Klare Regeln, sichere Fahrt.</div>
+  <div class="klein" id="asUnter">Auf dem Rad gelten klare Regeln.<br>Wer sie kennt, fährt sicher und spart sich Ärger.</div>
+</div></div>
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, liste) => { akteur(id, { x: liste[0][1], y: liste[0][2], o: 0, s: .8 }); liste.forEach(([t, x, y, d = .9]) => { set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const plakette = (id, svg) => { el(id).innerHTML = tpl(svg); };
+['x4', 'x5', 'x8', 'xp2'].forEach(id => plakette(id, 'svgXW'));
+['ok2', 'ok3', 'ok6', 'ok7', 'ok8a', 'ok8b'].forEach(id => plakette(id, 'svgHakenW'));
+
+/* ---------- Fahrrad: gezeichnet in Ebenen (Räder, Kurbel, Ständer, Klingel, Licht) ---------- */
+function radSVG(p, o = {}) {
+  const F = o.farbe || 'var(--b500)';
+  const sp = cx => [0, 45, 90, 135].map(a => { const r = a * Math.PI / 180, dx = 26 * Math.cos(r), dy = 26 * Math.sin(r);
+    return `M${(cx - dx).toFixed(1)} ${(110 - dy).toFixed(1)}L${(cx + dx).toFixed(1)} ${(110 + dy).toFixed(1)}`; }).join('');
+  const rad = (n, cx) => `<g id="${p}-${n}"><circle cx="${cx}" cy="110" r="34" fill="none" stroke="var(--ink)" stroke-width="8"/>
+    <circle cx="${cx}" cy="110" r="27" fill="none" stroke="var(--n300)" stroke-width="2"/><path d="${sp(cx)}" stroke="var(--n300)" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="110" r="5.5" fill="var(--n300)"/><circle cx="${cx}" cy="110" r="2.4" fill="var(--b700)"/></g>`;
+  const pedal = n => `<g id="${p}-${n}"><rect x="-8" y="-3" width="16" height="6" rx="2.5" fill="var(--ink)"/><rect id="${p}-${n}r" x="-4" y="-1.6" width="8" height="3.2" rx="1.4" fill="var(--warning)"/></g>`;
+  return `<svg viewBox="0 -80 240 240">
+    <defs><radialGradient id="${p}-gv"><stop offset="0" stop-color="var(--surface)"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></radialGradient>
+    <radialGradient id="${p}-gh"><stop offset="0" stop-color="var(--error)"/><stop offset="1" stop-color="var(--error)" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="120" cy="149" rx="102" ry="5" fill="var(--b700)" opacity=".14"/>
+    <path id="${p}-st" d="M100 112v35" stroke="var(--b700)" stroke-width="5" stroke-linecap="round" style="transform-origin:100px 112px"/>
+    ${pedal('pb')}
+    ${o.ohneHR ? '' : rad('hr', 58)}${o.ohneVR ? '' : rad('vr', 182)}
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M58 110L104 62M58 110H114L104 62M104 62H168M114 110L168 62M168 62L182 110" stroke="${F}" stroke-width="8"/>
+      <path d="M104 62l-4-12M168 62l-4-20" stroke="var(--b700)" stroke-width="6"/>
+      <path d="M156 40h22" stroke="var(--b700)" stroke-width="7"/>
+      <path d="M50 66L58 104" stroke="var(--b700)" stroke-width="3"/>
+    </g>
+    <rect x="84" y="42" width="34" height="10" rx="5" fill="var(--b700)"/>
+    <rect x="40" y="62" width="34" height="6" rx="3" fill="var(--b700)"/>
+    <circle id="${p}-glh" cx="37" cy="61" r="22" fill="url(#${p}-gh)" opacity="0"/>
+    <rect id="${p}-lh" x="32" y="56.5" width="10" height="9" rx="2.5" fill="var(--error)"/>
+    <g id="${p}-kl" style="transform-origin:160px 39px"><rect x="158.5" y="34" width="3" height="6" fill="var(--b700)"/><path d="M153.5 36a6.5 6.5 0 0 1 13 0Z" fill="var(--warning)"/></g>
+    <circle id="${p}-glv" cx="187" cy="57" r="24" fill="url(#${p}-gv)" opacity="0"/>
+    <rect x="168" y="51" width="15" height="12" rx="4" fill="var(--b700)"/>
+    <circle id="${p}-lv" cx="183" cy="57" r="4.6" fill="var(--n300)"/>
+    <circle cx="114" cy="110" r="11" fill="var(--n300)" stroke="var(--b700)" stroke-width="2.5"/>
+    <path id="${p}-arm" d="M100 110h28" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="114" cy="110" r="3" fill="var(--b700)"/>
+    ${pedal('pa')}
+  </svg>`;
+}
+const RAEDER = [];
+// Rad einsetzen: Container-id, Präfix, Basis (x, y, s), optional Hilfsgröße für die gefahrene Strecke
+function rad(id, basis, o = {}) {
+  el(id).insertAdjacentHTML('afterbegin', radSVG(id, o));
+  akteur(id, basis);
+  akteur(id + '-st', { r: o.staender ? 13 : 90 }, true);
+  akteur(id + '-kl', {}, true);
+  RAEDER.push({ id, virt: o.virt, k: 1.25 * (basis.s ?? 1), vr: !o.ohneVR, hr: !o.ohneHR });
+}
+HOOKS.push(t => RAEDER.forEach(R => {
+  const x = wertBei(R.id, 'x', t) + (R.virt ? wertBei(R.virt, 'x', t) : 0);
+  const a = x / (34 * R.k) * 180 / Math.PI;
+  if (R.hr) el(R.id + '-hr').setAttribute('transform', `rotate(${a.toFixed(1)} 58 110)`);
+  if (R.vr) el(R.id + '-vr').setAttribute('transform', `rotate(${a.toFixed(1)} 182 110)`);
+  const k = a * .55 * Math.PI / 180, c = 14 * Math.cos(k), s = 14 * Math.sin(k);
+  el(R.id + '-arm').setAttribute('transform', `rotate(${(a * .55).toFixed(1)} 114 110)`);
+  el(R.id + '-pa').setAttribute('transform', `translate(${(114 + c).toFixed(1)} ${(110 + s).toFixed(1)})`);
+  el(R.id + '-pb').setAttribute('transform', `translate(${(114 - c).toFixed(1)} ${(110 - s).toFixed(1)})`);
+}));
+// Weltposition eines Punkts im Fahrrad (SVG-Einheiten) zur Zeit t
+const radPunkt = (id, ux, uy, t) => { const s = wertBei(id, 's', t);
+  return [wertBei(id, 'x', t) + (ux * 1.25 - 150) * s, wertBei(id, 'y', t) + ((uy + 80) * 1.25 - 150) * s]; };
+// Klingel: wackelt, Welle, zweimal „ding“
+function klingel(id, t, w) {
+  wackeln(id + '-kl', t, 4, 14);
+  const [x, y] = radPunkt(id, 160, 32, t);
+  if (w) wellen(w, [[t, x, y, .7]]);
+  cue(t, 'ding'); cue(t + .16, 'ding');
+}
+// gefahrene Strecke: anfahren, rollen, bremsen
+function fahrt(v, t0, t1, tempo, dIn = .6, dOut = .8) {
+  const x0 = AKTEURE.has(el(v)) ? wertBei(v, 'x', t0) : (akteur(v, { x: 0 }), 0);
+  const x1 = x0 + tempo * dIn / 3, x2 = x1 + tempo * (t1 - t0 - dIn), x3 = x2 + tempo * dOut / 3;
+  tw(v, t0, dIn, { x: x1 }, 'in'); tw(v, t0 + dIn, t1 - t0 - dIn, { x: x2 }, 'lin'); tw(v, t1, dOut, { x: x3 }, 'out');
+}
+// Licht an/aus (vorne: Linse + Schein, hinten: Schein)
+const LICHT = [];
+const licht = (id, seite, t, an) => LICHT.push({ id, seite, t, an });
+HOOKS.push(t => {
+  const st = {};
+  for (const L of LICHT) { const k = L.id + L.seite; st[k] ??= { id: L.id, seite: L.seite, v: 0 };
+    if (t >= L.t) st[k].v = L.an ? clamp((t - L.t) / .15) : 1 - clamp((t - L.t) / .15); }
+  for (const { id, seite, v } of Object.values(st)) {
+    if (seite === 'v') { el(id + '-glv').setAttribute('opacity', v.toFixed(2)); el(id + '-lv').setAttribute('fill', v > .5 ? 'var(--surface)' : 'var(--n300)'); }
+    else el(id + '-glh').setAttribute('opacity', (v * (.85 + .15 * Math.sin(t * 6))).toFixed(2));
+  }
+});
+
+/* ---------- Figuren: blinzeln, nicken, lachen ---------- */
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.portrait').forEach(p => { akteur(p.querySelector('.froh'), { o: 0 }, true); akteur(p.querySelector('.zu'), {}, true); });
+const froh = (id, t) => { const p = el(id); set(p.querySelector('.froh'), t, { o: 1 }); set(p.querySelector('.zu'), t, { o: 0 }); };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 9;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ================= Mythos-Format ================= */
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+function titelUrteil(id, t0, u) {
+  titelEin(id, t0);
+  $(`#${id} .w`).classList.add(u === 'mythos' ? 'rot' : 'gruen');
+}
+// Eine Behauptung: Karte – Denkpause mit Countdown – Stempel – Karte wandert als Kachel nach links oben.
+// c: Satz (oder Sätze) der Behauptung, v: Satz mit „Das ist ein Mythos!“/„Das stimmt!“
+function mythos({ i, c, v, u, tb, text }) {
+  const X = S(i), CX = X + 960, CY = 440, RY = 790;
+  const cs = [].concat(c), cl = cs.at(-1);
+  text ??= cs.map(n => satz(n).text).join(' ').replace(/[„“"]/g, '');
+  const rot = u === 'mythos';
+  WELT.insertAdjacentHTML('beforeend', `
+    <div class="a pille mythos" id="pm${i}">${tpl('svgX')}Mythos?</div>
+    <div class="a ring3" id="ring${i}"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+      <circle id="lauf${i}" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer${i}">3</b></div>
+    <div class="a pille stimmt" id="ps${i}">${tpl('svgHaken')}Stimmt?</div>
+    <div class="a karte" id="karte${i}"><div class="kchip" id="kc${i}">${tpl('svgZitat')}Behauptung</div>
+      <div id="kt${i}"><div class="titel">${text}</div></div>
+      <div class="abdruck ${u}" id="abd${i}">${rot ? 'Mythos' : 'Stimmt'}</div></div>
+    <div class="a tinte ${u}" id="tinte${i}" style="width:340px;height:136px" data-frei></div>
+    <div class="a" id="stempel${i}" style="width:360px" data-frei>${tpl(rot ? 'tplRot' : 'tplGruen')}</div>`);
+  const tIn = A(satz(cs[0]).start) - .5;
+  const c0 = SE(cl) + .15, c1 = A(satz(v).start) - .1, dt = (c1 - c0) / 3;
+  const tV = A(satz(v).woerter.at(-1).start), tK = SE(v) + .05;
+  quiz(i, tK);
+  akteur(`karte${i}`, { x: CX, y: CY + 260, o: 0, s: .82 });
+  tw(`karte${i}`, tIn, .3, { o: 1 }); tw(`karte${i}`, tIn, .75, { y: CY, s: 1 }, 'sanft', { bogen: 60 }); cue(tIn, 'whoosh');
+  akteur(`kc${i}`, { s: 0 }, true); tw(`kc${i}`, tIn + .35, .45, { s: 1 }, 'back');
+  const wz = cs.flatMap(n => satz(n).woerter).map(w => A(w.start) - .12);
+  titelEin(`kt${i}`, wz[0], wz);
+  // Denkpause: Ring läuft leer, Ziffern 3 – 2 – 1, die Antworten pulsieren im Wechsel
+  pop(`ring${i}`, c0 - .35, { x: CX, y: RY });
+  ein(`pm${i}`, c0 - .3, { x: CX - 330, y: RY }, { x: 60 }); ein(`ps${i}`, c0 - .3, { x: CX + 330, y: RY }, { x: -60 });
+  for (let k = 0; k < 3; k++) { cue(c0 + k * dt, 'klick'); bump(k % 2 ? `ps${i}` : `pm${i}`, c0 + k * dt + .05, 1.08); }
+  HOOKS.push(t => {
+    const p = clamp((t - c0) / (c1 - c0));
+    $(`#lauf${i}`).style.strokeDashoffset = -p;
+    const k = Math.min(2, Math.floor((t - c0) / dt)), f = t - c0 - Math.max(0, k) * dt;
+    const z = $(`#ziffer${i}`);
+    z.textContent = 3 - Math.max(0, k);
+    z.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Urteil: Stempel fällt auf „Mythos“/„stimmt“, schlägt auf, Abdruck + Tinte, Karte wackelt, Kamera-Akzent
+  const IX = CX + 404, IY = CY + 154, SY = IY - 91;
+  akteur(`stempel${i}`, { x: IX, y: SY - 330, o: 0, r: -3 });
+  tw(`stempel${i}`, tV - .6, .2, { o: 1 }); tw(`stempel${i}`, tV - .6, .4, { y: SY - 150 }, 'sanft');
+  tw(`stempel${i}`, tV - .16, .16, { y: SY }, 'in');
+  tw(`stempel${i}`, tV, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(`stempel${i}`, tV + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(`stempel${i}`, tV + .2, .55, { y: SY - 260 }, 'inout'); tw(`stempel${i}`, tV + .45, .3, { o: 0 });
+  akteur(`abd${i}`, { o: 0, s: 1.4, r: -3 }, true);
+  tw(`abd${i}`, tV, .04, { o: 1 }); tw(`abd${i}`, tV, .22, { s: 1 }, 'out');
+  welle(`tinte${i}`, tV, IX, IY, .8); AKTEURE.get(el(`tinte${i}`)).basis.r = -3;
+  cue(tV, 'plopp'); if (!rot) cue(tV + .05, 'erfolg');
+  akzent(tV, .05);
+  tw(`karte${i}`, tV, .07, { y: CY + 10 }, 'sinus'); tw(`karte${i}`, tV + .07, .4, { y: CY }, 'sanft');
+  wackeln(`karte${i}`, tV + .05, 3, 1.2);
+  tw(`ring${i}`, tV - .05, .3, { s: 0, o: 0 }, 'in');
+  huepfen(rot ? `pm${i}` : `ps${i}`, tV + .1, 20); tw(rot ? `ps${i}` : `pm${i}`, tV + .05, .3, { o: .35 });
+  // Erklärung: Karte wird Kachel links oben, Bühne hell und klein, Text im Bild darunter
+  aus([`pm${i}`, `ps${i}`], tK - .15, .3);
+  tw(`karte${i}`, tK, .9, { x: X + 490, y: 250, s: .55 }, 'inout');
+  titelUrteil(tb, tK + .4, u);
+  return { X, tV, tK };
+}
+// Schwenk kurz vor der nächsten Behauptung
+const panVor = (n, i) => pan2(Math.max(SE(n - 1) + .3, A(satz(n).start) - .95), i);
+
+/* ---------- 1 · Intro: Rad rollt herein, Klingel, Helm/Lampe/Handy/Schloss kreisen, Yusuf steigt auf ---------- */
+{
+  quiz(0);
+  const MX = 960, MY = 500;
+  // Das Rad rollt auf einem Bogen herein und bremst federnd
+  rad('r0', { x: -420, y: MY + 30, s: 1.2 });
+  const tR = .15, tA = tR + 1.15;
+  tw('r0', tR, 1.15, { x: MX }, 'out', { bogen: 36 }); cue(tR + .1, 'whoosh');
+  tw('r0', tA - .25, .2, { r: 3 }, 'sinus'); tw('r0', tA - .05, .5, { r: 0 }, 'sanft');
+  tw('r0', tA - .1, .1, { sy: .95, sx: 1.03 }, 'sinus'); tw('r0', tA, .45, { sy: 1, sx: 1 }, 'sanft');
+  // Yusuf hüpft auf den Sattel
+  akteur('py0', { x: -230, y: 70, s: 0 }, true);
+  const tY = W('Yusuf', 1) - .05;
+  tw('py0', tY, .4, { s: 1 }, 'back'); cue(tY, 'pop');
+  tw('py0', W('fährt', 1), .55, { x: 0, y: 0 }, 'inout', { bogen: 110 }); cue(W('fährt', 1), 'whoosh');
+  const tL = W('fährt', 1) + .55;
+  landen('r0', tL); cue(tL, 'plopp'); froh('py0', tL);
+  // Rad: die Klingel klingelt
+  klingel('r0', W('Rad', 1) - .05, 'wk0'); akzent(W('Rad', 1), .03);
+  // Helm, Lampe, Handy, Schloss ploppen nacheinander auf und kreisen kurz um das Rad
+  const DINGE = [['helm0', 215], ['lampe0', 325], ['schloss0', 35], ['handy0', 145]];
+  const RX = 470, RY = 245, tD = W('Arbeit', 1) - .2;
+  DINGE.forEach(([id, wkl], k) => {
+    const a = wkl * Math.PI / 180, x = MX + RX * Math.cos(a), y = MY + RY * Math.sin(a), t0 = tD + k * .2;
+    pop(id, t0, { x, y }, k % 2 ? 'pop' : 'plopp');
+    const tE = W('Aber', 2) + .2, sw = 1.1;   // Schwung: sie laufen ein Stück auf der Ellipse nach
+    HOOKS.push(t => {
+      if (t < t0) return;
+      const p = E.inout(clamp((t - t0) / (tE - t0))), b = a - sw * (1 - p);
+      const dx = MX + RX * Math.cos(b) - x, dy = MY + RY * Math.sin(b) - y;
+      el(id).style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) ` + el(id).style.transform;
+    });
+  });
+  // Welche Regeln gelten wirklich? – die vier hüpfen nacheinander
+  huepfen('helm0', W('welche', 2), 18); huepfen('lampe0', W('Regeln', 2), 18);
+  huepfen('schloss0', W('gelten', 2), 18); huepfen('handy0', W('wirklich', 2), 18);
+  // Teste dein Wissen: „Mythos“ und „Stimmt“ schlagen auf
+  [['ab0a', 'ti0a', MX - 200, W('Teste', 3)], ['ab0b', 'ti0b', MX + 200, W('Wissen', 3)]].forEach(([ab, ti, x, t]) => {
+    akteur(ab, { x, y: 862, o: 0, s: 1.5, r: -3 });
+    tw(ab, t, .05, { o: 1 }); tw(ab, t, .24, { s: 1 }, 'out');
+    welle(ti, t, x, 862, .8); AKTEURE.get(el(ti)).basis.r = -3;
+    cue(t, 'plopp'); akzent(t, .03);
+  });
+  huepfen('ab0a', SE(3) + .25, 20); huepfen('ab0b', SE(3) + .4, 20);
+  huepfen('r0', SE(3) + .1, 10);
+}
+
+/* ---------- 2 · „Helmpflicht“ – Mythos ---------- */
+panVor(4, 1);
+{
+  const { X, tK } = mythos({ i: 1, c: 4, v: 5, u: 'mythos', tb: 'tb1' });
+  const BX = X + 1320, BY = 520;
+  // Das Gesetzbuch kommt, klappt auf: die Seite „Helm“ ist leer
+  ein('buch2', tK + .25, { x: BX, y: BY }, { y: 80 }, 'whoosh');
+  akteur('deckel2', {}, true); akteur('seiteL2', { sx: 0, o: 0 }, true);
+  const tAuf = W('Es', 6) - .05;
+  tw('deckel2', tAuf, .28, { sx: 0 }, 'in'); set('deckel2', tAuf + .28, { o: 0 });
+  set('seiteL2', tAuf + .28, { o: 1 }); tw('seiteL2', tAuf + .28, .32, { sx: 1 }, 'out'); cue(tAuf, 'whoosh');
+  // keine Helmpflicht: die Lupe sucht auf der Seite – nichts
+  const tL = W('keine', 6) - .1, LX = BX + 140, LY = BY + 10;
+  akteur('lupe2', { x: LX + 160, y: LY + 60, o: 0, s: .7 });
+  tw('lupe2', tL, .2, { o: 1 }); tw('lupe2', tL, .45, { x: LX - 40, y: LY - 40, s: 1 }, 'sanft'); cue(tL, 'scan');
+  tw('lupe2', tL + .45, .45, { x: LX + 40, y: LY + 20 }, 'inout'); tw('lupe2', tL + .9, .45, { x: LX - 30, y: LY + 60 }, 'inout');
+  tw('lupe2', tL + 1.35, .4, { x: LX + 30, y: LY + 30 }, 'inout');
+  const tN = W('Fahrrad', 6);
+  akteur('xp2', { s: 0 }, true); tw('xp2', tN, .5, { s: 1 }, 'back'); cue(tN, 'plopp'); akzent(tN, .03);
+  wackeln('lupe2', tN - .1, 3, 6);
+  // Aber ein Helm schützt: Buch rückt nach oben links, Yusuf kommt, der Helm fliegt auf seinen Kopf
+  const tA = W('Aber', 7) - .3;
+  aus('lupe2', tA - .1, .3);
+  tw('buch2', tA, .6, { x: X + 1090, y: 330, s: .55 }, 'inout');
+  const PX = X + 1430, PY = 600;
+  pop('p2', tA + .25, { x: PX, y: PY }, 'pop', 'sanft');
+  const tH = W('Helm', 7) - .35;
+  akteur('helm2', { x: PX + 330, y: PY + 120, o: 0, s: .7 });
+  tw('helm2', tH, .15, { o: 1 }); flug('helm2', tH, .5, PX + 1, PY - 68, 150, { s: 1 }); cue(tH, 'whoosh');
+  landen('helm2', tH + .5); cue(tH + .5, 'plopp');
+  // schützt: ein Stoß prallt am Helm ab, der Schutzring pulsiert
+  const tS = W('schützt', 7) - .1;
+  akteur('stoss2', { x: PX + 300, y: PY - 110, o: 0 });
+  tw('stoss2', tS, .1, { o: 1 }); tw('stoss2', tS, .25, { x: PX + 135, y: PY - 85 }, 'in');
+  tw('stoss2', tS + .25, .45, { x: PX + 290, y: PY - 150, r: -20 }, 'out'); tw('stoss2', tS + .45, .3, { o: 0 });
+  cue(tS + .25, 'klick'); wackeln('helm2', tS + .25, 3, 3); akzent(tS + .25, .045);
+  wellen('schutz2', [[tS + .28, PX, PY - 20, 1], [tS + .7, PX, PY - 20, 1]]);
+  froh('p2', W('Kopf', 7) - .1); huepfen('p2', W('Kopf', 7), 10);
+  // gute Idee: Haken
+  const tG = W('gute', 8) - .1;
+  pop('ok2', tG, { x: PX + 175, y: PY + 95 }, 'erfolg'); bump('helm2', tG + .1, 1.08);
+  textAus('tb1', SE(8) + .15);
+}
+
+/* ---------- 3 · „Licht im Dunkeln“ – Stimmt ---------- */
+panVor(9, 2);
+{
+  const { X, tK } = mythos({ i: 2, c: 9, v: 10, u: 'stimmt', tb: 'tb2' });
+  const RX = X + 1230, GY = 700, RY = GY - 135;
+  // Straße mit Mittelstreifen, die Striche laufen mit der Fahrt
+  el('str3').innerHTML = `<rect x="0" y="0" width="800" height="80" rx="22" fill="var(--n700)"/><path id="str3m" d="M30 40H770" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="46 54" opacity=".7"/>`;
+  ein('str3', tK + .2, { x: X + 1320, y: GY + 40 }, { y: 50 });
+  // Yusuf fährt
+  rad('r3', { x: RX, y: RY }, { virt: 'v3' });
+  ein('r3', tK + .3, { x: RX, y: RY }, { x: -120 }, 'whoosh');
+  fahrt('v3', tK + .3, A(satz(13).ende) + 1.6, 260);
+  HOOKS.push(t => { el('str3m').style.strokeDashoffset = (wertBei('v3', 'x', t) % 100).toFixed(1); });
+  HOOKS.push(t => { if (t > tK + .9) el('r3').style.transform += ` translateY(${(1.6 * Math.sin(t * 9)).toFixed(1)}px)`; });
+  // Bei Dämmerung und Dunkelheit: es wird Nacht, der Mond geht auf
+  const tD = W('Dämmerung', 11) - .1, tDu = W('Dunkelheit', 11) - .1;
+  HOOKS.push(t => { el('nacht2').style.opacity = (.5 * E.inout(clamp((t - tD) / .6)) + .42 * E.inout(clamp((t - tDu) / .6))).toFixed(3); });
+  akteur('mond2', { x: X + 1610, y: 420, o: 0, s: .7 });
+  tw('mond2', tDu, .3, { o: 1 }); tw('mond2', tDu, 1.1, { y: 320, s: 1 }, 'sanft'); schweben('mond2', 3);
+  // brauchst du Licht – vorne weiß: der Scheinwerfer geht an, der Lichtkegel tastet die Straße ab
+  const tV = W('vorne', 11) - .05;
+  licht('r3', 'v', tV, true); cue(tV, 'klick'); akzent(tV, .035);
+  const [lx, ly] = radPunkt('r3', 186, 57, tV);
+  const [wvx, wvy] = radPunkt('r3', 183, 57, tV);
+  wellen('wv3', [[tV, wvx, wvy, .8]]);
+  akteur('kegel3', { x: lx + 185, y: ly - 10 + 105, o: 0, r: -6 });
+  tw('kegel3', tV, .3, { o: 1 }); tw('kegel3', tV, .7, { r: 5 }, 'inout'); tw('kegel3', tV + .7, .8, { r: 0 }, 'sanft');
+  // hinten rot: das Rücklicht glimmt
+  const tH = W('hinten', 11) + .1;
+  licht('r3', 'h', tH, true); cue(tH, 'klick');
+  const [whx, why] = radPunkt('r3', 37, 61, tH);
+  wellen('wh3', [[tH, whx, why, .8]]); akzent(tH, .03);
+  // Pedal-Reflektoren blitzen
+  HOOKS.push(t => { const v = t > tV ? .55 + .45 * Math.abs(Math.sin(t * 5)) : 1;
+    ['pa', 'pb'].forEach(n => el(`r3-${n}r`).setAttribute('opacity', v.toFixed(2))); });
+  // Auch Lampen mit Akku: eine Akku-Lampe steckt am Lenker ein, der Ladebalken füllt sich
+  const tAk = W('Akku', 12) - .35;
+  const [kx, ky] = radPunkt('r3', 164, 30, tAk);
+  akteur('akkulampe3', { x: kx + 200, y: ky - 220, o: 0, s: .8 });
+  tw('akkulampe3', tAk, .15, { o: 1 }); flug('akkulampe3', tAk, .5, kx + 6, ky - 22, 60, { s: 1 }); cue(tAk, 'whoosh');
+  landen('akkulampe3', tAk + .5); cue(tAk + .5, 'klick');
+  pop('akku3', tAk + .45, { x: X + 1530, y: 300 }, 'pop');
+  const BARS = [...el('akku3').querySelectorAll('i')], tB0 = tAk + .6, tB1 = W('erlaubt', 12) - .05;
+  HOOKS.push(t => BARS.forEach((b, k) => { b.style.opacity = t >= tB0 + k * (tB1 - tB0) / 4 ? 1 : 0; }));
+  BARS.forEach((b, k) => cue(tB0 + k * (tB1 - tB0) / 4, 'tipp'));
+  pop('ok3', tB1, { x: X + 1690, y: 300 }, 'erfolg'); bump('akku3', tB1, 1.08);
+  // Ohne Licht: die Lichter gehen aus – Bußgeld: ein Strafzettel fällt und wackelt
+  const tO = W('Ohne', 13) + .05;
+  licht('r3', 'v', tO, false); licht('r3', 'h', tO, false); tw('kegel3', tO, .2, { o: 0 }); cue(tO, 'klick');
+  aus(['akku3', 'ok3'], tO - .1, .3);
+  const tZ = W('Bußgeld', 13) - .4;
+  akteur('zettel3', { x: X + 1560, y: -300, o: 0, r: -3 });
+  tw('zettel3', tZ, .1, { o: 1 }); tw('zettel3', tZ, .42, { y: 330 }, 'in'); landen('zettel3', tZ + .42); cue(tZ + .42, 'plopp');
+  wackeln('zettel3', tZ + .5, 4, 3); akzent(tZ + .45, .045);
+  textAus('tb2', SE(13) + .15);
+}
+
+/* ---------- 4 · „Handy in der Hand“ – Stimmt ---------- */
+panVor(14, 3);
+{
+  const { X, tK } = mythos({ i: 3, c: 14, v: 15, u: 'stimmt', tb: 'tb3' });
+  const RX = X + 1200, GY = 700, RY = GY - 135;
+  el('str4').innerHTML = `<rect x="0" y="0" width="800" height="80" rx="22" fill="var(--n700)"/><path id="str4m" d="M30 40H770" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="46 54" opacity=".7"/>`;
+  ein('str4', tK + .2, { x: X + 1320, y: GY + 40 }, { y: 50 });
+  rad('r4', { x: RX, y: RY }, { virt: 'v4' });
+  ein('r4', tK + .3, { x: RX, y: RY }, { x: -120 }, 'whoosh');
+  // Beim Fahren …
+  const tStop = W('halt', 18) - .1;
+  fahrt('v4', tK + .3, tStop, 280, .6, .7);
+  HOOKS.push(t => { el('str4m').style.strokeDashoffset = (wertBei('v4', 'x', t) % 100).toFixed(1); });
+  // Handy in der Hand: es vibriert (Wellen), das Rad schlingert
+  const HX = RX + 150, HY = RY - 120;
+  const tHa = W('Handy', 16) - .15;
+  ein('handy4', tHa, { x: HX, y: HY }, { y: 40 }, 'pop');
+  const VIB = [W('Handy', 16) + .1, W('kurz', 16) - .1, W('schreiben', 17), W('telefonieren', 17)];
+  wellen('wh4', VIB.map(t => [t, HX, HY, .7]));
+  HOOKS.push(t => {
+    const vib = VIB.some(v => t > v && t < v + .45);
+    if (vib) el('handy4').style.transform += ` translate(${(3 * Math.sin(t * 90)).toFixed(1)}px,0) rotate(${(2 * Math.sin(t * 70)).toFixed(1)}deg)`;
+  });
+  VIB.forEach(v => cue(v, 'tipp'));
+  // schlingern: nur solange das Handy in der Hand ist, feste Frequenz, Stärke wechselt
+  const tN = W('nicht', 16) - .05;
+  HOOKS.push(t => {
+    const st = clamp((t - tN) / .6) * (1 - clamp((t - tStop + .3) / .6));
+    if (st > 0) el('r4').style.transform += ` rotate(${(3 * st * Math.sin(t * 5.2)).toFixed(2)}deg) translateX(${(10 * st * Math.sin(t * 2.6)).toFixed(1)}px)`;
+  });
+  // nicht: eine rote Linie zwischen Handy und Lenker, rotes ✕
+  const [gx, gy] = radPunkt('r4', 172, 40, tN);
+  akteur('linie4', { x: (gx + HX) / 2 - 8, y: (gy + HY + 60) / 2, o: 0 });
+  tw('linie4', tN, .3, { o: 1 }); cue(tN, 'kritzeln');
+  pop('x4', W('Hand', 16) + .1, { x: HX + 95, y: HY + 40 }, 'plopp'); akzent(W('halten', 16), .035);
+  wackeln('x4', W('kurz', 16), 3, 4);
+  // schreiben – telefonieren: der Bildschirm zeigt Chat und Anruf
+  el('hs4a').innerHTML = tpl('svgChat'); el('hs4b').innerHTML = tpl('svgHoerer'); el('hs4c').innerHTML = tpl('svgHakenG');
+  akteur('hs4a', { s: 0 }, true); akteur('hs4b', { s: 0 }, true); akteur('hs4c', { s: 0 }, true); akteur('hg4', { o: 0 }, true);
+  const tSc = W('schreiben', 17) - .1, tTe = W('telefonieren', 17) - .1;
+  tw('hs4a', tSc, .4, { s: 1 }, 'back'); tw('hs4a', tTe - .1, .2, { s: 0 }, 'in');
+  tw('hs4b', tTe, .4, { s: 1 }, 'back'); tw('hs4b', tStop, .2, { s: 0 }, 'in');
+  // Dann halt an: bremsen, der Ständer klappt aus (Klack) – erst jetzt wird das Handy grün
+  tw('r4-st', W('an', 18) - .05, .35, { r: 13 }, 'back'); cue(W('an', 18), 'klick');
+  landen('r4', W('an', 18) + .1);
+  tw('linie4', tStop, .25, { o: 0 }); aus('x4', tStop, .25);
+  const tOk = W('an', 18) + .2;
+  tw('hg4', tOk, .2, { o: 1 }); tw('hs4c', tOk, .45, { s: 1 }, 'back'); cue(tOk, 'erfolg');
+  bump('handy4', tOk, 1.12); akzent(tOk, .04); froh('py4', tOk);
+  textAus('tb3', SE(18) + .5);
+}
+
+/* ---------- 5 · „Auf dem Gehweg darf ich Rad fahren“ – Mythos ---------- */
+panVor(19, 4);
+{
+  const { X, tK } = mythos({ i: 4, c: [19, 20], v: 21, u: 'mythos', tb: 'tb4' });
+  const WX = X + 1320, WT = 250;            // Wege: Gehweg 250–390, Radweg 390–510, Straße 510–720
+  const GG = 372, GR = 494, GS = 640;        // Bodenlinien für das Rad
+  ein('wege5', tK + .2, { x: WX, y: WT + 235 }, { y: 60 }, 'whoosh');
+  [['wc5g', WT + 70], ['wc5r', WT + 200], ['wc5s', WT + 365]].forEach(([id, y], k) => pop(id, tK + .45 + k * .08, { x: X + 1005, y }, k ? null : 'pop'));
+  // Fußspuren auf dem Gehweg
+  const SP = [[40, 30, -1], [95, 58, 1], [160, 28, -1], [220, 60, 1], [290, 30, -1], [350, 58, 1]];
+  el('spuren5').innerHTML = SP.map(([x, y, s], k) => `<g class="spur" transform="translate(${x} ${y}) rotate(${s * 3})"><ellipse cx="0" cy="${-5}" rx="11" ry="15" fill="var(--n400)"/><ellipse cx="0" cy="17" rx="8" ry="8" fill="var(--n400)"/></g>`).join('');
+  akteur('spuren5', { x: X + 1440, y: WT + 70, o: 0 }); tw('spuren5', tK + .4, .4, { o: 1 });
+  const S = .55, oy = 135 * S;
+  rad('r5', { x: X + 1170, y: GS - oy, s: S });
+  ein('r5', tK + .5, { x: X + 1170, y: GS - oy, s: S }, { x: -100 });
+  // Das Rad rollt auf den Gehweg – die Fußspuren pochen, rotes ✕, zurück
+  const tG = tK + .75;
+  tw('r5', tG, .55, { x: X + 1300, y: GG - oy }, 'inout', { bogen: 20 }); cue(tG, 'whoosh');
+  const tP = W('Erwachsener', 22) - .15;
+  const SPUREN = [...el('spuren5').querySelectorAll('.spur')];
+  HOOKS.push(t => { const p = t > tP && t < tP + 1.2 ? Math.max(0, Math.sin((t - tP) * 2 * Math.PI * 2.5)) : 0;
+    SPUREN.forEach(s => s.setAttribute('opacity', (1 - .5 * p).toFixed(2))); });
+  pop('x5', tP + .1, { x: X + 1300, y: GG - oy - 105 }, 'plopp'); wackeln('x5', tP + .55, 3, 4); akzent(tP + .1, .04);
+  wackeln('r5', tP + .1, 3, 2);
+  // Straße und Radweg leuchten grün, das Rad fährt dorthin
+  const tSt = W('Straße', 22) - .25;
+  aus('x5', tSt - .1, .25);
+  tw('r5', tSt, .6, { x: X + 1240, y: GS - oy }, 'inout', { bogen: 30 }); cue(tSt, 'whoosh');
+  akteur('gl5s', { o: 0 }, true); tw('gl5s', tSt + .2, .3, { o: .35 }); tw('gl5s', tSt + 1.2, .4, { o: 0 });
+  bump('wc5s', tSt + .25, 1.12); cue(tSt + .25, 'ding');
+  const tRw = W('Radweg', 22) - .25;
+  tw('r5', tRw, .6, { x: X + 1420, y: GR - oy }, 'inout', { bogen: 30 }); cue(tRw, 'whoosh');
+  akteur('gl5r', { o: 0 }, true); tw('gl5r', tRw + .2, .3, { o: .45 }); tw('gl5r', tRw + 1.2, .4, { o: 0 });
+  bump('wc5r', tRw + .25, 1.12); cue(tRw + .25, 'ding'); akzent(tRw + .3, .03);
+  // Auf dem Gehweg nur mit Schild: das Zusatzschild „Radverkehr frei“ klappt herunter, das Rad fährt im Schritttempo
+  const tSch = W('Schild', 23) - .15;
+  akteur('zusatz5', { x: X + 1610, y: WT - 10, o: 0, sy: 0 });
+  set('zusatz5', tSch, { o: 1 }); tw('zusatz5', tSch, .55, { sy: 1 }, 'back'); cue(tSch, 'klick');
+  wackeln('zusatz5', tSch + .55, 2, 2);
+  bump('wc5g', W('Gehweg', 23), 1.12);
+  const tEr = W('erlaubt', 23) - .1;
+  akteur('gl5g', { o: 0 }, true); tw('gl5g', tEr, .3, { o: .3 }); cue(tEr, 'erfolg'); akzent(tEr, .035);
+  tw('r5', tEr, .7, { x: X + 1190, y: GG - oy }, 'inout', { bogen: 25 });
+  tw('r5', tEr + .7, SE(23) + .8 - tEr - .7, { x: X + 1310 }, 'sinus');
+  textAus('tb4', SE(23) + .15);
+}
+
+/* ---------- 6 · „Radweg immer benutzen“ – Mythos ---------- */
+panVor(24, 5);
+{
+  const { X, tK } = mythos({ i: 5, c: 24, v: 25, u: 'mythos', tb: 'tb5' });
+  const WT = 440, GR = 545, GS = 735;
+  ein('wege6', tK + .2, { x: X + 1320, y: WT + 180 }, { y: 60 }, 'whoosh');
+  pop('wc6r', tK + .45, { x: X + 1005, y: WT + 65 }, 'pop'); pop('wc6s', tK + .53, { x: X + 1005, y: WT + 245 }, null);
+  const S = .6, oy = 135 * S, BX0 = X + 1180;
+  rad('r6', { x: BX0, y: GS - oy, s: S });
+  ein('r6', tK + .5, { x: BX0, y: GS - oy, s: S }, { x: -100 });
+  // Pflicht ist der Radweg …: der Radweg pulsiert
+  bump('wc6r', W('Radweg', 26), 1.12);
+  akteur('gl6r', { o: 0 }, true); tw('gl6r', W('Radweg', 26), .25, { o: .25 }); tw('gl6r', W('Radweg', 26) + .5, .4, { o: 0 });
+  // blaues, rundes Schild: es wächst aus dem Boden
+  const tB = W('blaues', 26) - .1;
+  akteur('schild6', { x: X + 1060, y: WT - 40, o: 0, sy: 0 });
+  set('schild6', tB, { o: 1 }); tw('schild6', tB, .7, { sy: 1 }, 'back'); cue(tB, 'pop');
+  bump('schild6', W('Schild', 26) - .05, 1.08); akzent(W('Schild', 26), .035);
+  // mit Fahrrad: ein Pfeil zwingt das Rad auf den Radweg, Chip „Pflicht“
+  const P0x = BX0 - 20, P0y = GS - 40;            // Pfeil-Ursprung (Pfad-Punkt 20/250)
+  akteur('pfeile6', { x: P0x - 20 + 320, y: P0y - 250 + 150 });
+  ['pz6', 'pa6', 'pb6'].forEach(g => el(g).setAttribute('opacity', 0));
+  const tP = W('Fahrrad', 26) - .25, tZ = tP + .55;
+  const zeichne = (g, t0, d = .5) => HOOKS.push(t => {
+    const p = E.inout(clamp((t - t0) / d)), pf = el(g + 'p'), k = el(g + 'k');
+    pf.style.strokeDasharray = '1 1'; pf.style.strokeDashoffset = 1 - p; k.setAttribute('opacity', p > .95 ? 1 : 0);
+  });
+  HOOKS.push(t => { el('pz6').setAttribute('opacity', t > tP && t < W('Sonst', 27) - .2 ? 1 : 0); });
+  zeichne('pz6', tP); cue(tP, 'scan');
+  tw('r6', tZ, .8, { x: X + 1470, y: GR - oy }, 'inout', { bogen: 30 }); cue(tZ, 'whoosh');
+  pop('pflicht6', tZ + .3, { x: X + 1260, y: WT - 120 }, 'plopp'); akzent(tZ + .3, .03);
+  wackeln('schild6', W('steht', 26), 2, 2);
+  // Sonst: das Schild kippt weg, zwei Pfeile – beide grün, das Rad wählt die Straße
+  const tS = W('Sonst', 27) - .25;
+  tw('schild6', tS, .5, { r: -80, o: 0 }, 'in'); cue(tS, 'whoosh'); aus('pflicht6', tS, .3);
+  tw('r6', tS + .2, .7, { x: BX0, y: GS - oy }, 'inout', { bogen: 25 });
+  const tA = tS + .7;
+  HOOKS.push(t => { ['pa6', 'pb6'].forEach(g => el(g).setAttribute('opacity', t > tA ? 1 : 0)); });
+  zeichne('pa6', tA, .45); zeichne('pb6', tA + .1, .45); cue(tA, 'scan');
+  const tD = W('darfst', 27) - .05;
+  HOOKS.push(t => { const f = t >= tD ? 'var(--success)' : 'var(--surface)'; ['pa6', 'pb6'].forEach(g => el(g).setAttribute('stroke', f)); });
+  cue(tD, 'ding'); cue(tD + .12, 'ding'); akzent(tD, .03);
+  const tSt = W('Straße', 27) - .2;
+  tw('r6', tSt, 1.1, { x: X + 1600 }, 'inout'); cue(tSt, 'whoosh');
+  akteur('gl6s', { o: 0 }, true); tw('gl6s', tSt, .3, { o: .3 });
+  HOOKS.push(t => { ['pa6', 'pb6'].forEach(g => el(g).style.opacity = t > tSt + .2 ? (1 - clamp((t - tSt - .2) / .4)).toFixed(2) : ''); });
+  pop('ok6', tSt + 1.1, { x: X + 1600, y: GS - oy - 120 }, 'erfolg');
+  textAus('tb5', SE(27) + .15);
+}
+
+/* ---------- 7 · „Nebeneinander fahren“ – Stimmt ---------- */
+panVor(28, 6);
+{
+  const { X, tK } = mythos({ i: 6, c: 28, v: 29, u: 'stimmt', tb: 'tb6' });
+  const S = .75, oy = 135 * S, GF = 600, GN = 770;      // Boden ferne / nahe Spur
+  el('str7').innerHTML = `<rect x="0" y="0" width="800" height="270" rx="30" fill="var(--n700)"/>
+    <path d="M24 12H776" stroke="var(--surface)" stroke-width="6" opacity=".55" stroke-linecap="round"/>
+    <path d="M24 258H776" stroke="var(--surface)" stroke-width="6" opacity=".55" stroke-linecap="round"/>`;
+  ein('str7', tK + .2, { x: X + 1320, y: 680 }, { y: 50 });
+  // zwei Räder nebeneinander: Kwame auf der äußeren, Yusuf auf der inneren Spur
+  const BX = X + 1440;
+  rad('rk7', { x: BX + 30, y: GF - oy, s: S * .92 }, { virt: 'v7', farbe: 'var(--b300)' });
+  rad('ry7', { x: BX, y: GN - oy, s: S }, { virt: 'v7' });
+  ein('rk7', tK + .3, { x: BX + 30, y: GF - oy, s: S * .92 }, { x: -140 }, 'whoosh');
+  ein('ry7', tK + .38, { x: BX, y: GN - oy, s: S }, { x: -140 });
+  fahrt('v7', tK + .3, SE(31) + 1.6, 220);
+  HOOKS.push(t => { if (t > tK + .9) { el('rk7').style.transform += ` translateY(${(1.3 * Math.sin(t * 9 + 1)).toFixed(1)}px)`; el('ry7').style.transform += ` translateY(${(1.3 * Math.sin(t * 9)).toFixed(1)}px)`; } });
+  // die Klingeln klingeln im Takt
+  const tKl = W('Aber', 30) - .1;
+  klingel('rk7', tKl, 'wk7a'); klingel('ry7', tKl + .32, 'wk7b'); klingel('rk7', tKl + .64, null); klingel('ry7', tKl + .96, null);
+  froh('pk7', tKl); froh('py7', tKl + .3);
+  // behindert: von hinten kommt ein Auto und bremst, Warn-Dreieck
+  const CY = GF - 71, tC = W('niemanden', 30) - .35, CX = X + 1200;
+  akteur('auto7', { x: X + 760, y: CY, o: 0, s: .92 });
+  tw('auto7', tC, .2, { o: 1 }); tw('auto7', tC, .9, { x: CX }, 'out'); cue(tC, 'whoosh');
+  tw('auto7', tC + .75, .1, { r: 2 }, 'sinus'); tw('auto7', tC + .85, .35, { r: 0 }, 'sanft');
+  const tW = W('behindert', 30);
+  pop('warn7', tW, { x: CX - 10, y: CY - 150 }, 'plopp'); wackeln('warn7', tW + .5, 4, 3); akzent(tW, .045);
+  // hintereinander: Kwame lässt sich zurückfallen und reiht sich ein, das Auto überholt mit Abstand
+  const tH = W('Sonst', 31);
+  tw('ry7', tH, 1.1, { x: BX + 150 }, 'inout');
+  tw('rk7', tH, 1.3, { x: BX - 120, y: GN - oy, s: S }, 'inout', { bogen: -20 }); cue(tH, 'whoosh');
+  const tU = W('hintereinander', 31) + .45;
+  aus('warn7', tU - .2, .3);
+  tw('auto7', tU, 1.4, { x: X + 1960 }, 'in'); tw('auto7', tU + .9, .45, { o: 0 }); cue(tU + .2, 'whoosh');
+  pop('ok7', tU + .8, { x: X + 1690, y: 330 }, 'erfolg'); akzent(tU + .8, .035);
+  textAus('tb6', SE(31) + .5);
+}
+
+/* ---------- 8 · Tipp: Rahmen anschließen ---------- */
+pan2(A(satz(32).start) - 1.2, 7);
+{
+  const X = S(7), G = 800, Sk = .85, oy = 135 * Sk;
+  akteur('bue7', { x: X + 1320, y: 540 });
+  titelEin('tb7', A(satz(32).start) - .5);
+  // zwei Fahrradständer, rechts steht schon ein Rad – nur das Vorderrad ist abgeschlossen
+  const SA = X + 1125, SB = X + 1545, SY = G - 82;
+  ein('stand8a', A(satz(32).start) - .3, { x: SA, y: SY }, { y: 60 });
+  ein('stand8b', A(satz(32).start) - .2, { x: SB, y: SY }, { y: 60 });
+  rad('r8b', { x: SB - 15, y: G - oy, s: Sk }, { ohneVR: true, staender: true });
+  ein('r8b', A(satz(32).start) - .1, { x: SB - 15, y: G - oy, s: Sk }, { y: 60 });
+  const [vx, vy] = radPunkt('r8b', 182, 110, A(satz(32).start) + 1);
+  el('vr8b').innerHTML = `<circle cx="40" cy="40" r="34" fill="none" stroke="var(--ink)" stroke-width="8"/><circle cx="40" cy="40" r="27" fill="none" stroke="var(--n300)" stroke-width="2"/>
+    <path d="M14 40H66M40 14V66M21.6 21.6L58.4 58.4M58.4 21.6L21.6 58.4" stroke="var(--n300)" stroke-width="1.6"/><circle cx="40" cy="40" r="5.5" fill="var(--n300)"/>`;
+  ein('vr8b', A(satz(32).start) - .1, { x: vx, y: vy, s: Sk * 1.0625 / (85 / 80) }, { y: 60 });
+  ein('kleinschloss8', A(satz(32).start), { x: vx + 2, y: vy - 26 }, { y: 60 });
+  // Schließ dein Rad: Yusufs Rad rollt an den linken Ständer
+  rad('r8a', { x: SA - 300, y: G - oy, s: Sk });
+  akteur('r8a', { x: SA - 300, y: G - oy, s: Sk, o: 0 });
+  const tR = W('Schließ', 32) - .2;
+  tw('r8a', tR, .25, { o: 1 }); tw('r8a', tR, 1, { x: SA - 15 }, 'out'); cue(tR, 'whoosh');
+  tw('r8a-st', tR + .9, .35, { r: 13 }, 'back'); cue(tR + 1, 'klick');
+  // Rahmen: das Bügelschloss legt sich um Rahmen und Ständer und schnappt zu, der Schlüssel dreht sich
+  const tRa = W('Rahmen', 32) - .3, [bx, by] = radPunkt('r8a', 128, 92, tR + 2);
+  akteur('buegel8', { x: bx, y: by - 260, o: 0, s: .9 });
+  tw('buegel8', tRa, .15, { o: 1 }); tw('buegel8', tRa, .4, { y: by, s: 1 }, 'in'); landen('buegel8', tRa + .4);
+  cue(tRa + .4, 'klick'); cue(tRa + .48, 'plopp'); akzent(tRa + .4, .05);
+  akteur('schluessel8', { x: bx + 50, y: by + 30, o: 0, s: .6 });
+  tw('schluessel8', tRa + .55, .2, { o: 1, s: 1 }, 'back');
+  tw('schluessel8', tRa + .8, .3, { r: 55 }, 'inout'); cue(tRa + 1.05, 'klick');
+  tw('schluessel8', tRa + 1.2, .3, { r: 0 }, 'inout'); tw('schluessel8', tRa + 1.55, .35, { o: 0, x: bx + 110 }, 'in');
+  // an etwas Festem – zum Beispiel an einem Fahrradständer
+  bump('stand8a', W('Festem', 32), 1.05);
+  welle('welle8', W('Fahrradständer', 32), SA, SY - 30, 1); cue(W('Fahrradständer', 32), 'ding');
+  bump('stand8a', W('Fahrradständer', 32), 1.06); bump('stand8b', W('Fahrradständer', 32) + .12, 1.06);
+  // Nimm ein gutes Schloss: das rechte Rad wird angehoben und schwebt weg – nur das Vorderrad bleibt, rotes ✕
+  const tN = W('Nimm', 33) - .2;
+  tw('r8b', tN, .3, { y: G - oy - 30 }, 'out'); tw('r8b', tN + .3, 1.1, { x: SB + 300, y: G - oy - 330, o: 0 }, 'in'); cue(tN, 'whoosh');
+  pop('x8', W('gutes', 33) - .05, { x: SB, y: SY - 150 }, 'plopp'); wackeln('x8', W('gutes', 33) + .4, 3, 4);
+  const tS = W('Schloss', 33) - .1;
+  bump('buegel8', tS, 1.15); pop('ok8a', tS + .1, { x: bx - 10, y: by - 120 }, 'erfolg'); akzent(tS, .04);
+  // Rahmennummer: auf dem Zettel tippt sich „Rahmennummer:“, der Stift schreibt, Haken
+  const tZ = W('schreib', 34) - .35;
+  ein('zettel8', tZ, { x: X + 1300, y: 330 }, { y: -50 }, 'whoosh');
+  const TEXT = 'Rahmennummer:', t0 = W('Rahmennummer', 34) - .05, t1 = WE('Rahmennummer', 34) + .1;
+  for (let k = 0; k < TEXT.length; k += 2) cue(t0 + k * (t1 - t0) / TEXT.length, 'tipp');
+  HOOKS.push(t => { const n = Math.round(clamp((t - t0) / (t1 - t0)) * TEXT.length);
+    el('tipp8').innerHTML = TEXT.slice(0, n) + (t > tZ + .3 && Math.floor(t * 2.5) % 2 === 0 ? '<span class="cursor"></span>' : '<span class="cursor" style="opacity:0"></span>'); });
+  const PL = [...el('platz8').querySelectorAll('i')];
+  HOOKS.push(t => PL.forEach((p, k) => { p.style.opacity = t > t1 + .1 + k * .1 ? 1 : .0; }));
+  akteur('stift8', { x: X + 1560, y: 480, o: 0, s: .8 });
+  tw('stift8', t1 - .2, .2, { o: 1 }); tw('stift8', t1 - .2, .4, { x: X + 1200, y: 360, s: 1 }, 'inout', { bogen: 30 });
+  tw('stift8', t1 + .2, .6, { x: X + 1440 }, 'inout'); cue(t1 + .2, 'kritzeln');
+  tw('stift8', t1 + .85, .4, { x: X + 1600, y: 460, o: 0, s: .8 }, 'in');
+  pop('ok8b', t1 + .9, { x: X + 1560, y: 290 }, 'erfolg'); bump('zettel8', t1 + .9, 1.05);
+}
+
+/* ---------- 9 · Wie viele hattest du richtig? ---------- */
+pan2(Math.max(SE(34) + .3, A(satz(35).start) - 1.1), 8);
+{
+  const X = S(8);
+  quiz(8);
+  const KARTEN = [['Helmpflicht', 'mythos'], ['Licht im Dunkeln', 'stimmt'], ['Handy in der Hand', 'stimmt'],
+    ['Auf dem Gehweg fahren', 'mythos'], ['Radweg immer Pflicht', 'mythos'], ['Nebeneinander fahren', 'stimmt']];
+  $('#standM').innerHTML = `${tpl('svgX')}<span><span id="zM">0</span> × Mythos</span>`;
+  $('#standS').innerHTML = `${tpl('svgHaken')}<span><span id="zS">0</span> × Stimmt</span>`;
+  const t0 = A(satz(35).start) - .55;
+  ein('standM', t0, { x: X + 760, y: 290 }, { y: -50 }, 'whoosh'); ein('standS', t0 + .1, { x: X + 1160, y: 290 }, { y: -50 });
+  const dk = (W('richtig', 35) + .6 - (t0 + .4)) / KARTEN.length, LAND = [];
+  KARTEN.forEach(([txt, u], k) => {
+    const id = 'mini' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a mini" id="${id}">${txt}<div class="abdruck ${u}" id="mab${k}">${u === 'mythos' ? 'Mythos' : 'Stimmt'}</div></div>`);
+    const x = X + 960 + (k % 3 - 1) * 400, y = 525 + Math.floor(k / 3) * 195, ts = t0 + .4 + k * dk;
+    akteur(id, { x: x - 260, y: y + 160, o: 0, s: .6 });
+    tw(id, ts, .15, { o: 1 }); tw(id, ts, .85, { x, y, s: 1 }, 'inout', { bogen: 50 }); cue(ts, 'whoosh');
+    akteur('mab' + k, { o: 0, s: 1.5, r: -3 }, true); tw('mab' + k, ts + .45, .04, { o: 1 }); tw('mab' + k, ts + .45, .2, { s: 1 }, 'out');
+    cue(ts + .45, 'plopp'); LAND.push([ts + .45, u]);
+    bump(u === 'mythos' ? 'standM' : 'standS', ts + .45, 1.08);
+  });
+  HOOKS.push(t => {
+    $('#zM').textContent = LAND.filter(([z, u]) => u === 'mythos' && t >= z).length;
+    $('#zS').textContent = LAND.filter(([z, u]) => u === 'stimmt' && t >= z).length;
+  });
+  const tE = LAND.at(-1)[0] + .4;
+  huepfen('standM', tE, 16); huepfen('standS', tE + .12, 16); cue(tE, 'erfolg'); akzent(tE, .04);
+}
+
+/* ---------- Abspann ---------- */
+const AB = Math.max(ENDE_SPRACHE, 0) + 2.6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

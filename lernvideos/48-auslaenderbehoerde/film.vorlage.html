@@ -932,63 +932,63 @@ pan2(SE(21) + .25, 5);
   const tBl = W('Foto', 24) - .05;
   akteur('blitz5', { x: X + 1600, y: 410, o: 0, s: .5 }); tw('blitz5', tBl, .08, { o: .95, s: 1.3 }, 'out'); tw('blitz5', tBl + .08, .35, { o: 0, s: 1.6 }, 'out'); cue(tBl, 'klick');
   // Aber es gilt immer die Liste deiner Behörde: Stempel „gilt“
-  const tG = W('gilt', 25) + .1;
+  const tG = W('gilt', 26) + .1;
   stempeln('stempel5', tG, X + 1382, 345);
   tw('abdruck5', tG, .05, { o: 1 }); tw('abdruck5', tG, .3, { s: 1, r: -4 }, 'out');
   wackeln('liste5', tG + .05, 3, 1.5); FROH.push(['priya5', tG, 999]); huepfen('priya5', tG + .1, 12);
-  bump('liste5', W('Behörde', 25), 1.03);
+  bump('liste5', W('Behörde', 26), 1.03);
   HUD.gut.push(tG);
   titelFarbe('tb6', W('Darin', 23), [W('Darin', 23), W('Darin', 23) + .08, W('Darin', 23) + .16, W('Darin', 23) + .24, W('Pass', 24)], { 0: 'gruen' });
-  textAus('tb6', SE(25) + .05);
+  textAus('tb6', SE(26) + .05);
 }
 
 /* ---------- 7 · Beim Termin: Fingerabdrücke, Gebühr, Karte wird bestellt ---------- */
-pan2(SE(25) + .2, 6);
+pan2(SE(26) + .2, 6);
 {
-  const X = S(6), T = SE(25) + .35;
+  const X = S(6), T = SE(26) + .35;
   akteur('bue6', { x: X + 1320, y: 540 });
   ein('schalter6', T, { x: X + 1240, y: 625 }, { y: 70 }, 'whoosh');
   pop('priya6', T + .2, { x: X + 1010, y: 315 });
   // Priya legt die Mappe ab
-  const tM = W('Termin', 26) - .1;
+  const tM = W('Termin', 27) - .1;
   ['mh6', 'mv6'].forEach(id => { akteur(id, { x: X + 1010, y: 330, o: 0, s: .4 }); tw(id, tM, .15, { o: 1 }); flug(id, tM, .7, X + 1095, 560, 90, { s: 1 }); });
   landen('mh6', tM + .7); landen('mv6', tM + .7); cue(tM, 'whoosh'); cue(tM + .7, 'tipp');
   // zwei Fingerabdrücke: Scanner, Scan-Linie, zwei Abdrücke leuchten nacheinander auf
-  ein('scan6', W('gibt', 26) - .3, { x: X + 1300, y: 560 }, { y: 40 });
-  ein('fp6', W('gibt', 26) - .3, { x: X + 1298, y: 565 }, { y: 40 });
-  const tF = W('Fingerabdrücke', 26) - .2;
+  ein('scan6', W('gibt', 27) - .3, { x: X + 1300, y: 560 }, { y: 40 });
+  ein('fp6', W('gibt', 27) - .3, { x: X + 1298, y: 565 }, { y: 40 });
+  const tF = W('Fingerabdrücke', 27) - .2;
   HOOKS.push(t => { const z = ZT(t);
     [['fp6a', tF + .2], ['fp6b', tF + .7]].forEach(([id, a]) => { const f = clamp((z - a) / .3); el(id).firstElementChild.style.opacity = (.25 + .75 * f).toFixed(3); });
     const p = clamp((z - tF) / 1.1), l = el('sl6');
     l.style.opacity = p > 0 && p < 1 ? .9 : 0; l.style.top = (4 + 38 * Math.abs(Math.sin(Math.PI * p * 1.5))).toFixed(1) + 'px'; });
   cue(tF, 'scan'); cue(tF + .2, 'ding'); cue(tF + .7, 'ding'); bump('fp6', tF + .2, 1.08); bump('fp6', tF + .7, 1.08);
   // zahlt eine Gebühr: Münze fällt in die Schale
-  ein('schale6', W('zahlt', 26) - .3, { x: X + 1630, y: 700 }, { y: 50 });
-  const tG = W('Gebühr', 26) - .25;
+  ein('schale6', W('zahlt', 27) - .3, { x: X + 1630, y: 700 }, { y: 50 });
+  const tG = W('Gebühr', 27) - .25;
   akteur('muenze6', { x: X + 1630, y: 360, o: 0, s: .8 });
   tw('muenze6', tG - .3, .2, { o: 1 }); tw('muenze6', tG, .4, { y: 668 }, 'in');
   for (let k = 0; k < 3; k++) tw('muenze6', tG + k * .13, .13, { sx: k % 2 ? 1 : .2 }, 'sinus');
   tw('muenze6', tG + .4, .1, { sx: 1 }, 'sinus');
   landen('schale6', tG + .4, .8); cue(tG + .4, 'muenze'); bump('schale6', tG + .42, 1.04);
   // Dann wird ihre Karte bestellt: Karte erscheint und fliegt in einem Bogen zur Druckerei
-  ein('druck6', W('Dann', 27) - .2, { x: X + 1610, y: 330 }, { y: -50 }, 'whoosh');
-  akteur('fort6', { x: X + 1610, y: 430, o: 0 }); tw('fort6', W('Dann', 27) - .1, .4, { o: 1 });
+  ein('druck6', W('Dann', 28) - .2, { x: X + 1610, y: 330 }, { y: -50 }, 'whoosh');
+  akteur('fort6', { x: X + 1610, y: 430, o: 0 }); tw('fort6', W('Dann', 28) - .1, .4, { o: 1 });
   akteur('fort6i', { sx: 0 }, true);
-  const tK = W('Karte', 27) - .1;
+  const tK = W('Karte', 28) - .1;
   pop('eat6', tK, { x: X + 1300, y: 330 }, 'pop');
-  const tBe = W('bestellt', 27);
+  const tBe = W('bestellt', 28);
   flug('eat6', tBe, .9, X + 1610, 300, 140, { s: .3, r: 3 }); tw('eat6', tBe + .75, .15, { o: 0 }); cue(tBe, 'whoosh');
   bump('druck6', tBe + .9, 1.08); cue(tBe + .9, 'klick');
-  tw('fort6i', tBe + 1, WE('Aufenthaltstitel', 27) - tBe - .8, { sx: 1 }, 'inout'); cue(tBe + 1, 'scan');
+  tw('fort6i', tBe + 1, WE('Aufenthaltstitel', 28) - tBe - .8, { sx: 1 }, 'inout'); cue(tBe + 1, 'scan');
   HUD.gut.push(tBe + .9); FROH.push(['priya6', tBe + .9, 999]);
   titelFarbe('tb7', tF, [tF, tF + .08, tF + .16, tG, tG + .08, tK, tK + .08, tBe], { 0: 'gruen' });
-  textAus('tb7', SE(27) + .05);
+  textAus('tb7', SE(28) + .05);
 }
 
 /* ---------- 8 · Ein paar Wochen später: PIN-Brief, Karte abholen, geschafft ---------- */
-pan2(SE(27) + .2, 7);
+pan2(SE(28) + .2, 7);
 {
-  const X = S(7), T = SE(27) + .35;
+  const X = S(7), T = SE(28) + .35;
   akteur('bue7', { x: X + 1320, y: 540 });
   const ZK = { x: X + 1360, y: 350 };
   pop('priya7', T, { x: X + 1060, y: 380 });
@@ -996,26 +996,26 @@ pan2(SE(27) + .2, 7);
   // Ein paar Wochen später: Kalenderblätter fliegen
   kalender('kal7', ['1', '2', '3', '4', '5'], 'Woche');
   ein('kal7', T + .1, { x: X + 1640, y: 330 }, { y: -60 }, 'whoosh');
-  blaetter('kal7', [0, 1, 2, 3].map(k => lerp(W('paar', 28), WE('später', 28), k / 3)));
+  blaetter('kal7', [0, 1, 2, 3].map(k => lerp(W('paar', 29), WE('später', 29), k / 3)));
   // Briefkasten klappert, ein Brief mit ihrer PIN kommt
-  ein('bk7', W('kommt', 28) - .4, { x: X + 1640, y: 660 }, { y: 60 });
-  wackeln('bk7', W('kommt', 28), 4, 4); cue(W('kommt', 28), 'klick'); cue(W('kommt', 28) + .2, 'klick');
-  const tPi = W('Pinn', 28) - .25;
+  ein('bk7', W('kommt', 29) - .4, { x: X + 1640, y: 660 }, { y: 60 });
+  wackeln('bk7', W('kommt', 29), 4, 4); cue(W('kommt', 29), 'klick'); cue(W('kommt', 29) + .2, 'klick');
+  const tPi = W('Pinn', 29) - .25;
   akteur('pin7', { x: X + 1640, y: 610, o: 0, s: .3 });
   tw('pin7', tPi - .1, .15, { o: 1 }); flug('pin7', tPi - .1, .7, X + 1420, 590, 100, { s: 1, r: -2 }); cue(tPi - .1, 'whoosh'); landen('pin7', tPi + .6);
   // Mit diesem Brief und ihrem Pass: beide gehen zum Schalter, die Karte gleitet heraus und dreht sich
-  aus(['kal7'], W('Mit', 29) - .2, .3);
-  pop('pass7', W('Pass', 29) - .1, { x: X + 1180, y: 600, r: 2 }, 'pop');
-  const tH = W('holt', 29) - .2;
+  aus(['kal7'], W('Mit', 30) - .2, .3);
+  pop('pass7', W('Pass', 30) - .1, { x: X + 1180, y: 600, r: 2 }, 'pop');
+  const tH = W('holt', 30) - .2;
   ein('schalter7', tH - .3, { x: X + 1300, y: 720 }, { y: 60 }, 'whoosh');
   flug('pin7', tH, .6, X + 1420, 680, 50, { s: .55 }); flug('pass7', tH + .05, .6, X + 1180, 682, 50, { s: .6 });
   tw(['pin7', 'pass7'], tH + .55, .2, { o: 0 });
-  const tKa = W('Karte', 29) - .2;
+  const tKa = W('Karte', 30) - .2;
   akteur('eat7', { x: X + 1300, y: 700, o: 0, s: .5 });
   tw('eat7', tKa, .2, { o: 1 }); tw('eat7', tKa, .6, { y: 560, s: .9 }, 'sanft'); cue(tKa, 'whoosh');
   for (let k = 0; k < 2; k++) { tw('eat7', tKa + .5 + k * .3, .15, { sx: -1 }, 'sinus'); tw('eat7', tKa + .65 + k * .3, .15, { sx: 1 }, 'sinus'); }
   // die gestrichelte Karte füllt sich, grüner Haken, die Sanduhr verschwindet
-  const tAb = WE('ab', 29) - .1;
+  const tAb = WE('ab', 30) - .1;
   flug('eat7', tAb - .4, .7, ZK.x, ZK.y, 80, { s: 1 }); cue(tAb - .4, 'whoosh'); landen('eat7', tAb + .3, .7);
   tw('ziel7', tAb + .25, .2, { o: 0 });
   pop('ok7', tAb + .4, { x: ZK.x + 108, y: ZK.y - 66 }, 'erfolg'); akzent(tAb + .4, .04);
@@ -1024,11 +1024,11 @@ pan2(SE(27) + .2, 7);
   HUD.gut.push(tAb + .4);
   aus(['schalter7', 'bk7'], tAb + .6, .35);
   // Geschafft, und ganz ohne Stress: Priya strahlt
-  FROH.push(['priya7', tAb + .4, 999]); huepfen('priya7', W('Geschafft', 30), 18); huepfen('priya7', W('Stress', 30), 10);
-  bump('eat7', W('Geschafft', 30) + .1, 1.06);
+  FROH.push(['priya7', tAb + .4, 999]); huepfen('priya7', W('Geschafft', 31), 18); huepfen('priya7', W('Stress', 31), 10);
+  bump('eat7', W('Geschafft', 31) + .1, 1.06);
   // Also: früh buchen, die Liste abarbeiten und Briefe sofort öffnen – drei Kacheln mit Haken
   const KX = [X + 1150, X + 1330, X + 1510], KY = 700;
-  const KT = [W('früh', 31), W('Liste', 31), W('Briefe', 31)], HT = [WE('buchen', 31), WE('abarbeiten', 31), WE('öffnen', 31)];
+  const KT = [W('früh', 32), W('Liste', 32), W('Briefe', 32)], HT = [WE('buchen', 32), WE('abarbeiten', 32), WE('öffnen', 32)];
   ['k7a', 'k7b', 'k7c'].forEach((id, k) => pop(id, KT[k] - .15, { x: KX[k], y: KY }, 'pop'));
   ['h7a', 'h7b', 'h7c'].forEach((id, k) => { pop(id, HT[k] - .15, { x: KX[k] + 52, y: KY - 52 }, 'ding'); bump(['k7a', 'k7b', 'k7c'][k], HT[k] - .1, 1.06); });
   titelFarbe('tb8', KT[0] - .1, [KT[0] - .1, KT[0], KT[0] + .08, KT[1], KT[1] + .08, KT[2], KT[2] + .08]);
