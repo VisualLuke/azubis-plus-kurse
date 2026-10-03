@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Arbeitsschutz und Schutzkleidung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+/* Bühne: ein Werkstatt-Fenster oben, darunter die Leiste mit Amirs Schutz-Ring und dem Text im Bild */
+#fenster{width:1760px;height:740px;border-radius:44px;overflow:hidden;background:linear-gradient(var(--b50),var(--b100) 64%);
+  box-shadow:0 18px 50px rgba(58,37,153,.14)}
+#boden{position:absolute;left:0;top:0;width:1760px;height:740px}
+#toenung{width:1760px;height:740px}
+#raeume{position:absolute;left:0;top:0;width:1760px;height:740px;transform-origin:880px 380px}
+.raum{width:1760px;height:740px;transform-origin:880px 400px}
+.saeule{width:150px;height:640px;border-radius:18px;background:linear-gradient(90deg,var(--b300),var(--b200) 40%,var(--b300));
+  box-shadow:0 10px 30px rgba(58,37,153,.18)}
+.saeule::before,.saeule::after{content:'';position:absolute;left:12px;right:12px;height:12px;border-radius:6px;background:var(--b400)}
+.saeule::before{top:180px} .saeule::after{top:400px}
+#rolltor{width:1760px;height:740px;background:repeating-linear-gradient(180deg,var(--b300) 0 6px,var(--b200) 6px 46px);
+  box-shadow:inset 0 -10px 0 var(--b600)}
+#rolltor::after{content:'';position:absolute;left:820px;bottom:20px;width:120px;height:22px;border-radius:11px;background:var(--b600)}
+#torkasten{width:1760px;height:44px;background:linear-gradient(var(--b600),var(--b500))}
+
+/* Leiste unten: Text im Bild */
+.block.leiste{left:380px;top:828px;width:1460px;height:220px}
+.leiste .titel{font:800 56px/66px Inter;letter-spacing:-.02em}
+.leiste .unter{font:500 38px/50px Inter;margin-top:8px;color:var(--n700)}
+#tb5 .unter{font:800 56px/66px Inter;letter-spacing:-.02em;color:var(--ink);margin-top:2px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+#amir{width:360px;height:360px}
+#amir .portrait{position:absolute;left:55px;top:55px;width:250px;height:250px;border-width:9px}
+#ring{position:absolute;left:0;top:0;width:360px;height:360px}
+.abzeichen{width:84px;height:84px;border-radius:999px;background:var(--surface);border:5px solid var(--success);
+  box-shadow:0 4px 12px rgba(22,19,37,.16);display:flex;align-items:center;justify-content:center}
+.abzeichen svg{width:64px;height:64px}
+
+/* Schilder als Wendetafeln */
+.tafel{border-radius:26px}
+.tafel .seite{position:absolute;inset:0;border-radius:26px;display:flex;align-items:center;justify-content:center}
+.tafel .rueck{background:linear-gradient(160deg,var(--n200),var(--n300));border:6px solid var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.12);
+  color:var(--surface);font:800 64px/1 Inter}
+.tafel .vorne{background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.tafel .vorne svg{width:84%;height:84%}
+.tafel.klein .rueck{font-size:34px;border-width:4px}
+
+/* Bauteile */
+.chip{display:flex;align-items:center;gap:12px;padding:10px 22px;border-radius:999px;font:800 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.chip .ok{width:32px;height:32px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.chip .ok svg{width:20px;height:20px}
+.chip i{width:18px;height:18px;border-radius:999px;flex:none}
+.plakette{width:60px;height:60px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.plakette.rot b{font:800 32px/1 Inter;color:var(--surface)}
+.frage{width:80px;height:80px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 48px/80px Inter;text-align:center;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:6px solid var(--success);opacity:0}
+.platz{width:164px;height:164px;border-radius:34px;border:5px dashed var(--b300);background:rgba(255,255,255,.55)}
+.platz .ok{position:absolute;right:-14px;top:-14px;width:46px;height:46px;border-radius:999px;background:var(--success);border:4px solid var(--surface);
+  display:flex;align-items:center;justify-content:center;transform:scale(0)}
+.platz .ok svg{width:24px}
+.kopf{padding:14px 30px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 34px/40px Inter;white-space:pre;
+  box-shadow:0 8px 22px rgba(90,63,230,.3)}
+#kopfPSA{display:flex;gap:6px;padding:10px 36px;font:800 60px/66px Inter;letter-spacing:.02em}
+#kopfPSA span{display:inline-block}
+.preis{width:150px;height:96px;border-radius:14px 26px 26px 14px;background:var(--surface);border:5px solid var(--warning);
+  display:flex;align-items:center;justify-content:center;font:800 44px/1 Inter;color:var(--ink);box-shadow:0 8px 20px rgba(22,19,37,.14)}
+.preis::before{content:'';position:absolute;left:14px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:999px;background:var(--b200)}
+.blase{padding:18px 26px;border-radius:30px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.16);display:flex;align-items:center;gap:10px}
+.blase svg{width:54px;height:54px}
+.blase b{font:800 46px/1 Inter;color:var(--b500)}
+.blase.gruen{background:var(--success)} .blase.gruen b{color:var(--surface)}
+.loch{width:34px;height:34px;border-radius:999px;background:var(--error);border:4px solid var(--surface);box-shadow:0 0 0 6px rgba(226,85,106,.35)}
+.korn{width:12px;height:12px;border-radius:999px;background:var(--n300)}
+.zacke{width:40px;height:50px}
+.zeile{position:absolute;display:flex;align-items:center;gap:12px}
+.zeile .ic{width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none}
+.zeile .ic svg{width:28px;height:28px}
+.zeile u{display:block;height:10px;border-radius:5px;background:var(--b200);transform-origin:0 50%}
+#brettKopf{position:absolute;left:115px;top:96px;width:184px;text-align:center;font:800 25px/30px Inter;color:var(--b700)}
+#kalKopf{position:absolute;left:0;top:64px;width:260px;text-align:center;font:800 22px/26px Inter;color:var(--surface)}
+#kalZelle{position:absolute;left:68px;top:110px;width:26px;height:23px;border-radius:5px;background:var(--success);opacity:0}
+
+#abspann{position:absolute;inset:0;background:repeating-linear-gradient(180deg,var(--b500) 0 74px,var(--b600) 74px 80px);transform:translateY(-1100px)}
+#abspann .ende .gross{font:800 112px/122px Inter}
+#abspann .ende .klein{max-width:1300px;text-align:center}
+</style></head><body>
+
+<template id="f-sabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne" id="fenster">
+    <svg id="boden" viewBox="0 0 1760 740">
+      <defs><linearGradient id="bodenVerlauf" x2="0" y2="1"><stop offset="0" stop-color="var(--b100)"/><stop offset="1" stop-color="var(--b200)"/></linearGradient>
+        <clipPath id="bodenClip"><rect x="0" y="480" width="1760" height="260"/></clipPath></defs>
+      <rect x="0" y="480" width="1760" height="260" fill="url(#bodenVerlauf)"/>
+      <rect x="0" y="476" width="1760" height="6" fill="var(--b200)"/>
+      <g clip-path="url(#bodenClip)" stroke="var(--b50)" stroke-width="3" opacity=".7">
+        <path d="M880 330L-700 740M880 330L-120 740M880 330L380 740M880 330L1380 740M880 330L1880 740M880 330L2460 740"/></g>
+      <g clip-path="url(#bodenClip)" stroke="var(--warning)" stroke-width="10" opacity=".85" fill="none">
+        <path d="M768 480L470 740M992 480L1290 740"/></g>
+      <path id="mittelstreifen" d="M880 484V740" stroke="var(--surface)" stroke-width="8" stroke-dasharray="22 26" opacity=".8"/>
+    </svg>
+    <div class="a" id="toenung" data-frei></div>
+    <div class="a saeule" id="saeuleL" data-frei></div>
+    <div class="a saeule" id="saeuleR" data-frei></div>
+    <div id="raeume">
+
+    <!-- 1 · Halle -->
+    <div class="a raum" id="r1" data-frei>
+      <div class="a" id="hebe" data-gruppe="lift" style="width:440px">{{hebebuehne}}</div>
+      <div class="a" id="auto1" data-gruppe="lift" style="width:300px">{{auto}}</div>
+      <div class="a" id="arm1" data-gruppe="lift" style="width:440px">{{hebebuehne-arm}}</div>
+      <div class="a" id="bank1" data-gruppe="bank" style="width:420px">{{werkbank}}</div>
+      <div class="a" id="bohr1" data-gruppe="bank" style="width:140px">{{bohrmaschine}}</div>
+      <div class="a" id="schl1" data-gruppe="bank" style="width:150px">{{schraubenschluessel}}</div>
+      <div class="a tafel klein" id="g1a" style="width:104px;height:104px"><div class="seite rueck">?</div></div>
+      <div class="a tafel klein" id="g1b" style="width:104px;height:104px"><div class="seite rueck">?</div></div>
+      <div class="a tafel klein" id="g1c" style="width:104px;height:104px"><div class="seite rueck">?</div></div>
+      <div class="a tafel klein" id="g1d" style="width:104px;height:104px"><div class="seite rueck">?</div></div>
+      <div class="a frage" id="q1">?</div>
+    </div>
+
+    <!-- 2 · Unterweisung -->
+    <div class="a raum" id="r2" data-frei>
+      <div class="a portrait" id="sab2" data-f="sabine" style="width:220px;height:220px"></div>
+      <div class="a" id="brett" style="width:420px;height:420px">{{klemmbrett}}
+        <div id="brettKopf">Unterweisung</div>
+        <div class="zeile" id="z2a" style="left:140px;top:150px"><span class="ic" style="background:var(--warning)"><svg viewBox="0 0 28 28"><path d="M16 3L7 16h6l-2 9 10-14h-6l3-8Z" fill="var(--surface)"/></svg></span><u style="width:96px"></u></div>
+        <div class="zeile" id="z2b" style="left:140px;top:214px"><span class="ic" style="background:var(--warning)"><svg viewBox="0 0 28 28"><path d="M14 4l2 3 3.4-.9.6 3.5 3.4 1-1.5 3.2L24 16l-3 2 .4 3.5-3.5-.2L16 24.5 14 22l-2 2.5-1.9-3.2-3.5.2.4-3.5-3-2 2.1-2.2-1.5-3.2 3.4-1 .6-3.5 3.4.9Z" fill="var(--surface)"/><circle cx="14" cy="14.5" r="4" fill="var(--warning)"/></svg></span><u style="width:110px"></u></div>
+        <div class="zeile" id="z2c" style="left:140px;top:278px"><span class="ic" style="background:var(--success)"><svg viewBox="0 0 28 28"><path d="M5 19c0-8 4-12 9-12s9 4 9 12Z" fill="var(--surface)"/><rect x="3" y="18" width="22" height="4" rx="2" fill="var(--surface)"/></svg></span><u style="width:88px"></u></div>
+      </div>
+      <div class="a" id="kal" style="width:260px;height:260px">{{kalender}}<div id="kalKopf">Jahr 1</div><div id="kalZelle"></div></div>
+      <svg class="a" id="wieder" viewBox="0 0 340 340" style="width:340px;height:340px" data-frei>
+        <defs><marker id="spitzeW" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.4" markerHeight="3.4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b500)"/></marker></defs>
+        <path id="wiederPfad" pathLength="1" d="M300 170A130 130 0 1 1 252 69" stroke="var(--b500)" stroke-width="9" stroke-linecap="round" fill="none" marker-end="url(#spitzeW)"/></svg>
+      <div class="a" id="uhr2" data-gruppe="uhr" style="width:220px">{{uhr}}</div>
+      <div class="a" id="std2" data-gruppe="uhr" data-dreht style="width:220px;transform-origin:50% 47.5%">{{uhr-stunde}}</div>
+      <div class="a" id="zgr2" data-gruppe="uhr" data-dreht style="width:220px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
+      <div class="a chip" id="chipZeit">Arbeitszeit<span class="ok" id="okZeit"></span></div>
+    </div>
+
+    <!-- 3/4 · Spind und Ausrüstungs-Menü -->
+    <div class="a raum" id="r3" data-frei>
+      <div class="a" id="spind" data-gruppe="spind" style="width:360px">{{spind}}</div>
+      <div class="a" id="spindTuer" data-gruppe="spind" data-dreht style="width:360px;transform-origin:25% 50%">{{spind-tuer}}</div>
+      <svg class="a" id="linien3" viewBox="0 0 1760 740" style="width:1760px;height:740px" data-frei>
+        <g stroke="var(--b300)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12" fill="none">
+          <path pathLength="1" d="M710 290L768 318"/><path pathLength="1" d="M1090 290L1032 318"/>
+          <path pathLength="1" d="M710 520L768 492"/><path pathLength="1" d="M1090 520L1032 492"/></g></svg>
+      <svg class="a" id="rahmen3" viewBox="0 0 1760 740" style="width:1760px;height:740px" data-frei>
+        <rect class="zeichnen" pathLength="1" x="500" y="152" width="800" height="508" rx="40" stroke="var(--b500)" stroke-width="6" fill="none"/></svg>
+      <div class="a platz" id="pTL"><span class="ok" id="okTL"></span></div>
+      <div class="a platz" id="pTR"><span class="ok" id="okTR"></span></div>
+      <div class="a platz" id="pBL"><span class="ok" id="okBL"></span></div>
+      <div class="a platz" id="pBR"><span class="ok" id="okBR"></span></div>
+      <div class="a kopf" id="kopfLang"></div>
+      <div class="a kopf" id="kopfPSA"><span id="kP">P</span><span id="kS">S</span><span id="kA">A</span></div>
+      <div class="a" id="betrieb3" style="width:210px">{{betrieb}}</div>
+      <div class="a preis" id="preis3">0 €</div>
+      <div class="a" id="geld3" data-gruppe="geld" style="width:190px">{{portemonnaie-vorne}}</div>
+      <div class="a plakette gruen" id="okGeld" data-gruppe="geld"></div>
+      <div class="a" id="hand4" style="width:260px">{{handschuh}}</div>
+      <div class="a loch" id="loch4" data-frei></div>
+      <div class="a" id="lupe4" style="width:170px" data-frei>{{lupe}}</div>
+      <div class="a portrait" id="sab4" data-f="sabine" style="width:210px;height:210px"></div>
+      <div class="a" id="handNeu" style="width:200px">{{handschuh~neu}}</div>
+      <div class="a plakette gruen" id="okHand" data-frei></div>
+    </div>
+
+    <!-- 5 · Schilderwand -->
+    <div class="a raum" id="r5" data-frei>
+      <div class="a tafel" id="t5a" data-dreht style="width:230px;height:230px"><div class="seite rueck">?</div><div class="seite vorne">{{zeichen-verbot}}</div></div>
+      <div class="a tafel" id="t5b" data-dreht style="width:230px;height:230px"><div class="seite rueck">?</div><div class="seite vorne">{{zeichen-warnung}}</div></div>
+      <div class="a tafel" id="t5c" data-dreht style="width:230px;height:230px"><div class="seite rueck">?</div><div class="seite vorne">{{zeichen-gebot}}</div></div>
+      <div class="a tafel" id="t5d" data-dreht style="width:230px;height:230px"><div class="seite rueck">?</div><div class="seite vorne">{{zeichen-rettung}}</div></div>
+      <div class="a chip" id="c5a"><i style="background:var(--error)"></i>Verbot</div>
+      <div class="a chip" id="c5b"><i style="background:var(--warning)"></i>Warnung</div>
+      <div class="a chip" id="c5c"><i style="background:var(--info)"></i>Gebot</div>
+      <div class="a chip" id="c5d"><i style="background:var(--success)"></i>Rettung</div>
+      <div class="a" id="loescher5" style="width:170px">{{feuerloescher}}</div>
+      <div class="a" id="hand5" style="width:160px">{{handschuh~fuenf}}</div>
+      <div class="a" id="ausgang5" style="width:190px">{{schild-ausgang~fuenf}}</div>
+    </div>
+
+    <!-- 6 · Fluchtweg -->
+    <div class="a raum" id="r6" data-frei>
+      <svg class="a" id="weg6" viewBox="0 0 1760 740" style="width:1760px;height:740px" data-frei>
+        <path id="wegFlaeche" d="M846 482H914L1010 728H750Z" fill="var(--success)"/>
+        <path id="wegRot" d="M838 540H922L962 640H798Z" fill="var(--error)" opacity="0"/>
+        <g id="pfeile6" fill="none" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M-30 14L0 0L30 14"/><path d="M-30 14L0 0L30 14"/><path d="M-30 14L0 0L30 14"/><path d="M-30 14L0 0L30 14"/></g></svg>
+      <div class="a" id="tuer6" data-gruppe="tuer" style="width:300px">{{tuer-rahmen}}</div>
+      <div class="a" id="blatt6" data-gruppe="tuer" data-dreht style="width:300px;transform-origin:22.5% 50%">{{tuer-blatt}}</div>
+      <div class="a" id="ausgang6" style="width:220px">{{schild-ausgang}}</div>
+      <div class="a" id="hw6" data-frei style="width:280px;height:280px"><div style="position:absolute;left:0;top:0;width:280px">{{hubwagen}}</div>
+        <div style="position:absolute;left:70px;top:58px;width:170px">{{karton}}</div></div>
+      <div class="a plakette rot" id="nein6" data-frei><b>✕</b></div>
+      <div class="a" id="kasten6" style="width:190px;transform-origin:50% 17.5%">{{erste-hilfe-kasten}}</div>
+      <div class="a" id="lupe6" style="width:170px" data-frei>{{lupe~sechs}}</div>
+      <div class="a plakette gruen" id="ok6"></div>
+      <div class="a welle" id="welle6" data-frei></div>
+    </div>
+
+    <!-- 7 · Mängel -->
+    <div class="a raum" id="r7" data-frei>
+      <div class="a" id="kabel7" style="width:440px">{{kabel-kaputt}}</div>
+      <svg class="a zacke" id="zk1" viewBox="0 0 40 50" data-frei><path d="M24 2L8 26h12l-6 22 20-30H22l8-16Z" fill="var(--warning)"/></svg>
+      <svg class="a zacke" id="zk2" viewBox="0 0 40 50" data-frei><path d="M24 2L8 26h12l-6 22 20-30H22l8-16Z" fill="var(--warning)"/></svg>
+      <div class="a" id="oel7" style="width:380px">{{oelpfuetze}}</div>
+      <svg class="a" id="rutsch7" viewBox="0 0 1760 740" style="width:1760px;height:740px" data-frei>
+        <defs><marker id="spitzeR" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--error)"/></marker></defs>
+        <path class="zeichnen" pathLength="1" d="M1010 540C1080 500 1160 560 1230 520" stroke="var(--error)" stroke-width="8" stroke-linecap="round" fill="none" marker-end="url(#spitzeR)"/></svg>
+      <div class="a" id="warn7" style="width:190px">{{zeichen-achtung}}</div>
+      <div class="a portrait" id="sab7" data-f="sabine" style="width:210px;height:210px"></div>
+      <div class="a" id="kegel7a" style="width:170px">{{absperrkegel}}</div>
+      <div class="a" id="kegel7b" style="width:170px">{{absperrkegel~zwei}}</div>
+      <div class="a korn" id="k7_0" data-frei></div><div class="a korn" id="k7_1" data-frei></div><div class="a korn" id="k7_2" data-frei></div>
+      <div class="a korn" id="k7_3" data-frei></div><div class="a korn" id="k7_4" data-frei></div><div class="a korn" id="k7_5" data-frei></div>
+      <div class="a korn" id="k7_6" data-frei></div><div class="a korn" id="k7_7" data-frei></div><div class="a korn" id="k7_8" data-frei></div>
+      <div class="a korn" id="k7_9" data-frei></div>
+    </div>
+
+    <!-- 8 · Schluss -->
+    <div class="a raum" id="r8" data-frei>
+      <div class="a portrait" id="sab8" data-f="sabine" style="width:210px;height:210px"></div>
+      <div class="a frage" id="q8">?</div>
+      <div class="a" id="schatten8" style="width:220px;filter:grayscale(1);opacity:.55" data-frei>{{zeichen-achtung~grau}}</div>
+      <div class="a abzeichen" id="a8_0" style="width:112px;height:112px"><div style="width:82px">{{klemmbrett~acht}}</div></div>
+      <div class="a abzeichen" id="a8_1" style="width:112px;height:112px"><div style="width:82px">{{schutzbrille-gross~acht}}</div></div>
+      <div class="a abzeichen" id="a8_2" style="width:112px;height:112px"><svg viewBox="0 0 64 64"><circle cx="22" cy="22" r="10" fill="var(--error)"/><circle cx="42" cy="22" r="10" fill="var(--warning)"/><circle cx="22" cy="42" r="10" fill="var(--info)"/><circle cx="42" cy="42" r="10" fill="var(--success)"/></svg></div>
+      <div class="a abzeichen" id="a8_3" style="width:112px;height:112px"><div style="width:90px">{{schild-ausgang~acht}}</div></div>
+      <div class="a abzeichen" id="a8_4" style="width:112px;height:112px"><div style="width:80px">{{zeichen-achtung~acht}}</div></div>
+    </div>
+    </div>
+    <div class="a" id="rolltor" data-frei></div>
+    <div class="a" id="torkasten" data-frei></div>
+  </div>
+
+  <!-- Amir mit Schutz-Ring (wandert zwischen Bühne und Leiste) -->
+  <div class="a" id="amir">
+    <svg id="ring" viewBox="0 0 360 360">
+      <defs><mask id="ringMaske" maskUnits="userSpaceOnUse" x="0" y="0" width="360" height="360">
+        <circle id="ringZeichner" pathLength="1" cx="180" cy="180" r="165" stroke="var(--surface)" stroke-width="34" fill="none" transform="rotate(-90 180 180)"/></mask></defs>
+      <circle cx="180" cy="180" r="165" stroke="var(--b300)" stroke-width="10" stroke-dasharray="3 13" stroke-linecap="round" fill="none" mask="url(#ringMaske)"/>
+      <g id="segmente" stroke="var(--success)" stroke-width="18" stroke-linecap="round" fill="none"></g>
+    </svg>
+    <div class="portrait" id="amirP"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+      <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div>
+      <div class="ebene" id="ebGehoer">{{gehoerschutz-ebene}}</div><div class="ebene" id="ebBrille">{{schutzbrille}}</div></div></div>
+    <div class="a abzeichen" id="abzH" data-frei><div style="width:70px">{{handschuh~abz}}</div></div>
+    <div class="a abzeichen" id="abzS" data-frei><div style="width:70px">{{sicherheitsschuhe~abz}}</div></div>
+  </div>
+
+  <!-- Ausrüstung: fliegt aus dem Spind in die Plätze und von dort an Amir (über ihm gezeichnet) -->
+  <div class="a" id="iBrille" style="width:150px">{{schutzbrille-gross}}</div>
+  <div class="a" id="iGehoer" style="width:150px">{{gehoerschutz}}</div>
+  <div class="a" id="iHand" style="width:150px">{{handschuh~item}}</div>
+  <div class="a" id="iSchuh" style="width:150px">{{sicherheitsschuhe}}</div>
+  <div class="a blase" id="blase7"><div style="width:58px">{{zeichen-achtung~blase}}</div><b>!</b></div>
+  <div class="a blase" id="blase8"><b>?</b></div>
+  <div class="a blase gruen" id="antwort8"><span style="width:44px;display:block" id="antwortHaken"></span></div>
+  <div class="a welle" id="welle8" data-frei></div>
+</div></div>
+
+<div class="block leiste" id="tb2"><div class="titel">Unterweisung</div><div class="unter">vor dem Start · mind. 1 × im Jahr</div></div>
+<div class="block leiste" id="tb3"><div class="titel">PSA</div><div class="unter">vom Betrieb, kostenlos</div></div>
+<div class="block leiste" id="tb4"><div class="titel">Benutzen · prüfen · Kaputtes melden</div></div>
+<div class="block leiste" id="tb5"><div class="titel">Rot Verbot · Gelb Warnung</div><div class="unter">Blau Gebot · Grün Rettung</div></div>
+<div class="block leiste" id="tb6"><div class="titel">Fluchtwege frei</div><div class="unter">Erste Hilfe: wo?</div></div>
+<div class="block leiste" id="tb7"><div class="titel">Mängel sofort melden</div></div>
+<div class="block leiste" id="tb8"><div class="titel">Im Zweifel: fragen</div></div>
+
+<div id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Sicher arbeiten.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Schutzausrüstung tragen, Mängel melden – und im Zweifel fragen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['okZeit', 'okTL', 'okTR', 'okBL', 'okBR', 'okGeld', 'okHand', 'ok6', 'antwortHaken'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+
+// Fenster (Bühne) und Leiste: Weltkoordinaten; Inhalte der Räume in Fensterkoordinaten (FX/FY addieren für die Welt)
+const FX = 80, FY = 60;
+akteur('fenster', { x: FX, y: FY }, true);
+const stelle = (id, x, y, extra = {}) => akteur(id, { x, y, ...extra });
+
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const weg = (ids, t, d = .3) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .6 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Wendetafel: dreht um die senkrechte Achse, in der Mitte wechselt die Seite
+const WENDEN = [];
+const wenden = (id, t) => {
+  tw(id, t, .2, { sx: 0 }, 'in'); tw(id, t + .2, .45, { sx: 1 }, 'sanft'); cue(t + .2, 'klick');
+  WENDEN.push([el(id), t + .2]);
+};
+HOOKS.push(t => WENDEN.forEach(([e, tm]) => { const v = t >= tm; e.querySelector('.vorne').style.visibility = v ? 'visible' : 'hidden'; e.querySelector('.rueck').style.visibility = v ? 'hidden' : 'visible'; }));
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+const NICKEN = [];      // [portrait, t]: deutliches Nicken (Zuhören)
+const nicken = (id, t) => NICKEN.push([el(id).classList.contains('portrait') ? el(id) : el(id).querySelector('.portrait'), t]);
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  let nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  for (const [q, tn] of NICKEN) if (q === p) { const d = (t - tn) / .55; if (d > 0 && d < 1) nick += 7 * Math.sin(Math.PI * d); }
+  p.querySelector('.figur').style.transform = `rotate(${(nick * .4).toFixed(2)}deg) translateY(${nick.toFixed(2)}px)`;
+}));
+
+/* ---------- Schutz-Ring: fünf Segmente ---------- */
+const SEG = [], SEGZ = [[], [], [], [], []];
+{
+  const g = el('segmente'), R = 165, C = 180;
+  const P = a => [C + R * Math.cos(a * Math.PI / 180), C + R * Math.sin(a * Math.PI / 180)].map(v => v.toFixed(2)).join(' ');
+  for (let k = 0; k < 5; k++) {
+    const a0 = -90 + 72 * k + 5, a1 = -90 + 72 * (k + 1) - 5;
+    g.insertAdjacentHTML('beforeend', `<path pathLength="1" d="M${P(a0)}A${R} ${R} 0 0 1 ${P(a1)}"/>`);
+  }
+  SEG.push(...g.querySelectorAll('path'));
+}
+const segment = (k, t0, ziel, d = .7) => { SEGZ[k].push([t0, d, ziel]); cue(t0, 'ding'); };
+const ringZeichner = el('ringZeichner');
+let RING_T = 1e9;
+HOOKS.push(t => {
+  SEG.forEach((p, k) => {
+    let v = 0; for (const [t0, d, z] of SEGZ[k]) if (t > t0) v = lerp(v, z, E.inout(clamp((t - t0) / d)));
+    p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - v; p.style.opacity = v > .002 ? 1 : 0;
+  });
+  ringZeichner.style.strokeDasharray = '1 1'; ringZeichner.style.strokeDashoffset = 1 - E.inout(clamp((t - RING_T) / .9));
+});
+
+/* ---------- Kamera: Ego-Fahrt durch die Werkstatt ---------- */
+const FAHRTEN = [], AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+const RAEUME = ['r1', 'r2', 'r3', 'r5', 'r6', 'r7', 'r8'];
+RAEUME.forEach(r => akteur(r, { x: 0, y: 0, o: r === 'r1' ? 1 : 0 }, true));
+akteur('saeuleL', { x: 700, y: 390, o: 0, s: .25 }); akteur('saeuleR', { x: 1060, y: 390, o: 0, s: .25 });
+// vorwärts: der alte Raum gleitet an der Kamera vorbei, der neue kommt aus der Tiefe; rückwärts umgekehrt
+function fahrt(t, von, nach, rueck = false) {
+  if (!rueck) {
+    tw(von, t, .95, { s: 2.3 }, 'in'); tw(von, t + .1, .55, { o: 0 }, 'lin');
+    set(nach, t, { s: .42, o: 0 }); tw(nach, t + .32, .4, { o: 1 }, 'out'); tw(nach, t + .32, 1.05, { s: 1 }, 'out');
+    // Regalsäulen am Gangrand ziehen vorbei
+    [['saeuleL', 700, -260], ['saeuleR', 1060, 2020]].forEach(([id, x0, x1]) => {
+      set(id, t, { x: x0, y: 390, s: .25, o: 0 }); tw(id, t, .15, { o: 1 }); tw(id, t, 1.0, { x: x1, s: 1.6, y: 420 }, 'in');
+    });
+  } else {
+    tw(von, t, .9, { s: .42 }, 'in'); tw(von, t, .55, { o: 0 }, 'lin');
+    set(nach, t, { s: 2.3, o: 0 }); tw(nach, t + .3, .45, { o: 1 }, 'out'); tw(nach, t + .3, 1.05, { s: 1 }, 'out');
+    [['saeuleL', -260, 700], ['saeuleR', 2020, 1060]].forEach(([id, x0, x1]) => {
+      set(id, t, { x: x0, y: 420, s: 1.6, o: 1 }); tw(id, t, 1.0, { x: x1, s: .25, y: 390 }, 'out'); tw(id, t + .7, .3, { o: 0 });
+    });
+  }
+  FAHRTEN.push([t, rueck ? -1 : 1]); cue(t, 'whoosh');
+}
+const mittel = el('mittelstreifen'), raeume = el('raeume');
+HOOKS.push(t => {
+  // Mittelstreifen fließt während der Fahrt auf die Kamera zu
+  let off = 0; for (const [t0, r] of FAHRTEN) off -= r * 260 * E.inout(clamp((t - t0) / 1.3));
+  mittel.style.strokeDashoffset = off.toFixed(1);
+  // Unschärfe beim Vorbeigleiten
+  RAEUME.forEach(r => { const s = wert(AKTEURE.get(el(r)), 's', t); const b = Math.min(8, Math.abs(s - 1) * 6); el(r).style.filter = b > .3 ? `blur(${b.toFixed(1)}px)` : ''; });
+  let z = 1;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .01 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  raeume.style.transform = `scale(${z.toFixed(4)})`;
+  // Amir zoomt mit, wenn er auf der Bühne steht (in der Leiste nicht)
+  const am = el('amir'), s = wert(AKTEURE.get(am), 's', t), w = clamp((s - .58) / .2), za = 1 + (z - 1) * w;
+  if (Math.abs(za - 1) > 1e-4) am.style.transform = `translate(${FX + 880}px,${FY + 380}px) scale(${za.toFixed(4)}) translate(${-FX - 880}px,${-FY - 380}px) ` + am.style.transform;
+});
+
+/* ---------- Amir ---------- */
+const HUD = { x: 215, y: 938, s: .56 };
+akteur('amir', { x: -260, y: 640, s: .78 });
+akteur('ebBrille', { o: 0, s: 1.4 }, true); akteur('ebGehoer', { o: 0, s: 1.2 }, true);
+el('ebBrille').style.transformOrigin = '50% 45%'; el('ebGehoer').style.transformOrigin = '50% 45%';
+akteur('abzH', { x: 63, y: 297, s: 0 }); akteur('abzS', { x: 297, y: 297, s: 0 });
+const zurLeiste = t => { tw('amir', t, .9, { x: HUD.x, y: HUD.y, s: HUD.s }, 'inout', { bogen: 60 }); cue(t, 'whoosh'); landen('amir', t + .9, .5); };
+const aufBuehne = (t, lx, ly) => { tw('amir', t, .9, { x: FX + lx, y: FY + ly, s: 1 }, 'inout', { bogen: 90 }); cue(t, 'whoosh'); landen('amir', t + .9, .5); };
+
+/* ================= 1 · Erster Tag in der Werkstatt (mittig, ohne Titel) ================= */
+akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, true);
+{
+  // Amir hüpft vor das geschlossene Tor
+  const tA = W('Amirs', 1) - .3;
+  tw('amir', tA, .85, { x: FX + 880, y: FY + 485 }, 'inout', { bogen: 170 }); cue(tA, 'whoosh');
+  landen('amir', tA + .85, .8); cue(tA + .85, 'plopp'); froh('amirP', tA + .9);
+  huepfen('amir', W('erster', 1), 14);
+  // Rolltor fährt hoch
+  const tT = W('Werkstatt', 1) - .45;
+  tw('rolltor', tT, 1.15, { y: -760 }, 'inout'); cue(tT, 'scan'); akzent(tT + .7, .03);
+  // Halle: Hebebühne mit Auto, Werkbank
+  stelle('hebe', 360, 440); stelle('auto1', 360, 510); stelle('arm1', 360, 600);
+  stelle('bank1', 1400, 505); stelle('bohr1', 1290, 410); stelle('schl1', 1520, 446);
+  // Maschinen: die Hebebühne hebt das Auto, die Bohrmaschine surrt
+  const tM = W('Maschinen', 2) - .15;
+  tw(['auto1', 'arm1'], tM, 1.0, { y: '+' }, 'lin');      // Platzhalter, unten ersetzt
+}
+</script>
+</body></html>

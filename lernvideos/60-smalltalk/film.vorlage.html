@@ -233,7 +233,7 @@ html,body{background:var(--b200)}
   <div class="a frage" id="frage1">?</div>
   <div class="a blase" id="gut3"><i class="pkt" style="left:54px"></i></div>
   <div class="a blase rechts" id="denk3" style="width:200px"><i class="pkt" style="left:46px"></i><i class="pkt" style="left:89px"></i><i class="pkt" style="left:132px"></i></div>
-  <svg class="a stille" id="stille3" viewBox="0 0 640 40" data-frei><path class="zeichnen" pathLength="1" d="M20 20H620" stroke="var(--n400)" stroke-width="10" stroke-linecap="round" stroke-dasharray=".035 .03" fill="none"/></svg>
+  <svg class="a stille" id="stille3" viewBox="0 0 640 40" data-frei><path d="M20 20H620" stroke="var(--n400)" stroke-width="10" stroke-linecap="round" stroke-dasharray="22 18" fill="none"/></svg>
   <div class="a ball" id="bGe"><div class="bs"></div><div class="bk"><div class="rund"></div><div class="ic" id="bGeIc"></div><div class="grau"></div></div></div>
   <div class="a privat" id="privat3"><svg class="sch" viewBox="0 0 170 150"><path d="M85 6l58 20v42c0 40-26 64-58 76-32-12-58-36-58-76V26Z" fill="var(--b500)"/><path d="M85 26l38 13v29c0 27-17 43-38 52Z" fill="var(--b400)"/>
     <rect x="64" y="66" width="42" height="34" rx="6" fill="var(--surface)"/><path d="M72 66v-8a13 13 0 0 1 26 0v8" stroke="var(--surface)" stroke-width="7" fill="none"/></svg><span class="etikett">privat</span></div>
@@ -331,10 +331,11 @@ const V = {
   uhr: [1050, 150, 1.1],         // Wand mit Uhr und Schild, Tür; unten die Tischkante
   sit: [1360, 880, .88],         // Kwame unten, der Geselle oben, rechts Platz für die Serviette
   tab: [3000, 860, 1.2],         // Tablett mit drei Tassen
-  ecke: [640, 660, 1.45],        // Tischecke mit den drei Tassen (Auflösung)
+  ecke: [580, 650, 1.6],         // Tischecke mit den drei Tassen (Auflösung)
+  uhr6: [1100, 190, 1.1],        // Wand und Tür am nächsten Tag, unten der Geselle am Tisch
   themen: [1690, 1000, .68],     // ganzer Platz mit Tischset und Boden
 };
-akteur(CAM, { x: 1000, y: 40, s: 1.75 }, true);
+akteur(CAM, { x: 820, y: 60, s: 1.55 }, true);
 const kam = (t, d, v, e = 'inout') => { tw(CAM, t, d, { x: v[0], y: v[1], s: v[2] }, e); cue(t, 'whoosh'); };
 const AKZ = [];
 const akzent = (t, z = .03) => AKZ.push([t, z]);
@@ -515,7 +516,7 @@ const TX = { A: 2700, B: 3000, C: 3300 }, TY = 790;
   tw('sA1', tGu - .1, .45, { s: 1 }, 'back'); cue(tGu, 'pop');
   tw('sA2', tWe - .15, .45, { s: 1 }, 'back'); cue(tWe, 'pop');
   tw('sA2l', tHa - .1, .3, { o: .95 }); bump('sA2', tHa, 1.1); cue(tHa, 'ding');
-  tw('sA1', tHa + .1, .45, { x: -30, s: .6, o: .3 }, 'inout');
+  tw('sA1', tHa + .1, .45, { x: -30, s: .6, o: .3 }, 'inout'); tw('sA2l', SA(8) - .2, .3, { o: 0 });
   heben('A', SA(8) - .45, 0, .45); cue(SA(8) - .1, 'klick');
   // B: Münzstapel mit Fragezeichen, der Stapel wackelt
   const tB = WN(8, 0), tVi = W('viel', 8), tVe = W('verdient', 8);
@@ -563,7 +564,7 @@ const P3 = SA(10) - .05;
   // Serviette mit dem Text im Bild rutscht herein
   const tGs = W('Gespräch', 12), tPr = W('privates', 13);
   ein('serv3', SA(11) - .2, { x: 2000, y: 1010, r: -2 }, { x: 160, r: 3 }, 'whoosh');
-  titelEin('tb3', tGs - .1, [tGs - .1, tGs, W('vorbei', 12), WN(13, 1), W('zu', 14) - 1.6 > tPr ? tPr : tPr, tPr + .08]);
+  titelEin('tb3', tGs - .1, [tGs - .1, tGs, W('vorbei', 12), W('vorbei', 12) + .08, WN(13, 1), tPr - .05, tPr + .03]);
   const ws3 = [...document.querySelectorAll('#tb3 .w')]; [0, 4].forEach(k => ws3[k].classList.add('rot'));
   // Kwame sagt nur „Gut“ (kleine Blase) und schaut wieder aufs Handy
   const tGu = W('Gut', 10), tSc = W('schaut', 10), tHa = W('Handy', 10);
@@ -585,12 +586,13 @@ const P3 = SA(10) - .05;
   // „… ist schnell vorbei“: der Ball wird grau und rollt vom Tisch auf den Boden; eine Wand aus Stille
   GRAU.bWo = [[0, 0], [tSn - .2, 1, .4]];
   wurf('bWo', tSn, .8, 1180, 1370, .35, 'in'); tw('bWo', tSn, .8, { s: .62, r: -3 }, 'in'); landen('bWo', tSn + .8); cue(tSn + .8, 'plopp');
-  akteur('stille3', { x: 1130, y: 860, r: 39, o: 1 });
-  tw('stille3', tVo - .1, .6, { draw: 1 }, 'out'); cue(tVo, 'klick'); akzent(tVo, .035);
+  el('stille3').style.transformOrigin = '0 50%';
+  akteur('stille3', { x: 1206, y: 664, r: 39, sx: 0 });
+  tw('stille3', tVo - .1, .7, { sx: 1 }, 'out'); cue(tVo, 'klick'); akzent(tVo, .035);
   // „Option Beh:“ – Tasse B fliegt vom Tablett herein und landet neben A, rotes ✕
   const tOB = SA(13), tBe = WN(13, 1);
   tw('handylicht', tOB - .4, .3, { o: 0 }); tw('stille3', tOB - .4, .3, { o: 0 });
-  akteur('tB', { x: TX.B + 15, y: TY + 4 }); set('tB', tOB - .9, { x: 2550, y: 520, s: .75 });
+  set('tB', tOB - .9, { x: 2750, y: 520, s: .75 });
   heben('B', tOB - .95, 1, .01);
   tw('tB', tOB - .85, .95, { x: ECK.B[0], y: ECK.B[1], s: .6 }, 'inout'); cue(tOB - .85, 'whoosh');
   heben('B', tOB - .2, .55, .3);
@@ -642,8 +644,6 @@ const P4 = SE(14) + .3;
   ein('serv4', tF + .6, { x: 2000, y: 1010, r: 2 }, { x: 160, r: -3 }, 'whoosh');
   titelEin('tb4', tGu, [tGu, tGu + .08, tGu + .16, tWo - .1, tWo - .02]);
   $('#tb4 .w').classList.add('gruen');
-  // Der Gesprächs-Ball liegt wieder vor Kwame
-  akteur('bW4', {});
-}
+/*REST*/
 </script>
 </body></html>
