@@ -38,6 +38,8 @@ Abspann: „Die richtigen Apps machen vieles leichter.“
   verschieden sind.
 - **Azubis Plus App:** nur Bereiche, die es als Components gibt (Lernen, Dokumente, Ankommen mit Aufgaben und Fristen);
   vor dem Freischalten prüfen, ob sie für Azubis schon live sind.
+- **Umsetzung im Bild (03.10.2026):** Kachel der Krankenkasse als Schild mit Herz statt Kreuz (kein Rotkreuz-ähnliches Zeichen);
+  Kachelfarben neutral (Token), nicht die Markenfarben der Apps. Bei „Lektionen wie dieser“ zeigt die Lektionskarte dieses Video im Kleinen.
 
 ## Sprechertext
 
