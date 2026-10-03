@@ -52,7 +52,7 @@ html,body{background:var(--b200)}
 .tuer .blatt::after{content:'';position:absolute;right:20px;top:160px;width:14px;height:40px;border-radius:7px;background:var(--b600)}
 
 /* Stühle von oben */
-.stuhl{width:300px;height:130px;border-radius:36px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 8px 16px rgba(22,19,37,.14)}
+.stuhl{width:300px;height:110px;border-radius:36px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 8px 16px rgba(22,19,37,.14)}
 .stuhl::after{content:'';position:absolute;left:14px;right:14px;height:30px;border-radius:15px;background:var(--b600)}
 .stuhl.unten::after{bottom:10px} .stuhl.oben::after{top:10px}
 
@@ -98,6 +98,8 @@ html,body{background:var(--b200)}
 .tasse .marke.rot{background:var(--error)} .tasse .marke.gruen{background:var(--success)}
 .untersetzer{width:240px;height:240px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 10px var(--b100),0 6px 14px rgba(22,19,37,.12)}
 .untersetzer > *{position:absolute}
+.untersetzer .blase{background:var(--b100);box-shadow:none}
+.untersetzer .blase .z{background:var(--b300)}
 .zaehler{width:160px;height:160px}
 .zaehler svg{position:absolute;inset:0;width:160px;height:160px}
 .zaehler b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 76px/1 Inter;color:var(--b600)}
@@ -134,7 +136,7 @@ html,body{background:var(--b200)}
 .plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
 
 /* Serviette mit Text im Bild */
-.serviette{width:640px;height:250px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
+.serviette{width:560px;height:250px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
 .serviette::before{content:'';position:absolute;inset:14px;border-radius:12px;border:3px dashed var(--b100)}
 .serviette::after{content:'';position:absolute;right:0;bottom:0;width:70px;height:70px;border-radius:0 0 22px 0;background:linear-gradient(135deg,var(--surface) 50%,var(--b100) 50%)}
 .serviette .wtext{left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
@@ -171,7 +173,8 @@ html,body{background:var(--b200)}
   <div class="ebene zu">{{figur-mund-zu~g}}</div><div class="ebene auf">{{figur-mund-auf~g}}</div><div class="ebene froh">{{figur-mund-froh~g}}</div></div></template>
 <template id="tKalender">{{kalender}}</template>
 <template id="tSonne">{{sonne}}</template>
-<template id="tTeller">{{teller-essen}}</template>
+<template id="tBesteck">{{besteck}}</template>
+<template id="tSchuh">{{laufschuh}}</template>
 <template id="tFussball">{{fussball}}</template>
 <template id="tGitarre">{{gitarre}}</template>
 <template id="tKoffer">{{koffer}}</template>
@@ -336,9 +339,9 @@ const V = {
   sit: [1270, 780, 1.0],         // Kwame unten, der Geselle oben, rechts Platz für die Serviette
   tab: [3580, 745, 1.33],        // Tablett mit drei Tassen (gehobene Tassen schweben über der Tablettkante)
   uhr6: [1100, 210, 1.1],        // Wand und Tür am nächsten Tag, unten der Geselle am Tisch
-  themen: [1490, 870, .86],      // ganzer Platz mit Tischset und Boden
+  themen: [1490, 870, .84],      // ganzer Platz mit Tischset und Boden
 };
-akteur(CAM, { x: 780, y: -30, s: 1.6 }, true);
+akteur(CAM, { x: 780, y: -45, s: 1.6 }, true);
 const kam = (t, d, v, e = 'inout') => { tw(CAM, t, d, { x: v[0], y: v[1], s: v[2] }, e); cue(t, 'whoosh'); };
 const AKZ = [];
 const akzent = (t, z = .03) => AKZ.push([t, z]);
@@ -469,7 +472,7 @@ const XK = 800, YK = 1090, XG = 1300, YG = 470;                   // Plätze von
   // Kamera: von der Wand hinunter zum Tisch
   kam(SA(2) - .5, 1.5, V.sit);
   // Kwame sitzt allein am Tisch
-  akteur('stuhlK', { x: XK, y: YK + 110 }); akteur('stuhlG', { x: XG, y: YG - 105 });
+  akteur('stuhlK', { x: XK, y: YK + 100 }); akteur('stuhlG', { x: XG, y: YG - 95 });
   akteur('kwame', { x: XK, y: YK });
   akteur('dose', { x: 540, y: 890, r: -2 }); rel('dosedeckel', {}, '50% 0');
   akteur('handy', { x: 1025, y: 930, r: 3 }); rel('handylicht', { o: 0 });
@@ -485,7 +488,7 @@ const XK = 800, YK = 1090, XG = 1300, YG = 470;                   // Plätze von
   akteur('geselle', { x: XG + 380, y: YG - 520, s: .8, o: 0 });
   tw('geselle', tGe - .25, .2, { o: 1 }); tw('geselle', tGe - .25, .9, { x: XG, y: YG, s: 1 }, 'inout', { bogen: -140 }); cue(tGe - .25, 'whoosh');
   landen('geselle', tGe + .65); cue(tGe + .65, 'plopp');
-  tw('stuhlG', tSe - .1, .5, { y: YG - 85 }, 'sanft'); cue(tSe - .1, 'klick'); tw('stuhlG', tSe + .4, .3, { y: YG - 105 }, 'sinus');
+  tw('stuhlG', tSe - .1, .5, { y: YG - 78 }, 'sanft'); cue(tSe - .1, 'klick'); tw('stuhlG', tSe + .4, .3, { y: YG - 95 }, 'sinus');
   // Becher rutscht heran, Dampf kringelt
   akteur('becher', { x: 1160, y: 500, o: 0, s: .8 });
   tw('becher', tIh - .1, .2, { o: 1 }); tw('becher', tIh - .1, .6, { x: 1060, y: 545, s: 1 }, 'sanft'); cue(tIh, 'whoosh');
@@ -561,7 +564,7 @@ const TX = { A: 3280, B: 3580, C: 3880 }, TY = 785;
 }
 
 /* ================= 3 · Option A und B am Tisch ================= */
-const ECK = [455, 600];          // Tischecke: hier landet die Tasse der Option, die gerade spielt
+const ECK = [480, 600];          // Tischecke: hier landet die Tasse der Option, die gerade spielt
 const KB = [800, 800], GB = [XG - 20, YG + 225];                     // Ball-Plätze vor Kwame und vor dem Gesellen
 const P3 = SA(10) - .05;
 // Tasse fliegt vom Tablett in die Tischecke (Kamera folgt) bzw. zurück aufs Tablett
@@ -576,7 +579,7 @@ const zurTablett = (L, t, d = 1.0) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY
   kam(tF, 1.05, V.sit);
   // Serviette mit dem Text im Bild rutscht herein
   const tGs = W('Gespräch', 12), tVo0 = W('vorbei', 12), tPr = W('privates', 13);
-  ein('serv3', tGs - .75, { x: 1860, y: 600, r: -2 }, { x: 160, r: 3 }, 'whoosh');
+  ein('serv3', tGs - .75, { x: 1830, y: 600, r: -2 }, { x: 160, r: 3 }, 'whoosh');
   titelEin('tb3', tGs - .1, [tGs - .1, tGs, tVo0, tVo0 + .08, WN(13, 1), tPr - .05, tPr + .03]);
   const ws3 = [...document.querySelectorAll('#tb3 .w')]; [0, 4].forEach(k => ws3[k].classList.add('rot'));
   // Kwame sagt nur „Gut“ (kleine Blase) und schaut wieder aufs Handy
@@ -599,7 +602,7 @@ const zurTablett = (L, t, d = 1.0) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY
   tw('dampf', tSn + .5, .4, { o: .85 });
   // „… ist schnell vorbei“: der Ball wird grau und rollt vom Tisch auf den Boden; eine Wand aus Stille
   GRAU.bWo = [[0, 0], [tSn - .2, 1, .4]];
-  wurf('bWo', tSn, .8, 1150, 1215, .35, 'in'); tw('bWo', tSn, .8, { s: .62, r: -3 }, 'in'); landen('bWo', tSn + .8); cue(tSn + .8, 'plopp');
+  wurf('bWo', tSn, .8, 1150, 1195, .35, 'in'); tw('bWo', tSn, .8, { s: .62, r: -3 }, 'in'); landen('bWo', tSn + .8); cue(tSn + .8, 'plopp');
   el('stille3').style.transformOrigin = '0 50%';
   akteur('stille3', { x: 1150, y: 604, r: 39, sx: 0 });
   tw('stille3', tVo - .1, .7, { sx: 1 }, 'out'); cue(tVo, 'klick'); akzent(tVo, .035);
@@ -617,10 +620,10 @@ const zurTablett = (L, t, d = 1.0) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY
   const tGh = W('Gehalt', 13), tTh = W('Thema', 13);
   pop('bGe', tGh - .25, { x: KB[0], y: KB[1] }, 'pop'); wackeln('bGe', tGh + .4, 4, 5); cue(tGh + .4, 'muenze');
   wurf('bGe', tPr - 1.0, .9, GB[0] - 30, GB[1] + 20, 1.1); cue(tPr - 1.0, 'whoosh');
-  pop('privat3', tPr - .15, { x: XG + 10, y: YG + 205 }, 'plopp');
+  pop('privat3', tPr - .65, { x: XG + 10, y: YG + 205 }, 'plopp');
   el('privat3').style.transformOrigin = '50% 40%';
   const tPa = tPr - .1;
-  wurf('bGe', tPa, .9, 1420, 1215, .5, 'in'); tw('bGe', tPa, .9, { s: .62, r: 3 }, 'in'); cue(tPa, 'klick'); bump('privat3', tPa, 1.15);
+  wurf('bGe', tPa, .9, 1420, 1195, .5, 'in'); tw('bGe', tPa, .9, { s: .62, r: 3 }, 'in'); cue(tPa, 'klick'); bump('privat3', tPa, 1.15);
   GRAU.bGe = [[0, 0], [tPa + .2, 1, .4]];
   landen('bGe', tPa + .9); cue(tPa + .9, 'plopp');
   aus('privat3', tTh + .5, .35);
@@ -631,7 +634,7 @@ const zurTablett = (L, t, d = 1.0) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY
   // „… die Stimmung wird komisch“: graue Wolke über dem Tisch
   el('wolke3').style.transformOrigin = '50% 60%';
   pop('wolke3', tSt - .1, { x: 1050, y: 760 }, 'plopp');
-  wackeln('wolke3', tKo, 4, 4); akzent(tKo, .03);
+  wackeln('wolke3', tKo, 4, 4); akzent(tKo, .02);
   rel('truebe', { o: 0 }); tw('truebe', tSt - .1, .8, { o: .13 }, 'inout'); tw('truebe', SE(14) + .4, .5, { o: 0 }, 'inout');
   HOOKS.push(t => { if (t > tKo) el('wolke3').style.transform += ` translateY(${(4 * Math.sin((t - tKo) * 2.4)).toFixed(1)}px)`; });
   aus('serv3', SE(14) + .15, .35);
@@ -655,7 +658,7 @@ const P4 = SE(14) + .3;
   kam(tF, 1.0, V.sit);
   // Serviette: „C: kurz antworten + Gegenfrage“
   const tGu = W('gut', 16), tWo = W('Wochenende', 18);
-  ein('serv4', tF + .6, { x: 1860, y: 600, r: 2 }, { x: 160, r: -3 }, 'whoosh');
+  ein('serv4', tF + .6, { x: 1830, y: 600, r: 2 }, { x: 160, r: -3 }, 'whoosh');
   titelEin('tb4', tGu, [tGu, tGu + .08, tGu + .16, tWo - .1, tWo - .02]);
   $('#tb4 .w').classList.add('gruen');
   // Der Gesprächs-Ball liegt wieder vor Kwame (zurückgesetzt, während die Kamera beim Tablett ist)
@@ -734,7 +737,7 @@ const P5 = SE(25) + .25;
   el('kopfGut').style.transformOrigin = '50% 50%';
   pop('kopfGut', tGt - .1, { x: 2100, y: 562 }, null);
   titelEin('tbGut', tGt);
-  const GUT = [['Wochenende', 'tKalender'], ['Wetter', 'tSonne'], ['Essen', 'tTeller'], ['Sport', 'tFussball'], ['Hobbys', 'tGitarre'], ['Urlaub', 'tKoffer']];
+  const GUT = [['Wochenende', 'tKalender'], ['Wetter', 'tSonne'], ['Essen', 'tBesteck'], ['Sport', 'tSchuh'], ['Hobbys', 'tGitarre'], ['Urlaub', 'tKoffer']];
   GUT.forEach(([w, ic], k) => {
     const id = 'g' + k, x = 1840 + (k % 3) * 260, y = 690 + Math.floor(k / 3) * 215, t = W(w, 26);
     ball(id, tpl(ic), w, false, 'gut');
@@ -756,9 +759,9 @@ const P5 = SE(25) + .25;
   NICHT.forEach(([w, ic], k) => {
     const id = 'n' + k, x = 1330 + k * 330, t = W(w, 27);
     ball(id, tpl(ic), w, true);
-    pop(id, t - .3, { x, y: 990 }, 'pop');
+    pop(id, t - .3, { x: 1260, y: 860 }, 'pop');
     wackeln(id, t + .05, 2, 5);
-    tw(id, t + .3, .5, { y: 1305, s: .85 }, 'in'); GRAU[id] = [[0, 0], [t + .35, 1, .4]];
+    tw(id, t + .3, .5, { x }, 'sinus'); tw(id, t + .3, .5, { y: 1305, s: .85 }, 'in'); GRAU[id] = [[0, 0], [t + .35, 1, .4]];
     landen(id, t + .8); cue(t + .8, 'plopp');
     akteur(id + 'L', { x, y: 1400, s: 0 }); tw(id + 'L', t + .85, .4, { s: 1 }, 'back');
   });
