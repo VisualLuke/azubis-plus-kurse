@@ -46,20 +46,8 @@ steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der Bildmitte 
 - Szene 5: Das Zögern „… Na gut.“ ist eine Pause von knapp einer Sekunde vor Herrn Brauns Satz (ein einzelnes „…“ lässt sich
   nicht sprechen); Wortlaut sonst unverändert.
 - Auto ohne Markenlogo.
-
-- Aussprache: Die Buchstaben der Optionen stehen im Sprechertext deutsch ausgeschrieben („Ah“, „Beh“, „Zeh“), sonst liest
-  das Modell sie englisch; „Option C:“ heißt gesprochen „Und Option Zeh:“ (kein Ein-Wort-Satz). Im Bild und im Untertitel
-  bleiben A, B, C (siehe „Schreibweise im Untertitel“).
-
-## Schreibweise im Untertitel
-
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
+- Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“,
+  das klang wie „Ahh“); im Bild steht ebenfalls „Antwort A/B/C“ bzw. der Buchstabe auf der Karte.
 
 ## Sprechertext
 
@@ -101,5 +89,3 @@ Erzählerin: Diese Sätze helfen bei Beschwerden: „Das tut mir leid.“ „Ich
 
 ### Szene 7
 Erzählerin: Die beste Wahl ist Antwort C. Der Kunde ist nicht wütend auf dich persönlich. Und Kunden sprichst du immer mit „Sie“ an.
-
-Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

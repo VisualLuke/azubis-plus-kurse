@@ -46,6 +46,8 @@ Stempel), damit das Format wiedererkennbar bleibt:
 - Szene 6b („Wichtig …“, Korrektur) hat keinen eigenen Text im Bild – das Briefing sieht keinen vor; die Bühne zeigt nur Beschriftungen
   aus dem Sprechertext („Wichtig!“, „mehr Zeit?“, „Widerspruch“, „kurz“, „später mehr“).
 - Sabine (Ausbilderin) erscheint in Szene 6 als stummes Porträt (Briefing: „Amir mit Sabine“); sie spricht nicht.
+- Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“,
+  das klang wie „Ahh“); im Bild steht ebenfalls „Antwort A/B/C“ bzw. der Buchstabe auf der Karte.
 
 ## Sprechertext
 
@@ -79,5 +81,3 @@ Erzähler: Antwort C: Amir übersetzt den Brief mit einer App. Dann sucht er dre
 
 ### Szene 7
 Erzähler: Die beste Wahl ist Antwort C. Merke dir: Öffne jeden Brief sofort. Such Absender, Frist und Aufgabe. Und hol dir Hilfe, bevor die Frist vorbei ist.
-
-Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

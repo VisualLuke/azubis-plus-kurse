@@ -337,7 +337,7 @@ window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
 const A = s => s + VERSATZ;
 const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
 const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
-const WN = (n, k) => A(satz(n).woerter[k].start);              // k-tes Wort in Satz n (für „Ah“, „Beh“, „Zeh“)
+const WN = (n, k) => A(satz(n).woerter[k].start);              // k-tes Wort in Satz n (für „A“, „B“, „C“ nach „Antwort“)
 const SA = n => A(satz(n).start);
 const SE = n => A(satz(n).ende);
 const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
@@ -669,7 +669,7 @@ pan2(P1, 1);
     akteur(p, { x: X + KX[k], y: KY - 330, o: 0, r: 0 });
     tw(p, t0, .25, { o: 1 }); tw(p, t0, .75, { y: KY }, 'sanft');
     pendel(p, t0 + .5, 5, 2.6, 340);   // Drehpunkt oben an der Stange
-    cue(t0, 'whoosh'); bump(`${p}kn`, SA(n), 1.25); cue(SA(n), 'pop');
+    cue(t0, 'whoosh'); bump(`${p}kn`, WN(n, 1), 1.25); cue(WN(n, 1), 'pop');   // auf dem gesprochenen Buchstaben („Antwort A“)
   });
   // A: Blatt, Stift kritzelt schnell (Zickzack), rotes „!“ auf „heute“
   const tSo = W('Sofort', 9), tUs = W('unterschreiben', 9), tHe = W('heute', 9);
@@ -875,7 +875,7 @@ pan2(P4, 4);
   ein('nabe4', tW0 + .15, { x: X + 1320, y: 300 }, { y: -30 });
   ein('schale4l', tW0 + .25, { x: X + 1088, y: 385 }, { y: -40 });
   ein('schale4r', tW0 + .3, { x: X + 1552, y: 385 }, { y: -40 });
-  const tPp = W('Pri', 25), tVt = W('Vertrag', 28);
+  const tPp = W('Prepaid', 25), tVt = W('Vertrag', 28);
   const KIPP = [[0, 0], [tVt - .1, 9]];
   WAAGEN.push({ balken: 'balken4', l: 'schale4l', r: 'schale4r', L: 232,
     winkel: t => kurve(KIPP, t, .7) + 5 * Math.sin((t - tW0) * 3.4) * Math.exp(-Math.max(0, t - tW0 - .4) / .9) * (t > tW0 + .4 ? 1 : 0)
@@ -936,7 +936,7 @@ pan2(P5, 5);
   ein('handy5', P5 + .55, { x: X + 1170, y: 620 }, { y: 60 }, 'whoosh');
   ein('globus5', P5 + .65, { x: X + 1570, y: 360 }, { y: -40 });
   const tAr = W('Anrufe', 30), tHa = W('Hause', 30);
-  titelEin('tb5', tAr, [tAr, tAr + .08, tAr + .16, W('Prüf', 32), W('Prüf', 32) + .08, W('Prüf', 32) + .16, W('Weh', 32)]);
+  titelEin('tb5', tAr, [tAr, tAr + .08, tAr + .16, W('Prüf', 32), W('Prüf', 32) + .08, W('Prüf', 32) + .16, W('WLAN', 32)]);
   // „Und Anrufe nach Hause?“: das Handy klingelt, ein Bogen zieht vom Handy in die Ferne
   summen('handy5', tAr, 1, 6); wellen('wh5a', [tAr + .1], X + 1170, 600, 1); wellen('wh5b', [tAr + .5], X + 1170, 600, 1); cue(tAr, 'ding');
   akteur('bogen5', { x: X + 1360, y: 430 });
@@ -956,7 +956,7 @@ pan2(P5, 5);
   tw('lupe5', tTa - .2, .2, { o: 1 }); tw('lupe5', tTa - .2, .6, { x: X + 1625, y: 755, s: 1 }, 'sanft', { bogen: 40 });
   rel('t5h', { o: 0 }); tw('t5h', tTa + .3, .25, { o: 1 }); cue(tTa + .3, 'ding');
   // „oder telefonier übers Internet im WLAN“: Münzen weg, Router mit Wellen, der Bogen wird grün
-  const tIn = W('Internet', 32), tWl = W('Weh', 32), tTf = W('telefonier', 32);
+  const tIn = W('Internet', 32), tWl = W('WLAN', 32), tTf = W('telefonier', 32);
   aus(['stapel5', 'warn5'], tTf - .1, .35);
   tw('lupe5', tTf, .35, { o: 0 }, 'in');
   ein('router5', tIn - .3, { x: X + 1330, y: 770 }, { y: 50 }, 'pop');
@@ -978,7 +978,7 @@ pan2(P6, 6);
   quiz(6);
   karten(6, true, 'AB');
   ['A', 'B', 'C'].forEach((M, k) => akteur(`k6${M}`, { x: X + KX[k], y: KY }));
-  const tBe = W('beste', 33), tC = WN(33, 4);
+  const tBe = W('beste', 33), tC = WN(33, 5);
   tw(['k6A', 'k6B'], tBe, .6, { o: .35, s: .9, y: HANG(.9) }, 'inout');
   tw('k6C', tBe, .7, { s: 1.12, y: HANG(1.12) }, 'sanft'); cue(tBe, 'whoosh');
   bump('k6Ckn', tC - .25, 1.2);

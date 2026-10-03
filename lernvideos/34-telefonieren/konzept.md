@@ -38,6 +38,8 @@ darunter steigt der Text im Bild. Auflösung: die beste Karte leuchtet grün, da
 - Szene 6: Die vier Sätze stehen in den Sprechblasen (Text im Bild laut Briefing: „Vier Sprechblasen“); links nur die Stichwörter.
 - Szene 7: Den Beispielsatz „Guten Tag, mein Name ist Mai Nguyen. Ich rufe an wegen meines Antrags.“ spricht Mai selbst
   (Bild: „Mai ruft selbstbewusst an“); Wortlaut unverändert.
+- Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“,
+  das klang wie „Ahh“); im Bild steht ebenfalls „Antwort A/B/C“ bzw. der Buchstabe auf der Karte.
 
 ## Sprechertext
 
@@ -78,5 +80,3 @@ Erzähler: Diese Sätze helfen dir bei jedem Anruf: „Können Sie bitte langsam
 ### Szene 7
 Erzähler: Die beste Wahl ist Antwort C. Nachfragen ist am Telefon ganz normal und höflich. Und wenn du selbst anrufst, sag zuerst deinen Namen und warum du anrufst:
 Mai: Guten Tag, mein Name ist Mai Nguyen. Ich rufe an wegen meines Antrags.
-
-Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

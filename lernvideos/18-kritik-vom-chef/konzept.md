@@ -32,18 +32,8 @@ Farben der Bewertung: grün = richtig, gelb = geht besser (Problem bleibt), rot 
   rund drei Sekunden läuft; der Ring läuft im Bild mit.
 - Szene 7: Die zwei Sprechblasen zeigen beide Beispielsätze (Briefing „Bild“); die Überschrift ist „Beste Lösung: C“.
 - Die Würfelgröße wird nur gezeigt (Maßpfeile), nicht als Zahl genannt – das Briefing nennt keine.
-- Aussprache: Die Buchstaben der Optionen stehen im Sprechertext deutsch ausgeschrieben („Ah“, „Beh“, „Zeh“), sonst liest
-  das Modell sie englisch. Im Bild und im Untertitel bleiben A, B, C (siehe „Schreibweise im Untertitel“).
-
-## Schreibweise im Untertitel
-
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- Wahl ist Zeh → Wahl ist C
+- Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“,
+  das klang wie „Ahh“); im Bild steht ebenfalls „Antwort A/B/C“ bzw. der Buchstabe auf der Karte.
 
 ## Sprechertext
 
@@ -89,5 +79,3 @@ Erzählerin: In Deutschland ist Kritik oft sehr direkt. Sie meint aber die Arbei
 ### Szene 7
 (Pause 0.6)
 Erzählerin: Die beste Wahl ist Antwort C. Kritik heißt: Ich soll etwas lernen. Gute Sätze dafür sind: „Können Sie mir das zeigen?“ oder „Was genau soll ich anders machen?“
-
-Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.
