@@ -63,7 +63,7 @@ Erzähler: Die Antwort: „Ich wohne gerade im Ausland. Überweise mir die Kauti
 
 ### Szene 2
 (Pause 0.4)
-Erzähler: Was würdest du tun? Ah: Schnell die Kaution überweisen, bevor jemand anders das Zimmer bekommt. Beh: Erst nur die Ausweiskopie schicken, damit der Vermieter dir vertraut. Zeh: Nichts zahlen, nichts schicken und zuerst das Zimmer ansehen.
+Erzähler: Was würdest du tun? Antwort A: Schnell die Kaution überweisen, bevor jemand anders das Zimmer bekommt. Antwort B: Erst nur die Ausweiskopie schicken, damit der Vermieter dir vertraut. Antwort C: Nichts zahlen, nichts schicken und zuerst das Zimmer ansehen.
 
 ### Szene 3
 (Pause 2)
@@ -74,12 +74,12 @@ Erzähler: Zwei …
 Erzähler: Eins …
 
 ### Szene 4
-Erzähler: Option Ah: Yusuf überweist. Der Schlüssel kommt nie, und der Vermieter antwortet nicht mehr. Das Zimmer gibt es vielleicht gar nicht. Das Geld ist weg.
+Erzähler: Antwort A: Yusuf überweist. Der Schlüssel kommt nie, und der Vermieter antwortet nicht mehr. Das Zimmer gibt es vielleicht gar nicht. Das Geld ist weg.
 (Pause 0.4)
-Erzähler: Option Beh: Mit deiner Ausweiskopie können Betrüger in deinem Namen Verträge machen oder Konten eröffnen.
+Erzähler: Antwort B: Mit deiner Ausweiskopie können Betrüger in deinem Namen Verträge machen oder Konten eröffnen.
 
 ### Szene 5
-Erzähler: Und Option Zeh:
+Erzähler: Und Antwort C:
 Yusuf: Ich zahle erst, wenn ich das Zimmer gesehen habe und einen Vertrag habe.
 Erzähler: Der Vermieter meldet sich nie wieder. Es war Betrug.
 
@@ -90,19 +90,12 @@ Erzähler: Beim nächsten Zimmer geht Yusuf hin und lernt die WG kennen. Er beko
 Erzähler: So erkennst du Betrug: sehr billig, Vermieter im Ausland, Geld vorab, Schlüssel per Post. Eine echte Kaution musst du erst zum Start der Miete zahlen, auf Wunsch in drei Raten. Und sie ist höchstens drei Kaltmieten.
 
 ### Szene 8
-Erzähler: Die beste Wahl ist Zeh. Und wenn du schon Geld überwiesen hast: Mach Fotos von allen Nachrichten, ruf sofort deine Bank an und geh zur Polizei.
+Erzähler: Die beste Wahl ist Antwort C. Und wenn du schon Geld überwiesen hast: Mach Fotos von allen Nachrichten, ruf sofort deine Bank an und geh zur Polizei.
 
 ## Schreibweise im Untertitel
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
 - drei Raten → 3 Raten
 - drei Kaltmieten → 3 Kaltmieten
 
@@ -147,3 +140,5 @@ Suchergebnisse dieser Seiten belegt und beim Produzieren noch einmal im Browser 
 | Fotos von allen Nachrichten, sofort Bank anrufen, zur Polizei / „Fotos sichern · Bank · Polizei“ | Polizei NDS (3): Anzeige erstatten, E-Mail-Verkehr speichern, Screenshots machen; Polizei (1, 2): Angebote der Polizei melden; Bank sofort informieren, um die Zahlung evtl. zu stoppen: Hinweis aus den Polizei-Seiten (3, 5) laut Suchergebnis |
 
 Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

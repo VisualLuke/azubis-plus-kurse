@@ -58,7 +58,7 @@ Erzähler: Amir kommt nach Hause. Im Briefkasten liegt ein offizieller Brief. Vi
 Amir: Was wollen die von mir?
 
 ### Szene 2
-Erzähler: Was würdest du tun? A: Den Brief erst mal weglegen, das ist bestimmt nicht so wichtig. B: Irgendwie antworten, auch wenn du nicht genau verstehst, worum es geht. C: Den Brief übersetzen, Absender, Frist und Aufgabe suchen und dir Hilfe holen.
+Erzähler: Was würdest du tun? Antwort A: Den Brief erst mal weglegen, das ist bestimmt nicht so wichtig. Antwort B: Irgendwie antworten, auch wenn du nicht genau verstehst, worum es geht. Antwort C: Den Brief übersetzen, Absender, Frist und Aufgabe suchen und dir Hilfe holen.
 
 ### Szene 3
 (Pause 2)
@@ -69,13 +69,15 @@ Erzähler: Zwei …
 Erzähler: Eins …
 
 ### Szene 4
-Erzähler: Option A: Der Brief liegt drei Wochen auf dem Tisch. Die Frist ist vorbei. Jetzt kommt ein zweiter Brief, vielleicht mit Gebühren, oder eine Entscheidung ist gefallen, ohne dass Amir etwas sagen konnte.
+Erzähler: Antwort A: Der Brief liegt drei Wochen auf dem Tisch. Die Frist ist vorbei. Jetzt kommt ein zweiter Brief, vielleicht mit Gebühren, oder eine Entscheidung ist gefallen, ohne dass Amir etwas sagen konnte.
 
 ### Szene 5
-Erzähler: Option B: Amir schickt irgendeine Antwort. Aber er hat nicht verstanden, was gefragt war. Die Behörde kann nichts damit anfangen, und das Problem bleibt.
+Erzähler: Antwort B: Amir schickt irgendeine Antwort. Aber er hat nicht verstanden, was gefragt war. Die Behörde kann nichts damit anfangen, und das Problem bleibt.
 
 ### Szene 6
-Erzähler: Option C: Amir übersetzt den Brief mit einer App. Dann sucht er drei Dinge: Wer schreibt? Bis wann? Was soll ich tun? Das markiert er. Er zeigt den Brief seiner Ausbilderin und schreibt Azubis Plus. Zusammen antworten sie rechtzeitig. Wichtig: Wenn Amir die Frist nicht schaffen kann, fragt er vorher nach mehr Zeit. Aber manche Fristen kann man nicht verlängern, zum Beispiel beim Widerspruch. Dann antwortet er rechtzeitig kurz und erklärt später mehr.
+Erzähler: Antwort C: Amir übersetzt den Brief mit einer App. Dann sucht er drei Dinge: Wer schreibt? Bis wann? Was soll ich tun? Das markiert er. Er zeigt den Brief seiner Ausbilderin und schreibt Azubis Plus. Zusammen antworten sie rechtzeitig. Wichtig: Wenn Amir die Frist nicht schaffen kann, fragt er vorher nach mehr Zeit. Aber manche Fristen kann man nicht verlängern, zum Beispiel beim Widerspruch. Dann antwortet er rechtzeitig kurz und erklärt später mehr.
 
 ### Szene 7
-Erzähler: Die beste Wahl ist C. Merke dir: Öffne jeden Brief sofort. Such Absender, Frist und Aufgabe. Und hol dir Hilfe, bevor die Frist vorbei ist.
+Erzähler: Die beste Wahl ist Antwort C. Merke dir: Öffne jeden Brief sofort. Such Absender, Frist und Aufgabe. Und hol dir Hilfe, bevor die Frist vorbei ist.
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

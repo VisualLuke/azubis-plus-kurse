@@ -65,7 +65,7 @@ Mai: Oh nein! Mein Wecker!
 
 ### Szene 2
 (Pause 0.4)
-Erzähler: Was würdest du tun? A: Nichts sagen und einfach später hingehen. B: Sofort Schule und Betrieb Bescheid geben und so schnell wie möglich hinfahren. C: Heute ganz zu Hause bleiben und sagen, dass du krank bist.
+Erzähler: Was würdest du tun? Antwort A: Nichts sagen und einfach später hingehen. Antwort B: Sofort Schule und Betrieb Bescheid geben und so schnell wie möglich hinfahren. Antwort C: Heute ganz zu Hause bleiben und sagen, dass du krank bist.
 
 ### Szene 3
 Erzähler: Was denkst du? Drei …
@@ -76,21 +76,21 @@ Erzähler: Eins …
 
 ### Szene 4
 (Pause 0.6)
-Erzähler: Option A: Mai kommt eine Stunde zu spät, ohne Nachricht. Die Lehrerin trägt sie als unentschuldigt ein. Das kann die Schule dem Betrieb melden. Und am Nachmittag fragt die Ausbilderin: „Warum hast du nichts gesagt?“
+Erzähler: Antwort A: Mai kommt eine Stunde zu spät, ohne Nachricht. Die Lehrerin trägt sie als unentschuldigt ein. Das kann die Schule dem Betrieb melden. Und am Nachmittag fragt die Ausbilderin: „Warum hast du nichts gesagt?“
 
 ### Szene 5
 (Pause 0.8)
-Erzähler: Option C: Mai bleibt zu Hause und sagt, sie ist krank. Aber sie ist nicht krank. Wenn das herauskommt, ist das ein großer Vertrauensbruch. Das kann eine Abmahnung oder sogar die Kündigung bedeuten.
+Erzähler: Antwort C: Mai bleibt zu Hause und sagt, sie ist krank. Aber sie ist nicht krank. Wenn das herauskommt, ist das ein großer Vertrauensbruch. Das kann eine Abmahnung oder sogar die Kündigung bedeuten.
 
 ### Szene 6
 (Pause 0.8)
-Erzähler: Option B: Mai schreibt sofort ihrem Betrieb und meldet sich bei der Schule:
+Erzähler: Antwort B: Mai schreibt sofort ihrem Betrieb und meldet sich bei der Schule:
 Mai: Ich habe verschlafen, es tut mir leid. Ich bin in dreißig Minuten da.
 Erzähler: Sie fährt los und entschuldigt sich kurz bei der Lehrerin. Unangenehm? Ja. Aber ehrlich und schnell. Das zeigt Verantwortung.
 
 ### Szene 7
 (Pause 0.6)
-Erzähler: Die beste Wahl ist B. Und damit es nicht wieder passiert: zwei Wecker stellen, das Handy weit weg vom Bett legen und am Abend vorher die Tasche packen.
+Erzähler: Die beste Wahl ist Antwort B. Und damit es nicht wieder passiert: zwei Wecker stellen, das Handy weit weg vom Bett legen und am Abend vorher die Tasche packen.
 
 ## Schreibweise im Untertitel
 
@@ -99,3 +99,5 @@ Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt 
 - acht Uhr fünfzehn → 8:15 Uhr
 - um acht Uhr → um 8 Uhr
 - dreißig Minuten → 30 Minuten
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

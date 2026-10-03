@@ -47,7 +47,7 @@ Kwame: Gesperrt? Mein Gehalt ist doch da drauf!
 
 ### Szene 2
 (Pause 0.4)
-Erzähler: Was würdest du tun? A: Schnell auf den Link klicken und die Daten eingeben. B: Die Nummer aus der SMS anrufen und fragen. C: Nichts anklicken, die Bank-App selbst öffnen oder die Bank über die offizielle Nummer anrufen.
+Erzähler: Was würdest du tun? Antwort A: Schnell auf den Link klicken und die Daten eingeben. Antwort B: Die Nummer aus der SMS anrufen und fragen. Antwort C: Nichts anklicken, die Bank-App selbst öffnen oder die Bank über die offizielle Nummer anrufen.
 
 ### Szene 3
 (Pause 2)
@@ -59,22 +59,24 @@ Erzähler: Eins …
 
 ### Szene 4
 (Pause 0.6)
-Erzähler: Option A: Die Seite sieht aus wie die Bank, ist aber gefälscht. Kwame gibt Kontonummer, Passwort und Code ein. Zwei Stunden später ist Geld von seinem Konto weg.
+Erzähler: Antwort A: Die Seite sieht aus wie die Bank, ist aber gefälscht. Kwame gibt Kontonummer, Passwort und Code ein. Zwei Stunden später ist Geld von seinem Konto weg.
 
 ### Szene 5
 (Pause 0.8)
-Erzähler: Option B: Am Telefon ist eine sehr freundliche Person. Sie sagt, sie ist von der Bank, und fragt nach einem Code. Auch das sind Betrüger.
+Erzähler: Antwort B: Am Telefon ist eine sehr freundliche Person. Sie sagt, sie ist von der Bank, und fragt nach einem Code. Auch das sind Betrüger.
 
 ### Szene 6
 (Pause 0.8)
-Erzähler: Option C: Kwame klickt nichts an. Er öffnet selbst seine Bank-App: Alles ist normal. Er ruft trotzdem bei der Bank an, mit der Nummer von der Website. Die Bank sagt: „Diese SMS ist nicht von uns.“ Kwame löscht sie.
+Erzähler: Antwort C: Kwame klickt nichts an. Er öffnet selbst seine Bank-App: Alles ist normal. Er ruft trotzdem bei der Bank an, mit der Nummer von der Website. Die Bank sagt: „Diese SMS ist nicht von uns.“ Kwame löscht sie.
 
 ### Szene 7
 (Pause 0.6)
-Erzähler: Die beste Wahl ist C. Eine echte Bank fragt nie per SMS, E-Mail oder Telefon nach PIN, Passwort oder Codes. Und wenn du doch schon geklickt hast: Ruf sofort deine Bank an oder den Sperr-Notruf eins-eins-sechs eins-eins-sechs.
+Erzähler: Die beste Wahl ist Antwort C. Eine echte Bank fragt nie per SMS, E-Mail oder Telefon nach PIN, Passwort oder Codes. Und wenn du doch schon geklickt hast: Ruf sofort deine Bank an oder den Sperr-Notruf eins-eins-sechs eins-eins-sechs.
 
 ## Schreibweise im Untertitel
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
 - eins-eins-sechs eins-eins-sechs → 116 116
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

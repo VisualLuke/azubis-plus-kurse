@@ -59,7 +59,7 @@ Erzähler: Montag, kurz vor sieben. Kwame steht an der Haltestelle. Die Straßen
 Kwame: Oh nein, der Automat ist kaputt!
 
 ### Szene 2
-Erzähler: Was würdest du tun? Ah: Einfach einsteigen. Es ist ja nur eine kurze Fahrt. Beh: Einsteigen und erst ein Ticket kaufen, wenn eine Kontrolle kommt. Zeh: Schnell ein Ticket in der App kaufen und dann einsteigen. Oder die nächste Bahn nehmen.
+Erzähler: Was würdest du tun? Antwort A: Einfach einsteigen. Es ist ja nur eine kurze Fahrt. Antwort B: Einsteigen und erst ein Ticket kaufen, wenn eine Kontrolle kommt. Antwort C: Schnell ein Ticket in der App kaufen und dann einsteigen. Oder die nächste Bahn nehmen.
 
 ### Szene 3
 (Pause 2)
@@ -70,12 +70,12 @@ Erzähler: Zwei …
 Erzähler: Eins …
 
 ### Szene 4
-Erzähler: Option Ah: Ohne gültiges Ticket fahren kann teuer werden. Bei einer Kontrolle zahlst du ein erhöhtes Beförderungsentgelt, oft sechzig Euro.
+Erzähler: Antwort A: Ohne gültiges Ticket fahren kann teuer werden. Bei einer Kontrolle zahlst du ein erhöhtes Beförderungsentgelt, oft sechzig Euro.
 (Pause 0.4)
-Erzähler: Option Beh: Das klappt auch nicht. Du brauchst das Ticket, bevor du fährst. Gibt es in der Bahn einen Automaten, kaufst du es sofort nach dem Einsteigen. Wenn die Kontrolle kommt, ist es zu spät.
+Erzähler: Antwort B: Das klappt auch nicht. Du brauchst das Ticket, bevor du fährst. Gibt es in der Bahn einen Automaten, kaufst du es sofort nach dem Einsteigen. Wenn die Kontrolle kommt, ist es zu spät.
 
 ### Szene 5
-Erzähler: Und Option Zeh: Kwame kauft das Ticket in der App.
+Erzähler: Und Antwort C: Kwame kauft das Ticket in der App.
 Kwame: Das Ticket ist da, geschafft!
 Erzähler: Die Bahn kommt. Kwame lässt zuerst die anderen aussteigen. Drinnen bietet er einer älteren Frau seinen Platz an. Und am Telefon spricht er leise.
 
@@ -83,19 +83,12 @@ Erzähler: Die Bahn kommt. Kwame lässt zuerst die anderen aussteigen. Drinnen b
 Erzähler: Du fährst jeden Tag? Dann ist ein Monatsabo praktisch, zum Beispiel das Deutschlandticket. Damit fährst du mit Bus und Bahn im Nahverkehr in ganz Deutschland. Frag in deinem Betrieb nach einem Jobticket. Oft zahlt der Betrieb dann einen Teil dazu. Und Papiertickets musst du manchmal vor der Fahrt entwerten, also stempeln.
 
 ### Szene 7
-Erzähler: Die beste Wahl ist Zeh. Kauf dein Ticket immer vor der Fahrt. Schau morgens in der App, ob deine Bahn Verspätung hat. Und wenn du pünktlich sein musst, fahr lieber eine Bahn früher.
+Erzähler: Die beste Wahl ist Antwort C. Kauf dein Ticket immer vor der Fahrt. Schau morgens in der App, ob deine Bahn Verspätung hat. Und wenn du pünktlich sein musst, fahr lieber eine Bahn früher.
 
 ## Schreibweise im Untertitel
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
 - sechzig Euro → 60 Euro
 
 ## Quellen
@@ -128,3 +121,5 @@ Stand: 03.10.2026
 | Papiertickets manchmal entwerten (stempeln) | VGN Tarif: Fahrausweise ohne Gültigkeitsaufdruck sind vor Fahrtantritt zu entwerten [3]; regional verschieden, daher „manchmal“ |
 | Morgens Verspätung prüfen, lieber eine Bahn früher fahren | Wegerisiko trägt der Arbeitnehmer; pünktlich sein ist deine Pflicht [10] – Rat, keine Regel |
 | (nicht im Video) Preis Deutschlandticket | 63 €/Monat seit 01.01.2026, 66,80 € ab 01.01.2027 [4][7] – deshalb weggelassen |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

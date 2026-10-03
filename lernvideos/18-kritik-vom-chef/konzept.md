@@ -58,7 +58,7 @@ Küchenchef: Das ist zu grob. So geht das nicht raus. Nochmal.
 
 ### Szene 2
 (Pause 0.4)
-Erzählerin: Was würdest du tun? Ah: Nichts sagen, einfach nochmal schneiden und den Rest des Tages traurig sein. Beh: Sagen: „Das ist unfair, ich habe mir Mühe gegeben!“ Zeh: Ruhig nachfragen: „Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?“
+Erzählerin: Was würdest du tun? Antwort A: Nichts sagen, einfach nochmal schneiden und den Rest des Tages traurig sein. Antwort B: Sagen: „Das ist unfair, ich habe mir Mühe gegeben!“ Antwort C: Ruhig nachfragen: „Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?“
 
 ### Szene 3
 (Pause 0.8)
@@ -70,17 +70,17 @@ Erzählerin: Eins …
 
 ### Szene 4
 (Pause 0.6)
-Erzählerin: Option Ah: Priya schneidet neu, aber sie weiß nicht genau, wie es richtig ist. Die Stücke sind wieder falsch. Sie fühlt sich schlecht und denkt, der Chef mag sie nicht.
+Erzählerin: Antwort A: Priya schneidet neu, aber sie weiß nicht genau, wie es richtig ist. Die Stücke sind wieder falsch. Sie fühlt sich schlecht und denkt, der Chef mag sie nicht.
 
 ### Szene 5
 (Pause 0.8)
-Erzählerin: Option Beh: Priya reagiert beleidigt.
+Erzählerin: Antwort B: Priya reagiert beleidigt.
 Priya: Das ist unfair, ich habe mir Mühe gegeben!
 Erzählerin: Der Chef wird ungeduldig. Jetzt geht es nicht mehr um das Gemüse, sondern um Streit.
 
 ### Szene 6
 (Pause 0.8)
-Erzählerin: Option Zeh: Priya fragt ruhig nach.
+Erzählerin: Antwort C: Priya fragt ruhig nach.
 Priya: Wie groß sollen die Stücke sein? Können Sie es mir einmal zeigen?
 Erzählerin: Der Chef zeigt ihr kurz, wie groß die Würfel sein sollen. Beim zweiten Mal passt es. Der Chef nickt:
 Küchenchef: Gut so.
@@ -88,4 +88,6 @@ Erzählerin: In Deutschland ist Kritik oft sehr direkt. Sie meint aber die Arbei
 
 ### Szene 7
 (Pause 0.6)
-Erzählerin: Die beste Wahl ist Zeh. Kritik heißt: Ich soll etwas lernen. Gute Sätze dafür sind: „Können Sie mir das zeigen?“ oder „Was genau soll ich anders machen?“
+Erzählerin: Die beste Wahl ist Antwort C. Kritik heißt: Ich soll etwas lernen. Gute Sätze dafür sind: „Können Sie mir das zeigen?“ oder „Was genau soll ich anders machen?“
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

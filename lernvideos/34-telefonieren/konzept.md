@@ -51,7 +51,7 @@ Erzähler: Mais Handy klingelt. Unbekannte Nummer.
 Frau Wolf: Guten Tag, hier ist Wolf von der Ausländerbehörde. Es geht um Ihren Antrag, da fehlt uns noch die Bescheinigung vom Arbeitgeber, die müssten Sie bis Ende nächster Woche nachreichen, am besten per E-Mail.
 
 ### Szene 2
-Erzähler: Mai hat nur die Hälfte verstanden. Was würdest du tun? A: Einfach „Ja, ja, okay“ sagen und auflegen. B: Auflegen und nicht mehr rangehen. C: Nachfragen und dir alles aufschreiben.
+Erzähler: Mai hat nur die Hälfte verstanden. Was würdest du tun? Antwort A: Einfach „Ja, ja, okay“ sagen und auflegen. Antwort B: Auflegen und nicht mehr rangehen. Antwort C: Nachfragen und dir alles aufschreiben.
 
 ### Szene 3
 (Pause 2)
@@ -62,10 +62,10 @@ Erzähler: Zwei …
 Erzähler: Eins …
 
 ### Szene 4
-Erzähler: Option A: Mai sagt „Ja, ja“ und legt auf. Aber sie weiß nicht, was fehlt und bis wann. Die Frist läuft ab, ihr Antrag bleibt liegen. Option B: Das ist noch schlimmer. Die Behörde erreicht sie nicht mehr.
+Erzähler: Antwort A: Mai sagt „Ja, ja“ und legt auf. Aber sie weiß nicht, was fehlt und bis wann. Die Frist läuft ab, ihr Antrag bleibt liegen. Antwort B: Das ist noch schlimmer. Die Behörde erreicht sie nicht mehr.
 
 ### Szene 5
-Erzähler: Option C: Mai fragt nach.
+Erzähler: Antwort C: Mai fragt nach.
 Mai: Entschuldigung, können Sie bitte langsamer sprechen? Mein Deutsch ist noch nicht so gut.
 Frau Wolf: Natürlich. Es fehlt eine Bescheinigung vom Arbeitgeber.
 Mai: Einen Moment, ich schreibe mit. Bis wann brauchen Sie das?
@@ -76,5 +76,7 @@ Mai: Können Sie mir das bitte auch per E-Mail schicken?
 Erzähler: Diese Sätze helfen dir bei jedem Anruf: „Können Sie bitte langsamer sprechen?“ „Können Sie das bitte wiederholen?“ „Wie schreibt man das?“ „Können Sie mir das per E-Mail schicken?“ Und am Ende wiederholst du das Wichtigste.
 
 ### Szene 7
-Erzähler: Die beste Wahl ist C. Nachfragen ist am Telefon ganz normal und höflich. Und wenn du selbst anrufst, sag zuerst deinen Namen und warum du anrufst:
+Erzähler: Die beste Wahl ist Antwort C. Nachfragen ist am Telefon ganz normal und höflich. Und wenn du selbst anrufst, sag zuerst deinen Namen und warum du anrufst:
 Mai: Guten Tag, mein Name ist Mai Nguyen. Ich rufe an wegen meines Antrags.
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

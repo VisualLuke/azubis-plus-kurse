@@ -61,7 +61,7 @@ Ton: Feuer nur als weicher oranger Schein, kein Flammen-Effekt.
 Erzählerin: Es ist Abend. Mai kommt nach Hause. Im Treppenhaus riecht es nach Rauch. In der Wohnung nebenan piept laut ein Rauchmelder. Mai klingelt, aber niemand macht auf.
 
 ### Szene 2
-Erzählerin: Was würdest du tun? Ah: In die eigene Wohnung gehen. Vielleicht ist nur das Essen angebrannt. Beh: Den Vermieter anrufen und warten, bis er kommt. Zeh: Sofort die eins-eins-zwei anrufen und ruhig die Fragen beantworten.
+Erzählerin: Was würdest du tun? Antwort A: In die eigene Wohnung gehen. Vielleicht ist nur das Essen angebrannt. Antwort B: Den Vermieter anrufen und warten, bis er kommt. Antwort C: Sofort die eins-eins-zwei anrufen und ruhig die Fragen beantworten.
 
 ### Szene 3
 (Pause 2)
@@ -72,12 +72,12 @@ Erzählerin: Zwei …
 Erzählerin: Eins …
 
 ### Szene 4
-Erzählerin: Option Ah ist gefährlich: Niemand ruft die Feuerwehr. Das Feuer wird größer, und Rauch ist giftig. Schon wenige Atemzüge können lebensgefährlich sein.
+Erzählerin: Antwort A ist gefährlich: Niemand ruft die Feuerwehr. Das Feuer wird größer, und Rauch ist giftig. Schon wenige Atemzüge können lebensgefährlich sein.
 (Pause 0.4)
-Erzählerin: Option Beh: Der Vermieter kann nicht löschen. Und bis er kommt, vergeht wertvolle Zeit.
+Erzählerin: Antwort B: Der Vermieter kann nicht löschen. Und bis er kommt, vergeht wertvolle Zeit.
 
 ### Szene 5
-Erzählerin: Und Option Zeh: Mai geht nach draußen und ruft die eins-eins-zwei an.
+Erzählerin: Und Antwort C: Mai geht nach draußen und ruft die eins-eins-zwei an.
 Mai: In der Musterstraße zwölf, im zweiten Stock, kommt Rauch aus einer Wohnung. Ein Rauchmelder piept, und niemand macht auf. Mein Name ist Mai Nguyen.
 Erzählerin: Dann beantwortet Mai alle Fragen. Sie legt nicht zuerst auf. Kurz danach ist die Feuerwehr da.
 
@@ -88,7 +88,7 @@ Erzählerin: Beim Notruf zählt: Wo ist es passiert? Was ist passiert? Wie viele
 Erzählerin: Die eins-eins-zwei ist für Feuerwehr und Rettungsdienst. Die eins-eins-null ist für die Polizei. Du bist krank, aber es ist kein Notfall? Dann hilft die eins-eins-sechs eins-eins-sieben, der ärztliche Bereitschaftsdienst, zum Beispiel nachts, am Wochenende und an Feiertagen.
 
 ### Szene 8
-Erzählerin: Die beste Wahl ist Zeh. Bei Rauch und Brandgeruch rufst du lieber einmal zu viel an als einmal zu wenig. Brennt es bei dir, gilt: raus, Tür zu, eins-eins-zwei. Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt. Bau sie also nie ab.
+Erzählerin: Die beste Wahl ist Antwort C. Bei Rauch und Brandgeruch rufst du lieber einmal zu viel an als einmal zu wenig. Brennt es bei dir, gilt: raus, Tür zu, eins-eins-zwei. Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt. Bau sie also nie ab.
 
 ## Schreibweise im Untertitel
 
@@ -98,13 +98,6 @@ Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt 
 - eins-eins-zwei → 112
 - eins-eins-null → 110
 - Musterstraße zwölf → Musterstraße 12
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
 
 ## Quellen
 
@@ -143,3 +136,5 @@ Stand: 03.10.2026
 | Brennt es bei dir: raus, Tür zu, 112 / „Bei Feuer: raus · Tür zu · 112“ | DFV/vfdb: Wohnung verlassen, Tür schließen (nicht abschließen), Aufzug nicht benutzen, 112 [7] |
 | Rauchmelder sind in Wohnungen Pflicht | Pflicht in allen 16 Bundesländern über die Landesbauordnungen (mindestens Schlafräume, Kinderzimmer, Flure als Rettungswege) [9] |
 | Sie wecken dich, wenn es brennt; nie abbauen | Rauchmelder warnen im Schlaf vor Brandrauch [9][7]; „nie abbauen“ als Rat |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

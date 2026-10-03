@@ -73,7 +73,7 @@ Erzählerin: Amir steht an der Annahme der Werkstatt. Ein Kunde kommt herein. Er
 Herr Braun: Mein Auto sollte heute Mittag fertig sein! Jetzt ist es drei Uhr, und keiner hat mich angerufen. Ich brauche das Auto!
 
 ### Szene 2
-Erzählerin: Was würdest du tun? Ah: „Das ist nicht meine Schuld. Ich bin nur Azubi.“ Beh: Nichts sagen und hoffen, dass der Chef bald kommt. Zeh: Ruhig zuhören, Verständnis zeigen und eine Lösung suchen.
+Erzählerin: Was würdest du tun? Antwort A: „Das ist nicht meine Schuld. Ich bin nur Azubi.“ Antwort B: Nichts sagen und hoffen, dass der Chef bald kommt. Antwort C: Ruhig zuhören, Verständnis zeigen und eine Lösung suchen.
 
 ### Szene 3
 (Pause 2)
@@ -84,12 +84,12 @@ Erzählerin: Zwei …
 Erzählerin: Eins …
 
 ### Szene 4
-Erzählerin: Option Ah: Amir hat recht, es ist nicht seine Schuld. Aber der Kunde hört nur: „Mir ist das egal.“ Er wird noch wütender und beschwert sich beim Chef über Amir.
+Erzählerin: Antwort A: Amir hat recht, es ist nicht seine Schuld. Aber der Kunde hört nur: „Mir ist das egal.“ Er wird noch wütender und beschwert sich beim Chef über Amir.
 (Pause 0.4)
-Erzählerin: Option Beh: Amir schweigt. Der Kunde fühlt sich ignoriert. Die Stimmung wird immer schlechter.
+Erzählerin: Antwort B: Amir schweigt. Der Kunde fühlt sich ignoriert. Die Stimmung wird immer schlechter.
 
 ### Szene 5
-Erzählerin: Und Option Zeh:
+Erzählerin: Und Antwort C:
 Amir: Das tut mir leid, Herr Braun. Ich verstehe, dass Sie das Auto brauchen. Ich schaue sofort nach, wie weit wir sind.
 Erzählerin: Amir fragt in der Werkstatt nach und kommt zurück.
 Amir: Ihr Auto ist in einer Stunde fertig. Wir hätten Sie anrufen müssen, das tut mir leid. Möchten Sie hier warten? Wir haben Kaffee.
@@ -100,4 +100,6 @@ Herr Braun: Na gut. Danke.
 Erzählerin: Diese Sätze helfen bei Beschwerden: „Das tut mir leid.“ „Ich verstehe, dass Sie verärgert sind.“ „Ich kümmere mich sofort darum.“ Und wenn du nicht weiterweißt: „Einen Moment bitte, ich hole eine Kollegin.“
 
 ### Szene 7
-Erzählerin: Die beste Wahl ist Zeh. Der Kunde ist nicht wütend auf dich persönlich. Und Kunden sprichst du immer mit „Sie“ an.
+Erzählerin: Die beste Wahl ist Antwort C. Der Kunde ist nicht wütend auf dich persönlich. Und Kunden sprichst du immer mit „Sie“ an.
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

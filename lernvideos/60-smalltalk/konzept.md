@@ -50,16 +50,16 @@ Erzählerin: Mittagspause im Betrieb. Kwame sitzt allein am Tisch und schaut auf
 Geselle: Mahlzeit, Kwame! Na, wie war dein Wochenende?
 
 ### Szene 2
-Erzählerin: Was würdest du tun? Ah: „Gut“ sagen und weiter aufs Handy schauen. Beh: Zurückfragen, wie viel er eigentlich verdient. Zeh: Kurz erzählen und eine Gegenfrage stellen.
+Erzählerin: Was würdest du tun? Antwort A: „Gut“ sagen und weiter aufs Handy schauen. Antwort B: Zurückfragen, wie viel er eigentlich verdient. Antwort C: Kurz erzählen und eine Gegenfrage stellen.
 
 ### Szene 3
 (Pause 3)
-Erzählerin: Option Ah: Kwame sagt nur „Gut“ und schaut wieder aufs Handy. Der Geselle denkt: Er will nicht reden. Das Gespräch ist schnell vorbei.
+Erzählerin: Antwort A: Kwame sagt nur „Gut“ und schaut wieder aufs Handy. Der Geselle denkt: Er will nicht reden. Das Gespräch ist schnell vorbei.
 (Pause 0.4)
-Erzählerin: Option Beh: Das Gehalt ist in Deutschland ein sehr privates Thema. Der Geselle fühlt sich unwohl, und die Stimmung wird komisch.
+Erzählerin: Antwort B: Das Gehalt ist in Deutschland ein sehr privates Thema. Der Geselle fühlt sich unwohl, und die Stimmung wird komisch.
 
 ### Szene 4
-Erzählerin: Und Option Zeh:
+Erzählerin: Und Antwort C:
 Kwame: Danke, gut! Ich habe am Samstag mit Freunden Fußball gespielt. Und wie war dein Wochenende?
 Geselle: Ich war mit meiner Familie wandern. Das Wetter war super. Spielst du in einem Verein?
 Kwame: Noch nicht. Kennst du hier einen guten Verein?
@@ -69,17 +69,10 @@ Geselle: Klar, mein Bruder spielt in einem. Ich frag ihn mal.
 Erzählerin: Gute Themen für die Pause sind das Wochenende, das Wetter, Essen, Sport, Hobbys und Urlaub. Lieber nicht: Gehalt, Religion, Politik und Krankheiten. Und das Wichtigste: Stell eine Gegenfrage und hör gut zu.
 
 ### Szene 6
-Erzählerin: Die beste Wahl ist Zeh. Smalltalk muss nicht lang oder perfekt sein. Kurze Antworten reichen. Und wenn jemand zur Mittagszeit „Mahlzeit“ sagt, ist das einfach ein Gruß. Du kannst ihn genauso zurückgeben.
+Erzählerin: Die beste Wahl ist Antwort C. Smalltalk muss nicht lang oder perfekt sein. Kurze Antworten reichen. Und wenn jemand zur Mittagszeit „Mahlzeit“ sagt, ist das einfach ein Gruß. Du kannst ihn genauso zurückgeben.
 
 ## Schreibweise im Untertitel
 
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
 
 ## Quellen
 
@@ -108,3 +101,5 @@ die Suchmaschinen-Auszüge der jeweiligen Seite.
 | Smalltalk muss nicht lang oder perfekt sein, kurze Antworten reichen | 4 (Smalltalk ist kein Wettbewerb, soll verbinden); Ratschlag |
 | „Mahlzeit“ ist ein Gruß zur Mittagszeit, in vielen Regionen üblich; man grüßt genauso zurück | 7, 8 |
 | Text im Bild „Mittagspause“, „A · B · C“, „C: kurz antworten + Gegenfrage“ | Situation bzw. Format; Inhalt wie oben |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.

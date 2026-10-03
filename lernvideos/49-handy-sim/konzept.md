@@ -57,7 +57,7 @@ Yusuf: Wow, das ist schön. Aber ist das nicht sehr teuer?
 Erzählerin: Der Verkäufer sagt: Nur heute! Mit Vertrag über vierundzwanzig Monate. Unterschreib einfach hier.
 
 ### Szene 2
-Erzählerin: Was würdest du tun? Ah: Sofort unterschreiben, das Angebot gilt ja nur heute. Beh: Unterschreiben und den Vertrag zu Hause einfach zurückgeben. Zeh: Nichts unterschreiben, die Vertragszusammenfassung mitnehmen und in Ruhe vergleichen.
+Erzählerin: Was würdest du tun? Antwort A: Sofort unterschreiben, das Angebot gilt ja nur heute. Antwort B: Unterschreiben und den Vertrag zu Hause einfach zurückgeben. Antwort C: Nichts unterschreiben, die Vertragszusammenfassung mitnehmen und in Ruhe vergleichen.
 
 ### Szene 3
 (Pause 2)
@@ -68,12 +68,12 @@ Erzählerin: Zwei …
 Erzählerin: Eins …
 
 ### Szene 4
-Erzählerin: Option Ah: Yusuf zahlt jetzt zwei Jahre lang jeden Monat. Und im Vertrag stecken Zusatzoptionen, die er gar nicht braucht.
+Erzählerin: Antwort A: Yusuf zahlt jetzt zwei Jahre lang jeden Monat. Und im Vertrag stecken Zusatzoptionen, die er gar nicht braucht.
 (Pause 0.4)
-Erzählerin: Option Beh: Das klappt meistens nicht. Für Verträge im Laden gibt es in der Regel kein Widerrufsrecht. Unterschrieben ist unterschrieben.
+Erzählerin: Antwort B: Das klappt meistens nicht. Für Verträge im Laden gibt es in der Regel kein Widerrufsrecht. Unterschrieben ist unterschrieben.
 
 ### Szene 5
-Erzählerin: Und Option Zeh:
+Erzählerin: Und Antwort C:
 Yusuf: Danke, ich überlege noch. Kann ich die Vertragszusammenfassung mitnehmen?
 Erzählerin: Die muss der Anbieter dir vor dem Vertrag geben. Darauf stehen Preis, Laufzeit und Kündigung.
 
@@ -81,18 +81,11 @@ Erzählerin: Die muss der Anbieter dir vor dem Vertrag geben. Darauf stehen Prei
 Erzählerin: Für den Anfang reicht oft eine Prepaid-Karte. Du lädst Guthaben auf und hast die Kosten im Griff. Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass. Ein Vertrag läuft höchstens vierundzwanzig Monate. Danach kannst du jeden Monat kündigen.
 
 ### Szene 7
-Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und können teuer sein. Prüf deinen Tarif, oder telefonier übers Internet im WLAN. Die beste Wahl ist Zeh. Lass dich nicht drängen.
+Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und können teuer sein. Prüf deinen Tarif, oder telefonier übers Internet im WLAN. Die beste Wahl ist Antwort C. Lass dich nicht drängen.
 
 ## Schreibweise im Untertitel
 
 - vierundzwanzig Monate → 24 Monate
-- Option Ah → Option A
-- Option Beh → Option B
-- Option Zeh → Option C
-- Ah: → A:
-- Beh: → B:
-- Zeh: → C:
-- ist Zeh → ist C
 
 ## Quellen
 
@@ -124,3 +117,5 @@ Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und k�
 | Übers Internet im WLAN telefonieren („WLAN“) | [9], [10] |
 
 Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Die Antworten heißen gesprochen „Antwort A/B/C“ (statt „Ah“ bzw. „Option A“, das klang wie „Ahh“). Antwort A/B/C 03.10.2026.
