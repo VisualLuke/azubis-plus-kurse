@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Zu Fuß im Straßenverkehr</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:58px;line-height:68px}
+.unter{font-size:38px;line-height:50px}
+#tb8 .titel{font-size:50px;line-height:66px}
+
+/* Szenen-Fenster: alles darin wird an der Bühnenkante abgeschnitten */
+.szene{width:900px;height:720px;border-radius:48px;overflow:hidden;background:linear-gradient(var(--b50),var(--b100))}
+.innen{position:absolute;left:0;top:0;width:900px;height:720px;transform-origin:50% 50%}
+.bg{position:absolute}
+.haus{position:absolute;transform-origin:50% 100%;border-radius:10px 10px 0 0;box-shadow:inset -10px 0 0 rgba(58,37,153,.08)}
+.haus i{position:absolute;width:20px;height:26px;border-radius:4px;background:var(--b50)}
+.gehweg{background-color:var(--surface);background-image:linear-gradient(90deg,var(--b100) 2px,transparent 2px),linear-gradient(var(--b100) 2px,transparent 2px);background-size:46px 46px}
+.bord{background:var(--b300)}
+.radweg{background:var(--b200)}
+.fahrbahn{background:var(--n700)}
+.strich-h{height:6px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--surface) 0 44px,transparent 44px 88px);opacity:.85}
+.strich-v{width:6px;border-radius:3px;background:repeating-linear-gradient(var(--surface) 0 40px,transparent 40px 80px);opacity:.85}
+.leuchten{position:absolute;opacity:0}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:6px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.16)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .schatten{position:absolute;inset:0;background:var(--ink);opacity:0}
+
+.ring{border-radius:999px;border:6px solid var(--b400);box-shadow:0 0 22px rgba(129,99,238,.45)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.frage{width:72px;height:72px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 44px/72px Inter;text-align:center;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.plakette{width:60px;height:60px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:28px}
+.plakette.gruen{background:var(--success)} .plakette.warn{background:var(--warning)}
+.plakette.warn b{font:800 32px/1 Inter;color:var(--surface)}
+.marke{width:92px;height:92px;border-radius:999px;background:var(--b500);display:flex;align-items:center;justify-content:center;
+  border:5px solid var(--surface);box-shadow:0 8px 22px rgba(90,63,230,.3)}
+.marke svg{width:52px}
+.wortchip{padding:10px 22px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 6px 18px rgba(22,19,37,.14)}
+.wortchip.gruen{background:var(--success);color:var(--surface)}
+.chip5{display:flex;align-items:center;gap:14px;padding:12px 22px 12px 14px;border-radius:999px;background:var(--surface);
+  font:800 26px/32px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.16)}
+.chip5 .icon{position:relative;width:76px;height:48px}
+.chip5 .icon svg{position:absolute;inset:0}
+.chip5 .seite2{position:absolute;left:104px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:999px;background:var(--success);
+  display:flex;align-items:center;justify-content:center;opacity:0}
+.chip5 .seite2 svg{width:20px}
+.masz{padding:8px 18px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 26px/30px Inter;white-space:nowrap;
+  box-shadow:0 6px 16px rgba(22,19,37,.25)}
+.masz.hell{background:var(--warning);color:var(--surface)}
+.wolke{border-radius:999px;border:4px dashed var(--b300);background:rgba(164,139,244,.10)}
+.nachricht{width:40px;height:14px;border-radius:7px;background:var(--b300)}
+.nachricht.w{background:var(--surface)}
+.spur{position:absolute;width:13px;height:19px;border-radius:50%;opacity:0}
+.kachel{width:136px;height:136px;border-radius:32px;background:var(--surface);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 26px rgba(58,37,153,.16)}
+.kachel svg{width:88px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/108px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Vorlagen -->
+<template id="t-figur-ana">{{figur-ana}}</template>
+<template id="t-augen">{{figur-augen}}</template>
+<template id="t-zu">{{figur-mund-zu}}</template>
+<template id="t-auf">{{figur-mund-auf}}</template>
+<template id="t-froh">{{figur-mund-froh}}</template>
+<template id="t-kh">{{kopfhoerer}}</template>
+<template id="t-khh">{{kopfhoerer-hals}}</template>
+<template id="t-weste">{{ana-weste}}</template>
+<template id="t-glanz">{{ana-weste-glanz}}</template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAuge"><svg viewBox="0 0 40 40"><path d="M3 20C9 9 31 9 37 20C31 31 9 31 3 20Z" fill="var(--surface)"/><circle cx="20" cy="20" r="7" fill="var(--b700)"/><circle cx="22.5" cy="17.5" r="2.2" fill="var(--surface)"/></svg></template>
+<template id="svgOhr"><svg viewBox="0 0 40 40"><path d="M12 15c0-7 5-12 11-12s11 5 11 12c0 5-3 7-6 10-2 2-3 4-3 7 0 3-3 5-6 5-4 0-6-3-6-6" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" fill="none"/><path d="M17 15c0-3 3-6 6-6s6 3 6 6c0 3-3 4-5 5" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgNote"><svg viewBox="0 0 40 48"><ellipse cx="13" cy="38" rx="9" ry="7" transform="rotate(-20 13 38)" fill="var(--b500)"/><rect x="18.5" y="6" width="4.5" height="33" rx="2" fill="var(--b500)"/><path d="M21 6c7 2 12 5 13 12-4-4-8-5-13-5Z" fill="var(--b500)"/></svg></template>
+<template id="svgBogen"><svg viewBox="0 0 60 100"><path d="M14 12Q50 50 14 88" stroke="var(--warning)" stroke-width="9" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgRadschild"><svg viewBox="0 0 100 190"><rect x="45" y="88" width="10" height="100" rx="5" fill="var(--n500)"/>
+  <circle cx="50" cy="48" r="46" fill="var(--surface)"/><circle cx="50" cy="48" r="40" fill="var(--info)"/>
+  <g stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="30" cy="58" r="11"/><circle cx="70" cy="58" r="11"/>
+  <path d="M30 58L42 38L52 58ZM42 38H64L52 58M64 38L70 58M42 38L40 31M35 31H45M64 38L62 30H56"/></g></svg></template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne" id="bue0"></div>
+  <div class="a buehne" id="bue1"></div>
+
+  <!-- 1 · Die Straße baut sich auf (mittig, ohne Titel) -->
+  <div class="a szene" id="sz1" data-frei>
+    <div class="bg" id="haeuser1" style="left:0;top:0;width:900px;height:430px"></div>
+    <div class="bg" id="boden1" style="left:0;top:430px;width:900px;height:290px">
+      <div class="bg gehweg" style="left:0;top:0;width:900px;height:70px"></div>
+      <div class="bg bord" style="left:0;top:70px;width:900px;height:6px"></div>
+      <div class="bg radweg" style="left:0;top:76px;width:900px;height:40px"></div>
+      <div class="bg bord" style="left:0;top:116px;width:900px;height:6px"></div>
+      <div class="bg fahrbahn" style="left:0;top:122px;width:900px;height:168px"></div>
+      <div class="bg strich-h" style="left:20px;top:203px;width:880px"></div>
+    </div>
+    <div class="a ampel" id="ampel1" style="width:50px" data-gruppe="ampel1"></div>
+    <div class="a" id="betrieb1" style="width:104px">{{betrieb}}</div>
+    <div class="a" id="bike1" style="width:110px">{{fahrrad}}</div>
+    <div class="a" id="car1" style="width:210px">{{auto}}</div>
+    <div class="a welle" id="klingel1" data-frei></div>
+    <div class="a ring" id="ring1" style="width:172px;height:172px" data-frei></div>
+    <div class="a welle" id="welle1" data-frei></div>
+    <div class="a portrait" id="ana1" data-gruppe="ana1" style="width:120px;height:120px"></div>
+    <div class="a" id="schild1" data-gruppe="ana1" style="width:70px">{{schild}}</div>
+    <div class="a frage" id="frage1">?</div>
+  </div>
+
+  <!-- 2 · Gehweg und Radweg (Draufsicht) -->
+  <div class="a szene" id="sz2" data-frei><div class="innen" id="in2">
+    <div class="bg" id="haeuser2" style="left:0;top:0;width:900px;height:150px"></div>
+    <div class="bg gehweg" style="left:0;top:150px;width:900px;height:220px"></div>
+    <div class="bg leuchten" id="glow2" style="left:0;top:150px;width:900px;height:220px;background:var(--success-bg);box-shadow:inset 0 0 0 6px var(--success)"></div>
+    <div class="bg bord" style="left:0;top:370px;width:900px;height:8px"></div>
+    <div class="bg radweg" style="left:0;top:378px;width:900px;height:104px"></div>
+    <div class="bg leuchten" id="radglow2" style="left:0;top:378px;width:900px;height:104px;background:var(--info-bg);box-shadow:inset 0 0 0 6px var(--info)"></div>
+    <svg class="bg" id="symbol2" viewBox="0 0 100 70" style="left:640px;top:392px;width:150px">
+      <g stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <circle pathLength="1" cx="24" cy="48" r="14"/><circle pathLength="1" cx="76" cy="48" r="14"/>
+      <path pathLength="1" d="M24 48L40 22L54 48ZM40 22H68L54 48M68 22L76 48"/><path pathLength="1" d="M40 22L37 13M31 13H44M68 22L65 12H57"/></g></svg>
+    <div class="bg bord" style="left:0;top:482px;width:900px;height:8px"></div>
+    <div class="bg fahrbahn" style="left:0;top:490px;width:900px;height:230px"></div>
+    <div class="bg strich-h" style="left:10px;top:602px;width:890px"></div>
+    <div class="a" id="car2" style="width:200px">{{auto-oben}}</div>
+    <div class="a" id="bike2" style="width:120px">{{fahrrad~b2}}</div>
+    <div class="a welle" id="klingel2" data-frei></div>
+    <div class="a" id="schild2" style="width:84px;transform-origin:50% 100%"></div>
+    <div class="a wortchip" id="chipG2">Gehweg</div>
+    <div class="a wortchip" id="chipB2" style="left:304px;top:318px;transform-origin:0 50%">= Bürgersteig</div>
+    <div class="a portrait" id="ana2" style="width:110px;height:110px"></div>
+    <div class="a plakette gruen" id="haken2"></div>
+  </div></div>
+
+  <!-- 3 · An der Ampel -->
+  <div class="a szene" id="sz3" data-frei>
+    <div class="bg" id="haeuser3" style="left:0;top:0;width:900px;height:470px"></div>
+    <div class="bg gehweg" style="left:0;top:470px;width:430px;height:250px"></div>
+    <div class="bg bord" style="left:430px;top:470px;width:14px;height:250px"></div>
+    <div class="bg fahrbahn" style="left:444px;top:470px;width:302px;height:250px"></div>
+    <div class="bg strich-v" style="left:592px;top:480px;height:240px"></div>
+    <div class="bg bord" style="left:746px;top:470px;width:14px;height:250px"></div>
+    <div class="bg gehweg" style="left:760px;top:470px;width:140px;height:250px"></div>
+    <div class="bg" id="spuren3" style="left:0;top:0;width:900px;height:720px"></div>
+    <div class="a ampel" id="ampel3" style="width:120px"></div>
+    <div class="a welle" id="lampe3" data-frei></div>
+    <div class="a" id="uhr3" style="width:116px" data-gruppe="uhr3">{{uhr}}</div>
+    <div class="a" id="zeiger3" style="width:116px;transform-origin:50% 47.5%" data-gruppe="uhr3" data-dreht>{{uhr-zeiger}}</div>
+    <div class="a" id="ranzen3" style="width:96px">{{schulranzen}}</div>
+    <div class="a portrait" id="ana3" style="width:130px;height:130px"></div>
+    <div class="a" id="blatt3" style="width:64px" data-dreht>{{blatt}}</div>
+    <div class="a" id="zettel3" style="width:118px">{{strafzettel}}</div>
+  </div>
+
+  <!-- 4 · Zebrastreifen (Draufsicht) -->
+  <div class="a szene" id="sz4" data-frei>
+    <div class="bg" id="haeuser4" style="left:0;top:0;width:900px;height:64px"></div>
+    <div class="bg gehweg" style="left:0;top:64px;width:900px;height:126px"></div>
+    <div class="bg bord" style="left:0;top:190px;width:900px;height:10px"></div>
+    <div class="bg fahrbahn" style="left:0;top:200px;width:900px;height:340px"></div>
+    <div class="bg strich-h" style="left:0;top:367px;width:350px"></div>
+    <div class="bg strich-h" style="left:552px;top:367px;width:348px"></div>
+    <div class="bg" id="zebra4" style="left:380px;top:200px;width:140px;height:340px"></div>
+    <div class="bg bord" style="left:0;top:540px;width:900px;height:10px"></div>
+    <div class="bg gehweg" style="left:0;top:550px;width:900px;height:170px"></div>
+    <div class="bg" id="spuren4" style="left:0;top:0;width:900px;height:720px"></div>
+    <svg class="a" id="pfad4" viewBox="0 0 900 720" style="width:900px;height:720px" data-frei>
+      <defs><marker id="spitze4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--success)"/></marker></defs>
+      <path pathLength="1" d="M450 538V236" stroke="var(--success)" stroke-width="9" stroke-linecap="round" fill="none" marker-end="url(#spitze4)"/></svg>
+    <svg class="a" id="licht4" viewBox="0 0 170 120" style="width:170px" data-gruppe="car4" data-frei>
+      <path d="M0 18L170 0V48L0 30Z" fill="var(--warning-bg)" opacity=".85"/><path d="M0 90L170 72V120L0 102Z" fill="var(--warning-bg)" opacity=".85"/></svg>
+    <div class="a" id="brems4" style="width:40px;height:84px" data-gruppe="car4">
+      <i style="position:absolute;left:4px;top:0;width:30px;height:30px;border-radius:50%;background:radial-gradient(var(--error),rgba(226,85,106,0) 70%)"></i>
+      <i style="position:absolute;left:4px;top:54px;width:30px;height:30px;border-radius:50%;background:radial-gradient(var(--error),rgba(226,85,106,0) 70%)"></i></div>
+    <div class="a" id="car4" style="width:220px" data-gruppe="car4">{{auto-oben~c4}}</div>
+    <svg class="a" id="blick4" viewBox="0 0 900 720" style="width:900px;height:720px" data-frei>
+      <path pathLength="1" d="M412 568L330 478" stroke="var(--b500)" stroke-width="6" stroke-linecap="round" stroke-dasharray=".04 .05" fill="none"/></svg>
+    <div class="a marke" id="auge4" style="width:72px;height:72px;border-width:4px" data-frei></div>
+    <div class="a plakette gruen" id="haken4" data-gruppe="car4"></div>
+    <div class="a portrait" id="ana4" data-gruppe="ana4" style="width:110px;height:110px"></div>
+    <div class="a plakette warn" id="warn4" data-gruppe="ana4"><b>!</b></div>
+  </div>
+
+  <!-- 5 · Links – rechts – links (Draufsicht) -->
+  <div class="a szene" id="sz5" data-frei>
+    <div class="bg" id="haeuser5" style="left:0;top:0;width:900px;height:64px"></div>
+    <div class="bg gehweg" style="left:0;top:64px;width:900px;height:126px"></div>
+    <div class="bg bord" style="left:0;top:190px;width:900px;height:10px"></div>
+    <div class="bg fahrbahn" style="left:0;top:200px;width:900px;height:340px"></div>
+    <div class="bg strich-h" style="left:0;top:367px;width:900px"></div>
+    <div class="bg bord" style="left:0;top:540px;width:900px;height:10px"></div>
+    <div class="bg gehweg" style="left:0;top:550px;width:900px;height:170px"></div>
+    <div class="bg" id="spuren5" style="left:0;top:0;width:900px;height:720px"></div>
+    <svg class="a" id="pfN5" viewBox="0 0 140 50" style="width:140px"><path d="M8 25H104" stroke="var(--surface)" stroke-width="11" stroke-linecap="round"/><path d="M98 6L134 25L98 44Z" fill="var(--surface)"/></svg>
+    <svg class="a" id="pfF5" viewBox="0 0 140 50" style="width:140px"><path d="M8 25H104" stroke="var(--surface)" stroke-width="11" stroke-linecap="round"/><path d="M98 6L134 25L98 44Z" fill="var(--surface)"/></svg>
+    <div class="a" id="car5a" style="width:200px">{{auto-oben~c5a}}</div>
+    <div class="a" id="car5b" style="width:200px">{{auto-oben~c5b}}</div>
+    <div class="a" id="bus5" style="width:300px">{{bus-oben}}</div>
+    <svg class="a" id="blick5" viewBox="0 0 640 640" style="width:640px;height:640px" data-frei>
+      <path pathLength="1" d="M392 320H580" stroke="var(--b500)" stroke-width="16" stroke-linecap="round" fill="none"/>
+      <path d="M574 290L626 320L574 350Z" fill="var(--b500)" stroke="var(--b500)" stroke-width="6" stroke-linejoin="round"/></svg>
+    <div class="a portrait" id="ana5" data-gruppe="ana5" style="width:110px;height:110px"></div>
+    <div class="a plakette gruen" id="haken5" data-gruppe="ana5"></div>
+    <div class="a chip5" id="chip5" data-dreht><span class="icon">
+      <svg id="lv5" viewBox="0 0 76 48"><rect width="76" height="48" rx="10" fill="var(--n700)"/><path d="M8 24H68" stroke="var(--surface)" stroke-width="2.5" stroke-dasharray="6 6"/>
+        <path d="M14 13H54M48 7L58 13L48 19" stroke="var(--warning)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M62 35H22M28 29L18 35L28 41" stroke="var(--warning)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <svg id="rv5" viewBox="0 0 76 48" style="opacity:0"><rect width="76" height="48" rx="10" fill="var(--n700)"/><path d="M8 24H68" stroke="var(--surface)" stroke-width="2.5" stroke-dasharray="6 6"/>
+        <path d="M62 13H22M28 7L18 13L28 19" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M14 35H54M48 29L58 35L48 41" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span id="lvText5">Linksverkehr</span><span class="seite2" id="lvOk5"></span></div>
+  </div>
+
+  <!-- 6 · Handy weg, Kopfhörer raus -->
+  <div class="a szene" id="sz6" data-frei>
+    <div class="bg" id="haeuser6" style="left:0;top:0;width:900px;height:480px;opacity:.55"></div>
+    <div class="bg gehweg" style="left:0;top:480px;width:900px;height:80px"></div>
+    <div class="bg bord" style="left:0;top:560px;width:900px;height:5px"></div>
+    <div class="bg radweg" style="left:0;top:565px;width:900px;height:35px"></div>
+    <div class="bg bord" style="left:0;top:600px;width:900px;height:5px"></div>
+    <div class="bg fahrbahn" style="left:0;top:605px;width:900px;height:115px"></div>
+    <div class="a wolke" id="wolke6" style="width:410px;height:410px" data-frei></div>
+    <div class="a" id="note6a" style="width:52px">{{}}</div>
+    <div class="a" id="note6b" style="width:52px"></div>
+    <div class="a" id="note6c" style="width:52px"></div>
+    <div class="a" id="bike6" style="width:110px">{{fahrrad~b6}}</div>
+    <div class="a" id="car6" style="width:200px">{{auto~c6}}</div>
+    <div class="a" id="bg6a" style="width:44px" data-frei></div>
+    <div class="a" id="bg6b" style="width:44px" data-frei></div>
+    <div class="a" id="bg6c" style="width:44px" data-frei></div>
+    <div class="a welle" id="klingel6" data-frei></div>
+    <div class="a" id="tasche6" style="width:140px">{{tasche}}</div>
+    <div class="a portrait" id="ana6" data-gruppe="ana6" data-extra="kh" style="width:230px;height:230px;border-width:8px"></div>
+    <div class="a" id="handy6" data-gruppe="ana6" style="width:120px">{{handy}}</div>
+    <div class="a nachricht" id="msg6a" data-gruppe="ana6"></div>
+    <div class="a nachricht w" id="msg6b" data-gruppe="ana6"></div>
+    <div class="a nachricht" id="msg6c" data-gruppe="ana6"></div>
+    <div class="a welle" id="welle6a" data-frei></div><div class="a welle" id="welle6b" data-frei></div>
+    <div class="a marke" id="auge6"></div>
+    <div class="a marke" id="ohr6"></div>
+  </div>
+
+  <!-- 7 · Im Dunkeln -->
+  <div class="a szene" id="sz7" data-frei>
+    <div class="bg" id="haeuser7" style="left:0;top:0;width:900px;height:400px"></div>
+    <div class="bg gehweg" style="left:0;top:400px;width:900px;height:70px"></div>
+    <div class="bg bord" style="left:0;top:470px;width:900px;height:6px"></div>
+    <div class="bg fahrbahn" style="left:0;top:476px;width:900px;height:244px"></div>
+    <div class="bg" style="left:0;top:170px;width:900px;height:300px">
+      <div class="bg" style="left:-30px;top:-20px;width:300px">{{laterne}}</div>
+      <div class="bg" style="left:370px;top:-20px;width:300px">{{laterne}}</div></div>
+    <div class="bg" id="nacht7" style="left:0;top:0;width:900px;height:720px;background:linear-gradient(var(--ink),var(--b700));opacity:0"></div>
+    <div class="bg" id="lichter7" style="left:0;top:0;width:900px;height:720px;opacity:0"></div>
+    <div class="a" id="mond7" style="width:112px">{{mond}}</div>
+    <svg class="a" id="kegel7" viewBox="0 0 600 300" style="width:600px;height:300px;transform-origin:0 50%" data-frei>
+      <defs><linearGradient id="kegelVerlauf" x2="1"><stop offset="0" stop-color="var(--warning-bg)" stop-opacity=".95"/><stop offset="1" stop-color="var(--warning-bg)" stop-opacity="0"/></linearGradient></defs>
+      <path d="M0 140L600 40V260L0 160Z" fill="url(#kegelVerlauf)"/></svg>
+    <div class="a" id="car7" style="width:230px">{{auto~c7}}</div>
+    <svg class="a" id="lineal7" viewBox="0 0 900 720" style="width:900px;height:720px" data-frei>
+      <g stroke="var(--warning)" stroke-width="6" stroke-linecap="round" fill="none">
+        <path id="seg7a" pathLength="1" d="M264 664H356"/><path id="seg7b" pathLength="1" d="M356 664H780"/></g>
+      <g stroke="var(--warning)" stroke-width="5" stroke-linecap="round"><path id="tick7a" d="M264 652V676"/><path id="tick7b" d="M356 652V676"/><path id="tick7c" d="M780 652V676"/></g></svg>
+    <div class="a masz" id="m25">25 m</div>
+    <div class="a masz hell" id="m140">140 m</div>
+    <div class="a welle" id="welle7" style="border-color:var(--warning)" data-frei></div>
+    <div class="a welle" id="welle7b" style="border-color:var(--warning)" data-frei></div>
+    <div class="a" id="tasche7" style="width:132px" data-gruppe="tasche7">{{tasche~t7}}</div>
+    <div class="a" id="refl7" style="width:44px" data-gruppe="tasche7">{{reflektor}}</div>
+    <div class="a portrait" id="ana7" data-nacht style="width:120px;height:120px"></div>
+  </div>
+
+  <!-- 8 · Zusammenfassung -->
+  <div class="a szene" id="sz8" data-frei>
+    <div class="bg gehweg" style="left:0;top:560px;width:900px;height:160px;opacity:.7"></div>
+    <div class="a kachel" id="k8a" data-gruppe="k8a"><svg viewBox="0 0 80 80"><g fill="var(--b100)"><rect x="8" y="8" width="30" height="30" rx="5"/><rect x="42" y="8" width="30" height="30" rx="5"/><rect x="8" y="42" width="30" height="30" rx="5"/><rect x="42" y="42" width="30" height="30" rx="5"/></g>
+      <g fill="var(--b500)"><ellipse cx="30" cy="52" rx="6" ry="9"/><ellipse cx="50" cy="30" rx="6" ry="9"/></g></svg></div>
+    <div class="a kachel" id="k8b" data-gruppe="k8b"><svg viewBox="0 0 80 80"><rect x="22" y="4" width="36" height="72" rx="10" fill="var(--ink)"/><circle cx="40" cy="24" r="13" fill="var(--error)"/>
+      <circle cx="40" cy="18" r="3" fill="var(--surface)"/><rect x="36" y="22" width="8" height="10" rx="2" fill="var(--surface)"/><circle cx="40" cy="56" r="13" fill="var(--n700)"/></svg></div>
+    <div class="a kachel" id="k8c" data-gruppe="k8c"><svg viewBox="0 0 80 80"><g stroke="var(--b500)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M64 18H18M28 8L16 18L28 28"/><path d="M16 40H62M52 30L64 40L52 50"/><path d="M64 62H18M28 52L16 62L28 72"/></g></svg></div>
+    <div class="a kachel" id="k8d" data-gruppe="k8d"><svg viewBox="0 0 80 80"><rect x="30" y="6" width="22" height="38" rx="5" fill="var(--b300)"/><rect x="34" y="11" width="14" height="24" rx="2" fill="var(--b100)"/>
+      <path d="M22 34C22 18 58 18 58 34" stroke="var(--b700)" stroke-width="4" fill="none"/><rect x="10" y="32" width="60" height="40" rx="10" fill="var(--b600)"/><rect x="10" y="32" width="60" height="12" rx="6" fill="var(--b500)"/></svg></div>
+    <div class="a kachel" id="k8e" data-gruppe="k8e"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="30" fill="var(--warning)"/><circle cx="40" cy="40" r="21" stroke="var(--warning-bg)" stroke-width="4" fill="none"/><circle cx="40" cy="40" r="11" stroke="var(--warning-bg)" stroke-width="4" fill="none"/></svg></div>
+    <div class="a plakette gruen" id="h8a" data-gruppe="k8a"></div><div class="a plakette gruen" id="h8b" data-gruppe="k8b"></div>
+    <div class="a plakette gruen" id="h8c" data-gruppe="k8c"></div><div class="a plakette gruen" id="h8d" data-gruppe="k8d"></div>
+    <div class="a plakette gruen" id="h8e" data-gruppe="k8e"></div>
+    <div class="a ring" id="ring8" style="width:172px;height:172px" data-frei></div>
+    <div class="a welle" id="welle8" style="border-color:var(--success)" data-frei></div>
+    <div class="a portrait" id="ana8" style="width:100px;height:100px"></div>
+  </div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Gehweg für dich</div><div class="unter">Radweg für Räder</div></div>
+<div class="block" id="tb3"><div class="titel">Bei Rot: stehen bleiben</div></div>
+<div class="block" id="tb4"><div class="titel">Zebrastreifen:</div><div class="unter">Autos halten – trotzdem schauen</div></div>
+<div class="block" id="tb5"><div class="titel">Links – rechts – links</div></div>
+<div class="block" id="tb6"><div class="titel">Beim Überqueren: Handy weg</div></div>
+<div class="block" id="tb7"><div class="titel">Dunkel: ab 25 m</div><div class="unter">Reflektoren: bis 140 m</div></div>
+<div class="block" id="tb8"><div class="titel">Gehweg</div><div class="titel">Rot = warten</div><div class="titel">Links-rechts-links</div><div class="titel">Handy weg</div><div class="titel">Sichtbar sein</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Schauen und gesehen werden.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Zu Fuß bist du sicher unterwegs, wenn du die Regeln kennst.</div>
+</div></div>
+
+<svg width="0" height="0" style="position:absolute"><defs id="filterDefs"></defs></svg>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+// k-tes Wort im Satz n, das mit m beginnt (für Wörter, die im Satz mehrfach vorkommen)
+const WN = (m, n, k = 0) => { const L = satz(n).woerter.filter(w => _norm(w.w).startsWith(_norm(m))); if (!L[k]) throw new Error(`Wort ${m} #${k} fehlt in Satz ${n}`); return A(L[k].start); };
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+/* ---------- Bauteile ---------- */
+// Porträts: Ana mit Augen- und Mund-Ebenen; data-extra="kh" = Kopfhörer, data-nacht = Schatten + Warnweste
+document.querySelectorAll('.portrait').forEach(p => {
+  const kh = p.dataset.extra === 'kh' ? `<div class="ebene kh">${tpl('t-kh')}</div><div class="ebene khh">${tpl('t-khh')}</div>` : '';
+  let h = `<div class="figur"><div class="ebene basis">${tpl('t-figur-ana')}</div>${kh}<div class="ebene augen">${tpl('t-augen')}</div>` +
+    `<div class="ebene zu">${tpl('t-zu')}</div><div class="ebene auf">${tpl('t-auf')}</div><div class="ebene froh">${tpl('t-froh')}</div></div>`;
+  if ('nacht' in p.dataset) h += `<div class="schatten"></div><div class="figur"><div class="ebene weste">${tpl('t-weste')}</div><div class="ebene glanz">${tpl('t-glanz')}</div></div>`;
+  p.innerHTML = h;
+});
+['haken2', 'haken4', 'haken5', 'h8a', 'h8b', 'h8c', 'h8d', 'h8e'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+el('lvOk5').innerHTML = tpl('svgHaken');
+['auge4', 'auge6'].forEach(id => { el(id).innerHTML = tpl('svgAuge'); });
+el('ohr6').innerHTML = tpl('svgOhr');
+['note6a', 'note6b', 'note6c'].forEach(id => { el(id).innerHTML = tpl('svgNote'); });
+['bg6a', 'bg6b', 'bg6c'].forEach(id => { el(id).innerHTML = tpl('svgBogen'); });
+el('schild2').innerHTML = tpl('svgRadschild');
+
+// Fußgängerampel: Gehäuse, Mast, zwei Lampen mit Ampelmännchen (steht / geht); leuchtende Lampen als eigene Ebenen
+const steht = (cx, cy, f) => `<g fill="${f}"><circle cx="${cx}" cy="${cy - 22}" r="7"/><rect x="${cx - 11}" y="${cy - 13}" width="22" height="25" rx="6"/>` +
+  `<rect x="${cx - 10}" y="${cy + 8}" width="8" height="22" rx="4"/><rect x="${cx + 2}" y="${cy + 8}" width="8" height="22" rx="4"/></g>`;
+const geht = (cx, cy, f) => `<g stroke="${f}" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M${cx + 1} ${cy - 10}L${cx - 1} ${cy + 7}" stroke-width="13"/>` +
+  `<path d="M${cx - 1} ${cy + 8}L${cx - 13} ${cy + 27}M${cx - 1} ${cy + 8}L${cx + 9} ${cy + 18}L${cx + 15} ${cy + 28}M${cx} ${cy - 9}L${cx - 13} ${cy + 3}M${cx + 2} ${cy - 9}L${cx + 14} ${cy}" stroke-width="7"/></g>` +
+  `<circle cx="${cx + 3}" cy="${cy - 23}" r="7" fill="${f}"/>`;
+document.querySelectorAll('.ampel').forEach(a => {
+  a.innerHTML = `<svg viewBox="0 0 120 430"><rect x="53" y="236" width="14" height="188" rx="5" fill="var(--b700)"/><rect x="38" y="420" width="44" height="10" rx="5" fill="var(--b700)"/>
+    <rect x="14" y="4" width="98" height="240" rx="22" fill="var(--b700)"/><rect x="10" y="0" width="98" height="240" rx="22" fill="var(--ink)"/>
+    <circle cx="59" cy="64" r="39" fill="var(--n700)"/><circle cx="59" cy="176" r="39" fill="var(--n700)"/>
+    ${steht(59, 64, 'var(--n500)')}${geht(59, 176, 'var(--n500)')}
+    <g id="${a.id}-rot" style="opacity:0"><circle cx="59" cy="64" r="39" fill="var(--error)" opacity=".22"/>${steht(59, 64, 'var(--error)')}</g>
+    <g id="${a.id}-gruen" style="opacity:0"><circle cx="59" cy="176" r="39" fill="var(--success)" opacity=".22"/>${geht(59, 176, 'var(--success)')}</g></svg>`;
+});
+
+// Häuserzeilen: Blöcke mit Fenstern (Hintergrund, wachsen aus dem Boden)
+const FARBE = { a: 'var(--b200)', b: 'var(--b300)', c: 'var(--b100)' };
+const haeuser = (id, liste, unten) => liste.map(([x, w, h, f], i) => {
+  const d = document.createElement('div');
+  d.className = 'haus'; d.id = `${id}-${i}`;
+  Object.assign(d.style, { left: x + 'px', top: (unten - h) + 'px', width: w + 'px', height: h + 'px', background: FARBE[f] });
+  const sp = Math.max(1, Math.floor((w - 16) / 36)), ze = Math.max(1, Math.floor((h - 34) / 46)), ox = (w - (sp * 36 - 16)) / 2;
+  for (let r = 0; r < ze; r++) for (let c = 0; c < sp; c++) d.insertAdjacentHTML('beforeend', `<i style="left:${ox + c * 36}px;top:${22 + r * 46}px"></i>`);
+  el(id).appendChild(d);
+  return d;
+});
+const H1 = haeuser('haeuser1', [[40, 140, 220, 'a'], [190, 120, 290, 'b'], [320, 160, 190, 'a'], [490, 120, 250, 'b'], [620, 130, 200, 'a'], [760, 120, 260, 'b']], 430);
+haeuser('haeuser2', [[0, 150, 110, 'a'], [160, 130, 140, 'b'], [300, 170, 100, 'a'], [480, 140, 130, 'b'], [630, 120, 110, 'a'], [760, 140, 140, 'b']], 150);
+haeuser('haeuser3', [[0, 130, 230, 'c'], [140, 110, 300, 'c'], [470, 150, 200, 'c'], [630, 120, 280, 'c'], [760, 140, 220, 'c']], 470);
+haeuser('haeuser4', [[0, 150, 64, 'a'], [160, 130, 64, 'b'], [300, 170, 64, 'a'], [480, 140, 64, 'b'], [630, 120, 64, 'a'], [760, 140, 64, 'b']], 64);
+haeuser('haeuser5', [[0, 150, 64, 'b'], [160, 130, 64, 'a'], [300, 170, 64, 'b'], [480, 140, 64, 'a'], [630, 120, 64, 'b'], [760, 140, 64, 'a']], 64);
+haeuser('haeuser6', [[20, 180, 300, 'a'], [210, 150, 380, 'b'], [370, 190, 280, 'a'], [570, 150, 360, 'b'], [730, 170, 310, 'a']], 480);
+const H7 = haeuser('haeuser7', [[10, 150, 230, 'a'], [170, 130, 300, 'b'], [310, 170, 210, 'a'], [490, 130, 280, 'b'], [630, 130, 200, 'a'], [770, 120, 250, 'b']], 400);
+// Nachts leuchten einige Fenster: Kopien über der Nacht-Ebene
+H7.forEach((h, i) => [...h.querySelectorAll('i')].forEach((f, k) => {
+  if ((k * 7 + i * 3) % 4) return;
+  el('lichter7').insertAdjacentHTML('beforeend', `<i style="position:absolute;left:${h.offsetLeft + f.offsetLeft}px;top:${h.offsetTop + f.offsetTop}px;width:20px;height:26px;border-radius:4px;background:var(--warning-bg)"></i>`);
+}));
+// Laternenlicht
+[[120, 210], [520, 210]].forEach(([x, y]) => el('lichter7').insertAdjacentHTML('beforeend',
+  `<i style="position:absolute;left:${x - 90}px;top:${y - 20}px;width:180px;height:270px;background:linear-gradient(rgba(252,241,221,.55),rgba(252,241,221,0));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%)"></i>` +
+  `<i style="position:absolute;left:${x - 40}px;top:${y - 40}px;width:80px;height:60px;border-radius:50%;background:radial-gradient(rgba(252,241,221,.9),rgba(252,241,221,0) 70%)"></i>`));
+// Zebrastreifen: sieben Balken
+const ZEBRA = [0, 1, 2, 3, 4, 5, 6].map(i => { el('zebra4').insertAdjacentHTML('beforeend', `<div class="bg" id="zb${i}" style="left:0;top:${14 + i * 46}px;width:140px;height:26px;border-radius:5px;background:var(--surface);transform-origin:50% 50%"></div>`); return 'zb' + i; });
+
+const X0 = S(0), X1 = S(1);
+akteur('bue0', { x: X0 + 1320, y: 540 });
+akteur('bue1', { x: X1 + 1320, y: 540 });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte, der Schwenk startet von hier
+akteur('sz1', { x: X0 + 1320, y: 540 });
+akteur('sz2', { x: X1 + 1320, y: 540 });
+['sz3', 'sz4', 'sz5', 'sz6', 'sz7', 'sz8'].forEach(id => akteur(id, { x: X1 + 1320, y: 540, o: 0, s: 1.04 }));
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, liste, d = .9) => {   // [t, x, y, g] – mehrere Wellen mit einem Element
+  akteur(id, { x: liste[0][1], y: liste[0][2], o: 0, s: .8 });
+  liste.forEach(([t, x, y, g]) => { set(id, t, { x, y, o: .9, s: .8 * g / 200 }); tw(id, t, d, { o: 0, s: 1.5 * g / 200 }, 'weich'); });
+  el(id).style.width = el(id).style.height = '200px';
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+const sichtbar = (id, t, o = 1) => set(id, t, { o });
+// Gehen: kleine Hüpfer Schritt für Schritt, leichtes Wiegen, Fußspuren in einem Hintergrund-Element
+const gehen = (id, t0, x1, y1, opt = {}) => {
+  const { schritt = 46, dauer = .24, spur = null, farbe = 'var(--b300)', h = 9 } = opt;
+  const x0 = wertBei(id, 'x', t0), y0 = wertBei(id, 'y', t0), g = el(id).offsetHeight / 2;
+  const n = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0) / schritt));
+  const dx = (x1 - x0) / n, dy = (y1 - y0) / n, l = Math.hypot(dx, dy) || 1;
+  for (let k = 1; k <= n; k++) {
+    const t = t0 + (k - 1) * dauer;
+    tw(id, t, dauer, { x: x0 + dx * k, y: y0 + dy * k }, 'sinus', { bogen: h });
+    tw(id, t, dauer, { r: k === n ? 0 : (k % 2 ? 3 : -3) }, 'sinus');
+    if (spur) {
+      const q = k % 2 ? 1 : -1, px = x0 + dx * (k - .5) - dy / l * 9 * q, py = y0 + dy * (k - .5) + dx / l * 9 * q + (Math.abs(dx) > Math.abs(dy) ? g * .82 : 0);
+      const s = document.createElement('i'); s.className = 'spur';
+      Object.assign(s.style, { left: (px - 6.5) + 'px', top: (py - 9.5) + 'px', background: farbe, transform: `rotate(${Math.atan2(dy, dx) * 180 / Math.PI + 90}deg)` });
+      el(spur).appendChild(s);
+      akteur(s, { o: 0 }, true); tw(s, t + dauer * .6, .15, { o: .8 }); tw(s, t + 1.6, .8, { o: 0 });
+      AKTEURE.get(s).basis.r = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+    }
+    if (k % 2) cue(t + dauer * .5, 'tipp');
+  }
+  return t0 + n * dauer;
+};
+// Bewegungsunschärfe für schnelle Fahrzeuge (waagrecht, je nach Tempo)
+const UNSCHAERFE = [];
+const unschaerfe = (id, k = .28) => {
+  const e = el(id), f = 'mb-' + e.id;
+  el('filterDefs').insertAdjacentHTML('beforeend', `<filter id="${f}" x="-25%" y="-5%" width="150%" height="110%"><feGaussianBlur stdDeviation="0 0"/></filter>`);
+  UNSCHAERFE.push([e, el(f).firstElementChild, f, k]);
+};
+HOOKS.push(t => UNSCHAERFE.forEach(([e, b, f, k]) => {
+  const a = AKTEURE.get(e), v = Math.abs(wert(a, 'x', t) - wert(a, 'x', t - 1 / 30));
+  const s = Math.min(10, v * k);
+  b.setAttribute('stdDeviation', `${s.toFixed(2)} 0`);
+  e.style.filter = s > .4 ? `url(#${f})` : '';
+}));
+const fahrt = (id, t, d, x0, x1, y, e = 'inout') => { akteur(id, { x: x0, y, o: 0 }); sichtbar(id, t, 1); tw(id, t, d, { x: x1 }, e); sichtbar(id, t + d, 0); unschaerfe(id); };
+
+/* ---------- Figuren: blinzeln, Blick, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  akteur(p.querySelector('.zu'), {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const BLICK = new Map();
+const blick = (id, t, dx, d = .2) => { const p = el(id); if (!BLICK.has(p)) BLICK.set(p, []); BLICK.get(p).push([t, dx, d]); BLICK.get(p).sort((a, b) => a[0] - b[0]); };
+const blickWert = (p, t) => { let v = 0; for (const [t0, dx, d] of BLICK.get(p) || []) { if (t < t0) break; v += (dx - v) * E.sinus(clamp((t - t0) / d)); } return v; };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `translateX(${(3.2 * blickWert(p, t)).toFixed(2)}%) scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelectorAll('.figur').forEach(f => { f.style.transform = `rotate(${nick}deg) translateY(${nick}px)`; });
+}));
+
+/* ---------- Kamera: Schwenk, Szenenwechsel-Atmer, Akzente ---------- */
+const PANS = [], WECHSEL = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const wechsel = t => { WECHSEL.push(t); cue(t, 'whoosh'); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const RUHE = [-360, -S(1)];
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const p of WECHSEL) z -= .045 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  const wx = wert(kamera, 'x', t);
+  const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  for (let i = 0; i < 2; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE[i])).toFixed(1)}px)`;
+});
+// Szenenwechsel auf der Erklär-Bühne: altes Bild tritt zurück, neues kommt nach vorn
+const szene = (alt, neu, t) => { wechsel(t); tw(alt, t, .4, { o: 0, s: .96 }, 'in'); tw(neu, t + .22, .6, { o: 1, s: 1 }, 'out'); };
+const ampel = (id, t, farbe) => { set(id + '-rot', t, { o: farbe === 'rot' ? 1 : 0 }); set(id + '-gruen', t, { o: farbe === 'gruen' ? 1 : 0 }); };
+['ampel1', 'ampel3'].forEach(a => { akteur(a + '-rot', { o: 0 }, true); akteur(a + '-gruen', { o: 0 }, true); });
+
+/* ================= 1 · Ana ist neu in der Stadt (Bühne mittig, ohne Titel) ================= */
+{
+  // Häuser wachsen aus dem Boden, der Boden rollt sich aus
+  H1.forEach((h, i) => { akteur(h, { sy: 0 }, true); tw(h, .12 + i * .07, .6, { sy: 1 }, 'sanft'); });
+  cue(.15, 'whoosh');
+  HOOKS.push(t => { const p = E.inout(clamp((t - .05) / .75)); el('boden1').style.clipPath = `inset(0 ${(100 - 100 * p).toFixed(2)}% 0 0)`; });
+  ampel('ampel1', 0, 'gruen');
+  pop('ampel1', .95, { x: 690, y: 395 }, 'pop', 'sanft');
+  // Ana hüpft mit Squash & Stretch auf den Gehweg
+  const tA = W('Ana', 1) - .1;
+  akteur('ana1', { x: -90, y: 330, o: 0 });
+  sichtbar('ana1', tA, 1); flug('ana1', tA, .6, 190, 400, 150); landen('ana1', tA + .6, 1.1); cue(tA + .6, 'plopp');
+  froh('ana1', tA + .7);
+  blick('ana1', W('Stadt', 1) - .2, -1); blick('ana1', W('Stadt', 1) + .3, 1); blick('ana1', W('Stadt', 1) + .8, 0);
+  H1.forEach((h, i) => { tw(h, W('Stadt', 1) + i * .05, .12, { sy: 1.04 }, 'sinus'); tw(h, W('Stadt', 1) + .12 + i * .05, .3, { sy: 1 }, 'sanft'); });
+  // Zur Arbeit: der Betrieb ploppt auf, Ana geht zu Fuß los
+  pop('betrieb1', W('Arbeit', 2) - .05, { x: 790, y: 343 }, 'plopp', 'sanft');
+  schweben('betrieb1', 3);
+  mund('ana1', W('geht', 2) - .3, 'zu');
+  gehen('ana1', W('geht', 2) - .2, 420, 400, { spur: 'haeuser1', farbe: 'var(--b300)' });
+  bump('betrieb1', W('Fuß', 2), 1.08);
+  // Autos, Fahrräder, Ampeln
+  fahrt('car1', W('Autos', 3) - .4, 1.05, -170, 1090, 612); cue(W('Autos', 3) - .1, 'whoosh');
+  const tR = W('Fahrräder', 3) - .55;
+  fahrt('bike1', tR, 1.9, -110, 1020, 508);
+  [.62, .86].forEach(d => cue(tR + d, 'ding'));
+  wellen('klingel1', [[tR + .62, 360, 470, 90], [tR + .86, 470, 470, 90]], .6);
+  blick('ana1', tR + .5, -1); blick('ana1', tR + 1.1, 1); blick('ana1', tR + 1.5, 0);
+  const tAm = W('Ampeln', 3);
+  ampel('ampel1', tAm, 'rot'); cue(tAm, 'klick'); bump('ampel1', tAm, 1.12);
+  // Ana schaut nach links und rechts, ein Fragezeichen ploppt
+  blick('ana1', tAm + .45, -1); blick('ana1', tAm + .9, 1); blick('ana1', tAm + 1.35, 0);
+  mund('ana1', tAm + .4, 'auf');
+  pop('frage1', tAm + .55, { x: 420, y: 290 }); wackeln('frage1', tAm + 1.0, 4, 6);
+  // Diese Regeln schützen dich: Schutzring
+  const tS = W('schützen', 4) - .15;
+  tw('frage1', tS - .3, .3, { s: 0 }, 'sinus');
+  akteur('ring1', { x: 420, y: 400, o: 0, s: 1.5 });
+  tw('ring1', tS, .2, { o: 1 }); tw('ring1', tS, .6, { s: 1 }, 'sanft'); cue(tS, 'ding');
+  welle('welle1', tS + .45, 420, 400, 1.0, 172);
+  pop('schild1', tS + .3, { x: 494, y: 330 }, 'erfolg', 'sanft');
+  froh('ana1', tS + .1); bump('ana1', tS + .45, 1.08); akzent(tS + .2);
+}
+
+/* ================= 2 · Gehweg und Radweg ================= */
+const P1 = SE(4) + .3;
+pan2(P1, 1);
+{
+  akteur('in2', { s: 1.28 }, true); tw('in2', P1 + .15, 1.2, { s: 1 }, 'inout');
+  titelEin('tb2', W('Gehweg', 5) - .25, { unter: W('Radweg', 7) - .1 });
+  pop('ana2', P1 + .55, { x: 140, y: 262 }, 'pop', 'sanft'); froh('ana2', P1 + .6);
+  fahrt('car2', W('gehst', 5) - .3, 1.5, -160, 1080, 548);
+  // Gehweg leuchtet grün, Ana läuft los
+  const tG = W('Gehweg', 5) - .1;
+  akteur('glow2', { o: 0 }, true); tw('glow2', tG, .35, { o: .9 }); tw('glow2', tG + 1.6, .6, { o: .45 });
+  pop('chipG2', tG + .15, { x: 202, y: 342 }, 'pop', 'sanft');
+  gehen('ana2', W('Zu', 5) + .45, 420, 262, { spur: 'in2', farbe: 'var(--b200)' });
+  // Bürgersteig: Wort-Chip klappt auf
+  const tB = W('Bürgersteig', 6) - .1;
+  akteur('chipB2', { sx: 0, o: 0 }, true); tw('chipB2', tB, .1, { o: 1 }); tw('chipB2', tB, .5, { sx: 1 }, 'back'); cue(tB, 'klick');
+  bump('chipG2', tB + .2, 1.08);
+  // Radweg: Fahrrad-Symbol malt sich, das blaue Schild klappt hoch
+  const tRw = W('Radweg', 7) - .1;
+  akteur('radglow2', { o: 0 }, true); tw('radglow2', tRw, .35, { o: .8 }); tw('radglow2', tRw + 2.2, .5, { o: .35 });
+  tw('glow2', tRw, .4, { o: .2 });
+  el('symbol2').querySelectorAll('[pathLength]').forEach((p, i) => strich(p, tRw + .1 + i * .12, .55));
+  cue(tRw + .1, 'kritzeln');
+  akteur('schild2', { x: 792, y: 268, sy: 0, o: 0 }); tw('schild2', W('daneben', 7), .1, { o: 1 }); tw('schild2', W('daneben', 7), .55, { sy: 1 }, 'back'); cue(W('daneben', 7), 'klick');
+  wackeln('schild2', W('Fahrräder', 7) - .1, 3, 3);
+  // Ana tritt auf den Radweg – ein Fahrrad klingelt heran, Ana hüpft zurück
+  const tStep = W('Fahrräder', 7) + .15;
+  tw('ana2', tStep, .45, { x: 470, y: 430 }, 'inout', { bogen: 40 }); landen('ana2', tStep + .45, .7); mund('ana2', tStep, 'zu');
+  const tK = W('Dort', 8) - .55;
+  akteur('bike2', { x: -120, y: 418, o: 0 }); sichtbar('bike2', tK, 1); tw('bike2', tK, .75, { x: 250 }, 'inout'); unschaerfe('bike2');
+  wellen('klingel2', [[tK + .55, 284, 393, 110], [tK + .8, 284, 393, 110]], .6); cue(tK + .55, 'ding'); cue(tK + .8, 'ding');
+  mund('ana2', tK + .6, 'auf'); wackeln('ana2', tK + .6, 3, 5); blick('ana2', tK + .5, -1);
+  const tZ = W('gehst', 8) - .05;
+  tw('ana2', tZ, .45, { x: 470, y: 262 }, 'inout', { bogen: 60 }); landen('ana2', tZ + .45, .9); cue(tZ, 'whoosh');
+  blick('ana2', tZ + .5, 0);
+  tw('bike2', tZ + .3, 1.0, { x: 1060 }, 'in'); sichtbar('bike2', tZ + 1.3, 0);
+  pop('haken2', W('nicht', 8), { x: 566, y: 196 }, 'erfolg'); froh('ana2', W('nicht', 8));
+  tw('glow2', W('nicht', 8), .3, { o: .9 }); tw('radglow2', W('nicht', 8), .3, { o: .2 });
+  textAus('tb2', SE(8) + .2);
+}
+
+/* ================= 3 · An der Ampel ================= */
+const T3 = SE(8) + .25;
+szene('sz2', 'sz3', T3);
+{
+  titelEin('tb3', W('Bei', 9) - .2);
+  ampel('ampel3', 0, 'rot');
+  akteur('ampel3', { x: 130, y: 390 });
+  // Ana kommt angelaufen und bremst an der Bordsteinkante
+  const tRot = W('Rot', 9);
+  akteur('ana3', { x: -90, y: 555, o: 0 }); sichtbar('ana3', T3 + .2, 1);
+  const n = 10, dauer = (tRot - .05 - (T3 + .25)) / n;
+  gehen('ana3', T3 + .25, 362, 555, { schritt: 45.2, dauer, spur: 'spuren3', farbe: 'var(--b200)' });
+  tw('ana3', tRot - .05, .12, { r: -7, sx: .86, sy: 1.12 }, 'out'); tw('ana3', tRot + .07, .55, { r: 0, sx: 1, sy: 1 }, 'sanft'); cue(tRot - .05, 'plopp');
+  mund('ana3', tRot, 'auf');
+  bump('ampel3', W('Ampel', 9), 1.06);
+  wellen('lampe3', [[tRot, 129, 239, 100], [W('stehen', 9), 129, 239, 100]], .8); el('lampe3').style.borderColor = 'var(--error)';
+  // Auch wenn die Straße leer ist: Uhr tickt, ein Blatt weht vorbei
+  const tU = W('Auch', 10) - .1;
+  ['uhr3', 'zeiger3'].forEach(id => pop(id, tU, { x: 610, y: 270 }, id === 'uhr3' ? 'pop' : null, 'sanft'));
+  for (let i = 1; i <= 6; i++) { tw('zeiger3', tU + .2 + i * .5, .12, { r: i * 30 }, 'back'); cue(tU + .2 + i * .5, 'klick'); }
+  mund('ana3', tU, 'zu');
+  blick('ana3', W('Straße', 10) - .1, 1); blick('ana3', W('leer', 10) + .5, -1); blick('ana3', W('Sonst', 11) - .2, 0);
+  const tBl = W('leer', 10) - .35;
+  akteur('blatt3', { x: 950, y: 600, o: 0 }); sichtbar('blatt3', tBl, 1);
+  tw('blatt3', tBl, 2.1, { x: -60 }, 'inout'); tw('blatt3', tBl, 1.0, { y: 520 }, 'sinus', { bogen: 30 }); tw('blatt3', tBl + 1.0, 1.1, { y: 410 }, 'sinus', { bogen: 40 });
+  tw('blatt3', tBl, 2.1, { r: -400 }, 'inout'); sichtbar('blatt3', tBl + 2.1, 0); cue(tBl + .3, 'whoosh');
+  aus(['uhr3', 'zeiger3'], W('Sonst', 11) - .2);
+  // Bußgeld: Strafzettel fällt, wackelt, weht davon
+  const tZ = W('Bußgeld', 11) - .4;
+  akteur('zettel3', { x: 610, y: -100, o: 0, r: -3 }); sichtbar('zettel3', tZ, 1);
+  tw('zettel3', tZ, .45, { y: 600, r: 0 }, 'in'); landen('zettel3', tZ + .45, 1); cue(tZ + .45, 'plopp'); akzent(tZ + .45, .03);
+  wackeln('zettel3', tZ + .6, 4, 3);
+  const tW = W('geben', 11) + .5;
+  tw('zettel3', tW, .8, { x: 1060, y: 520, r: 35 }, 'in'); sichtbar('zettel3', tW + .8, 0); cue(tW, 'whoosh');
+  mund('ana3', tZ + .5, 'auf'); mund('ana3', tW, 'zu');
+  // Kinder lernen von dir: ein kleiner Schulranzen wartet mit
+  pop('ranzen3', W('Kinder', 12) - .1, { x: 245, y: 588 }, 'pop', 'sanft');
+  huepfen('ana3', W('lernen', 12), 12); huepfen('ranzen3', W('lernen', 12) + .12, 12); froh('ana3', W('lernen', 12));
+  // Grün: Ana geht zügig hinüber
+  const tGr = W('Grün', 13) - .05;
+  ampel('ampel3', tGr, 'gruen'); cue(tGr, 'klick'); cue(tGr + .05, 'ding'); bump('ampel3', tGr, 1.05);
+  welle('lampe3', tGr, 129, 351, .9, 110);
+  gehen('ana3', W('gehst', 13) - .1, 783, 555, { schritt: 53, dauer: .19, spur: 'spuren3', farbe: 'var(--surface)' });
+  akzent(W('zügig', 13));
+  huepfen('ranzen3', W('zügig', 13), 10);
+  textAus('tb3', SE(13) + .2);
+}
+
+/* ================= 4 · Zebrastreifen ================= */
+const T4 = SE(13) + .3;
+szene('sz3', 'sz4', T4);
+{
+  titelEin('tb4', W('Zebrastreifen', 14) - .2, { unter: W('müssen', 14) });
+  pop('ana4', T4 + .45, { x: 450, y: 612 }, 'pop', 'sanft');
+  // Streifen für Streifen
+  const tZs = W('Zebrastreifen', 14) - .15;
+  ZEBRA.forEach((z, i) => { akteur(z, { sx: 0 }, true); tw(z, tZs + i * .09, .32, { sx: 1 }, 'back'); if (i % 2 === 0) cue(tZs + i * .09, 'tipp'); });
+  // Auto fährt heran und bremst
+  const tC = W('Zebrastreifen', 14) + .2, tStop = W('müssen', 14) + .2;
+  [['car4', 255], ['brems4', 162], ['licht4', 433]].forEach(([id, x]) => { akteur(id, { x: x - 430, y: 455, o: id === 'car4' ? 0 : 0 }); tw(id, tC, tStop - tC, { x }, 'inout'); });
+  sichtbar('car4', tC, 1); unschaerfe('car4', .2);
+  tw('brems4', tStop - .45, .15, { o: 1 }); cue(tStop - .45, 'klick');
+  tw('car4', tStop, .1, { sx: .95 }, 'sinus'); tw('car4', tStop + .1, .4, { sx: 1 }, 'sanft'); cue(tStop, 'plopp');
+  tw('brems4', tStop + 1.6, .4, { o: .45 });
+  // Weg über die Straße, dann: nicht blind verlassen
+  const tP = W('über', 14) - .1;
+  akteur('pfad4', { x: 450, y: 360, o: 0 }); tw('pfad4', tP, .1, { o: 1 }); strich(el('pfad4').querySelector('[pathLength]'), tP, .6);
+  tw('pfad4', W('Aber', 15), .35, { o: .25 });
+  froh('ana4', tP + .2);
+  pop('warn4', W('blind', 15) - .1, { x: 515, y: 560 }, 'pop'); wackeln('warn4', W('blind', 15) + .35, 4, 6); mund('ana4', W('blind', 15), 'zu');
+  // Blickkontakt: Blicklinie zur Windschutzscheibe, Auge, Lichthupe
+  const tB = W('Blickkontakt', 16) - .15;
+  aus('warn4', tB);
+  blick('ana4', tB, -1);
+  akteur('blick4', { x: 450, y: 360, o: 0 }); tw('blick4', tB, .1, { o: 1 }); cue(tB, 'scan');
+  HOOKS.push(t => { const p = E.inout(clamp((t - tB) / .5)); el('blick4').querySelector('path').style.strokeDashoffset = 0; el('blick4').querySelector('path').setAttribute('d', `M412 568L${(412 - 82 * p).toFixed(1)} ${(568 - 90 * p).toFixed(1)}`); });
+  pop('auge4', tB + .45, { x: 352, y: 545 }, 'pop');
+  [.6, .95].forEach(d => { tw('licht4', tB + d, .06, { o: 1 }); tw('licht4', tB + d + .16, .12, { o: 0 }); cue(tB + d, 'klick'); });
+  // … bis das Auto wirklich steht: Haken, dann geht Ana über den Zebrastreifen
+  const tH = W('wirklich', 16) - .1;
+  pop('haken4', tH, { x: 262, y: 455 }, 'erfolg'); akzent(tH, .03);
+  tw(['blick4', 'auge4'], tH + .4, .3, { o: 0 });
+  blick('ana4', tH + .5, 0); froh('ana4', tH + .3);
+  tw('pfad4', tH + .2, .3, { o: 1 });
+  gehen('ana4', tH + .55, 450, 112, { schritt: 62.5, dauer: .17, spur: 'spuren4', farbe: 'var(--b300)' });
+  textAus('tb4', SE(16) + .2);
+}
+
+/* ================= 5 · Links – rechts – links ================= */
+const T5 = SE(16) + .55;
+szene('sz4', 'sz5', T5);
+{
+  const t1 = W('links', 18), t2 = W('rechts', 18), t3 = WN('links', 18, 1);
+  titelEin('tb5', t1 - .15, [t1 - .15, t1 + .05, t2 - .15, t2 + .05, t3 - .15]);
+  pop('ana5', T5 + .4, { x: 450, y: 610 }, 'pop', 'sanft');
+  // Rechtsverkehr: Autos fahren rechts, Richtungspfeile auf den Spuren
+  fahrt('car5a', W('fahren', 17) - .2, 1.4, -160, 1080, 455);
+  pop('pfN5', W('rechts', 17) - .1, { x: 640, y: 455 }, 'pop', 'sanft');
+  pop('pfF5', W('rechts', 17) + .1, { x: 260, y: 285, sx: -1 }, null, 'sanft');
+  bump('pfN5', W('rechts', 17) + .6, 1.12); bump('pfF5', W('rechts', 17) + .7, 1.12); akzent(W('rechts', 17));
+  // links: Blickpfeil, ein Auto kommt auf der nahen Spur
+  akteur('blick5', { x: 450, y: 610, r: 200, o: 0 });
+  tw('blick5', t1 - .2, .15, { o: 1 }); strich(el('blick5').querySelector('[pathLength]'), t1 - .2, .35); cue(t1 - .2, 'whoosh');
+  blick('ana5', t1 - .2, -1);
+  fahrt('car5b', t1 - .1, 1.6, -160, 1080, 455);
+  // rechts: der Pfeil schwenkt, auf der fernen Spur fährt ein Bus
+  tw('blick5', t2 - .2, .5, { r: 340 }, 'inout'); blick('ana5', t2 - .15, 1); cue(t2 - .2, 'whoosh');
+  akteur('bus5', { sx: -1 }); fahrt('bus5', t2 - .15, 2.0, 1130, -230, 285);
+  // noch einmal links: frei – Haken, Ana geht
+  tw('blick5', t3 - .2, .5, { r: 200 }, 'inout'); blick('ana5', t3 - .15, -1); cue(t3 - .2, 'whoosh');
+  pop('haken5', t3 + .4, { x: 506, y: 558 }, 'erfolg'); froh('ana5', t3 + .4); akzent(t3 + .4, .03);
+  tw('blick5', t3 + .8, .3, { o: 0 }); aus('haken5', t3 + .9);
+  blick('ana5', t3 + .9, 0);
+  gehen('ana5', t3 + .95, 450, 112, { schritt: 62, dauer: .17, spur: 'spuren5', farbe: 'var(--b300)' });
+  // Linksverkehr gewohnt? Chip mit gespiegelten Pfeilen klappt auf und dreht sich zurück
+  const tL = W('Linksverkehr', 19) - .15;
+  akteur('chip5', { x: 680, y: 112, sx: 0, o: 0 }); tw('chip5', tL, .1, { o: 1 }); tw('chip5', tL, .5, { sx: 1 }, 'back'); cue(tL, 'klick');
+  const tD = W('gewohnt', 19) + .05;
+  tw('chip5', tD, .2, { sx: 0 }, 'in'); tw('chip5', tD + .2, .35, { sx: 1 }, 'out'); cue(tD, 'whoosh');
+  akteur('lv5', { o: 1 }, true); akteur('rv5', { o: 0 }, true); akteur('lvText5', { o: 1 }, true); akteur('lvOk5', { o: 0 }, true);
+  set(['lv5', 'lvText5'], tD + .2, { o: 0 }); set(['rv5', 'lvOk5'], tD + .2, { o: 1 }); cue(tD + .45, 'ding');
+  bump('pfN5', tD + .55, 1.12); bump('pfF5', tD + .62, 1.12);
+  textAus('tb5', SE(19) + .15);
+}
+
+/* ================= 6 · Handy weg, Kopfhörer raus ================= */
+const T6 = SE(19) + .3;
+szene('sz5', 'sz6', T6);
+{
+  titelEin('tb6', W('Wenn', 20) - .1, [W('Wenn', 20) - .1, W('Wenn', 20), W('Handy', 20) - .15, W('weg', 20) - .1]);
+  pop('ana6', T6 + .3, { x: 520, y: 332 }, null, 'sanft'); froh('ana6', T6 + .4);
+  akteur('wolke6', { x: 520, y: 332, o: 0, s: .8 }); tw('wolke6', T6 + .45, .6, { o: 1, s: 1 }, 'sanft');
+  [['note6a', 352, 196], ['note6b', 702, 206], ['note6c', 354, 470]].forEach(([id, x, y], i) => { pop(id, T6 + .6 + i * .15, { x, y }, i ? null : 'pop'); schweben(id, 6); });
+  HOOKS.push(t => ['note6a', 'note6b', 'note6c'].forEach((id, i) => { el(id).style.transform += ` rotate(${(7 * Math.sin(t * 3.1 + i * 2)).toFixed(2)}deg)`; }));
+  pop('handy6', T6 + .5, { x: 646, y: 452 }, 'pop', 'sanft');
+  [['msg6a', 642, 424], ['msg6b', 650, 446], ['msg6c', 642, 468]].forEach(([id, x, y], i) => pop(id, T6 + .8 + i * .32, { x, y }, 'pop'));
+  pop('tasche6', T6 + .55, { x: 785, y: 520 }, null, 'sanft');
+  pop('car6', T6 + .45, { x: 170, y: 612 }, null, 'sanft');
+  // Ana wippt zur Musik, bis die Kopfhörer raus sind
+  const tKh = W('Kopfhörer', 20) - .05;
+  HOOKS.push(t => { const d = t - T6 - .4; if (d > 0 && t < tKh + .3) el('ana6').style.transform += ` rotate(${(3 * Math.sin(d * 5) * Math.min(1, d) * clamp((tKh + .3 - t) / .3)).toFixed(2)}deg)`; });
+  // Hupe: Schallwellen prallen an der Musik ab
+  const BOGEN = ['bg6a', 'bg6b', 'bg6c'], VON = [262, 588], RAND = [380, 474], ZIEL = [436, 418];
+  BOGEN.forEach(id => akteur(id, { x: VON[0], y: VON[1], o: 0, r: -45 }));
+  const hupe = (t, ziel, zurueck) => {
+    bump('car6', t, 1.06); cue(t, 'plopp'); cue(t + .15, 'plopp');
+    BOGEN.forEach((id, i) => {
+      const t0 = t + i * .13;
+      set(id, t0, { x: VON[0], y: VON[1], o: 1, s: .7 }); tw(id, t0, .5, { x: ziel[0], y: ziel[1], s: 1.1 }, 'out');
+      if (zurueck) { tw(id, t0 + .5, .35, { x: ziel[0] - 50, y: ziel[1] + 52 }, 'out'); tw(id, t0 + .5, .35, { o: 0 }, 'in'); }
+      else tw(id, t0 + .45, .2, { o: 0 }, 'in');
+    });
+  };
+  const tH1 = W('Straße', 20) + .05;
+  hupe(tH1, RAND, true);
+  tw('wolke6', tH1 + .5, .1, { s: 1.04 }, 'sinus'); tw('wolke6', tH1 + .6, .4, { s: 1 }, 'sanft'); cue(tH1 + .5, 'klick');
+  // Handy weg: fliegt in die Tasche
+  const tHd = W('Handy', 20) - .1;
+  ['msg6a', 'msg6b', 'msg6c'].forEach((id, i) => tw(id, tHd - .15 + i * .04, .2, { s: 0 }, 'sinus'));
+  flug('handy6', tHd, .6, 785, 492, 130, { s: .55 }); tw('handy6', tHd, .6, { r: 0 }); tw('handy6', tHd + .52, .1, { o: 0 });
+  cue(tHd, 'whoosh'); bump('tasche6', tHd + .6, 1.1); cue(tHd + .6, 'plopp');
+  // Kopfhörer raus: fallen auf den Hals, die Musik ist weg
+  const kh = el('ana6').querySelector('.kh'), khh = el('ana6').querySelector('.khh');
+  akteur(kh, {}, true); akteur(khh, { o: 0, y: -40 }, true);
+  tw(kh, tKh, .3, { y: 40, o: 0 }, 'in'); tw(khh, tKh + .12, .1, { o: 1 }); tw(khh, tKh + .12, .35, { y: 0 }, 'out'); landen('ana6', tKh + .3, .5); cue(tKh, 'pop');
+  ['note6a', 'note6b', 'note6c'].forEach((id, i) => tw(id, tKh + .15 + i * .06, .3, { s: 0 }, 'sinus'));
+  tw('wolke6', tKh + .2, .45, { s: 1.15, o: 0 }, 'out');
+  mund('ana6', tKh + .3, 'zu');
+  // Sehen und hören: die Hupe kommt jetzt an
+  const tH2 = W('Autos', 21) - .05;
+  hupe(tH2, ZIEL, false);
+  bump('ana6', tH2 + .55, 1.05); blick('ana6', tH2 + .5, -1); mund('ana6', tH2 + .55, 'auf');
+  const tR = W('Fahrräder', 21) - .5;
+  fahrt('bike6', tR, 1.9, -110, 1020, 562);
+  cue(tR + .7, 'ding'); cue(tR + .95, 'ding');
+  welle('welle6a', W('sehen', 21) - .05, 450, 112, .9, 92);
+  pop('auge6', W('sehen', 21) - .1, { x: 450, y: 112 }, 'ding');
+  welle('welle6b', W('hören', 21) - .05, 600, 112, .9, 92);
+  pop('ohr6', W('hören', 21) - .1, { x: 600, y: 112 }, 'ding');
+  blick('ana6', W('hören', 21), 0); froh('ana6', W('hören', 21) + .1);
+  textAus('tb6', SE(21) + .15);
+}
+
+/* ================= 7 · Im Dunkeln ================= */
+const T7 = SE(21) + .3;
+szene('sz6', 'sz7', T7);
+{
+  const tf = W('fünfundzwanzig', 23) - .1, tR = W('Reflektoren', 24) - .1, th = W('hundertvierzig', 24) - .1;
+  titelEin('tb7', W('Dunkeln', 22) - .1, [W('Dunkeln', 22) - .1, tf, tf + .08, tf + .16, tR, th, th + .08, th + .16]);
+  pop('car7', T7 + .35, { x: 175, y: 565 }, null, 'sanft');
+  pop('ana7', T7 + .45, { x: 356, y: 520 }, 'pop', 'sanft');
+  // Es wird Nacht: Mond, Laternen, Fenster
+  const tN = W('Dunkeln', 22) - .15;
+  akteur('nacht7', { o: 0 }, true); tw('nacht7', tN, 1.0, { o: .86 }, 'inout'); cue(tN, 'whoosh');
+  akteur('mond7', { x: 790, y: 260, o: 0 }); tw('mond7', tN + .2, 1.1, { y: 112, o: 1 }, 'weich');
+  akteur('lichter7', { o: 0 }, true); tw('lichter7', tN + .7, .25, { o: 1 }); cue(tN + .7, 'klick');
+  // Ana in dunkler Kleidung verschwindet fast
+  const sch = el('ana7').querySelector('.schatten');
+  akteur(sch, { o: 0 }, true); tw(sch, tN, 1.0, { o: .82 }, 'inout');
+  HOOKS.push(t => { const o = wert(AKTEURE.get(sch), 'o', t); el('ana7').style.borderColor = `color-mix(in srgb, var(--surface) ${(100 - 100 * o / .82 * .8).toFixed(1)}%, var(--b700))`; el('ana7').style.boxShadow = o > .3 ? 'none' : ''; });
+  // Scheinwerfer an, der Kegel tastet die Straße ab
+  akteur('kegel7', { x: 262 + 300, y: 560, o: 0 });
+  tw('kegel7', tN + .9, .3, { o: .75 }); cue(tN + .9, 'klick');
+  tw('kegel7', W('sieht', 22), .6, { r: -4 }, 'sinus'); tw('kegel7', W('sieht', 22) + .6, .7, { r: 3 }, 'sinus'); tw('kegel7', W('sieht', 22) + 1.3, .5, { r: 0 }, 'sinus');
+  // 25 m: erst jetzt sichtbar
+  akteur('lineal7', { x: 450, y: 360, o: 1 });
+  ['seg7a', 'seg7b'].forEach(id => { el(id).style.strokeDasharray = '1 1'; el(id).style.strokeDashoffset = 1; });
+  ['tick7a', 'tick7b', 'tick7c'].forEach(id => akteur(id, { o: 0 }, true));
+  bump('ana7', W('dunkler', 23), 1.06);
+  set('tick7a', tf - .1, { o: 1 }); strich('seg7a', tf, .45); set('tick7b', tf + .45, { o: 1 });
+  tw('kegel7', tf, .3, { o: 1 }); tw('kegel7', tf + .6, .4, { o: .75 });
+  tw(sch, tf + .2, .4, { o: .12 }); cue(tf + .3, 'ding');
+  pop('m25', tf + .4, { x: 356, y: 620 }, 'pop');
+  bump('ana7', tf + .3, 1.1); mund('ana7', tf + .3, 'auf');
+  // Mit Reflektoren: helle Jacke, Streifen blitzen schon bei 140 m
+  const we = el('ana7').querySelector('.weste'), gl = el('ana7').querySelector('.glanz');
+  akteur(we, { o: 0 }, true); akteur(gl, { o: 0 }, true);
+  flug('ana7', tR, .8, 780, 520, 70); cue(tR, 'whoosh'); landen('ana7', tR + .8, .8);
+  tw(sch, tR + .1, .5, { o: .62 }); tw(we, tR + .2, .45, { o: 1 }); mund('ana7', tR + .4, 'froh');
+  akzent(tR + .2);
+  strich('seg7b', th, .6, 'out'); set('tick7c', th + .55, { o: 1 }); cue(th, 'scan');
+  pop('m140', th + .5, { x: 780, y: 620 }, 'erfolg');
+  const blitz = t => { tw(gl, t, .08, { o: 1 }); tw(gl, t + .12, .35, { o: 0 }, 'out'); };
+  blitz(th + .05); blitz(th + .45); blitz(tR + .75);
+  wellen('welle7', [[th + .05, 780, 520, 140], [th + .45, 780, 520, 140]], .8);
+  // Trag helle Kleidung oder Reflektoren: Ana kommt nach vorn, Tasche mit Reflektor
+  const tT = W('Trag', 25) - .1;
+  tw(['car7', 'kegel7', 'lineal7', 'm25', 'm140'], tT, .5, { o: .22 });
+  tw('ana7', tT, .85, { x: 450, y: 322, s: 1.9 }, 'inout'); cue(tT, 'whoosh');
+  tw(sch, tT, .6, { o: .3 });
+  bump('ana7', W('helle', 25), 1.05);
+  blitz(W('Reflektoren', 25)); akzent(W('Reflektoren', 25));
+  pop('tasche7', W('Beispiel', 25) - .1, { x: 660, y: 430 }, 'pop', 'sanft');
+  pop('refl7', W('Beispiel', 25) + .15, { x: 634, y: 452 }, null);
+  blitz(W('Jacke', 25) - .05); cue(W('Jacke', 25), 'ding');
+  wellen('welle7b', [[W('Jacke', 25) - .05, 450, 410, 160], [W('Tasche', 25) - .05, 634, 452, 90]], .8);
+  bump('refl7', W('Tasche', 25) - .05, 1.35); cue(W('Tasche', 25), 'ding');
+  HOOKS.push(t => { const d = t - W('Tasche', 25) + .05; el('refl7').style.filter = d > 0 && d < .7 ? `brightness(${(1 + .6 * Math.sin(Math.PI * d / .7)).toFixed(2)})` : ''; });
+  froh('ana7', W('Tasche', 25) + .2);
+  textAus('tb7', SE(25) + .15);
+}
+
+/* ================= 8 · Zusammenfassung ================= */
+const T8 = SE(25) + .3;
+szene('sz7', 'sz8', T8);
+{
+  const Z = [W('Gehweg', 26), W('Rot', 26), W('links', 26), W('Handy', 26), W('sichtbar', 26)];
+  titelEin('tb8', Z[0] - .2, [Z[0] - .2, Z[1] - .25, Z[1] - .17, Z[1] - .09, Z[2] - .2, Z[3] - .2, Z[3] - .12, Z[4] - .2, Z[4] - .12]);
+  pop('ana8', T8 + .45, { x: 450, y: 200 }, 'pop', 'sanft'); froh('ana8', T8 + .5);
+  const XK = [130, 290, 450, 610, 770];
+  ['k8a', 'k8b', 'k8c', 'k8d', 'k8e'].forEach((k, i) => {
+    const t = Z[i] - .3;
+    pop(k, t - .1, { x: XK[i], y: 432 }, 'pop', 'sanft');
+    flug('ana8', t - .15, .45, XK[i], 290, 80); landen('ana8', t + .3, .8); cue(t + .3, 'plopp');
+    bump(k, t + .3, 1.06);
+    pop('h8' + 'abcde'[i], t + .45, { x: XK[i] + 54, y: 378 }, 'ding');
+  });
+  // So kommst du sicher an: Schutzring, Ana lächelt
+  const tF = W('So', 27) - .1;
+  flug('ana8', tF, .65, 450, 190, 70, { s: 1.25 }); landen('ana8', tF + .65, .7);
+  akteur('ring8', { x: 450, y: 190, o: 0, s: 1.5 }); tw('ring8', tF + .55, .2, { o: 1 }); tw('ring8', tF + .55, .6, { s: 1 }, 'sanft'); cue(tF + .55, 'ding');
+  welle('welle8', W('sicher', 27), 450, 190, 1.1, 172); cue(W('sicher', 27), 'erfolg'); akzent(W('sicher', 27), .045);
+  ['k8a', 'k8b', 'k8c', 'k8d', 'k8e'].forEach((k, i) => bump(k, W('sicher', 27) + .2 + i * .07, 1.07));
+  froh('ana8', tF + .7);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

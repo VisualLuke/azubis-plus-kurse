@@ -18,7 +18,7 @@ voll an.
 | 2 | Amirs Geld-Balken; Kacheln Haus „Miete“, Teller „Essen“, Fahrkarte „Ticket“, Sparglas „Notgroschen“ ploppen auf ihre Wörter und schneiden je ein Stück ab; nur der leuchtende Rest springt in den Umschlag; auf „Sonst“ spielt kurz die Gegenprobe: der Umschlag schnappt sich zu viel, Amirs Teller wird leer und blinkt rot, dann rollt alles zurück (Rückspul-Bewegung) | Zuerst deine eigenen Kosten |
 | 3 | Der Umschlag fliegt auf der Bahn durch zwei Schranken: an der ersten („Gebühr“) springt sichtbar eine Münze in eine Kasse; an der zweiten hängt eine Kurs-Anzeige mit rollenden Ziffern („Wechselkurs“), ein gestrichelter, fast unsichtbarer Keil schneidet leise ein Stück mehr ab; auf „nicht sofort“ fährt eine Lupe darüber, der Keil wird farbig und sichtbar, Kamera-Zoom auf den Keil | Kosten = Gebühr + Aufschlag im Wechselkurs |
 | 4 | Drei neutrale Anbieter-Karten ohne Namen (Schalter-Symbol, Laptop, Handy) stellen sich nebeneinander, aus jeder fliegt derselbe Umschlag los; am Haus wachsen drei Balken „kommt an“ unterschiedlich hoch (einer deutlich kleiner); auf „am Ende“ leuchtet der höchste Balken auf, eine Waage neigt sich zu ihm, Amir nickt | Vergleichen: Was kommt an? |
-| 5 | Ein Siegel „Erlaubnis“ schlägt mit Wackler auf eine der Anbieter-Karten; auf „Bafin“ erscheint ein Behörden-Gebäude mit Schild „BaFin“; auf „Datenbank“ öffnet sich eine Liste, die Zeilen scrollen, eine Lupe sucht, eine Zeile leuchtet grün mit Haken; zwei Chips „Deutschland“ und „EU“ ploppen auf | Nur Anbieter mit Erlaubnis |
+| 5 | Ein Siegel „Erlaubnis“ schlägt mit Wackler auf eine der Anbieter-Karten; auf „Bafin“ erscheint ein Behörden-Gebäude mit Schild „BaFin“; auf „Datenbank“ öffnet sich eine Liste, die Zeilen scrollen, eine Lupe sucht, eine Zeile leuchtet grün mit Haken; Chip „darf in Deutschland arbeiten“ ploppt auf | Nur Anbieter mit Erlaubnis |
 | 6 | Amir hält ein Bündel Scheine (Porträt mit Bündel daneben); rechts eine dunkle Tür mit Fragezeichen statt Namensschild (keine Person); das Bündel will auf einem Bogen zur Tür fliegen, auf „verboten“ schlägt ein rotes ✕-Schild „ohne Erlaubnis verboten“ davor auf (Wackler), das Bündel prallt ab und fliegt zurück zu Amir, die Tür schlägt zu | Nie Bargeld an Unbekannte |
 | 7 | Auf Amirs Handy tippt sich eine Nachricht „Job: Geld weiterleiten – hohe Provision!“; ein Münzstrom fließt in Amirs Konto und sofort wieder hinaus über eine Kette von Konten; auf „Geldwäsche“ färbt sich die Kette rot, ein Stempel „Geldwäsche“ schlägt auf; auf „Sag nein“ schüttelt Amirs Porträt den Kopf (Wackeln), Blase „Nein!“, die Kette reißt; Pfeile zu zwei Kacheln „Bank“ (Gebäude ohne Logo) und „Polizei“ (Schild ohne Wappen) | Geld für Fremde weiterleiten? Nein! |
 | 8 | Ein Formular mit den Zeilen „Name“, „Kontodaten“: eine Lupe fährt Zeile für Zeile, je ein grüner Haken; dann druckt sich ein Beleg (Papier rollt heraus) und fliegt in das Handy mit der Azubis Plus Helper App, Bereich „Dokumente“ – der Beleg landet in der Liste, Haken | Daten prüfen · Belege aufheben |
@@ -56,7 +56,7 @@ Erzähler: Geld ins Ausland zu schicken kostet etwas. Da ist zuerst die Gebühr.
 Erzähler: Vergleich deshalb mehrere Anbieter. Wichtig ist nicht nur die Gebühr. Wichtig ist, wie viel Geld am Ende bei deiner Familie ankommt. Die Kosten sind sehr unterschiedlich.
 
 ### Szene 5
-Erzähler: Nutze nur Anbieter mit Erlaubnis. In Deutschland kontrolliert das die Finanzaufsicht Bafin. In ihrer Datenbank im Internet kannst du nachsehen, ob ein Anbieter eine Erlaubnis für Deutschland oder die Eh-Uh hat.
+Erzähler: Nutze nur Anbieter mit Erlaubnis. In Deutschland kontrolliert das die Finanzaufsicht Bafin. In ihrer Datenbank im Internet siehst du, ob ein Anbieter in Deutschland arbeiten darf.
 
 ### Szene 6
 Erzähler: Gib dein Geld nie an Unbekannte, die es gegen eine Gebühr privat weiterschicken wollen. Ohne Erlaubnis ist so ein Geldtransfer in Deutschland verboten.
@@ -73,7 +73,6 @@ Erzähler: Also: erst deine eigenen Kosten, dann vergleichen, nur Anbieter mit E
 ## Schreibweise im Untertitel
 
 - Finanzaufsicht Bafin → Finanzaufsicht BaFin
-- oder die Eh-Uh → oder die EU
 
 ## Quellen
 

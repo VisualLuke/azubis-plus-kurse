@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? Handy und SIM-Karte</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px;overflow:hidden}
+/* Handyladen: Wand und Boden als Teil der Bühne */
+.buehne .wand{position:absolute;left:0;right:0;top:0;height:66%;background:linear-gradient(var(--b50),var(--b100))}
+.buehne .wand::before{content:'';position:absolute;inset:0;background-image:linear-gradient(90deg,var(--b100) 3px,transparent 3px);background-size:150px 100%;background-position:60px 0;opacity:.9}
+.buehne .boden{position:absolute;left:0;right:0;top:66%;bottom:0;background:linear-gradient(var(--b100),var(--b200))}
+.buehne .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:12px;background:var(--b200)}
+/* Text im Bild: beim Durchspielen unter der Karten-Kachel, sonst mittig links */
+.block{justify-content:flex-start;padding-top:420px}
+.block.mitte{justify-content:center;padding-top:0}
+.block .titel{font-size:60px;line-height:70px}
+.titel .w.hell .wi{color:var(--b500)}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.rot{border-color:var(--error)}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.frage{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.ausruf{width:64px;height:64px;border-radius:999px;background:var(--error);color:var(--surface);font:800 42px/56px Inter;text-align:center;border:4px solid var(--surface);
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+
+/* Porträts im Kreis */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Laden: Tresen, Tür, Regal, Drehteller, Hängeschild */
+.tresen{height:150px}
+.tresen .platte{position:absolute;left:0;right:0;top:0;height:28px;border-radius:10px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 4px 0 var(--b600)}
+.tresen .front{position:absolute;left:12px;right:12px;top:28px;bottom:0;border-radius:0 0 16px 16px;
+  background-image:linear-gradient(90deg,transparent 0,transparent calc(33.3% - 2px),var(--b700) calc(33.3% - 2px),var(--b700) 33.3%,transparent 33.3%,transparent calc(66.6% - 2px),var(--b700) calc(66.6% - 2px),var(--b700) 66.6%,transparent 66.6%),linear-gradient(var(--b500),var(--b600))}
+.eingang{width:190px;height:300px;border-radius:14px 14px 0 0;background:var(--b300);padding:10px 10px 0}
+.eingang .innen{position:absolute;left:10px;right:10px;top:10px;bottom:0;background:linear-gradient(var(--b600),var(--b700));border-radius:6px 6px 0 0}
+.eingang .blatt{position:absolute;left:10px;right:10px;top:10px;bottom:0;border-radius:6px 6px 0 0;transform-origin:100% 50%;
+  background:linear-gradient(160deg,var(--b100),var(--b200));box-shadow:inset 0 0 0 6px var(--b400)}
+.eingang .blatt::after{content:'';position:absolute;left:18px;top:110px;width:14px;height:44px;border-radius:7px;background:var(--b600)}
+.eingang .fenster{position:absolute;left:44px;top:34px;width:82px;height:60px;border-radius:8px;background:var(--b50);opacity:.8}
+.regal{width:200px;height:250px;border-radius:14px;background:var(--b300);box-shadow:inset 0 0 0 10px var(--b400)}
+.regal .brett{position:absolute;left:10px;right:10px;height:10px;background:var(--b500);border-radius:3px}
+.regal .mini{position:absolute;width:34px;height:56px;border-radius:7px;background:var(--b700);padding:4px}
+.regal .mini i{display:block;width:100%;height:100%;border-radius:4px;background:linear-gradient(160deg,var(--b100),var(--b200))}
+.teller{width:180px;height:38px;border-radius:50%;background:linear-gradient(var(--b100),var(--b200));box-shadow:0 8px 0 var(--b500),0 14px 20px rgba(22,19,37,.15)}
+.handybox{width:190px;height:190px}
+.handybox > svg{position:absolute;left:0;top:0;width:190px}
+.handybox .glas{position:absolute;left:59px;top:31px;width:72px;height:128px;border-radius:8px;overflow:hidden}
+.handybox .glas i{position:absolute;left:-70px;top:0;width:70px;height:100%;background:linear-gradient(105deg,transparent 30%,var(--surface) 50%,transparent 70%);opacity:.85}
+.schiene{height:12px;border-radius:6px;background:var(--b400);box-shadow:0 3px 0 var(--b600)}
+.haenge{width:270px;height:140px;transform-origin:50% 0}
+.haenge svg{position:absolute;left:0;top:0;width:270px;height:46px}
+.haenge .tafel{position:absolute;left:0;top:42px;width:270px;height:98px;border-radius:22px;background:var(--error);border:6px solid var(--surface);
+  box-shadow:0 10px 26px rgba(226,85,106,.35);display:flex;align-items:center;justify-content:center;font:800 46px/1 Inter;color:var(--surface);white-space:nowrap}
+.simform{width:110px;height:140px}
+.simform svg{position:absolute;inset:0;width:110px;height:140px}
+.simform b{position:absolute;left:0;right:0;top:34px;text-align:center;font:800 64px/1 Inter;color:var(--b500)}
+/* Vertrag über dem Tresen: rollt sich nach unten aus */
+.rolle{width:440px;height:128px;transform-origin:50% 0}
+.rolle .papier{position:absolute;left:8px;right:8px;top:8px;bottom:0;border-radius:0 0 12px 12px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.16)}
+.rolle .walze{position:absolute;left:0;right:0;top:0;height:18px;border-radius:9px;background:linear-gradient(var(--b200),var(--b300))}
+.rolle .zahl{position:absolute;left:28px;top:26px;font:800 36px/44px Inter;color:var(--ink);white-space:nowrap}
+.rolle .zeile{position:absolute;left:30px;top:88px;display:flex;align-items:center;gap:10px;font:800 26px/1 Inter;color:var(--error)}
+.rolle .zeile u{display:block;width:120px;height:3px;background:var(--n300)}
+.rolle .raster{position:absolute;left:238px;top:32px;width:170px;display:grid;grid-template-columns:repeat(12,11px);gap:4px 3px}
+.rolle .raster i{display:block;height:24px;border-radius:3px;background:var(--b100)}
+
+/* ---------- Format „Was würdest du tun?“ ---------- */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+.okarte{width:360px;height:430px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3)}
+.okarte > *{position:absolute}
+.okarte .rahmen{inset:0;border-radius:36px;box-shadow:0 0 0 9px var(--b300);opacity:0}
+.okarte .rahmen.rot{box-shadow:0 0 0 9px var(--error)}
+.okarte .rahmen.gruen{box-shadow:0 0 0 9px var(--success),0 0 60px 10px rgba(31,169,113,.45)}
+.okarte .knopf{left:132px;top:28px;width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);
+  font:800 56px/96px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.okarte .sym{left:30px;top:146px;width:300px;height:260px}
+.okarte .sym > *{position:absolute;left:0;top:0}
+.okarte .sym > svg{width:300px;height:260px}
+.okarte .sym > svg *{transform-box:fill-box;transform-origin:center}
+.okarte .marke{right:-24px;top:-24px;width:92px;height:92px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.okarte .marke svg{width:46px}
+.okarte .marke.rot{background:var(--error)} .okarte .marke.gruen{background:var(--success)}
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.tinte{border-radius:40px;border:6px solid var(--success);opacity:0}
+
+/* Option A: Kalender mit 24 Monatsblättern, Münzen, Zusatz-Kärtchen */
+.kblatt{width:64px;height:66px;border-radius:10px;background:var(--surface);box-shadow:0 6px 14px rgba(22,19,37,.12);overflow:hidden}
+.kblatt::before{content:'';position:absolute;left:0;right:0;top:0;height:13px;background:var(--b400)}
+.kblatt b{position:absolute;left:0;right:0;top:17px;text-align:center;font:700 14px/1 Inter;color:var(--n500)}
+.taler{width:26px;height:26px;border-radius:999px;background:var(--warning);box-shadow:inset 0 0 0 4px var(--warning-text),0 3px 6px rgba(22,19,37,.2)}
+.taler::after{content:'';position:absolute;left:8px;top:6px;width:10px;height:14px;border-radius:999px;border:3px solid var(--warning-bg);border-right-color:transparent;opacity:.8}
+.zusatz{width:74px;height:56px;border-radius:12px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.14);border:3px solid var(--warning)}
+.zusatz > svg{position:absolute;left:16px;top:8px;width:36px;height:36px}
+.zusatz .klammer{position:absolute;left:-16px;top:6px;width:24px;height:40px}
+.zusatz .plus{position:absolute;right:-12px;top:-12px;width:30px;height:30px;border-radius:999px;background:var(--warning);color:var(--surface);font:800 24px/30px Inter;text-align:center}
+/* Option B: Vertrag, Sperre, Stempel-Abdruck */
+.blatt2{width:170px;height:210px;border-radius:14px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16)}
+.blatt2 i{position:absolute;left:22px;height:9px;border-radius:5px;background:var(--n200)}
+.blatt2 .kopf{position:absolute;left:22px;top:22px;width:80px;height:14px;border-radius:7px;background:var(--b300)}
+.blatt2 svg{position:absolute;left:22px;top:150px;width:126px;height:40px}
+.sperre{width:210px;height:170px;padding-top:26px;border-radius:26px;background:var(--surface);border:7px solid var(--error);box-shadow:0 12px 30px rgba(22,19,37,.14);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 30px/38px Inter;color:var(--error-text);text-align:center}
+.sperre small{font:600 24px/30px Inter;color:var(--n700)}
+.sperre .plakette{position:absolute;left:73px;top:-38px;width:64px;height:64px}
+.abdruck{padding:6px 14px;border:5px solid var(--error);border-radius:12px;font:800 22px/1 Inter;color:var(--error);letter-spacing:.02em;white-space:nowrap;background:var(--surface)}
+/* Option C: Vertragszusammenfassung */
+.zf{width:300px;height:380px;border-radius:22px;background:var(--surface);box-shadow:0 16px 40px rgba(22,19,37,.18)}
+.zf .kopf{position:absolute;left:24px;right:20px;top:22px;font:800 25px/31px Inter;color:var(--b600)}
+.zf .reihe{position:absolute;left:18px;right:18px;height:64px;border-radius:16px;display:flex;align-items:center;gap:14px;padding:0 14px;
+  font:700 25px/1 Inter;color:var(--ink)}
+.zf .reihe .hl{position:absolute;inset:0;border-radius:16px;background:var(--b100);box-shadow:inset 0 0 0 4px var(--b400);opacity:0}
+.zf .reihe .ic{position:relative;width:40px;height:40px;border-radius:999px;background:var(--b500);flex:none;display:flex;align-items:center;justify-content:center}
+.zf .reihe .ic svg{width:24px}
+.zf .reihe span{position:relative}
+.zf .reihe u{position:absolute;right:16px;width:54px;height:9px;border-radius:5px;background:var(--n200)}
+
+/* Szene 6: Waage, Karten, Zeitstrahl, Kündigen-Knopf */
+.pfosten{width:20px;height:240px;border-radius:10px;background:linear-gradient(90deg,var(--b500),var(--b700))}
+.fuss{width:170px;height:22px;border-radius:11px;background:var(--b600)}
+.balken{width:480px;height:16px;border-radius:8px;background:linear-gradient(var(--b400),var(--b600))}
+.nabe{width:38px;height:38px;border-radius:999px;background:var(--b700);border:6px solid var(--b300)}
+.schale{width:210px;height:170px}
+.schale > svg{position:absolute;left:0;top:0;width:210px;height:170px}
+.wkarte{position:absolute;left:20px;top:46px;width:170px;height:104px;border-radius:18px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.14);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font:800 28px/1 Inter;color:var(--ink)}
+.wkarte .spur2{width:120px;height:14px;border-radius:7px;background:var(--b100);overflow:hidden}
+.wkarte .spur2 i{display:block;height:100%;width:0;border-radius:7px;background:var(--success)}
+.wkarte .ikon{display:flex;gap:6px}
+.wkarte .ikon i{display:block;width:16px;height:20px;border-radius:4px;background:var(--b300)}
+.feld{width:20px;height:28px;border-radius:5px;background:var(--b100)}
+.feld.einzel{background:var(--surface);border:3px solid var(--b400)}
+.kuend{height:58px;padding:0 26px 0 14px;border-radius:999px;background:var(--surface);border:4px solid var(--b500);display:flex;align-items:center;gap:12px;
+  font:800 28px/1 Inter;color:var(--b600);white-space:nowrap;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.kuend .ic{width:34px;height:34px;border-radius:999px;background:var(--b500);display:flex;align-items:center;justify-content:center}
+.kuend .ic svg{width:20px}
+.scan{width:90px;height:8px;border-radius:4px;background:var(--success);box-shadow:0 0 14px 4px rgba(31,169,113,.5)}
+
+/* Szene 7: Anruf in die Ferne, Münzstapel, Tarif-Karte, WLAN */
+.stapel{width:64px;height:110px}
+.stapel i{position:absolute;left:4px;width:56px;height:18px;border-radius:50%;background:var(--warning);box-shadow:inset 0 -4px 0 var(--warning-text)}
+.tarif{width:270px;height:206px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14)}
+.tarif .kopf{position:absolute;left:22px;top:18px;width:90px;height:14px;border-radius:7px;background:var(--b300)}
+.tarif .reihe{position:absolute;left:12px;right:12px;height:46px;border-radius:14px;display:flex;align-items:center;gap:12px;padding:0 12px;font:700 23px/1 Inter;color:var(--ink)}
+.tarif .reihe .hl{position:absolute;inset:0;border-radius:14px;background:var(--warning-bg);box-shadow:inset 0 0 0 4px var(--warning);opacity:0}
+.tarif .reihe span{position:relative}
+.tarif .reihe .pk{position:absolute;right:12px;width:30px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.tarif .reihe .pk svg{width:18px}
+.tarif .reihe .pk.gruen{background:var(--success)} .tarif .reihe .pk.rot{background:var(--warning)}
+.tarif .reihe .pk b{font:800 20px/1 Inter;color:var(--surface)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><path d="M13 13l18 18M31 13L13 31" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><path d="M11 23l8 8 15-17" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgEuro"><svg viewBox="0 0 40 40"><path d="M28 11a11 11 0 1 0 0 18M8 17h16M8 23h14" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgKal"><svg viewBox="0 0 40 40"><rect x="6" y="9" width="28" height="25" rx="5" stroke="var(--surface)" stroke-width="4" fill="none"/><path d="M6 17h28M14 5v7M26 5v7" stroke="var(--surface)" stroke-width="4" stroke-linecap="round"/></svg></template>
+<template id="svgTuer"><svg viewBox="0 0 40 40"><path d="M16 7h14v26H16" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round" fill="none"/><path d="M6 20h16M17 14l6 6-6 6" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgNote"><svg viewBox="0 0 36 36"><path d="M14 27V8l15-3v19" stroke="var(--warning-text)" stroke-width="3.6" fill="none" stroke-linejoin="round"/><circle cx="10" cy="27" r="5" fill="var(--warning)"/><circle cx="25" cy="24" r="5" fill="var(--warning)"/></svg></template>
+<template id="svgSchirm"><svg viewBox="0 0 36 36"><path d="M18 5l11 4v9c0 8-5 12-11 14-6-2-11-6-11-14V9Z" fill="var(--warning)"/><path d="M18 11l6 2v5c0 4-3 7-6 8Z" fill="var(--warning-bg)"/></svg></template>
+<template id="svgKlammer"><svg viewBox="0 0 24 40"><path d="M8 34V9a5 5 0 0 1 10 0v21a3 3 0 0 1-6 0V12" stroke="var(--n400)" stroke-width="3" fill="none" stroke-linecap="round"/></svg></template>
+<template id="tplYusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="tplHandy">{{handy}}</template>
+<template id="tplSim">{{sim-karte}}</template>
+<template id="tplTasche">{{tasche}}</template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Situation: Handyladen -->
+  <div class="a buehne" id="bue0"><div class="wand"></div><div class="boden"></div></div>
+  <div class="a eingang" id="tuer0" data-frei><div class="innen"></div><div class="blatt" id="tuer0b"><div class="fenster"></div></div></div>
+  <div class="a regal" id="regal0"></div>
+  <div class="a schiene" id="schiene0" style="width:300px"></div>
+  <div class="a haenge" id="schild0"><svg viewBox="0 0 270 46"><path d="M60 0L44 46M210 0l16 46" stroke="var(--n400)" stroke-width="4" stroke-linecap="round"/></svg><div class="tafel">Nur heute!</div></div>
+  <div class="a portrait yusuf" id="yusuf0" style="width:220px;height:220px"></div>
+  <div class="a simform" id="sim0"><svg viewBox="0 0 110 140"><path d="M14 6h56l34 34v86a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8V14a8 8 0 0 1 8-8Z" fill="var(--surface)" fill-opacity=".7" stroke="var(--b400)" stroke-width="5" stroke-dasharray="14 9" stroke-linejoin="round"/></svg><b>?</b></div>
+  <div class="a tresen" id="tresen0" style="width:500px" data-gruppe="t0"><div class="platte"></div><div class="front"></div></div>
+  <div class="a teller" id="teller0" data-gruppe="t0"></div>
+  <div class="a handybox" id="handy0" data-gruppe="t0" data-dreht><div class="glas"><i id="glanz0"></i></div></div>
+  <div class="a rolle" id="rolle0" data-gruppe="t0"><div class="papier"><div class="zahl" id="zahl0">24 Monate</div><div class="zeile" id="zeile0">✕ <u></u></div><div class="raster" id="raster0"></div></div><div class="walze"></div></div>
+  <div class="a" id="stift0" style="width:170px">{{stift-quer}}</div>
+  <div class="a frage" id="frage0" data-frei>?</div>
+
+  <!-- 1 · Optionen + Denkpause -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a frage" id="frage1" style="width:104px;height:104px;font-size:64px;line-height:104px;background:var(--surface);color:var(--b500)">?</div>
+
+  <!-- 2 · Option A und B -->
+  <div class="a buehne quiz" id="bue2"><div class="wand"></div><div class="boden"></div><div class="dunkel"></div></div>
+  <div class="a portrait yusuf" id="yusuf2" style="width:190px;height:190px"></div>
+  <div class="a" id="boerse2" style="width:140px">{{geldboerse}}</div>
+  <div class="a" id="handy2" style="width:150px">{{handy~h2}}</div>
+  <div class="a" id="vertrag2" style="width:200px">{{vertrag}}</div>
+  <div class="a zusatz" id="zus2a" data-frei></div>
+  <div class="a zusatz" id="zus2b" data-frei></div>
+  <div class="a blatt2" id="blatt2"><div class="kopf"></div><i style="top:56px;width:120px"></i><i style="top:78px;width:104px"></i><i style="top:100px;width:116px"></i><i style="top:122px;width:80px"></i>
+    <svg viewBox="0 0 126 40"><path d="M2 38h122" stroke="var(--n300)" stroke-width="3"/><path d="M8 30l8-18 7 16 8-20 7 18 8-16 7 14" stroke="var(--b500)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="a sperre" id="sperre2"><span class="plakette rot" id="sperre2x"></span>Laden:<br>kein Widerruf</div>
+  <div class="a" id="bk2" style="width:180px">{{briefkasten}}</div>
+  <div class="a abdruck" id="abdruck2" data-frei>unterschrieben</div>
+  <div class="a" id="stempel2" style="width:120px" data-frei>{{stempel}}</div>
+
+  <!-- 3 · Option C -->
+  <div class="a buehne quiz" id="bue3"><div class="wand"></div><div class="boden"></div><div class="dunkel"></div></div>
+  <div class="a eingang" id="tuer3" data-frei><div class="innen"></div><div class="blatt"><div class="fenster"></div></div></div>
+  <div class="a schiene" id="schiene3" style="width:300px"></div>
+  <div class="a haenge" id="schild3"><svg viewBox="0 0 270 46"><path d="M60 0L44 46M210 0l16 46" stroke="var(--n400)" stroke-width="4" stroke-linecap="round"/></svg><div class="tafel">Nur heute!</div></div>
+  <div class="a zf" id="zf3" data-gruppe="t3"><div class="kopf">Vertrags-<br>zusammenfassung</div>
+    <div class="reihe" id="r3a" style="top:116px"><i class="hl" id="r3ah"></i><span class="ic" id="r3ai"></span><span>Preis</span></div>
+    <div class="reihe" id="r3b" style="top:196px"><i class="hl" id="r3bh"></i><span class="ic" id="r3bi"></span><span>Laufzeit</span></div>
+    <div class="reihe" id="r3c" style="top:276px"><i class="hl" id="r3ch"></i><span class="ic" id="r3ci"></span><span>Kündigung</span></div></div>
+  <div class="a tresen" id="tresen3" style="width:470px" data-gruppe="t3"><div class="platte"></div><div class="front"></div></div>
+  <div class="a teller" id="teller3" data-gruppe="t3"></div>
+  <div class="a handybox" id="handy3" data-gruppe="t3"><div class="glas"><i></i></div></div>
+  <div class="a portrait yusuf" id="yusuf3" style="width:200px;height:200px"></div>
+  <div class="a" id="tasche3" style="width:140px">{{tasche}}</div>
+
+  <!-- 4 · Prepaid oder Vertrag -->
+  <div class="a buehne" id="bue4" style="background:linear-gradient(var(--b50),var(--b100))"></div>
+  <div class="a pfosten" id="pfosten4" data-gruppe="w4"></div>
+  <div class="a fuss" id="fuss4" data-gruppe="w4"></div>
+  <div class="a schale" id="schale4l" data-gruppe="w4"><svg viewBox="0 0 210 170"><path d="M105 2L12 152M105 2l93 150" stroke="var(--n400)" stroke-width="3"/><rect x="0" y="150" width="210" height="12" rx="6" fill="var(--b500)"/></svg>
+    <div class="wkarte"><span>Prepaid</span><span class="spur2"><i id="guthaben4"></i></span></div></div>
+  <div class="a schale" id="schale4r" data-gruppe="w4"><svg viewBox="0 0 210 170"><path d="M105 2L12 152M105 2l93 150" stroke="var(--n400)" stroke-width="3"/><rect x="0" y="150" width="210" height="12" rx="6" fill="var(--b500)"/></svg>
+    <div class="wkarte"><span>Vertrag</span><span class="ikon"><i></i><i></i><i></i><i></i><i></i></span></div></div>
+  <div class="a balken" id="balken4" data-gruppe="w4"></div>
+  <div class="a nabe" id="nabe4" data-gruppe="w4"></div>
+  <div class="a" id="boerse4" style="width:150px" data-gruppe="b4">{{geldboerse~b4}}</div>
+  <div class="a" id="schloss4" style="width:100px" data-gruppe="b4">{{schloss}}</div>
+  <div class="a" id="handy4" style="width:200px" data-gruppe="s4">{{handy~h4}}</div>
+  <div class="a" id="pass4" style="width:150px" data-gruppe="s4">{{pass}}</div>
+  <div class="a scan" id="scan4" data-gruppe="s4"></div>
+  <div class="a plakette gruen" id="ok4" data-frei></div>
+  <div class="a kuend" id="kuend4"><span class="ic" id="kuend4i"></span>Kündigen</div>
+
+  <!-- 5 · Anrufe nach Hause -->
+  <div class="a buehne" id="bue5" style="background:linear-gradient(var(--b50),var(--b100))"></div>
+  <svg class="a" id="bogen5" viewBox="0 0 420 260" style="width:420px;height:260px" data-frei>
+    <path id="bogen5r" d="M30 240C80 60 230 30 335 85" stroke="var(--error)" stroke-width="7" stroke-dasharray="1 1" stroke-linecap="round" fill="none" pathLength="1"/>
+    <path id="bogen5g" d="M30 240C80 60 230 30 335 85" stroke="var(--success)" stroke-width="7" stroke-linecap="round" fill="none" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></svg>
+  <div class="a" id="globus5" style="width:240px">{{globus}}</div>
+  <div class="a portrait yusuf" id="yusuf5" style="width:180px;height:180px"></div>
+  <div class="a" id="handy5" style="width:200px">{{handy~h5}}</div>
+  <div class="a welle" id="wh5a" style="width:150px;height:150px" data-frei></div>
+  <div class="a welle" id="wh5b" style="width:150px;height:150px" data-frei></div>
+  <div class="a stapel" id="stapel5"></div>
+  <div class="a ausruf" id="warn5" data-frei>!</div>
+  <div class="a tarif" id="tarif5"><div class="kopf"></div>
+    <div class="reihe" style="top:44px"><span>Inland</span><span class="pk gruen" id="t5a"></span></div>
+    <div class="reihe" style="top:94px"><span>Internet</span><span class="pk gruen" id="t5b"></span></div>
+    <div class="reihe" style="top:144px"><i class="hl" id="t5h"></i><span>Ausland</span><span class="pk rot"><b>!</b></span></div></div>
+  <div class="a" id="lupe5" style="width:150px" data-frei>{{lupe}}</div>
+  <div class="a" id="router5" style="width:170px">{{router}}</div>
+  <svg class="a" id="wlan5" viewBox="0 0 120 70" style="width:120px;height:70px" data-frei>
+    <path id="wl5a" d="M45 58a21 21 0 0 1 30 0" stroke="var(--success)" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <path id="wl5b" d="M30 43a42 42 0 0 1 60 0" stroke="var(--success)" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <path id="wl5c" d="M15 28a63 63 0 0 1 90 0" stroke="var(--success)" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+  <div class="a plakette gruen" id="ok5" data-frei></div>
+
+  <!-- 6 · Auflösung -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <div class="a tinte" id="tinte6" style="width:404px;height:482px" data-frei></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">A: zu teuer ·</div><div class="titel">B: kein Widerruf</div><div class="titel">im Laden</div></div>
+<div class="block" id="tb3"><div class="titel">C: Zusammenfassung</div><div class="titel">mitnehmen ·</div><div class="titel">vergleichen</div></div>
+<div class="block mitte" id="tb4"><div class="titel">Prepaid:</div><div class="titel">Kosten im Griff ·</div><div class="titel">Vertrag:</div><div class="titel">max. 24 Monate</div></div>
+<div class="block mitte" id="tb5"><div class="titel">Anrufe ins Ausland:</div><div class="titel">Tarif prüfen ·</div><div class="titel">WLAN</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Lass dich nicht drängen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Nimm die Vertragszusammenfassung mit und vergleiche in Ruhe. Für den Anfang reicht oft Prepaid.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WN = (n, k) => A(satz(n).woerter[k].start);              // k-tes Wort in Satz n (für „Ah“, „Beh“, „Zeh“)
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const nicken = (id, t, h = 12) => { const y = wertBei(id, 'y', t); tw(id, t, .13, { y: y + h, sy: .96 }, 'sinus'); tw(id, t + .13, .3, { y, sy: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const wellen = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
+const beben = (id, t, a = 6, d = .45) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 80) * (1 - p / d)).toFixed(2)}px)`; });
+// Pendel: gedämpftes Schwingen um den Aufhängepunkt (feste Frequenz)
+const pendel = (id, t, a = 7, d = 2.2) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` rotate(${(a * Math.sin(p * 9) * Math.pow(1 - p / d, 2)).toFixed(2)}deg)`; });
+
+document.querySelectorAll('.portrait.yusuf').forEach(p => { p.innerHTML = tpl('tplYusuf'); p.dataset.sprecher = 'Yusuf'; });
+document.querySelectorAll('.handybox').forEach((h, k) => h.insertAdjacentHTML('afterbegin', tpl('tplHandy').replaceAll('il-handy-g', `il-handy-hb${k}-g`)));
+['ok4', 'ok5'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('sperre2x').innerHTML = tpl('svgX');
+el('kuend4i').innerHTML = tpl('svgTuer');
+['t5a', 't5b'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+[['r3ai', 'svgEuro'], ['r3bi', 'svgKal'], ['r3ci', 'svgTuer']].forEach(([id, s]) => el(id).innerHTML = tpl(s));
+el('zus2a').innerHTML = `${tpl('svgNote')}<span class="klammer">${tpl('svgKlammer')}</span><span class="plus">+</span>`;
+el('zus2b').innerHTML = `${tpl('svgSchirm')}<span class="klammer">${tpl('svgKlammer')}</span><span class="plus">+</span>`;
+// Regal mit Handys (ohne Logo)
+el('regal0').innerHTML = [0, 1].map(r => `<i class="brett" style="top:${108 + r * 112}px"></i>` +
+  [0, 1, 2].map(c => `<span class="mini" style="left:${30 + c * 52}px;top:${48 + r * 112}px"><i></i></span>`).join('')).join('');
+el('raster0').innerHTML = Array.from({ length: 24 }, (_, k) => `<i id="rz${k}"></i>`).join('');
+el('stapel5').innerHTML = Array.from({ length: 8 }, (_, k) => `<i id="st5${k}" style="top:${88 - k * 11}px"></i>`).join('');
+
+/* ---------- Porträts: Mund exakt in den eigenen Sätzen (sprache.json), blinzeln, nicken beim Zuhören ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, STAUNEN = {};
+const froh = (id, a, b) => (FROH[id] ??= []).push([a, b]);
+const staunen = (id, a, b) => (STAUNEN[id] ??= []).push([a, b]);
+const kurve = (keys, t, d = .5) => { let v = keys[0][1]; for (const [a, w] of keys.slice(1)) if (t >= a) v = lerp(v, w, E.inout(clamp((t - a) / d))); return v; };
+const rampe = (t, a, b, d = .25) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const gross = (STAUNEN[p.id] || []).reduce((m, [a, b]) => Math.max(m, rampe(t, a, b)), 0);
+    const z = (t * .29 + i * .37) % 1, blinz = gross > .1 ? 1 : (z < .035 ? .12 : 1);
+    p.querySelector('.augen').style.transform = `scale(${(1 + .32 * gross).toFixed(3)},${((1 + .32 * gross) * blinz).toFixed(3)})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick.toFixed(2)}deg) translateY(${aktiv ? 0 : nick}px)`;
+    p.style.borderColor = aktiv ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 7, RUHE = Array.from({ length: N }, (_, i) => i ? -S(i) : -360);
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in die Bildmitte, der erste Schwenk startet von hier
+let MITTE_BIS = 0;       // bis dahin zoomt die Kamera um die Bildmitte (erste Bühne mittig)
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transformOrigin = `${t < MITTE_BIS ? 960 : 1320}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE[i])).toFixed(1)}px)`;
+});
+
+/* ---------- Unterschriften: Pfad zeichnet sich, der Stift folgt der Spitze ---------- */
+const ZUEGE = [];
+const zug = (pfad, stift, t0, d) => ZUEGE.push({ pfad, stift, t0, d });
+HOOKS.push(t => ZUEGE.forEach(({ pfad, stift, t0, d }) => {
+  const p = el(pfad), q = E.inout(clamp((t - t0) / d));
+  p.style.strokeDashoffset = (1 - q).toFixed(4);
+  if (stift) { const L = p.getTotalLength(), pt = p.getPointAtLength(L * q); el(stift).setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})`); }
+}));
+// Waagen: Winkel des Balkens (Grad) aus einer Funktion der Zeit; die Schalen hängen senkrecht an den Enden
+const WAAGEN = [];
+HOOKS.push(t => WAAGEN.forEach(({ balken, l, r, cx, cy, L, winkel }) => {
+  const a = winkel(t), rad = a * Math.PI / 180, dx = (L * (1 - Math.cos(rad))).toFixed(2), dy = (L * Math.sin(rad)).toFixed(2);
+  const b = el(balken);
+  if (b.tagName === 'g') {
+    b.style.transformBox = 'view-box'; b.style.transformOrigin = `${cx}px ${cy}px`; b.style.transform = `rotate(${a.toFixed(2)}deg)`;
+    el(l).style.transform = `translate(${dx}px,${-dy}px)`; el(r).style.transform = `translate(${-dx}px,${dy}px)`;
+  } else {
+    b.style.transform += ` rotate(${a.toFixed(2)}deg)`;
+    el(l).style.transform += ` translate(${dx}px,${-dy}px)`; el(r).style.transform += ` translate(${-dx}px,${dy}px)`;
+  }
+}));
+
+/* ================= Format „Was würdest du tun?“ ================= */
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.querySelector('.dunkel').style.opacity = 1 - p;
+}));
+const FARBE = { A: 'rot', B: 'rot', C: 'gruen' };
+const KX = [540, 960, 1380], KY = 490;
+const papier = (x, y, w, h) => `<rect x="${x + 5}" y="${y + 6}" width="${w}" height="${h}" rx="12" fill="var(--b700)" opacity=".18"/>
+  <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="var(--surface)" stroke="var(--n300)" stroke-width="4"/>
+  <rect x="${x + 18}" y="${y + 20}" width="${w * .45}" height="12" rx="6" fill="var(--b300)"/>
+  <path d="M${x + 18} ${y + 52}h${w - 40}M${x + 18} ${y + 72}h${w - 56}M${x + 18} ${y + 92}h${w - 46}" stroke="var(--n200)" stroke-width="8" stroke-linecap="round"/>`;
+const STIFT = p => `<g id="${p}pw"><g id="${p}pen"><path d="M0 0l5-17 46-46 12 12-46 46Z" fill="var(--b500)"/><path d="M0 0l5-17 12 12Z" fill="var(--warning-bg)"/><path d="M0 0l2-7 5 5Z" fill="var(--ink)"/><path d="M51-63l6-6 12 12-6 6Z" fill="var(--b700)"/></g></g>`;
+// Symbole: A schnell unterschreiben (Zickzack), „heute!“; B unterschreiben, Pfeil zurück zum Briefkasten „?“; C Zusammenfassung in die Tasche, Waage vergleicht
+const SYM = {
+  A: p => `<svg viewBox="0 0 300 260">
+    <g id="${p}pa">${papier(64, 24, 160, 206)}<path d="M82 206h124" stroke="var(--n300)" stroke-width="3"/></g>
+    <path id="${p}sig" d="M88 198l9-26 9 22 9-30 9 26 9-30 9 28 9-26 9 22 9-18" stroke="var(--b500)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/>
+    ${STIFT(p)}
+    <g id="${p}he"><circle cx="246" cy="44" r="30" fill="var(--error)"/><circle cx="246" cy="44" r="30" fill="none" stroke="var(--surface)" stroke-width="5"/>
+      <path d="M246 28v18" stroke="var(--surface)" stroke-width="7" stroke-linecap="round"/><circle cx="246" cy="58" r="4.5" fill="var(--surface)"/></g></svg>`,
+  B: p => `<svg viewBox="0 0 300 260">
+    <g id="${p}pa">${papier(14, 76, 130, 168)}<path d="M30 222h96" stroke="var(--n300)" stroke-width="3"/></g>
+    <path id="${p}sig" d="M34 214l8-20 8 16 8-22 8 18 8-20 8 16 8-12" stroke="var(--b500)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/>
+    ${STIFT(p)}
+    <g id="${p}bk"><rect x="241" y="164" width="10" height="84" fill="var(--n300)"/><path d="M206 124a24 24 0 0 1 24-24h26a24 24 0 0 1 24 24v48h-74Z" fill="var(--b500)"/>
+      <rect x="220" y="130" width="46" height="8" rx="4" fill="var(--b700)"/><rect x="282" y="112" width="5" height="34" rx="2.5" fill="var(--n300)"/><rect x="282" y="112" width="16" height="12" rx="2" fill="var(--error)"/></g>
+    <path id="${p}pf" d="M120 66C150 6 214 6 236 86" stroke="var(--b400)" stroke-width="7" fill="none" stroke-linecap="round" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/>
+    <path id="${p}ps" d="M220 78l16 14 6-21" stroke="var(--b400)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="${p}fz"><circle cx="178" cy="40" r="25" fill="var(--b500)"/><text x="178" y="55" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="40" fill="var(--surface)">?</text></g></svg>`,
+  C: p => `<svg viewBox="0 0 300 260">
+    <g id="${p}zf"><rect x="38" y="20" width="104" height="134" rx="12" fill="var(--surface)" stroke="var(--n300)" stroke-width="4"/>
+      <rect x="52" y="34" width="76" height="14" rx="7" fill="var(--b500)"/>
+      <g fill="var(--b400)"><circle cx="60" cy="72" r="6"/><circle cx="60" cy="98" r="6"/><circle cx="60" cy="124" r="6"/></g>
+      <path d="M74 72h50M74 98h40M74 124h46" stroke="var(--n200)" stroke-width="8" stroke-linecap="round"/></g>
+    <g id="${p}ta"><path d="M56 128v-10a34 34 0 0 1 68 0v10" stroke="var(--b700)" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path d="M22 126h136l-10 106a10 10 0 0 1-10 9H42a10 10 0 0 1-10-9Z" fill="var(--b500)"/><path d="M22 126h136l-2 18H24Z" fill="var(--b700)"/>
+      <rect x="78" y="138" width="24" height="16" rx="5" fill="var(--warning)"/></g>
+    <g id="${p}wa"><rect x="226" y="96" width="10" height="132" rx="5" fill="var(--b700)"/><rect x="196" y="226" width="70" height="12" rx="6" fill="var(--b700)"/>
+      <g id="${p}wl"><path d="M190 96l-20 54M190 96l20 54" stroke="var(--n400)" stroke-width="3"/><rect x="164" y="148" width="52" height="8" rx="4" fill="var(--b500)"/>
+        <rect x="174" y="124" width="32" height="24" rx="6" fill="var(--success-bg)" stroke="var(--success)" stroke-width="3"/></g>
+      <g id="${p}wr"><path d="M272 96l-20 54M272 96l20 54" stroke="var(--n400)" stroke-width="3"/><rect x="246" y="148" width="52" height="8" rx="4" fill="var(--b500)"/>
+        <rect x="256" y="124" width="32" height="24" rx="6" fill="var(--warning-bg)" stroke="var(--warning)" stroke-width="3"/></g>
+      <g id="${p}wb"><rect x="186" y="90" width="90" height="10" rx="5" fill="var(--b500)"/><circle cx="231" cy="95" r="9" fill="var(--b700)"/></g></g></svg>`,
+};
+// Zustand der Symbole: fertig = alles schon da (Kacheln, Auflösung), sonst spielen sie beim Sprechen
+function symZustand(p, L, fertig) {
+  const s = fertig ? {} : { s: 0 };
+  if (L === 'A') {
+    akteur(`${p}pa`, s, true); akteur(`${p}pw`, s, true); akteur(`${p}he`, s, true);
+    if (fertig) { el(`${p}sig`).style.strokeDashoffset = 0; el(`${p}pen`).setAttribute('transform', 'translate(169 166)'); }
+  }
+  if (L === 'B') {
+    akteur(`${p}pa`, s, true); akteur(`${p}pw`, fertig ? { s: 0 } : s, true); akteur(`${p}bk`, s, true); akteur(`${p}ps`, s, true); akteur(`${p}fz`, s, true);
+    if (fertig) { el(`${p}sig`).style.strokeDashoffset = 0; el(`${p}pf`).style.strokeDashoffset = 0;  }
+  }
+  if (L === 'C') {
+    akteur(`${p}zf`, fertig ? { y: 52 } : { s: 0 }, true); akteur(`${p}ta`, s, true); akteur(`${p}wa`, s, true);
+  }
+}
+const MARKE = { A: () => tpl('svgX'), B: () => tpl('svgX'), C: () => tpl('svgHaken') };
+function karten(i, fertig = true, marken = '') {
+  WELT.insertAdjacentHTML('beforeend', ['A', 'B', 'C'].map(L => {
+    const p = `k${i}${L}`;
+    return `<div class="a okarte" id="${p}"><div class="rahmen" id="${p}r"></div><div class="knopf" id="${p}kn">${L}</div>
+      <div class="sym">${SYM[L](p)}</div><div class="marke ${FARBE[L]}" id="${p}m">${MARKE[L]()}</div></div>`;
+  }).join(''));
+  ['A', 'B', 'C'].forEach(L => {
+    const p = `k${i}${L}`;
+    symZustand(p, L, fertig);
+    el(`${p}m`).style.transformOrigin = '50% 50%'; el(`${p}kn`).style.transformOrigin = '50% 50%';
+    akteur(`${p}m`, marken.includes(L) ? {} : { s: 0, o: 0 }, true);
+    akteur(`${p}r`, marken.includes(L) ? { o: 1 } : { o: 0 }, true);
+    if (marken.includes(L)) el(`${p}r`).classList.add(FARBE[L]);
+    akteur(`${p}kn`, {}, true);
+  });
+}
+function markeAuf(p, L, t) {
+  set(`${p}m`, t - .01, { o: 1 }); tw(`${p}m`, t, .45, { s: 1 }, 'back');
+  el(`${p}r`).classList.add(FARBE[L]); tw(`${p}r`, t, .25, { o: 1 });
+  tw(p, t, .08, { sy: .95, sx: 1.03 }, 'sinus'); tw(p, t + .08, .4, { sy: 1, sx: 1 }, 'sanft');
+  wackeln(p, t + .05, 3, 1.5); cue(t, 'plopp'); cue(t + .05, L === 'C' ? 'erfolg' : 'klick'); akzent(t, .045);
+}
+function durchspielen({ i, L, tVor, tMarke, tK, tb, marken, zeiten }) {
+  const X = S(i);
+  quiz(i, tK);
+  karten(i, true, marken);
+  ['A', 'B', 'C'].forEach((M, k) => akteur(`k${i}${M}`, { x: X + KX[k], y: KY }));
+  const p = `k${i}${L}`, andere = ['A', 'B', 'C'].filter(M => M !== L).map(M => `k${i}${M}`);
+  tw(p, tVor, .7, { s: 1.12, y: KY - 10 }, 'sanft'); cue(tVor, 'whoosh');
+  tw(andere, tVor, .7, { s: .9, o: .45 }, 'inout');
+  bump(`${p}kn`, tMarke - .25, 1.2);
+  markeAuf(p, L, tMarke);
+  aus(andere, tK - .1, .4);
+  tw(p, tK, .9, { x: X + 232, y: 250, s: .5 }, 'inout');
+  titelEin(tb, tK + .4, zeiten);
+  return X;
+}
+// Handy auf dem Drehteller: dreht sich (Breite nach Kosinus), ein Glanzlicht wischt über das Glas
+const DREH = [];
+HOOKS.push(t => DREH.forEach(([id, t0, d]) => { const p = (t - t0) / d; if (p > 0 && p < 1) el(id).style.transform += ` scaleX(${Math.cos(2 * Math.PI * E.inout(p)).toFixed(3)})`; }));
+const glanz = (id, t) => { rel(id, { x: 0 }); tw(id, t, .7, { x: 190 }, 'inout'); set(id, t + .75, { x: 0 }); };
+
+/* ---------- 0 · Handyladen: Yusuf braucht eine SIM-Karte ---------- */
+{
+  const X = S(0);
+  akteur('bue0', { x: X + 1320, y: 540 });
+  ein('tuer0', A(-.6), { x: X + 1020, y: 430 }, { y: -40 });
+  rel('tuer0b', {});
+  ein('regal0', A(-.5), { x: X + 1610, y: 400 }, { y: -40 });
+  ein('schiene0', A(-.45), { x: X + 1300, y: 246 }, { y: -30 });
+  ein('tresen0', A(-.4), { x: X + 1440, y: 770 }, { y: 70 }, 'whoosh');
+  // „Yusuf braucht eine SIM-Karte“: die Tür schwingt auf, Yusuf hüpft herein, eine leere SIM-Form mit „?“
+  const tYu = W('Yusuf', 1), tSi = W('Simm', 1);
+  tw('tuer0b', tYu - .45, .4, { sx: .12 }, 'inout'); cue(tYu - .45, 'whoosh');
+  akteur('yusuf0', { x: X + 1020, y: 470, s: .55, o: 0 });
+  tw('yusuf0', tYu - .15, .2, { o: 1 }); tw('yusuf0', tYu - .15, .7, { x: X + 1040, y: 610, s: 1 }, 'sanft', { bogen: 40 });
+  landen('yusuf0', tYu + .55); cue(tYu + .55, 'plopp');
+  tw('tuer0b', tYu + .7, .5, { sx: 1 }, 'inout'); cue(tYu + .8, 'klick');
+  el('sim0').style.transformOrigin = '50% 60%';
+  pop('sim0', tSi - .1, { x: X + 1215, y: 420 }); schweben('sim0', 5);
+  wackeln('sim0', tSi + .5, 3, 3);
+  // „Im Laden zeigt ihm ein Verkäufer das neueste Handy“: Regal pocht, Drehteller fährt aus dem Tisch, das Handy dreht sich, Glanzlicht
+  const tLa = W('Laden', 2), tVe = W('Verkäufer', 2), tNe = W('neueste', 2), tHa = W('Handy', 2);
+  bump('regal0', tLa, 1.05); cue(tLa, 'klick');
+  aus('sim0', tVe, .35);
+  akteur('teller0', { x: X + 1400, y: 720, o: 0, sx: .6 });
+  tw('teller0', tNe - .35, .25, { o: 1 }); tw('teller0', tNe - .35, .55, { y: 690, sx: 1 }, 'sanft'); cue(tNe - .35, 'whoosh');
+  akteur('handy0', { x: X + 1400, y: 660, o: 0, s: .7 });
+  tw('handy0', tNe - .2, .25, { o: 1 }); tw('handy0', tNe - .2, .6, { y: 600, s: 1 }, 'back');
+  DREH.push(['handy0', tHa - .1, 1.1]); cue(tHa - .1, 'whoosh');
+  glanz('glanz0', tHa + 1.05); cue(tHa + 1.1, 'ding'); akzent(tHa + 1.1, .035);
+  // Yusuf: „Wow, das ist schön.“ – die Augen werden groß, er hüpft
+  const tWo = W('Wow', 3);
+  staunen('yusuf0', tWo - .1, W('schön', 3) + .3); huepfen('yusuf0', tWo, 16);
+  froh('yusuf0', SE(3) + .05, SA(4) - .05);
+  bump('handy0', W('schön', 3), 1.06); glanz('glanz0', W('schön', 3));
+  // „Aber ist das nicht sehr teuer?“: ein „?“
+  const tTe = W('teuer', 4);
+  el('frage0').style.transformOrigin = '50% 60%';
+  pop('frage0', tTe - .05, { x: X + 1170, y: 480 }); wackeln('frage0', tTe + .45, 3, 5);
+  // „Der Verkäufer sagt: Nur heute!“: das rote Schild klappt herunter und schwingt
+  const tNu = W('Nur', 5), tHe = W('heute', 5);
+  aus('frage0', W('Verkäufer', 5), .3);
+  akteur('schild0', { x: X + 1300, y: 322, sy: 0, o: 0 });
+  set('schild0', tNu - .2, { o: 1 }); tw('schild0', tNu - .2, .45, { sy: 1 }, 'back'); cue(tNu - .2, 'plopp');
+  pendel('schild0', tNu + .2, 6, 2.4); akzent(tHe, .045); cue(tHe, 'klick');
+  wackeln('yusuf0', tHe + .1, 3, 2);
+  // „Mit Vertrag über 24 Monate“: ein langer Vertrag rollt sich über den Tresen aus, 24 Felder füllen sich
+  const tVt = W('Vertrag', 6), tVi = W('vierundzwanzig', 6), tMo = WE('Monate', 6);
+  akteur('rolle0', { x: X + 1440, y: 782, sy: 0, o: 0 });
+  set('rolle0', tVt - .25, { o: 1 }); tw('rolle0', tVt - .25, .6, { sy: 1 }, 'sanft'); cue(tVt - .25, 'whoosh');
+  rel('zahl0', {}, '0 50%'); bump('zahl0', tVi, 1.12);
+  HOOKS.push(t => { const n = Math.floor(24 * clamp((t - tVi) / (tMo - tVi))); for (let k = 0; k < 24; k++) el('rz' + k).style.background = k < n ? 'var(--b500)' : ''; });
+  for (let k = 0; k < 6; k++) cue(tVi + k * (tMo - tVi) / 6, 'tipp');
+  akzent(W('Monate', 6), .04);
+  // „Unterschreib einfach hier“: ein Stift rollt über den Tresen zu Yusuf, das ✕ auf der Linie blinkt
+  const tUn = W('Unterschreib', 7), tHi = W('hier', 7);
+  akteur('stift0', { x: X + 1650, y: 676, o: 0 });
+  tw('stift0', tUn - .2, .2, { o: 1 }); tw('stift0', tUn - .1, tHi - tUn + .1, { x: X + 1250 }, 'inout'); cue(tUn - .1, 'whoosh');
+  for (let k = 0; k < 3; k++) { const tt = tUn + k * (tHi - tUn) / 3; tw('stift0', tt, .1, { sy: .9 }, 'sinus'); tw('stift0', tt + .1, .18, { sy: 1 }, 'sinus'); }
+  landen('stift0', tHi); cue(tHi, 'klick');
+  rel('zeile0', {}, '20% 50%'); bump('zeile0', tHi, 1.25); bump('zeile0', tHi + .6, 1.15);
+  wackeln('yusuf0', W('einfach', 7), 3, 2.5);
+}
+
+/* ---------- 1 · Was würdest du tun? Drei Karten, Denkpause ---------- */
+const P1 = SE(7) + .15;
+MITTE_BIS = P1 + .9;
+pan2(P1, 1);
+{
+  const X = S(1);
+  quiz(1);
+  pop('frage1', P1 + .55, { x: X + 960, y: 215 }); schweben('frage1', 5);
+  wackeln('frage1', W('tun', 8) - .1, 3, 4);
+  karten(1, false);
+  [['A', 9], ['B', 10], ['C', 11]].forEach(([L, n], k) => {
+    const p = `k1${L}`, t0 = SA(n) - .35;
+    akteur(p, { x: X + KX[k] - 120, y: KY + 360, o: 0, s: .75, r: -3 });
+    tw(p, t0, .2, { o: 1 }); tw(p, t0, .85, { x: X + KX[k], y: KY }, 'inout', { bogen: 90 }); tw(p, t0, .85, { r: 0, s: 1 }, 'sanft');
+    cue(t0, 'whoosh'); bump(`${p}kn`, SA(n), 1.25); cue(SA(n), 'pop');
+  });
+  // A: Blatt, Stift kritzelt schnell (Zickzack), rotes „!“ auf „heute“
+  const tSo = W('Sofort', 9), tUs = W('unterschreiben', 9), tHe = W('heute', 9);
+  tw('k1Apa', tSo - .1, .45, { s: 1 }, 'back'); cue(tSo, 'pop');
+  tw('k1Apw', tUs - .3, .35, { s: 1 }, 'back');
+  el('k1Apen').setAttribute('transform', 'translate(88 198)');
+  zug('k1Asig', 'k1Apen', tUs - .05, .75); cue(tUs - .05, 'kritzeln');
+  tw('k1Ahe', tHe - .1, .45, { s: 1 }, 'back'); cue(tHe, 'plopp'); wackeln('k1Ahe', tHe + .4, 4, 8);
+  // B: unterschreiben, dann Pfeil zurück zum Briefkasten – mit „?“
+  const tU2 = W('Unterschreiben', 10), tHa = W('Hause', 10), tZu = W('zurückgeben', 10);
+  tw('k1Bpa', tU2 - .25, .45, { s: 1 }, 'back'); cue(tU2 - .25, 'pop');
+  tw('k1Bpw', tU2 - .1, .3, { s: 1 }, 'back');
+  el('k1Bpen').setAttribute('transform', 'translate(34 214)');
+  zug('k1Bsig', 'k1Bpen', tU2 + .1, .6); cue(tU2 + .1, 'kritzeln');
+  tw('k1Bpw', W('Vertrag', 10), .3, { s: 0 }, 'in');
+  tw('k1Bbk', tHa - .15, .45, { s: 1 }, 'back'); cue(tHa - .1, 'pop');
+  zug('k1Bpf', null, tZu - .35, .6); cue(tZu - .35, 'whoosh');
+  tw('k1Bps', tZu + .2, .3, { s: 1 }, 'back');
+  tw('k1Bfz', WE('zurückgeben', 10) - .1, .45, { s: 1 }, 'back'); cue(WE('zurückgeben', 10), 'plopp'); wackeln('k1Bfz', WE('zurückgeben', 10) + .4, 4, 8);
+  // C: Zusammenfassung wandert in die Tasche, die Waage vergleicht zwei Angebote
+  const tVz = W('Vertragszusammenfassung', 11), tMi = W('mitnehmen', 11), tVg = W('vergleichen', 11);
+  tw('k1Czf', tVz, .45, { s: 1 }, 'back'); cue(tVz, 'pop');
+  tw('k1Cta', tMi - .3, .45, { s: 1 }, 'back'); cue(tMi - .3, 'pop');
+  tw('k1Czf', tMi + .15, .6, { y: 52 }, 'inout'); cue(tMi + .2, 'whoosh');
+  tw('k1Cwa', W('Ruhe', 11) - .1, .45, { s: 1 }, 'back'); cue(W('Ruhe', 11), 'pop');
+  const tW = tVg - .1;
+  WAAGEN.push({ balken: 'k1Cwb', l: 'k1Cwl', r: 'k1Cwr', cx: 231, cy: 95, L: 41,
+    winkel: t => t < tW ? 0 : 10 * Math.sin((t - tW) * 4) * Math.exp(-(t - tW) / 1.6) });
+  cue(tVg, 'klick');
+  // Denkpause: Ring läuft leer, Lichtrahmen wandert A → B → C, dann 3 – 2 – 1 auf den gesprochenen Zahlen
+  WELT.insertAdjacentHTML('beforeend', `<div class="a ring3" id="ring1"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+    <circle id="lauf1" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer1">?</b></div>`);
+  const c0 = SE(11) + .3, c1 = WE('Eins', 14) + .25;
+  pop('ring1', SE(11) + .05, { x: X + 960, y: 830 });
+  const ZIFFERN = [[W('Drei', 12), '3'], [W('Zwei', 13), '2'], [W('Eins', 14), '1']];
+  ZIFFERN.forEach(([t], k) => { cue(t, 'klick'); bump(`k1${'ABC'[k]}`, t + .03, 1.05); });
+  HOOKS.push(t => {
+    el('lauf1').style.strokeDashoffset = -clamp((t - c0) / (c1 - c0));
+    let z = '?', seit = t - c0;
+    for (const [tz, n] of ZIFFERN) if (t >= tz) { z = n; seit = t - tz; }
+    const zf = el('ziffer1'); zf.textContent = z;
+    zf.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(seit / .3)))})` : '';
+  });
+  const tLicht = SE(11) + .45, dl = (W('Drei', 12) - .2 - tLicht) / 3;
+  ['A', 'B', 'C'].forEach((L, k) => {
+    const t = tLicht + k * dl;
+    tw(`k1${L}r`, t, .2, { o: 1 }, 'out'); tw(`k1${L}r`, t + dl * .85, .25, { o: 0 }, 'in');
+    bump(`k1${L}`, t, 1.05); cue(t, 'tipp');
+  });
+  aus(['ring1', 'frage1'], c1 + .05, .35);
+}
+
+/* ---------- 2 · Option A: 24 Monate zahlen – Option B: zurückgeben geht nicht ---------- */
+const P2 = WE('Eins', 14) + .4;
+pan2(P2, 2);
+{
+  const tMarke = WN(15, 1), tK = W('Yusuf', 15) - .25, tB = WN(17, 1), tKe = W('kein', 18), tLa = W('Laden', 18);
+  const X = durchspielen({ i: 2, L: 'A', tVor: P2 + .35, tMarke, tK, tb: 'tb2',
+    zeiten: [tK + .4, tK + .48, tK + .56, tK + .64, tB - .05, tKe, tKe + .08, tKe + .16, tKe + .24] });
+  const ws = [...document.querySelectorAll('#tb2 .w')]; [0, 1, 2, 4, 5, 6].forEach(k => ws[k].classList.add('rot'));
+  // Yusuf, seine Geldbörse und das teure Handy
+  ein('yusuf2', tK + .3, { x: X + 1020, y: 650 }, { x: -50 }, 'pop');
+  ein('boerse2', tK + .45, { x: X + 1200, y: 780 }, { y: 50 });
+  ein('handy2', tK + .55, { x: X + 1600, y: 735 }, { x: 60 }, 'whoosh');
+  // „zahlt … zwei Jahre lang“: 24 Monatsblätter fächern sich auf
+  const tZa = W('zahlt', 15), tZw = W('zwei', 15), tJe = W('jeden', 15);
+  bump('boerse2', tZa, 1.1); cue(tZa, 'muenze');
+  const KAL = [];
+  for (let k = 0; k < 24; k++) {
+    const c = k % 6, r = Math.floor(k / 6), id = 'kb2' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a kblatt" id="${id}"><b>${k + 1}</b></div>`);
+    const x = X + 1275 + c * 74, y = 312 + r * 74; KAL.push([x, y]);
+    const t = tZw - .2 + k * .045;
+    akteur(id, { x: X + 1460, y: 420, s: .3, o: 0 });
+    tw(id, t, .15, { o: 1 }); tw(id, t, .55, { x, y, s: 1 }, 'sanft');
+    if (k % 4 === 0) cue(t, 'tipp');
+  }
+  akzent(W('Jahre', 15), .035);
+  // „jeden Monat“: aus der Geldbörse fliegt auf jedes Blatt eine Münze
+  for (let k = 0; k < 24; k++) {
+    const id = 'mz2' + k, [x, y] = KAL[k], t = tJe - .35 + k * .07;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a taler" id="${id}" data-frei></div>`);
+    akteur(id, { x: X + 1200, y: 760, o: 0, s: .6 });
+    set(id, t, { o: 1 }); flug(id, t, .8, x, y + 14, 60, { s: 1 }); landen(id, t + .8);
+    if (k % 3 === 0) cue(t + .8, 'muenze');
+  }
+  tw('boerse2', tJe, .25, { sy: .93 }, 'sinus'); tw('boerse2', tJe + 1.8, .3, { sy: 1 }, 'sanft');
+  // „Und im Vertrag stecken Zusatzoptionen“: zwei Zusatz-Kärtchen hängen sich mit Büroklammern an den Vertrag
+  const tVt = W('Vertrag', 16), tZo = W('Zusatzoptionen', 16), tBr = W('braucht', 16);
+  pop('vertrag2', tVt - .1, { x: X + 1060, y: 380 }); cue(tVt, 'pop');
+  [['zus2a', 340, 0], ['zus2b', 418, .3]].forEach(([id, y, d]) => {
+    akteur(id, { x: X + 1240, y: y - 60, o: 0, s: .6, r: 3 });
+    tw(id, tZo + d, .2, { o: 1 }); tw(id, tZo + d, .6, { x: X + 1170, y, s: 1, r: 0 }, 'back'); cue(tZo + d, 'plopp');
+    landen(id, tZo + d + .55); cue(tZo + d + .55, 'klick');
+  });
+  wackeln('vertrag2', tZo + .9, 3, 2);
+  // „die er gar nicht braucht“: die Münzen werden mehr – auf jedes Blatt eine zweite
+  for (let k = 0; k < 24; k++) {
+    const id = 'mz2b' + k, [x, y] = KAL[k], t = W('gar', 16) + k * .04;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a taler" id="${id}" data-frei></div>`);
+    pop(id, t, { x: x + 11, y: y + 9 }, k % 4 === 0 ? 'muenze' : null);
+  }
+  wackeln('yusuf2', tBr, 3, 3); akzent(tBr, .04);
+  // Option B: Karte B als zweite Kachel, rote Marke; Option A räumt auf
+  const tOB = SA(17) - .15;
+  const A_IDS = ['boerse2', 'handy2', 'vertrag2', 'zus2a', 'zus2b', ...KAL.flatMap((_, k) => ['kb2' + k, 'mz2' + k, 'mz2b' + k])];
+  aus(A_IDS, tOB - .2, .35);
+  set('k2B', tOB - .05, { x: X + 442, y: 330, s: 0, o: 1 });
+  tw('k2B', tOB, .6, { s: .5, y: 250 }, 'back'); cue(tOB, 'whoosh');
+  bump('k2Bkn', tB - .2, 1.2);
+  markeAuf('k2B', 'B', tB);
+  // Vertrag (unterschrieben), Briefkasten, die Sperre „Laden: kein Widerruf“
+  ein('blatt2', tB + .1, { x: X + 1215, y: 520 }, { y: 60 }, 'whoosh');
+  ein('bk2', tB + .25, { x: X + 1650, y: 560 }, { x: 60 });
+  const tKl = W('klappt', 17), tMe = W('meistens', 17), tNi = W('nicht', 17);
+  pop('sperre2', tMe - .2, { x: X + 1460, y: 520 }, 'plopp');
+  rel('sperre2x', { s: 0 }, '50% 50%'); tw('sperre2x', tMe + .1, .45, { s: 1 }, 'back');
+  // „Das klappt …“: der Vertrag fliegt los – prallt an der Sperre ab und fällt zurück
+  tw('blatt2', tKl - .2, .5, { x: X + 1300, y: 470, s: .6, r: 3 }, 'in', { bogen: 60 }); cue(tKl - .2, 'whoosh');
+  tw('blatt2', tKl + .3, .55, { x: X + 1215, y: 520, s: 1, r: 0 }, 'sanft', { bogen: 50 }); cue(tKl + .3, 'plopp');
+  beben('sperre2', tKl + .3, 7, .5); akzent(tKl + .3, .05);
+  bump('sperre2', tNi, 1.08); wackeln('yusuf2', tNi, 3, 2.5);
+  // „im Laden … kein Widerrufsrecht“
+  bump('sperre2', tLa, 1.06); bump('sperre2x', tKe, 1.3); cue(tKe, 'klick');
+  wackeln('sperre2', W('Widerrufsrecht', 18), 3, 2);
+  // „Unterschrieben ist unterschrieben“: der Stempel schlägt mit Wackler auf
+  const tU1 = W('Unterschrieben', 19), tU2 = W('unterschrieben', 19);
+  akteur('stempel2', { x: X + 1215, y: 380, o: 0 });
+  tw('stempel2', tU1 - .5, .25, { o: 1 }); tw('stempel2', tU1 - .5, .35, { y: 460 }, 'out');
+  tw('stempel2', tU1 - .12, .12, { y: 532 }, 'in'); landen('stempel2', tU1); cue(tU1, 'plopp');
+  akteur('abdruck2', { x: X + 1215, y: 565, s: 1.3, o: 0, r: -3 });
+  set('abdruck2', tU1, { o: 1 }); tw('abdruck2', tU1, .3, { s: 1 }, 'out'); wackeln('blatt2', tU1, 3, 2.5);
+  akzent(tU1, .05);
+  tw('stempel2', tU1 + .35, .45, { y: 420, o: 0 }, 'inout');
+  bump('abdruck2', tU2, 1.1); cue(tU2, 'klick');
+  textAus('tb2', SE(19) + .1);
+}
+
+/* ---------- 3 · Option C: nichts unterschreiben, Zusammenfassung mitnehmen ---------- */
+const P3 = SE(19) + .3;
+pan2(P3, 3);
+{
+  const tMarke = WN(20, 2), tK = SA(21) - .3, tVz = W('Vertragszusammenfassung', 22);
+  const X = durchspielen({ i: 3, L: 'C', tVor: P3 + .35, tMarke, tK, tb: 'tb3', marken: 'AB',
+    zeiten: [tK + .4, tVz, tVz + .1, tVz + .18, W('Kündigung', 24) + .2] });
+  $('#tb3 .w').classList.add('gruen');
+  // Laden wie vorher: Tür, Tresen mit Handy, das Schild „Nur heute!“
+  ein('tuer3', tK + .2, { x: X + 1020, y: 430 }, { y: -40 });
+  ein('schiene3', tK + .25, { x: X + 1400, y: 246 }, { y: -30 });
+  ein('schild3', tK + .3, { x: X + 1400, y: 322 }, { y: -30 });
+  ein('tresen3', tK + .25, { x: X + 1465, y: 770 }, { y: 70 }, 'whoosh');
+  ein('teller3', tK + .35, { x: X + 1600, y: 690 }, { y: 30 });
+  ein('handy3', tK + .4, { x: X + 1600, y: 600 }, { y: 40 });
+  ein('yusuf3', tK + .2, { x: X + 1085, y: 640 }, { x: -50 }, 'pop');
+  // Yusuf: „Danke, ich überlege noch.“ – ruhig, nickt; das Schild verblasst
+  const tDa = W('Danke', 21), tUe = W('überlege', 21);
+  nicken('yusuf3', tDa + .1, 10);
+  tw('schild3', tUe - .1, .9, { o: 0 }, 'inout'); cue(tUe, 'whoosh');
+  tw('schiene3', tUe + .3, .6, { o: 0 }, 'inout');
+  // „Kann ich die Vertragszusammenfassung mitnehmen?“: das Blatt gleitet hinter dem Tresen hervor
+  akteur('zf3', { x: X + 1400, y: 640, s: .55, o: 0 });
+  tw('zf3', tVz - .25, .3, { o: 1 }); tw('zf3', tVz - .25, .8, { y: 455, s: 1 }, 'sanft'); cue(tVz - .25, 'whoosh');
+  akzent(tVz + .3, .035);
+  // „Die muss der Anbieter dir vor dem Vertrag geben“: das Blatt kommt zu Yusuf
+  const tMu = W('muss', 23), tGe = W('geben', 23);
+  bump('zf3', tMu, 1.05); cue(tMu, 'klick');
+  tw('zf3', tGe - .2, .6, { x: X + 1380 }, 'sanft'); nicken('yusuf3', tGe, 8); cue(tGe, 'ding');
+  // „Darauf stehen Preis, Laufzeit und Kündigung“: drei Zeilen leuchten auf
+  [['r3a', 'Preis'], ['r3b', 'Laufzeit'], ['r3c', 'Kündigung']].forEach(([r, w]) => {
+    const t = W(w, 24);
+    rel(r + 'h', { o: 0 }); tw(r + 'h', t - .05, .25, { o: 1 });
+    rel(r + 'i', {}, '50% 50%'); bump(r + 'i', t, 1.3);
+    rel(r, {}, '30% 50%'); bump(r, t, 1.06); cue(t, 'pop');
+  });
+  // das Blatt fliegt in Yusufs Tasche, Yusuf freut sich
+  const tFl = WE('Kündigung', 24) + .05;
+  ein('tasche3', W('Darauf', 24) - .2, { x: X + 1190, y: 795 }, { y: 50 }, 'pop');
+  flug('zf3', tFl, .85, X + 1190, 770, 110, { s: .2 }); cue(tFl, 'whoosh');
+  tw('zf3', tFl + .7, .15, { o: 0 });
+  landen('tasche3', tFl + .82); cue(tFl + .82, 'plopp');
+  huepfen('yusuf3', tFl + .75, 14); froh('yusuf3', tFl + .7, tFl + 3);
+  textAus('tb3', tFl + .75);
+}
+
+/* ---------- 4 · Prepaid oder Vertrag ---------- */
+const P4 = WE('Kündigung', 24) + .95;
+pan2(P4, 4);
+{
+  const X = S(4);
+  akteur('bue4', { x: X + 1320, y: 540 });
+  // Waage mit zwei Karten „Prepaid“ und „Vertrag“
+  const tW0 = P4 + .45;
+  ein('fuss4', tW0, { x: X + 1320, y: 548 }, { y: 40 });
+  ein('pfosten4', tW0 + .05, { x: X + 1320, y: 420 }, { y: 40 });
+  ein('balken4', tW0 + .15, { x: X + 1320, y: 300 }, { y: -30 }, 'whoosh');
+  ein('nabe4', tW0 + .15, { x: X + 1320, y: 300 }, { y: -30 });
+  ein('schale4l', tW0 + .25, { x: X + 1088, y: 385 }, { y: -40 });
+  ein('schale4r', tW0 + .3, { x: X + 1552, y: 385 }, { y: -40 });
+  const tPp = W('Pri', 25), tVt = W('Vertrag', 28);
+  const KIPP = [[0, 0], [tVt - .1, 9]];
+  WAAGEN.push({ balken: 'balken4', l: 'schale4l', r: 'schale4r', L: 232,
+    winkel: t => kurve(KIPP, t, .7) + 5 * Math.sin((t - tW0) * 3.4) * Math.exp(-Math.max(0, t - tW0 - .4) / .9) * (t > tW0 + .4 ? 1 : 0)
+      + (t > tVt - .1 ? 3 * Math.sin((t - tVt + .1) * 6) * Math.exp(-(t - tVt + .1) / .5) : 0) });
+  bump('schale4l', tPp, 1.06); cue(tPp, 'pop');
+  const tb4 = 'tb4', tGu = W('Guthaben', 26), tKo = W('Kosten', 26), tGr = W('Griff', 26);
+  titelEin(tb4, tPp, [tPp, tKo, tKo + .08, tKo + .16, tKo + .24, tVt, W('höchstens', 28), W('vierundzwanzig', 28), W('Monate', 28)]);
+  // „Du lädst Guthaben auf“: Balken auf der Prepaid-Karte füllt sich
+  rel('guthaben4', {});
+  HOOKS.push(t => { el('guthaben4').style.width = (100 * E.inout(clamp((t - tGu + .1) / .9))).toFixed(1) + '%'; });
+  cue(tGu, 'scan');
+  // „und hast die Kosten im Griff“: Geldbörse, ein Schloss legt sich darauf
+  ein('boerse4', W('auf', 26) - .1, { x: X + 1080, y: 720 }, { y: 50 }, 'pop');
+  akteur('schloss4', { x: X + 1110, y: 600, o: 0, s: .7 });
+  tw('schloss4', tGr - .45, .2, { o: 1 }); tw('schloss4', tGr - .45, .45, { y: 712, s: 1 }, 'in'); landen('schloss4', tGr); cue(tGr, 'klick');
+  bump('boerse4', tGr + .02, 1.05); akzent(tGr, .035);
+  // „Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass“: Pass vor die Handykamera, Scan, Haken
+  const tKa = W('Kauf', 27), tAu = W('ausweisen', 27), tPa = W('deinem', 27) + .3;
+  aus(['boerse4', 'schloss4'], tKa - .3, .35);
+  ein('handy4', tKa, { x: X + 1110, y: 700 }, { y: 60 }, 'whoosh');
+  akteur('pass4', { x: X + 960, y: 820, o: 0, r: -3, s: .8 });
+  tw('pass4', tAu - .2, .25, { o: 1 }); tw('pass4', tAu - .2, .6, { x: X + 1110, y: 712, r: 0, s: 1 }, 'sanft'); cue(tAu - .2, 'whoosh');
+  akteur('scan4', { x: X + 1110, y: 655, o: 0 });
+  tw('scan4', tAu + .5, .2, { o: 1 }); tw('scan4', tAu + .5, .7, { y: 770 }, 'inout'); tw('scan4', tAu + 1.2, .6, { y: 655 }, 'inout'); tw('scan4', tAu + 1.8, .2, { o: 0 });
+  cue(tAu + .5, 'scan');
+  bump('pass4', tPa - .1, 1.06);
+  pop('ok4', tPa, { x: X + 1185, y: 625 }, 'erfolg');
+  // „Ein Vertrag läuft höchstens 24 Monate“: Waage kippt zum Vertrag, Zeitstrahl mit 24 Feldern läuft voll
+  akzent(tVt, .04); cue(tVt, 'whoosh');
+  aus(['handy4', 'pass4', 'ok4'], W('läuft', 28), .35);
+  const tVi = W('vierundzwanzig', 28), tMo = WE('Monate', 28);
+  for (let k = 0; k < 24; k++) {
+    const id = 'f4' + k, c = k % 12, r = Math.floor(k / 12);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a feld" id="${id}"></div>`);
+    pop(id, W('höchstens', 28) + k * .025, { x: X + 1404 + c * 25, y: 640 + r * 36 }, k % 6 === 0 ? 'tipp' : null);
+  }
+  HOOKS.push(t => { const n = Math.floor(24 * clamp((t - tVi) / (tMo - tVi))); for (let k = 0; k < 24; k++) el('f4' + k).style.background = k < n ? 'var(--b500)' : ''; });
+  // „Danach kannst du jeden Monat kündigen“: einzelne Monatsfelder, der Kündigen-Knopf springt auf
+  const tDn = W('Danach', 29), tJm = W('jeden', 29), tKu = W('kündigen', 29);
+  for (let k = 0; k < 3; k++) {
+    const id = 'e4' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a feld einzel" id="${id}"></div>`);
+    pop(id, [tDn, tJm, W('Monat', 29)][k], { x: X + 1430 + k * 38, y: 735 }, 'pop');
+  }
+  el('kuend4').style.transformOrigin = '50% 50%';
+  pop('kuend4', tKu - .1, { x: X + 1580, y: 805 }, 'plopp'); wackeln('kuend4', tKu + .45, 3, 2); akzent(tKu, .035);
+  rel('kuend4i', {}, '50% 50%'); bump('kuend4i', tKu + .5, 1.25);
+  textAus('tb4', SE(29) + .1);
+}
+
+/* ---------- 5 · Anrufe nach Hause: Tarif prüfen oder übers WLAN ---------- */
+const P5 = SE(29) + .15;
+pan2(P5, 5);
+{
+  const X = S(5);
+  akteur('bue5', { x: X + 1320, y: 540 });
+  ein('yusuf5', P5 + .45, { x: X + 1016, y: 700 }, { x: -50 }, 'pop');
+  ein('handy5', P5 + .55, { x: X + 1170, y: 620 }, { y: 60 }, 'whoosh');
+  ein('globus5', P5 + .65, { x: X + 1570, y: 360 }, { y: -40 });
+  const tAr = W('Anrufe', 30), tHa = W('Hause', 30);
+  titelEin('tb5', tAr, [tAr, tAr + .08, tAr + .16, W('Prüf', 32), W('Prüf', 32) + .08, W('Prüf', 32) + .16, W('Weh', 32)]);
+  // „Und Anrufe nach Hause?“: das Handy klingelt, ein Bogen zieht vom Handy in die Ferne
+  summen('handy5', tAr, 1, 6); wellen('wh5a', [tAr + .1], X + 1170, 600, 1); wellen('wh5b', [tAr + .5], X + 1170, 600, 1); cue(tAr, 'ding');
+  akteur('bogen5', { x: X + 1360, y: 430 });
+  zug('bogen5r', null, tAr + .3, tHa - tAr + .2);
+  el('bogen5r').style.strokeDashoffset = 1;
+  bump('globus5', tHa + .2, 1.06); cue(tHa + .2, 'plopp'); akzent(tHa, .035);
+  // „nicht drin … teuer“: Münzen stapeln sich schnell, rotes „!“
+  const tNd = W('nicht', 31), tTe = W('teuer', 31), tKo = W('können', 31);
+  for (let k = 0; k < 8; k++) { rel('st5' + k, { s: 0, y: -30 }, '50% 50%'); const t = tKo - .3 + k * .14; tw('st5' + k, t, .3, { s: 1, y: 0 }, 'back'); cue(t, k % 2 ? 'tipp' : 'muenze'); }
+  akteur('stapel5', { x: X + 1350, y: 790 });
+  wackeln('globus5', tNd, 3, 2);
+  pop('warn5', tTe, { x: X + 1410, y: 700 }, 'plopp'); wackeln('warn5', tTe + .45, 4, 8); akzent(tTe, .045);
+  // „Prüf deinen Tarif“: Tarif-Karte, die Lupe fährt über die Zeile „Ausland“
+  const tPr = W('Prüf', 32), tTa = W('Tarif', 32);
+  ein('tarif5', tPr - .25, { x: X + 1570, y: 668 }, { x: 60 }, 'whoosh');
+  akteur('lupe5', { x: X + 1720, y: 560, o: 0, s: .8 });
+  tw('lupe5', tTa - .2, .2, { o: 1 }); tw('lupe5', tTa - .2, .6, { x: X + 1625, y: 755, s: 1 }, 'sanft', { bogen: 40 });
+  rel('t5h', { o: 0 }); tw('t5h', tTa + .3, .25, { o: 1 }); cue(tTa + .3, 'ding');
+  // „oder telefonier übers Internet im WLAN“: Münzen weg, Router mit Wellen, der Bogen wird grün
+  const tIn = W('Internet', 32), tWl = W('Weh', 32), tTf = W('telefonier', 32);
+  aus(['stapel5', 'warn5'], tTf - .1, .35);
+  tw('lupe5', tTf, .35, { o: 0 }, 'in');
+  ein('router5', tIn - .3, { x: X + 1330, y: 770 }, { y: 50 }, 'pop');
+  const WL = ['wl5a', 'wl5b', 'wl5c'];
+  akteur('wlan5', { x: X + 1330, y: 695 });
+  HOOKS.push(t => WL.forEach((id, k) => { const d = t - tIn - k * .15; el(id).style.opacity = d < 0 ? 0 : (.35 + .65 * Math.max(0, Math.sin(d * 4 - k * .9))).toFixed(3); }));
+  cue(tIn, 'scan');
+  rel('bogen5r', {}); zug('bogen5g', null, tWl - .2, .7); tw('bogen5r', tWl + .3, .3, { o: 0 }); cue(tWl, 'erfolg');
+  pop('ok5', tWl + .3, { x: X + 1440, y: 300 }, null);
+  textAus('tb5', SE(32) + .1);
+  froh('yusuf5', tWl, SE(32) + 2); huepfen('yusuf5', tWl + .1, 12); akzent(tWl, .04);
+}
+
+/* ---------- 6 · Auflösung: C ist die beste Wahl ---------- */
+const P6 = SE(32) + .2;
+pan2(P6, 6);
+{
+  const X = S(6);
+  quiz(6);
+  karten(6, true, 'AB');
+  ['A', 'B', 'C'].forEach((M, k) => akteur(`k6${M}`, { x: X + KX[k], y: KY }));
+  const tBe = W('beste', 33), tC = WN(33, 4);
+  tw(['k6A', 'k6B'], tBe, .6, { o: .35, s: .9 }, 'inout');
+  tw('k6C', tBe, .7, { s: 1.12, y: KY - 20 }, 'sanft'); cue(tBe, 'whoosh');
+  bump('k6Ckn', tC - .25, 1.2);
+  markeAuf('k6C', 'C', tC);
+  HOOKS.push(t => { const d = t - tC; if (d > 0) el('k6Cr').style.opacity = .75 + .25 * Math.sin(d * 5); });
+  akteur('tinte6', { x: X + KX[2], y: KY - 20, o: 0, s: 1.12 });
+  set('tinte6', tC + .05, { o: .9 }); tw('tinte6', tC + .05, 1.1, { o: 0, s: 1.4 }, 'weich');
+  bump('k6Cm', tC + .5, 1.15);
+  // „Lass dich nicht drängen“: die Waage auf Karte C wiegt noch einmal, C pocht
+  const tDr = W('drängen', 34);
+  WAAGEN.push({ balken: 'k6Cwb', l: 'k6Cwl', r: 'k6Cwr', cx: 231, cy: 95, L: 41,
+    winkel: t => t < tDr ? 0 : 8 * Math.sin((t - tDr) * 4) * Math.exp(-(t - tDr) / 1.4) });
+  bump('k6C', tDr, 1.05); cue(tDr, 'klick'); akzent(tDr, .03);
+  tw(['k6A', 'k6B'], tDr, .6, { o: .15 }, 'inout');
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.2;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

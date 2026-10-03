@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der schlechte Tag: Der erste Termin bei der Ausländerbehörde</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+.buehne.trueb{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b100),var(--b200))}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:70px}
+.block .titel + .titel{margin-top:10px}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.plakette.gross{width:96px;height:96px;border-width:6px} .plakette.gross svg{width:48px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.chip{display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;font:800 28px/32px Inter;white-space:nowrap;
+  background:var(--b500);color:var(--surface);box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.chip.weiss{background:var(--surface);color:var(--b700);box-shadow:0 6px 18px rgba(22,19,37,.16)}
+.chip.rot{background:var(--error);box-shadow:0 6px 16px rgba(226,85,106,.3)}
+
+/* Mini-Porträt (Foto auf Pass, Karte, biometrisches Foto) */
+.mini{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--b100),var(--b200))}
+.mini > div{position:absolute;left:-8%;top:4%;width:116%}
+
+/* Ziel: gestrichelte Karte (Aufenthaltserlaubnis) */
+.ziel48{width:230px;height:146px;border-radius:18px;border:5px dashed var(--b300);background:color-mix(in srgb, var(--surface) 55%, transparent)}
+.ziel48 i{position:absolute;display:block;border-radius:6px;background:var(--b100)}
+/* Karte (elektronischer Aufenthaltstitel), ohne Daten */
+.eat{width:230px;height:146px;border-radius:18px;background:linear-gradient(135deg,var(--b400),var(--b600));box-shadow:0 10px 26px rgba(22,19,37,.22);overflow:hidden}
+.eat .chipk{position:absolute;left:22px;top:52px;width:40px;height:30px;border-radius:7px;background:linear-gradient(var(--warning-bg),var(--warning))}
+.eat .bild{position:absolute;right:20px;top:22px;width:62px;height:76px;border-radius:9px;border:3px solid var(--b200)}
+.eat i{position:absolute;display:block;height:9px;border-radius:5px;background:var(--b200)}
+.eat .glanz{position:absolute;left:-60px;top:-20px;width:40px;height:220px;background:var(--surface);opacity:.0;transform:rotate(20deg)}
+
+/* Pass, aufgeklappt (Visum-Seite) */
+.passauf{width:340px;height:214px;border-radius:16px;background:var(--b600);padding:8px;display:flex;gap:6px;box-shadow:0 12px 30px rgba(22,19,37,.2)}
+.passauf .seite{flex:1;border-radius:10px;background:var(--surface);position:relative;overflow:hidden}
+.passauf .seite i{position:absolute;display:block;height:8px;border-radius:4px;background:var(--n200)}
+.passauf .kopf{position:absolute;left:14px;top:12px;font:800 20px/24px Inter;letter-spacing:.12em;color:var(--b600)}
+.passauf .stempelfeld{position:absolute;right:14px;bottom:14px;width:54px;height:54px;border-radius:999px;border:4px solid var(--b300)}
+
+/* Sprechwolke (nur Symbol, kein gesprochener Text) */
+.wolke48{width:150px;height:96px;border-radius:48px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.18);display:flex;align-items:center;justify-content:center}
+.wolke48::after{content:"";position:absolute;left:18px;top:-14px;width:30px;height:30px;background:var(--surface);border-radius:4px;transform:rotate(45deg)}
+.wolke48 svg{width:96px;position:relative;z-index:1}
+
+/* Aushang an der Tür */
+.aushang{padding:10px 18px;border-radius:12px;background:var(--surface);border:5px solid var(--error);color:var(--error-text);font:800 24px/28px Inter;white-space:nowrap;
+  box-shadow:0 8px 20px rgba(22,19,37,.16);transform-origin:50% 0}
+
+/* Kalender mit Blättern */
+.kal{width:150px;height:160px}
+.kal .blatt{position:absolute;left:0;top:26px;width:150px;height:134px;border-radius:16px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.1);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 54px/1 Inter;color:var(--b600)}
+.kal .blatt small{font:700 17px/20px Inter;color:var(--n500);margin-top:6px}
+.kal .ring{position:absolute;left:0;top:0;width:150px;height:44px;border-radius:16px 16px 6px 6px;background:linear-gradient(var(--b400),var(--b600));z-index:20}
+
+/* Dokumente: Fotorahmen, Blatt */
+.fotorahmen{width:92px;height:114px;border-radius:12px;border:5px dashed var(--error);background:var(--error-bg)}
+.leerblatt{width:96px;height:124px;border-radius:12px;border:5px dashed var(--error);background:var(--error-bg)}
+.foto48{width:104px;height:128px;border-radius:12px;border:5px solid var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.16)}
+
+/* Werbung im Stapel, Brief der Behörde */
+.flyer{width:290px;height:66px;border-radius:12px;box-shadow:0 4px 12px rgba(22,19,37,.12);display:flex;align-items:center;gap:12px;padding:0 16px}
+.flyer b{font:800 26px/1 Inter}
+.flyer i{display:block;height:9px;border-radius:5px;background:var(--surface);opacity:.8}
+.umschlag48{width:300px;height:170px;border-radius:14px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.16);overflow:hidden}
+.umschlag48::before{content:"";position:absolute;left:-10px;right:-10px;top:-96px;height:180px;border-bottom:3px solid var(--n300);transform:skewY(0deg);
+  clip-path:polygon(0 0,100% 0,50% 100%);background:var(--n200)}
+.umschlag48 .abs{position:absolute;left:22px;bottom:20px;padding:6px 12px;border-radius:8px;background:var(--b50);font:800 19px/22px Inter;color:var(--b600)}
+.umschlag48 .marke{position:absolute;right:18px;bottom:18px;width:40px;height:48px;border-radius:6px;background:var(--b200);border:3px dashed var(--b400)}
+.umschlag48 .siegel{position:absolute;left:50%;top:62px;width:40px;height:40px;margin-left:-20px;border-radius:999px;background:var(--error)}
+.lupentext{font:800 24px/1 Inter;color:var(--b600)}
+
+/* Termin-Karte, Abdruck */
+.terminkarte{width:310px;height:200px;border-radius:22px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.14);overflow:hidden}
+.terminkarte .kopfz{height:58px;background:linear-gradient(135deg,var(--b500),var(--b600));color:var(--surface);font:800 25px/58px Inter;padding-left:22px}
+.terminkarte i{position:absolute;display:block;height:11px;border-radius:6px;background:var(--n200)}
+.abdruck{position:absolute;padding:8px 16px;border-radius:12px;border:5px solid var(--error);color:var(--error-text);font:800 26px/30px Inter;white-space:nowrap;
+  background:var(--surface);text-transform:uppercase;letter-spacing:.02em}
+.abdruck.gruen{border-color:var(--success);color:var(--success-text)}
+
+/* Laptop-Bildschirm: Website der Behörde */
+.web{border-radius:6px;overflow:hidden;background:var(--bg)}
+.web .leiste{height:32px;padding:0 12px;display:flex;align-items:center;gap:8px;background:var(--b500);color:var(--surface);font:700 15px/1 Inter;white-space:nowrap}
+.web .leiste i{width:9px;height:9px;border-radius:999px;background:var(--b300)}
+.web h6{position:absolute;left:14px;top:40px;font:800 17px/22px Inter;color:var(--ink)}
+.web .fenster48{position:absolute;left:14px;right:14px;top:68px;height:78px;overflow:hidden}
+.web .raster{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.web .raster s{height:22px;border-radius:6px;background:var(--n200);text-decoration:none}
+.web .raster s.frei{background:var(--success)}
+.web .knopf{position:absolute;right:14px;bottom:10px;padding:6px 16px;border-radius:9px;background:var(--b500);color:var(--surface);font:800 15px/18px Inter}
+.web .toast{position:absolute;left:14px;bottom:10px;padding:6px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:800 14px/18px Inter;white-space:nowrap}
+.finger{width:40px;height:40px;border-radius:999px;background:rgba(90,63,230,.28);border:3px solid var(--b500)}
+/* Handy: Helper App „Dokumente“ */
+.schirm{border-radius:10px;overflow:hidden;background:var(--bg)}
+.scr{position:absolute;inset:0;padding:10px 8px;display:flex;flex-direction:column;gap:6px}
+.scr .ak{font:800 10px/12px Inter;color:var(--b500)}
+.scr h4{font:800 15px/18px Inter;color:var(--ink)}
+.app-zeile{display:flex;align-items:center;gap:5px;padding:6px 5px;border-radius:8px;background:var(--surface);font:700 10px/12px Inter;color:var(--ink);box-shadow:0 2px 6px rgba(22,19,37,.06)}
+.app-zeile i{width:16px;height:16px;border-radius:5px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app-zeile i svg{width:10px}
+.app-zeile em{margin-left:auto;font:800 9px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:3px 5px}
+.app-toast{margin-top:auto;align-self:center;padding:5px 8px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:800 10px/12px Inter;white-space:nowrap}
+.mailflug{width:64px;height:64px;border-radius:999px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.22);display:flex;align-items:center;justify-content:center}
+.mailflug svg{width:40px}
+
+/* Liste der Behörde */
+.liste48{width:350px;border-radius:24px;background:var(--surface);box-shadow:0 14px 36px rgba(22,19,37,.14);padding:20px 22px 22px;transform-origin:50% 0}
+.liste48 .lk{font:800 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.liste48 .lk svg{width:30px}
+.liste48 .lz{display:flex;align-items:center;gap:12px;height:50px;font:700 21px/24px Inter;color:var(--ink);white-space:nowrap}
+.liste48 .lz u{width:32px;height:32px;border-radius:9px;border:3px solid var(--b200);flex:none;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.liste48 .lz u svg{width:22px;opacity:0}
+.liste48 .lz.ok u{background:var(--success);border-color:var(--success)} .liste48 .lz.ok u svg{opacity:1}
+.blitz48{width:150px;height:150px;border-radius:999px;background:radial-gradient(var(--surface) 30%,transparent 70%)}
+
+/* Fingerabdruck-Scanner */
+.abdruckfeld{display:flex;gap:10px;align-items:center;justify-content:center;border-radius:8px;overflow:hidden}
+.abdruckfeld svg{width:30px;height:38px;opacity:.25}
+.scanlinie{position:absolute;left:4px;right:4px;height:5px;border-radius:3px;background:var(--success);opacity:0}
+.fortschritt{width:150px;height:12px;border-radius:999px;background:var(--b100);overflow:hidden}
+.fortschritt i{display:block;height:100%;width:100%;border-radius:999px;background:var(--success);transform-origin:left center}
+
+/* Kacheln zum Schluss */
+.kachel{width:132px;height:132px;border-radius:30px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center}
+.kachel svg{width:78px}
+
+/* ---------- Format „Der schlechte Tag“ (wie Kurs 20) ---------- */
+#hud{position:absolute;left:140px;top:84px;width:720px;height:80px}
+#hud .wetter{position:absolute;left:0;top:4px;width:72px;height:72px;border-radius:999px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center}
+#hud .wetter svg{position:absolute;left:50%;top:50%;transform-origin:center}
+#hud #wWolke{margin:-25px 0 0 -25px} #hud #wSonne{margin:-28px 0 0 -28px}
+#hud .uhr{position:absolute;left:88px;top:4px;width:72px;height:72px}
+#hud .spur{position:absolute;left:186px;top:35px;width:440px;height:10px;border-radius:999px;background:var(--b100);overflow:visible;flex:none}
+#hud .fuell{position:absolute;left:0;top:0;height:10px;border-radius:999px;background:var(--error);width:0}
+#hud .kopfp{position:absolute;top:-11px;width:32px;height:32px;margin-left:-16px;border-radius:999px;background:var(--surface);border:7px solid var(--error);box-shadow:0 3px 10px rgba(22,19,37,.18)}
+#hud .mk{position:absolute;top:-15px;width:40px;height:40px;margin-left:-20px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:4px solid var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.15)}
+#hud .mk svg{width:22px}
+#hud .mk.rot{background:var(--error)} #hud .mk.gruen{background:var(--success)} #hud .mk.leer{background:var(--surface);border-color:var(--b200);box-shadow:none}
+/* Sanduhr: liegt über der Welt (Bildschirm-Koordinaten), wandert in die Tagesleiste */
+#sand{width:100px;height:150px}
+#sandRing{position:absolute;left:-30px;top:-5px;width:160px;height:160px;border-radius:999px;border:6px solid var(--error);opacity:0}
+/* Zurückspulen */
+#toenung{position:absolute;inset:0;background:var(--b700);opacity:0}
+#rauschen{position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0}
+#blitz{position:absolute;inset:0;background:var(--surface);opacity:0}
+.rknopf{width:210px;height:210px;border-radius:999px;background:var(--error);border:9px solid var(--surface);box-shadow:0 16px 50px rgba(22,19,37,.35)}
+.rknopf svg{position:absolute;left:50%;top:50%;width:104px;margin:-52px 0 0 -52px}
+.ruhr{width:250px;height:250px}
+#tb4{position:absolute;left:0;top:640px;width:1920px;display:flex;justify-content:center;align-items:center;gap:22px;color:var(--surface)}
+#tb4 .titel{font:800 72px/84px Inter;letter-spacing:-.02em}
+#tb4 .ic{width:86px;height:86px;display:block}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgFrage"><svg viewBox="0 0 40 40"><path d="M14 15a6 6 0 1 1 9 5c-2 1-3 3-3 5" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="20" cy="32" r="3.5" fill="var(--surface)"/></svg></template>
+<template id="svgRueck"><svg viewBox="0 0 100 100"><path d="M48 24v52L10 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/><path d="M90 24v52L52 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/></svg></template>
+<template id="svgBrille"><svg viewBox="0 0 100 44"><path d="M6 10h88" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M10 10h32v10a14 14 0 0 1-14 14h-4a14 14 0 0 1-14-14Z" fill="var(--b700)"/><path d="M58 10h32v10a14 14 0 0 1-14 14h-4a14 14 0 0 1-14-14Z" fill="var(--b700)"/>
+  <path d="M16 15l8-3M64 15l8-3" stroke="var(--b300)" stroke-width="3" stroke-linecap="round"/></svg></template>
+<template id="svgMail"><svg viewBox="0 0 44 44"><rect x="5" y="10" width="34" height="24" rx="5" fill="var(--b500)"/><path d="M7 13l15 11 15-11" stroke="var(--surface)" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgOrdner"><svg viewBox="0 0 14 14"><path d="M1 3.5a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h4.5A1.5 1.5 0 0 1 13 5v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 10.5Z" fill="var(--b500)"/></svg></template>
+<template id="svgListe"><svg viewBox="0 0 40 40"><rect x="7" y="4" width="26" height="32" rx="5" fill="var(--b500)"/><path d="M13 13h14M13 20h14M13 27h9" stroke="var(--surface)" stroke-width="3" stroke-linecap="round"/></svg></template>
+<template id="svgFinger"><svg viewBox="0 0 30 38"><g fill="none" stroke="var(--success)" stroke-width="2.4" stroke-linecap="round">
+  <path d="M4 26V16a11 11 0 0 1 22 0v8"/><path d="M8.5 30V16.5a6.5 6.5 0 0 1 13 0V28"/><path d="M13 34V17a2 2 0 0 1 4 0v14"/><path d="M26 29v3"/></g></svg></template>
+<template id="svgKal"><svg viewBox="0 0 80 80"><rect x="10" y="16" width="60" height="54" rx="10" fill="var(--b100)"/><rect x="10" y="16" width="60" height="18" rx="9" fill="var(--b500)"/><rect x="10" y="26" width="60" height="8" fill="var(--b500)"/>
+  <rect x="22" y="9" width="7" height="14" rx="3.5" fill="var(--b700)"/><rect x="51" y="9" width="7" height="14" rx="3.5" fill="var(--b700)"/>
+  <g fill="var(--b300)"><rect x="18" y="41" width="10" height="9" rx="3"/><rect x="35" y="41" width="10" height="9" rx="3"/><rect x="18" y="55" width="10" height="9" rx="3"/><rect x="35" y="55" width="10" height="9" rx="3"/></g>
+  <rect x="52" y="41" width="10" height="9" rx="3" fill="var(--success)"/><rect x="52" y="55" width="10" height="9" rx="3" fill="var(--b300)"/></svg></template>
+<template id="svgListeGross"><svg viewBox="0 0 80 80"><rect x="16" y="8" width="48" height="64" rx="9" fill="var(--b100)"/><rect x="28" y="4" width="24" height="10" rx="5" fill="var(--b500)"/>
+  <g stroke-linecap="round" stroke-width="5"><path d="M26 28l4 4 7-8" stroke="var(--success)" fill="none" stroke-linejoin="round"/><path d="M43 29h12" stroke="var(--b300)"/>
+  <path d="M26 46l4 4 7-8" stroke="var(--success)" fill="none" stroke-linejoin="round"/><path d="M43 47h12" stroke="var(--b300)"/><path d="M28 63h27" stroke="var(--b200)"/></g></svg></template>
+<template id="svgBriefOffen"><svg viewBox="0 0 80 80"><path d="M10 34l30-22 30 22v32a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6Z" fill="var(--b300)"/>
+  <rect x="20" y="20" width="40" height="34" rx="5" fill="var(--surface)"/><path d="M27 30h26M27 38h18" stroke="var(--b300)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M10 36l30 20 30-20v30a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6Z" fill="var(--b500)"/></svg></template>
+
+<template id="pPriya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="miniPriya"><div>{{figur-priya~m}}</div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Priya, Visum, Ziel-Karte (schlechter Tag trüb, richtiger Tag hell) -->
+  <div class="a buehne trueb" id="bue0"></div>
+  <div class="a ziel48" id="ziel0"><i style="left:20px;top:46px;width:44px;height:34px"></i><i style="right:20px;top:20px;width:58px;height:72px"></i>
+    <i style="left:20px;top:100px;width:110px;height:10px"></i></div>
+  <div class="a portrait" id="priya0" style="width:230px;height:230px" data-sprecher="Priya"></div>
+  <div class="a" id="pass0" style="width:200px" data-dreht>{{pass}}</div>
+  <div class="a passauf" id="passauf0" data-dreht><div class="seite"><div class="mini" style="position:absolute;left:14px;top:16px;width:62px;height:78px;border-radius:8px"></div>
+      <i style="left:14px;top:112px;width:110px"></i><i style="left:14px;top:130px;width:80px"></i><i style="left:14px;top:148px;width:96px"></i></div>
+    <div class="seite"><div class="kopf">VISUM</div><i style="left:14px;top:52px;width:120px"></i><i style="left:14px;top:72px;width:90px"></i><i style="left:14px;top:92px;width:110px"></i>
+      <div class="stempelfeld"></div></div></div>
+  <div class="a wolke48" id="wolke0" data-frei></div>
+  <div class="a" id="laptop0" style="width:440px" data-gruppe="laptop0">{{laptop}}</div>
+  <div class="a web" id="web0" style="width:290px;height:194px" data-gruppe="laptop0"><div class="leiste"><i></i>Ausländerbehörde</div>
+    <h6>Termin buchen</h6><div class="fenster48"><div class="raster" id="raster0"></div></div>
+    <div class="knopf" id="knopf0">Buchen</div><div class="toast" id="toast0">✓ Gebucht</div></div>
+  <div class="a finger" id="finger0" data-frei></div>
+  <div class="a welle" id="tap0" style="width:110px;height:110px" data-frei></div>
+  <div class="a" id="handy0" style="width:260px" data-gruppe="handy0">{{handy}}</div>
+  <div class="a schirm" id="schirm0" style="width:97px;height:175px" data-gruppe="handy0">
+    <div class="scr"><div class="ak">Azubis Plus</div><h4>Dokumente</h4>
+      <div class="app-zeile" id="zeile0"><i></i><span>Termine</span><em id="anz0">1</em></div>
+      <div class="app-zeile"><i></i><span>Ausweise</span><em>2</em></div>
+      <div class="app-toast" id="atoast0">✓ Gespeichert</div></div></div>
+  <div class="a mailflug" id="mail0" data-frei></div>
+
+  <!-- 1 · Ausländerbehörde: ohne Termin kein Einlass -->
+  <div class="a buehne trueb" id="bue1"></div>
+  <div class="a" id="beh1" style="width:500px" data-gruppe="beh1">{{behoerde}}</div>
+  <div class="a" id="tuer1" style="width:312.5px" data-gruppe="beh1">{{glastuer}}</div>
+  <div class="a aushang" id="aush1" data-gruppe="beh1">Nur mit Termin</div>
+  <div class="a portrait" id="priya1" style="width:170px;height:170px" data-sprecher="Priya"></div>
+  <div class="a plakette rot" id="x1" data-frei></div>
+  <div class="a kal" id="kal1"></div>
+
+  <!-- 2 · Beim Termin: Unterlagen fehlen -->
+  <div class="a buehne trueb" id="bue2"></div>
+  <div class="a portrait" id="priya2" style="width:160px;height:160px" data-sprecher="Priya"></div>
+  <div class="a ruhr" id="uhr2" style="width:170px;height:170px"></div>
+  <div class="a chip weiss" id="chip2" style="font-size:24px;line-height:28px;padding:10px 18px">6 Wochen später</div>
+  <div class="a" id="schalter2" style="width:520px" data-gruppe="schalter2">{{schalter}}</div>
+  <div class="a" id="pass2" style="width:120px" data-gruppe="schalter2">{{pass~2}}</div>
+  <div class="a fotorahmen" id="foto2" data-gruppe="schalter2"></div>
+  <div class="a leerblatt" id="meld2" data-gruppe="schalter2"></div>
+  <div class="a plakette rot" id="xf2" data-frei></div>
+  <div class="a plakette rot" id="xm2" data-frei></div>
+
+  <!-- 3 · Zu Hause: Brief ungeöffnet im Werbestapel -->
+  <div class="a buehne trueb" id="bue3"></div>
+  <div class="a" id="haus3" style="width:170px">{{haus}}</div>
+  <div class="a umschlag48" id="brief3" data-gruppe="stapel3"><div class="siegel"></div><div class="abs">Ausländerbehörde</div><div class="marke"></div></div>
+  <div class="a flyer" id="fl3a" style="background:var(--warning)" data-gruppe="stapel3"><b style="color:var(--surface)">%</b><i style="width:120px"></i></div>
+  <div class="a flyer" id="fl3b" style="background:var(--b400)" data-gruppe="stapel3"><b style="color:var(--surface)">%</b><i style="width:160px"></i></div>
+  <div class="a flyer" id="fl3c" style="background:var(--info)" data-gruppe="stapel3"><b style="color:var(--surface)">%</b><i style="width:100px"></i></div>
+  <div class="a flyer" id="fl3d" style="background:var(--error)" data-gruppe="stapel3"><b style="color:var(--surface)">%</b><i style="width:140px"></i></div>
+  <div class="a" id="lupe3" style="width:190px" data-frei>{{lupe}}</div>
+  <div class="a lupentext" id="lupet3" data-frei>Liste</div>
+  <div class="a plakette rot" id="x3" data-frei></div>
+
+  <!-- 4 · Oh nein: neuer Termin, wieder warten -->
+  <div class="a buehne trueb" id="bue4"></div>
+  <div class="a portrait" id="priya4" style="width:230px;height:230px" data-sprecher="Priya"></div>
+  <div class="a plakette rot" id="frage4" data-frei></div>
+  <div class="a terminkarte" id="termin4"><div class="kopfz">Termin</div><i style="left:22px;top:84px;width:200px"></i><i style="left:22px;top:110px;width:150px"></i><i style="left:22px;top:136px;width:180px"></i>
+    <div class="abdruck" id="abdruck4" style="left:34px;top:96px">Neuer Termin</div></div>
+  <div class="a" id="stempel4" style="width:200px" data-frei>{{stempel-rot}}</div>
+  <div class="a kal" id="kal4"></div>
+
+  <!-- 5 · Richtig: Brief sofort öffnen, Liste abarbeiten -->
+  <div class="a buehne hell" id="bue5"></div>
+  <div class="a" id="bk5" style="width:190px">{{briefkasten}}</div>
+  <div class="a" id="uh5" style="width:250px" data-gruppe="brief5">{{umschlag-hinten}}</div>
+  <div class="a liste48" id="liste5" data-gruppe="brief5"><div class="lk"><span id="lk5"></span>Mitbringen</div>
+    <div class="lz" id="lz5a"><u></u>Pass</div><div class="lz" id="lz5b"><u></u>Biometrisches Foto</div><div class="lz" id="lz5c"><u></u>Meldebescheinigung</div>
+    <div class="lz" id="lz5d"><u></u>Ausbildungsvertrag</div><div class="lz" id="lz5e"><u></u>Krankenversicherung</div>
+    <div class="abdruck gruen" id="abdruck5" style="right:18px;top:14px">✓ gilt</div></div>
+  <div class="a" id="uv5" style="width:250px" data-gruppe="brief5">{{umschlag-vorne}}</div>
+  <div class="a" id="uk5" style="width:250px" data-gruppe="brief5" data-dreht>{{umschlag-klappe}}</div>
+  <div class="a" id="stempel5" style="width:180px" data-frei>{{stempel-gruen}}</div>
+  <div class="a portrait" id="priya5" style="width:160px;height:160px" data-sprecher="Priya"></div>
+  <div class="a" id="mh5" style="width:240px" data-gruppe="mappe5">{{mappe-hinten}}</div>
+  <div class="a" id="i5a" style="width:150px" data-gruppe="mappe5">{{pass~5}}</div>
+  <div class="a foto48 mini" id="i5b" data-gruppe="mappe5"></div>
+  <div class="a" id="i5c" style="width:160px" data-gruppe="mappe5">{{meldung}}</div>
+  <div class="a" id="i5d" style="width:160px" data-gruppe="mappe5">{{vertrag}}</div>
+  <div class="a" id="i5e" style="width:170px" data-gruppe="mappe5">{{versichertenkarte}}</div>
+  <div class="a" id="mv5" style="width:240px" data-gruppe="mappe5">{{mappe-vorne}}</div>
+  <div class="a blitz48" id="blitz5" data-frei></div>
+
+  <!-- 6 · Richtig: beim Termin -->
+  <div class="a buehne hell" id="bue6"></div>
+  <div class="a portrait" id="priya6" style="width:160px;height:160px" data-sprecher="Priya"></div>
+  <div class="a" id="schalter6" style="width:520px" data-gruppe="schalter6">{{schalter~6}}</div>
+  <div class="a" id="mh6" style="width:150px" data-gruppe="schalter6">{{mappe-hinten~6}}</div>
+  <div class="a" id="mv6" style="width:150px" data-gruppe="schalter6">{{mappe-vorne~6}}</div>
+  <div class="a" id="scan6" style="width:190px" data-gruppe="schalter6">{{scanner}}</div>
+  <div class="a abdruckfeld" id="fp6" style="width:88px;height:46px" data-gruppe="schalter6"><span id="fp6a"></span><span id="fp6b"></span><div class="scanlinie" id="sl6"></div></div>
+  <div class="a" id="schale6" style="width:170px" data-gruppe="schale6">{{schale}}</div>
+  <div class="a" id="muenze6" style="width:90px" data-gruppe="schale6" data-dreht>{{muenze}}</div>
+  <div class="a eat" id="eat6"><div class="chipk"></div><div class="bild mini"></div><i style="left:22px;top:104px;width:110px"></i><i style="left:22px;top:122px;width:80px"></i><div class="glanz"></div></div>
+  <div class="a" id="druck6" style="width:180px" data-gruppe="druck6">{{drucker}}</div>
+  <div class="a fortschritt" id="fort6" data-gruppe="druck6"><i id="fort6i"></i></div>
+
+  <!-- 7 · Richtig: PIN-Brief, Karte abholen, drei Schritte -->
+  <div class="a buehne hell" id="bue7"></div>
+  <div class="a portrait" id="priya7" style="width:190px;height:190px" data-sprecher="Priya"></div>
+  <div class="a ziel48" id="ziel7"><i style="left:20px;top:46px;width:44px;height:34px"></i><i style="right:20px;top:20px;width:58px;height:72px"></i>
+    <i style="left:20px;top:100px;width:110px;height:10px"></i></div>
+  <div class="a kal" id="kal7"></div>
+  <div class="a" id="bk7" style="width:190px">{{briefkasten~7}}</div>
+  <div class="a umschlag48" id="pin7" style="width:220px;height:130px" data-gruppe="abhol7"><div class="abs" style="font-size:24px;line-height:28px">PIN</div><div class="marke" style="width:32px;height:38px"></div></div>
+  <div class="a" id="pass7" style="width:120px" data-gruppe="abhol7">{{pass~7}}</div>
+  <div class="a" id="schalter7" style="width:300px" data-gruppe="abhol7">{{schalter~7}}</div>
+  <div class="a eat" id="eat7" data-gruppe="abhol7" data-dreht><div class="chipk"></div><div class="bild mini"></div><i style="left:22px;top:104px;width:110px"></i><i style="left:22px;top:122px;width:80px"></i><div class="glanz" id="glanz7"></div></div>
+  <div class="a plakette gruen" id="ok7" data-frei></div>
+  <div class="a kachel" id="k7a"></div><div class="a kachel" id="k7b"></div><div class="a kachel" id="k7c"></div>
+  <div class="a plakette gruen" id="h7a" data-frei></div><div class="a plakette gruen" id="h7b" data-frei></div><div class="a plakette gruen" id="h7c" data-frei></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Visum gilt nur noch</div><div class="titel">2 Monate</div></div>
+<div class="block" id="tb2"><div class="titel">Ohne Termin:</div><div class="titel">kein Einlass</div></div>
+<div class="block" id="tb3"><div class="titel">Unterlagen fehlen ·</div><div class="titel">Brief nicht geöffnet</div></div>
+<div class="block" id="tb5"><div class="titel">1. Termin früh buchen</div></div>
+<div class="block" id="tb6"><div class="titel">2. Liste deiner Behörde</div><div class="titel">abarbeiten</div></div>
+<div class="block" id="tb7"><div class="titel">3. Fingerabdrücke ·</div><div class="titel">Gebühr ·</div><div class="titel">Karte wird bestellt</div></div>
+<div class="block" id="tb8"><div class="titel">Früh buchen ·</div><div class="titel">Liste ·</div><div class="titel">Briefe öffnen</div></div>
+
+<!-- Sanduhr (über der Welt) -->
+<div class="a" id="sand"><div id="sandRing"></div><svg viewBox="0 0 100 150">
+  <defs><clipPath id="sandO"><path d="M14 16H86C86 44 60 58 53 75H47C40 58 14 44 14 16Z"/></clipPath>
+    <clipPath id="sandU"><path d="M47 75H53C60 92 86 106 86 134H14C14 106 40 92 47 75Z"/></clipPath></defs>
+  <path d="M14 16H86C86 44 60 58 53 75C60 92 86 106 86 134H14C14 106 40 92 47 75C40 58 14 44 14 16Z" fill="var(--b50)" stroke="var(--b300)" stroke-width="4" stroke-linejoin="round"/>
+  <rect id="sandOben" x="0" y="16" width="100" height="60" fill="var(--warning)" clip-path="url(#sandO)"/>
+  <rect id="sandUnten" x="0" y="134" width="100" height="0" fill="var(--warning)" clip-path="url(#sandU)"/>
+  <rect id="sandStrahl" x="48.5" y="74" width="3" height="60" rx="1.5" fill="var(--warning)"/>
+  <rect x="6" y="4" width="88" height="14" rx="7" fill="var(--b600)"/><rect x="6" y="132" width="88" height="14" rx="7" fill="var(--b600)"/></svg></div>
+
+<!-- Zurückspulen (Echtzeit, über der Welt) -->
+<div id="toenung"></div>
+<svg id="rauschen" viewBox="0 0 1920 1080"><g id="baender"></g><g id="koerner"></g></svg>
+<div class="a rknopf" id="rknopf"><div id="iStopp" style="position:absolute;inset:0"><svg viewBox="0 0 100 100"><rect x="26" y="26" width="48" height="48" rx="8" fill="var(--surface)"/></svg></div>
+  <div id="iRueck" style="position:absolute;inset:0"></div></div>
+<div class="a welle" id="rwelle" style="width:230px;height:230px;border-color:var(--surface)"></div>
+<div class="a ruhr" id="ruhr"></div>
+<div id="tb4"><svg class="ic" id="tb4i" viewBox="0 0 100 100"><path d="M48 24v52L10 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/><path d="M90 24v52L52 50Z" fill="var(--surface)" stroke="var(--surface)" stroke-width="6" stroke-linejoin="round"/></svg><div class="titel">Nochmal – aber richtig</div></div>
+<div id="blitz"></div>
+
+<!-- Tagesleiste -->
+<div id="hud">
+  <div class="wetter" id="wetter"><svg id="wWolke" viewBox="0 0 60 60" style="width:50px"><path d="M17 38h26a9 9 0 0 0 1-18 12 12 0 0 0-23-3 10 10 0 0 0-4 21Z" fill="var(--b400)"/><path d="M22 44l-3 7M31 44l-3 7M40 44l-3 7" stroke="var(--b300)" stroke-width="4" stroke-linecap="round"/></svg>
+    <svg id="wSonne" viewBox="0 0 160 160" style="width:56px"><circle cx="80" cy="80" r="30" fill="var(--warning)"/><g stroke="var(--warning)" stroke-width="10" stroke-linecap="round"><path d="M80 22v14M80 124v14M22 80h14M124 80h14M39 39l10 10M111 111l10 10M121 39l-10 10M49 111l-10 10"/></g></svg></div>
+  <div class="uhr" id="huhr"></div>
+  <div class="spur"><div class="fuell" id="hfuell"></div><div id="hmarken"></div><div class="kopfp" id="hkopf"></div></div>
+</div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Früh buchen. Liste abarbeiten. Briefe öffnen.</div>
+  <div class="klein" id="asUnter">Termin früh buchen, die Liste deiner Behörde abarbeiten, Briefe sofort öffnen – dann klappt der Termin beim ersten Mal.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const einSanft = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .7, { x: basis.x, y: basis.y }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const wippen = (id, t, n = 4, a = 8) => { const x = wertBei(id, 'x', t); for (let i = 0; i < n; i++) tw(id, t + i * .12, .12, { x: x + (i % 2 ? a : -a) }, 'sinus'); tw(id, t + n * .12, .25, { x }, 'sinus'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { if (!AKTEURE.has(el(id))) akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+function titelFarbe(id, t0, zeiten, farben = {}) {
+  titelEin(id, t0, zeiten);
+  const w = [...document.querySelectorAll(`#${id} .w`)];
+  for (const [i, f] of Object.entries(farben)) w[i].classList.add(f);
+}
+// Stempel schlägt auf (Wackler), hebt wieder ab
+function stempeln(id, t, x, y) {
+  akteur(id, { x, y: y - 330, o: 0, r: -3 });
+  tw(id, t - .6, .2, { o: 1 }); tw(id, t - .6, .4, { y: y - 150 }, 'sanft');
+  tw(id, t - .16, .16, { y }, 'in');
+  tw(id, t, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(id, t + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(id, t + .25, .55, { y: y - 260 }, 'inout'); tw(id, t + .5, .3, { o: 0 });
+  cue(t, 'plopp'); akzent(t, .045);
+}
+// Kalender: Blätter (oben zuerst) fliegen zu den Zeitpunkten ab
+function kalender(id, zahlen, unten = '') {
+  el(id).innerHTML = '<div class="ring"></div>' + zahlen.map((z, k) => `<div class="blatt" id="${id}b${k}" style="z-index:${zahlen.length - k}">${z}${unten ? `<small>${unten}</small>` : ''}</div>`).join('');
+  zahlen.forEach((_, k) => akteur(`${id}b${k}`, {}, true));
+}
+function blaetter(id, zeiten) {
+  zeiten.forEach((t, k) => {
+    tw(`${id}b${k}`, t, .45, { x: 90 + (k % 2) * 30, y: -110, r: 18 + (k % 3) * 6, o: 0, s: .8 }, 'in'); cue(t, 'tipp');
+  });
+}
+
+['x1', 'xf2', 'xm2', 'x3'].forEach(id => el(id).innerHTML = tpl('svgX'));
+['ok7', 'h7a', 'h7b', 'h7c'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('frage4').innerHTML = tpl('svgFrage'); el('iRueck').innerHTML = tpl('svgRueck');
+el('wolke0').innerHTML = tpl('svgBrille'); el('mail0').innerHTML = tpl('svgMail');
+document.querySelectorAll('.app-zeile i').forEach(i => i.innerHTML = tpl('svgOrdner'));
+document.querySelectorAll('.liste48 .lz u').forEach(u => u.innerHTML = tpl('svgHaken'));
+el('lk5').innerHTML = tpl('svgListe').replace('<svg', '<svg style="width:30px"');
+el('fp6a').innerHTML = tpl('svgFinger'); el('fp6b').innerHTML = tpl('svgFinger');
+el('k7a').innerHTML = tpl('svgKal'); el('k7b').innerHTML = tpl('svgListeGross'); el('k7c').innerHTML = tpl('svgBriefOffen');
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl('pPriya'); });
+document.querySelectorAll('.mini').forEach(m => { m.innerHTML = tpl('miniPriya'); });
+// Raster der Website: viele belegte (graue) Tage, ein freier
+el('raster0').innerHTML = Array.from({ length: 84 }, (_, k) => `<s${k === 61 ? ' class="frei" id="frei0"' : ''}></s>`).join('');
+
+/* ================= Format „Der schlechte Tag“: Zeit der Welt ================= */
+// Die Welt läuft in „Welt-Zeit“ ZT(t): bis „Stopp!“ normal, dann steht sie (Standbild), beim Zurückspulen läuft sie
+// schnell rückwärts bis zum Anfang (TS), danach wieder normal – ab R1 in den Zustand von TS zurückgesetzt.
+const TSTOP = W('Stopp', 17) - .05;
+const R0 = W('Zurückspulen', 19) - .05, R1 = SA(20) - .45;
+const TS = SE(3) + .25;                                  // Anfang: Priya, Visum, Ziel-Karte – noch kein „kein Stress“
+const rueckP = t => clamp((t - R0) / (R1 - R0));
+const RUECK = p => E.sinus(p);
+function ZT(t) {
+  if (t < TSTOP) return t;
+  if (t < R0) return TSTOP;
+  if (t < R1) return TSTOP - (TSTOP - TS) * RUECK(rueckP(t));
+  return t;
+}
+const ECHT = new Set();                                  // Akteure in Echtzeit (Rückspul-Ebene)
+const echt = id => ECHT.add(el(id));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="0" width="110%" height="100%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+HOOKS.push(t => {
+  const v = Math.abs(wert(kamera, 'x', ZT(t)) - wert(kamera, 'x', ZT(t - 1 / 30)));
+  const r = t >= R0 && t < R1 ? 4 * Math.sin(Math.PI * rueckP(t)) : 0;
+  const b = Math.min(22, v * .1 + r);
+  $('#wischerBlur').setAttribute('stdDeviation', `${b.toFixed(2)} ${(r * .15).toFixed(2)}`);
+  WELT.style.filter = b > .3 ? 'url(#wischer)' : '';
+});
+const N = 8;
+HOOKS.push(t => {
+  const tz = ZT(t);
+  let z = 1;
+  if (!(t >= R0 && t < R1)) for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((tz - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= tz));
+  z *= 1 + .03 * E.inout(clamp((tz - letzte - .9) / 11));
+  z *= 1 + .08 * Math.sin(Math.PI * clamp((t - R0 + .15) / (R1 - R0 + .5)));   // Rückspul-Zoom
+  const zit = t >= TSTOP && t < R1 ? 1.2 * Math.sin(t * 57) * Math.sin(t * 23) : 0;   // Standbild: Band-Zittern
+  $('#kamera').style.transform = `translateY(${zit.toFixed(2)}px) scale(${z.toFixed(4)})`;
+  const wx = wert(kamera, 'x', tz);
+  for (let i = 0; i < N; i++) {
+    const b = $('#bue' + i);
+    const off = i === 0 ? wx - clamp(wx, -360, 0) : wx + S(i);      // Bühne 0 steht erst mittig, dann an ihrem Platz
+    b.style.transform += ` translateX(${(.16 * off).toFixed(1)}px)`;
+  }
+});
+
+/* ---------- Figur: Mund nur in Priyas Sätzen (Sprecher exakt aus sprache.json) ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], ROTRING = [];      // [id, von, bis] in Welt-Zeit
+HOOKS.push(t => {
+  const tz = ZT(t);
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick.toFixed(2)}deg) translateY(${nick.toFixed(2)}px)`;
+    const rot = ROTRING.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    p.style.borderColor = rot ? 'var(--error)' : spricht ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Uhr (Tagesleiste, Szene 2 und große Rückspul-Uhr) ---------- */
+function uhrSvg(id) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <g stroke="var(--b300)" stroke-width="5" stroke-linecap="round"><path d="M80 31v8M80 121v8M31 80h8M121 80h8"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="9" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V36" stroke="var(--b600)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="7" fill="var(--b700)"/></svg>`;
+}
+uhrSvg('huhr'); uhrSvg('ruhr'); uhrSvg('uhr2');
+const M0 = 8 * 60, MPS = 7;                               // Tageszeit: 8 Uhr, 7 Minuten pro Sekunde
+function minuten(t) {
+  if (t < TSTOP) return M0 + t * MPS;
+  if (t < R0) return M0 + TSTOP * MPS;
+  if (t < R1) return lerp(M0 + TSTOP * MPS, M0 - 12 * 60, RUECK(rueckP(t)));
+  return M0 - 12 * 60 + (t - R1) * MPS;
+}
+HOOKS.push(t => {
+  const m = minuten(t);
+  for (const id of ['huhr', 'ruhr']) {
+    $(`#${id}h`).setAttribute('transform', `rotate(${((m / 60) % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  }
+});
+
+/* ---------- Tagesleiste: Abspielkopf, rote Marken (Fehler), grüne Schritte ---------- */
+const HUD = { schlecht: [], gut: [] };
+const BREITE = 440, TA = A(0);
+function hudFertig() {
+  const box = $('#hmarken');
+  HUD.schlecht.forEach((z, k) => box.insertAdjacentHTML('beforeend', `<div class="mk rot" id="hs${k}" style="left:${(BREITE * (z - TA) / (TSTOP - TA)).toFixed(1)}px">${tpl('svgX')}</div>`));
+  HUD.gut.forEach((z, k) => box.insertAdjacentHTML('beforeend', `<div class="mk leer" id="hg${k}" style="left:${(BREITE * (k + 1) / (HUD.gut.length + .6)).toFixed(1)}px">${tpl('svgHaken')}</div>`));
+  HOOKS.push(t => {
+    let pos, gut = t >= R1;
+    if (t < TSTOP) pos = clamp((t - TA) / (TSTOP - TA));
+    else if (t < R0) pos = 1;
+    else if (t < R1) pos = 1 - RUECK(rueckP(t));
+    else pos = 0;
+    const tEff = TA + pos * (TSTOP - TA);
+    HUD.schlecht.forEach((z, k) => {
+      const m = $('#hs' + k), s = gut ? 0 : E.back(clamp((tEff - z) / .4));
+      m.style.transform = `scale(${s.toFixed(3)})`; m.style.opacity = s > .02 ? 1 : 0;
+    });
+    const n = HUD.gut.filter(z => t >= z).length;
+    HUD.gut.forEach((z, k) => {
+      const m = $('#hg' + k), f = clamp((t - z) / .4);
+      m.style.opacity = gut ? clamp((t - R1) / .4) : 0;
+      m.className = 'mk ' + (t >= z ? 'gruen' : 'leer');
+      m.style.transform = `scale(${t >= z ? E.back(f).toFixed(3) : .7})`;
+      m.querySelector('svg').style.opacity = t >= z ? 1 : 0;
+    });
+    if (gut) {
+      const ziel = k => k ? BREITE * k / (HUD.gut.length + .6) : 0;
+      const letzte = HUD.gut[n - 1] ?? R1;
+      pos = lerp(ziel(Math.max(0, n - 1)), ziel(n), E.inout(clamp((t - letzte) / .5))) / BREITE;
+      if (n === 0) pos = 0;
+      if (t >= ENDE_SPRACHE) pos = lerp(pos, 1, E.inout(clamp((t - ENDE_SPRACHE) / .8)));
+    }
+    $('#hfuell').style.width = (pos * BREITE).toFixed(1) + 'px';
+    $('#hkopf').style.left = (pos * BREITE).toFixed(1) + 'px';
+    $('#hfuell').style.background = gut ? 'var(--success)' : 'var(--b300)'; $('#hkopf').style.borderColor = gut ? 'var(--success)' : 'var(--error)';
+    const d = clamp((t - (R1 - .35)) / .6), flip = Math.abs(Math.cos(Math.PI * d));
+    $('#wetter').style.transform = `scaleX(${flip.toFixed(3)})`;
+    $('#wWolke').style.opacity = d < .5 ? 1 : 0; $('#wSonne').style.opacity = d < .5 ? 0 : 1;
+    $('#wSonne').style.transform = `rotate(${(t * 20).toFixed(1)}deg)`;
+    $('#hud').style.opacity = clamp((t - A(-.4)) / .5) * (1 - clamp((t - AB) / .4));
+  });
+}
+
+/* ---------- Sanduhr: Füllstand in Welt-Zeit (läuft beim Zurückspulen mit zurück) ---------- */
+const SAND = { knicke: [], gut: [] };        // schlechter Tag: [t, Stand] – richtiger Tag: ruhig
+function sandStand(tz) {
+  if (tz >= R1) { const [t0, s0] = SAND.gutStart; return Math.max(.05, s0 - .0035 * Math.max(0, tz - t0)); }
+  const k = SAND.knicke; if (!k.length || tz <= k[0][0]) return 1;
+  for (let i = 1; i < k.length; i++) if (tz < k[i][0]) return lerp(k[i - 1][1], k[i][1], E.sinus(clamp((tz - k[i - 1][0]) / (k[i][0] - k[i - 1][0]))));
+  return k.at(-1)[1];
+}
+HOOKS.push(t => {
+  const tz = ZT(t), s = sandStand(tz), s2 = sandStand(tz + 1 / 30);
+  $('#sandOben').setAttribute('y', (16 + (1 - s) * 59).toFixed(2));
+  const hU = (1 - s) * 50;
+  $('#sandUnten').setAttribute('y', (134 - hU).toFixed(2)); $('#sandUnten').setAttribute('height', hU.toFixed(2));
+  const laeuft = s > .02 && (Math.abs(s - s2) > 1e-6 || (tz >= SAND.start && tz < R1) || tz >= R1);
+  $('#sandStrahl').setAttribute('height', Math.max(0, 134 - hU - 74).toFixed(2));
+  $('#sandStrahl').style.opacity = laeuft && tz >= SAND.start ? .9 : 0;
+});
+
+/* ================= Szenen ================= */
+/* ---------- 0 · Das ist Priya. Visum, zwei Monate, Aufenthaltserlaubnis ---------- */
+akteur('bue0', { x: 1320, y: 540 });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte
+const P0 = { priya: [1080, 560], ziel: [1080, 308], pass: [1480, 390], sand: [1490, 680] };
+{
+  const X = S(0);
+  ein('priya0', A(.0), { x: X + P0.priya[0], y: P0.priya[1] }, { y: 80 }, 'whoosh');
+  huepfen('priya0', W('Priya', 1), 16);
+  // Ihr Visum gilt nur noch zwei Monate: die Kamera macht Platz für den Text, der Pass klappt auf
+  const tV = W('Visum', 2);
+  tw('welt', tV - .35, 1, { x: 0 }, 'inout');
+  pop('pass0', tV - .25, { x: X + P0.pass[0], y: P0.pass[1], r: -2 }, 'pop');
+  akteur('passauf0', { x: X + P0.pass[0], y: P0.pass[1], sx: 0, o: 0 });
+  const tAuf = tV + .35;
+  tw('pass0', tAuf, .18, { sx: 0 }, 'in'); set('pass0', tAuf + .18, { o: 0 });
+  set('passauf0', tAuf + .18, { o: 1 }); tw('passauf0', tAuf + .18, .4, { sx: 1 }, 'back'); cue(tAuf + .18, 'klick');
+  titelFarbe('tb1', tV, [tV, W('gilt', 2), W('nur', 2), W('noch', 2), W('zwei', 2), W('Monate', 2)], { 4: 'rot', 5: 'rot' });
+  // zwei Monate: Sanduhr ploppt, der Sand beginnt zu rieseln
+  const tM = W('Monate', 2);
+  SAND.start = tM + .3;
+  pop('sand', tM - .1, { x: P0.sand[0], y: P0.sand[1] }, 'plopp');
+  wackeln('sand', tM + .45, 2, 4); bump('passauf0', W('zwei', 2), 1.05); akzent(tM, .03);
+  SAND.knicke.push([tM + .3, 1], [SE(5) + .2, .86]);
+  // Für ihre Ausbildung braucht sie eine Aufenthaltserlaubnis: gestrichelte Karte schwebt über ihr
+  const tAe = W('Aufenthaltserlaubnis', 3);
+  akteur('ziel0', { x: X + P0.ziel[0], y: P0.ziel[1] + 40, o: 0, s: .8 });
+  tw('ziel0', tAe - .1, .4, { o: 1 }); tw('ziel0', tAe - .1, .7, { y: P0.ziel[1], s: 1 }, 'sanft'); cue(tAe - .1, 'pop');
+  tw('priya0', tAe + .2, .5, { y: P0.priya[1] + 6 }, 'sanft');
+  // Kein Stress: Priya winkt lässig ab (Porträt wippt), Sprechwolke mit Sonnenbrille
+  const tK = W('Kein', 4);
+  pop('wolke0', tK - .05, { x: X + 1300, y: 770 }, 'pop');
+  wippen('priya0', tK, 4, 9); FROH.push(['priya0', tK - .2, SE(5) + 1]);
+  wackeln('wolke0', W('einfach', 5), 2, 4);
+  huepfen('priya0', W('Ausländerbehörde', 5), 12);
+}
+
+/* ---------- 1 · Ausländerbehörde: Tür bleibt zu, nur mit Termin ---------- */
+textAus('tb1', SE(5) + .1);
+pan2(SE(5) + .25, 1);
+tw('sand', SE(5) + .25, .9, { x: 822, y: 124, s: .42 }, 'inout', { bogen: 60 });
+{
+  const X = S(1), T = SE(5) + .4;
+  akteur('bue1', { x: X + 1320, y: 540 });
+  const BX1 = X + 1320, BY1 = 490;
+  ein('beh1', T, { x: BX1, y: BY1 }, { y: 60 }, 'whoosh');
+  ein('tuer1', T, { x: BX1, y: BY1 + 65.25 }, { y: 60 });
+  akteur('aush1', { x: BX1, y: BY1 - 22, sy: 0, o: 0 });
+  // Am nächsten Morgen steht sie vor der Tür: Priya hüpft heran
+  const tM = W('Morgen', 6) - .2;
+  akteur('priya1', { x: X + 910, y: 740, o: 0 });
+  tw('priya1', tM, .3, { o: 1 }); tw('priya1', tM, 1.1, { x: X + 1010 }, 'inout');
+  for (let n = 0; n < 3; n++) tw('priya1', tM + n * .36, .36, { y: 740 }, 'sinus', { bogen: 16 });
+  // vor der Tür: sie drückt – die Tür bleibt zu und wackelt
+  const tT = W('Tür', 6);
+  tw('priya1', tT - .15, .18, { x: X + 1045 }, 'out'); tw('priya1', tT + .05, .4, { x: X + 1010 }, 'sanft');
+  wackeln('tuer1', tT, 4, 1.5); cue(tT, 'klick'); cue(tT + .2, 'klick');
+  // Aber ohne Termin kommt sie nicht dran: Schild klappt herunter, rotes Kreuz
+  const tO = W('ohne', 7);
+  set('aush1', tO - .1, { o: 1 }); tw('aush1', tO - .1, .55, { sy: 1 }, 'back'); cue(tO - .1, 'plopp');
+  wackeln('aush1', tO + .45, 3, 3);
+  const tTe = W('Termin', 7);
+  pop('x1', tTe + .1, { x: BX1 + 100, y: BY1 + 92 }, 'plopp'); wackeln('x1', tTe + .55, 3, 5); akzent(tTe, .04);
+  wippen('priya1', W('nicht', 7), 3, 7);
+  HUD.schlecht.push(tTe + .1);
+  titelFarbe('tb2', tO - .1, [tO - .1, tTe, W('nicht', 7), W('dran', 7)], { 2: 'rot', 3: 'rot' });
+  // Der nächste freie Termin ist erst in sechs Wochen: Kalenderblätter fliegen ab, das letzte pocht
+  kalender('kal1', ['1', '2', '3', '4', '5', '6'], 'Woche');
+  ein('kal1', W('nächste', 8) - .2, { x: X + 1632, y: 745 }, { y: 60 }, 'whoosh');
+  const tE = W('erst', 8), tW = WE('Wochen', 8);
+  blaetter('kal1', [0, 1, 2, 3, 4].map(k => lerp(tE, tW - .2, k / 4)));
+  bump('kal1', tW, 1.12); wackeln('kal1', tW + .1, 3, 3); cue(tW, 'ding'); akzent(tW, .035);
+  SAND.knicke.push([tE, .84], [tW + .2, .6]);
+  textAus('tb2', SE(8) + .05);
+}
+
+/* ---------- 2 · Sechs Wochen später, beim Termin: Unterlagen fehlen ---------- */
+pan2(SE(8) + .2, 2);
+{
+  const X = S(2), T = SE(8) + .35;
+  akteur('bue2', { x: X + 1320, y: 540 });
+  // Sechs Wochen später: Uhr springt vor
+  pop('uhr2', T, { x: X + 1600, y: 320 }, 'pop');
+  const tS = W('Sechs', 9);
+  HOOKS.push(t => { const z = ZT(t), m = 600 + 1500 * E.inout(clamp((z - tS) / 1.3));
+    $('#uhr2h').setAttribute('transform', `rotate(${((m / 60) % 12) * 30} 80 80)`); $('#uhr2m').setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`); });
+  for (let k = 0; k < 6; k++) cue(tS + k * .2, 'tipp');
+  pop('chip2', W('später', 9), { x: X + 1600, y: 458 }, 'pop');
+  SAND.knicke.push([tS, .6], [tS + 1.3, .36]);
+  // beim Termin: Schalter, Priya legt den Pass auf die Ablage
+  const tB = W('Sechs', 9) + .3;
+  ein('schalter2', tB, { x: X + 1230, y: 640 }, { y: 70 }, 'whoosh');
+  pop('priya2', tB + .2, { x: X + 1010, y: 320 });
+  akteur('pass2', { x: X + 1010, y: 320, o: 0, s: .4 });
+  tw('pass2', W('Termin', 9), .15, { o: 1 }); flug('pass2', W('Termin', 9), .7, X + 1080, 570, 90, { s: 1 }); landen('pass2', W('Termin', 9) + .7); cue(W('Termin', 9), 'whoosh');
+  // Kein biometrisches Foto, keine Meldebescheinigung: leere Stellen, rote Kreuze
+  const tF = W('biometrisches', 10) - .1, tFx = W('Foto', 10);
+  pop('foto2', tF, { x: X + 1230, y: 560 }, 'pop'); pop('xf2', tFx, { x: X + 1270, y: 500 }, 'plopp'); wackeln('xf2', tFx + .45, 3, 5);
+  const tMe = W('keine', 10), tMx = W('Meldebescheinigung', 10) + .2;
+  pop('meld2', tMe, { x: X + 1370, y: 556 }, 'pop'); pop('xm2', tMx, { x: X + 1412, y: 492 }, 'plopp'); wackeln('xm2', tMx + .45, 3, 5);
+  wippen('priya2', tMx + .1, 3, 7); akzent(tMx, .04);
+  HUD.schlecht.push(tMx);
+  { const k = W('Kein', 10), b = W('Brief', 12); titelFarbe('tb3', k, [k, k + .08, k + .16, b, b + .08, b + .16], { 1: 'rot', 4: 'rot', 5: 'rot' }); }
+}
+
+/* ---------- 3 · Zu Hause: der Brief mit der Liste liegt ungeöffnet im Werbestapel ---------- */
+pan2(SE(10) + .2, 3);
+{
+  const X = S(3), T = SE(10) + .35;
+  akteur('bue3', { x: X + 1320, y: 540 });
+  // Werbung fällt auf den Stapel, der Brief liegt ganz unten
+  const SX = X + 1320, SY = 700;
+  akteur('brief3', { x: SX, y: SY + 6, o: 0 }); tw('brief3', T, .3, { o: 1 });
+  [['fl3a', SY - 10, -2], ['fl3b', SY - 34, 1.5], ['fl3c', SY - 58, -1], ['fl3d', SY - 82, 2]].forEach(([id, y, r], k) => {
+    akteur(id, { x: SX + (k % 2 ? 14 : -10), y: y - 260, o: 0, r });
+    const t = T + .1 + k * .14; tw(id, t, .15, { o: 1 }); tw(id, t, .35, { y }, 'in'); landen(id, t + .35, .6); cue(t + .35, 'tipp');
+  });
+  // Die Behörde hatte ihr eine Liste geschickt: der Brief schaut heraus, die Lupe zeigt „Liste“
+  const tB = W('Behörde', 11), tL = W('Liste', 11);
+  tw('brief3', tB, .6, { x: SX + 150, y: SY - 40 }, 'sanft'); cue(tB, 'whoosh');
+  akteur('lupe3', { x: X + 1640, y: 300, o: 0, s: .6, r: 8 });
+  akteur('lupet3', { x: X + 1580, y: 360, o: 0, s: .6 });
+  tw('lupe3', tL - .35, .25, { o: 1 }); tw('lupe3', tL - .35, .6, { x: X + 1560, y: 400, s: 1, r: 0 }, 'sanft');
+  tw('lupet3', tL + .1, .35, { o: 1, s: 1, x: X + 1543, y: 383 }, 'back'); cue(tL + .1, 'pop');
+  // Aber der Brief liegt noch zu Hause, ungeöffnet: Brief rutscht hervor, Haus, rotes Kreuz
+  aus(['lupe3', 'lupet3'], W('Aber', 12) - .1, .3);
+  const tBr = W('Brief', 12);
+  tw('brief3', tBr - .1, .7, { x: SX + 40, y: 400 }, 'inout', { bogen: 60 }); cue(tBr - .1, 'whoosh'); landen('brief3', tBr + .6);
+  pop('haus3', W('Hause', 12) - .1, { x: X + 1010, y: 350 }, 'pop');
+  const tU = W('ungeöffnet', 12);
+  pop('x3', tU, { x: SX + 175, y: 340 }, 'plopp'); wackeln('brief3', tU + .1, 3, 2); wackeln('x3', tU + .45, 3, 5); akzent(tU, .04);
+  HUD.schlecht.push(tU);
+}
+
+/* ---------- 4 · Oh nein: neuer Termin, wieder warten – die Zeit wird knapp ---------- */
+pan2(SE(12) + .15, 4);
+{
+  const X = S(4), T = SE(12) + .3;
+  akteur('bue4', { x: X + 1320, y: 540 });
+  pop('priya4', T, { x: X + 1050, y: 480 });
+  ein('termin4', T + .15, { x: X + 1470, y: 380 }, { y: -50 }, 'whoosh');
+  akteur('abdruck4', { o: 0, s: 1.6, r: -4 }, true);
+  // Oh nein. Ich muss noch einmal kommen?
+  ROTRING.push(['priya4', SA(13), SE(14) + .2]);
+  wippen('priya4', W('nein', 13), 4, 8);
+  pop('frage4', W('kommen', 14) - .1, { x: X + 1160, y: 345 }, 'plopp'); wackeln('frage4', W('kommen', 14) + .4, 3, 6);
+  // Neuer Termin, wieder warten: Stempel schlägt auf, Kalenderblätter fliegen wieder
+  const tN = W('Neuer', 15) + .15;
+  stempeln('stempel4', tN, X + 1470, 380);
+  tw('abdruck4', tN, .05, { o: 1 }); tw('abdruck4', tN, .3, { s: 1 }, 'out'); wackeln('termin4', tN + .05, 3, 2);
+  aus('frage4', tN - .2, .3);
+  kalender('kal4', ['1', '2', '3', '4', '5', '6'], 'Woche');
+  ein('kal4', W('wieder', 15) - .3, { x: X + 1400, y: 700 }, { y: 60 }, 'whoosh');
+  blaetter('kal4', [0, 1, 2, 3, 4].map(k => lerp(W('wieder', 15), WE('warten', 15), k / 4)));
+  wippen('priya4', W('warten', 15), 3, 6);
+  // Und die Zeit wird richtig knapp: die Sanduhr kommt groß ins Bild, fast leer, rote Welle
+  const tZ = W('Zeit', 16) - .3;
+  tw('sand', tZ, .7, { x: 1630, y: 690, s: 1 }, 'inout', { bogen: 40 }); cue(tZ, 'whoosh');
+  SAND.knicke.push([W('wieder', 15), .36], [WE('knapp', 16), .07]);
+  const tK = W('knapp', 16);
+  wackeln('sand', tK, 4, 5); akzent(tK, .05); cue(tK, 'plopp');
+  HOOKS.push(t => { const z = ZT(t), p = (z - tK) / 1.1, q = (z - tK - .5) / 1.1, r = $('#sandRing');
+    const a = p > 0 && p < 1 ? p : q > 0 && q < 1 ? q : -1;
+    r.style.opacity = a < 0 ? 0 : (.9 * (1 - a)).toFixed(3); r.style.transform = `scale(${a < 0 ? 1 : (.8 + .7 * a).toFixed(3)})`; });
+  tw('priya4', tK, .4, { y: 492 }, 'sanft');
+}
+
+/* ---------- Stopp! Das geht besser. Zurückspulen! ---------- */
+{
+  ['rknopf', 'rwelle', 'ruhr'].forEach(echt);
+  HOOKS.push(t => {
+    const ton = t < TSTOP ? 0 : t < R0 ? .32 * clamp((t - TSTOP) / .2) : t < R1 - .2 ? .32 + .18 * clamp((t - R0) / .3) : .5 * (1 - clamp((t - (R1 - .2)) / .45));
+    $('#toenung').style.opacity = ton.toFixed(3);
+    const bl = Math.max(.55 * (1 - clamp((t - TSTOP) / .25)) * (t >= TSTOP), .7 * (1 - clamp((t - R1 + .05) / .35)) * (t >= R1 - .05));
+    $('#blitz').style.opacity = bl.toFixed(3);
+  });
+  textAus('tb3', TSTOP - .1);
+  akzent(TSTOP + .02, .06); cue(TSTOP, 'klick'); cue(TSTOP, 'plopp');
+  pop('rknopf', TSTOP + .05, { x: 960, y: 440 });
+  bump('rknopf', W('besser', 18), 1.1);
+  const tR = R0;
+  HOOKS.push(t => {
+    const f = clamp((t - tR) / .25);
+    const g = E.back(clamp((t - tR - .1) / .35));
+    $('#iStopp').style.transform = `scale(${Math.max(.001, 1 - f)})`; $('#iStopp').style.opacity = f < 1 ? 1 : 0;
+    $('#iRueck').style.transform = `scale(${Math.max(.001, g)})`; $('#iRueck').style.opacity = g > .01 ? 1 : 0;
+    $('#rknopf').style.background = t >= tR + .1 ? 'var(--b500)' : '';
+    if (t > tR + .45 && t < R1) $('#iRueck').style.transform = `scale(${1 + .08 * Math.max(0, Math.sin((t - tR) * 11))})`;
+  });
+  tw('rknopf', tR, .5, { x: 1110 }, 'sanft');
+  akteur('ruhr', { x: 800, y: 440, s: 0, r: -8 }); tw('ruhr', tR + .1, .55, { s: 1, r: 0 }, 'back'); cue(tR, 'whoosh');
+  for (let n = 0; n < 4; n++) welle('rwelle', tR + .3 + n * .7, 1110, 440, .8);
+  aus(['rknopf', 'ruhr'], R1 - .3, .3);
+  for (let z = tR + .2; z < R1 - .2; z += .16) cue(z, 'tipp');
+  cue(tR + .8, 'scan'); cue(tR + 1.9, 'scan'); cue(R1 - .15, 'whoosh');
+  titelEin('tb4', W('Zurückspulen', 19) + .25);
+  akteur('tb4i', { s: 0 }, true); tw('tb4i', W('Zurückspulen', 19) + .15, .45, { s: 1 }, 'back');
+  tw('tb4', R1 - .3, .3, { o: 0 });
+  document.querySelectorAll('#tb4 .wi').forEach(w => echt(w)); ['tb4', 'tb4i'].forEach(echt);
+  const FARBEN = ['var(--surface)', 'var(--b200)', 'var(--b300)', 'var(--b100)', 'var(--error-bg)'];
+  const koerner = $('#koerner'), baender = $('#baender');
+  for (let i = 0; i < 70; i++) koerner.insertAdjacentHTML('beforeend', `<rect rx="2" fill="${FARBEN[i % FARBEN.length]}"/>`);
+  for (let i = 0; i < 3; i++) baender.insertAdjacentHTML('beforeend', `<rect x="0" width="1920" fill="${FARBEN[(i + 1) % 3 + 1]}"/>`);
+  const zufall = n => { const x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+  HOOKS.push(t => {
+    const r = t >= R0 && t < R1 + .2 ? Math.min(clamp((t - R0) / .25), 1 - clamp((t - R1 + .1) / .3)) : 0;
+    const s = t >= TSTOP && t < R0 ? .35 : 0;
+    const o = Math.max(r, s);
+    $('#rauschen').style.opacity = o.toFixed(3);
+    if (o <= 0) return;
+    const fr = Math.round(t * 30), dicht = r > 0 ? 1 : .35;
+    [...koerner.children].forEach((k, i) => {
+      const z = n => zufall(fr * 131 + i * 7 + n);
+      const an = z(1) < dicht;
+      k.setAttribute('x', (z(2) * 1920).toFixed(0)); k.setAttribute('y', (z(3) * 1080).toFixed(0));
+      k.setAttribute('width', (30 + z(4) * (r > 0 ? 380 : 120)).toFixed(0)); k.setAttribute('height', (2 + z(5) * 5).toFixed(0));
+      k.setAttribute('opacity', an ? (.15 + z(6) * .45).toFixed(2) : 0);
+    });
+    [...baender.children].forEach((b, i) => {
+      const y = ((t - R0) * 700 + i * 380) % 1260 - 90;
+      b.setAttribute('y', y.toFixed(0)); b.setAttribute('height', 50 + i * 22); b.setAttribute('opacity', r > 0 ? .22 : 0);
+    });
+  });
+}
+
+HOOKS.push(t => { el('bue0').className = 'a buehne ' + (t >= R1 ? 'hell' : 'trueb'); });
+/* ---------- Zurücksetzen: ab R1 steht die Welt im Zustand des Anfangs (TS) ---------- */
+{
+  const P = ['x', 'y', 's', 'sx', 'sy', 'r', 'o'];
+  for (const a of AKTEURE.values()) {
+    if (ECHT.has(a.el)) continue;
+    const to = {}; P.forEach(p => { to[p] = wert(a, p, TS); });
+    a.tw.push({ t0: R1, d: 1e-4, to, from: {}, e: E.lin, nr: TW_NR++, bogen: 0 }); a.unsortiert = true;
+  }
+  SAND.gutStart = [R1, sandStand(TS)];
+}
+
+/* ---------- 5 · Derselbe Tag, richtig: sofort online buchen ---------- */
+{
+  const X = S(0), T = R1 + .1;
+  // Die Sanduhr wandert in die Tagesleiste und läuft ruhig weiter
+  tw('sand', T + .2, .8, { x: 822, y: 124, s: .42 }, 'inout', { bogen: 60 }); cue(T + .2, 'whoosh');
+  // Priya bucht ihren Termin sofort: der Pass klappt zu und rückt beiseite, der Laptop kommt
+  const tP = W('Priya', 20);
+  textAus('tb1', tP - .2);
+  tw('passauf0', tP - .2, .2, { sx: 0 }, 'in'); set('passauf0', tP, { o: 0 });
+  set('pass0', tP, { o: 1, sx: 0 }); tw('pass0', tP, .2, { sx: 1 }, 'out'); cue(tP, 'klick');
+  tw('pass0', tP + .25, .55, { x: X + 1265, y: 780, s: .5, r: 0 }, 'inout', { bogen: 40 }); landen('pass0', tP + .8, .6);
+  const tL = W('bucht', 20) - .1;
+  ein('laptop0', tL, { x: X + 1450, y: 400 }, { y: 80 }, 'whoosh'); ein('web0', tL, { x: X + 1450 - 6, y: 400 - 28 }, { y: 80 });
+  // Termin: das Raster läuft durch viele belegte Tage, ein freier Tag leuchtet grün
+  akteur('raster0', { y: 0 }, true); akteur('frei0', {}, true);
+  const tT = W('Termin', 20);
+  tw('raster0', tT - .2, .9, { y: -162 }, 'inout'); cue(tT - .2, 'scan');
+  bump('frei0', tT + .75, 1.35); bump('frei0', tT + 1.15, 1.25); cue(tT + .75, 'ding');
+  // sofort: Klick auf „Buchen“, bestätigt
+  const tS = W('sofort', 20) + .1;
+  akteur('finger0', { x: X + 1640, y: 560, o: 0 });
+  tw('finger0', tS - .45, .4, { o: 1, x: X + 1541, y: 450 }, 'inout');
+  tw('finger0', tS - .05, .1, { s: .8 }, 'in'); tw('finger0', tS + .05, .3, { s: 1 }, 'sanft'); tw('finger0', tS + .35, .25, { o: 0 });
+  akteur('knopf0', {}, true); tw('knopf0', tS - .05, .1, { s: .9 }, 'in'); tw('knopf0', tS + .05, .35, { s: 1 }, 'back'); cue(tS, 'klick');
+  welle('tap0', tS, X + 1541, 450, .7);
+  akteur('toast0', { o: 0, y: 10 }, true); tw('toast0', tS + .15, .35, { o: 1, y: 0 }, 'back'); cue(tS + .2, 'erfolg');
+  HUD.gut.push(tS + .2); FROH.push(['priya0', tS + .1, 999]); huepfen('priya0', tS + .2, 14);
+  bump('laptop0', W('Website', 20), 1.03); bump('web0', W('Website', 20), 1.03);
+  titelFarbe('tb5', tT - .1, [tT - .1, tT, W('sofort', 20), tS + .1], { 0: 'gruen' });
+  // Denn Termine gibt es oft erst nach vielen Wochen: die belegten Tage pochen nacheinander
+  const tV = W('vielen', 21) - .2;
+  [...document.querySelectorAll('#raster0 s')].slice(28, 61).forEach((s, k) => { akteur(s, {}, true); tw(s, tV + k * .03, .12, { s: 1.25 }, 'sinus'); tw(s, tV + k * .03 + .12, .25, { s: 1 }, 'sanft'); });
+  cue(tV, 'scan'); bump('frei0', WE('Wochen', 21) - .1, 1.3);
+  // Die Bestätigung fliegt in die Azubis Plus Helper App, Bereich „Dokumente“
+  const tH = W('Denn', 21) - .1;
+  ein('handy0', tH, { x: X + 1645, y: 700 }, { x: 60 }, 'whoosh'); ein('schirm0', tH, { x: X + 1645, y: 700 }, { x: 60 });
+  const tM = W('gibt', 21);
+  akteur('mail0', { x: X + 1450, y: 400, o: 0, s: .4 });
+  tw('mail0', tM, .15, { o: 1 }); flug('mail0', tM, .8, X + 1645, 690, 110, { s: 1 }); cue(tM, 'whoosh');
+  tw('mail0', tM + .75, .2, { s: .3, o: 0 }, 'in');
+  akteur('zeile0', {}, true); bump('zeile0', tM + .85, 1.12);
+  HOOKS.push(t => { el('anz0').textContent = t >= tM + .85 ? '2' : '1'; });
+  akteur('atoast0', { o: 0, y: 8 }, true); tw('atoast0', tM + 1, .35, { o: 1, y: 0 }, 'back'); cue(tM + .95, 'ding');
+  textAus('tb5', SE(21) + .1);
+}
+
+/* ---------- 6 · Brief sofort öffnen: die Liste deiner Behörde abarbeiten ---------- */
+pan2(SE(21) + .25, 5);
+{
+  const X = S(5), T = SE(21) + .4;
+  akteur('bue5', { x: X + 1320, y: 540 });
+  ein('bk5', T, { x: X + 1000, y: 330 }, { y: -60 }, 'whoosh');
+  pop('priya5', T + .2, { x: X + 1012, y: 690 });
+  ein('mh5', T + .3, { x: X + 1600, y: 700 }, { y: 60 }); ein('mv5', T + .3, { x: X + 1600, y: 700 }, { y: 60 });
+  // Den Brief der Behörde öffnet sie gleich: der Brief kommt aus dem Briefkasten, die Klappe geht auf
+  const tB = W('Brief', 22) - .1, BR = { x: X + 1272, y: 600 };
+  wackeln('bk5', tB - .2, 3, 3); cue(tB - .2, 'klick');
+  ['uh5', 'uv5', 'uk5'].forEach(id => { akteur(id, { x: X + 1000, y: 300, o: 0, s: .3 }); tw(id, tB, .15, { o: 1 }); flug(id, tB, .7, BR.x, BR.y, 100, { s: 1 }); });
+  cue(tB, 'whoosh');
+  el('uk5').style.transformOrigin = '50% 37%';
+  const tO = W('öffnet', 22);
+  tw('uk5', tO, .3, { sy: -1 }, 'inout'); cue(tO, 'klick');
+  // Liste steigt aus dem Umschlag und faltet sich auf
+  akteur('liste5', { x: BR.x, y: BR.y + 40, o: 0, sy: .1, s: .5 });
+  const tLi = W('gleich', 22);
+  tw('liste5', tLi - .15, .2, { o: 1 }); tw('liste5', tLi - .15, .7, { y: 480, s: 1, sy: 1 }, 'sanft'); cue(tLi, 'whoosh');
+  aus(['uh5', 'uv5', 'uk5'], tLi + .3, .3);
+  ['lz5a', 'lz5b', 'lz5c', 'lz5d', 'lz5e'].forEach((id, k) => { akteur(id, { o: 0, x: -20 }, true); tw(id, W('Darin', 23) + k * .18, .35, { o: 1, x: 0 }, 'sanft'); cue(W('Darin', 23) + k * .18, 'tipp'); });
+  akteur('abdruck5', { o: 0, s: 1.6, r: -6 }, true);
+  bump('liste5', W('mitbringen', 23), 1.03);
+  // Pass, Foto (Blitz), Meldebescheinigung, Ausbildungsvertrag, Karte der Krankenkasse: springen in die Mappe
+  const ITEMS = [['i5a', 'lz5a', W('Pass', 24)], ['i5b', 'lz5b', W('Foto', 24) - .15], ['i5c', 'lz5c', W('Meldebescheinigung', 24)],
+    ['i5d', 'lz5d', W('Ausbildungsvertrag', 24)], ['i5e', 'lz5e', W('Krankenversicherung', 24)]];
+  const ZEILE = {};
+  ITEMS.forEach(([id, z, t], k) => {
+    pop(id, t - .25, { x: X + 1600, y: 410 }, 'pop');
+    flug(id, t + .45, .7, X + 1600, 650 - k * 4, 100, { s: .7, r: k % 2 ? 3 : -3 }); cue(t + .45, 'whoosh');
+    tw(id, t + 1.1, .12, { o: 0 });
+    bump('mv5', t + 1.12, 1.06); bump('mh5', t + 1.12, 1.06);
+    ZEILE[z] = t + .2; cue(t + .2, 'ding');
+  });
+  HOOKS.push(t => { for (const [z, a] of Object.entries(ZEILE)) el(z).classList.toggle('ok', t >= a); });
+  ITEMS.forEach(([, z, t]) => { const u = el(z).querySelector('u'); akteur(u, {}, true); tw(u, t + .2, .12, { s: 1.3 }, 'sinus'); tw(u, t + .32, .3, { s: 1 }, 'sanft'); });
+  // Blitz beim biometrischen Foto
+  const tBl = W('Foto', 24) - .05;
+  akteur('blitz5', { x: X + 1600, y: 410, o: 0, s: .5 }); tw('blitz5', tBl, .08, { o: .95, s: 1.3 }, 'out'); tw('blitz5', tBl + .08, .35, { o: 0, s: 1.6 }, 'out'); cue(tBl, 'klick');
+  // Aber es gilt immer die Liste deiner Behörde: Stempel „gilt“
+  const tG = W('gilt', 25) + .1;
+  stempeln('stempel5', tG, X + 1382, 345);
+  tw('abdruck5', tG, .05, { o: 1 }); tw('abdruck5', tG, .3, { s: 1, r: -4 }, 'out');
+  wackeln('liste5', tG + .05, 3, 1.5); FROH.push(['priya5', tG, 999]); huepfen('priya5', tG + .1, 12);
+  bump('liste5', W('Behörde', 25), 1.03);
+  HUD.gut.push(tG);
+  titelFarbe('tb6', W('Darin', 23), [W('Darin', 23), W('Darin', 23) + .08, W('Darin', 23) + .16, W('Darin', 23) + .24, W('Pass', 24)], { 0: 'gruen' });
+  textAus('tb6', SE(25) + .05);
+}
+
+/* ---------- 7 · Beim Termin: Fingerabdrücke, Gebühr, Karte wird bestellt ---------- */
+pan2(SE(25) + .2, 6);
+{
+  const X = S(6), T = SE(25) + .35;
+  akteur('bue6', { x: X + 1320, y: 540 });
+  ein('schalter6', T, { x: X + 1240, y: 625 }, { y: 70 }, 'whoosh');
+  pop('priya6', T + .2, { x: X + 1010, y: 315 });
+  // Priya legt die Mappe ab
+  const tM = W('Termin', 26) - .1;
+  ['mh6', 'mv6'].forEach(id => { akteur(id, { x: X + 1010, y: 330, o: 0, s: .4 }); tw(id, tM, .15, { o: 1 }); flug(id, tM, .7, X + 1095, 560, 90, { s: 1 }); });
+  landen('mh6', tM + .7); landen('mv6', tM + .7); cue(tM, 'whoosh'); cue(tM + .7, 'tipp');
+  // zwei Fingerabdrücke: Scanner, Scan-Linie, zwei Abdrücke leuchten nacheinander auf
+  ein('scan6', W('gibt', 26) - .3, { x: X + 1300, y: 560 }, { y: 40 });
+  ein('fp6', W('gibt', 26) - .3, { x: X + 1298, y: 565 }, { y: 40 });
+  const tF = W('Fingerabdrücke', 26) - .2;
+  HOOKS.push(t => { const z = ZT(t);
+    [['fp6a', tF + .2], ['fp6b', tF + .7]].forEach(([id, a]) => { const f = clamp((z - a) / .3); el(id).firstElementChild.style.opacity = (.25 + .75 * f).toFixed(3); });
+    const p = clamp((z - tF) / 1.1), l = el('sl6');
+    l.style.opacity = p > 0 && p < 1 ? .9 : 0; l.style.top = (4 + 38 * Math.abs(Math.sin(Math.PI * p * 1.5))).toFixed(1) + 'px'; });
+  cue(tF, 'scan'); cue(tF + .2, 'ding'); cue(tF + .7, 'ding'); bump('fp6', tF + .2, 1.08); bump('fp6', tF + .7, 1.08);
+  // zahlt eine Gebühr: Münze fällt in die Schale
+  ein('schale6', W('zahlt', 26) - .3, { x: X + 1630, y: 700 }, { y: 50 });
+  const tG = W('Gebühr', 26) - .25;
+  akteur('muenze6', { x: X + 1630, y: 360, o: 0, s: .8 });
+  tw('muenze6', tG - .3, .2, { o: 1 }); tw('muenze6', tG, .4, { y: 668 }, 'in');
+  for (let k = 0; k < 3; k++) tw('muenze6', tG + k * .13, .13, { sx: k % 2 ? 1 : .2 }, 'sinus');
+  tw('muenze6', tG + .4, .1, { sx: 1 }, 'sinus');
+  landen('schale6', tG + .4, .8); cue(tG + .4, 'muenze'); bump('schale6', tG + .42, 1.04);
+  // Dann wird ihre Karte bestellt: Karte erscheint und fliegt in einem Bogen zur Druckerei
+  ein('druck6', W('Dann', 27) - .2, { x: X + 1610, y: 330 }, { y: -50 }, 'whoosh');
+  akteur('fort6', { x: X + 1610, y: 430, o: 0 }); tw('fort6', W('Dann', 27) - .1, .4, { o: 1 });
+  akteur('fort6i', { sx: 0 }, true);
+  const tK = W('Karte', 27) - .1;
+  pop('eat6', tK, { x: X + 1300, y: 330 }, 'pop');
+  const tBe = W('bestellt', 27);
+  flug('eat6', tBe, .9, X + 1610, 300, 140, { s: .3, r: 3 }); tw('eat6', tBe + .75, .15, { o: 0 }); cue(tBe, 'whoosh');
+  bump('druck6', tBe + .9, 1.08); cue(tBe + .9, 'klick');
+  tw('fort6i', tBe + 1, WE('Aufenthaltstitel', 27) - tBe - .8, { sx: 1 }, 'inout'); cue(tBe + 1, 'scan');
+  HUD.gut.push(tBe + .9); FROH.push(['priya6', tBe + .9, 999]);
+  titelFarbe('tb7', tF, [tF, tF + .08, tF + .16, tG, tG + .08, tK, tK + .08, tBe], { 0: 'gruen' });
+  textAus('tb7', SE(27) + .05);
+}
+
+/* ---------- 8 · Ein paar Wochen später: PIN-Brief, Karte abholen, geschafft ---------- */
+pan2(SE(27) + .2, 7);
+{
+  const X = S(7), T = SE(27) + .35;
+  akteur('bue7', { x: X + 1320, y: 540 });
+  const ZK = { x: X + 1360, y: 350 };
+  pop('priya7', T, { x: X + 1060, y: 380 });
+  ein('ziel7', T + .15, { x: ZK.x, y: ZK.y }, { y: -40 });
+  // Ein paar Wochen später: Kalenderblätter fliegen
+  kalender('kal7', ['1', '2', '3', '4', '5'], 'Woche');
+  ein('kal7', T + .1, { x: X + 1640, y: 330 }, { y: -60 }, 'whoosh');
+  blaetter('kal7', [0, 1, 2, 3].map(k => lerp(W('paar', 28), WE('später', 28), k / 3)));
+  // Briefkasten klappert, ein Brief mit ihrer PIN kommt
+  ein('bk7', W('kommt', 28) - .4, { x: X + 1640, y: 660 }, { y: 60 });
+  wackeln('bk7', W('kommt', 28), 4, 4); cue(W('kommt', 28), 'klick'); cue(W('kommt', 28) + .2, 'klick');
+  const tPi = W('Pinn', 28) - .25;
+  akteur('pin7', { x: X + 1640, y: 610, o: 0, s: .3 });
+  tw('pin7', tPi - .1, .15, { o: 1 }); flug('pin7', tPi - .1, .7, X + 1420, 590, 100, { s: 1, r: -2 }); cue(tPi - .1, 'whoosh'); landen('pin7', tPi + .6);
+  // Mit diesem Brief und ihrem Pass: beide gehen zum Schalter, die Karte gleitet heraus und dreht sich
+  aus(['kal7'], W('Mit', 29) - .2, .3);
+  pop('pass7', W('Pass', 29) - .1, { x: X + 1180, y: 600, r: 2 }, 'pop');
+  const tH = W('holt', 29) - .2;
+  ein('schalter7', tH - .3, { x: X + 1300, y: 720 }, { y: 60 }, 'whoosh');
+  flug('pin7', tH, .6, X + 1420, 680, 50, { s: .55 }); flug('pass7', tH + .05, .6, X + 1180, 682, 50, { s: .6 });
+  tw(['pin7', 'pass7'], tH + .55, .2, { o: 0 });
+  const tKa = W('Karte', 29) - .2;
+  akteur('eat7', { x: X + 1300, y: 700, o: 0, s: .5 });
+  tw('eat7', tKa, .2, { o: 1 }); tw('eat7', tKa, .6, { y: 560, s: .9 }, 'sanft'); cue(tKa, 'whoosh');
+  for (let k = 0; k < 2; k++) { tw('eat7', tKa + .5 + k * .3, .15, { sx: -1 }, 'sinus'); tw('eat7', tKa + .65 + k * .3, .15, { sx: 1 }, 'sinus'); }
+  // die gestrichelte Karte füllt sich, grüner Haken, die Sanduhr verschwindet
+  const tAb = WE('ab', 29) - .1;
+  flug('eat7', tAb - .4, .7, ZK.x, ZK.y, 80, { s: 1 }); cue(tAb - .4, 'whoosh'); landen('eat7', tAb + .3, .7);
+  tw('ziel7', tAb + .25, .2, { o: 0 });
+  pop('ok7', tAb + .4, { x: ZK.x + 108, y: ZK.y - 66 }, 'erfolg'); akzent(tAb + .4, .04);
+  HOOKS.push(t => { const p = clamp((ZT(t) - tAb - .35) / .6); el('glanz7').style.opacity = (.35 * Math.sin(Math.PI * p)).toFixed(3); el('glanz7').style.transform = `translateX(${(330 * p).toFixed(1)}px) rotate(20deg)`; });
+  tw('sand', tAb + .5, .35, { s: 0, o: 0 }, 'in'); cue(tAb + .5, 'pop');
+  HUD.gut.push(tAb + .4);
+  aus(['schalter7', 'bk7'], tAb + .6, .35);
+  // Geschafft, und ganz ohne Stress: Priya strahlt
+  FROH.push(['priya7', tAb + .4, 999]); huepfen('priya7', W('Geschafft', 30), 18); huepfen('priya7', W('Stress', 30), 10);
+  bump('eat7', W('Geschafft', 30) + .1, 1.06);
+  // Also: früh buchen, die Liste abarbeiten und Briefe sofort öffnen – drei Kacheln mit Haken
+  const KX = [X + 1150, X + 1330, X + 1510], KY = 700;
+  const KT = [W('früh', 31), W('Liste', 31), W('Briefe', 31)], HT = [WE('buchen', 31), WE('abarbeiten', 31), WE('öffnen', 31)];
+  ['k7a', 'k7b', 'k7c'].forEach((id, k) => pop(id, KT[k] - .15, { x: KX[k], y: KY }, 'pop'));
+  ['h7a', 'h7b', 'h7c'].forEach((id, k) => { pop(id, HT[k] - .15, { x: KX[k] + 52, y: KY - 52 }, 'ding'); bump(['k7a', 'k7b', 'k7c'][k], HT[k] - .1, 1.06); });
+  titelFarbe('tb8', KT[0] - .1, [KT[0] - .1, KT[0], KT[0] + .08, KT[1], KT[1] + .08, KT[2], KT[2] + .08]);
+}
+
+/* ---------- Abspann ---------- */
+var AB = ENDE_SPRACHE + 1.7;
+hudFertig();
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+['asTitel', 'asUnter'].forEach(echt);
+textAus('tb8', AB);
+
+/* ---------- eigenes render: Welt-Zeit je Akteur ---------- */
+function renderZ(t) {
+  const tz = ZT(t);
+  for (const a of AKTEURE.values()) {
+    const tt = ECHT.has(a.el) ? t : tz;
+    const g = p => wert(a, p, tt);
+    const o = g('o'), skx = g('s') * g('sx'), sky = g('s') * g('sy');
+    a.el.style.opacity = o;
+    a.el.style.visibility = o <= 0.001 || Math.abs(skx) < 0.001 || Math.abs(sky) < 0.001 ? 'hidden' : 'visible';
+    const sw = a.basis.schweben ? a.basis.schweben * Math.sin(tt * 1.9 + (a.phase ??= [...(a.el.id || 'x')].reduce((h, c) => h + c.charCodeAt(0), 0) % 7)) : 0;
+    a.el.style.transform = `translate(${g('x')}px,${g('y') + sw}px)` + (a.rel ? '' : ' translate(-50%,-50%)') +
+      ` rotate(${g('r')}deg) scale(${skx},${sky})`;
+  }
+  for (const h of HOOKS) h(t);
+}
+start(AB + 3.8, AB + 2);
+window.render = renderZ;
+</script>
+</body></html>

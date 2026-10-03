@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Steuer-ID und Sozialversicherungsnummer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:58px;line-height:68px}
+.titel.schmal{font-size:54px;line-height:64px}
+.unter{font-size:38px;line-height:50px}
+.unter + .unter{margin-top:6px}
+.unter.oben{margin:0 0 12px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* Bausteine */
+.frage{width:72px;height:72px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 44px/72px Inter;text-align:center;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.plakette{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:26px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.plakette b{font:800 30px/1 Inter;color:var(--surface)}
+.plakette.grau{background:var(--n500)}
+.etikett{padding:8px 18px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 21px/26px Inter;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(22,19,37,.1)}
+.etikett.brand{background:var(--b500);color:var(--surface)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)}
+.finger{width:40px;height:40px;border-radius:999px;background:rgba(90,63,230,.28);border:3px solid var(--b500)}
+
+/* Nummern-Karten */
+.nk{width:760px;height:196px;border-radius:30px;padding:22px 30px;background:linear-gradient(135deg,var(--b500),var(--b700));
+  box-shadow:0 14px 36px rgba(58,37,153,.28);border:0 solid var(--success)}
+.nk.sv{background:linear-gradient(135deg,var(--info),var(--b500))}
+.nk.leer{background:linear-gradient(135deg,var(--n300),var(--n500));box-shadow:0 10px 26px rgba(22,19,37,.16)}
+.nk-kopf{display:flex;align-items:center;justify-content:space-between;height:44px;margin-bottom:22px}
+.nk-kopf b{font:800 30px/36px Inter;color:var(--surface);white-space:nowrap}
+.nk-zahl{min-width:60px;height:44px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.2);color:var(--surface);font:800 26px/44px Inter;text-align:center}
+.nk-felder{display:flex;gap:8px}
+.nk-felder i{width:52px;height:72px;flex:none;border-radius:12px;border:3px dashed rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;
+  font:800 36px/1 Inter;font-style:normal;color:var(--ink)}
+.nk.sv .nk-felder i{width:48px}
+.nk-felder i.lu{margin-left:14px}
+.nk.sv .nk-felder i.lu{margin-left:12px}
+.nk-felder i.voll{border:3px solid var(--surface);background:var(--surface)}
+.nk-felder i.bst{border-color:var(--warning)}
+.nk-felder i.bst.voll{background:var(--warning-bg);border-color:var(--warning);color:var(--warning-text)}
+.nk-felder i.hell{background:var(--surface);border-style:solid;border-color:var(--surface)}
+.nk-rahmen{position:absolute;inset:-9px;border-radius:38px;border:6px solid var(--success)}
+
+/* Formular im Personalbüro */
+.fb{width:400px;padding:26px 28px 30px;border-radius:26px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:14px}
+.fb small{font:800 16px/20px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.fb-z{height:12px;border-radius:6px;background:var(--n200);transform-origin:left center}
+.fb-feld{position:relative}
+.fb-feld span{display:block;height:24px;font:700 19px/24px Inter;color:var(--ink);margin-bottom:8px;white-space:pre}
+.fb-box{height:64px;border-radius:14px;border:3px dashed var(--n300);background:var(--bg);display:flex;align-items:center;padding:0 16px;
+  font:800 25px/1 Inter;letter-spacing:.03em;color:var(--success-text);white-space:pre}
+.fb-box.rot{border-color:var(--error);background:var(--error-bg)}
+.fb-box.gruen{border-style:solid;border-color:var(--success);background:var(--success-bg)}
+.fb-q,.fb-ok{position:absolute;right:-16px;top:18px;width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  font:800 28px/1 Inter;font-style:normal;color:var(--surface);border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.fb-q{background:var(--error)} .fb-ok{background:var(--success)}
+.fb-ok svg{width:22px}
+
+/* Personal-Tür */
+.tuerschild{padding:10px 22px;border-radius:12px;background:var(--b500);color:var(--surface);font:800 24px/28px Inter;white-space:nowrap;
+  box-shadow:0 6px 16px rgba(90,63,230,.28)}
+
+/* Stempelabdruck */
+.abdruck{padding:6px 14px;border-radius:10px;border:4px solid var(--success);color:var(--success-text);font:800 20px/24px Inter;letter-spacing:.06em;
+  text-transform:uppercase;background:rgba(255,255,255,.75);white-space:nowrap}
+.mini-doc{width:34px;height:42px;border-radius:6px;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.2);padding:7px 6px;display:flex;flex-direction:column;gap:4px}
+.mini-doc i{height:4px;border-radius:2px;background:var(--b300)} .mini-doc i + i{background:var(--n200)}
+
+/* Abreißkalender und Monate */
+.abreiss{width:230px;height:250px;border-radius:24px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14)}
+.abreiss .kopf{position:absolute;left:0;right:0;top:0;height:56px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--b500),var(--b600))}
+.abreiss .ring{position:absolute;top:-12px;width:14px;height:34px;border-radius:7px;background:var(--b700)}
+.kblatt{position:absolute;left:0;right:0;top:56px;bottom:0;border-radius:0 0 24px 24px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transform-origin:50% 0;border-top:2px dashed var(--n200)}
+.kblatt small{font:700 22px/26px Inter;color:var(--n500)}
+.kblatt b{font:800 84px/90px Inter;color:var(--b600)}
+.monat{width:106px;height:120px;border-radius:18px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.12);overflow:hidden;border:4px solid transparent}
+.monat .kopf{height:30px;background:var(--b400)}
+.monat small{display:block;text-align:center;font:700 15px/18px Inter;color:var(--n500);margin-top:8px}
+.monat b{display:block;text-align:center;font:800 40px/44px Inter;color:var(--b600)}
+.monat.warn{border-color:var(--warning)} .monat.warn .kopf{background:var(--warning)}
+
+/* Handy-Bildschirme */
+.schirm{width:180px;height:324px;border-radius:14px;overflow:hidden;background:var(--bg)}
+.scr{position:absolute;inset:0;padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.scr .ak{font:800 12px/15px Inter;color:var(--b500)}
+.scr h4{font:800 22px/26px Inter;color:var(--ink)}
+.scr .fz{height:30px;border-radius:9px;background:var(--surface);box-shadow:0 1px 3px rgba(22,19,37,.08);padding:0 9px;display:flex;align-items:center}
+.scr .fz i{height:7px;border-radius:4px;background:var(--b200);transform-origin:left center}
+.scr .knopf{margin-top:auto;height:38px;border-radius:11px;background:var(--b500);color:var(--surface);font:700 14px/38px Inter;text-align:center;position:relative}
+.scr .knopf.ok{background:var(--success)}
+.app-zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:600 13px/16px Inter;color:var(--ink);box-shadow:0 2px 6px rgba(22,19,37,.06);white-space:nowrap}
+.app-zeile i{width:24px;height:24px;border-radius:7px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app-zeile i svg{width:14px}
+.app-zeile em{margin-left:auto;font:700 11px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:4px 7px}
+.app-zeile.neu i{background:var(--b500)}
+.app-zeile.neu.sv i{background:var(--info)}
+.app-toast{margin-top:auto;align-self:center;padding:7px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;white-space:nowrap}
+.blitz{width:150px;height:150px;border-radius:999px;background:radial-gradient(var(--surface),rgba(255,255,255,0) 70%);opacity:0}
+
+/* Gehaltsabrechnung */
+.lohn{width:330px;padding:22px 24px 24px;border-radius:20px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:14px}
+.lohn small{font:800 15px/18px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.lohn .lz{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.lohn .lz i{height:11px;border-radius:6px;background:var(--n200)} .lohn .lz i:last-child{background:var(--b100)}
+.lohn .lst{padding:8px 10px;margin:0 -10px;border-radius:10px;display:flex;align-items:center;gap:12px}
+.lohn .lst b{font:700 18px/22px Inter;color:var(--ink);white-space:nowrap}
+.lohn .lst .spur4{flex:1;height:14px;border-radius:7px;background:var(--n200);overflow:hidden}
+.lohn .lst .spur4 i{display:block;height:100%;width:100%;border-radius:7px;background:var(--b400);transform-origin:left center}
+.lohn .lst.rot{background:var(--error-bg)} .lohn .lst.rot .spur4 i{background:var(--error)}
+
+/* Kalenderblatt Start Ausbildung */
+.start5{width:190px;height:200px;border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);overflow:hidden;text-align:center}
+.start5 .kopf{height:50px;background:var(--success);color:var(--surface);font:800 24px/50px Inter}
+.start5 b{display:block;font:800 64px/76px Inter;color:var(--b600);margin-top:8px}
+.start5 small{display:block;font:700 20px/24px Inter;color:var(--ink)}
+
+/* Versicherungsnummernachweis und alter Ausweis */
+.nachweis{width:380px;padding:24px 26px 26px;border-radius:20px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:12px;transform-origin:50% 0}
+.nachweis small{font:700 14px/18px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--info)}
+.nachweis b{font:800 22px/26px Inter;color:var(--ink);white-space:nowrap;letter-spacing:-.01em}
+.nachweis .nr{display:flex;gap:4px}
+.nachweis .nr i{width:22px;height:32px;flex:none;border-radius:6px;background:var(--info-bg);font:800 17px/32px Inter;font-style:normal;text-align:center;color:var(--ink)}
+.nachweis .nr i.lu{margin-left:8px}
+.nachweis .nr i.bst{background:var(--warning-bg);color:var(--warning-text)}
+.nachweis .ln{height:9px;border-radius:5px;background:var(--n200)}
+.altkarte{width:290px;height:184px;border-radius:18px;background:linear-gradient(135deg,var(--n300),var(--n500));box-shadow:0 8px 22px rgba(22,19,37,.14);padding:20px 22px;
+  display:flex;flex-direction:column;gap:12px}
+.altkarte b{font:800 17px/20px Inter;color:var(--surface);white-space:nowrap}
+.altkarte i{height:9px;border-radius:5px;background:var(--n200);opacity:.75}
+.altkarte .bild{position:absolute;right:20px;bottom:20px;width:54px;height:66px;border-radius:9px;background:var(--n200);opacity:.6}
+
+/* Waage */
+.saeule{width:26px;height:250px;border-radius:13px;background:linear-gradient(90deg,var(--b600),var(--b700))}
+.fuss{width:220px;height:26px;border-radius:13px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 6px 14px rgba(22,19,37,.14)}
+.balken{width:760px;height:18px;border-radius:9px;background:linear-gradient(var(--b300),var(--b500));box-shadow:0 6px 14px rgba(22,19,37,.12)}
+.gelenk{width:44px;height:44px;border-radius:999px;background:var(--b700);border:6px solid var(--b300)}
+
+/* Fremde: Haken */
+.angel{width:86px;height:86px;border-radius:999px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.14);display:flex;align-items:center;justify-content:center}
+.angel svg{width:54px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgSchloss"><svg viewBox="0 0 40 40"><path d="M13 18v-4a7 7 0 0 1 14 0v4" stroke="var(--surface)" stroke-width="4" fill="none"/><rect x="9" y="17" width="22" height="17" rx="4" fill="var(--surface)"/></svg></template>
+<template id="svgOrdner"><svg viewBox="0 0 16 16"><path d="M1.5 4a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h5.5A1.5 1.5 0 0 1 14.5 5.5v6.5a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 12Z" fill="var(--b500)"/></svg></template>
+<template id="svgFoto"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="2" fill="var(--surface)"/><path d="M3.5 11.5l3-3.5 2.5 2.5 1.5-1.5 2 2.5Z" fill="var(--b300)"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Personalbüro (Bühne mittig) -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="tuer1" style="width:300px" data-gruppe="tuer1">{{haustuer}}</div>
+  <div class="a" id="blatt1" style="width:300px;transform-origin:27.5% 50%" data-gruppe="tuer1" data-dreht>{{haustuer-blatt}}</div>
+  <div class="a tuerschild" id="schild1" data-gruppe="tuer1">Personal</div>
+  <div class="a fb" id="fb1"><small>Neue Mitarbeiter</small><div class="fb-z" style="width:62%"></div><div class="fb-z" style="width:84%"></div>
+    <div class="fb-feld"><span></span><div class="fb-box"></div><em class="fb-q">?</em></div>
+    <div class="fb-feld"><span></span><div class="fb-box"></div><em class="fb-q">?</em></div></div>
+  <div class="a portrait" id="kw1" data-f="kwame" data-gruppe="tuer1" style="width:170px;height:170px"></div>
+  <div class="a frage" id="frage1">?</div>
+
+  <!-- 2 · Steuer-ID: elf Ziffern, kommt per Post -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a nk" id="k2"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
+  <div class="a" id="antrag2" style="width:240px" data-gruppe="antrag2">{{vertrag}}</div>
+  <svg class="a" id="strich2" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M1258 588L1384 712" stroke="var(--error)" stroke-width="12" stroke-linecap="round" fill="none"/></svg>
+  <div class="a plakette rot" id="nein2" data-gruppe="antrag2"></div>
+  <div class="a" id="rathaus2" style="width:220px" data-gruppe="ba2">{{rathaus}}</div>
+  <div class="a" id="stempel2" style="width:150px" data-frei>{{stempel}}</div>
+  <div class="a abdruck" id="abdruck2" data-gruppe="ba2">Angemeldet</div>
+  <div class="a etikett" id="eBa2">Bürgeramt</div>
+  <div class="a" id="amt2" style="width:220px">{{amt}}</div>
+  <div class="a etikett" id="eBz2">Bundeszentralamt für Steuern</div>
+  <svg class="a" id="pfeil2" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1104 620C1150 584 1196 584 1232 612" stroke="var(--b400)" stroke-width="6" stroke-dasharray="1 1" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/></svg>
+  <div class="a mini-doc" id="daten2" data-frei><i></i><i></i><i></i></div>
+  <div class="a" id="kasten2" style="width:200px">{{briefkasten}}</div>
+  <div class="a" id="brief2" style="width:120px" data-frei>{{brief}}</div>
+  <div class="a" id="muenze2" style="width:120px" data-gruppe="m2">{{muenze}}</div>
+  <div class="a plakette rot" id="nein2b" data-gruppe="m2"></div>
+
+  <!-- 3 · Ein paar Wochen, nach drei Monaten anfordern -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a abreiss" id="kal3"><i class="ring" style="left:58px"></i><i class="ring" style="right:58px"></i><div class="kopf"></div></div>
+  <div class="a monat" id="mon3a"><div class="kopf"></div><small>Monat</small><b>1</b></div>
+  <div class="a monat" id="mon3b"><div class="kopf"></div><small>Monat</small><b>2</b></div>
+  <div class="a monat" id="mon3c"><div class="kopf"></div><small>Monat</small><b>3</b></div>
+  <div class="a" id="kasten3" style="width:200px">{{briefkasten~3}}</div>
+  <div class="a frage" id="frage3">?</div>
+  <div class="a portrait" id="kw3" data-f="kwame" style="width:160px;height:160px"></div>
+  <div class="a" id="handy3" style="width:480px" data-gruppe="handy3">{{handy}}</div>
+  <div class="a schirm" id="schirm3" data-gruppe="handy3">
+    <div class="scr"><div class="ak">Online-Formular</div><h4>Steuer-ID</h4>
+      <div class="fz"><i id="fz3a" style="width:70%"></i></div><div class="fz"><i id="fz3b" style="width:52%"></i></div><div class="fz"><i id="fz3c" style="width:84%"></i></div>
+      <div class="knopf" id="knopf3">Absenden</div></div></div>
+  <div class="a finger" id="finger3" data-frei></div>
+  <div class="a" id="brief3" style="width:120px" data-frei>{{brief~3}}</div>
+
+  <!-- 4 · Ein Leben lang gleich, Lohnsteuer, gleich ans Personalbüro (erst mittig) -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="haus4a" style="width:170px" data-gruppe="umzug">{{haus}}</div>
+  <div class="a" id="haus4b" style="width:170px" data-gruppe="umzug">{{haus~4}}</div>
+  <div class="a" id="karton4" style="width:150px" data-gruppe="umzug">{{karton}}</div>
+  <div class="a lohn" id="lohn4" data-gruppe="lohn4"><small>Gehaltsabrechnung</small>
+    <div class="lz"><i style="width:120px"></i><i style="width:60px"></i></div>
+    <div class="lz"><i style="width:90px"></i><i style="width:70px"></i></div>
+    <div class="lst" id="lst4"><b>Lohnsteuer</b><div class="spur4"><i id="lbar4"></i></div></div>
+    <div class="lz"><i style="width:110px"></i><i style="width:50px"></i></div></div>
+  <div class="a plakette rot" id="warn4" data-gruppe="lohn4"><b>!</b></div>
+  <div class="a" id="betrieb4" style="width:210px">{{betrieb}}</div>
+  <svg class="a" id="pfeil4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1560 446C1580 488 1580 524 1562 556" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze4)"/></svg>
+  <div class="a" id="umO4" style="width:340px;transform-origin:50% 31.25%" data-gruppe="post4">{{umschlag-offen}}</div>
+  <div class="a" id="umH4" style="width:340px" data-gruppe="post4">{{umschlag-hinten}}</div>
+  <div class="a nk" id="k4" data-gruppe="umzug"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div><div class="nk-rahmen"></div></div>
+  <div class="a" id="umV4" style="width:340px" data-gruppe="post4">{{umschlag-vorne}}</div>
+  <div class="a" id="umK4" style="width:340px;transform-origin:50% 31.25%" data-gruppe="post4">{{umschlag-klappe}}</div>
+  <div class="a plakette gruen" id="ok4" data-gruppe="umzug"></div>
+  <div class="a plakette grau" id="frage4" data-gruppe="umzug"><b>?</b></div>
+  <div class="a" id="brief4" style="width:150px" data-gruppe="brief4">{{brief~4}}</div>
+  <div class="a plakette gruen" id="da4" data-gruppe="brief4"></div>
+  <div class="a etikett" id="zahl4" data-frei>12 345 678 901</div>
+  <div class="a fb" id="fb4"><small>Neue Mitarbeiter</small><div class="fb-z" style="width:62%"></div><div class="fb-z" style="width:84%"></div>
+    <div class="fb-feld"><span>Steuer-ID</span><div class="fb-box"></div><em class="fb-ok"></em></div>
+    <div class="fb-feld"><span>Sozialversicherungsnummer</span><div class="fb-box"></div></div></div>
+
+  <!-- 5 · Sozialversicherungsnummer: von der Rentenversicherung -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a nk sv" id="k5"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
+  <div class="a" id="amt5" style="width:200px">{{amt~5}}</div>
+  <div class="a etikett" id="eRv5">Rentenversicherung</div>
+  <svg class="a" id="pfeil5" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path id="p5a" pathLength="1" d="M1050 562C1050 520 1060 486 1084 454" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze5)"/>
+    <path id="p5b" pathLength="1" d="M1360 540C1362 506 1368 482 1386 454" stroke="var(--success)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze5)"/></svg>
+  <div class="a start5" id="start5"><div class="kopf">Start</div><b>1.</b><small>Ausbildung</small></div>
+  <div class="a portrait" id="kw5" data-f="kwame" data-gruppe="kw5" style="width:150px;height:150px"></div>
+  <div class="a" id="koffer5" style="width:130px" data-gruppe="kw5">{{werkzeugkoffer}}</div>
+
+  <!-- 6 · Betrieb meldet an, Versicherungsnummernachweis (erst mittig) -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="betrieb6" style="width:210px" data-gruppe="b6">{{betrieb~6}}</div>
+  <div class="a" id="zahn6a" style="width:70px" data-gruppe="b6" data-dreht>{{zahnrad}}</div>
+  <div class="a" id="zahn6b" style="width:52px" data-gruppe="b6" data-dreht>{{zahnrad~6}}</div>
+  <div class="a" id="kasse6" style="width:200px">{{schild-kreuz}}</div>
+  <div class="a etikett" id="eKk6">Krankenkasse</div>
+  <svg class="a" id="pfeil6" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze6" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path id="p6a" pathLength="1" d="M1200 440C1300 400 1420 400 1514 440" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze6)"/>
+</svg>
+  <div class="a" id="meldung6" style="width:100px" data-frei>{{meldung}}</div>
+  <div class="a plakette gruen" id="ok6" data-gruppe="kk6"></div>
+  <div class="a nk sv leer" id="k6leer" data-gruppe="k6"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">?</span></div><div class="nk-felder"></div></div>
+  <div class="a nk sv" id="k6" data-gruppe="k6"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
+  <div class="a plakette grau" id="frage6" data-gruppe="k6"><b>?</b></div>
+  <div class="a" id="brief6" style="width:170px" data-frei>{{brief~6}}</div>
+  <div class="a nachweis" id="nw6"><small>Deutsche Rentenversicherung</small><b>Versicherungsnummernachweis</b><div class="nr" id="nr6"></div>
+    <div class="ln" style="width:86%"></div><div class="ln" style="width:64%"></div></div>
+  <div class="a altkarte" id="alt6" data-dreht><b>Sozialversicherungsausweis</b><i style="width:62%"></i><i style="width:44%"></i><div class="bild"></div></div>
+  <div class="a etikett" id="eFr6">früher</div>
+  <div class="a etikett brand" id="eHe6">heute: Brief</div>
+
+  <!-- 7 · Zwei Nummern, zwei Aufgaben (Waage) -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a saeule" id="saeule7" data-gruppe="waage"></div>
+  <div class="a fuss" id="fuss7" data-gruppe="waage"></div>
+  <div class="a balken" id="balken7" data-gruppe="waage"></div>
+  <div class="a gelenk" id="gelenk7" data-gruppe="waage"></div>
+  <div class="a nk" id="k7s"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
+  <div class="a nk sv" id="k7v"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
+  <svg class="a" id="linie7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" fill="none">
+      <path id="l7a" d="M1110 580V626"/><path id="l7b" d="M1460 580V630"/><path id="l7c" d="M1620 580V630"/></g></svg>
+  <div class="a" id="muenze7" style="width:130px">{{muenze-prozent}}</div>
+  <div class="a" id="schwein7" style="width:150px">{{sparschwein}}</div>
+  <div class="a" id="kasse7" style="width:130px">{{schild-kreuz~7}}</div>
+  <div class="a etikett" id="eSt7">Steuer</div>
+  <div class="a etikett" id="eRe7">Rente</div>
+  <div class="a etikett" id="eKk7">Krankenkasse</div>
+
+  <!-- 8 · Sicher ablegen, nur an Stellen, die sie brauchen (erst mittig) -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a nk" id="k8s"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
+  <div class="a nk sv" id="k8v"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
+  <div class="a" id="brief8a" style="width:170px" data-frei>{{brief~8a}}</div>
+  <div class="a" id="brief8b" style="width:170px" data-frei>{{brief~8b}}</div>
+  <div class="a" id="handy8" style="width:480px" data-gruppe="handy8">{{handy~8}}</div>
+  <div class="a schirm" id="schirm8" data-gruppe="handy8">
+    <div class="scr"><div class="ak">Azubis Plus</div><h4>Dokumente</h4>
+      <div class="app-zeile"><i></i><span>Verträge</span><em>2</em></div>
+      <div class="app-zeile"><i></i><span>Ausweise</span><em>1</em></div>
+      <div class="app-zeile neu" id="row8a"><i></i><span>Steuer-ID</span></div>
+      <div class="app-zeile neu sv" id="row8b"><i></i><span>SV-Nummer</span></div>
+      <div class="app-toast" id="toast8">✓ Gespeichert</div></div></div>
+  <div class="a blitz" id="blitz8" data-frei></div>
+  <div class="a plakette" id="schloss8" style="background:var(--b500)" data-gruppe="handy8"></div>
+  <div class="a etikett" id="eApp8">Azubis Plus Helper</div>
+  <div class="a fb" id="fb8"><small>Neue Mitarbeiter</small><div class="fb-z" style="width:62%"></div><div class="fb-z" style="width:84%"></div>
+    <div class="fb-feld"><span>Steuer-ID</span><div class="fb-box"></div><em class="fb-ok"></em></div>
+    <div class="fb-feld"><span>Sozialversicherungsnummer</span><div class="fb-box"></div><em class="fb-ok"></em></div></div>
+  <div class="a etikett" id="zahl8a" data-frei>12 345 678 901</div>
+  <div class="a etikett" id="zahl8b" data-frei>12 345678 A 901</div>
+  <div class="a portrait" id="kw8" data-f="kwame" style="width:180px;height:180px"></div>
+  <div class="a" id="schutz8" style="width:200px">{{schild}}</div>
+  <div class="a" id="mail8" style="width:150px" data-gruppe="mail8">{{brief~8c}}</div>
+  <div class="a plakette rot" id="nein8a" data-gruppe="mail8"></div>
+  <div class="a angel" id="tel8" data-gruppe="tel8"><svg viewBox="0 0 54 54"><rect x="13" y="4" width="22" height="40" rx="5" fill="var(--b500)"/><rect x="16" y="9" width="16" height="27" rx="2" fill="var(--b100)"/>
+    <path d="M42 8v22a7 7 0 0 1-14 0v-3" stroke="var(--n500)" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M28 27l-3 4" stroke="var(--n500)" stroke-width="4" stroke-linecap="round"/></svg></div>
+  <div class="a plakette rot" id="nein8b" data-gruppe="tel8"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Steuer-ID</div><div class="unter">11 Ziffern</div><div class="unter">kommt per Post</div><div class="unter">kostenlos</div></div>
+<div class="block" id="tb3"><div class="titel">Nach 3 Monaten kein Brief?</div><div class="unter">→ beim BZSt anfordern</div></div>
+<div class="block" id="tb4"><div class="titel">Gleich ans Personalbüro</div></div>
+<div class="block" id="tb5"><div class="titel schmal">Sozialversicherungs- nummer</div><div class="unter">von der Rentenversicherung</div></div>
+<div class="block" id="tb6"><div class="unter oben">Heute:</div><div class="titel schmal">Versicherungs- nummernachweis</div></div>
+<div class="block" id="tb7"><div class="titel">Steuer-ID = Steuer</div><div class="unter">SV-Nummer = Sozialversicherung</div></div>
+<div class="block" id="tb8"><div class="titel">Nur an Stellen, die sie brauchen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Zwei Nummern – gut aufheben.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Gib sie deinem Betrieb – und sonst nur Stellen, die sie wirklich brauchen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n, nach = 0) => A(wort(m, satz(n).start - .01 + nach));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['ok4', 'ok6', 'da4'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.fb-ok').forEach(e => { e.innerHTML = tpl('svgHaken'); });
+['nein2', 'nein2b', 'nein8a', 'nein8b'].forEach(id => { el(id).innerHTML = tpl('svgKreuz'); });
+el('schloss8').innerHTML = tpl('svgSchloss');
+document.querySelectorAll('#schirm8 .app-zeile:not(.neu) i').forEach(i => { i.innerHTML = tpl('svgOrdner'); });
+document.querySelectorAll('#schirm8 .app-zeile.neu i').forEach(i => { i.innerHTML = tpl('svgFoto'); });
+
+const N = 8;
+for (let i = 0; i < N; i++) akteur('bue' + i, { x: S(i) + 1320, y: 540 });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte
+
+/* ---------- Helfer (wie Kurs 32) ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .85 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// gestrichelte Linien: nur einblenden (Strichmuster bleibt)
+const linieEin = (pfad, t0) => { akteur(pfad, { o: 0 }, true); tw(pfad, t0, .35, { o: 1 }); };
+// zusätzliche Welle-Elemente erzeugen
+let WN = 0;
+const neueWelle = (X, gruen) => { const w = document.createElement('div'); w.className = 'a welle' + (gruen ? ' gruen' : ''); w.id = 'welle' + (WN++); w.dataset.frei = ''; el('welt').appendChild(w); return w.id; };
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Nummern-Karten: Kästchen, Tippen, Zähler ---------- */
+const STEUER = '12345678901', SVNR = '12345678A901';
+function kaestchen(id) {
+  const k = el(id), sv = k.classList.contains('sv'), n = sv ? 12 : 11, lu = sv ? [2, 8, 9] : [2, 5, 8];
+  k.querySelector('.nk-felder').innerHTML = Array.from({ length: n }, (_, i) => `<i class="${lu.includes(i) ? 'lu' : ''}${sv && i === 8 ? ' bst' : ''}"></i>`).join('');
+  return [...k.querySelectorAll('.nk-felder i')];
+}
+const TIPP = [];   // [Kästchen, Text, t0, dt]
+const tippen = (boxen, text, t0, dt) => TIPP.push([boxen, text, t0, dt]);
+HOOKS.push(t => TIPP.forEach(([bx, txt, t0, dt]) => bx.forEach((b, i) => {
+  const c = txt[i] || ' ', an = c !== ' ' && t >= t0 + i * dt;
+  b.textContent = an ? c : ''; b.classList.toggle('voll', an);
+})));
+// Kästchen fahren nacheinander herein; der Zähler zählt mit
+function kaestchenEin(boxen, zahl, t0, dt) {
+  boxen.forEach((b, i) => { akteur(b, { o: 0, y: -26, s: .6 }, true); tw(b, t0 + i * dt, .4, { o: 1, y: 0, s: 1 }, 'back'); if (i % 2 === 0) cue(t0 + i * dt, 'tipp'); });
+  if (zahl) HOOKS.push(t => { zahl.textContent = String(Math.max(0, Math.min(boxen.length, Math.floor((t - t0) / dt) + 1))); });
+}
+// Welle durch die Kästchen
+const kaestchenWelle = (boxen, t0, dt = .05, s = 1.18) => boxen.forEach((b, i) => {
+  if (!AKTEURE.get(b)) akteur(b, {}, true);
+  tw(b, t0 + i * dt, .12, { s, y: -6 }, 'sinus'); tw(b, t0 + i * dt + .12, .35, { s: 1, y: 0 }, 'sanft');
+});
+
+/* ---------- Formular-Felder: Zustände über die Zeit ---------- */
+const FELDER = [];   // [box, [[t, zustand, text, dt]]]
+const feld = (box, z) => FELDER.push([box, z]);
+HOOKS.push(t => FELDER.forEach(([b, z]) => {
+  let s = null; for (const x of z) if (t >= x[0]) s = x;
+  const k = s ? s[1] : '';
+  b.className = 'fb-box' + (k ? ' ' + k : '');
+  b.textContent = s && s[2] ? s[2].slice(0, s[3] ? Math.floor((t - s[0]) / s[3]) : 99) : '';
+  b.style.transform = k === 'rot' ? `scale(${(1 + .025 * Math.sin(t * 2 * Math.PI * 1.5)).toFixed(4)})` : '';
+}));
+const LABEL = [];   // [span, Text, t0, dt]
+HOOKS.push(t => LABEL.forEach(([s, txt, t0, dt]) => { s.textContent = txt.slice(0, Math.max(0, Math.floor((t - t0) / dt))); }));
+
+/* ---------- Kamera: Schwenk, mittige Bühnen, Akzente ---------- */
+const PANS = [], WECHSEL = [], AKZENTE = [];
+const MITTIG = [0, 3, 5, 7];
+const RUHE = Array.from({ length: N }, (_, i) => i === 0 ? [-360, -360] : MITTIG.includes(i) ? [-S(i) - 360, -S(i)] : [-S(i), -S(i)]);
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const panMitte = (t0, i) => { tw('welt', t0, .9, { x: -S(i) - 360 }, 'inout'); cue(t0, 'whoosh'); PANS.push(t0); };
+const schieben = (t0, i) => { tw('welt', t0, .9, { x: -S(i) }, 'inout'); cue(t0, 'whoosh'); WECHSEL.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const p of WECHSEL) z -= .035 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  const wx = wert(kamera, 'x', t);
+  let c = 0;
+  for (const i of MITTIG) c = Math.max(c, clamp(1 - Math.abs(wx - RUHE[i][0]) / 360));
+  $('#kamera').style.transformOrigin = `${(1320 - 360 * c).toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  // Tiefe: die Bühne bleibt beim Schwenk etwas zurück
+  for (let i = 0; i < N; i++) { const [lo, hi] = RUHE[i]; $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - Math.min(hi, Math.max(lo, wx)))).toFixed(1)}px)`; }
+});
+
+/* ================= 1 · Kwames erster Tag: zwei Nummern? (mittig, ohne Titel) ================= */
+{
+  const X = S(0);
+  ein('tuer1', A(-.55), { x: X + 1030, y: 470 }, { y: 70 }, 'whoosh');
+  ein('blatt1', A(-.55), { x: X + 1030, y: 470 }, { y: 70 });
+  pop('schild1', A(-.2), { x: X + 1030, y: 300 }, 'pop');
+  ein('fb1', W('erster', 1) - .2, { x: X + 1510, y: 540 }, { x: 90 }, 'whoosh');
+  // Die Tür geht auf, Kwame hüpft herein
+  const tT = W('Kwames', 1) - .05;
+  tw('blatt1', tT, .4, { sx: .18 }, 'inout'); cue(tT, 'klick');
+  akteur('kw1', { x: X + 1030, y: 500, s: .5, o: 0 });
+  tw('kw1', tT + .3, .15, { o: 1 });
+  const tK = W('Tag', 1) - .1;
+  flug('kw1', tK, .7, X + 1150, 740, 130, { s: 1 }); landen('kw1', tK + .7, .9); cue(tK + .7, 'plopp');
+  tw('blatt1', tK + .5, .4, { sx: 1 }, 'inout'); cue(tK + .85, 'klick');
+  froh('kw1', W('Betrieb', 1)); huepfen('kw1', W('Betrieb', 1) + .2, 14);
+  // Im Personalbüro: das Schild wippt, das Formular füllt sich
+  wackeln('schild1', W('Personalbüro', 2) - .1, 3, 4); bump('fb1', W('Personalbüro', 2) + .2, 1.04); cue(W('Personalbüro', 2), 'pop');
+  [...el('fb1').querySelectorAll('.fb-z')].forEach((z, i) => { akteur(z, { sx: 0 }, true); tw(z, W('fragt', 2) + i * .2, .5, { sx: 1 }, 'weich'); cue(W('fragt', 2) + i * .2, 'kritzeln'); });
+  mund('kw1', W('fragt', 2), 'zu');
+  // zwei Nummern: zwei leere Felder ploppen auf und pochen rot
+  const F = [...el('fb1').querySelectorAll('.fb-feld')], B = F.map(f => f.querySelector('.fb-box')), Q = F.map(f => f.querySelector('.fb-q'));
+  F.forEach((f, i) => { akteur(f, { s: 0 }, true); tw(f, W('zwei', 2) + i * .18, .5, { s: 1 }, 'back'); cue(W('zwei', 2) + i * .18, 'pop'); });
+  B.forEach((b, i) => feld(b, [[W('Nummern', 2) + i * .1, 'rot']]));
+  akzent(W('Nummern', 2), .03);
+  // Steuer-Aidih / Sozialversicherungsnummer: Beschriftung tippt sich, Fragezeichen
+  const L = F.map(f => f.querySelector('span'));
+  LABEL.push([L[0], 'Steuer-ID', W('Steuer', 2) - .05, .05], [L[1], 'Sozialversicherungsnummer', W('Sozialversicherungsnummer', 2) - .05, .045]);
+  cue(W('Steuer', 2), 'tipp'); cue(W('Sozialversicherungsnummer', 2), 'tipp');
+  Q.forEach(q => akteur(q, { s: 0 }, true));
+  tw(Q[0], W('Steuer', 2) + .4, .5, { s: 1 }, 'back'); cue(W('Steuer', 2) + .4, 'plopp');
+  tw(Q[1], W('Sozialversicherungsnummer', 2) + 1.0, .5, { s: 1 }, 'back'); cue(W('Sozialversicherungsnummer', 2) + 1.0, 'plopp');
+  // Kwame denkt: Kopf schief, großes Fragezeichen
+  tw('kw1', W('Kwame', 3), .5, { r: -7 }, 'sanft');
+  pop('frage1', W('denkt', 3), { x: X + 1250, y: 610 }, 'pop');
+  mund('kw1', W('Woher', 3), 'auf'); wackeln('frage1', W('Woher', 3), 4, 6);
+  Q.forEach((q, i) => { tw(q, W('denn', 3) + i * .1, .12, { s: 1.25 }, 'sinus'); tw(q, W('denn', 3) + i * .1 + .12, .35, { s: 1 }, 'sanft'); });
+  mund('kw1', SE(3), 'zu'); tw('kw1', SE(3) + .1, .4, { r: 0 }, 'sanft');
+}
+
+/* ================= 2 · Steuer-ID: elf Ziffern, per Post, kostenlos ================= */
+pan2(SE(3) + .3, 1);
+{
+  const X = S(1);
+  titelEin('tb2', W('Steuer', 4) - .2, [W('Steuer', 4) - .2, W('elf', 5) - .1, W('elf', 5) + .02, W('Brief', 7) - .3, W('Brief', 7) - .22, W('Brief', 7) - .14, W('kostet', 8) - .1]);
+  // Die Karte kommt, elf Kästchen fahren herein, der Zähler läuft
+  ein('k2', W('Zuerst', 4) - .1, { x: X + 1320, y: 330 }, { y: -80 }, 'whoosh');
+  const bx = kaestchen('k2'), zahl = el('k2').querySelector('.nk-zahl');
+  kaestchenEin(bx, zahl, W('hat', 5) - .05, .09);
+  akzent(W('elf', 5), .04); bump('k2', W('Ziffern', 5) + .45, 1.04); cue(W('Ziffern', 5) + .45, 'ding');
+  // Du musst sie nicht beantragen: Antrag wird durchgestrichen und fliegt weg
+  ein('antrag2', W('Du', 6) - .15, { x: X + 1320, y: 650 }, { y: 70 }, 'whoosh');
+  akteur('strich2', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('strich2', W('nicht', 6) - .05, .05, { o: 1 }); tw('strich2', W('nicht', 6) - .05, .4, { draw: 1 }, 'inout'); cue(W('nicht', 6), 'kritzeln');
+  pop('nein2', W('beantragen', 6), { x: X + 1400, y: 580 }, 'plopp');
+  wackeln('antrag2', W('beantragen', 6) + .1, 3, 3);
+  const tW = SE(6) + .1;
+  tw(['antrag2', 'nein2'], tW, .55, { x: X + 1760, y: 470, o: 0, s: .5, r: 3 }, 'in'); tw('strich2', tW, .25, { o: 0 }); cue(tW, 'whoosh');
+  // Anmeldung beim Bürgeramt: Stempel
+  ein('rathaus2', W('Nach', 7) - .1, { x: X + 1010, y: 640 }, { y: 70 }, 'whoosh');
+  pop('eBa2', W('Bürgeramt', 7), { x: X + 1010, y: 790 }, null);
+  const tS = W('Anmeldung', 7);
+  akteur('stempel2', { x: X + 1010, y: 460, o: 0 });
+  tw('stempel2', tS - .5, .2, { o: 1 }); tw('stempel2', tS - .2, .18, { y: 560 }, 'in'); tw('stempel2', tS - .02, .5, { y: 450, o: 0 }, 'weich');
+  akteur('abdruck2', { x: X + 1010, y: 640, o: 0, r: -3, s: 1.4 }); tw('abdruck2', tS - .02, .16, { o: 1, s: 1 }, 'out'); cue(tS - .02, 'plopp');
+  wackeln('rathaus2', tS, 3, 2);
+  // Daten gehen zum Bundeszentralamt, das schickt einen Brief
+  ein('amt2', W('schickt', 7) - .3, { x: X + 1340, y: 650 }, { y: 70 }, 'whoosh');
+  pop('eBz2', W('Bundeszentralamt', 7), { x: X + 1340, y: 790 }, null);
+  akteur('pfeil2', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('pfeil2', W('schickt', 7), .1, { o: 1 }); tw('pfeil2', W('schickt', 7), .5, { draw: 1 }, 'inout');
+  akteur('daten2', { x: X + 1100, y: 610, o: 0, s: .5 });
+  tw('daten2', W('schickt', 7), .15, { o: 1, s: 1 }); flug('daten2', W('schickt', 7) + .05, .65, X + 1236, 616, 40); tw('daten2', W('schickt', 7) + .6, .15, { o: 0 }); cue(W('schickt', 7), 'scan');
+  bump('amt2', W('Bundeszentralamt', 7) - .05, 1.06);
+  ein('kasten2', W('Steuern', 7) - .4, { x: X + 1640, y: 640 }, { x: 70 }, 'whoosh');
+  const tB = W('einen', 7) - .15;
+  akteur('brief2', { x: X + 1340, y: 640, s: .2, o: 0 });
+  tw('brief2', tB, .1, { o: 1 }); tw('brief2', tB, .4, { y: 520, s: 1 }, 'back'); cue(tB, 'pop');
+  flug('brief2', tB + .45, .75, X + 1640, 600, 110, { s: .5 }); tw('brief2', tB + 1.08, .12, { o: 0 }); cue(tB + .45, 'whoosh');
+  wackeln('kasten2', tB + 1.2, 4, 4); bump('kasten2', tB + 1.2, 1.06); cue(tB + 1.2, 'klick');
+  // Das kostet nichts: Münze mit rotem Kreuz
+  pop('muenze2', W('kostet', 8) - .1, { x: X + 1640, y: 482 }, 'muenze');
+  pop('nein2b', W('nichts', 8), { x: X + 1688, y: 458 }, 'plopp'); wackeln('muenze2', W('nichts', 8) + .1, 4, 3);
+  textAus('tb2', SE(8) + .15);
+}
+
+/* ================= 3 · Ein paar Wochen – nach drei Monaten anfordern ================= */
+pan2(SE(8) + .3, 2);
+{
+  const X = S(2);
+  // Abreißkalender: Woche um Woche fliegt ein Blatt ab
+  const kal = el('kal3');
+  for (let w = 5; w >= 1; w--) kal.insertAdjacentHTML('beforeend', `<div class="kblatt"><small>Woche</small><b>${w}</b></div>`);
+  const BL = [...kal.querySelectorAll('.kblatt')].reverse();   // BL[0] = Woche 1 (oben)
+  ein('kal3', SA(9) - .3, { x: X + 1060, y: 430 }, { y: 70 }, 'whoosh');
+  ein('kasten3', SA(9) - .1, { x: X + 1590, y: 420 }, { x: 70 });
+  pop('kw3', W('dauert', 9) - .1, { x: X + 1590, y: 700 }, 'pop', 'sanft');
+  [W('dauert', 9), W('oft', 9), W('paar', 9) - .05, W('Wochen', 9)].forEach((t, i) => {
+    akteur(BL[i], {}, true);
+    tw(BL[i], t, .12, { r: -2, y: 4 }, 'sinus');
+    tw(BL[i], t + .1, .55, { x: -90, y: -170, r: -14, o: 0 }, 'in'); cue(t + .1, 'whoosh');
+    huepfen('kw3', t + .05, 8);
+  });
+  // Kwame schaut in den Briefkasten: leer
+  wackeln('kasten3', W('Wochen', 9) + .2, 4, 3); cue(W('Wochen', 9) + .2, 'klick'); mund('kw3', W('Wochen', 9) + .3, 'auf');
+  // Nach drei Monaten: drei Monatsblätter, das dritte pocht
+  titelEin('tb3', W('nach', 10) - .15, [W('nach', 10) - .15, W('drei', 10) - .05, W('Monaten', 10) - .05, W('kein', 10) - .1, W('Brief', 10) - .1,
+    W('Dann', 11) - .1, W('beim', 11) - .1, W('Bundeszentralamt', 11) - .05, W('anfordern', 11) - .1]);
+  aus('kal3', W('Kommt', 10) - .2, .3);
+  [['mon3a', 985], ['mon3b', 1110], ['mon3c', 1235]].forEach(([id, x], i) => { pop(id, W('drei', 10) - .1 + i * .16, { x: X + x, y: 430 }, 'pop'); });
+  const tM = W('Monaten', 10) + .2;
+  HOOKS.push(t => el('mon3c').classList.toggle('warn', t >= tM));
+  for (let i = 0; i < 4; i++) { tw('mon3c', tM + i * .55, .15, { s: 1.12 }, 'sinus'); tw('mon3c', tM + i * .55 + .15, .35, { s: 1 }, 'sanft'); }
+  cue(tM, 'ding');
+  pop('frage3', W('kein', 10) - .05, { x: X + 1590, y: 290 }, 'plopp'); wackeln('frage3', W('Brief', 10), 4, 6);
+  wackeln('kasten3', W('kein', 10), 4, 4); cue(W('kein', 10), 'klick');
+  tw('kw3', W('kein', 10), .45, { r: 6 }, 'sanft');
+  // Dann online anfordern: Handy mit Formular
+  aus(['mon3a', 'mon3b', 'mon3c'], W('Dann', 11) - .3, .3);
+  ein('handy3', W('Dann', 11) - .1, { x: X + 1120, y: 590 }, { y: 90 }, 'whoosh');
+  ein('schirm3', W('Dann', 11) - .1, { x: X + 1120, y: 590 }, { y: 90 });
+  ['fz3a', 'fz3b', 'fz3c'].forEach((id, i) => { akteur(id, { sx: 0 }, true); tw(id, W('Nummer', 11) - .1 + i * .32, .35, { sx: 1 }, 'weich'); cue(W('Nummer', 11) - .1 + i * .32, 'tipp'); });
+  tw('kw3', W('Dann', 11), .4, { r: 0 }, 'sanft'); mund('kw3', W('Dann', 11), 'zu');
+  const tA = W('anfordern', 11) - .15;
+  akteur('finger3', { x: X + 1200, y: 800, o: 0 });
+  tw('finger3', tA - .5, .2, { o: 1 }); tw('finger3', tA - .5, .45, { x: X + 1120, y: 719 }, 'inout');
+  tw('finger3', tA, .08, { s: .8 }, 'sinus'); tw('finger3', tA + .08, .2, { s: 1 }, 'sanft'); tw('finger3', tA + .3, .2, { o: 0 });
+  HOOKS.push(t => { const k = el('knopf3'); const an = t >= tA; k.classList.toggle('ok', an); k.textContent = an ? '✓ Gesendet' : 'Absenden'; });
+  cue(tA, 'klick'); bump('handy3', tA, 1.03); bump('schirm3', tA, 1.03);
+  // ein neuer Brief fliegt zu Kwames Briefkasten
+  akteur('brief3', { x: X + 1120, y: 560, s: .3, o: 0 });
+  tw('brief3', tA + .1, .1, { o: 1 }); flug('brief3', tA + .1, .7, X + 1590, 400, 150, { s: .6 }); tw('brief3', tA + .72, .1, { o: 0 }); cue(tA + .1, 'whoosh');
+  bump('kasten3', tA + .8, 1.08); cue(tA + .8, 'erfolg'); tw('frage3', tA + .8, .25, { s: 0 }, 'sinus');
+  froh('kw3', tA + .85); huepfen('kw3', tA + .85, 14);
+  textAus('tb3', SE(11) + .2);
+}
+
+/* ================= 4 · Ein Leben lang gleich, Lohnsteuer, gleich ans Personalbüro ================= */
+panMitte(SE(11) + .35, 3);
+{
+  const X = S(3), UX = X + 1320, UY = 600, UM = ['umO4', 'umH4', 'umV4', 'umK4'];
+  // Der Brief landet und öffnet sich, die Karte kommt heraus und die Ziffern tippen sich
+  const tL = SE(11) + .5;
+  UM.forEach(id => {
+    akteur(id, { x: X + 1720, y: 300, o: 0, s: .5, r: -3 });
+    tw(id, tL, .2, { o: 1 }); tw(id, tL, .9, { x: UX, y: UY, s: 1 }, 'inout', { bogen: 100 }); tw(id, tL, .9, { r: 0 }, 'sinus');
+    tw(id, tL + .9, .1, { sy: .9, sx: 1.05 }, 'sinus'); tw(id, tL + 1.0, .4, { sy: 1, sx: 1 }, 'sanft');
+  });
+  set('umO4', 0, { sy: 0 }); cue(tL + .9, 'plopp');
+  const tK = W('Steuer', 12) + .1;
+  tw('umK4', tK, .2, { sy: 0 }, 'in'); set('umK4', tK + .2, { o: 0 }); tw('umO4', tK + .2, .26, { sy: 1 }, 'weich'); cue(tK, 'klick');
+  akteur('k4', { x: UX, y: UY + 10, s: .34, o: 0 });
+  set('k4', tK + .25, { o: 1 }); tw('k4', tK + .3, .8, { y: 330, s: 1 }, 'inout'); cue(tK + .3, 'whoosh');
+  const bx = kaestchen('k4');
+  tippen(bx, STEUER, tK + .9, .07); for (let i = 0; i < 11; i += 2) cue(tK + .9 + i * .07, 'tipp');
+  aus(['umO4', 'umH4', 'umV4'], tK + 1.1, .35);
+  // ganzes Leben gleich: grüner Rahmen
+  const rahmen = el('k4').querySelector('.nk-rahmen');
+  akteur(rahmen, { o: 0, s: 1.04 }, true); tw(rahmen, W('gleich', 12) - .1, .4, { o: 1, s: 1 }, 'sanft'); cue(W('gleich', 12), 'ding');
+  akzent(W('ganzes', 12), .04); bump('k4', W('Leben', 12), 1.04);
+  // auch wenn du umziehst: Karton mit Karte von Haus A nach Haus B
+  ein('haus4a', W('ganzes', 12) + .1, { x: X + 1010, y: 690 }, { y: 70 }, 'whoosh');
+  ein('haus4b', W('ganzes', 12) + .25, { x: X + 1630, y: 690 }, { y: 70 });
+  pop('karton4', W('auch', 12) - .3, { x: X + 1070, y: 772 }, 'plopp');
+  const tU = W('auch', 12) - .05;
+  tw('k4', tU, .55, { x: X + 1070, y: 742, s: .26 }, 'inout'); cue(tU, 'whoosh');
+  const tZ = W('umziehst', 12) - .2, dZ = 1.0;
+  tw('karton4', tZ, dZ, { x: X + 1570, y: 772 }, 'inout', { bogen: 70 });
+  tw('k4', tZ, dZ, { x: X + 1570, y: 742 }, 'inout', { bogen: 70 }); cue(tZ, 'whoosh');
+  landen('karton4', tZ + dZ); cue(tZ + dZ, 'plopp');
+  pop('ok4', tZ + dZ + .05, { x: X + 1660, y: 700 }, 'erfolg');
+  const w4 = neueWelle(); welle(w4, tZ + dZ, X + 1570, 742, 1.0, 240); el(w4).classList.add('gruen');
+  // Dein Betrieb braucht sie für die Lohnsteuer
+  const tB = W('Dein', 13) - .25;
+  aus(['haus4a', 'haus4b', 'karton4', 'ok4'], tB, .3);
+  tw('k4', tB + .05, .7, { x: UX, y: 330, s: 1 }, 'inout'); cue(tB + .05, 'whoosh');
+  tw(rahmen, tB + .4, .3, { o: 0 });
+  ein('lohn4', W('Betrieb', 13) - .1, { x: X + 1150, y: 650 }, { y: 70 }, 'whoosh');
+  ein('betrieb4', W('braucht', 13) - .2, { x: X + 1570, y: 650 }, { x: 70 });
+  akteur('pfeil4', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('pfeil4', W('braucht', 13) + .1, .1, { o: 1 }); tw('pfeil4', W('braucht', 13) + .1, .45, { draw: 1 }, 'inout');
+  bump('betrieb4', W('braucht', 13) + .55, 1.06); cue(W('braucht', 13) + .55, 'pop');
+  const bar = el('lbar4');
+  akteur(bar, { sx: 0 }, true); tw(bar, W('Lohnsteuer', 13) - .05, .5, { sx: .45 }, 'weich');
+  akteur('lst4', {}, true); bump('lst4', W('Lohnsteuer', 13), 1.05); cue(W('Lohnsteuer', 13), 'scan');
+  // Fehlt sie: Karte wird blass, mehr Steuern
+  tw('k4', W('Fehlt', 14) - .1, .4, { o: .22, s: .96 }, 'inout'); tw('pfeil4', W('Fehlt', 14) - .1, .3, { o: 0 });
+  pop('frage4', W('Fehlt', 14) + .2, { x: UX, y: 352 }, 'plopp'); wackeln('frage4', W('sie', 14) + .2, 3, 6);
+  const tM = W('mehr', 14) - .05;
+  tw(bar, tM, .6, { sx: 1 }, 'sanft'); cue(tM, 'scan');
+  HOOKS.push(t => el('lst4').classList.toggle('rot', t >= tM && t < W('Also', 15)));
+  pop('warn4', W('Steuern', 14), { x: X + 1150 + 165 - 10, y: 600 }, 'plopp');
+  wackeln('lohn4', W('abziehen', 14) - .05, 4, 2); akzent(W('mehr', 14), .03);
+  // Also: Brief da, Nummer gleich ans Personalbüro
+  const tA = W('Also', 15) - .1;
+  aus(['lohn4', 'warn4', 'betrieb4', 'frage4'], tA, .3);
+  tw('k4', tA, .45, { o: 1, s: 1 }, 'sanft'); cue(tA, 'whoosh');
+  pop('brief4', W('Brief', 15) - .1, { x: UX, y: 620 }, 'pop');
+  pop('da4', W('da', 15), { x: UX + 62, y: 580 }, 'ding');
+  schieben(W('Nummer', 15) - .6, 3);
+  aus(['brief4', 'da4'], W('Nummer', 15) - .55, .3);
+  titelEin('tb4', W('gleich', 15) - .25, [W('gleich', 15) - .25, W('ans', 15) - .1, W('Personalbüro', 15) - .1]);
+  ein('fb4', W('Nummer', 15) - .1, { x: X + 1480, y: 650 }, { y: 80 }, 'whoosh');
+  const F = [...el('fb4').querySelectorAll('.fb-feld')], B = F.map(f => f.querySelector('.fb-box')), OK = F[0].querySelector('.fb-ok');
+  const tP = W('Personalbüro', 15) - .35, FY4 = 650 - el('fb4').offsetHeight / 2 + F[0].offsetTop + 64;
+  bump('k4', tP - .1, 1.04);
+  akteur('zahl4', { x: UX, y: 352, o: 0, s: .6 });
+  tw('zahl4', tP, .12, { o: 1 }); flug('zahl4', tP, .62, X + 1460, FY4, 80, { s: 1 }); tw('zahl4', tP + .55, .12, { o: 0 }); cue(tP, 'whoosh');
+  feld(B[0], [[0, 'rot'], [tP + .62, 'gruen', '12 345 678 901', .025]]);
+  feld(B[1], [[0, '']]);
+  akteur(OK, { s: 0 }, true); tw(OK, tP + .7, .5, { s: 1 }, 'back'); cue(tP + .7, 'erfolg');
+  bump('fb4', tP + .65, 1.04); akzent(tP + .65, .035);
+  textAus('tb4', SE(15) + .25);
+}
+
+/* ================= 5 · Sozialversicherungsnummer: von der Rentenversicherung ================= */
+pan2(SE(15) + .35, 4);
+{
+  const X = S(4);
+  titelEin('tb5', W('Sozialversicherungsnummer', 16) - .2, [W('Sozialversicherungsnummer', 16) - .2, W('Sozialversicherungsnummer', 16) + .4,
+    W('von', 17) - .1, W('der', 17) - .05, W('Rentenversicherung', 17) - .1]);
+  ein('k5', W('zweite', 16) - .15, { x: X + 1320, y: 330 }, { y: -80 }, 'whoosh');
+  const bx = kaestchen('k5'), zahl = el('k5').querySelector('.nk-zahl');
+  kaestchenEin(bx, zahl, W('Sozialversicherungsnummer', 16), .09);
+  tippen(bx, '        A   ', W('Sozialversicherungsnummer', 16) + 8 * .09 + .1, 0);
+  const tBu = W('Sozialversicherungsnummer', 16) + 1.4;
+  wackeln(bx[8], tBu, 4, 8); cue(tBu, 'ding'); akzent(W('Sozialversicherungsnummer', 16) + .3, .035);
+  // Sie kommt von der Deutschen Rentenversicherung
+  ein('amt5', W('kommt', 17) - .1, { x: X + 1050, y: 650 }, { y: 70 }, 'whoosh');
+  pop('eRv5', W('Rentenversicherung', 17), { x: X + 1050, y: 790 }, null);
+  bump('amt5', W('Rentenversicherung', 17), 1.06);
+  akteur('pfeil5', { x: X + 960, y: 540 });
+  strich('p5a', W('Rentenversicherung', 17) + .45, .45); cue(W('Rentenversicherung', 17) + .45, 'scan');
+  bump('k5', W('Rentenversicherung', 17) + .9, 1.03);
+  // erstes Mal arbeiten, z. B. Ausbildung: Kwame mit Werkzeugkoffer, Kalenderblatt „Start“
+  pop('kw5', W('Du', 18) - .1, { x: X + 1610, y: 640 }, 'pop', 'sanft'); froh('kw5', W('Du', 18) + .2);
+  ein('start5', W('ersten', 18) - .25, { x: X + 1360, y: 650 }, { y: 70 }, 'whoosh');
+  bump('start5', W('Mal', 18), 1.08); cue(W('Mal', 18), 'pop');
+  pop('koffer5', W('arbeitest', 18) - .1, { x: X + 1645, y: 768 }, 'plopp');
+  huepfen('kw5', W('arbeitest', 18) + .2, 12);
+  const tAu = W('Ausbildung', 18) - .1;
+  bump('start5', tAu, 1.1); cue(tAu, 'ding');
+  strich('p5b', tAu + .15, .4);
+  kaestchenWelle(bx, tAu + .55, .05, 1.16); cue(tAu + .55, 'scan');
+  HOOKS.push(t => bx.forEach((b, i) => b.classList.toggle('hell', i !== 8 && t >= tAu + .55 + i * .05 && t < tAu + .55 + i * .05 + .5)));
+  huepfen('kw5', tAu + .2, 14); bump('koffer5', tAu + .25, 1.08);
+  textAus('tb5', SE(18) + .15);
+}
+
+/* ================= 6 · Anmeldung bei der Krankenkasse, Versicherungsnummernachweis ================= */
+panMitte(SE(18) + .3, 5);
+{
+  const X = S(5);
+  ein('betrieb6', W('Dein', 19) - .2, { x: X + 1110, y: 460 }, { y: 70 }, 'whoosh');
+  bump('betrieb6', W('Betrieb', 19), 1.06);
+  ein('kasse6', W('Krankenkasse', 19) - .3, { x: X + 1600, y: 460 }, { x: 70 }, 'whoosh');
+  pop('eKk6', W('Krankenkasse', 19) + .1, { x: X + 1600, y: 600 }, null);
+  // anmelden: Meldung fliegt über den Pfeil, Haken an der Krankenkasse
+  akteur('pfeil6', { x: X + 960, y: 540 });
+  const tM = W('anzumelden', 19) - .1;
+  strich('p6a', tM, .55); cue(tM, 'scan');
+  akteur('meldung6', { x: X + 1150, y: 450, o: 0, s: .5 });
+  tw('meldung6', tM, .15, { o: 1, s: 1 }); flug('meldung6', tM + .1, .75, X + 1540, 440, 70, { s: .6 }); tw('meldung6', tM + .75, .15, { o: 0 });
+  bump('kasse6', tM + .85, 1.08); pop('ok6', tM + .9, { x: X + 1662, y: 400 }, 'erfolg');
+  // Hast du noch keine: graue Karte mit Fragezeichen, der Betrieb kümmert sich (Zahnräder)
+  const bx0 = kaestchen('k6leer');
+  pop('k6leer', W('Hast', 20) - .1, { x: X + 1110, y: 700, s: .45 }, 'pop', 'sanft');
+  pop('frage6', W('keine', 20) - .05, { x: X + 1110 + 160, y: 668 }, 'plopp'); wackeln('frage6', W('keine', 20) + .3, 3, 6);
+  const tZ = W('kümmert', 20) - .1;
+  pop('zahn6a', tZ, { x: X + 1150, y: 395 }, 'pop'); pop('zahn6b', tZ + .12, { x: X + 1192, y: 432 }, null);
+  HOOKS.push(t => {
+    const d = Math.max(0, t - tZ), v = Math.min(d, tF - tZ + .3) * 160;
+    el('zahn6a').style.transform += ` rotate(${v.toFixed(1)}deg)`; el('zahn6b').style.transform += ` rotate(${(-v * 1.35).toFixed(1)}deg)`;
+  });
+  wackeln('betrieb6', W('Betrieb', 20) - .05, 3, 2); cue(W('Betrieb', 20), 'klick');
+  kaestchenWelle(bx0, W('darum', 20) - .1, .04, 1.12);
+  // Dann kommt ein Brief: Kamera schiebt, der Nachweis faltet sich auf
+  aus(['kasse6', 'eKk6', 'ok6'], W('Dann', 21) - .45, .3);
+  tw('pfeil6', W('Dann', 21) - .45, .3, { o: 0 });
+  schieben(W('Dann', 21) - .3, 5);
+  titelEin('tb6', W('Brief', 21) - .2, [W('Brief', 21) - .2, W('Versicherungsnummernachweis', 21) - .15, W('Versicherungsnummernachweis', 21) + .35]);
+  const tB = W('kommt', 21) - .25;
+  akteur('brief6', { x: X + 1760, y: 250, o: 0, s: .6, r: -3 });
+  tw('brief6', tB, .15, { o: 1 }); tw('brief6', tB, .8, { x: X + 1520, y: 470, s: 1, r: 0 }, 'inout', { bogen: 60 }); cue(tB, 'whoosh');
+  landen('brief6', tB + .8); cue(tB + .8, 'plopp');
+  const tN = W('Versicherungsnummernachweis', 21) - .3;
+  tw('brief6', tN, .25, { o: 0, s: .8 }, 'in');
+  const nr = el('nr6'); nr.innerHTML = [...SVNR].map((c, i) => `<i class="${[2, 8, 9].includes(i) ? 'lu' : ''}${i === 8 ? ' bst' : ''}">${c}</i>`).join('');
+  const NR = [...nr.querySelectorAll('i')];
+  akteur('nw6', { x: X + 1520, y: 560, sy: 0, o: 0 });
+  set('nw6', tN + .1, { o: 1 }); tw('nw6', tN + .1, .55, { sy: 1 }, 'sanft'); cue(tN + .1, 'kritzeln');
+  NR.forEach((b, i) => { akteur(b, { o: 0, s: .5 }, true); tw(b, tN + .55 + i * .06, .3, { o: 1, s: 1 }, 'back'); });
+  akzent(tN + .4, .035);
+  // die Nummer kommt in die Karte: grau → blau, Ziffern tippen sich
+  const tF = tN + 1.45;
+  const bx = kaestchen('k6');
+  akteur('k6', { x: X + 1110, y: 700, s: .45, o: 0 });
+  tw('k6', tF, .35, { o: 1 }); tw('k6leer', tF + .3, .1, { o: 0 }); tw('frage6', tF - .1, .25, { s: 0 }, 'sinus');
+  tippen(bx, SVNR, tF + .1, .05); cue(tF + .1, 'tipp'); cue(tF + .4, 'tipp');
+  bump('k6', tF + .75, 1.06); cue(tF + .75, 'erfolg');
+  aus(['zahn6a', 'zahn6b'], tF, .3);
+  // Früher: alter Sozialversicherungsausweis dreht sich weg
+  const tA = W('Früher', 22) - .15;
+  aus('betrieb6', tA - .1, .3);
+  akteur('alt6', { x: X + 1100, y: 420, o: 0, s: .8 });
+  tw('alt6', tA + .1, .4, { o: 1, s: 1 }, 'sanft'); cue(tA + .1, 'pop');
+  pop('eFr6', tA + .3, { x: X + 1100, y: 290 }, null);
+  const tD = W('Sozialversicherungsausweis', 22) + .3;
+  tw('alt6', tD, .3, { sx: 0 }, 'in'); tw('alt6', tD + .3, .35, { sx: -.85, o: .55, s: .9 }, 'out'); cue(tD, 'whoosh');
+  pop('eHe6', tD + .55, { x: X + 1335, y: 352 }, 'ding');
+  bump('nw6', tD + .7, 1.04);
+  textAus('tb6', SE(22) + .2);
+}
+
+/* ================= 7 · Zwei Nummern, zwei Aufgaben (Waage) ================= */
+pan2(SE(22) + .35, 6);
+{
+  const X = S(6), BY = 560;
+  ein('fuss7', SA(23) - .45, { x: X + 1320, y: 830 }, { y: 60 }, 'whoosh');
+  ein('saeule7', SA(23) - .35, { x: X + 1320, y: 700 }, { y: 80 });
+  pop('balken7', SA(23) - .25, { x: X + 1320, y: BY }, null, 'sanft');
+  pop('gelenk7', SA(23) - .15, { x: X + 1320, y: BY }, 'pop');
+  // beide Karten fallen auf die Waage
+  const bs = kaestchen('k7s'), bv = kaestchen('k7v');
+  tippen(bs, STEUER, -1, 0); tippen(bv, SVNR, -1, 0);
+  const KY = BY - 9 - 46;
+  const fall = (id, x, t) => { akteur(id, { x, y: KY - 260, s: .46, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .38, { y: KY }, 'in'); landen(id, t + .38, .8); cue(t + .38, 'plopp'); };
+  const tS = W('Zwei', 23) - .4, tV = W('zwei', 23, .5) - .4;
+  fall('k7s', X + 1125, tS); fall('k7v', X + 1515, tV);
+  // Balken kippt kurz und pendelt sich ein (höchstens 3°), Karten fahren mit
+  const kipp = [[tS + .38, -2.5], [tV + .38, 1.6], [tV + .7, -.8], [tV + 1.0, .3], [tV + 1.3, 0]];
+  kipp.forEach(([t, r], i) => {
+    const d = i ? .3 : .25;
+    tw('balken7', t, d, { r }, 'sinus');
+    const dy = Math.sin(r * Math.PI / 180) * 195;
+    tw('k7s', t, d, { y: KY - dy, r }, 'sinus'); if (i) tw('k7v', t, d, { y: KY + dy, r }, 'sinus');
+  });
+  bump('k7s', W('Aufgaben', 23), 1.05); bump('k7v', W('Aufgaben', 23) + .1, 1.05); cue(W('Aufgaben', 23), 'ding');
+  // Steuer-ID: elf Ziffern, für die Steuer
+  titelEin('tb7', W('Steuer', 24) - .2, [W('Steuer', 24) - .2, W('ist', 24) - .1, W('Steuer', 24, 2.5) - .1,
+    W('Sozialversicherungsnummer', 25) - .15, W('Sozialversicherung', 26) - .3, W('Sozialversicherung', 26) - .15]);
+  kaestchenWelle(bs, W('elf', 24) - .1, .05, 1.2); cue(W('elf', 24), 'scan'); akzent(W('elf', 24), .03);
+  const tSt = W('Steuer', 24, 2.5) - .1;
+  linieEin('l7a', tSt); pop('muenze7', tSt, { x: X + 1110, y: 690 }, 'muenze'); pop('eSt7', tSt + .25, { x: X + 1110, y: 790 }, null);
+  // Sozialversicherungsnummer: zwölf Zeichen, auch ein Buchstabe
+  bump('k7v', W('Sozialversicherungsnummer', 25), 1.05);
+  kaestchenWelle(bv, W('zwölf', 25) - .1, .05, 1.2); cue(W('zwölf', 25), 'scan'); akzent(W('zwölf', 25), .03);
+  wackeln(bv[8], W('Buchstaben', 25) - .05, 4, 10); tw(bv[8], W('Buchstaben', 25) - .05, .15, { s: 1.35 }, 'sinus'); tw(bv[8], W('Buchstaben', 25) + .45, .35, { s: 1 }, 'sanft');
+  cue(W('Buchstaben', 25), 'ding');
+  // für die Sozialversicherung: Rente und Krankenkasse
+  bump('k7v', W('Sozialversicherung', 26), 1.05);
+  linieEin('l7b', W('Rente', 26) - .1); pop('schwein7', W('Rente', 26) - .1, { x: X + 1460, y: 695 }, 'pop'); pop('eRe7', W('Rente', 26) + .15, { x: X + 1460, y: 790 }, null);
+  linieEin('l7c', W('Krankenkasse', 26) - .1); pop('kasse7', W('Krankenkasse', 26) - .1, { x: X + 1625, y: 695 }, 'pop'); pop('eKk7', W('Krankenkasse', 26) + .15, { x: X + 1625, y: 790 }, null);
+  textAus('tb7', SE(26) + .2);
+}
+
+/* ================= 8 · Sicher ablegen – nur an Stellen, die sie brauchen ================= */
+panMitte(SE(26) + .3, 7);
+{
+  const X = S(7), HX = X + 1320, HY = 540;
+  // Beide Nummern sind persönlich
+  const bs = kaestchen('k8s'), bv = kaestchen('k8v');
+  tippen(bs, STEUER, -1, 0); tippen(bv, SVNR, -1, 0);
+  pop('k8s', W('Beide', 27) - .1, { x: X + 1060, y: 360, s: .36 }, 'pop', 'sanft');
+  pop('k8v', W('Nummern', 27) - .1, { x: X + 1580, y: 360, s: .36 }, 'pop', 'sanft');
+  ein('handy8', W('persönlich', 27) - .1, { x: HX, y: HY }, { y: 90 }, 'whoosh');
+  ein('schirm8', W('persönlich', 27) - .1, { x: HX, y: HY }, { y: 90 });
+  ['row8a', 'row8b'].forEach(id => akteur(id, { o: 0, x: -30 }, true)); akteur('toast8', { o: 0, y: 10 }, true);
+  bump('k8s', W('persönlich', 27) + .3, 1.08); bump('k8v', W('persönlich', 27) + .4, 1.08);
+  // Leg die Briefe sicher ab: Karten werden zu Briefen, Schloss schnappt zu
+  const tBr = W('Briefe', 28) - .15;
+  tw(['k8s', 'k8v'], tBr, .3, { s: 0 }, 'in');
+  pop('brief8a', tBr + .2, { x: X + 1060, y: 380 }, 'pop'); pop('brief8b', tBr + .3, { x: X + 1580, y: 380 }, null);
+  const tSi = W('sicher', 28) - .15;
+  akteur('schloss8', { x: HX + 92, y: HY + 150, o: 0, s: 1.3 });
+  tw('schloss8', tSi, .12, { o: 1 }); tw('schloss8', tSi, .25, { s: 1 }, 'in'); landen('schloss8', tSi + .25); cue(tSi + .25, 'klick');
+  // als Foto: Blitz, die Briefe fliegen ins Handy, neue Zeilen in „Dokumente“
+  const tFo = W('Foto', 28) - .1;
+  welle('blitz8', tFo, HX, HY - 60, .5, 150); cue(tFo, 'klick');
+  [['brief8a', 'row8a', 0], ['brief8b', 'row8b', .3]].forEach(([b, r, d]) => {
+    flug(b, tFo + .2 + d, .7, HX, HY - 20, 90, { s: .25 }); tw(b, tFo + .75 + d, .15, { o: 0 }); cue(tFo + .2 + d, 'whoosh');
+    tw(r, tFo + .85 + d, .4, { o: 1, x: 0 }, 'back'); cue(tFo + .85 + d, 'pop');
+  });
+  pop('eApp8', W('Azubis', 28) - .1, { x: HX, y: 800 }, null);
+  tw('toast8', W('Dokumente', 28), .4, { o: 1, y: 0 }, 'back'); cue(W('Dokumente', 28), 'ding');
+  bump('handy8', W('Dokumente', 28), 1.03); bump('schirm8', W('Dokumente', 28), 1.03); akzent(W('Dokumente', 28), .03);
+  // Gib die Nummern nur an Stellen, die sie brauchen – wie deinen Betrieb
+  const tG = W('Gib', 29) - .25;
+  aus('eApp8', tG, .3);
+  schieben(tG, 7);
+  titelEin('tb8', W('nur', 29) - .15, [W('nur', 29) - .15, W('an', 29) - .1, W('Stellen', 29) - .1, W('die', 29, 1.5) - .1, W('sie', 29, 1.5) - .1,
+    W('brauchen', 29) - .1]);
+  const PX = X + 1050, PY = 540, PS = .8;
+  tw(['handy8', 'schirm8'], tG + .1, .8, { x: PX, y: PY, s: PS }, 'inout');
+  tw('schloss8', tG + .1, .8, { x: PX + 92 * PS, y: PY + 150 * PS, s: PS }, 'inout');
+  ein('fb8', W('Stellen', 29) - .2, { x: X + 1500, y: 560 }, { x: 80 }, 'whoosh');
+  const F = [...el('fb8').querySelectorAll('.fb-feld')], B = F.map(f => f.querySelector('.fb-box')), OK = F.map(f => f.querySelector('.fb-ok'));
+  bump('fb8', W('brauchen', 29) - .05, 1.04);
+  const tBe = W('Betrieb', 29) - .45;
+  // Feldmitten im Formular: Oberkante + Feld + Beschriftung (32) + halbe Box (32)
+  const FY = F.map(f => 560 - el('fb8').offsetHeight / 2 + f.offsetTop + 64);
+  [['zahl8a', 0], ['zahl8b', 1]].forEach(([z, i]) => {
+    akteur(z, { x: PX, y: PY - 40 + i * 30, o: 0, s: .5 });
+    const t0 = tBe + i * .2;
+    tw(z, t0, .12, { o: 1 }); flug(z, t0, .6, X + 1480, FY[i], 60, { s: 1 }); tw(z, t0 + .55, .12, { o: 0 }); cue(t0, 'whoosh');
+    feld(B[i], [[0, ''], [t0 + .6, 'gruen', i ? '12 345678 A 901' : '12 345 678 901', 0]]);
+    akteur(OK[i], { s: 0 }, true); tw(OK[i], t0 + .65, .5, { s: 1 }, 'back'); cue(t0 + .65, 'ding');
+  });
+  cue(tBe + 1.0, 'erfolg'); akzent(tBe + .9, .035);
+  // Und nie an Fremde: E-Mail und Telefon prallen am Schild ab, Kwame nickt
+  const tU = W('Und', 30) - .3;
+  aus(['handy8', 'schirm8', 'schloss8', 'fb8'], tU, .35);
+  pop('kw8', W('nie', 30) - .15, { x: X + 1060, y: 600 }, 'pop', 'sanft');
+  ein('schutz8', W('Fremde', 30) - .2, { x: X + 1290, y: 600 }, { x: -40 }, 'whoosh');
+  const angriff = (id, kreuz, t, x0, y0, x1, y1) => {
+    akteur(id, { x: x0 + 90, y: y0, o: 0, s: .8 });
+    tw(id, t - .6, .3, { o: 1, x: x0, s: 1 }, 'sanft'); cue(t - .6, 'pop');
+    tw(id, t - .1, .3, { x: X + 1410, y: 600 + (y0 - 600) * .35 }, 'in');
+    tw(id, t + .2, .5, { x: x1, y: y1, r: 3 }, 'weich'); tw(id, t + .7, .3, { r: 0 }, 'sinus');
+    cue(t + .2, 'plopp'); bump('schutz8', t + .2, 1.08);
+    pop(kreuz, t + .35, { x: x1 + 52, y: y1 - 44 }, null);
+  };
+  angriff('mail8', 'nein8a', W('E-Mail', 30), X + 1640, 420, X + 1610, 430);
+  angriff('tel8', 'nein8b', W('Telefon', 30), X + 1640, 790, X + 1610, 770);
+  mund('kw8', W('fragen', 30) - .1, 'froh');
+  [0, .45].forEach(d => { tw('kw8', W('danach', 30) + d, .18, { r: 4, y: 606 }, 'sinus'); tw('kw8', W('danach', 30) + d + .18, .25, { r: 0, y: 600 }, 'sanft'); });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

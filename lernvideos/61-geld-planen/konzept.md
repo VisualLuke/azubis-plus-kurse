@@ -18,9 +18,9 @@ vier Wochen-Umschläge. In Szene 1 läuft er ohne Plan leer, in Szene 9 hält er
 | 3 | Der Netto-Balken steht groß da; vier Kacheln ploppen auf ihre Wörter (Haus „Miete“, Handy, Fahrkarte „Ticket“, Schild „Versicherungen“) und schneiden je ein Stück vom Balken ab, die Stücke stapeln sich zu einem Block „Fixkosten“; auf „Dauerauftrag“ erscheint ein Kalender mit Kreispfeil, eine Überweisung fliegt automatisch zum Haus – Kalenderblatt blättert um, sie fliegt wieder (dreimal, immer schneller), jedes Mal ein grüner Haken am Haus | Zuerst die Fixkosten · Miete per Dauerauftrag |
 | 4 | Der Rest des Balkens teilt sich in vier gleiche Umschläge „Woche 1–4“, die sich nebeneinander aufstellen; aus dem ersten zieht eine Einkaufstüte („Essen“), aus dem zweiten ein T-Shirt („Kleidung“), aus dem dritten ein Ball („Freizeit“); die Wochen laufen durch (Marker wandert über die Umschläge), am Ende ist im vierten Umschlag noch Geld, Mai hüpft | Rest auf die Wochen verteilen |
 | 5 | Ein Sparglas „Notgroschen“: jeden Monat (Kalender blättert) fällt eine Münze hinein, klingt, das Glas füllt sich langsam; auf „Handy kaputtgeht“ bekommt ein Handy einen Riss und wackelt, eine Rechnung flattert herein; Münzen springen aus dem Glas, der Riss schließt sich, die Rechnung bekommt einen Stempel „bezahlt“ mit Wackler; Mai atmet auf (lächelt) | Notgroschen = Puffer für Unerwartetes |
-| 6 | Notizzettel mit kleinem Stempel „Beispiel“ oben rechts; die Rechnung tippt sich Zeile für Zeile auf das gesprochene Wort (der Stift schreibt mit): „1.000 € netto“, „− 550 € Fixkosten“, „− 50 € Notgroschen“, Strich, „= 400 €“; daneben schrumpft der Balken passend; auf „Woche“ teilen sich die 400 € in vier Umschläge à „100 €“, die hüpfen | Beispiel: 1.000 € − 550 € − 50 € = 400 € · ca. 100 € pro Woche |
+| 6 | Notizzettel mit kleinem Stempel „Beispiel“ oben rechts; die Rechnung tippt sich Zeile für Zeile auf das gesprochene Wort (der Stift schreibt mit): „800 € netto“, „− 450 € Fixkosten“, „− 50 € Notgroschen“, Strich, „= 300 €“; daneben schrumpft der Balken passend; auf „Woche“ teilen sich die 300 € in Wochen-Umschläge à „ca. 70 €“, die hüpfen | Beispiel: 800 € − 450 € − 50 € = 300 € · ca. 70 € pro Woche |
 | 7 | Ein Heft klappt auf, der Stift schreibt Zeilen (Brot, Ticket, Kaffee, Kaffee, Kaffee …), daneben ein Handy mit derselben Liste (ohne App-Namen); kleine Kaffeebecher stapeln sich zu einem Turm, eine Lupe fährt darüber, der Turm wird zu einer Summe, die auf „genau“ aufleuchtet; Mai staunt (Augen groß) | Ausgaben aufschreiben |
-| 8 | Konto-Anzeige rutscht unter die Null-Linie in einen roten Bereich („Dispo“), Prozent-Gewichte hängen sich daran und ziehen sie tiefer; ein Einkaufswagen schiebt sich herein, aus ihm fallen Ratenzettel „1/6“, „2/6“, „3/6“ und stapeln sich zu einem wackelnden Turm („später zahlen“); auf „Schuldnerberatung“ öffnet sich eine Tür mit Schild „Beratung“, ein Pfeil führt Mai dorthin, der Turm wird kleiner, Chip „kostenlos“ mit grünem Haken | Dispo und Raten: Vorsicht! · Hilfe: Schuldnerberatung |
+| 8 | Konto-Anzeige rutscht unter die Null-Linie in einen roten Bereich („Dispo“), Prozent-Gewichte hängen sich daran und ziehen sie tiefer; ein Einkaufswagen schiebt sich herein, aus ihm fallen Ratenzettel „1/6“, „2/6“, „3/6“ und stapeln sich zu einem wackelnden Turm („später zahlen“); auf „Schuldnerberatung“ öffnet sich eine Tür mit Schild „Beratung“, ein Pfeil führt Mai dorthin, der Turm wird kleiner, Chip „oft kostenlos“ mit grünem Haken | Dispo und Raten: Vorsicht! · Hilfe: Schuldnerberatung |
 | 9 | Vier Stufen bauen sich auf ihre Wörter auf („Netto“, „Fixkosten“, „Notgroschen“, „Woche“), Mai hüpft Stufe für Stufe hoch (Squash & Stretch); daneben läuft der Kalender bis zum Monatsende, der Balken bleibt grün, oben ein grüner Haken, Welle | Netto · Fixkosten · Notgroschen · Woche |
 
 Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; jede Animation hängt an einem Wort aus
@@ -47,7 +47,7 @@ Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; 
 Erzählerin: Am Monatsanfang kommt Mais Geld. Am Monatsende ist das Konto fast leer. Wo ist das Geld geblieben? Mit einem einfachen Plan behältst du den Überblick.
 
 ### Szene 2
-Erzählerin: Plane immer mit deinem Netto. Das ist das Geld, das wirklich auf deinem Konto ankommt. Steuern und Versicherungen sind dann schon abgezogen.
+Erzählerin: Plane immer mit deinem Netto. Das ist das Geld, das wirklich auf deinem Konto ankommt. Die Beiträge zur Sozialversicherung, zum Beispiel für Kranken- und Rentenversicherung, sind dann schon abgezogen.
 
 ### Szene 3
 Erzählerin: Zuerst kommen die Fixkosten. Das sind Kosten, die jeden Monat gleich sind: Miete, Handy, Ticket und Versicherungen. Für die Miete richtest du einen Dauerauftrag ein. Dann wird sie jeden Monat pünktlich bezahlt.
@@ -59,24 +59,24 @@ Erzählerin: Was dann übrig bleibt, ist für Essen, Kleidung und Freizeit. Teil
 Erzählerin: Leg jeden Monat etwas zur Seite, auch wenn es wenig ist. Das ist dein Notgroschen. Er hilft, wenn dein Handy kaputtgeht oder eine unerwartete Rechnung kommt.
 
 ### Szene 6
-Erzählerin: Ein Beispiel: Mai hat tausend Euro netto. Ihre Fixkosten sind fünfhundertfünfzig Euro. Fünfzig Euro legt sie als Notgroschen zur Seite. Dann bleiben vierhundert Euro, also etwa hundert Euro pro Woche.
+Erzählerin: Ein Beispiel: Mai hat achthundert Euro netto. Ihre Fixkosten sind vierhundertfünfzig Euro. Fünfzig Euro legt sie als Notgroschen zur Seite. Dann bleiben dreihundert Euro, also etwa siebzig Euro pro Woche.
 
 ### Szene 7
 Erzählerin: Schreib einen Monat lang alle Ausgaben auf, im Heft oder in einer App. Auch den Kaffee unterwegs. Dann siehst du genau, wo dein Geld bleibt.
 
 ### Szene 8
-Erzählerin: Vorsicht beim Dispo, also beim Minus auf dem Konto. Dafür zahlst du hohe Zinsen. Auch Ratenkäufe und „Jetzt kaufen, später zahlen“ führen schnell zu Schulden. Wenn das Geld nicht reicht, hilft eine Schuldnerberatung. Anerkannte Beratungsstellen sind kostenlos.
+Erzählerin: Vorsicht beim Dispo, also beim Minus auf dem Konto. Dafür zahlst du hohe Zinsen. Auch Ratenkäufe und „Jetzt kaufen, später zahlen“ können schnell zu Schulden führen. Wenn das Geld nicht reicht, hilft eine Schuldnerberatung. Viele Beratungsstellen, zum Beispiel von der Stadt oder von Sozialverbänden, sind kostenlos.
 
 ### Szene 9
 Erzählerin: Also: erst das Netto, dann die Fixkosten, dann der Notgroschen. Mit dem Rest planst du die Woche. So hast du dein Geld im Griff.
 
 ## Schreibweise im Untertitel
 
-- hat tausend Euro netto → hat 1.000 Euro netto
-- sind fünfhundertfünfzig Euro → sind 550 Euro
+- hat achthundert Euro netto → hat 800 Euro netto
+- sind vierhundertfünfzig Euro → sind 450 Euro
 - Fünfzig Euro legt sie → 50 Euro legt sie
-- bleiben vierhundert Euro → bleiben 400 Euro
-- etwa hundert Euro pro Woche → etwa 100 Euro pro Woche
+- bleiben dreihundert Euro → bleiben 300 Euro
+- etwa siebzig Euro pro Woche → etwa 70 Euro pro Woche
 
 ## Quellen
 
@@ -105,10 +105,10 @@ die Suchmaschinen-Auszüge der jeweiligen Seite.
 | Was übrig bleibt, ist für veränderliche Ausgaben: Essen, Kleidung, Freizeit | 1 (variable Ausgaben: Lebensmittel, Kleidung, Freizeit …), 2 |
 | Rest auf die Wochen verteilen | 2 (Haushaltsbuch mit Wochenübersichten); Ratschlag |
 | Notgroschen: regelmäßig etwas zur Seite legen, für Unerwartetes | 1 (Notgroschen aufbauen), 4 (Ziel zwei bis drei Monatsgehälter – im Video bewusst ohne Betrag) |
-| Beispielrechnung 1.000 € − 550 € − 50 € = 400 €, ca. 100 € pro Woche | eigenes Rechenbeispiel, im Bild als „Beispiel“ gekennzeichnet; keine Durchschnittswerte |
+| Beispielrechnung 800 € − 450 € − 50 € = 300 €, ca. 70 € pro Woche (300 € : 4,3 Wochen) | Faktencheck 03.10.: kleinere Zahlen, näher an einer Ausbildungsvergütung;  eigenes Rechenbeispiel, im Bild als „Beispiel“ gekennzeichnet; keine Durchschnittswerte |
 | Ausgaben aufschreiben, im Heft oder in einer App | 1, 5 |
 | Dispo = Minus auf dem Konto, hohe Zinsen, nur kurzfristig | 6 |
 | Ratenkäufe und „Jetzt kaufen, später zahlen“ können zu Schulden führen | 7, 8 |
-| Wenn das Geld nicht reicht: Schuldnerberatung; anerkannte Beratungsstellen sind kostenlos | 1 (Beratung suchen, wenn das Geld knapp ist), 9, 10 |
+| Wenn das Geld nicht reicht: Schuldnerberatung; viele Beratungsstellen (Stadt, Sozialverbände) sind kostenlos – nicht alle (Finanztip) | 1 (Beratung suchen, wenn das Geld knapp ist), 9, 10 |
 | Text im Bild „Wo ist das Geld geblieben?“ | Situation, keine Sachaussage |
 | Text im Bild Szene 2–9 | wie die zugehörigen Sätze oben |
