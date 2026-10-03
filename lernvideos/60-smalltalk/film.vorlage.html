@@ -134,7 +134,7 @@ html,body{background:var(--b200)}
 .plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
 
 /* Serviette mit Text im Bild */
-.serviette{width:660px;height:250px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
+.serviette{width:640px;height:250px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
 .serviette::before{content:'';position:absolute;inset:14px;border-radius:12px;border:3px dashed var(--b100)}
 .serviette::after{content:'';position:absolute;right:0;bottom:0;width:70px;height:70px;border-radius:0 0 22px 0;background:linear-gradient(135deg,var(--surface) 50%,var(--b100) 50%)}
 .serviette .wtext{left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
@@ -570,7 +570,7 @@ const zurTablett = (L, t, d = .9) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY 
   kam(tF, 1.05, V.sit);
   // Serviette mit dem Text im Bild rutscht herein
   const tGs = W('Gespräch', 12), tVo0 = W('vorbei', 12), tPr = W('privates', 13);
-  ein('serv3', tGs - .75, { x: 1830, y: 600, r: -2 }, { x: 160, r: 3 }, 'whoosh');
+  ein('serv3', tGs - .75, { x: 1860, y: 600, r: -2 }, { x: 160, r: 3 }, 'whoosh');
   titelEin('tb3', tGs - .1, [tGs - .1, tGs, tVo0, tVo0 + .08, WN(13, 1), tPr - .05, tPr + .03]);
   const ws3 = [...document.querySelectorAll('#tb3 .w')]; [0, 4].forEach(k => ws3[k].classList.add('rot'));
   // Kwame sagt nur „Gut“ (kleine Blase) und schaut wieder aufs Handy
@@ -588,7 +588,7 @@ const zurTablett = (L, t, d = .9) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY 
   ['denk3', 'geselle'].forEach(id => wackeln(id, tRe, 3, 3));
   aus('denk3', SE(11) + .1, .3);
   const tGsp = W('Gespräch', 12), tSn = W('schnell', 12), tVo = W('vorbei', 12);
-  tw('becher', tGsp - .3, .45, { x: XG - 50, y: YG + 40, s: 1.15 }, 'inout'); tw('dampf', tGsp - .3, .2, { o: 0 });
+  tw('becher', tGsp - .3, .45, { x: XG - 100, y: YG + 35, s: 1.1 }, 'inout'); tw('dampf', tGsp - .3, .2, { o: 0 });
   tw('becher', tGsp + .15, .25, { r: -3 }, 'sinus'); tw('becher', tSn + .1, .4, { x: 1060, y: 545, s: 1, r: 0 }, 'inout');
   tw('dampf', tSn + .5, .4, { o: .85 });
   // „… ist schnell vorbei“: der Ball wird grau und rollt vom Tisch auf den Boden; eine Wand aus Stille
@@ -609,19 +609,18 @@ const zurTablett = (L, t, d = .9) => { tw('t' + L, t, d, { x: TX[L] + 15, y: TY 
   // „Das Gehalt …“: Ball mit Münzen fliegt zum Gesellen, prallt am Schild „privat“ ab und fällt zu Boden
   el('bGeIc').innerHTML = tpl('tMuenzen');
   const tGh = W('Gehalt', 13), tTh = W('Thema', 13);
-  pop('bGe', tGh - .25, { x: KB[0], y: KB[1] }, 'pop');
-  wurf('bGe', tGh + .2, .9, GB[0] - 30, GB[1] + 20, 1.1); cue(tGh + .2, 'whoosh');
+  pop('bGe', tGh - .25, { x: KB[0], y: KB[1] }, 'pop'); wackeln('bGe', tGh + .4, 4, 5); cue(tGh + .4, 'muenze');
+  wurf('bGe', tPr - 1.0, .9, GB[0] - 30, GB[1] + 20, 1.1); cue(tPr - 1.0, 'whoosh');
   pop('privat3', tPr - .15, { x: XG + 10, y: YG + 205 }, 'plopp');
   el('privat3').style.transformOrigin = '50% 40%';
-  const tPa = Math.max(tGh + 1.1, tPr + .25);
-  tw('bGe', tGh + 1.1, Math.max(.01, tPa - tGh - 1.1), { x: GB[0] - 60 });
+  const tPa = tPr - .1;
   wurf('bGe', tPa, .9, 1420, 1215, .5, 'in'); tw('bGe', tPa, .9, { s: .62, r: 3 }, 'in'); cue(tPa, 'klick'); bump('privat3', tPa, 1.15);
   GRAU.bGe = [[0, 0], [tPa + .2, 1, .4]];
   landen('bGe', tPa + .9); cue(tPa + .9, 'plopp');
   aus('privat3', tTh + .5, .35);
   // „Der Geselle fühlt sich unwohl“: er rückt mit dem Stuhl ein Stück weg
   const tUn = W('unwohl', 14), tSt = W('Stimmung', 14), tKo = W('komisch', 14);
-  tw(['geselle', 'stuhlG'], tUn - .2, .6, { x: XG + 110 }, 'inout'); cue(tUn - .2, 'whoosh');
+  tw(['geselle', 'stuhlG'], tUn - .2, .6, { x: XG + 70 }, 'inout'); cue(tUn - .2, 'whoosh');
   tw('geselle', tUn + .4, .3, { r: 3 }, 'sinus'); tw('geselle', tUn + .7, .4, { r: 0 }, 'sinus');
   // „… die Stimmung wird komisch“: graue Wolke über dem Tisch
   el('wolke3').style.transformOrigin = '50% 60%';
@@ -650,7 +649,7 @@ const P4 = SE(14) + .3;
   kam(tF, 1.0, V.sit);
   // Serviette: „C: kurz antworten + Gegenfrage“
   const tGu = W('gut', 16), tWo = W('Wochenende', 18);
-  ein('serv4', tF + .6, { x: 1830, y: 600, r: 2 }, { x: 160, r: -3 }, 'whoosh');
+  ein('serv4', tF + .6, { x: 1860, y: 600, r: 2 }, { x: 160, r: -3 }, 'whoosh');
   titelEin('tb4', tGu, [tGu, tGu + .08, tGu + .16, tWo - .1, tWo - .02]);
   $('#tb4 .w').classList.add('gruen');
   // Der Gesprächs-Ball liegt wieder vor Kwame (zurückgesetzt, während die Kamera beim Tablett ist)
@@ -663,7 +662,7 @@ const P4 = SE(14) + .3;
   const tSa = W('Samstag', 17), tFu = W('Fußball', 17), tGe = W('gespielt', 17);
   bump('bWo', tSa, 1.15); cue(tSa, 'klick');
   akteur('fussball4', { x: 160, y: 780, s: .9 });
-  const HOPS = [[330, 740], [480, 770], [610, 755]];
+  const HOPS = [[330, 720], [500, 730], [640, 700]];
   HOPS.forEach(([x, y], k) => {
     const t = tFu - .45 + k * .32;
     tw('fussball4', t, .32, { x, y }, 'lin'); tw('fussball4', t, .16, { s: 1.15 }, 'sinus'); tw('fussball4', t + .16, .16, { s: k === 2 ? 1 : .9 }, 'sinus');
@@ -676,7 +675,7 @@ const P4 = SE(14) + .3;
   const t18 = SA(18), tW18 = W('Wochenende', 18);
   wurf('bWo', t18 + .1, .95, GB[0], GB[1], 1.1); cue(t18 + .1, 'whoosh');
   landen('bWo', t18 + 1.05); cue(t18 + 1.05, 'plopp'); bump('geselle', t18 + 1.1, 1.04);
-  akteur('pfeil4', { x: 1120, y: 670 }); rel('pfeil4s', { o: 0 });
+  akteur('pfeil4', { x: 1120, y: 670, o: 0 }); rel('pfeil4s', { o: 0 }); set('pfeil4', t18, { o: 1 });
   tw('pfeil4', t18, .9, { draw: 1 }, 'inout'); tw('pfeil4s', t18 + .8, .2, { o: 1 });
   tw('pfeil4', tW18 + .6, .35, { o: 0 }); akzent(tW18, .03);
   // Geselle: „wandern“ – ein Bild mit Berg und Weg, „Wetter … super“ – die Sonne geht auf
@@ -760,7 +759,7 @@ const P5 = SE(25) + .25;
   // „Und das Wichtigste: Stell eine Gegenfrage und hör gut zu.“
   const tWi = W('Wichtigste', 28), tGf = W('Gegenfrage', 28), tHo = W('hör', 28), tZu = W('zu', 28);
   akzent(tWi, .04); bump('kwame', tWi, 1.05); bump('geselle', tWi + .1, 1.05);
-  akteur('bumerang5', { x: 1120, y: 670 });
+  akteur('bumerang5', { x: 1120, y: 670, o: 0 }); set('bumerang5', tGf - .2, { o: 1 });
   tw('bumerang5', tGf - .2, 1.1, { draw: 1 }, 'inout'); cue(tGf - .2, 'whoosh'); cue(tGf + .5, 'whoosh');
   tw('bumerang5', tHo + .1, .35, { o: 0 });
   pop('ohr5', tHo - .1, { x: 1010, y: 1110 }, 'pop');

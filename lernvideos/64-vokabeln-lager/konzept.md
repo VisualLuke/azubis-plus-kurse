@@ -118,7 +118,7 @@ Yusuf: Die Pakete sind fertig für den Versand.
 (Pause 0.8)
 Kollege: Yusuf, am Wareneingang steht eine neue Lieferung. Prüf sie bitte mit dem Lieferschein.
 Yusuf: Mach ich. Zwei Paletten, alles in Ordnung.
-Kollege: Gut. Ich fahre sie mit dem Gabelstapler ins Hochregal. Du skännst die Lagerplätze.
+Kollege: Gut, ich fahre sie mit dem Gabelstapler ins Hochregal. Du skännst die Lagerplätze.
 Yusuf: Und was mache ich danach?
 Kollege: Danach kommt die Kommissionierung. Der Versand braucht die Pakete bis vierzehn Uhr.
 Yusuf: Alles klar. Sicherheitsschuhe hab ich an!

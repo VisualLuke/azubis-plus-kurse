@@ -123,7 +123,7 @@ Geselle: Kwame, heute haben wir zwei Termine im Kundendienst.
 Kwame: Was ist zuerst dran?
 Geselle: Ein Wasserhahn tropft. Dreh das Ventil zu und wechsle die Dichtung.
 Kwame: Dann nehme ich die Rohrzange mit.
-Geselle: Gut. Danach ein Heizkörper, der nicht warm wird. Prüf das Thermostat, den Heizkessel mache ich.
+Geselle: Gut, danach ein Heizkörper, der nicht warm wird. Prüf das Thermostat, den Heizkessel mache ich.
 Kwame: Und wann kommt die Wärmepumpe?
 Geselle: Nächste Woche. Da lernst du viel!
 

@@ -304,7 +304,7 @@ function hopsen(id, t0, ziele, d = .46, h = 60) {
     const t = t0 + k * (d + .08);
     tw(id, t, .07, { sy: .9, sx: 1.07 }, 'sinus');
     tw(id, t + .07, d, { x, y }, 'inout', { bogen: h }); tw(id, t + .07, .16, { sy: 1.06, sx: .96 }, 'sinus');
-    tw(id, t + .07 + d - .04, .08, { sy: .88, sx: 1.08 }, 'sinus'); tw(id, t + .07 + d + .04, .22, { sy: 1, sx: 1 }, 'sanft');
+    tw(id, t + .07 + d - .05, .1, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .07 + d + .05, .3, { sy: 1, sx: 1 }, 'sanft');
     cue(t + .07 + d, 'plopp');
   });
 }
@@ -599,7 +599,7 @@ akteur('bue1', { x: 1320, y: 540 - 1100 }); akteur('raum1', { y: -1100 }, true);
     tw('pS' + k, t - .25, .55, { y: 760, r: 40, o: 0 }, 'in');
     neu('pD' + k, 'du', '', 'data-frei', 'plak du');
     akteur('pD' + k, { x: 1020, y: 790, s: .3, o: 0 });
-    tw('pD' + k, t, .15, { o: 1 }); flug('pD' + k, t, .7, px, py, 160, { s: 1 }); landen('pD' + k, t + .7); cue(t, 'whoosh'); cue(t + .7, 'pop');
+    tw('pD' + k, t, .15, { o: 1 }); flug('pD' + k, t, .9, px, py, 120, { s: 1 }); landen('pD' + k, t + .9); cue(t, 'whoosh'); cue(t + .9, 'pop');
   };
   const tFa = W('Familie', 14), tFr = W('Freunden', 14), tAz = W('Azubis', 15), tDu15 = WI(15, 6);
   wenden('kB', tFa - .2); duFliegt(0, tFa + .25);
@@ -720,17 +720,17 @@ RAUM = el('raum1');
   aus('sch6', tKu - .35, .3);
   flug('ana6', tKu - .2, .65, 1100, 705, 50);
   neu('tre6', '<i></i>', '', 'data-gruppe="tresen6"', 'tresen');
-  akteur('tre6', { x: 2250, y: 785 }); tw('tre6', tKu - .25, .8, { x: 1450 }, 'sanft');
-  bild('kl6', 't-klingel', 130, 'data-gruppe="tresen6"');
-  akteur('kl6', { x: 2330, y: 660 }); tw('kl6', tKu - .25, .8, { x: 1530 }, 'sanft');
-  linien('klw6', [['klw6a', 'M1474 630c-9 13-9 29 0 42M1586 630c9 13 9 29 0 42', 'var(--b400)', 6], ['klw6b', 'M1458 618c-15 20-15 46 0 66M1602 618c15 20 15 46 0 66', 'var(--b400)', 6]]);
+  akteur('tre6', { x: 2250, y: 780 }); tw('tre6', tKu - .25, .8, { x: 1450 }, 'sanft');
+  bild('kl6', 't-klingel', 160, 'data-gruppe="tresen6"');
+  akteur('kl6', { x: 2330, y: 650 }); tw('kl6', tKu - .25, .8, { x: 1530 }, 'sanft');
+  linien('klw6', [['klw6a', 'M1466 624c-10 14-10 32 0 46M1594 624c10 14 10 32 0 46', 'var(--b400)', 6], ['klw6b', 'M1448 610c-16 22-16 52 0 74M1612 610c16 22 16 52 0 74', 'var(--b400)', 6]]);
   [tSz - .05, tIm - .05].forEach((t, k) => {
     tw('kl6', t, .07, { sy: .9 }, 'in'); tw('kl6', t + .07, .3, { sy: 1 }, 'sanft'); cue(t + .07, 'ding');
   });
   zeichne('klw6a', tSz + .02, .2); zeichne('klw6b', tSz + .1, .2); tw('klw6', tSz + .45, .4, { o: 0 });
   neu('pS6', 'Sie', '', '', 'plak sie');
   pop('pS6', tSz + .1, { x: 1530, y: 548 }, 'pop'); wackeln('pS6', tSz + .4, 3, 6);
-  bump('pS6', tIm, 1.2); akzent(tIm, .03);
+  bump('pS6', tSz + .7, 1.2); akzent(tIm, .03);
   // „außer … andere Regel“: ein Aushang fährt herunter und wieder hinauf
   neu('au6', 'Bei uns: <b>„du“</b>', '', '', 'haenge aushang');
   herab('au6', W('außer', 27) - .15, { x: 1290, y: 420 }, .8);
@@ -775,14 +775,14 @@ RAUM = el('raum0');
   akzent(tRe, .05);
   // „mit du sehr höflich“: Ana und Sabine kommen dazu, Ana verbeugt sich
   portrait('ana7', 'ana', 180); portrait('sab7', 'sabine', 180);
-  bogenEin('ana7', W('Man', 29) - .2, { x: 880, y: 800 }, 780, 990, 70, .65);
-  bogenEin('sab7', W('kann', 29) - .1, { x: 1068, y: 800 }, 1170, 990, 70, .65, null);
+  bogenEin('ana7', W('Man', 29) - .2, { x: 860, y: 800 }, 760, 990, 70, .65);
+  bogenEin('sab7', W('kann', 29) - .1, { x: 1080, y: 800 }, 1180, 990, 70, .65, null);
   bump('wcsL', WI(29, 4), 1.15); tw('wcgL', WI(29, 4) - .05, .25, { o: 1 }); tw('wcgL', WI(29, 4) + .6, .4, { o: 0 }); cue(WI(29, 4), 'pop');
-  verbeugen('ana7', W('höflich', 29) - .1, 12, .4); froh('sab7', W('höflich', 29)); nicken('sab7', W('sein', 29), 1.0); froh('ana7', W('sein', 29));
+  verbeugen('ana7', W('höflich', 29) - .1, 10, .4); froh('sab7', W('höflich', 29)); nicken('sab7', W('sein', 29), 1.0); froh('ana7', W('sein', 29));
   // „Jede Sprache … auf ihre Art“: Licht wird eins, Schilder fahren hoch, Treppe und Waage rücken zusammen
   const tJe = W('Jede', 30), tAr = W('Art', 30);
   licht(['L0', 'R0'], tJe, 0, 1.2); licht('M0', tJe, .95, 1.2);
-  tw('tr7', tJe + .2, 1.1, { x: 590 }, 'inout'); tw('wc', tJe + .3, 1.1, { x: 1300 }, 'inout'); cue(tJe + .2, 'whoosh');
+  tw('tr7', tJe + .2, 1.1, { x: 575 }, 'inout'); tw('wc', tJe + .3, 1.1, { x: 1300 }, 'inout'); cue(tJe + .2, 'whoosh');
   hinauf('schL', tAr - .55, .65); hinauf('schR', tAr - .45, .65);
   welle(tAr, 960, 640, 'var(--b300)', 520, 1.3);
   // „Anders ist nicht falsch“: die Titelplatte fährt herunter – Verbeugung aller wie beim Schlussapplaus
@@ -791,7 +791,7 @@ RAUM = el('raum0');
   herab('pl7', tAn - .65, { x: 960, y: 300 }, .9, 'whoosh');
   titelEin('pl7t', tAn, [tAn, tAn + .3, W('nicht', 31), tFa]);
   const tBow = tFa + .55;
-  verbeugen('ana7', tBow, 14, .45); verbeugen('sab7', tBow + .08, -14, .45);
+  verbeugen('ana7', tBow, 10, .45); verbeugen('sab7', tBow + .08, -10, .45);
   tw('tr7b', tBow, .3, { r: 16, y: 10 }, 'sanft'); tw('tr7b', tBow + .75, .45, { r: 0, y: 0 }, 'sanft');
   tw('wc', tBow + .04, .3, { y: 520, sy: .94 }, 'sanft'); tw('wc', tBow + .8, .45, { y: 500, sy: 1 }, 'sanft');
   cue(tBow, 'erfolg'); akzent(tBow + .1, .04);
