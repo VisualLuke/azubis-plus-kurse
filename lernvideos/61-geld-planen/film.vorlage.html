@@ -250,10 +250,10 @@
   <div class="a welle" id="welle5" data-frei></div>
   <div class="a glas" id="gN" data-etikett="Notgroschen" style="width:260px;height:320px"></div>
   <div class="a portrait" id="mai5" data-f="mai" style="width:160px;height:160px"></div>
-  <div class="a icon" id="handy5" data-gruppe="handy5" style="width:170px">{{handy}}</div>
-  <svg class="a" id="riss5" data-gruppe="handy5" viewBox="0 0 100 160" style="width:56px;height:90px"><path class="zeichnen" pathLength="1" d="M30 10L52 52L38 70L64 104L50 124L70 150M52 52L74 60M64 104L40 112" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a icon" id="handy5" data-gruppe="handy5" style="width:220px">{{handy}}</div>
+  <svg class="a" id="riss5" data-gruppe="handy5" viewBox="0 0 100 160" style="width:72px;height:116px"><path class="zeichnen" pathLength="1" d="M30 10L52 52L38 70L64 104L50 124L70 150M52 52L74 60M64 104L40 112" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
   <div class="a plakette gruen" id="ok5" data-gruppe="handy5" style="width:48px;height:48px"></div>
-  <div class="a icon" id="rechnung5" data-gruppe="rechnung5" style="width:170px">{{rechnung}}</div>
+  <div class="a icon" id="rechnung5" data-gruppe="rechnung5" style="width:220px">{{rechnung}}</div>
   <div class="a plakette rot" id="ausruf5" data-gruppe="rechnung5">!</div>
   <div class="a stempel61 gruen" id="bezahlt5" data-gruppe="rechnung5">bezahlt</div>
 
@@ -262,7 +262,7 @@
     <div class="zeile" id="z6a" style="top:84px"></div>
     <div class="zeile minus" id="z6b" style="top:162px"></div>
     <div class="zeile minus" id="z6c" style="top:240px"></div>
-    <div class="a strich" id="strich6" data-gruppe="notiz6" style="left:40px;top:322px"></div>
+    <div class="a strich" id="strich6" data-gruppe="notiz6"></div>
     <div class="zeile summe" id="z6d" style="top:352px"></div>
     <div class="a" id="stift6" style="width:64px" data-frei>{{stift}}</div>
   </div>
@@ -281,9 +281,9 @@
   </div>
   <div class="a handy61" id="handy7" data-gruppe="handy7"><div class="schirm"><small>Ausgaben</small>
     <div class="eintrag">Brot<i></i></div><div class="eintrag">Kaffee<i></i></div><div class="eintrag">Shampoo<i></i></div><div class="eintrag">Kaffee<i></i></div><div class="eintrag">Kaffee<i></i></div></div><div class="kerbe"></div></div>
-  <div class="a icon" id="b7a" data-gruppe="turm7" style="width:96px">{{becher}}</div>
-  <div class="a icon" id="b7b" data-gruppe="turm7" style="width:96px">{{becher}}</div>
-  <div class="a icon" id="b7c" data-gruppe="turm7" style="width:96px">{{becher}}</div>
+  <div class="a icon" id="b7a" data-gruppe="turm7" style="width:130px">{{becher}}</div>
+  <div class="a icon" id="b7b" data-gruppe="turm7" style="width:130px">{{becher}}</div>
+  <div class="a icon" id="b7c" data-gruppe="turm7" style="width:130px">{{becher}}</div>
   <div class="a icon" id="stapel7" data-gruppe="turm7" style="width:150px">{{muenzstapel}}</div>
   <div class="a welle" id="welle7" data-frei></div>
   <div class="a icon" id="lupe7" data-frei style="width:150px">{{lupe}}</div>
@@ -818,14 +818,14 @@ const TZ = SE(14) + .25;
   set('rechnung5', tRe, { o: 1 });
   tw('rechnung5', tRe, .9, { x: X(4, 860), y: Y(4, 650) }, 'out');
   [-10, 8, -4, 2, 0].forEach((r, i) => tw('rechnung5', tRe + i * .18, .18, { r }, 'sinus')); klang(tRe, 'whoosh');
-  pop('ausruf5', W('Rechnung', 17) + .1, P(4, 930, 580), 'klick');
-  const tH = W('kommt', 17) - .05;
+  pop('ausruf5', W('Rechnung', 17) - .05, P(4, 942, 572), 'klick');
+  const tH = W('Rechnung', 17) + .15;
   [[860, 330], [860, 330], [860, 640], [860, 640]].forEach(([x, y], k) => muenzSprung(tH + k * .1, X(4, 520), Y(4, 470), X(4, x), Y(4, y), { h: 150, d: .55, g: 46, s1: .6 }));
   pegel('gN', tH, .2, .5, 'inout'); klang(tH + .5, 'muenze');
   tw('riss5', tH + .6, .3, { o: 0 }); bump('handy5', tH + .6, 1.08);
-  pop('ok5', tH + .7, P(4, 925, 255), 'ding');
+  pop('ok5', tH + .7, P(4, 938, 236), 'ding');
   tw('ausruf5', tH + .7, .2, { s: 0 }, 'sinus');
-  akteur('bezahlt5', { ...P(4, 860, 660), o: 0, s: 1.7, r: -3 });
+  akteur('bezahlt5', { ...P(4, 860, 676), o: 0, s: 1.7, r: -3 });
   tw('bezahlt5', tH + .85, .12, { o: 1 }); tw('bezahlt5', tH + .85, .22, { s: 1 }, 'in'); klang(tH + 1.07, 'plopp'); wackeln('bezahlt5', tH + 1.07, 3, 2);
   wackler(tH + 1.07, 5, .3);
   froh('mai5', tH + .9); huepfen('mai5', tH + 1.0, 12);
@@ -833,7 +833,7 @@ const TZ = SE(14) + .25;
 }
 
 /* ================= Übergang 5 → 6: Seite umblättern ================= */
-const TB = SE(17) + .25;
+const TB = SE(17) + .65;
 {
   const d1 = .45, d2 = .5;
   HOOKS.push(t => {
@@ -853,9 +853,9 @@ const TB = SE(17) + .25;
 {
   akteur('notiz6', P(5, 455, 450));
   akteur('beispiel6', { ...P(5, 590, 230), o: 0, s: 1.8, r: 3 });
-  const tB = W('Beispiel', 18) - .15;
+  const tB = Math.max(W('Beispiel', 18) - .15, TB + 1.0);
   tw('beispiel6', tB, .1, { o: 1 }); tw('beispiel6', tB, .22, { s: 1 }, 'in'); klang(tB + .22, 'plopp'); wackeln('beispiel6', tB + .22, 3, 2);
-  titelEin('tb6', W('Beispiel', 18) - .1, { unter: W('etwa', 21) - .1 });
+  titelEin('tb6', Math.max(W('Beispiel', 18) - .1, TB + 1.05), { unter: W('etwa', 21) - .1 });
   pop('mai6', W('Mai', 18) - .15, P(5, 930, 690), 'pop', 'sanft'); froh('mai6', W('Mai', 18));
   akteur('g6', P(5, 920, 400)); pegelSofort('g6', 0, 0);
   pop('g6', W('Mai', 18) - .05, P(5, 920, 400), null, 'sanft');
@@ -931,7 +931,7 @@ fahrt(T67, 6, 1.0);
   [1, 3, 4].forEach((i, k) => {
     const z = ZE[i].parentElement; HOOKS.push(t => { z.style.background = t >= tK + k * .18 && t < SE(24) ? 'var(--warning-bg)' : ''; });
   });
-  const BE = [['b7a', 860], ['b7b', 784], ['b7c', 708]];
+  const BE = [['b7a', 850], ['b7b', 761], ['b7c', 672]];
   BE.forEach(([id, y], k) => {
     const t = tK + k * .2, zy = 430 - 235 + 62 + [1, 3, 4][k] * 68 + 40;
     akteur(id, { ...P(6, 520, zy), s: .4, o: 0 }); set(id, t, { o: 1 });
@@ -992,8 +992,8 @@ fahrt(T78, 7, 1.0);
   pegel('g8', tT, .5, .5, 'inout'); klang(tT, 'whoosh');
   // Ratenkäufe, „Jetzt kaufen, später zahlen“: Ratenzettel stapeln sich zum wackligen Turm
   const tW = W('Ratenkäufe', 27) - .3;
-  akteur('wagen8', { ...P(7, 1260, 790) });
-  tw('wagen8', tW, .8, { x: X(7, 900) }, 'out'); [4, -3, 2, 0].forEach((r, i) => tw('wagen8', tW + .6 + i * .12, .12, { r }, 'sinus')); klang(tW, 'whoosh');
+  akteur('wagen8', { ...P(7, 1090, 790), o: 0 });
+  tw('wagen8', tW, .2, { o: 1 }); tw('wagen8', tW, .8, { x: X(7, 900) }, 'out'); [4, -3, 2, 0].forEach((r, i) => tw('wagen8', tW + .6 + i * .12, .12, { r }, 'sinus')); klang(tW, 'whoosh');
   const RT = [['r8a', W('Jetzt', 27) - .1], ['r8b', W('kaufen', 27)], ['r8c', W('später', 27)], ['r8d', W('zahlen', 27)], ['r8e', W('schnell', 27)]];
   RT.forEach(([id, t], i) => {
     const y = 640 - i * 62;
@@ -1005,7 +1005,7 @@ fahrt(T78, 7, 1.0);
   RT.forEach(([id], i) => wackeln(id, tS + i * .03, 5, 3 + i));
   pop('schulden8', tS, P(7, 720, 290), 'klick'); wackler(tS, 6, .35);
   // Wenn das Geld nicht reicht: Wagen fährt weg, die Tür zur Beratung kommt, Mai geht hin
-  tw('wagen8', W('Wenn', 28), .6, { x: X(7, 1280), o: 0 }, 'in');
+  tw('wagen8', W('Wenn', 28), .6, { x: X(7, 1080) }, 'in'); tw('wagen8', W('Wenn', 28) + .35, .25, { o: 0 });
   tw('spaeter8', W('Wenn', 28), .3, { o: 0, s: .8 }, 'in');
   ein('tuer8', W('Schuldnerberatung', 28) - .45, P(7, 935, 500), { y: 70 }, 'whoosh');
   pop('mai8', W('hilft', 28) - .1, P(7, 935, 800), 'pop', 'sanft');
@@ -1022,7 +1022,7 @@ fahrt(T78, 7, 1.0);
   [...RT].reverse().forEach(([id], i) => { flug(id, tK + i * .1, .5, X(7, 935), Y(7, 540), 80, { s: .4 }); tw(id, tK + i * .1 + .4, .12, { o: 0 }); });
   [['gew8a', 'kette8a'], ['gew8b', 'kette8b']].forEach(([g, k], i) => { tw(g, tK + .2 + i * .1, .45, { y: Y(7, 1000), o: 0 }, 'in'); tw(k, tK + .2, .2, { o: 0 }); });
   tw('g8', tK + .3, .6, { y: Y(7, 600) }, 'sanft');
-  pop('frei8', W('kostenlos', 29) - .1, P(7, 720, 560), 'erfolg');
+  pop('frei8', W('kostenlos', 29) - .1, P(7, 748, 700), 'erfolg');
   froh('mai8', W('kostenlos', 29)); huepfen('mai8', W('kostenlos', 29) + .1, 12); akzent(W('kostenlos', 29), .03);
   textAus('tb8', SE(29) + .1);
 }

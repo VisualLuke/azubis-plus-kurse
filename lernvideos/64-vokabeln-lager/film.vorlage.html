@@ -413,7 +413,7 @@ const GENUS = ['der', 'die', 'das'];
 const CODE = (() => { let x = 4, s = ''; const b = [3, 1, 2, 1, 1, 3, 2, 1, 4, 1, 1, 2, 3, 1, 2, 2, 1, 1, 3, 1, 2, 4, 1, 2, 1, 3, 1, 1, 2, 3];
   b.forEach((w, k) => { if (k % 2 === 0) s += `<rect x="${x}" y="0" width="${w * 1.6}" height="40" fill="var(--ink)"/>`; x += w * 1.6 + 1.4; });
   return `<svg viewBox="0 0 ${Math.ceil(x + 4)} 40" preserveAspectRatio="none">${s}</svg>`; })();
-const KT_X = 470, KT_Y = 755;     // Kartonmitte im Fach
+const KT_X = 470, KT_Y = 741;     // Kartonmitte im Fach
 function karton(i, o) {
   const X = FX(i), Y = FY(i), id = 'kt' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral';
   const woerter = o.wort.split(' ');
@@ -433,12 +433,12 @@ function karton(i, o) {
   const bue = el('bue' + i);
   HOOKS.push(t => bue.style.setProperty('--rw', ((wertBei(id, 'x', t) - x) / 15 * 57.3).toFixed(1) + 'deg'));
   return {
-    ein: (t, d = .8) => { tw(id, t, .3, { o: 1 }); tw(id, t, d, { x }, 'sanft'); cue(t, 'whoosh'); tw(id, t + d - .15, .12, { sx: 1.03, sy: .97 }, 'sinus'); tw(id, t + d - .03, .35, { sx: 1, sy: 1 }, 'sanft'); },
+    ein: (t, d = .75) => { tw(id, t, .3, { o: 1 }); tw(id, t, d, { x }, 'sanft'); cue(t, 'whoosh'); tw(id, t + d - .15, .12, { sx: 1.03, sy: .97 }, 'sinus'); tw(id, t + d - .03, .35, { sx: 1, sy: 1 }, 'sanft'); },
     // Laser fährt über den Karton; am Strichcode piept es, der Artikel-Aufkleber klebt sich auf
     scan: t => {
-      const t0 = t - .62;
-      tw(id + 'l', t0, .1, { o: 1 }); tw([id + 'k', id + 'l'], t0, .55, { x: X + 790 }, 'inout'); tw(id + 'l', t0 + .55, .15, { o: 0 });
-      tw(id + 'k', t0 + .75, .6, { x: X + 160 }, 'inout');
+      const t0 = t - .5;
+      tw(id + 'l', t0, .08, { o: 1 }); tw([id + 'k', id + 'l'], t0, .45, { x: X + 790 }, 'inout'); tw(id + 'l', t0 + .45, .15, { o: 0 });
+      tw(id + 'k', t0 + .7, .6, { x: X + 160 }, 'inout');
       cue(t0, 'scan'); cue(t - .07, 'ding');
       HOOKS.push(z => el(id + 'c').classList.toggle('ok', z >= t - .07));
       bump(id + 'c', t - .07, 1.08);
@@ -497,7 +497,7 @@ function stapler(id, gr, attr = '') {
     setzen: (x, gy, basis = {}) => { cx = x; cy = gy - (146 - 80) * k; for (const [t, [dx, dy]] of Object.entries(teile)) akteur(t, { x: cx + dx, y: cy + dy, ...basis }); },
     fahren: (t, x, d, ziel = []) => { const dx = x - cx; cx = x; for (const [tl, [ox]] of Object.entries(teile)) tw(tl, t, d, { x: cx + ox }, 'inout');
       for (const z of ziel) tw(z, t, d, { x: wertBei(z, 'x', t) + dx }, 'inout');
-      const u = Math.abs(dx) / (Math.PI * rd * .875) * 360 * Math.sign(-dx);
+      const u = Math.abs(dx) / (Math.PI * rd * .875) * 360 * Math.sign(dx);
       for (const r of [id + 'v', id + 'h']) tw(r, t, d, { r: wertBei(r, 'r', t) + u }, 'inout'); cue(t, 'whoosh'); },
     heben: (t, h, d, ziel = []) => { const dy = h - hub; hub = h; tw(id + 'g', t, d, { y: cy - hub }, 'inout'); for (const z of ziel) tw(z, t, d, { y: wertBei(z, 'y', t) - dy }, 'inout'); cue(t, 'scan'); },
     leuchte: (t0, t1) => HOOKS.push(t => { const e = el(id + 'w'); if (t < t0 || t > t1) return; const q = .55 + .45 * Math.sin((t - t0) * 9); e.style.opacity = (q * e.style.opacity).toFixed(3); }),
@@ -549,9 +549,6 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   WESTE.yu0 = tY + .35; cue(tY + .35, 'whoosh');
   nicken('yu0', tY + .2, 1); FROH.push(['yu0', tY + .9, 99]); akzent(tY, .03);
   bump('yu0', W('Ausbildung', 2), 1.05);
-  neu('ber0', 'Fachkraft für Lagerlogistik', '', 'data-frei', 'etikett');
-  const pb = W0(960, 640);
-  pop('ber0', W('Fachkraft', 2) - .1, { x: pb.x, y: pb.y, s: 1 / Z0 }, 'pop');
   akzent(W('Lagerlogistik', 2), .03);
   // Farb-Legende der · die · das
   neu('leg0', GENUS.map((g, k) => `<span class="lg ${g}" id="lg0${k}">${g}</span>`).join(''), 'white-space:nowrap', 'data-frei');
@@ -563,7 +560,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // Zoom ins erste Fach: Yusuf, Etikett und Legende bleiben in der Halle zurück
   const tZ = SE(3) + .05;
   fahrt(tZ, FX(2) + FW / 2, FY(2) + FH / 2, 1, 1.35, false);
-  aus(['yu0', 'ber0', 'leg0'], tZ + .1, .5);
+  aus(['yu0', 'leg0'], tZ + .1, .5);
   tw(['kg0', 'kg1', 'kg2'], tZ + .2, .6, { o: 0 });
 }
 
@@ -571,7 +568,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
 {
   const i = 2, X = FX(i), Y = FY(i), P = SE(3) + .05;
   const k = karton(i, { art: 'der', wort: 'Sicherheitsschuh', zeile: ['Plural', 'die Sicherheitsschuhe'], gr: 62, plgr: 38 });
-  k.ein(P + .55); k.scan(W('Der', 4)); k.wort(W('Sicherheitsschuh', 4)); k.zeile(W('Die', 5));
+  k.ein(P + .25); k.scan(W('Der', 4)); k.wort(W('Sicherheitsschuh', 4)); k.zeile(W('Die', 5));
   const sl = schild(i, 8, 'der', ['sicherheitsschuhe']); sl.ein(SA(8) - .55);
   // Schuh 1 landet, Schuh 2 setzt sich daneben
   const SB = 270, sk = SB / 160, sy = Y + GY - (132 - 80) * sk;
@@ -734,7 +731,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   for (let r = 0; r < 2; r++) for (let c = 0; c < 2; c++) { const id = `k5${r}${c}`; kiste(id, 104, 84, G, false); pk.push(id); akteur(id, { x: PX - 54 + c * 110, y: py - 17 - 42 - r * 98 }); }
   ['pa5', ...pk].forEach((id, n) => pop(id, P + .7 + n * .08, { x: wertBei(id, 'x', 0), y: wertBei(id, 'y', 0) }, n ? null : 'pop'));
   // Gabelstapler fährt mit drehenden Rädern heran (leerer Sitz, Warnleuchte blinkt); Gabel unter die Palette
-  const xEnd = PX + PBB / 2 - 38 * st.k + 260 - 4;   // Gabelträger an der Palette
+  const xEnd = PX + PBB / 2 + 42 * st.k;   // Gabelträger an der Palette
   st.setzen(xEnd + 620, Y + GY, { o: 0 });
   const tS = W('Gabelstapler', 19) - .95;
   tw(st.ids, tS, .25, { o: 1 }); st.fahren(tS, xEnd, 1.2); akzent(W('Gabelstapler', 19) + .3, .03);
@@ -761,17 +758,17 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // Den Fahrausweis machst du später
   bump('da5', W('Fahrausweis', 23), 1.08); wackeln('da5', W('später', 23), 3, 3);
   // Bis dahin fahre ich, und du hältst Abstand: Fahrbereich, Yusuf außerhalb, Abstandspfeil
-  const ZL = X + 1190, ZR = X + 1850, ZT = Y + 540;
+  const ZL = X + 1140, ZR = X + 1850, ZT = Y + 540;
   neu('zo5', '', `width:${ZR - ZL}px;height:${Y + GY + 4 - ZT}px`, 'data-frei', 'zone');
   pop('zo5', W('fahre', 24) - .25, { x: (ZL + ZR) / 2, y: (ZT + Y + GY + 4) / 2 }, 'plopp', 'out');
-  st.fahren(W('fahre', 24), xWeg - 110, .7, last); st.fahren(W('fahre', 24) + .8, xWeg, .7, last);
+  st.fahren(W('fahre', 24) - .1, xWeg - 80, .7, last); st.fahren(W('fahre', 24) + .7, xWeg, .7, last);
   const tA = W('Abstand', 24) - .45;
-  portrait('yu5', 'Yusuf', 170); WESTE.yu5 = -1;
-  pop('yu5', tA - .3, { x: X + 1000, y: Y + 800 }, 'pop');
-  neu('pf5', '', `width:${ZL - X - 1100}px`, 'data-frei', 'pfeil2');
-  akteur('pf5', { x: X + 1100 + (ZL - X - 1100) / 2, y: Y + 800, sx: 0 }); tw('pf5', tA, .5, { sx: 1 }, 'sanft'); cue(tA, 'whoosh');
+  portrait('yu5', 'Yusuf', 160); WESTE.yu5 = -1;
+  pop('yu5', tA - .3, { x: X + 960, y: Y + 810 }, 'pop');
+  neu('pf5', '', `width:${ZL - X - 1078}px`, 'data-frei', 'pfeil2');
+  akteur('pf5', { x: X + 1064 + (ZL - X - 1078) / 2, y: Y + 810, sx: 0 }); tw('pf5', tA, .5, { sx: 1 }, 'sanft'); cue(tA, 'whoosh');
   neu('ab5', 'Abstand', '', '', 'etikett klein');
-  pop('ab5', W('Abstand', 24), { x: X + 1000, y: Y + 660 }, 'ding'); akzent(W('Abstand', 24), .04);
+  pop('ab5', W('Abstand', 24), { x: X + 1000, y: Y + 670 }, 'ding'); akzent(W('Abstand', 24), .04);
   nicken('yu5', W('Abstand', 24) + .2, 1);
   sl.aus(SE(24) + .5);
 }
@@ -810,32 +807,32 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   FE.forEach(([x, b], n) => {
     const id = 'lp6' + n; ladung(id, 170);
     const t = W('Paletten', 27) - .3 + n * .15;
-    ein(id, t, { x: X + x, y: Y + b - 63 - (n === 0 ? 0 : 16) }, { x: 200 }, n ? null : 'whoosh'); cue(t + .35, 'klick');
+    ein(id, t, { x: X + x, y: Y + b - 63 }, { x: 200 }, n ? null : 'whoosh'); cue(t + .35, 'klick');
   });
   // Die Palette kommt ganz oben ins Hochregal: Stapler hebt sie mit ausfahrendem Hubmast ins oberste Fach
-  const st = stapler('st6', 270, 'data-gruppe="st6"'), sx0 = X + RR + 20 + 135 - 38 * (270 / 160) + 50;
-  st.setzen(sx0 + 300, Y + GY, { o: 0 });
+  const st = stapler('st6', 270, 'data-gruppe="st6"'), kk = st.k;
+  const cx6 = X + 1660 + 42 * kk;                          // Palette (170 breit) liegt rechts neben dem Regal auf der Gabel
+  st.setzen(cx6 + 320, Y + GY, { o: 0 });
   ladung('lp6x', 170);
-  const fg = 139 * st.k - 80 * st.k;   // Gabel relativ zur Körpermitte
-  const tS = SA(28) - .5;
-  tw(st.ids, tS, .25, { o: 1 });
-  akteur('lp6x', { x: sx0 + 300 - 135 + 38 * st.k - 85 - 10, y: Y + GY - 1 * (146 - 80) * st.k + fg - 63, o: 0 });
-  tw('lp6x', tS, .25, { o: 1 });
-  st.fahren(tS, sx0, .9, ['lp6x']); st.leuchte(tS, 999);
-  ho6aus: aus('ho6', tS, .3);
-  const hub = (Y + GY - 1 * (146 - 80) * st.k + fg) - (Y + B[2]) + 16;
-  neu('ms6', '', `height:${hub + 40}px`, 'data-gruppe="st6"', 'mast2');
-  akteur('ms6', { x: sx0 - 135 + 53 * st.k, y: Y + GY - 146 * st.k + 22 * st.k - (hub + 40) / 2, sy: 0 });
-  set('ms6', 0, { y: Y + GY - (146 - 22) * st.k - (hub + 40) / 2 + (hub + 40) / 2 });
-  const tH = W('ganz', 28) - .4;
-  tw('ms6', tH - .2, .5, { sy: 1, y: Y + GY - (146 - 22) * st.k - (hub + 40) / 2 }, 'sanft');
-  st.heben(tH, hub, 1.0, ['lp6x']);
-  const tE = W('Hochregal', 28) - .25;
+  const gabelOben = Y + GY - 7 * kk;                        // Oberkante der Gabel (Einheit 139)
+  const tS = SA(28) - .6;
+  akteur('lp6x', { x: cx6 + 320 - 42 * kk - 85, y: gabelOben - 63, o: 0 });
+  tw([...st.ids, 'lp6x'], tS, .25, { o: 1 });
+  st.fahren(tS, cx6, .9, ['lp6x']); st.leuchte(tS, 999);
+  aus('ho6', tS, .3);
+  const hub = gabelOben - (Y + B[2]);
+  const mastH = hub - 74 * kk + 40, mastFuss = Y + GY - 126 * kk + 6;
+  neu('ms6', '', `height:${mastH}px`, 'data-gruppe="st6"', 'mast2');
+  akteur('ms6', { x: cx6 - 27 * kk, y: mastFuss - mastH / 2, sy: 0 });
+  const tH = W('ganz', 28) - .45;
+  tw('ms6', tH - .15, .45, { sy: 1 }, 'sanft');
+  st.heben(tH, hub, 1.0, ['lp6x']); akzent(W('oben', 28), .03);
+  const tE = W('Hochregal', 28) - .3;
   tw('lp6x', tE, .5, { x: X + RL + 300 }, 'sanft'); cue(tE, 'whoosh'); cue(tE + .5, 'klick');
   neu('fr6', '', 'width:186px;height:166px', 'data-frei', 'fachrahmen voll');
   akteur('fr6', { x: X + RL + 300, y: Y + (B[2] + B[3]) / 2 + 8, o: 0 });
-  tw('fr6', tE + .45, .3, { o: 1 }); haken('ok6', tE + .5, X + RL + 300, Y + B[3] - 50);
-  st.heben(tE + .6, 0, .8); tw('ms6', tE + .9, .5, { sy: 0, y: Y + GY - (146 - 22) * st.k }, 'inout');
+  tw('fr6', tE + .45, .3, { o: 1 }); haken('ok6', tE + .5, X + RL + 300, Y + B[3] - 60);
+  st.heben(tE + .6, 0, .8); tw('ms6', tE + 1.1, .4, { sy: 0 }, 'in');
   akzent(W('Hochregal', 28), .04);
   sl.aus(SE(28) + .5);
 }
