@@ -48,6 +48,10 @@ Abspann: „Feierabend heißt: abschalten – für alle.“
 - **Warum:** BAuA-Befunde (zu kurze Ruhezeit → müde, mehr Fehler, mehr Unfälle) vereinfacht auf B1.
 - **Keine großen orangen Flächen:** Abendhimmel in Violett-Tönen, die Sonne bleibt ein kleiner gelber Kreis.
 - **Weggelassen:** Urlaubsdauer in Tagen, Rufbereitschaft, Überstunden – würden die Kernbotschaft überladen.
+- **Umsetzung im Bild (Film):** Die Sorgenwolke verpufft schon bei „Nein, sicher nicht.“; die Auflösung in Szene 6 trägt der
+  Papierflieger aus der Hängematte. Die Ruhezeit läuft als Spur vom Feierabend-Punkt des Bogens durch einen Nachtbogen unter
+  dem Boden bis zum nächsten Morgen (Sonne bzw. Mond an der Spitze). In „Bei dir?“ zeigen zwei Kreise (Werkzeug, Mond)
+  „enger verbunden / ähnlich / ganz anders“, dann großes Fragezeichen und Gedankenbläschen (Sonne, Mond, Handy, Herz).
 
 ## Sprechertext
 

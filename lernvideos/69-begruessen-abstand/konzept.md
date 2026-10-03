@@ -48,6 +48,13 @@ Abspann: „Hand, Nicken oder Umarmung – jede Begrüßung zeigt Respekt.“
   Händedrucks in Sekunden; Corona-Hinweise.
 - **Keine Daumen-Geste**, keine echten Paare: die zwei neutralen Pins in Szene 2/4 haben kein Gesicht (nur Kreise), damit keine
   weiteren Menschen im Bild sind.
+- **Umsetzung im Film (03.10.2026):** Das Brett hat drei Felder – „Werkstatt“ (Mitte), „Zuhause“ (dahinter, Kamerafahrt den
+  Spielweg hinauf) und das Würfelfeld (davor). In der Schräge (Szene 4) sieht man das Feld „Zuhause“ im Hintergrund; dort
+  rücken die beiden neutralen Pins näher, ein Herz steigt auf. „Beim Abschied“ zeigen Kwame und Sabine einen zweiten
+  Händedruck (statt des Gesellen, der in Szene 3 an der Werkbank gebraucht wird). Das Gedankenbläschen der Denkpause zeigt
+  Hand, Nick-Zeichen, Herz und Winken. Der Schluss spielt auf dem Würfelfeld (alle Pins mit eigenem Kreis kommen dazu),
+  die weiße Platte „Anders ist nicht falsch.“ wird zum ruhigen Abspann mit der Zeile „Hand, Nicken oder Umarmung – jede
+  Begrüßung zeigt Respekt.“
 
 ## Sprechertext
 

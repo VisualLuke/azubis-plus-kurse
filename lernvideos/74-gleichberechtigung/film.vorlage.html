@@ -422,15 +422,13 @@ const lerp = (a, b, u) => a + (b - a) * u;
   s += R(3290, 1180, 380, 26, 'var(--b300)', 'rx="8"');
   s += R(4120, 1060, 360, 240, 'var(--b100)', 'rx="18" stroke="var(--b200)" stroke-width="10"');
   s += R(4150, 1090, 120, 90, 'var(--surface)', 'rx="8"') + R(4300, 1110, 140, 70, 'var(--surface)', 'rx="8"') + R(4180, 1200, 150, 70, 'var(--surface)', 'rx="8"');
-  // Empfangstheke im Eingang
-  s += R(860, 2700, 260, 210, 'var(--b200)', 'rx="14"') + R(840, 2684, 300, 30, 'var(--b400)', 'rx="10"');
   s += '</svg>';
   el('bau').innerHTML = s;
 }
 // Gegenstände im Bild (Deko, nicht animiert): Name, x, y (Mitte), Breite
 const DEKO = [
   ['wolke', 600, 120, 520], ['wolke', 3900, -40, 640], ['wolke', -200, 1500, 460], ['wolke', 5300, 900, 520],
-  ['pflanze', 1010, 2600, 150], ['bild', 470, 2160, 170], ['lampe', 700, 2010, 200], ['uhr', 1320, 2180, 150],
+  ['bild', 470, 2160, 170], ['lampe', 700, 2010, 200], ['uhr', 1320, 2180, 150],
   ['pflanze', 1580, 1100, 190], ['bild', 760, 1060, 210], ['uhr', 1450, 1080, 150], ['lampe', 900, 990, 200], ['ordner', 430, 1720, 160], ['ordner', 520, 1720, 160],
   ['lampe', 2450, 960, 220], ['tisch', 2050, 1780, 280], ['stuhl', 1880, 1790, 180], ['tisch', 2900, 1780, 280], ['stuhl', 3060, 1790, 180], ['pflanze', 1820, 1100, 200],
   ['topf', 3400, 1135, 150], ['kocher', 3560, 1125, 140], ['lampe', 3950, 980, 210],
@@ -472,6 +470,8 @@ el('blaseW').innerHTML = '<div class="zipfel" style="left:500px"></div>' + BLASE
 
 /* ---------- Helfer ---------- */
 const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// große Elemente (Weltmaßstab) erscheinen weich: Deckkraft und Größe ohne Überschwung
+const sacht = (id, t, basis, snd = null) => { akteur(id, { ...basis, o: 0, s: (basis.s ?? 1) * .8 }); tw(id, t, .8, { o: 1, s: basis.s ?? 1 }, 'inout'); if (snd) cue(t, snd); };
 const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
 const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
 const huepfen = (id, t, h = 18) => {
@@ -485,9 +485,9 @@ const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12
 const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
 // Sprung von Stelle zu Stelle (Squash & Stretch beim Absprung und bei der Landung)
 const sprung = (id, t, x, y, h = 80, d = .4) => {
-  tw(id, t, .07, { sy: .9, sx: 1.06 }, 'sinus');
-  tw(id, t + .07, d, { x, y }, 'inout', { bogen: h }); tw(id, t + .07, .14, { sy: 1.06, sx: .96 }, 'sinus');
-  landen(id, t + .07 + d, .9); cue(t + .07 + d, 'plopp');
+  tw(id, t, .1, { sy: .95, sx: 1.03 }, 'sinus');
+  tw(id, t + .07, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .1, .16, { sy: 1.03, sx: .98 }, 'sinus');
+  tw(id, t + .07 + d, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .19 + d, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t + .07 + d, 'plopp');
 };
 const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
 const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
@@ -620,7 +620,7 @@ const notiz = (nr, t0, t1, zeiten) => {
 
 /* ===================== 1 · Situation (ohne Titel, Bild mittig) ===================== */
 // Eingang: Priya kommt durch die Haustür
-const TUER_EIN = 360;
+const TUER_EIN = 390;
 akteur('haustuer', { x: TUER_EIN, y: 2740 });
 rel(el('haustuer').querySelector('.blatt'), {});
 {
@@ -638,8 +638,8 @@ rel(el('haustuer').querySelector('.blatt'), {});
   huepfen('priya1', W('Überraschungen', 1), 26); akzent(W('Überraschungen', 1), .03);
   // Treppe hoch zur Chefin
   const tT = SE(1) + .05;
-  sprung('priya1', tT, 1110, 2790, 60, .3);
-  [[1260, 2550], [1380, 2310], [1500, 2070], [1400, 1765]].forEach(([x, y], i) => sprung('priya1', tT + .36 + i * .32, x, y, 60, .25));
+  sprung('priya1', tT, 1110, 2790, 50, .32);
+  [[1260, 2550], [1380, 2310], [1500, 2070], [1400, 1765]].forEach(([x, y], i) => sprung('priya1', tT + .4 + i * .36, x, y, 50, .3));
   fahrt(tT + .2, 1.1, 958, 1400,.86);
 }
 // Flur oben: Tür „Chefin“ geht auf, die Chefin lächelt
@@ -760,8 +760,9 @@ const OX = 2250, OY = 1600, OZ = .3;
   landen('wagen2', W('Väter', 10) + 1.0, .4);
   bump('wagen2', W('Elternzeit', 10) + .1, 1.06);
   aufSchale('ezL', 'L', W('beiden', 10) - .5, 118); neigen(W('beiden', 10) + .05, -9);
-  aufSchale('ezR', 'R', W('Eltern', 10) - .3, 118); neigen(W('Eltern', 10) + .25, 0); stoss(W('Eltern', 10) + .3, 3);
-  waageLeuchtet(W('Eltern', 10) + .6, 1.2); cue(W('Eltern', 10) + .7, 'erfolg'); akzent(W('Eltern', 10) + .6, .03);
+  const tEl = A(wort('Eltern', wort('beiden', satz(10).start)));
+  aufSchale('ezR', 'R', tEl - .3, 118); neigen(tEl + .25, 0); stoss(tEl + .3, 3);
+  waageLeuchtet(tEl + .6, 1.2); cue(tEl + .7, 'erfolg'); akzent(tEl + .6, .03);
   aus(['ezL', 'ezR', 'wagen2'], SE(10) + .4, .35);
 }
 
@@ -775,10 +776,10 @@ const OX = 2250, OY = 1600, OZ = .3;
   KA.forEach((id, i) => pop(id, W('heißt', 11) - .1 + i * .1, { x: PL[i][0], y: PL[i][1] }, i % 2 ? null : 'pop'));
   // mischen: zum Stapel, Riffeln, neu austeilen – zweimal
   const mischen = (t, ziel) => {
-    KA.forEach((id, i) => { flug(id, t + i * .05, .4, 2470, 1430 - i * 6, 60, { r: [-3, 2, -2, 3][i] }); });
+    KA.forEach((id, i) => { tw(id, t + i * .05, .45, { x: 2470, y: 1430 - i * 6, r: [-3, 2, -2, 3][i] }, 'sinus', { bogen: 50 }); });
     cue(t, 'whoosh');
-    KA.forEach((id, i) => { const tr = t + .5 + i * .07; tw(id, tr, .1, { y: 1430 - i * 6 - 34, x: 2470 + (i % 2 ? 40 : -40) }, 'sinus'); tw(id, tr + .1, .12, { y: 1430 - i * 6, x: 2470 }, 'sinus'); cue(tr, 'klick'); });
-    KA.forEach((id, i) => { const ta = t + 1.05 + i * .14, [x, y] = PL[ziel[i]]; flug(id, ta, .42, x, y, 140, { r: 0 }); landen(id, ta + .42, .5); cue(ta + .4, 'plopp'); });
+    KA.forEach((id, i) => { const tr = t + .52 + i * .07; tw(id, tr, .16, { y: 1430 - i * 6 - 20, x: 2470 + (i % 2 ? 26 : -26) }, 'sinus'); tw(id, tr + .16, .16, { y: 1430 - i * 6, x: 2470 }, 'sinus'); cue(tr, 'klick'); });
+    KA.forEach((id, i) => { const ta = t + 1.1 + i * .13, [x, y] = PL[ziel[i]]; tw(id, ta, .5, { x, y, r: 0 }, 'sinus', { bogen: 110 }); landen(id, ta + .5, .4); cue(ta + .48, 'plopp'); });
   };
   mischen(W('gleiche', 11) - .2, [3, 0, 1, 2]);
   mischen(W('gleiche', 11) + 1.75, [1, 3, 2, 0]);
@@ -808,8 +809,9 @@ const OX = 2250, OY = 1600, OZ = .3;
   schweben(['ringL', 'ringR'], 4);
   pop('formular', W('zweitausendsiebzehn', 15) - .1, { x: 3250, y: 640 }, 'pop', 'sanft');
   rel('f1', { sx: 0 }); rel('f2', { sx: 0 });
-  tw('f1', W('zwei', 15), .5, { sx: 1 }, 'weich'); tw('f2', W('zwei', 15) + 1.1, .5, { sx: 1 }, 'weich');
-  cue(W('zwei', 15), 'kritzeln'); cue(W('zwei', 15) + 1.1, 'kritzeln');
+  const tZ1 = A(wort('zwei', wort('dürfen', satz(15).start))), tZ2 = A(wort('zwei', wort('oder', satz(15).start)));
+  tw('f1', tZ1, .5, { sx: 1 }, 'weich'); tw('f2', tZ2, .5, { sx: 1 }, 'weich');
+  cue(tZ1, 'kritzeln'); cue(tZ2, 'kritzeln');
   const tE = W('heiraten', 15);
   akteur('stempelE', { x: 3340, y: 360, o: 0 });
   tw('stempelE', tE - .55, .2, { o: 1 }); tw('stempelE', tE - .55, .3, { y: 400 }, 'sinus');
@@ -874,49 +876,49 @@ const OX = 2250, OY = 1600, OZ = .3;
 const SPX = 5450, SPY = 1500, SPZ = .165;
 {
   fahrt(SE(20) + .3, 2.0, SPX, SPY, SPZ);
-  akteur('teiler', { x: SPX, y: 900, o: 0, sy: 0 }); tw('teiler', W('Wer', 21) - .2, .9, { o: 1, sy: 1 }, 'inout');
-  akteur('plot', { x: 8600, y: 1620, o: 0, s: .92 }); tw('plot', W('Wer', 21), .8, { o: 1, s: 1 }, 'sanft'); cue(W('Wer', 21), 'scan');
-  pop('chipDE', W('euch', 21), { x: 2450, y: -480 }, 'pop', 'sanft');
-  pop('chipDir', W('euch', 21) + .25, { x: 8600, y: -480 }, null, 'sanft');
-  pop('frageG', W('Arbeit', 21), { x: 8600, y: 1620 });
-  wackeln('frageG', W('ähnlich', 22), 3, -8); wackeln('frageG', W('anders', 22), 3, 8);
+  akteur('teiler', { x: SPX, y: 900, o: 0 }); tw('teiler', W('Wer', 21) - .2, .7, { o: 1 }, 'inout');
+  akteur('plot', { x: 8600, y: 1620, o: 0, s: .97 }); tw('plot', W('Wer', 21), 1.0, { o: 1, s: 1 }, 'inout'); cue(W('Wer', 21), 'scan');
+  sacht('chipDE', W('euch', 21), { x: 2450, y: -480 }, 'pop');
+  sacht('chipDir', W('euch', 21) + .25, { x: 8600, y: -480 });
+  sacht('frageG', W('Arbeit', 21), { x: 8600, y: 1620 }, 'pop');
+  tw('frageG', W('ähnlich', 22), .8, { r: -3 }, 'sinus'); tw('frageG', W('anders', 22) - .3, 1.0, { r: 3 }, 'sinus'); tw('frageG', W('anders', 22) + .6, .6, { r: 0 }, 'sinus');
   // Priya fährt in die Mitte und legt den Kopf schief
   akteur('priyaG', { x: SPX - 2600, y: 3700, o: 0 });
   const tM = W('Und', 23) - .2;
-  tw('priyaG', tM, .2, { o: 1 }); tw('priyaG', tM, .9, { x: SPX }, 'sanft'); cue(tM, 'whoosh');
+  tw('priyaG', tM, .3, { o: 1 }); tw('priyaG', tM, 1.5, { x: SPX }, 'inout'); cue(tM, 'whoosh');
   kopf('priyaG', W('dir', 23), -9, .5);
   // Denkpause: Gedankenblasen, Symbole tauchen auf, Fragezeichen pulsiert
   const tD = SE(23) + .1;
-  pop('gp1', tD, { x: 6150, y: 3000 }, 'pop', 'sanft'); pop('gp2', tD + .25, { x: 6600, y: 2560 }, null, 'sanft');
-  tw('frageG', tD + .2, .6, { s: .62 }, 'inout');
+  sacht('gp1', tD, { x: 6150, y: 3000 }, 'pop'); sacht('gp2', tD + .25, { x: 6600, y: 2560 });
+  tw('frageG', tD + .2, 1.0, { s: .62 }, 'inout');
   const GS = [0, 1, 2, 3, 4].map(i => { const w = -Math.PI / 2 + i * 2 * Math.PI / 5; return [8600 + 1450 * Math.cos(w), 1620 + 820 * Math.sin(w)]; });
-  GS.forEach(([x, y], i) => { const t = tD + .5 + i * .5; pop('gs' + (i + 1), t, { x, y }, 'pop', 'sanft'); });
+  GS.forEach(([x, y], i) => { const t = tD + .5 + i * .5; sacht('gs' + (i + 1), t, { x, y }, 'pop'); });
   schweben(['gs1', 'gs2', 'gs3', 'gs4', 'gs5'], 40);
   HOOKS.push(t => { const d = t - tD; if (d > 0 && d < 4.4) el('frageG').style.transform += ` scale(${(1 + .07 * Math.sin(d * 2 * Math.PI * .9) * Math.min(1, d)).toFixed(4)})`; });
   kopf('priyaG', tD + 1.5, 6, .8); kopf('priyaG', tD + 3, -5, .8);
   const tX = SS(24) - .25;
-  aus(['teiler', 'plot', 'chipDE', 'chipDir', 'frageG', 'gp1', 'gp2', 'priyaG', 'gs1', 'gs2', 'gs3', 'gs4', 'gs5'], tX, .35);
+  tw(['teiler', 'plot', 'chipDE', 'chipDir', 'frageG', 'gp1', 'gp2', 'priyaG', 'gs1', 'gs2', 'gs3', 'gs4', 'gs5'], tX, .35, { o: 0 }, 'in');
 }
 
 /* ===================== 6 · Tipp und Schluss ===================== */
 {
   fahrt(SS(24) - .3, 1.4, 2450, 2425,.86);
   // drei nebeneinander, ein Ring verbindet sie
-  set('priyaW', SS(24) - .5, { x: 1980, y: 2700, o: 0, s: .6, r: 0 }); tw('priyaW', SS(24) + .5, .5, { o: 1, s: 1 }, 'sanft');
-  akteur('jonasW', { x: 2290, y: 2700, s: 0 }); tw('jonasW', SS(24) + .65, .5, { s: 1 }, 'sanft');
-  set('chefinW', SS(24) - .5, { x: 2600, y: 2700, s: .6, o: 0 }); tw('chefinW', SS(24) + .8, .5, { o: 1, s: 1 }, 'sanft');
+  set('priyaW', SS(24) - .5, { x: 1950, y: 2700, o: 0, s: .6, r: 0 }); tw('priyaW', SS(24) + .5, .5, { o: 1, s: 1 }, 'sanft');
+  akteur('jonasW', { x: 2240, y: 2700, s: 0 }); tw('jonasW', SS(24) + .65, .5, { s: 1 }, 'sanft');
+  set('chefinW', SS(24) - .5, { x: 2530, y: 2700, s: .6, o: 0 }); tw('chefinW', SS(24) + .8, .5, { o: 1, s: 1 }, 'sanft');
   cue(SS(24) + .5, 'pop');
-  akteur('trioRing', { x: 2290, y: 2700, o: 0 }); set('trioRing', W('Respekt', 24) - .45, { o: 1 }); strich('trioP', W('Respekt', 24) - .45, .9); cue(W('Respekt', 24) - .4, 'scan');
+  akteur('trioRing', { x: 2260, y: 2700, o: 0, s: .88 }); set('trioRing', W('Respekt', 24) - .45, { o: 1 }); strich('trioP', W('Respekt', 24) - .45, .9); cue(W('Respekt', 24) - .4, 'scan');
   ['priyaW', 'jonasW', 'chefinW'].forEach((id, i) => { froh(id, W('Respekt', 24) + .1 + i * .1); huepfen(id, W('Respekt', 24) + .2 + i * .12, 16); });
-  welle('welleTrio', W('Respekt', 24) + .4, 2290, 2700, 1.1); cue(W('Respekt', 24) + .4, 'erfolg');
+  welle('welleTrio', W('Respekt', 24) + .4, 2240, 2700, 1.1); cue(W('Respekt', 24) + .4, 'erfolg');
   notiz(6, W('benachteiligt', 25) - .2, SS(28) - .2, { unter: W('Ausbilderin', 26) - .2 });
   aus(['trioRing', 'jonasW', 'chefinW'], W('Hilfe', 25) + .1, .3);
   // Priya läuft zum Eingang, dort ploppen drei Türen
   fahrt(W('Hilfe', 25) + .15, 1.1, 958, 2425,.86);
   sprung('priyaW', W('Hilfe', 25) + .15, 1640, 2760, 90, .5);
-  sprung('priyaW', W('Hilfe', 25) + .75, 1330, 2770, 70, .45);
+  sprung('priyaW', W('Hilfe', 25) + .75, 1360, 2770, 70, .45);
   aus('kal1', W('Hilfe', 25), .3);
-  [['hilfe1', 'Ausbilderin', 590], ['hilfe2', 'Betriebsrat', 820], ['hilfe3', 'Kammer', 1050]].forEach(([id, w, x], i) => {
+  [['hilfe1', 'Ausbilderin', 620], ['hilfe2', 'Betriebsrat', 850], ['hilfe3', 'Kammer', 1080]].forEach(([id, w, x], i) => {
     akteur(id, { x, y: 2740, s: 0 });
     tw(id, W(w, 26) - .2, .55, { s: 1 }, 'back'); cue(W(w, 26) - .2, 'pop');
     const li = el(id).querySelector('.licht'), rh = el(id).querySelector('.rahmen');
@@ -926,7 +928,7 @@ const SPX = 5450, SPY = 1500, SPZ = .165;
   });
   kopf('priyaW', W('Ausbilderin', 26), 5); kopf('priyaW', W('Kammer', 26), -4); kopf('priyaW', WE('Kammer', 26) + .3, 0);
   // fragen: Sprechblase mit „?“ wird zum Herz
-  pop('blaseE', W('fremd', 27) - .1, { x: 1440, y: 2500 });
+  pop('blaseE', W('fremd', 27) - .1, { x: 1500, y: 2470, s: 1.35 });
   rel('blaseEf', {}); rel('blaseEh', { s: 0 });
   tw('blaseEf', W('fragen', 27) - .1, .25, { s: 0 }, 'in'); tw('blaseEh', W('fragen', 27) + .1, .45, { s: 1 }, 'back'); cue(W('fragen', 27) + .1, 'ding');
   froh('priyaW', W('fragen', 27) + .1); huepfen('priyaW', W('fragen', 27) + .2, 14);
@@ -934,14 +936,14 @@ const SPX = 5450, SPY = 1500, SPZ = .165;
   // Gleiche Rechte für alle: Betrieb, Schule und Zuhause nebeneinander, die Waage steht gerade
   fahrt(SS(28) - .1, 1.8, 5600, 1250, .155);
   stoss(W('Gleiche', 28) + .4, 6); waageLeuchtet(W('Gleiche', 28) + .4, 1.4);
-  pop('gl1', W('Betrieb', 28) - .1, { x: 2450, y: -500 }, 'pop', 'sanft');
-  akteur('schule', { x: 7050, y: 2950 - 2600 * (150 / 160 - .5) + 250, s: 0 }); tw('schule', W('Schule', 28) - .25, .6, { s: 1 }, 'sanft'); cue(W('Schule', 28) - .25, 'pop');
-  pop('gl2', W('Schule', 28) + .2, { x: 7050, y: -500 }, null, 'sanft');
-  akteur('haus', { x: 9900, y: 2950 - 2300 * (148 / 160 - .5), s: 0 }); tw('haus', W('Hause', 28) - .35, .6, { s: 1 }, 'sanft'); cue(W('Hause', 28) - .35, 'pop');
-  pop('gl3', W('Hause', 28) + .05, { x: 9900, y: -500 }, null, 'sanft');
+  sacht('gl1', W('Betrieb', 28) - .1, { x: 2450, y: -500 }, 'pop');
+  akteur('schule', { x: 7050, y: 2950 - 2600 * (150 / 160 - .5) + 250, s: .8, o: 0 }); tw('schule', W('Schule', 28) - .25, .8, { s: 1, o: 1 }, 'inout'); cue(W('Schule', 28) - .25, 'pop');
+  sacht('gl2', W('Schule', 28) + .2, { x: 7050, y: -500 });
+  akteur('haus', { x: 9900, y: 2950 - 2300 * (148 / 160 - .5), s: .8, o: 0 }); tw('haus', W('Hause', 28) - .35, .8, { s: 1, o: 1 }, 'inout'); cue(W('Hause', 28) - .35, 'pop');
+  sacht('gl3', W('Hause', 28) + .05, { x: 9900, y: -500 });
   akteur('band', { x: 5600, y: 3150, o: 0 }); set('band', W('Hause', 28) + .3, { o: 1 }); strich('bandP', W('Hause', 28) + .3, 1.0); cue(W('Hause', 28) + .3, 'scan');
   stoss(WE('Hause', 28) + .2, -3);
-  ['gl1', 'gl2', 'gl3'].forEach((id, i) => bump(id, WE('Hause', 28) + .4 + i * .12, 1.12));
+  ['gl1', 'gl2', 'gl3'].forEach((id, i) => { const t = WE('Hause', 28) + .4 + i * .15; tw(id, t, .3, { s: 1.05 }, 'sinus'); tw(id, t + .3, .5, { s: 1 }, 'sinus'); });
   cue(WE('Hause', 28) + .45, 'erfolg');
 }
 

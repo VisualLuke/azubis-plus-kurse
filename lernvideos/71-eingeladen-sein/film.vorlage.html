@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Eingeladen sein</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+}
+/* Leitidee: die Wohnung im Querschnitt (Puppenhaus). Kamera = #welt (translate + scale, Ursprung oben links) */
+#welt{transform-origin:0 0}
+#himmel{position:absolute;inset:0;background:linear-gradient(var(--b700),var(--b600) 55%,var(--b500));opacity:0}
+.boden0{position:absolute;left:-4000px;top:1030px;width:14000px;height:1400px;background:linear-gradient(var(--b100),var(--b50) 30%)}
+.boden0::before{content:'';position:absolute;left:0;right:0;top:0;height:8px;background:var(--b200)}
+.boden0 .nacht{position:absolute;inset:0;background:linear-gradient(var(--b600),var(--b700));opacity:0}
+
+.huelle{position:absolute;left:0;top:0;width:0;height:0}
+.schale{position:absolute;top:50px;height:980px;background:linear-gradient(var(--b300),var(--b400))}
+.dach{position:absolute;overflow:visible}
+.dach svg,.raum svg.bg,.huelle svg{overflow:visible}
+.a.buehne.raum{border-radius:8px;background:none;overflow:hidden}
+.raum .tapete{position:absolute;inset:0;background:linear-gradient(var(--surface),var(--b50))}
+.raum .fussboden{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(var(--b100),var(--b200));border-top:5px solid var(--b200)}
+.raum svg.bg{position:absolute;left:0;top:0}
+.inhalt{position:absolute;inset:0}
+.tuerlicht{position:absolute;left:940px;top:240px;width:190px;height:270px;background:linear-gradient(var(--b50),var(--b100))}
+.tuerblatt{position:absolute;left:940px;top:240px;width:190px;height:270px;border-radius:6px 6px 0 0;background:linear-gradient(160deg,var(--b400),var(--b600));transform-origin:0 50%}
+.tuerblatt::before,.tuerblatt::after{content:'';position:absolute;left:26px;right:26px;border-radius:8px;background:var(--b500);opacity:.7}
+.tuerblatt::before{top:24px;height:96px}.tuerblatt::after{top:142px;height:100px}
+.tuerblatt i{position:absolute;right:20px;top:138px;width:18px;height:18px;border-radius:999px;background:var(--surface);box-shadow:0 2px 0 var(--b700)}
+.leer{position:absolute;inset:40px 40px 110px;border:7px dashed var(--b300);border-radius:28px;background:var(--b50)}
+.a.buehne.spalt{background:none;border-radius:0}
+.spalt .schwelle{position:absolute;left:30px;right:30px;top:792px;height:30px;border-radius:8px;background:linear-gradient(var(--b200),var(--b300))}
+.spalt .schein{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,var(--surface),transparent 70%);opacity:.8}
+
+/* Fassade: die Front des Puppenhauses klappt zu */
+.fassade{position:absolute;top:50px;height:980px;z-index:20;background:linear-gradient(var(--b100),var(--b50));border:8px solid var(--b300)}
+#fasL{left:-60px;width:2350px;border-radius:14px 0 0 14px;transform-origin:0 50%}
+#fasR{left:2290px;width:1590px;border-radius:0 14px 14px 0;transform-origin:100% 50%}
+.fassade::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(var(--b100) 0 46px,var(--b200) 46px 49px);opacity:.45}
+.fenster{position:absolute;border-radius:12px;background:var(--b300);box-shadow:0 10px 0 var(--b200)}
+.fenster .glas,.fenster .licht{position:absolute;inset:12px;border-radius:6px}
+.fenster .glas{background:linear-gradient(160deg,var(--b50),var(--b100))}
+.fenster .licht{background:linear-gradient(var(--surface),var(--warning-bg));box-shadow:0 0 60px 18px var(--warning-bg);opacity:0}
+.fenster::before,.fenster::after{content:'';position:absolute;background:var(--b300);z-index:2}
+.fenster::before{left:50%;top:12px;bottom:12px;width:10px;margin-left:-5px}
+.fenster::after{top:50%;left:12px;right:12px;height:10px;margin-top:-5px}
+.haustuer{position:absolute;border-radius:14px 14px 0 0;background:linear-gradient(160deg,var(--b400),var(--b600))}
+.haustuer i{position:absolute;right:26px;top:48%;width:22px;height:22px;border-radius:999px;background:var(--surface)}
+
+/* Figuren */
+.portrait{z-index:10;border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{opacity:0;transform-origin:50% 56%}
+.flieg{z-index:12}
+
+/* Text im Bild: Tafel, die von der Zimmerdecke hängt */
+.tafel{padding:16px 34px 20px;border-radius:20px;background:var(--surface);border-top:7px solid var(--b500);
+  box-shadow:0 14px 34px rgba(22,19,37,.14);white-space:nowrap;text-align:center;transform-origin:50% -150px}
+.tafel .titel{font:700 1em/1.22 Inter;letter-spacing:-.01em;color:var(--ink)}
+.tafel .schnur{position:absolute;bottom:100%;width:4px;height:900px;background:var(--b300)}
+.tafel .schnur.l{left:20%}.tafel .schnur.r{right:20%}
+
+/* Bausteine */
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.sym{width:124px;height:124px;border-radius:999px;background:var(--surface);border:5px solid var(--b200);box-shadow:0 8px 22px rgba(22,19,37,.12)}
+.sym .ic{position:absolute;left:14px;top:12px;width:86px;height:86px}
+.fz{position:absolute;width:46px;height:46px;border-radius:999px;background:var(--b500);color:var(--surface);
+  font:800 30px/46px Inter;text-align:center;box-shadow:0 3px 8px rgba(22,19,37,.2)}
+.sym .fz{right:-12px;top:-12px}
+.einladung{width:240px;height:160px;border-radius:22px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.16);overflow:hidden}
+.einladung .kopf{position:absolute;left:0;right:0;top:0;height:34px;background:linear-gradient(var(--b500),var(--b600))}
+.einladung .ic{position:absolute;left:10px;top:40px;width:110px;height:110px}
+.einladung b{position:absolute;right:20px;top:72px;font:800 42px/48px Inter;color:var(--ink);letter-spacing:-.02em}
+.nachricht{display:flex;align-items:center;gap:10px;padding:12px 20px 12px 14px;border-radius:24px;background:var(--b500);box-shadow:0 8px 20px rgba(22,19,37,.16)}
+.nachricht::after{content:'';position:absolute;left:24px;bottom:-9px;width:22px;height:22px;background:inherit;transform:rotate(45deg);border-radius:0 0 5px 0}
+.nachricht .ic{width:52px;height:52px;position:relative}
+.nachricht i{width:12px;height:12px;border-radius:999px;background:var(--b200)}
+.blase{padding:14px 28px;border-radius:26px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);
+  font:700 30px/38px Inter;color:var(--ink);white-space:nowrap}
+.blase::after{content:'';position:absolute;left:30px;bottom:-11px;width:24px;height:24px;background:inherit;transform:rotate(45deg);border-radius:0 0 6px 0}
+.blase.r::after{left:auto;right:30px}
+.blase .rest,.chat .rest{visibility:hidden}
+.blase.bild{display:flex;align-items:center;gap:6px;padding:10px 20px 10px 14px}
+.blase.bild .ic{width:70px;height:70px;position:relative}
+.blase.bild b{font:800 46px/1 Inter;color:var(--b500)}
+.blase.gross{width:190px;height:136px;padding:0}
+.blase.gross .q{position:absolute;left:0;right:0;top:20px;text-align:center;font:800 84px/96px Inter;color:var(--b500)}
+.blase.gross svg{position:absolute;left:45px;top:18px;width:100px}
+.chat{padding:16px 30px;border-radius:26px 26px 6px 26px;background:var(--b500);color:var(--surface);font:700 30px/38px Inter;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(22,19,37,.16)}
+.platz{width:118px;height:66px;border-radius:10px;background:var(--surface);border:4px solid var(--b200);box-shadow:0 5px 0 var(--b200)}
+.platz::before{content:'';position:absolute;left:22px;right:22px;top:24px;height:8px;border-radius:4px;background:var(--b300)}
+.bon{width:112px;height:226px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12);transform-origin:50% 100%;
+  clip-path:polygon(0 8px,10% 0,20% 8px,30% 0,40% 8px,50% 0,60% 8px,70% 0,80% 8px,90% 0,100% 8px,100% 100%,0 100%)}
+.bon i,.bonh i{position:absolute;left:16px;height:9px;border-radius:5px;background:var(--n200)}
+.bon u,.bonh u{position:absolute;left:16px;right:16px;height:12px;border-radius:6px;background:var(--b500)}
+.bonh{width:112px;height:108px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12)}
+.bonh.oben{clip-path:polygon(0 8px,10% 0,20% 8px,30% 0,40% 8px,50% 0,60% 8px,70% 0,80% 8px,90% 0,100% 8px,100% 92%,90% 100%,80% 92%,70% 100%,60% 92%,50% 100%,40% 92%,30% 100%,20% 92%,10% 100%,0 92%)}
+.bonh.unten{clip-path:polygon(0 0,10% 8px,20% 0,30% 8px,40% 0,50% 8px,60% 0,70% 8px,80% 0,90% 8px,100% 0,100% 100%,0 100%)}
+.zettel{width:190px;height:250px;border-radius:16px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);overflow:hidden}
+.zettel .kopf{position:absolute;left:0;right:0;top:0;height:30px;background:linear-gradient(var(--b500),var(--b600))}
+.zettel .zeile{position:absolute;left:18px;right:18px;height:34px}
+.zettel .kasten{position:absolute;left:0;top:0;width:34px;height:34px;border-radius:9px;border:4px solid var(--b200);background:var(--surface)}
+.zettel .strich{position:absolute;left:48px;top:12px;height:10px;border-radius:5px;background:var(--n200)}
+.zettel .ok{position:absolute;left:-4px;top:-8px;width:44px;height:44px}
+.abz{width:150px;height:150px;border-radius:999px;background:var(--surface);border:6px solid var(--b500);box-shadow:0 10px 24px rgba(22,19,37,.12)}
+.abz .ic{position:absolute;left:20px;top:16px;width:98px;height:98px}
+.abz.geist{background:none;border:6px dashed var(--b300);box-shadow:none}
+.abz.geist .ic{opacity:.3}
+.riesen{width:300px;height:300px;border-radius:999px;border:8px dashed var(--b300);background:var(--surface);
+  font:800 220px/284px Inter;color:var(--b500);text-align:center}
+.denk{width:400px;height:280px;border-radius:140px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14)}
+.denk i{position:absolute;border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(22,19,37,.12)}
+.denk .ds{position:absolute;width:104px;height:104px}
+.dampf path{fill:none;stroke-linecap:round}
+.band{width:520px;height:900px;z-index:15;background:linear-gradient(90deg,transparent,var(--surface),transparent)}
+.endplatte{z-index:25;padding:26px 70px 34px;border-radius:40px;background:var(--surface);border-top:9px solid var(--b500);
+  box-shadow:0 22px 60px rgba(22,19,37,.18);white-space:nowrap;text-align:center}
+.endplatte .titel{font:800 104px/118px Inter;letter-spacing:-.03em;color:var(--ink)}
+#schluss{position:absolute;left:0;right:0;top:62px;text-align:center;font:700 54px/66px Inter;letter-spacing:-.01em;color:var(--surface);opacity:0}
+</style></head><body>
+
+<template id="t-blumen">{{blumen}}</template>
+<template id="t-pralinen">{{pralinen}}</template>
+<template id="t-schuhe">{{schuhe}}</template>
+<template id="t-hausschuhe">{{hausschuhe}}</template>
+<template id="t-schuessel">{{schuessel}}</template>
+<template id="t-teller">{{teller}}</template>
+<template id="t-kasse">{{kasse}}</template>
+<template id="t-loeffel">{{kochloeffel}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-topf">{{topf-offen}}</template>
+<template id="t-deckel">{{topf-deckel}}</template>
+<template id="t-handy">{{handy}}</template>
+<template id="t-uhr">{{uhr}}</template>
+<template id="f-amir">{{figur-amir}}</template>
+<template id="f-jonas">{{figur-jonas}}</template>
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path class="zeichnen" pathLength="1" d="M9 21l7 7 15-16" stroke="var(--b500)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<div id="himmel"></div>
+<div id="kamera"><div id="welt">
+  <div class="boden0"><div class="nacht" id="nacht"></div></div>
+
+  <!-- linke Haushälfte: Treppenhaus + Flur -->
+  <div class="huelle" id="hausL">
+    <div class="dach" id="dachL" style="left:0;top:0"><svg width="0" height="0" style="position:absolute">
+      <path d="M-140 50L1910-360L2290-284V50Z" fill="var(--b500)"/>
+      <path d="M-140 50L1910-360L2290-284" stroke="var(--b300)" stroke-width="10" fill="none" stroke-linejoin="round"/>
+      <path d="M115 50L1910-309L2290-233V50Z" fill="var(--b50)"/>
+      <g stroke="var(--b100)" stroke-width="6"><path d="M600 50V-46M1100 50V-146M1600 50V-246M2100 50V-271"/></g>
+      <rect x="1850" y="-150" width="120" height="96" rx="12" fill="var(--b200)"/><rect x="1862" y="-138" width="96" height="72" rx="6" fill="var(--b100)"/>
+      <path d="M1910-138v72M1862-102h96" stroke="var(--b200)" stroke-width="7"/></svg></div>
+    <div class="schale" id="schaleL" style="left:-60px;width:2350px;border-radius:14px 0 0 14px"></div>
+
+    <div class="a buehne raum" id="rT" style="left:0;top:110px;width:1300px;height:860px">
+      <div class="tapete"></div><div class="fussboden"></div>
+      <svg class="bg" width="1300" height="860" viewBox="0 0 1300 860">
+        <path d="M380 790V734H450V678H520V622H590V566H660V510H1300V790Z" fill="var(--b100)"/>
+        <g fill="var(--b200)"><rect x="380" y="734" width="70" height="56"/><rect x="450" y="678" width="70" height="112"/><rect x="520" y="622" width="70" height="168"/><rect x="590" y="566" width="70" height="224"/></g>
+        <path d="M380 734H450V678H520V622H590V566H660V510H1300" stroke="var(--b300)" stroke-width="7" fill="none" stroke-linejoin="round"/>
+        <path d="M660 540H1300" stroke="var(--b200)" stroke-width="4"/>
+        <g stroke="var(--b200)" stroke-width="5"><path d="M415 734V618M485 678V562M555 622V506M625 566V450M700 510V394M790 510V394M870 510V394"/></g>
+        <path d="M400 618L660 410H880" stroke="var(--b300)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="926" y="226" width="218" height="286" rx="8" fill="var(--b200)"/>
+        <rect x="930" y="500" width="210" height="12" rx="6" fill="var(--b300)"/>
+      </svg>
+      <div class="tuerlicht"></div><div class="tuerblatt" id="tuer"><i></i></div>
+    </div>
+
+    <div class="a buehne raum" id="rF" style="left:1360px;top:110px;width:900px;height:860px">
+      <div class="tapete"></div><div class="fussboden"></div>
+      <svg class="bg" width="900" height="860" viewBox="0 0 900 860">
+        <rect x="690" y="200" width="150" height="14" rx="7" fill="var(--b400)"/>
+        <g fill="var(--b500)"><circle cx="712" cy="222" r="7"/><circle cx="765" cy="222" r="7"/><circle cx="818" cy="222" r="7"/></g>
+        <path d="M712 222c-26 10-34 40-34 70v80h68v-80c0-30-8-60-34-70Z" fill="var(--b300)"/>
+        <path d="M712 222v150" stroke="var(--b400)" stroke-width="4"/>
+        <path d="M818 222c-20 8-26 32-26 56v60h52v-60c0-24-6-48-26-56Z" fill="var(--b200)"/>
+        <rect x="360" y="600" width="240" height="190" rx="10" fill="var(--b200)"/>
+        <rect x="374" y="616" width="212" height="160" rx="6" fill="var(--b50)"/>
+        <rect x="360" y="596" width="240" height="16" rx="7" fill="var(--b400)"/>
+        <rect x="374" y="690" width="212" height="10" rx="4" fill="var(--b300)"/>
+        <rect x="104" y="782" width="204" height="14" rx="7" fill="var(--b300)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- rechte Haushälfte: Küche -->
+  <div class="huelle" id="hausR">
+    <div class="dach" id="dachR" style="left:0;top:0"><svg width="0" height="0" style="position:absolute">
+      <rect x="3190" y="-190" width="96" height="140" rx="6" fill="var(--b400)"/><rect x="3178" y="-200" width="120" height="22" rx="6" fill="var(--b500)"/>
+      <path d="M2290-284L3960 50H2290Z" fill="var(--b500)"/>
+      <path d="M2290-284L3960 50" stroke="var(--b300)" stroke-width="10" fill="none"/>
+      <path d="M2290-233L3705 50H2290Z" fill="var(--b50)"/>
+      <g stroke="var(--b100)" stroke-width="6"><path d="M2700 50V-150M3200 50V-50"/></g></svg></div>
+    <div class="schale" id="schaleR" style="left:2290px;width:1590px;border-radius:0 14px 14px 0"></div>
+    <div class="a buehne raum" id="rK" style="left:2320px;top:110px;width:1500px;height:860px">
+      <div class="tapete"></div><div class="fussboden"></div>
+      <div class="inhalt" id="kInhalt">
+        <svg class="bg" width="1500" height="860" viewBox="0 0 1500 860">
+          <rect x="70" y="380" width="300" height="170" fill="var(--b50)"/>
+          <g stroke="var(--b100)" stroke-width="4"><path d="M70 437h300M70 494h300M145 380v170M220 380v170M295 380v170"/></g>
+          <rect x="80" y="560" width="280" height="230" rx="12" fill="var(--b200)"/>
+          <rect x="70" y="548" width="300" height="18" rx="7" fill="var(--b400)"/>
+          <rect x="112" y="612" width="216" height="118" rx="12" fill="var(--b600)"/><rect x="126" y="626" width="188" height="90" rx="8" fill="var(--b500)"/>
+          <rect x="130" y="748" width="180" height="10" rx="5" fill="var(--b400)"/>
+          <g fill="var(--b500)"><circle cx="130" cy="589" r="8"/><circle cx="220" cy="589" r="8"/><circle cx="310" cy="589" r="8"/></g>
+          <rect x="430" y="250" width="210" height="540" rx="10" fill="var(--b300)"/>
+          <rect x="444" y="264" width="182" height="512" rx="6" fill="var(--b50)"/>
+          <g fill="var(--b400)"><rect x="444" y="398" width="182" height="12"/><rect x="444" y="540" width="182" height="12"/><rect x="444" y="680" width="182" height="12"/></g>
+          <rect x="462" y="330" width="46" height="68" rx="9" fill="var(--b200)"/><rect x="458" y="322" width="54" height="14" rx="5" fill="var(--b400)"/>
+          <rect x="524" y="346" width="40" height="52" rx="8" fill="var(--b100)"/><rect x="520" y="338" width="48" height="12" rx="5" fill="var(--b300)"/>
+          <rect x="580" y="352" width="32" height="46" rx="7" fill="var(--b200)"/>
+          <g fill="var(--b100)" stroke="var(--b200)" stroke-width="3"><ellipse cx="535" cy="672" rx="62" ry="9"/><ellipse cx="535" cy="660" rx="62" ry="9"/><ellipse cx="535" cy="648" rx="62" ry="9"/></g>
+          <rect x="468" y="716" width="60" height="60" rx="10" fill="var(--b200)"/><rect x="544" y="728" width="60" height="48" rx="10" fill="var(--b100)"/>
+          <path d="M870 600V480a60 60 0 0 1 120 0V600Z" fill="var(--b200)"/>
+          <path d="M1190 600V480a60 60 0 0 1 120 0V600Z" fill="var(--b200)"/>
+          <rect x="780" y="560" width="620" height="28" rx="9" fill="var(--b400)"/>
+          <rect x="792" y="586" width="596" height="14" rx="5" fill="var(--b500)"/>
+          <rect x="812" y="598" width="24" height="192" rx="6" fill="var(--b500)"/><rect x="1344" y="598" width="24" height="192" rx="6" fill="var(--b500)"/>
+        </svg>
+      </div>
+      <div class="leer" id="kLeer"></div>
+    </div>
+  </div>
+
+  <!-- Spalt zwischen den Haushälften (Szene 5) -->
+  <div class="a buehne spalt" id="rS" style="left:1990px;top:110px;width:600px;height:860px"><div class="schein"></div><div class="schwelle"></div></div>
+
+  <!-- Restaurant (Szene 4), rechts neben dem Haus -->
+  <div class="schale" style="left:4240px;width:1720px;border-radius:14px"></div>
+  <svg style="position:absolute;left:0;top:0;width:0;height:0;overflow:visible">
+    <path d="M4200 60L4250-10H5950L6000 60Z" fill="var(--b500)"/>
+    <g fill="var(--surface)" opacity=".9"><path d="M4330-10h90l-10 70h-100Z M4510-10h90l-10 70h-100Z M4690-10h90l-10 70h-100Z M4870-10h90l-10 70h-100Z M5050-10h90l-10 70h-100Z M5230-10h90l-10 70h-100Z M5410-10h90l-10 70h-100Z M5590-10h90l-10 70h-100Z M5770-10h90l-10 70h-100Z"/></g>
+  </svg>
+  <div class="a buehne raum" id="rR" style="left:4300px;top:110px;width:1600px;height:860px">
+    <div class="tapete"></div><div class="fussboden"></div>
+    <svg class="bg" width="1600" height="860" viewBox="0 0 1600 860">
+      <rect x="0" y="470" width="1600" height="320" fill="var(--b100)"/>
+      <rect x="0" y="462" width="1600" height="12" fill="var(--b200)"/>
+      <g stroke="var(--b200)" stroke-width="4"><path d="M80 474v316M160 474v316M240 474v316M320 474v316M400 474v316M480 474v316M560 474v316M640 474v316M720 474v316M800 474v316M880 474v316M960 474v316M1040 474v316"/></g>
+      <g><rect x="166" y="250" width="28" height="60" rx="8" fill="var(--b400)"/><path d="M140 250h80l-14-50h-52Z" fill="var(--b300)"/>
+         <rect x="986" y="250" width="28" height="60" rx="8" fill="var(--b400)"/><path d="M960 250h80l-14-50h-52Z" fill="var(--b300)"/></g>
+      <path d="M150 790l-14-90h88l-14 90Z" fill="var(--b500)"/>
+      <path d="M180 700c-40-30-50-80-30-110 20 30 30 70 30 110Zm0 0c40-30 50-80 30-110-20 30-30 70-30 110Zm0 0c-10-50 0-90 0-120 10 30 14 70 0 120Z" fill="var(--b300)"/>
+      <rect x="1080" y="560" width="440" height="230" rx="12" fill="var(--b200)"/>
+      <rect x="1066" y="548" width="468" height="20" rx="8" fill="var(--b400)"/>
+      <rect x="1110" y="610" width="380" height="14" rx="7" fill="var(--b100)"/>
+    </svg>
+    <div class="inhalt" id="tischR">
+      <svg class="bg" width="1600" height="860" viewBox="0 0 1600 860">
+        <rect x="324" y="640" width="24" height="150" rx="6" fill="var(--b500)"/><rect x="892" y="640" width="24" height="150" rx="6" fill="var(--b500)"/>
+        <path d="M282 556h676v26l-20 90H302l-20-90Z" fill="var(--surface)"/>
+        <g fill="var(--b100)"><rect x="282" y="556" width="676" height="16"/><path d="M330 572h40v100h-40ZM450 572h40v100h-40ZM570 572h40v100h-40ZM690 572h40v100h-40ZM810 572h40v100h-40Z"/></g>
+        <rect x="282" y="552" width="676" height="8" rx="4" fill="var(--b200)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="fassade" id="fasL">
+    <div class="haustuer" style="left:330px;top:640px;width:220px;height:332px"><i></i></div>
+    <div class="fenster" style="left:200px;top:180px;width:240px;height:300px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:760px;top:180px;width:240px;height:300px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:860px;top:560px;width:240px;height:260px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:1600px;top:260px;width:300px;height:340px"><div class="glas"></div><div class="licht"></div></div>
+  </div>
+  <div class="fassade" id="fasR">
+    <div class="fenster" style="left:260px;top:260px;width:320px;height:340px"><div class="glas"></div><div class="licht"></div></div>
+    <div class="fenster" style="left:960px;top:260px;width:320px;height:340px"><div class="glas"></div><div class="licht"></div></div>
+  </div>
+</div></div>
+
+<div id="schluss">Gast sein heißt auch: ehrlich sagen, was du möchtest.</div>
+<div id="dummies" style="display:none"><div id="cam"></div><div id="uhrZ"></div><div id="keilOk"></div><div id="keilFr"></div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const WI = (n, i) => A(satz(n).woerter[i].start);     // Filmzeit von Wort i (ab 0) in Satz n
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const KLAENGE = new Set(['whoosh', 'pop', 'plopp', 'klick', 'muenze', 'ding', 'erfolg', 'tipp', 'kritzeln', 'scan']);
+const ton = (t, k) => { if (!k) return; if (!KLAENGE.has(k) || !(t >= 0)) throw new Error(`Klang ${k} @ ${t}`); cue(t, k); };
+
+// Elemente anlegen: in der Welt (Weltkoordinaten) oder in einem Raum (Raumkoordinaten)
+const neu = (id, inhalt, stil = '', attr = '', klasse = '', ort = 'welt') => {
+  el(ort).insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const bild = (id, t, breite, attr = '', ort = 'welt', klasse = '') => neu(id, kopie(t, id), `width:${breite}px`, attr, klasse, ort);
+const OFF = { T: [0, 110], F: [1360, 110], K: [2320, 110], R: [4300, 110], S: [1990, 110] };
+const WP = (r, x, y) => [OFF[r][0] + x, OFF[r][1] + y];        // Raumkoordinaten → Welt
+
+/* ---------- Helfer: Auftritte, Bewegungen ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { const s1 = basis.s ?? 1; akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: s1 }, e); ton(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  ton(t, snd);
+};
+const aus = (ids, t, d = .35) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .8 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .14 * k, sx: 1 + .08 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const fliegen = (id, t0, d, x, y, h = 120, extra = {}) => { flug(id, t0, d, x, y, h, extra); landen(id, t0 + d); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+let WN = 0;
+const welle = (t, x, y, farbe = null, gr = 160, d = .9, ort = 'welt') => {
+  const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle flieg', ort);
+  akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich');
+};
+const SUMMEN = [];
+const summen = (id, t, d = .8, a = 4) => SUMMEN.push([el(id), t, d, a]);
+HOOKS.push(z => SUMMEN.forEach(([e, t, d, a]) => { const p = z - t; if (p > 0 && p < d) e.style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; }));
+// Text tippt sich: getippter Teil sichtbar, Rest unsichtbar (Blase behält ihre Breite)
+const tippen = (id, text, t1, t2, n = 7) => {
+  el(id).innerHTML = `<span class="tp"></span><span class="rest">${text}</span>`;
+  const [a, b] = el(id).children;
+  HOOKS.push(t => { const k = Math.round(text.length * clamp((t - t1) / (t2 - t1))); a.textContent = text.slice(0, k); b.textContent = text.slice(k); });
+  for (let i = 0; i < n; i++) ton(t1 + i * (t2 - t1) / n, 'tipp');
+};
+// Ortswechsel ohne Ruckler: kurz unsichtbar, dann am neuen Ort
+const versetzen = (id, t, x, y) => { set(id, t - .12, { o: 0 }); set(id, t, { x, y }); set(id, t + .12, { o: 1 }); };
+// Inhalt eines Raums mitbewegen: Weltelement unsichtbar tauschen gegen ein Element im Raum
+const tausch = (weltId, raumId, t) => { set(weltId, t, { o: 0 }); set(raumId, t, { o: 1 }); };
+
+/* ---------- Kamera: Mittelpunkt (x, y) und Zoom s; Fahrten mit Atmer, Akzente auf einen Weltpunkt ---------- */
+akteur('cam', { x: 1910, y: 335, s: .43 }, true);
+const FAHRTEN = [], AKZENTE = [];
+const kam = (t, d, x, y, z, e = 'inout', snd = 'whoosh', atmer = true) => { tw('cam', t, d, { x, y, s: z }, e); ton(t, snd); if (atmer) FAHRTEN.push([t, d]); };
+const akzent = (t, h = .035, wx = null, wy = null, d = 1.1) => AKZENTE.push([t, h, wx, wy, d]);
+function kamBei(t) {
+  const c = AKTEURE.get(el('cam'));
+  const cx = wert(c, 'x', t), cy = wert(c, 'y', t); let z = wert(c, 's', t);
+  for (const [t0, d] of FAHRTEN) { const u = (t - t0) / d; if (u > 0 && u < 1) z *= 1 - .045 * Math.sin(Math.PI * u); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 16));
+  let tx = 960 - cx * z, ty = 540 - cy * z;
+  for (const [a, h, wx, wy, d] of AKZENTE) {
+    const v = (t - a) / d; if (v <= 0 || v >= 1) continue;
+    const k = 1 + h * Math.sin(Math.PI * E.weich(v));
+    const fx = wx == null ? 960 : tx + wx * z, fy = wy == null ? 540 : ty + wy * z;
+    tx = fx + (tx - fx) * k; ty = fy + (ty - fy) * k; z *= k;
+  }
+  return { tx, ty, z, cx, cy };
+}
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const blur = $('#wischerBlur');
+HOOKS.push(t => {
+  const k = kamBei(t), v = kamBei(t - 1 / 30);
+  WELT.style.transform = `translate(${k.tx.toFixed(2)}px,${k.ty.toFixed(2)}px) scale(${k.z.toFixed(5)})`;
+  const vx = Math.abs(k.cx - v.cx) * k.z, vy = Math.abs(k.cy - v.cy) * k.z, vz = Math.min(5, Math.abs(Math.log(k.z / v.z)) * 220);
+  const bx = Math.min(20, vx * .09) + vz, by = Math.min(20, vy * .09) + vz;
+  blur.setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  WELT.style.filter = bx + by > .6 ? 'url(#wischer)' : '';
+});
+
+/* ---------- Figuren: Porträts im Kreis; Mund nur in Amirs eigenen Sätzen ---------- */
+function portrait(id, wer, gr, attr = '', ort = 'welt') {
+  neu(id, `<div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${tpl('gesicht')}</div>`, `width:${gr}px;height:${gr}px`,
+    attr + (wer === 'amir' ? ' data-sprecher="Amir"' : ''), 'portrait', ort);
+  return id;
+}
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = [], BLICK = [], NEIG = [], NICK = [], SCHUETTEL = [];
+const froh = (id, a, b = 999) => FROH.push([id, a, b]);
+const blick = (id, a, b, dx) => BLICK.push([id, a, b, dx]);
+const neigen = (id, a, b, g) => NEIG.push([id, a, b, g]);
+const nicken = (id, t, d = 1.1) => NICK.push([id, t, d]);
+const schuetteln = (id, t, d = .8) => SCHUETTEL.push([id, t, d]);
+let PORTRAETS = null;
+HOOKS.push(t => {
+  PORTRAETS ??= [...document.querySelectorAll('.portrait')].map(p => ({ p, auf: p.querySelector('.auf'), froh: p.querySelector('.froh'), zu: p.querySelector('.zu'), augen: p.querySelector('.augen'), figur: p.querySelector('.figur') }));
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  PORTRAETS.forEach(({ p, auf, froh: fr, zu, augen, figur }, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const o = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    auf.style.transform = `scaleY(${Math.max(.05, o)})`; auf.style.opacity = o > .12 ? 1 : 0;
+    fr.style.opacity = f && o <= .12 ? 1 : 0; zu.style.opacity = o > .12 || f ? 0 : 1;
+    let dx = 0;
+    for (const [id, a, b, w] of BLICK) if (id === p.id) dx += w * clamp((t - a) / .25) * (1 - clamp((t - b) / .3));
+    const z = (t * .29 + i * .37) % 1;
+    augen.style.transform = `translateX(${dx.toFixed(2)}%) scaleY(${z < .035 ? .12 : 1})`;
+    let r = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = aktiv ? 0 : Math.abs(r);
+    for (const [id, a, b, g] of NEIG) if (id === p.id) r += g * E.inout(clamp((t - a) / .35)) * (1 - E.inout(clamp((t - b) / .35)));
+    for (const [id, t0, d] of NICK) { const q = (t - t0) / d; if (id === p.id && q > 0 && q < 1) y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q); }
+    for (const [id, t0, d] of SCHUETTEL) { const q = (t - t0) / d; if (id === p.id && q > 0 && q < 1) r += 9 * Math.sin(q * Math.PI * 4) * Math.sin(Math.PI * q); }
+    figur.style.transform = `translateY(${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+  });
+});
+
+/* ---------- Tafeln: hängen an zwei Schnüren von der Zimmerdecke, fallen herein und schwingen nach ---------- */
+const SCHWING = [];
+function tafel(id, raum, x, y, zeilen, fs = 46) {
+  neu(id, `<i class="schnur l"></i><i class="schnur r"></i><div id="${id}t">${[].concat(zeilen).map(z => `<div class="titel">${z}</div>`).join('')}</div>`,
+    `font-size:${fs}px`, '', 'tafel', raum);
+  akteur(id, { x, y: y - 420, o: 0 });
+  AKTEURE.get(el(id)).ziel = y;
+}
+function tafelEin(id, t, zeiten) {
+  const y = AKTEURE.get(el(id)).ziel;
+  set(id, t, { o: 1 }); tw(id, t, .7, { y }, 'sanft'); ton(t, 'whoosh');
+  SCHWING.push([el(id), t + .45, 5.5]);
+  titelEin(id + 't', zeiten[0], zeiten);
+}
+function tafelAus(id, t) { const y = AKTEURE.get(el(id)).ziel; tw(id, t, .55, { y: y - 420 }, 'in'); set(id, t + .56, { o: 0 }); }
+HOOKS.push(t => SCHWING.forEach(([e, t0, a]) => {
+  const d = t - t0; if (d <= 0 || d > 4) return;
+  e.style.transform += ` rotate(${(a * Math.exp(-1.6 * d) * Math.sin(2 * Math.PI * 1.25 * d)).toFixed(3)}deg)`;
+}));
+
+/* ---------- Uhr über der Wohnungstür: Minuten seit 0 Uhr (Dummy uhrZ.x), Keile grün (ok) / rot (zu früh) ---------- */
+akteur('uhrZ', { x: 900 }, true); akteur('keilOk', { x: 0, o: 0 }, true); akteur('keilFr', { x: 0, o: 0 }, true);
+neu('uhr', `<svg viewBox="0 0 160 160"><circle cx="83" cy="85" r="68" fill="var(--b700)" opacity=".22"/><circle cx="80" cy="80" r="68" fill="var(--b500)"/>
+  <circle cx="80" cy="80" r="57" fill="var(--surface)"/>
+  <path id="uhrOk" fill="var(--success)"/><path id="uhrFr" fill="var(--error)"/>
+  <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round">${Array.from({ length: 12 }, (_, k) => `<path d="M80 ${k % 3 ? 29 : 26}v${k % 3 ? 6 : 10}" transform="rotate(${k * 30} 80 80)"/>`).join('')}</g>
+  <path id="uhrH" d="M80 80V52" stroke="var(--ink)" stroke-width="8.5" stroke-linecap="round"/>
+  <path id="uhrM" d="M80 80V34" stroke="var(--b600)" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="80" r="7" fill="var(--b700)"/></svg>`, 'width:150px;height:150px', '', '', 'rT');
+akteur('uhr', { x: 1035, y: 140 });
+const keil = (m0, m1, r = 49) => {
+  if (m1 - m0 < .05) return '';
+  const P = m => [80 + r * Math.sin(m * Math.PI / 30), 80 - r * Math.cos(m * Math.PI / 30)];
+  const [x0, y0] = P(m0), [x1, y1] = P(m1);
+  return `M80 80L${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${m1 - m0 > 30 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}Z`;
+};
+HOOKS.push(t => {
+  const m = wertBei('uhrZ', 'x', t);
+  $('#uhrH').setAttribute('transform', `rotate(${((m / 60) % 12 * 30).toFixed(2)} 80 80)`);
+  $('#uhrM').setAttribute('transform', `rotate(${((m % 60) * 6).toFixed(2)} 80 80)`);
+  const ok = wertBei('keilOk', 'x', t), fr = wertBei('keilFr', 'x', t);
+  $('#uhrOk').setAttribute('d', keil(0, ok)); $('#uhrOk').style.opacity = (.85 * wertBei('keilOk', 'o', t)).toFixed(3);
+  $('#uhrFr').setAttribute('d', keil(60 - fr, 60)); $('#uhrFr').style.opacity = (.8 * wertBei('keilFr', 'o', t)).toFixed(3);
+});
+const uhrAuf = (t, m, d = .7, e = 'inout') => tw('uhrZ', t, d, { x: m }, e);
+
+/* ---------- Räume, Hüllen, Fassade ---------- */
+['hausL', 'hausR', 'dachL', 'dachR', 'kInhalt', 'tischR'].forEach(id => akteur(id, {}, true));
+akteur('kLeer', { o: 0 }, true);
+akteur('schaleL', { o: 0 }, true); akteur('schaleR', { o: 0 }, true);
+['rT', 'rF', 'rK'].forEach(id => akteur(id, { o: 0, s: .86 }, true));
+akteur('rR', {}, true); akteur('rS', { sx: 0 }, true);
+akteur('fasL', { sx: 0 }, true); akteur('fasR', { sx: 0 }, true);
+akteur('tuer', {}, true);
+akteur('himmel', { o: 0 }, true); akteur('nacht', { o: 0 }, true); akteur('schluss', { o: 0, y: 30 }, true);
+const tuerAuf = (t, d = .45) => { tw('tuer', t, d, { sx: .14 }, 'inout'); ton(t, 'klick'); };
+const tuerZu = (t, d = .45) => { tw('tuer', t, d, { sx: 1 }, 'inout'); ton(t + d, 'klick'); };
+
+/* ---------- Bausteine anlegen ---------- */
+const AMIR = portrait('amir', 'amir', 160, 'data-gruppe="amir"');
+const JONAS = portrait('jonas', 'jonas', 160, 'data-gruppe="jonas"');
+// Gegenstände im Raum (Raumkoordinaten)
+bild('klingel', 't-handy', 1, '', 'rT');           // Platzhalter, wird gleich ersetzt
+el('klingel').innerHTML = `<svg viewBox="0 0 60 92"><rect x="4" y="4" width="52" height="84" rx="12" fill="var(--b700)" opacity=".2"/><rect x="2" y="2" width="52" height="84" rx="12" fill="var(--surface)" stroke="var(--b200)" stroke-width="3"/>
+  <rect x="12" y="14" width="32" height="12" rx="4" fill="var(--b100)"/><circle cx="28" cy="56" r="14" fill="var(--b500)"/><circle cx="28" cy="56" r="7" fill="var(--b300)"/></svg>`;
+el('klingel').style.width = '60px';
+akteur('klingel', { x: 905, y: 380 });
+// Küche: Töpfe, Deckel, Schüssel, Teller
+[['topf1', 150], ['topf2', 290]].forEach(([id, x]) => { bild(id, 't-topf', 120, `data-gruppe="${id}"`, 'kInhalt'); bild(id + 'd', 't-deckel', 120, `data-gruppe="${id}"`, 'kInhalt'); });
+bild('schuessel', 't-schuessel', 110, 'data-gruppe="tisch"', 'kInhalt');
+bild('teller1', 't-teller', 120, 'data-gruppe="tisch"', 'kInhalt'); bild('teller2', 't-teller', 120, 'data-gruppe="tisch"', 'kInhalt');
+const dampf = (id, x) => {
+  neu(id, `<svg viewBox="0 0 90 100" style="width:90px"><g stroke="var(--b200)" stroke-width="7">
+    <path class="zeichnen" pathLength="1" d="M22 96c-12-16 12-28 0-46s12-30 0-46"/><path class="zeichnen" pathLength="1" d="M45 96c-12-16 12-28 0-46s12-30 0-46"/>
+    <path class="zeichnen" pathLength="1" d="M68 96c-12-16 12-28 0-46s12-30 0-46"/></g></svg>`, 'width:90px', 'data-frei', 'dampf', 'kInhalt');
+  akteur(id, { x, y: 420, draw: 0, o: 1 });
+};
+dampf('dampf1', 150); dampf('dampf2', 290);
+// Flur: Schuhe im Regal, Hausschuhe, Amirs Schuhe, Mitbringsel (nach dem Tausch)
+bild('schuheA', 't-schuhe', 100, 'data-gruppe="regal"', 'rF'); bild('schuheB', 't-schuhe', 100, 'data-gruppe="regal"', 'rF');
+bild('hschuhe', 't-hausschuhe', 104, 'data-gruppe="regal"', 'rF');
+bild('aschuhe', 't-schuhe', 100, 'data-gruppe="regal"', 'rF');
+bild('blumenF', 't-blumen', 110, 'data-gruppe="regal"', 'rF'); bild('pralF', 't-pralinen', 100, 'data-gruppe="regal"', 'rF');
+akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o: 0 });
+
+/* ================= Szene 1 · Querschnitt baut sich auf, die Einladung fliegt, Amirs Fragen ================= */
+{
+  const tJ = WI(1, 0), tA = WI(1, 2), tAb = WI(1, 4), tEi = WI(1, 5), tSi = WI(1, 7);
+  tw(['schaleL', 'schaleR'], .02, .35, { o: 1 });
+  [['rT', .1], ['rF', .26], ['rK', .42]].forEach(([id, t]) => { tw(id, t, .3, { o: 1 }); tw(id, t, .6, { s: 1 }, 'sanft'); ton(t, 'pop'); });
+  akteur('dachL', { o: 0, y: -260 }, true); akteur('dachR', { o: 0, y: -260 }, true);
+  tw(['dachL', 'dachR'], .55, .15, { o: 1 }); tw(['dachL', 'dachR'], .55, .45, { y: 0 }, 'in');
+  tw(['dachL', 'dachR'], 1.0, .08, { sy: .95 }, 'sinus'); tw(['dachL', 'dachR'], 1.08, .4, { sy: 1 }, 'sanft'); ton(1.0, 'plopp');
+  // Töpfe, Teller, Schüssel
+  pop('topf1', .8, { x: 150, y: 505 }, null); pop('topf1d', .8, { x: 150, y: 505 }, null);
+  pop('topf2', .9, { x: 290, y: 505 }, 'klick'); pop('topf2d', .9, { x: 290, y: 505 }, null);
+  // Jonas in der Küche, Amir unten im Treppenhaus
+  pop(JONAS, tJ, { x: WP('K', 930, 430)[0], y: WP('K', 930, 430)[1] });
+  pop(AMIR, tA, { x: 250, y: 818 });
+  pop('teller1', tAb - .05, { x: 930, y: 548 }, 'klick'); pop('teller2', tAb + .07, { x: 1250, y: 548 }, null);
+  pop('schuessel', tAb + .2, { x: 1090, y: 515 }, 'plopp');
+  // Einladung: Handy bei Jonas → Karte mit Teller und 19:00 fliegt über das Dach zu Amir
+  bild('handyJ', 't-handy', 96, 'data-gruppe="jonas"'); el('handyJ').classList.add('flieg');
+  pop('handyJ', tEi - .45, { x: 3140, y: 585 }, 'klick');
+  summen('handyJ', tEi - .15, .5, 5);
+  neu('einl', `<div class="kopf"></div><div class="ic">${kopie('t-teller', 'einl')}</div><b>19:00</b>`, '', 'data-gruppe="amir"', 'einladung flieg');
+  pop('einl', tEi, { x: 3040, y: 390 }, 'pop');
+  flug('einl', tEi + .45, 1.25, 420, 760, 560, { s: .62 }); ton(tEi + .45, 'whoosh');
+  tw('einl', tEi + .45, .55, { r: -3 }, 'sinus'); tw('einl', tEi + 1.0, .7, { r: 0 }, 'sinus');
+  landen('einl', tEi + 1.7);
+  aus('handyJ', tEi + .6, .3);
+  // „um sieben Uhr“: die Uhr über der Tür dreht auf 19:00
+  uhrAuf(tSi - .25, 1140, 1.0); bump('uhr', tSi + .75, 1.3); ton(tSi + .75, 'ding'); akzent(tSi + .7, .07, 1035, 250, 1.2);
+  // „Amir freut sich sehr“: Amir lacht und hüpft; die Kamera fährt zu ihm
+  const tF = WI(2, 1), tSe = WI(2, 3), tAb2 = WI(2, 4);
+  froh(AMIR, WI(2, 0), WI(2, 4) + .2);
+  huepfen(AMIR, tF, 22); huepfen(AMIR, tSe, 16); bump('einl', tF + .1, 1.12);
+  aus('einl', tSe + .5, .35);
+  kam(WI(2, 0) + .2, 1.6, 620, 560, 1.0);
+  // „aber er hat auch ein paar Fragen“: Kopf schief
+  neigen(AMIR, tAb2 + .3, WI(3, 0) - .2, -8); blick(AMIR, tAb2 + .3, WI(3, 0) - .2, -4);
+  // Drei Fragen: Uhr, Geschenk, Schuh – je ein Symbol mit Fragezeichen
+  const SYM = [['symA', 't-uhr', 120, 600, WI(3, 3)], ['symB', 't-pralinen', 300, 540, WI(4, 2)], ['symC', 't-schuhe', 480, 600, WI(5, 6)]];
+  SYM.forEach(([id, t, x, y, tz], k) => {
+    neu(id, `<div class="ic">${kopie(t, id)}</div><div class="fz" id="${id}q">?</div>`, '', 'data-frei', 'sym flieg');
+    pop(id, tz - .15, { x, y, s: k === 1 ? .88 : 1 }, 'pop');
+    akteur(id + 'q', { s: 0 }, true); tw(id + 'q', tz + .1, .4, { s: 1 }, 'back'); ton(tz + .1, 'klick');
+    wackeln(id, tz + .55, 3, 6);
+  });
+  blick(AMIR, WI(3, 3) - .1, WI(4, 0), -6); neigen(AMIR, WI(3, 3), WI(4, 0), -7);
+  blick(AMIR, WI(4, 2) - .1, WI(5, 0), 0); neigen(AMIR, WI(4, 2), WI(5, 0), 6);
+  blick(AMIR, WI(5, 6) - .1, SE(5) + .2, 6); neigen(AMIR, WI(5, 6), SE(5) + .3, -6);
+  // Die drei Symbole kreisen kurz um Amirs Kopf (Ellipse, vorne größer)
+  const tO = SE(5) + .05, dO = 1.5, CX = 300, CY = 600, RX = 180, RY = 60;
+  const PH = { symA: Math.PI, symB: Math.PI / 2, symC: 0 };
+  HOOKS.push(t => {
+    const u = (t - tO) / dO; if (u <= 0 || u >= 1) return;
+    const w = 2 * Math.PI * E.inout(u);
+    for (const id of ['symA', 'symB', 'symC']) {
+      const f = PH[id] + w, s = 1 - .12 * Math.sin(f);
+      el(id).style.transform = `translate(${(CX + RX * Math.cos(f)).toFixed(2)}px,${(CY - RY * Math.sin(f)).toFixed(2)}px) translate(-50%,-50%) scale(${s.toFixed(4)})`;
+    }
+  });
+  ton(tO, 'whoosh');
+  neigen(AMIR, tO, tO + .5, 7); neigen(AMIR, tO + .5, tO + 1.1, -7);
+  aus(['symA', 'symB', 'symC'], tO + dO + .05, .3);
+  uhrAuf(tO + .2, 1134, .6);
+}
+
+/* ================= Szene 2 · Pünktlich (Treppe, Uhr, Klingel), zu früh (Küche), Nachricht, Mitbringsel ================= */
+{
+  kam(SE(5) + 1.1, 1.0, 720, 540, 1.0);
+  // Amir steigt die Treppe hoch, Stufe für Stufe – die Uhr läuft auf 19:00
+  const tIn = WI(6, 0), tP = WI(6, 6);
+  const STUFEN = [[415, 762], [485, 706], [555, 650], [625, 594], [695, 538], [790, 538]];
+  const dt = (tP - .25 - tIn) / STUFEN.length;
+  STUFEN.forEach(([x, y], k) => { const t = tIn + k * dt; tw(AMIR, t, dt * .82, { x, y }, 'inout', { bogen: 34 }); landen(AMIR, t + dt * .82, .7); if (k % 2 === 0) ton(t + dt * .8, 'klick'); });
+  uhrAuf(tIn, 1140, tP - tIn, 'lin');
+  // „pünktlich“: Amir klingelt
+  wackeln('klingel', tP, 4, 12); welle(tP + .05, 905, 490, 'var(--b500)', 110, .8); welle(tP + .35, 905, 490, 'var(--b500)', 110, .8);
+  ton(tP + .05, 'ding'); bump('uhr', tP, 1.12); froh(AMIR, tP + .1, WI(7, 2)); akzent(tP + .05, .045, 905, 490);
+  tafel('tP', 'rT', 400, 200, ['Pünktlich oder', 'ein paar Minuten später']);
+  tafelEin('tP', tP - .3, [WI(6, 6), WI(6, 7), WI(6, 8), WI(6, 9), WI(6, 10), WI(6, 11)]);
+  // „ein paar Minuten später“: der Zeiger rückt einen kleinen Bogen weiter, der Bogen leuchtet grün
+  const tE = WI(6, 8);
+  uhrAuf(tE, 1145, 1.3); tw('keilOk', tE, 1.3, { x: 5 }, 'inout'); tw('keilOk', tE, .3, { o: 1 }); ton(tE, 'scan');
+  bump('uhr', WI(6, 11), 1.12); ton(WI(6, 11), 'ding');
+  // „Viel zu früh“: Kamera zeigt auch die Küche; der Zeiger läuft vor die Zwölf, roter Bogen
+  const tV = WI(7, 0), tFr = WI(7, 2);
+  kam(tV - .25, 1.1, 1820, 540, .82);
+  versetzen(JONAS, WI(6, 2), ...WP('K', 220, 320));
+  uhrAuf(tFr - .1, 1125, .8); tw('keilOk', tFr - .1, .4, { o: 0 }); tw('keilFr', tFr, .8, { x: 15, o: 1 }, 'inout'); ton(tFr, 'scan');
+  wackeln('uhr', WI(7, 5), 4, 5); ton(WI(7, 5), 'klick');
+  blick(AMIR, WI(7, 8), WI(8, 3), 6);
+  // „die Gastgeber kochen vielleicht noch“: Dampf, Deckel klappern, Jonas eilt mit dem Kochlöffel hin und her
+  const tG = WI(7, 10), tK = WI(7, 11);
+  bild('loeffel', 't-loeffel', 90, 'data-gruppe="jonas"'); el('loeffel').classList.add('flieg');
+  const LX = (x) => x + 95, LY = 470;
+  pop('loeffel', tG - .2, { x: LX(WP('K', 220, 0)[0]), y: LY, r: 8 }, 'klick');
+  const WEG = [150, 300, 150, 300, 220];
+  WEG.forEach((lx, k) => { const t = tG + .1 + k * .38, x = WP('K', lx, 0)[0];
+    tw(JONAS, t, .32, { x }, 'inout', { bogen: 14 }); tw('loeffel', t + .03, .32, { x: LX(x), r: k % 2 ? -10 : 10 }, 'inout', { bogen: 14 }); });
+  froh(JONAS, WI(8, 8), WI(9, 0));
+  ['dampf1', 'dampf2'].forEach((id, k) => { tw(id, tK - .1 + k * .12, .8, { draw: 1 }, 'inout'); });
+  ton(tK - .1, 'scan');
+  [tK + .05, tK + .45, tK + .85].forEach((t, k) => { wackeln(k % 2 ? 'topf2d' : 'topf1d', t, 3, 6); ton(t, 'klick'); });
+  tw(['dampf1', 'dampf2'], WI(8, 5), .6, { o: 0, y: 380 }, 'in');
+  // „wenn du später kommst“: Zeiger springt weiter; „Nachricht“: Amirs Handy vibriert, eine Nachricht mit Uhr fliegt zu Jonas
+  const tSp = WI(8, 3), tSc = WI(8, 5), tN = WI(8, 8), tR = WI(8, 10);
+  uhrAuf(tSp, 1160, .8); tw('keilFr', tSp, .4, { o: 0 });
+  bild('handyA', 't-handy', 96, 'data-gruppe="amir"'); el('handyA').classList.add('flieg');
+  pop('handyA', tSc, { x: 700, y: 612 }, 'klick'); summen('handyA', tN - .3, .55, 5);
+  neu('nachr', `<div class="ic">${kopie('t-uhr', 'nachr')}</div><i></i><i></i><i></i>`, '', 'data-frei', 'nachricht flieg');
+  el('nachr').querySelector('.ic svg').classList.add('auf-brand');
+  pop('nachr', tN - .05, { x: 700, y: 470 }, 'pop');
+  flug('nachr', tN + .3, .9, WP('K', 220, 0)[0] + 10, 300, 300); ton(tN + .3, 'whoosh');
+  bump(JONAS, tN + 1.2, 1.08); nicken(JONAS, tN + 1.25, 1.1);
+  aus('nachr', WI(9, 0) - .1, .3);
+  welle(tR, 700, 612, 'var(--b500)', 120, .8); welle(tR + .3, 700, 612, 'var(--b500)', 120, .8); ton(tR, 'klick'); summen('handyA', tR, .6, 4);
+  // „Kleinigkeit … Blumen oder etwas Süßes“: zurück zur Tür; Strauß und Schachtel wachsen in Amirs Hand
+  const tKl = WI(9, 1), tB = WI(9, 7), tSu = WI(9, 10);
+  kam(tKl - .3, 1.0, 780, 540, 1.05);
+  aus(['handyA', 'loeffel'], tKl - .2, .3); uhrAuf(tKl - .2, 1140, .6);
+  froh(AMIR, WI(9, 4) - .1, WI(9, 7));
+  bild('blumen', 't-blumen', 120, 'data-gruppe="amir"'); el('blumen').classList.add('flieg');
+  bild('pral', 't-pralinen', 100, 'data-gruppe="amir"'); el('pral').classList.add('flieg');
+  akteur('blumen', { x: 690, y: 596, s: 0, sy: 0 });
+  tw('blumen', tB - .1, .55, { s: 1 }, 'back'); tw('blumen', tB - .1, .7, { sy: 1 }, 'sanft'); ton(tB - .1, 'pop');
+  bump('blumen', tB + .55, 1.08);
+  pop('pral', tSu - .05, { x: 852, y: 604 }, 'plopp'); wackeln('pral', tSu + .4, 3, 3);
+  // „Ein Muss ist es aber nicht“: Amir nickt, lächelt
+  nicken(AMIR, WI(10, 1), 1.1); froh(AMIR, WI(10, 3), WI(11, 2));
+  huepfen('blumen', WI(10, 5) - .1, 10); huepfen('pral', WI(10, 5), 10);
+}
+
+/* ================= Szene 3 · Flur (Schuhe) und Küche („Nein, danke“ – die Schüssel nimmt es wörtlich) ================= */
+{
+  // Tür auf, Amir geht hinein, die Kamera fährt in den Flur
+  const t0 = SE(10) + .1;
+  tuerAuf(t0);
+  const [ax, ay] = WP('F', 205, 640);
+  fliegen(AMIR, t0 + .3, .85, ax, ay, 160);
+  fliegen('blumen', t0 + .38, .85, ...WP('F', 430, 552), 140, { s: 110 / 120 });
+  fliegen('pral', t0 + .46, .85, ...WP('F', 548, 564), 130);
+  tausch('blumen', 'blumenF', t0 + 2.0); tausch('pral', 'pralF', t0 + 2.0);
+  kam(t0 + .25, 1.0, 1810, 540, 1.0);
+  tuerZu(t0 + 1.35);
+  tafelAus('tP', t0 + .4);
+  fliegen(JONAS, t0 + .55, .9, ...WP('F', 750, 520), 110);
+  pop('aschuhe', t0 + 1.12, { x: 205, y: 760 }, 'plopp');
+  // „Bei den Schuhen ist es verschieden“: Regal zeigt Schuhe und Hausschuhe; Amirs Schuhe hüpfen fragend
+  const tS = WI(11, 2), tV = WI(11, 5);
+  pop('schuheA', tS - .05, { x: 422, y: 654 }, 'pop'); pop('schuheB', tS + .08, { x: 536, y: 654 }, null); pop('hschuhe', tS + .21, { x: 482, y: 741 }, 'klick');
+  huepfen('aschuhe', tV - .05, 20); huepfen('aschuhe', tV + .45, 14);
+  neu('fzS', '?', '', '', 'fz', 'rF'); pop('fzS', tV, { x: 318, y: 712 }, 'pop'); wackeln('fzS', tV + .4, 3, 8);
+  blick(AMIR, tS, WI(12, 0), 3);
+  // „Frag einfach“: Amirs Blase tippt sich, Jonas nickt; Hausschuhe rutschen zu Amir, seine Schuhe ins Regal
+  const tFr = WI(12, 0), tAu = WI(12, 5);
+  aus('fzS', tFr - .2, .3);
+  neu('blaseF', '', '', '', 'blase flieg');
+  pop('blaseF', tFr - .1, { x: WP('F', 380, 0)[0], y: 480 }, 'pop');
+  tippen('blaseF', 'Soll ich die Schuhe ausziehen?', tFr + .05, tAu - .25, 8);
+  tafel('tF', 'rF', 450, 150, 'Frag einfach: Schuhe aus?');
+  tafelEin('tF', tFr - .25, [WI(12, 0), WI(12, 1), tAu, tAu + .3]);
+  nicken(JONAS, tAu - .05, 1.2); froh(JONAS, tAu, WI(13, 3));
+  tw('hschuhe', tAu + .15, .75, { x: 205, y: 745 }, 'inout'); wackeln('hschuhe', tAu + .2, 4, 3); ton(tAu + .15, 'whoosh');
+  fliegen('aschuhe', tAu + .25, .75, 482, 741, 120);
+  froh(AMIR, tAu + .6, WI(13, 3)); huepfen(AMIR, tAu + .65, 14);
+  // „Und am Tisch“: Kamera in die Küche, beide an den Tisch (Jonas links, Amir rechts)
+  const tT = WI(13, 2), tGi = WI(13, 3), tNe = WI(13, 6), tH = WI(13, 8), tWi = WI(13, 9);
+  aus('blaseF', tT - .5, .3); tafelAus('tF', tT);
+  kam(tT - .2, 1.0, 3260, 540, 1.0);
+  fliegen(AMIR, tT - .15, .95, ...WP('K', 1250, 430), 150);
+  fliegen(JONAS, tT - .05, .95, ...WP('K', 930, 430), 120);
+  // Jonas bietet an: kleine Blase mit Schüssel, die Schüssel schiebt sich zu Amir
+  neu('blaseJ', `<div class="ic">${kopie('t-schuessel', 'blaseJ')}</div><b>?</b>`, '', '', 'blase bild flieg');
+  const tAn = WI(13, 4) + .3;
+  pop('blaseJ', tAn - .05, { x: WP('K', 1015, 0)[0], y: 392 }, 'pop');
+  tw('schuessel', tAn, .6, { x: 1180 }, 'inout'); wackeln('schuessel', tAn + .05, 4, 4); ton(tAn, 'whoosh');
+  froh(JONAS, tAn, tH); blick(JONAS, tAn, tNe, 5);
+  // „Nein, danke“: Amir schüttelt freundlich den Kopf …
+  schuetteln(AMIR, tNe - .1, .9); froh(AMIR, tNe + .2, tH);
+  aus('blaseJ', tNe + .3, .3);
+  // … und die Schüssel nimmt es wörtlich: macht kehrt, rollt zurück, springt ins Küchenregal
+  tw('schuessel', tH - .05, .25, { sx: -1 }, 'inout'); ton(tH - .05, 'klick');
+  tw('schuessel', tH + .25, .8, { x: 820 }, 'inout');
+  [0, 1, 2, 3].forEach(k => tw('schuessel', tH + .25 + k * .2, .2, { r: k % 2 ? 7 : -7 }, 'sinus'));
+  tw('schuessel', tH + 1.05, .2, { r: 0 }, 'sinus'); ton(tH + .3, 'whoosh');
+  fliegen('schuessel', tH + 1.08, .55, 535, 493, 150); tw('schuessel', tH + 1.7, .25, { sx: 1 }, 'inout'); ton(tH + 1.63, 'plopp');
+  blick(AMIR, tH, SE(14) - .6, -7); blick(JONAS, tH + .2, tH + 1.4, -6); akzent(tH + 1.65, .04, ...WP('K', 535, 493));
+  tafel('tN', 'rK', 760, 140, '„Nein, danke“ heißt oft wirklich nein');
+  tafelEin('tN', tH - .2, [tH - .05, tH + .08, tH + .22, tH + .36, tWi, WI(13, 10)]);
+  // „Viele Gastgeber fragen dann nicht noch einmal“: Jonas lächelt, die Schüssel zappelt im Regal – bleibt aber
+  froh(JONAS, WI(14, 1), SE(14) + 1); nicken(JONAS, WI(14, 2), 1.1);
+  wackeln('schuessel', WI(14, 5), 4, 5); ton(WI(14, 5), 'klick');
+}
+
+/* ================= Szene 4 · Fassade klappt zu (Wischblende) → Restaurant: „Zusammen oder getrennt?“ ================= */
+{
+  const t0 = SE(14) + .3;
+  tw('fasR', t0, .75, { sx: 1 }, 'inout'); ton(t0, 'whoosh');
+  tafelAus('tN', t0 + .8);
+  kam(t0 + .8, 1.0, 5100, 540, 1.0);
+  // Restaurant: Tisch gleitet herein, Jonas und Amir, Platzkarten
+  akteur('tischR', { x: 760, o: 0 }, true); tw('tischR', t0 + 1.25, .3, { o: 1 }); tw('tischR', t0 + 1.25, .8, { x: 0 }, 'sanft'); ton(t0 + 1.25, 'whoosh');
+  portrait('jonasR', 'jonas', 160, 'data-gruppe="kartenJ"', 'rR'); portrait('amirR', 'amir', 160, 'data-gruppe="kartenA"', 'rR');
+  const tRe = WI(15, 2);
+  pop('jonasR', tRe - .1, { x: 430, y: 440 }); pop('amirR', tRe + .08, { x: 790, y: 440 }, null);
+  froh('jonasR', tRe, WI(16, 3)); froh('amirR', tRe + .1, WI(16, 3));
+  neu('platzJ', '', '', 'data-gruppe="kartenJ"', 'platz', 'rR'); neu('platzA', '', '', 'data-gruppe="kartenA"', 'platz', 'rR');
+  pop('platzJ', SE(15) - .1, { x: 430, y: 532 }, 'klick'); pop('platzA', SE(15), { x: 790, y: 532 }, null);
+  // „Bedienung“: die Kasse; „oft“: ein Bon rollt heraus
+  const tB = WI(16, 3), tO = WI(16, 4), tZ = WI(16, 5);
+  bild('kasse', 't-kasse', 210, '', 'rR'); ein('kasse', tB - .15, { x: 1300, y: 470 }, { x: 260 }, 'whoosh');
+  neu('bon', '<i style="top:28px;width:70px"></i><i style="top:50px;width:52px"></i><i style="top:72px;width:66px"></i><i style="top:104px;width:56px"></i><i style="top:126px;width:72px"></i><i style="top:148px;width:48px"></i><u style="top:186px"></u>', '', '', 'bon', 'rR');
+  akteur('bon', { x: 1300, y: 292, sy: 0, o: 0 });
+  set('bon', tO + .05, { o: 1 }); tw('bon', tO + .05, .95, { sy: 1 }, 'inout');
+  for (let k = 0; k < 6; k++) ton(tO + .1 + k * .14, 'tipp');
+  blick('jonasR', tB, tZ + 1.2, 6); blick('amirR', tB + .1, tZ + 1.2, 6);
+  tafel('tZ', 'rR', 1150, 118, 'Zusammen oder getrennt?');
+  tafelEin('tZ', tZ - .2, [WI(16, 5), WI(16, 6), WI(16, 7)]);
+  // „Viele zahlen getrennt“: der Bon reißt in zwei Hälften, jede fliegt zu einer Platzkarte
+  const tG = WI(17, 2);
+  neu('bonO', '<i style="top:28px;width:70px"></i><i style="top:50px;width:52px"></i><i style="top:72px;width:66px"></i>', '', 'data-gruppe="kartenJ"', 'bonh oben', 'rR');
+  neu('bonU', '<i style="top:14px;width:56px"></i><i style="top:36px;width:72px"></i><u style="top:74px"></u>', '', 'data-gruppe="kartenA"', 'bonh unten', 'rR');
+  akteur('bonO', { x: 1300, y: 233, o: 0 }); akteur('bonU', { x: 1300, y: 351, o: 0 });
+  set(['bonO', 'bonU'], tG - .05, { o: 1 }); set('bon', tG - .05, { o: 0 }); ton(tG - .05, 'kritzeln');
+  tw('bonO', tG - .03, .2, { y: 215, r: -3 }, 'out'); tw('bonU', tG - .03, .2, { y: 370, r: 3 }, 'out');
+  fliegen('bonO', tG + .22, .7, 430, 512, 170, { r: 0 }); fliegen('bonU', tG + .32, .7, 790, 512, 150, { r: 0 }); ton(tG + .22, 'whoosh');
+  nicken('jonasR', tG + 1.0, 1); nicken('amirR', tG + 1.1, 1);
+  // „Wer einlädt, zahlt aber meistens alles“: Herz auf Jonas' Seite, der ganze Bon wandert zu ihm
+  const tW = WI(18, 0), tE = WI(18, 1), tZa = WI(18, 2), tAl = WI(18, 5);
+  tafelAus('tZ', tW - .15);
+  tafel('tW', 'rR', 620, 130, 'Wer einlädt, zahlt');
+  tafelEin('tW', tW - .1, [WI(18, 0), WI(18, 1), WI(18, 2)]);
+  bild('herzR', 't-herz', 72, 'data-gruppe="kartenJ"', 'rR');
+  pop('herzR', tE + .05, { x: 318, y: 520 }, 'ding'); bump('herzR', tE + .6, 1.18);
+  froh('jonasR', tE, SE(18) + 1.2);
+  fliegen('bonU', tZa + .05, .7, 438, 500, 130); ton(tZa + .05, 'whoosh'); ton(tZa + .75, 'plopp');
+  bump('bonO', tAl, 1.12); bump('bonU', tAl + .05, 1.12); ton(tAl, 'muenze');
+  froh('amirR', tAl - .1, SE(18) + 1.2); huepfen('jonasR', tAl + .05, 12); nicken('amirR', tAl + .2, 1);
+}
+
+/* ================= Szene 4b · „Warum?“ zurück ins Haus: Planen und direkt sagen ================= */
+{
+  const tWa = WI(19, 0);
+  kam(tWa - .15, 1.0, 3260, 540, 1.0);
+  tw('fasR', tWa + .7, .7, { sx: 0 }, 'inout'); ton(tWa + .7, 'whoosh');
+  neigen(AMIR, tWa + .9, SE(19) + .4, -7);
+  // „Gastgeber planen gern genau“: ein Einkaufszettel hakt sich Zeile für Zeile ab
+  const Z = [0, 1, 2, 3], ZB = [96, 70, 110, 84];
+  neu('zettel', `<div class="kopf"></div>${Z.map(k => `<div class="zeile" style="top:${52 + k * 48}px"><div class="kasten"></div><div class="strich" style="width:${ZB[k]}px"></div><div class="ok" id="zok${k}">${tpl('svgHaken')}</div></div>`).join('')}`,
+    '', '', 'zettel', 'rK');
+  pop('zettel', WI(20, 0) - .25, { x: 930, y: 206 }, 'pop');
+  Z.forEach(k => { const t = WI(20, k) + .05; akteur('zok' + k, { draw: 0 }, true); tw('zok' + k, t, .3, { draw: 1 }, 'inout'); ton(t, 'klick'); });
+  froh(JONAS, WI(20, 0), WI(21, 2)); nicken(JONAS, WI(20, 3), 1.1); bump('zettel', WI(20, 3) + .3, 1.06);
+  // „direkt“: schlichte Sprechblase mit Fragezeichen; „niemand raten“: das Fragezeichen löst sich auf, ein Haken erscheint
+  const tD = WI(21, 3), tNi = WI(22, 2), tRa = WI(22, 3);
+  aus('zettel', WI(21, 0), .35);
+  neu('blaseD', `<div class="q" id="blaseDq">?</div>${tpl('svgHaken').replace('<svg', '<svg id="blaseDh"')}`, '', '', 'blase gross flieg');
+  pop('blaseD', tD - .1, { x: WP('K', 1090, 0)[0], y: 395 }, 'pop');
+  akteur('blaseDq', {}, true); akteur('blaseDh', { draw: 0 }, true);
+  blick(AMIR, tD, SE(22), -6); blick(JONAS, tD, SE(22), 6);
+  wackeln('blaseDq', WI(21, 6), 3, 8);
+  tw('blaseDq', tNi - .05, .5, { s: 0, r: 120, o: 0 }, 'in'); ton(tNi - .05, 'whoosh');
+  tw('blaseDh', tRa - .05, .4, { draw: 1 }, 'inout'); ton(tRa + .2, 'ding'); bump('blaseD', tRa + .3, 1.1);
+  froh(AMIR, tRa, SE(22) + 1.5); nicken(AMIR, tRa + .1, 1.1); froh(JONAS, tRa + .1, SE(22) + 1.2);
+}
+
+/* ================= Szene 5 · Das Haus teilt sich: links „In Deutschland“, rechts „Bei dir?“ – Denkpause ================= */
+{
+  const t0 = SE(22) + .2, tIn = WI(23, 0);
+  aus('blaseD', t0, .3);
+  kam(t0 + .25, 1.3, 2590, 470, .6);
+  aus(JONAS, t0 + .4, .35);
+  fliegen(AMIR, t0 + .55, .95, 2290, 700, 130, { s: 1.2 });
+  const tT = tIn - .3;
+  tw('hausL', tT, 1.2, { x: -300 }, 'inout'); tw('hausR', tT, 1.2, { x: 300 }, 'inout'); tw('rS', tT, 1.2, { sx: 1 }, 'inout');
+  ton(tT, 'whoosh'); ton(tT + 1.1, 'plopp'); akzent(tT + 1.15, .03);
+  // links: „In Deutschland“ mit Uhr, Blumen, Hausschuhen
+  tafel('tDE', 'rF', 450, 150, 'In Deutschland', 74);
+  tafelEin('tDE', tIn + .8, [tIn + 1.15, tIn + 1.35]);
+  const ABZ = [['abz1', 't-uhr', 200], ['abz2', 't-blumen', 450], ['abz3', 't-hausschuhe', 700]];
+  ABZ.forEach(([id, t, x], k) => { neu(id, `<div class="ic">${kopie(t, id)}</div>`, '', '', 'abz', 'rF'); pop(id, WI(23, 4) + k * .2, { x, y: 345 }, k === 1 ? 'pop' : 'klick'); });
+  // rechts: die Küche leert sich zu einem leeren Raum
+  const tB = WI(23, 4);
+  tw('kInhalt', tB - .1, .7, { y: 160, o: 0 }, 'in'); ton(tB - .1, 'whoosh');
+  tw('kLeer', tB + .3, .7, { o: 1 }, 'inout');
+  // „ähnlich“: blasse Kopien der Symbole tauchen rechts auf; „ganz anders“: sie wirbeln davon, ein großes Fragezeichen bleibt
+  const tAe = WI(24, 5), tV = WI(24, 6), tGa = WI(24, 7);
+  const GE = [['ge1', 't-uhr', 480, -260, 640, -40], ['ge2', 't-blumen', 750, 0, 760, 30], ['ge3', 't-hausschuhe', 1020, 260, 640, 40]];
+  GE.forEach(([id, t, x], k) => { neu(id, `<div class="ic">${kopie(t, id)}</div>`, '', '', 'abz geist', 'rK'); pop(id, tAe - .1 + k * .14, { x, y: 345 }, k ? null : 'pop'); });
+  ABZ.forEach(([id], k) => bump(id, tAe - .1 + k * .14, 1.1));
+  GE.forEach(([id], k) => wackeln(id, tV + k * .1, 3, 6));
+  GE.forEach(([id, , x, dx, y, r]) => tw(id, tGa, .6, { x: x + dx, y, r, o: 0, s: .6 }, 'in')); ton(tGa, 'whoosh');
+  neu('frage', '?', '', '', 'riesen', 'rK'); pop('frage', WI(24, 8) + .1, { x: 750, y: 470 }, 'pop');
+  // „Und wie ist das bei dir?“: Amir tritt auf die Schwelle, „Bei dir?“ hängt rechts
+  tw(AMIR, WI(25, 0), .6, { s: 1.35, y: 690 }, 'inout');
+  tafel('tB', 'rK', 750, 150, 'Bei dir?', 80);
+  tafelEin('tB', WI(25, 3) - .15, [WI(25, 4), WI(25, 5)]);
+  bump('frage', WI(25, 5) + .05, 1.12); ton(WI(25, 5) + .05, 'ding');
+  // Denkpause: Gedankenbläschen füllt sich mit neutralen Symbolen, das Fragezeichen pulsiert, Amir grübelt
+  const tP = SE(25) + .1, tEnde = WI(26, 0) - .55;
+  neu('denk', `<i style="left:150px;top:262px;width:56px;height:56px"></i><i style="left:132px;top:322px;width:32px;height:32px"></i>
+    ${[['ds1', 't-teller', 78, 30], ['ds2', 't-uhr', 218, 30], ['ds3', 't-pralinen', 78, 146], ['ds4', 't-herz', 218, 146]].map(([id, t, x, y]) => `<div class="ds" id="${id}" style="left:${x}px;top:${y}px">${kopie(t, id)}</div>`).join('')}`,
+    '', '', 'denk', 'rS');
+  pop('denk', tP, { x: 300, y: 270 }, 'pop');
+  ['ds1', 'ds2', 'ds3', 'ds4'].forEach((id, k) => { const t = tP + .4 + k * .6; akteur(id, { s: 0 }, true); tw(id, t, .45, { s: 1 }, 'back'); ton(t, k % 2 ? 'klick' : 'pop'); });
+  kam(tP, tEnde - tP + .3, 2590, 480, .66, 'inout', null, false);
+  neigen(AMIR, tP, tEnde, -9); blick(AMIR, tP, tP + 1.4, 7); blick(AMIR, tP + 1.6, tP + 2.4, -5);
+  froh(AMIR, tEnde - .5, WI(26, 0) + .2);
+  HOOKS.push(t => { const a = clamp((t - tP) / .4) * (1 - clamp((t - tEnde) / .3)); if (a > 0) el('frage').style.transform += ` scale(${(1 + .06 * a * Math.sin(2 * Math.PI * 1.6 * (t - tP))).toFixed(4)})`; });
+  welle(tP + 1.0, ...WP('K', 750, 470).map((v, k) => v + (k ? 0 : 300)), 'var(--b300)', 300, 1.2);
+}
+
+/* ================= Szene 6 · Haus schließt sich: Amirs Tipp, die Schüssel kommt zurück, um sieben klingelt er ================= */
+{
+  const tZu = WI(26, 0) - .5;
+  aus('denk', tZu - .1, .3); aus('frage', tZu - .05, .3); aus(['abz1', 'abz2', 'abz3'], tZu, .3);
+  tafelAus('tB', tZu); tafelAus('tDE', tZu + .05);
+  tw('hausL', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('hausR', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('rS', tZu + .1, 1.1, { sx: 0 }, 'inout'); ton(tZu + .1, 'whoosh');
+  tw('kLeer', tZu + .2, .5, { o: 0 }); tw('kInhalt', tZu + .5, .7, { y: 0, o: 1 }, 'out');
+  kam(tZu + .1, 1.2, 3260, 540, 1.0, 'inout', null);
+  fliegen(AMIR, tZu + .3, .95, ...WP('K', 1250, 430), 120, { s: 1 });
+  tw(JONAS, tZu + .9, .5, { o: 1, s: 1 }, 'back'); ton(tZu + .9, 'pop'); froh(JONAS, tZu + 1, WI(27, 0));
+  // „sag es vorher freundlich“: Tafel
+  tafel('tS', 'rK', 760, 140, 'Sag vorher, was du nicht isst');
+  const tSa = WI(26, 7), tVo = WI(26, 9), tFr = WI(26, 10);
+  tafelEin('tS', tSa - .2, [tSa, tVo, tFr, tFr + .12, tFr + .24, tFr + .36]);
+  blick(AMIR, WI(26, 2), WI(26, 7), -5);
+  // „Ich habe Jonas geschrieben: …“: Nachricht tippt sich und fliegt zu Jonas, Jonas antwortet mit Herz
+  const tJ = WI(27, 2), tGe = WI(27, 3), tI = WI(27, 4), tOk = SE(27);
+  bild('handyA2', 't-handy', 100, 'data-gruppe="amir"'); el('handyA2').classList.add('flieg');
+  pop('handyA2', tJ, { x: WP('K', 1372, 0)[0], y: 610 }, 'klick');
+  neu('chat', '', '', '', 'chat flieg');
+  pop('chat', tGe, { x: WP('K', 1060, 0)[0], y: 410 }, 'pop');
+  tippen('chat', 'Ich esse kein Fleisch. Ist das okay?', tI - .05, tOk, 9);
+  froh(JONAS, tJ, WI(28, 0)); blick(JONAS, tGe, tOk + .6, 5);
+  flug('chat', tOk + .1, .6, ...WP('K', 930, 450), 90, { s: .2 }); tw('chat', tOk + .45, .25, { o: 0 }); ton(tOk + .1, 'whoosh');
+  bump(JONAS, tOk + .7, 1.1);
+  bild('herzJ', 't-herz', 84, 'data-gruppe="jonas"'); el('herzJ').classList.add('flieg');
+  pop('herzJ', tOk + .75, { x: WP('K', 930, 0)[0], y: 395 }, 'ding'); nicken(JONAS, tOk + .8, 1.1);
+  // „wenn ich noch Hunger habe“: die Schüssel kommt aus dem Regal zurück und federt auf den Tisch
+  const tH = WI(28, 4);
+  tw('schuessel', tH - .1, .2, { sy: .9 }, 'sinus');
+  fliegen('schuessel', tH + .05, .75, 1090, 515, 170); ton(tH + .05, 'whoosh'); ton(tH + .8, 'plopp');
+  huepfen('schuessel', tH + .9, 14);
+  froh(AMIR, tH + .3, WI(29, 0)); blick(AMIR, tH, tH + 1.0, -5);
+  akzent(tH + .85, .04, ...WP('K', 1090, 515));
+  nicken(JONAS, WI(28, 6), 1.1);
+  aus('herzJ', WI(28, 7), .3); aus('handyA2', WI(28, 8), .3);
+  // „Um sieben Uhr klingelt Amir, mit Blumen in der Hand“: Kamera zeigt das Haus von der Tür bis zum Tisch
+  const t9 = WI(29, 0), tS7 = WI(29, 1), tKl = WI(29, 3), tBl = WI(29, 6), tHa = WI(29, 9);
+  tafelAus('tS', t9 - .45);
+  set(['blumenF', 'pralF'], t9 - .6, { o: 0 });
+  uhrAuf(t9 - 1.0, 1138, .3);
+  kam(t9 - .45, 1.2, 2210, 520, .62);
+  fliegen(AMIR, t9 - .4, 1.2, 790, 538, 300);
+  uhrAuf(tS7 + .05, 1140, .45, 'back'); bump('uhr', WI(29, 2) + .1, 1.25); ton(WI(29, 2) + .1, 'ding'); akzent(WI(29, 2), .04, 1035, 250);
+  wackeln('klingel', tKl, 4, 12); welle(tKl + .05, 905, 490, 'var(--b500)', 110, .8); welle(tKl + .35, 905, 490, 'var(--b500)', 110, .8); ton(tKl + .05, 'ding');
+  froh(AMIR, tKl + .2, SE(31) + 3);
+  bild('blumen2', 't-blumen', 120, 'data-frei'); el('blumen2').classList.add('flieg');
+  akteur('blumen2', { x: 690, y: 596, s: 0, sy: 0 });
+  tw('blumen2', tBl - .1, .55, { s: 1 }, 'back'); tw('blumen2', tBl - .1, .7, { sy: 1 }, 'sanft'); ton(tBl - .1, 'pop');
+  bump('blumen2', tHa, 1.1);
+  // „Jonas freut sich über den Besuch“: Tür auf, Jonas steht im Türrahmen, beide hüpfen; dann gemeinsam an den Tisch
+  const tJo = WI(30, 0), tFe = WI(30, 1), tBe = WI(30, 5);
+  tuerAuf(tJo - .3);
+  fliegen(JONAS, tJo - .25, .8, 1035, 470, 240);
+  froh(JONAS, tJo + .4, SE(31) + 3);
+  huepfen(AMIR, tFe + .05, 16); huepfen(JONAS, tFe + .15, 16); ton(tFe + .05, 'pop');
+  fliegen(AMIR, tBe - .1, 1.0, ...WP('K', 1250, 430), 220);
+  fliegen(JONAS, tBe, 1.0, ...WP('K', 930, 430), 200);
+  fliegen('blumen2', tBe + .05, 1.0, ...WP('K', 1362, 516), 200, { s: 100 / 120 });
+  tuerZu(tBe + .6);
+  // „Du darfst auch fragen“: kleine Fragezeichen-Blase bei Amir, Jonas nickt
+  const tDu = WI(31, 0), tFg = WI(31, 3);
+  neu('blaseA', `<b>?</b>`, '', '', 'blase bild flieg');
+  pop('blaseA', tDu + .05, { x: WP('K', 1290, 0)[0], y: 392 }, 'pop');
+  bump('blaseA', tFg, 1.12); nicken(JONAS, tFg - .05, 1.1); ton(tFg, 'klick');
+  // „Anders ist nicht falsch“: Welle durchs Haus, die weiße Platte steigt auf
+  const tAn = WI(32, 0);
+  aus('blaseA', tAn - .4, .3);
+  kam(tAn - .45, 1.2, 2050, 560, .55);
+  neu('band', '', '', 'data-frei', 'band');
+  akteur('band', { x: -300, y: 540, o: 0 }); tw('band', tAn - .1, .3, { o: .55 }); tw('band', tAn - .1, 1.7, { x: 4100 }, 'inout'); tw('band', tAn + 1.3, .3, { o: 0 });
+  welle(tAn + .05, ...WP('K', 1090, 470), 'var(--b300)', 420, 1.3); welle(tAn + .45, ...WP('K', 1090, 470), 'var(--b300)', 420, 1.3);
+  neu('endplatte', `<div id="endplatteT"><div class="titel">Anders ist nicht falsch</div></div>`, '', '', 'endplatte');
+  akteur('endplatte', { x: 1960, y: 1520, o: 0 });
+  tw('endplatte', tAn - .2, .3, { o: 1 }); tw('endplatte', tAn - .2, .85, { y: 1150 }, 'sanft'); ton(tAn - .2, 'whoosh');
+  titelEin('endplatteT', WI(32, 0), [WI(32, 0), WI(32, 1), WI(32, 2), WI(32, 3)]);
+  huepfen(AMIR, WI(32, 3), 14); huepfen(JONAS, WI(32, 3) + .1, 14); ton(WI(32, 3) + .1, 'erfolg');
+}
+
+/* ---------- Abspann: das Puppenhaus schließt sich, es wird Abend, die Fenster leuchten ---------- */
+const AB = ENDE_SPRACHE + 1.0;
+kam(AB - .2, 1.7, 1960, 430, .44);
+tw('fasL', AB, 1.2, { sx: 1 }, 'inout'); tw('fasR', AB + .1, 1.2, { sx: 1 }, 'inout'); ton(AB, 'whoosh');
+tw('himmel', AB + .5, 1.5, { o: 1 }, 'inout'); tw('nacht', AB + .5, 1.5, { o: .9 }, 'inout');
+document.querySelectorAll('.licht').forEach((l, k) => { akteur(l, { o: 0 }, true); tw(l, AB + 1.3 + k * .14, .6, { o: 1 }, 'inout'); });
+ton(AB + 1.3, 'ding');
+tw('schluss', AB + 1.9, .8, { o: 1, y: 0 }, 'weich');
+
+start(AB + 5.4, AB + 3.6);
+</script>
+</body></html>

@@ -163,10 +163,10 @@
 <div id="kamera"><div id="welt">
   <div class="f" id="cam" style="display:none"></div><div class="f" id="kipp" style="display:none"></div>
 
+  <div class="a buehne" id="kulisse" style="background:none;border-radius:0;width:0;height:0;visibility:hidden"></div>
   <!-- ===== Boden: Brett, Felder, Weg, Kreise (kippt in Szene 4) ===== -->
   <div id="brett">
     <div class="f" id="flaeche"></div>
-    <div class="a buehne" id="kulisse" style="background:none;border-radius:0;width:0;height:0;visibility:hidden"></div>
     <div class="f" id="weg"></div>
     <!-- Feld „Werkstatt“ -->
     <div class="a buehne feld" id="feldW" style="left:70px;top:60px;width:1780px;height:960px"></div>
@@ -255,13 +255,13 @@ const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, 
 const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
 const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
 const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
-const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const landen = (id, t, k = 1) => { tw(id, t, .1, { sy: 1 - .14 * k, sx: 1 + .09 * k }, 'sinus'); tw(id, t + .1, .45, { sy: 1, sx: 1 }, 'sinus'); };
 const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
 const rel = (id, basis = {}) => akteur(id, basis, true);
 // Hüpfen von Feld zu Feld (Spielfigur): Bogen, Strecken im Flug, Stauchen beim Landen
 const hopp = (id, t, x, y, d = .38, h = 34) => {
-  tw(id, t, .07, { sy: .9, sx: 1.06 }, 'sinus');
-  tw(id, t + .05, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .07, d * .45, { sy: 1.07, sx: .95 }, 'sinus');
+  tw(id, t - .03, .1, { sy: .92, sx: 1.05 }, 'sinus');
+  tw(id, t + .05, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .07, d * .45, { sy: 1.06, sx: .96 }, 'sinus');
   landen(id, t + .05 + d); cue(t + .05 + d, 'klick');
 };
 const hopps = (id, t, punkte, dt = .42, d = .36, h = 30) => punkte.forEach(([x, y], i) => hopp(id, t + i * dt, x, y, d, h));
@@ -338,7 +338,7 @@ pin('ges', { figur: 'tGeselle', r: 130, x: 1660, y: 520 });
 pin('n1', { klein: true, r: 125, x: 760, y: -520 });
 pin('n2', { klein: true, r: 125, x: 1160, y: -520 });
 pin('n3', { klein: true, r: 95, x: 1420, y: -560, basis: { s: 0 } });
-pin('n4', { klein: true, r: 110, x: 180, y: 960, basis: { o: 0 } });
+pin('n4', { klein: true, r: 110, x: 190, y: 900, basis: { o: 0 } });
 // Kwames Arme: zwei Bögen wachsen aus dem Pin
 el('kw').insertAdjacentHTML('beforeend', `<svg class="arme" id="arme" viewBox="0 0 400 220">
   <path class="zeichnen" pathLength="1" d="M150 160Q70 170 46 70" stroke="var(--b500)" stroke-width="20" stroke-linecap="round" fill="none"/>
@@ -415,7 +415,7 @@ HOOKS.push(t => {
 /* ================= 1 · Kwames erster Tag: Sabine streckt die Hand aus, der Geselle nickt ================= */
 // Erste Bühne mittig, ohne Titel. Die Kamera schwebt beim Start leicht heran.
 set('cam', 0, { s: .94 }); tw('cam', 0, 2.2, { s: 1 }, 'weich');
-steher('bank', 1420, 470); steher('sofa', 1250, -820); steher('thermo', 230, 720, { o: 0, hoch: 0 });
+steher('bank', 1420, 470); steher('sofa', 1430, -790); steher('thermo', 230, 720, { o: 0, hoch: 0 });
 // Werkbank und Geselle stehen schon; Kwame springt aufs Startfeld
 rel('start1', { x: 574, y: 654, s: .9, o: .6 });
 tw('start1', W('Kwames', 1) - .2, .5, { s: 1, o: 1 }, 'back');
@@ -436,7 +436,7 @@ tw('arme', W('breitet', 3), .55, { draw: 1 }, 'out'); cue(W('breitet', 3), 'whoo
 rel('armHandL', { o: 0 }); rel('armHandR', { o: 0 });
 tw(['armHandL', 'armHandR'], W('breitet', 3) + .4, .15, { o: 1 });
 const tGross = W('Arme', 3);
-tw('k_kw', tGross, .9, { s: 1.7 }, 'sinus'); akzent(tGross + .2, .03);
+tw('k_kw', tGross, .9, { s: 1.62 }, 'sinus'); akzent(tGross + .2, .03);
 // Seifenblasen: beide Kreise wabbeln, Sabine wird ein Stück zurückgeschoben
 const wabbeln = (id, t, n = 5, a = .06) => { for (let i = 0; i < n; i++) { const k = a * (1 - i / n); tw(id, t + i * .18, .18, i % 2 ? { sx: 1 + k, sy: 1 - k } : { sx: 1 - k, sy: 1 + k }, 'sinus'); } tw(id, t + n * .18, .35, { sx: 1, sy: 1 }, 'sinus'); };
 wabbeln('k_kw', tGross + .45); wabbeln('k_sab', tGross + .45); cue(tGross + .45, 'plopp');
@@ -448,10 +448,10 @@ bump('hdSab', W('Hand', 4), 1.12);
 // Kwames Arme ziehen sich verlegen zurück, sein Kreis schrumpft, ein Fragezeichen ploppt
 tw(['armHandL', 'armHandR'], W('entgegen', 4) + .2, .12, { o: 0 });
 tw('arme', W('entgegen', 4) + .2, .5, { draw: 0 }, 'in');
-tw('k_kw', W('entgegen', 4) + .3, .6, { s: 1 }, 'sanft');
+tw('k_kw', W('entgegen', 4) + .3, .8, { s: 1 }, 'sinus');
 tw('sab', W('entgegen', 4) + .4, .5, { x: 1020 }, 'weich');
 pop('frage1', W('entgegen', 4) + .55, { x: 640, y: 440 });
-wackeln('frage1', W('entgegen', 4) + 1.05, 4, 6);
+wackeln('frage1', W('entgegen', 4) + 1.05, 4, 4);
 // Der Geselle an der Werkbank nickt nur kurz zu
 bump('ges', W('Geselle', 5), 1.06); wackeln('bank', W('Werkbank', 5), 3, 2);
 tw('hdSab', W('Geselle', 5) - .2, .4, { x: 1000, s: 0 }, 'in');
@@ -462,7 +462,7 @@ for (const t of [W('nickt', 5), W('kurz', 5)]) { tw('nickGes', t, .17, { y: 420 
 tw('nickGes', W('zu', 5) + .3, .35, { o: 0 });
 // Kwame: „Jetzt bin ich unsicher …“ – sein Kreis wird kleiner und blasser
 tw('k_kw', W('unsicher', 6), .8, { s: .8, o: .5 }, 'sanft');
-wackeln('frage1', W('Mag', 7), 4, 7); bump('frage1', W('nicht', 7), 1.15);
+wackeln('frage1', W('Mag', 7), 4, 4); bump('frage1', W('nicht', 7), 1.15);
 
 /* ================= 2 · So ist es oft: Hand geben, Blickkontakt, Umarmung unter Freunden ================= */
 // Kamera zoomt auf beide Figuren
@@ -541,7 +541,7 @@ document.querySelectorAll('.glied').forEach((g, i) => { if (i) { g.style.left = 
 // Die Kreise wachsen genau bis zur Mitte: eine Armlänge
 tw(['k_kw', 'k_sab'], W('Armlänge', 14) + .1, .6, { s: 1.27 }, 'sanft'); akzent(W('Armlänge', 14) + .2, .035);
 karte('karte3', W('Beim', 14) - .3, 560, 210, [W('eine', 14) - .2, null, null, null, W('Nicken', 17) - .15]);
-tw('meter', W('nicht', 15) - .1, .4, { o: 0 }); tw(['k_kw', 'k_sab'], W('nicht', 15), .6, { s: 1 }, 'sanft');
+tw('meter', W('nicht', 15) - .1, .4, { o: 0 }); tw(['k_kw', 'k_sab'], W('nicht', 15), .8, { s: 1 }, 'sinus');
 // Nicht alle geben gern die Hand: Geselle mit öligen Händen
 akteur('hdGes', { x: 1640, y: 580, s: 0 });
 tw('hdGes', W('alle', 15) - .1, .5, { s: 1 }, 'back'); tw('hdGes', W('alle', 15), .5, { x: 1520 }, 'sanft'); cue(W('alle', 15) - .1, 'pop');
@@ -566,7 +566,7 @@ nickt('ges', W('Nicken', 17) + .3);
 const tK = SE(17) + .25, aKipp = 52;
 aus(['karte3', 'nickGes'], SE(17) + .1, .35);
 tw('kipp', tK, 1.7, { r: aKipp }, 'inout'); cue(tK, 'whoosh');
-fahrt(tK, 1.7, 960, 300, .92, .02);
+fahrt(tK, 1.7, 960, 320, .92, .02);
 // Kälte? Thermometer fällt ins Bild, der Balken steigt auf eine warme mittlere Höhe
 akteur('thermoI', { sy: .08 }, true);
 set('thermo', W('Kälte', 19) - .45, { o: 1, hoch: 700 });
@@ -577,27 +577,27 @@ karte('karte4', W('Abstand', 20) - .9, 960, -140, [W('Abstand', 20), W('Abstand'
 const tRaum = W('eigenen', 20);
 ['kw', 'sab', 'ges'].forEach((id, i) => {
   const t = tRaum + i * .18;
-  set('l_' + id, t, { o: .9, s: 1 }); tw('l_' + id, t, .9, { o: 0, s: 1.35 }, 'weich');
+  set('l_' + id, t, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in');
   bump('k_' + id, t, 1.08); cue(t, 'ding');
 });
 // zu nah: jemand rückt in Kwames Kreis – beide Kreise wabbeln, Kwame weicht zurück
 const tNah = W('nah', 21);
-tw('n4', tNah - 1.0, .3, { o: 1 }); tw('k_n4', tNah - 1.0, .4, { s: 1 }, 'back');
-hopps('n4', tNah - .9, [[330, 890], [470, 820]], .38, .34, 24);
+tw('n4', tNah - 1.15, .3, { o: 1 }); tw('k_n4', tNah - 1.15, .55, { s: 1 }, 'sinus');
+hopps('n4', tNah - 1.05, [[330, 860], [470, 800]], .47, .4, 24);
 wabbeln('k_kw', tNah - .05, 6, .09); wabbeln('k_n4', tNah - .05, 6, .09); cue(tNah - .05, 'plopp');
 tw('kw', tNah, .5, { x: 700, r: 5 }, 'sanft');
 tw('k_kw', tNah, .5, { sx: .9 }, 'sanft');
 tw('kw', W('unangenehm', 21) + .6, .5, { x: 640, r: 0 }, 'sanft'); tw('k_kw', W('unangenehm', 21) + .6, .5, { sx: 1 }, 'sanft');
-hopp('n4', W('unangenehm', 21) + .5, 300, 900, .4, 24);
-tw('n4', SE(21) + .3, .3, { o: 0 }); tw('k_n4', SE(21) + .3, .3, { s: 0 }, 'in');
+hopp('n4', W('unangenehm', 21) + .5, 330, 800, .4, 24);
+tw('n4', SE(21) + .3, .3, { o: 0 }); tw('k_n4', SE(21) + .1, .6, { s: 0 }, 'sinus');
 // je besser man sich kennt: die beiden vom Feld „Zuhause“ rücken Schritt für Schritt näher
-set('n1', SE(17), { x: 700, y: -440 }); set('n2', SE(17), { x: 1220, y: -440 });
+set('n1', SE(17), { x: 700, y: -440 }); set('n2', SE(17), { x: 1200, y: -440 });
 set(['k_n1', 'k_n2'], SE(17), { s: 1 }); set(['n3', 'k_n3'], SE(17), { s: 0 }); set('herzZ', SE(17), { o: 0 }); set('kFam', SE(17), { o: 0 }); set(['k_n1', 'k_n2'], SE(17), { o: 1 });
 // Kamera fährt nach hinten zu den beiden
 fahrt(W('besser', 22) - .7, 1.0, 960, 330, 1.2, .02);
 aus('karte4', W('besser', 22) - .7, .35);
 set('herzZ', SE(17), { x: 960, y: -440, s: 0, o: 1, hoch: 170 });
-pop2: { const t = W('näher', 22) + .3; tw('herzZ', t, .5, { s: .9 }, 'back'); tw('herzZ', t, 1.0, { hoch: 215 }, 'out'); cue(t, 'ding'); tw('herzZ', SE(22) + .3, .3, { o: 0 }); }
+{ const t = W('näher', 22) + .3; tw('herzZ', t, .5, { s: .9 }, 'back'); tw('herzZ', t, 1.0, { hoch: 215 }, 'out'); cue(t, 'ding'); tw('herzZ', SE(22) + .3, .3, { o: 0 }); }
 [['besser', 780, 1140, .86], ['kennt', 850, 1070, .7], ['näher', 900, 1020, .52]].forEach(([w, x1, x2, s]) => {
   const t = W(w, 22) - .1;
   hopp('n1', t, x1, -440, .34, 22); hopp('n2', t, x2, -440, .34, 22);
@@ -607,10 +607,10 @@ pop2: { const t = W('näher', 22) + .3; tw('herzZ', t, .5, { s: .9 }, 'back'); t
 /* ================= 5 · Und bei dir? Der Würfel rollt, das Brett teilt sich ================= */
 const tZur = SE(22) + .15;
 tw('kipp', tZur, 1.3, { r: 0 }, 'inout');
-aus('thermo', tZur, .35);
+aus('thermo', W('besser', 22) - .8, .35);
 fahrt(tZur + .6, 1.5, 960, 1720, 1, .1);
 // Kwame hüpft mit der Kamera den Spielweg hinunter, Sabine gleitet mit
-hopps('kw', tZur + .5, [[740, 880], [860, 1040], [960, 1200], [960, 1370], [960, 1540], [960, 1720], [960, 1900]], .26, .34, 26);
+hopps('kw', tZur + .45, [[760, 880], [900, 1060], [960, 1250], [960, 1460], [960, 1680], [960, 1900]], .36, .32, 26);
 tw('sab', tZur + .6, 1.6, { x: 520, y: 1900 }, 'inout', { bogen: 30 });
 aus(['ges', 'k_ges'], tZur + 1.9, .01);
 // das Würfelfeld
@@ -704,7 +704,7 @@ hopps('ges', t29, [[1600, 1380], [1600, 1580], [1590, 1660]], .3, .28, 30);
 set('n1', t29, { x: 900, y: 1150 }); set('n2', t29, { x: 1020, y: 1150 }); set(['k_n1', 'k_n2'], t29, { s: .55 });
 hopps('n1', t29 + .1, [[700, 1330], [500, 1520], [360, 1640]], .3, .28, 26);
 hopps('n2', t29 + .18, [[820, 1330], [620, 1520], [500, 1640]], .3, .28, 26);
-tw(['k_n1', 'k_n2'], t29 + .6, .6, { s: 1 }, 'sanft');
+tw(['k_n1', 'k_n2'], t29 + .6, .8, { s: 1 }, 'sinus');
 fahrt(t29 + .2, 1.2, 960, 1700, .97, .02);
 // Hand: Sabine und Kwame – kurzer Händedruck
 set('hdSab', W('Hand', 29) - .5, { x: 800, y: 1790 }); set('hdKw', W('Hand', 29) - .5, { x: 1020, y: 1790 });
@@ -727,10 +727,10 @@ froh('sab', W('Umarmung', 29)); froh('kw', W('Umarmung', 29)); froh('ges', W('Um
 tw(['hdSab', 'hdKw', 'nickGes'], W('Jede', 29) - .1, .35, { s: 0, o: 0 }, 'in');
 const tRe = W('Respekt', 29) - .1;
 akteur('welle6', { x: 960, y: 1760, s: .1, o: 0 });
-set('welle6', W('Jede', 29), { o: .7 }); tw('welle6', W('Jede', 29), 2.2, { s: 6, o: 0 }, 'weich'); cue(W('Jede', 29), 'scan');
+set('welle6', W('Jede', 29), { o: .85 }); tw('welle6', W('Jede', 29), 2.4, { s: 6 }, 'out'); tw('welle6', W('Jede', 29), 2.4, { o: 0 }, 'in'); cue(W('Jede', 29), 'scan');
 [['n1', 0], ['n2', .05], ['sab', .25], ['kw', .45], ['ges', .7]].forEach(([id, d]) => {
   const t = W('Jede', 29) + .2 + d;
-  set('l_' + id, t, { o: .9, s: 1 }); tw('l_' + id, t, .9, { o: 0, s: 1.3 }, 'weich'); bump('k_' + id, t, 1.07);
+  set('l_' + id, t, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in'); bump('k_' + id, t, 1.07);
 });
 ['n1', 'n2', 'sab', 'kw', 'ges'].forEach((id, i) => wippen(id, tRe + i * .1, 12));
 cue(tRe, 'erfolg');
