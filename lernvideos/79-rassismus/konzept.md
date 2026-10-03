@@ -38,9 +38,18 @@ Abspann: „Alle sind gleich viel wert.“ und die Kernbotschaft.
 - Die Situation in Szene 1 ist eine Beispielsituation (Figuren). Solche Tests mit zwei Anfragen, die sich nur im Namen
   unterscheiden, gibt es wirklich (Studien zur Wohnungssuche) – im Faktencheck belegen, im Video nicht als Statistik.
 - Schreibweise für die Stimme: „Artikel drei“, „neunzehnhundertneunundvierzig“, „eins eins null“ (siehe unten).
-- Zu prüfen in der Recherche (sonst vorsichtiger formulieren): Gleichbehandlungsgesetz gilt auch bei der Wohnungssuche
-  (ethnische Herkunft, § 19 AGG); rassistische Beleidigung/Gewalt strafbar (Beleidigung § 185 StGB, Volksverhetzung § 130 StGB,
-  Körperverletzung); Beratung der Antidiskriminierungsstelle des Bundes kostenlos.
+- **Recherche (03.10.2026):** Gleichbehandlungsgesetz bei der Wohnungssuche (ethnische Herkunft, § 19 Abs. 2 AGG), Strafbarkeit
+  (Beleidigung § 185 StGB, Körperverletzung, rassistische Beweggründe schärfen die Strafe nach § 46 Abs. 2 StGB) und die kostenlose
+  Beratung der Antidiskriminierungsstelle des Bundes sind belegt (siehe Faktencheck).
+- **Korrektur nach der Recherche (Szene 4):** „nur wegen ihrer Herkunft oder ihres Glaubens“ → „aus Rassismus und Judenhass“.
+  Jüdinnen und Juden wurden im Nationalsozialismus nach rassistischen Kategorien verfolgt – unabhängig von ihrem Glauben;
+  Sinti und Roma ebenso aus Rassismus. Die alte Fassung hätte den Mord als Verfolgung „wegen des Glaubens“ verkürzt.
+- **Keine Zahl zu „viele Menschen“ (Szene 4):** Laut Rassismusmonitor 2023 hat etwa jede fünfte Person in Deutschland (22 %)
+  selbst Rassismus erlebt; im Video bleibt es bei „viele Menschen“, ohne Statistik.
+- **Wohnungssuche, Ausnahme:** § 19 Abs. 5 AGG nimmt Mietverhältnisse aus, bei denen ein besonderes Nähe- oder Vertrauensverhältnis
+  besteht (z. B. Vermieter wohnt auf demselben Grundstück). „schützt dich … auch bei der Wohnungssuche“ bleibt als Grundsatz richtig;
+  dass die Absage in Szene 1 Rassismus ist, gilt unabhängig davon.
+- **Tipp „Lach nicht mit … frag später“** ist eine Empfehlung (Zivilcourage), keine Rechtsaussage.
 
 ## Sprechertext
 
@@ -60,7 +69,7 @@ Erzählerin: Rassismus heißt: Menschen werden schlechter behandelt, weil sie an
 Erzählerin: In Deutschland sind alle Menschen gleich viel wert. Das Grundgesetz sagt in Artikel drei: Niemand darf wegen seiner Herkunft, seiner Sprache oder seines Glaubens benachteiligt werden. Das Gleichbehandlungsgesetz schützt dich in der Ausbildung, bei der Arbeit und auch bei der Wohnungssuche. Rassistische Beleidigungen und Gewalt sind Straftaten.
 
 ### Szene 4
-Kwame: Warum ist das hier so wichtig? Im Nationalsozialismus wurden Millionen Menschen verfolgt und ermordet, nur wegen ihrer Herkunft oder ihres Glaubens. Danach hieß es: Nie wieder. Darum steht der Schutz seit neunzehnhundertneunundvierzig im Grundgesetz. Trotzdem erleben auch heute viele Menschen Rassismus. Darum ist es wichtig, darüber zu sprechen.
+Kwame: Warum ist das hier so wichtig? Im Nationalsozialismus wurden Millionen Menschen verfolgt und ermordet, aus Rassismus und Judenhass. Danach hieß es: Nie wieder. Darum steht der Schutz seit neunzehnhundertneunundvierzig im Grundgesetz. Trotzdem erleben auch heute viele Menschen Rassismus. Darum ist es wichtig, darüber zu sprechen.
 
 ### Szene 5
 Erzählerin: Stell dir vor: In der Pause macht ein Kollege einen Witz über die Herkunft von Kwame. Ein paar Leute lachen. Was würdest du tun?
@@ -79,8 +88,53 @@ Erzählerin: In Deutschland sind alle Menschen gleich viel wert. Egal, wie du au
 
 ## Quellen
 
-(Vom produzierenden Agenten recherchieren und eintragen: Titel + URL.)
+Recherche am 03.10.2026. gesetze-im-internet.de und weitere Seiten waren aus der Arbeitsumgebung nicht direkt abrufbar
+(Netzwerk gesperrt); geprüft wurden die Aussagen über die Suchmaschinen-Auszüge der jeweiligen Seite.
+
+1. Grundgesetz Art. 3 (Abs. 3: „Niemand darf wegen seines Geschlechtes, seiner Abstammung, seiner Rasse, seiner Sprache, seiner Heimat und Herkunft, seines Glaubens … benachteiligt oder bevorzugt werden.“) – https://www.gesetze-im-internet.de/gg/art_3.html
+2. Grundgesetz für jeden: Artikel 3 (Wortlaut, Gleichheit vor dem Gesetz, Diskriminierungsverbote) – https://www.grundgesetz-fuer-jeden.de/artikel-3.html
+3. Antidiskriminierungsstelle des Bundes: Ethnische Herkunft / Rassismus / Antisemitismus (Abwertung wegen äußerer Merkmale, Name, Herkunft; Beispiele Wohnungssuche, Beleidigung, Nachname bei Bewerbungen; Ungleichbehandlung verboten) – https://www.antidiskriminierungsstelle.gov.de/DE/ueber-diskriminierung/diskriminierungsmerkmale/ethnische-herkunft-rassismus/ethnische-herkunft-rassismus-node.html
+4. bpb: „Offensichtlich und zugedeckt“ – Alltagsrassismus in Deutschland (offen als Beleidigung, oft subtil: Witze, Blicke, Ausgrenzung) – https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/194569/offensichtlich-und-zugedeckt-alltagsrassismus-in-deutschland/
+5. bpb, APuZ „Mückenstiche mit System“ (Alltagsrassismus, Mikroaggressionen) – https://www.bpb.de/shop/zeitschriften/apuz/antirassismus-2020/316756/mueckenstiche-mit-system/
+6. Antidiskriminierungsstelle des Bundes: Arbeitsleben (AGG schützt Bewerber, Beschäftigte, Auszubildende) – https://www.antidiskriminierungsstelle.de/DE/ueber-diskriminierung/lebensbereiche/arbeitsleben/arbeitsleben_artikel.html
+7. Antidiskriminierungsstelle des Bundes: Forschungsprojekt „Rassistische Diskriminierung auf dem Wohnungsmarkt“ (Umfrage 2020: 35 % der Wohnungssuchenden mit sichtbarem Migrationshintergrund erlebten rassistische Diskriminierung) – https://www.antidiskriminierungsstelle.gov.de/SharedDocs/forschungsprojekte/DE/UMFRAGE_Rass_Diskr_a_d_Wohnungsmarkt.html
+8. Legal Tribune Online: Kein Besichtigungstermin? BGH verhandelt Diskriminierungsklage (Testing mit gleichen Anfragen unter verschiedenen Namen; § 19 AGG) – https://www.lto.de/recht/hintergruende/h/bgh-verhandelt-ueber-diskriminierung-bei-wohnungssuche
+9. Haus & Grund München: AGG – Vermietung nur an Deutsche ist Diskriminierung (§ 19 Abs. 2 AGG gilt für jeden Vermieter) – https://www.haus-und-grund-muenchen.de/rechtsprechung/allgemeines-gleichbehandlungsgesetz-vermietung-nur-an-deutsche-ist-diskriminierung/
+10. dejure.org: § 185 StGB Beleidigung – https://dejure.org/gesetze/StGB/185.html
+11. Legal Tribune Online: BGH – Fremdenfeindlichkeit muss Strafe schärfen (§ 46 Abs. 2 StGB, rassistische Beweggründe) – https://www.lto.de/recht/nachrichten/n/bgh-3str4020-lg-koblenz-2090js297521012kls-staatsschutz-rechtsextrem-fremdenfeindlich-menschenverachtend-rassistisch-strafe-strafschaerfung-46-stgb
+12. Bundesministerium der Justiz: Rechtsextremismus und Rassismus (Strafrecht, Hasskriminalität) – https://www.bmjv.de/DE/themen/praevention_opferhilfe/extremismus_terrorismus/rechtsextremismus/rechtsextremismus_artikel.html
+13. bpb: Krieg und Holocaust (Mord an sechs Millionen Juden, Hunderttausende Sinti und Roma; rassistische Politik des NS-Regimes) – https://www.bpb.de/themen/nationalsozialismus-zweiter-weltkrieg/der-zweite-weltkrieg/199409/krieg-und-holocaust/
+14. Deutscher Bundestag, Wissenschaftliche Dienste: Die Verfolgung der Sinti und Roma im Nationalsozialismus (Verfolgung aus „rassischen“ Gründen wie bei Juden) – https://www.bundestag.de/resource/blob/410880/917c712d81cb4578775060ed6f592b2b/wd-1-020-09-pdf-data.pdf
+15. bpb: Unvollständige Erinnerung („Nie wieder“ als zentrale Formel der deutschen Erinnerungskultur) – https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/544876/unvollstaendige-erinnerung/
+16. bpb, Informationen zur politischen Bildung 305: Grundrechte (Grundgesetz 1949 als Antwort auf den Nationalsozialismus) – https://www.bpb.de/system/files/dokument_pdf/IzPB_305_Grundrechte_barrierefrei.pdf
+17. BAMF: Das Grundgesetz – Die Basis unseres Zusammenlebens (Menschenwürde, Gleichheit; Lehre aus dem Nationalsozialismus) – https://www.bamf.de/SharedDocs/Anlagen/DE/Integration/Grundgesetz/broschuere-das-grundgesetz.pdf?__blob=publicationFile&v=15
+18. DeZIM, Nationaler Diskriminierungs- und Rassismusmonitor: Rassistische Realitäten (22 % der Bevölkerung haben selbst Rassismus erlebt) – https://www.rassismusmonitor.de/fileadmin/user_upload/NaDiRa/CATI_Studie_Rassistische_Realit%C3%A4ten/Zusammenfassung_DeZIM-Studie_Rassistische-Realit%C3%A4ten.pdf
+19. Mediendienst Integration: Wie oft erfahren Menschen Rassismus in Deutschland? – https://mediendienst-integration.de/rassismus-und-antisemitismus/rassismus-in-deutschland/wie-oft-erfahren-menschen-rassismus-in-deutschland/
+20. Antidiskriminierungsstelle des Bundes: Jetzt Kontakt aufnehmen (Beratung vertraulich, kostenlos, unabhängig) – https://www.antidiskriminierungsstelle.gov.de/DE/wir-beraten-sie/jetzt-kontakt-aufnehmen/jetzt-kontakt-aufnehmen-node.html
+21. Antidiskriminierungsstelle des Bundes: Wie kann ich mich gegen Diskriminierung am Arbeitsplatz wehren? (Beschwerdestelle § 13 AGG, Betriebsrat) – https://www.antidiskriminierungsstelle.de/SharedDocs/faqs/DE/arbeitsrecht/03_diskriminierung_arbeit_agg/09_wehren_diskrim_arbeit_agg.html
+22. Antidiskriminierungsverband Deutschland: Was tun bei Diskriminierung? (Vorfall mit Datum, Ort und Zeugen aufschreiben, Gedächtnisprotokoll) – https://www.antidiskriminierung.org/was-tun-bei-diskriminierung
+23. IHK (Dachseite): Konflikt- und Problemlösung in der Ausbildung (Ausbildungsberatung als neutrale Ansprechpartner) – https://www.ihk.de/themen/ausbildung/konflikt-und-problemloesung-5417318
+24. Handwerkskammer Berlin: Während der Ausbildung (Ausbildungsberater, kostenfrei) – https://www.hwk-berlin.de/artikel/waehrend-der-ausbildung-91,0,286.html
+25. Belltower.News: Wie reagiere ich, wenn ein Kollege rassistische Witze macht? (widersprechen, nicht schweigen; Betriebsrat) – https://www.belltower.news/wie-reagiere-ich-wenn-ein-kollege-rassistische-witze-macht-32154/
 
 ## Faktencheck
 
-(Vom produzierenden Agenten ausfüllen: Aussage → Quelle.)
+| Aussage (Sprechertext / Text im Bild) | Quelle |
+| --- | --- |
+| Szene 1: gleiche Nachricht, nur der Name anders – Absage für den einen, Zusage für den anderen | Beispielsituation (Figuren); solche Fälle sind belegt: 3 (Absagen bei der Wohnungssuche wegen äußerer Merkmale, Nachname), 7, 8 (Testing mit verschiedenen Namen) – im Video ohne Statistik |
+| Rassismus heißt: Menschen werden schlechter behandelt, weil sie anders aussehen, einen anderen Namen haben oder aus einem anderen Land kommen („Rassismus: schlechter behandelt wegen Aussehen, Name oder Herkunft“) | 3 |
+| Das kann laut sein, z. B. eine Beleidigung; oft ist es leise: ein dummer Witz, ein Blick, eine Absage ohne Grund | 4, 5 (offen und subtil: Beleidigung, Witze, Blicke); 3 (Absagen bei Wohnung und Bewerbung) |
+| In Deutschland sind alle Menschen gleich viel wert | 1 (Art. 3 Abs. 1: alle Menschen sind vor dem Gesetz gleich), 16, 17 (Menschenwürde Art. 1) |
+| Grundgesetz Artikel 3: Niemand darf wegen seiner Herkunft, seiner Sprache oder seines Glaubens benachteiligt werden („Grundgesetz Artikel 3“) | 1, 2 (Auswahl aus Art. 3 Abs. 3, sinngemäß gekürzt) |
+| Das Gleichbehandlungsgesetz schützt dich in der Ausbildung, bei der Arbeit und auch bei der Wohnungssuche („Gleichbehandlungsgesetz: Ausbildung, Arbeit, Wohnung“) | 6 (Auszubildende, Beschäftigte); 9, 8 (§ 19 Abs. 2 AGG, Wohnungssuche; Ausnahme § 19 Abs. 5 siehe Abweichungen) |
+| Rassistische Beleidigungen und Gewalt sind Straftaten | 10 (§ 185 StGB); 11, 12 (rassistische Beweggründe schärfen die Strafe, § 46 Abs. 2 StGB; Körperverletzung strafbar) |
+| Im Nationalsozialismus wurden Millionen Menschen verfolgt und ermordet, aus Rassismus und Judenhass („1933–1945“) | 13, 14 |
+| Danach hieß es: Nie wieder | 15 |
+| Darum steht der Schutz seit 1949 im Grundgesetz („1949: Schutz im Grundgesetz – ‚Nie wieder‘“) | 1, 16, 17 (Grundgesetz 1949 als Antwort auf den Nationalsozialismus; Art. 3 Abs. 3 seit 1949) |
+| Trotzdem erleben auch heute viele Menschen Rassismus | 18, 19 (22 % haben selbst Rassismus erlebt) |
+| Tipp: nicht mitlachen, ruhig widersprechen, später nachfragen | 25 (Empfehlung, keine Rechtsaussage) |
+| Schreib auf, was passiert ist: wann, wo und wer dabei war | 22 |
+| Sprich mit deiner Ausbilderin, mit dem Betriebsrat oder mit der Kammer („Ausbilder/in · Betriebsrat · Kammer“) | 21 (Beschwerde im Betrieb, Betriebsrat); 23, 24 (Ausbildungsberatung der Kammern) |
+| Die Antidiskriminierungsstelle des Bundes berät dich kostenlos („Antidiskriminierungsstelle“) | 20 |
+| Bei Drohung oder Gewalt ruf die Polizei an, die 110 („Notruf 110“) | Polizeinotruf 110 (bundesweit); 12 |
+| In Deutschland sind alle Menschen gleich viel wert, egal, wie du aussiehst und woher du kommst | 1, 3 |

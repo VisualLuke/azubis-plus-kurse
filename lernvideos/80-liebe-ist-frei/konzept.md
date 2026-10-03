@@ -38,10 +38,16 @@ Abspann: „Gleiche Rechte – egal, wen du liebst.“ und die Kernbotschaft.
   Religion als Gegenargument zu behandeln.
 - **Weggelassen:** geschlechtliche Identität / trans (eigenes Thema, für B1 in zwei Minuten zu viel); Abstammungsrecht und
   Adoption (Details nicht nötig); Zahlen zur Häufigkeit.
-- **Zeitreise:** § 175 StGB nicht beim Namen nennen (zu juristisch); „Früher war das auch in Deutschland verboten. Schwule Männer
+- **Zeitreise:** § 175 StGB nicht beim Namen nennen (zu juristisch); „Früher war Liebe zwischen Männern auch in Deutschland verboten. Schwule Männer
   kamen sogar ins Gefängnis. Erst 1994 wurde dieses Gesetz ganz abgeschafft.“ – in der Recherche belegen.
 - Christopher Street Day: in vielen Städten im Sommer – belegen (z. B. bpb). Regenbogen nur als schmales Band (CI).
 - Schreibweise für die Stimme: „zweitausendsiebzehn“, „neunzehnhundertvierundneunzig“ (siehe unten).
+- **Nach dem Faktencheck geändert (03.10.2026):**
+  - Szene 2: „Viele zeigen ihre Liebe offen, zum Beispiel halten sie auf der Straße Händchen.“ →
+    „Sie dürfen ihre Liebe offen zeigen, zum Beispiel auf der Straße Händchen halten.“ – wie viele es tun, lässt sich
+    nicht belegen; belegt ist das Recht dazu (niemand muss seine Liebe verstecken).
+  - Szene 4: „Früher war das auch in Deutschland verboten.“ → „Früher war Liebe zwischen Männern auch in Deutschland
+    verboten.“ – § 175 StGB bestrafte nur sexuelle Handlungen zwischen Männern; „das“ hätte auch Frauen eingeschlossen.
 
 ## Sprechertext
 
@@ -56,13 +62,13 @@ Sabine: Meine Frau und ich waren am See. Es war wunderschön.
 Ana: Sabine hat eine Frau? Ich war überrascht und wusste nicht, was ich sagen soll.
 
 ### Szene 2
-Erzähler: In Deutschland ist das ganz normal. Manche Männer lieben Männer, manche Frauen lieben Frauen, manche Menschen lieben beide. Man sagt dazu schwul, lesbisch oder bi. Das ist erlaubt, und daran ist nichts falsch. Seit zweitausendsiebzehn dürfen auch zwei Frauen oder zwei Männer heiraten. Viele zeigen ihre Liebe offen, zum Beispiel halten sie auf der Straße Händchen.
+Erzähler: In Deutschland ist das ganz normal. Manche Männer lieben Männer, manche Frauen lieben Frauen, manche Menschen lieben beide. Man sagt dazu schwul, lesbisch oder bi. Das ist erlaubt, und daran ist nichts falsch. Seit zweitausendsiebzehn dürfen auch zwei Frauen oder zwei Männer heiraten. Sie dürfen ihre Liebe offen zeigen, zum Beispiel auf der Straße Händchen halten.
 
 ### Szene 3
 Erzähler: Auch im Betrieb gilt: Niemand darf benachteiligt werden, weil er einen Mann oder eine Frau liebt. Das regelt das Gleichbehandlungsgesetz. Dumme Sprüche und Beleidigungen sind nicht in Ordnung, auch nicht als Witz. Wen jemand liebt, ist Privatsache. Niemand muss darüber sprechen. Aber alle dürfen es.
 
 ### Szene 4
-Ana: Warum ist das hier so wichtig? Früher war das auch in Deutschland verboten. Schwule Männer kamen sogar ins Gefängnis. Erst neunzehnhundertvierundneunzig wurde dieses Gesetz ganz abgeschafft. Heute feiern viele Städte im Sommer den Christopher Street Day, ein buntes Fest für Vielfalt.
+Ana: Warum ist das hier so wichtig? Früher war Liebe zwischen Männern auch in Deutschland verboten. Schwule Männer kamen sogar ins Gefängnis. Erst neunzehnhundertvierundneunzig wurde dieses Gesetz ganz abgeschafft. Heute feiern viele Städte im Sommer den Christopher Street Day, ein buntes Fest für Vielfalt.
 
 ### Szene 5
 Erzähler: Stell dir vor: Ein neuer Kollege erzählt von seinem Freund. Jemand im Team lacht und macht einen dummen Spruch. Was würdest du tun?
@@ -79,8 +85,45 @@ Erzähler: In Deutschland haben alle die gleichen Rechte. Egal, wen sie lieben.
 
 ## Quellen
 
-(Vom produzierenden Agenten recherchieren und eintragen: Titel + URL.)
+Recherche am 03.10.2026. Die Seiten von gesetze-im-internet.de, antidiskriminierungsstelle.de und bpb.de waren aus der
+Arbeitsumgebung nicht direkt abrufbar (Netzwerk gesperrt); geprüft wurden die Aussagen über die Suchmaschinen-Auszüge der jeweiligen Seite.
+
+1. Antidiskriminierungsstelle des Bundes: Sexuelle Identität (Schutz von lesbischen, schwulen und bisexuellen Menschen) – https://www.antidiskriminierungsstelle.gov.de/DE/ueber-diskriminierung/diskriminierungsmerkmale/sexuelle-identitaet/sexuelle-identitaet.html
+2. bpb, Das junge Politik-Lexikon: Homophobie (Abwertung von schwulen, lesbischen und bisexuellen Menschen) – https://www.bpb.de/kurz-knapp/lexika/das-junge-politik-lexikon/320495/homophobie/
+3. Antidiskriminierungsstelle des Bundes: Fragen und Antworten zur sexuellen Identität (Ehe für alle seit 1. Oktober 2017) – https://www.antidiskriminierungsstelle.de/DE/ueber-diskriminierung/was-ist-diskriminierung/_docs/faq-uebersicht/_functions/sexuelle_identitaet.html
+4. Bundesrat: Eine Ehe für alle (Textarchiv 2017; Gesetz in Kraft seit 1. Oktober 2017) – https://www.bundesrat.de/SharedDocs/texte/17/20170628-ehe-fuer-alle.html
+5. Grundgesetz Art. 2 (freie Entfaltung der Persönlichkeit) – https://www.gesetze-im-internet.de/gg/art_2.html
+6. LSVD: Bundesverfassungsgericht – Geheimhaltung der sexuellen Orientierung unzumutbar – https://www.lsvd.de/de/ct/3435-Bundesverfassungsgericht-Geheimhaltung-der-sexuellen-Orientierung-unzumutbar
+7. Allgemeines Gleichbehandlungsgesetz (AGG), § 1 (sexuelle Identität), § 6 (gilt für Beschäftigte und Auszubildende), § 7 (Benachteiligungsverbot) – https://www.gesetze-im-internet.de/agg/BJNR189710006.html
+8. AGG § 3 Abs. 3 (Belästigung: unerwünschte Verhaltensweisen, die die Würde verletzen und ein von Einschüchterungen, Erniedrigungen oder Beleidigungen gekennzeichnetes Umfeld schaffen) – https://www.gesetze-im-internet.de/agg/__3.html
+9. AGG § 12 (Pflichten des Arbeitgebers: Schutz vor Benachteiligung, Maßnahmen gegen Beschäftigte, die benachteiligen) – https://www.gesetze-im-internet.de/agg/__12.html
+10. Antidiskriminierungsstelle des Bundes: Arbeitsleben (AGG schützt Beschäftigte und Auszubildende, u. a. wegen der sexuellen Identität) – https://www.antidiskriminierungsstelle.de/DE/ueber-diskriminierung/lebensbereiche/arbeitsleben/arbeitsleben-node.html
+11. Antidiskriminierungsstelle des Bundes: Was Arbeitgeber fragen (dürfen) (Fragen nach der sexuellen Orientierung sind unzulässig, die Partnerschaft ist privat) – https://www.antidiskriminierungsstelle.de/SharedDocs/downloads/DE/publikationen/Expertisen/was_arbeitgeber_fragen_duerfen.pdf?__blob=publicationFile&v=5
+12. Antidiskriminierungsstelle des Bundes: Paragraph 175 (bis 1994 waren sexuelle Handlungen zwischen Männern strafbar) – https://www.antidiskriminierungsstelle.gov.de/DE/ueber-diskriminierung/diskriminierungsmerkmale/sexuelle-identitaet/paragraph_175/paragraph_175_node.html
+13. BMBFSFJ: 30 Jahre Ende des Strafrechtsparagrafen 175 (am 11. Juni 1994 endgültig aufgehoben) – https://www.bmbfsfj.bund.de/bmbfsfj/aktuelles/alle-meldungen/30-jahre-ende-des-strafrechtsparagrafen-175-241178
+14. LSVD: Paragraph 175 StGB – Verbot von Homosexualität in Deutschland (Verurteilungen zu Gefängnis und Zuchthaus, rund 50 000 Männer in der frühen Bundesrepublik) – https://www.lsvd.de/de/ct/1022-Paragraph-175-StGB-Verbot-von-Homosexualitaet-in-Deutschland
+15. bpb: Geschichte des Christopher-Street-Day (jedes Jahr in vielen Städten, Sommer; erster CSD in Deutschland 1979 in Berlin) – https://www.bpb.de/themen/gender-diversitaet/homosexualitaet/38838/geschichte-des-christopher-street-day/
+16. Antidiskriminierungsstelle des Bundes: Wie kann ich mich gegen Diskriminierung am Arbeitsplatz wehren? (Beschwerdestelle § 13 AGG, Betriebsrat) – https://www.antidiskriminierungsstelle.de/SharedDocs/faqs/DE/arbeitsrecht/03_diskriminierung_arbeit_agg/09_wehren_diskrim_arbeit_agg.html
+17. IHK (Dachseite): Konflikt- und Problemlösung in der Ausbildung (Ausbildungsberatung als neutrale Ansprechpartner) – https://www.ihk.de/themen/ausbildung/konflikt-und-problemloesung-5417318
+18. Handwerkskammer Berlin: Während der Ausbildung (Ausbildungsberater, kostenfrei) – https://www.hwk-berlin.de/artikel/waehrend-der-ausbildung-91,0,286.html
+19. Grundgesetz Art. 3 Abs. 1 (alle Menschen sind vor dem Gesetz gleich) und Art. 4 (Glaubensfreiheit) – https://www.gesetze-im-internet.de/gg/art_3.html , https://www.gesetze-im-internet.de/gg/art_4.html
+20. Deutscher Bundestag, hib: Schutz der sexuellen Identität im Grundgesetz (Ergänzung von Art. 3 Abs. 3 beantragt, bisher nicht beschlossen) – https://www.bundestag.de/presse/hib/kurzmeldungen-1113532
 
 ## Faktencheck
 
-(Vom produzierenden Agenten ausfüllen: Aussage → Quelle.)
+| Aussage (Sprechertext / Text im Bild) | Quelle |
+| --- | --- |
+| Manche Männer lieben Männer, manche Frauen Frauen, manche Menschen beide; man sagt dazu schwul, lesbisch oder bi | 2 (Begriffe schwul, lesbisch, bisexuell); 1 |
+| In Deutschland ist das ganz normal; das ist erlaubt, daran ist nichts falsch („Liebe ist frei“) | 1, 7 (gesetzlicher Schutz vor Benachteiligung wegen der sexuellen Identität); 4 (gleiches Eherecht); 13 (Strafbarkeit seit 1994 vollständig abgeschafft) |
+| Seit 2017 dürfen auch zwei Frauen oder zwei Männer heiraten („Ehe für alle seit 2017“) | 3, 4 (in Kraft seit 1. Oktober 2017) |
+| Sie dürfen ihre Liebe offen zeigen, z. B. auf der Straße Händchen halten | 5 (freie Entfaltung der Persönlichkeit); 6 (Geheimhaltung der sexuellen Orientierung ist nicht zumutbar); kein Gesetz verbietet es – bewusst als Recht formuliert, nicht als Häufigkeit (siehe Abweichungen) |
+| Im Betrieb darf niemand benachteiligt werden, weil er einen Mann oder eine Frau liebt; das regelt das Gleichbehandlungsgesetz („Niemand darf benachteiligt werden – egal, wen du liebst“) | 7 (§ 1 sexuelle Identität, § 6 Auszubildende, § 7); 10 |
+| Dumme Sprüche und Beleidigungen sind nicht in Ordnung, auch nicht als Witz | 8 (Belästigung = Benachteiligung, auch durch Worte, die die Würde verletzen); 9 (Arbeitgeber muss einschreiten) |
+| Wen jemand liebt, ist Privatsache; niemand muss darüber sprechen, aber alle dürfen es | 11 (Fragen nach sexueller Orientierung und Partnerschaft unzulässig, man muss nicht antworten); 6 (niemand muss es verheimlichen) |
+| Früher war Liebe zwischen Männern auch in Deutschland verboten; schwule Männer kamen sogar ins Gefängnis | 12, 14 (§ 175 StGB, Gefängnis- und Zuchthausstrafen) |
+| Erst 1994 wurde dieses Gesetz ganz abgeschafft („1994: das Verbot ist ganz weg“) | 12, 13 (11. Juni 1994) |
+| Heute feiern viele Städte im Sommer den Christopher Street Day, ein buntes Fest für Vielfalt | 15 (jährlich in vielen Städten, Sommer; Fest und Demonstration für Vielfalt und gleiche Rechte) |
+| Jeder Mensch darf so lieben, wie er will; das musst du respektieren, genauso wie andere deinen Glauben respektieren | 19 (Art. 3 Abs. 1 und Art. 4 GG); 7 (Benachteiligungsverbot wegen sexueller Identität und Religion) |
+| Hilfe: Ausbilderin, Betriebsrat, Kammer („Ausbilder/in · Betriebsrat · Kammer“) | 16 (Beschwerdestelle § 13 AGG, Betriebsrat); 17, 18 (Ausbildungsberatung der Kammern) |
+| In Deutschland haben alle die gleichen Rechte, egal, wen sie lieben („Gleiche Rechte – egal, wen du liebst.“) | 19 (Art. 3 Abs. 1 GG); 7 (AGG); 3, 4 (gleiches Eherecht). Hinweis: Die ausdrückliche Nennung der sexuellen Identität in Art. 3 Abs. 3 GG ist beantragt, aber nicht beschlossen (20) – darum spricht das Video nicht vom „Grundgesetz“, sondern allgemein von gleichen Rechten. |
+| Situation in Szene 1 und 5 (Sabine und ihre Frau, neuer Kollege) | erfundene Beispielsituation (Figuren), keine Sachaussage |
