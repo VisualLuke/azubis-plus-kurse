@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? Smalltalk in der Pause</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+html,body{background:var(--b200)}
+#welt{transform-origin:0 0}
+/* Der Pausenraum von oben: oben die Wand (von vorn), darunter der Boden mit dem langen Tisch */
+.deko{position:absolute}
+.wandflaeche{left:-1500px;top:-1500px;width:7000px;height:1660px;background:linear-gradient(var(--b100),var(--b200));
+  background-image:linear-gradient(90deg,transparent 0 196px,var(--b200) 196px 200px),linear-gradient(var(--b100),var(--b200));background-size:200px 100%,100% 100%}
+.sockel{left:-1500px;top:146px;width:7000px;height:22px;background:var(--b400);box-shadow:0 6px 0 var(--b300)}
+#boden{width:7000px;height:2900px;border-radius:0;overflow:hidden;
+  background:linear-gradient(90deg,var(--b100) 0 4px,transparent 4px),linear-gradient(var(--b100) 0 4px,transparent 4px),var(--b50);background-size:150px 150px,150px 150px,auto}
+.tisch{left:300px;top:460px;width:3400px;height:800px;border-radius:44px;background:linear-gradient(170deg,var(--b100),var(--b200));
+  box-shadow:inset 0 0 0 16px var(--b300),0 26px 0 var(--b300),0 40px 60px rgba(22,19,37,.16)}
+.tisch::before{content:'';position:absolute;inset:16px;border-radius:30px;background:repeating-linear-gradient(transparent 0 58px,rgba(164,139,244,.22) 58px 62px)}
+.tablett{left:2480px;top:540px;width:1040px;height:640px;border-radius:54px;background:linear-gradient(160deg,var(--b300),var(--b400));
+  box-shadow:inset 0 0 0 18px var(--b500),0 14px 30px rgba(22,19,37,.2)}
+.tablett i{position:absolute;top:36px;width:110px;height:22px;border-radius:11px;background:var(--b600)}
+.nachtdeko{left:-1500px;top:-1500px;width:7000px;height:4600px;background:var(--b700);opacity:0}
+
+/* Wanduhr (eigene Zeichnung: Zeiger einzeln drehbar) */
+.wuhr{width:200px;height:200px}
+.wuhr svg{position:absolute;left:0;top:0;width:200px;height:200px}
+.wuhr .zg{transform-origin:100px 100px}
+/* Schild an der Wand: Text im Bild */
+.wschild{border-radius:28px;background:var(--surface);box-shadow:0 10px 0 var(--b300),0 18px 40px rgba(22,19,37,.14);display:flex;align-items:center;justify-content:center}
+.wschild::before,.wschild::after{content:'';position:absolute;top:-34px;width:6px;height:40px;background:var(--b400);border-radius:3px}
+.wschild::before{left:60px} .wschild::after{right:60px}
+.wtext{position:absolute;text-align:center}
+.wtext .titel{font:800 64px/74px Inter;letter-spacing:-.02em;color:var(--ink)}
+.titel .w.hell .wi{color:var(--b500)}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+/* Tür in der Wand (von vorn) */
+.tuer{left:1540px;top:-170px;width:200px;height:330px;border-radius:16px 16px 0 0;background:var(--b400)}
+.tuer .loch{position:absolute;left:14px;top:14px;right:14px;bottom:0;border-radius:8px 8px 0 0;background:linear-gradient(var(--b600),var(--b700))}
+.tuer .blatt{position:absolute;left:14px;top:14px;width:172px;bottom:0;border-radius:8px 8px 0 0;transform-origin:0 50%;
+  background:linear-gradient(160deg,var(--b200),var(--b300));box-shadow:inset 0 0 0 6px var(--b400)}
+.tuer .blatt::after{content:'';position:absolute;right:20px;top:160px;width:14px;height:40px;border-radius:7px;background:var(--b600)}
+
+/* Stühle von oben */
+.stuhl{width:220px;height:130px;border-radius:36px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 8px 16px rgba(22,19,37,.14)}
+.stuhl::after{content:'';position:absolute;left:14px;right:14px;height:30px;border-radius:15px;background:var(--b600)}
+.stuhl.unten::after{bottom:10px} .stuhl.oben::after{top:10px}
+
+/* Porträts im Kreis */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 10px 26px rgba(22,19,37,.18)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Dinge auf dem Tisch, von oben */
+.dose{width:220px;height:150px}
+.dose .boden{position:absolute;inset:0;border-radius:26px;background:var(--b500);box-shadow:0 8px 14px rgba(22,19,37,.16)}
+.dose .innen{position:absolute;inset:12px;border-radius:18px;background:var(--b100)}
+.dose .innen i{position:absolute;border-radius:999px;background:radial-gradient(circle at 40% 35%,var(--warning-bg),var(--warning))}
+.dose .deckel{position:absolute;inset:0;border-radius:26px;background:linear-gradient(160deg,var(--b300),var(--b400));transform-origin:50% 0;
+  box-shadow:inset 0 0 0 8px var(--b500)}
+.dose .deckel::after{content:'';position:absolute;left:84px;bottom:14px;width:52px;height:14px;border-radius:7px;background:var(--b600)}
+.handy{width:96px;height:176px;border-radius:22px;background:var(--b700);box-shadow:0 8px 14px rgba(22,19,37,.2)}
+.handy .schirm{position:absolute;left:8px;top:12px;right:8px;bottom:12px;border-radius:14px;background:var(--b300);overflow:hidden}
+.handy .zeilen{position:absolute;left:10px;right:10px;top:0}
+.handy .zeilen u{display:block;height:12px;border-radius:6px;background:var(--surface);opacity:.75;margin-top:12px}
+.handy .licht{position:absolute;left:-30px;top:-30px;right:-30px;bottom:-30px;border-radius:50px;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(201,186,250,0));opacity:0}
+.becher{width:130px;height:130px}
+.becher .rand{position:absolute;inset:0;border-radius:999px;background:var(--surface);box-shadow:0 8px 14px rgba(22,19,37,.18),inset 0 0 0 6px var(--b200)}
+.becher .kaffee{position:absolute;inset:16px;border-radius:999px;background:radial-gradient(circle at 40% 40%,var(--b600),var(--b700))}
+.becher .henkel{position:absolute;right:-30px;top:44px;width:40px;height:42px;border-radius:0 21px 21px 0;border:10px solid var(--surface);border-left:0}
+.dampf{width:120px;height:120px}
+.teller{width:160px;height:160px}
+.teller .t{position:absolute;inset:0;border-radius:999px;background:var(--surface);box-shadow:0 6px 12px rgba(22,19,37,.14),inset 0 0 0 16px var(--n200)}
+.teller .b{position:absolute;left:38px;top:46px;width:84px;height:66px;border-radius:999px;background:radial-gradient(circle at 40% 35%,var(--warning-bg),var(--warning))}
+.teller .b::after{content:'';position:absolute;left:18px;top:30px;width:48px;height:7px;border-radius:4px;background:var(--warning-text);opacity:.55}
+
+/* Tassen (umgedreht, Hütchenspiel) und Untersetzer */
+.tasse{width:260px;height:230px}
+.tasse > *{position:absolute;left:0;top:0;width:260px;height:230px}
+.tasse .ts{transform-origin:115px 115px}
+.tasse .tk{transform-origin:115px 115px}
+.tasse svg{width:260px;height:230px}
+.tasse .marke{left:150px;top:-6px;width:92px;height:92px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.tasse .marke svg{width:46px;height:46px}
+.tasse .marke.rot{background:var(--error)} .tasse .marke.gruen{background:var(--success)}
+.untersetzer{width:240px;height:240px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 10px var(--b100),0 6px 14px rgba(22,19,37,.12)}
+.untersetzer > *{position:absolute}
+.zaehler{width:160px;height:160px}
+.zaehler svg{position:absolute;inset:0;width:160px;height:160px}
+.zaehler b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 76px/1 Inter;color:var(--b600)}
+.welle{border-radius:999px;border:6px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.hell{border-color:var(--surface)}
+
+/* Gesprächs-Bälle: Sprechblase als Ball, Schatten bleibt am Tisch */
+.ball{width:150px;height:150px}
+.ball .bs{position:absolute;left:10px;top:18px;width:130px;height:130px;border-radius:999px;background:rgba(58,37,153,.22);filter:blur(6px)}
+.ball .bk{position:absolute;inset:0;transform-origin:50% 50%}
+.ball .bk .rund{position:absolute;inset:0;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 6px var(--b200)}
+.ball .bk .rund::after{content:'';position:absolute;left:18px;bottom:2px;width:30px;height:30px;background:var(--surface);border-radius:4px 4px 4px 14px;transform:rotate(20deg);box-shadow:inset -6px -6px 0 -1px var(--b200)}
+.ball .bk .ic{position:absolute;left:25px;top:22px;width:100px;height:100px}
+.ball .bk .grau{position:absolute;inset:0;border-radius:999px;background:var(--n300);opacity:0}
+.ball .bk .kal{position:absolute;left:30px;top:34px;width:90px;height:80px;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 4px var(--b200);overflow:hidden}
+.ball .bk .kal::before{content:'';position:absolute;left:0;right:0;top:0;height:22px;background:var(--b500)}
+.ball .bk .kal span{position:absolute;left:0;right:0;top:30px;text-align:center;font:800 30px/40px Inter;color:var(--b600);white-space:nowrap}
+.etikett{padding:8px 18px;border-radius:999px;background:var(--surface);box-shadow:0 6px 14px rgba(22,19,37,.1);font:700 34px/40px Inter;color:var(--ink);white-space:nowrap}
+.etikett.grau{background:var(--n200);color:var(--n500);box-shadow:none}
+
+/* kleine Blasen ohne Text */
+.blase{width:130px;height:96px;border-radius:34px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.16)}
+.blase::after{content:'';position:absolute;left:22px;bottom:-12px;width:28px;height:28px;background:inherit;transform:rotate(45deg);border-radius:5px}
+.blase.rechts::after{left:auto;right:22px}
+.blase.oben::after{bottom:auto;top:-12px}
+.blase > *{position:absolute}
+.blase .pkt{top:36px;width:22px;height:22px;border-radius:999px;background:var(--b400)}
+.blase .z{left:22px;height:12px;border-radius:6px;background:var(--b200)}
+.frage{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:34px;height:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+
+/* Serviette mit Text im Bild */
+.serviette{width:700px;height:250px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
+.serviette::before{content:'';position:absolute;inset:14px;border-radius:12px;border:3px dashed var(--b100)}
+.serviette::after{content:'';position:absolute;right:0;bottom:0;width:70px;height:70px;border-radius:0 0 22px 0;background:linear-gradient(135deg,var(--surface) 50%,var(--b100) 50%)}
+.serviette .wtext{left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
+.serviette .titel{font-size:54px;line-height:66px}
+
+/* Szene 3/4: Stille, Schild „privat“, Wolke, Berg, Verein */
+.stille{width:640px;height:40px}
+.privat{width:170px;height:200px}
+.privat .sch{position:absolute;left:0;top:0;width:170px;height:150px}
+.privat .etikett{position:absolute;left:50%;top:140px;transform:translateX(-50%);font-size:28px;line-height:34px;padding:6px 16px;background:var(--b500);color:var(--surface)}
+.berg{width:260px;height:180px;border-radius:30px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.12);overflow:hidden}
+.berg svg{position:absolute;left:0;top:0;width:260px;height:180px}
+.wimpel{width:170px;height:190px}
+.zurueck{width:560px;height:520px}
+
+/* Szene 5: Tischset „Gut“, Boden „Lieber nicht“ */
+.tischset{width:900px;height:640px;border-radius:40px;background:var(--success-bg);box-shadow:inset 0 0 0 8px var(--success),0 10px 24px rgba(22,19,37,.08)}
+.kopf{padding:10px 28px;border-radius:999px}
+.kopf .titel{font:800 54px/62px Inter}
+
+/* Abspann: Tischdecke fällt von oben */
+.decke{position:absolute;inset:0;background:linear-gradient(160deg,var(--b500),var(--b700));clip-path:polygon(0 0,100% 0,100% 0,0 0)}
+.decke .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.decke .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+#nacht{position:absolute;inset:0;background:var(--b700);opacity:0;pointer-events:none}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><path d="M13 13l18 18M31 13L13 31" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><path d="M11 23l8 8 15-17" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHerz"><svg viewBox="0 0 40 40"><path d="M20 34C8 26 4 20 4 14a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 6-4 12-16 20Z" fill="var(--surface)"/></svg></template>
+<template id="portraitKwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="portraitGeselle"><div class="figur"><div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen~g}}</div>
+  <div class="ebene zu">{{figur-mund-zu~g}}</div><div class="ebene auf">{{figur-mund-auf~g}}</div><div class="ebene froh">{{figur-mund-froh~g}}</div></div></template>
+<template id="tKalender">{{kalender}}</template>
+<template id="tSonne">{{sonne}}</template>
+<template id="tTeller">{{teller-essen}}</template>
+<template id="tFussball">{{fussball}}</template>
+<template id="tGitarre">{{gitarre}}</template>
+<template id="tKoffer">{{koffer}}</template>
+<template id="tMuenzen">{{muenzstapel}}</template>
+<template id="tBuch">{{buch}}</template>
+<template id="tPult">{{pult}}</template>
+<template id="tPflaster">{{pflaster}}</template>
+<template id="tHandy">{{handy}}</template>
+
+<div id="cam" style="display:none"></div>
+<div id="welt">
+  <div class="deko wandflaeche"></div>
+  <div class="a buehne" id="boden"></div>
+  <div class="deko sockel"></div>
+  <div class="deko tuer"><div class="loch"></div><div class="blatt" id="tuerblatt"></div></div>
+  <div class="deko tisch"></div>
+  <div class="deko tablett"><i style="left:150px"></i><i style="right:150px"></i></div>
+
+  <!-- Wand: Uhr und Schilder -->
+  <div class="a wuhr" id="uhr"><svg viewBox="0 0 200 200"><circle cx="102" cy="106" r="96" fill="var(--b700)" opacity=".25"/><circle cx="100" cy="100" r="96" fill="var(--b500)"/>
+    <circle cx="100" cy="100" r="82" fill="var(--surface)"/><g stroke="var(--b300)" stroke-width="6" stroke-linecap="round"><path d="M100 28v12M100 160v12M28 100h12M160 100h12"/></g>
+    <g stroke="var(--b200)" stroke-width="4" stroke-linecap="round"><path d="M136 37.6l-4 7M162.4 64l-7 4M162.4 136l-7-4M136 162.4l-4-7M64 162.4l4-7M37.6 136l7-4M37.6 64l7 4M64 37.6l4 7"/></g></svg>
+    <svg class="zg" id="uhrH" viewBox="0 0 200 200"><path d="M100 100V60" stroke="var(--b700)" stroke-width="10" stroke-linecap="round"/></svg>
+    <svg class="zg" id="uhrM" viewBox="0 0 200 200"><path d="M100 108V36" stroke="var(--b500)" stroke-width="7" stroke-linecap="round"/></svg>
+    <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="9" fill="var(--b700)"/></svg></div>
+  <div class="a wschild" id="schild1" style="width:560px;height:140px"><div class="wtext" id="tb1" style="position:relative"><div class="titel">Mittagspause</div></div></div>
+  <div class="a wschild" id="schild6" style="width:780px;height:200px"><div class="wtext" id="tb6" style="position:relative"><div class="titel" style="font-size:56px;line-height:66px">„Mahlzeit!“ =</div><div class="titel" style="font-size:56px;line-height:66px">Gruß zur Mittagszeit</div></div></div>
+
+  <!-- Stühle, Figuren -->
+  <div class="a stuhl unten" id="stuhlK" data-gruppe="kwame"></div>
+  <div class="a stuhl oben" id="stuhlG" data-gruppe="geselle"></div>
+
+  <!-- Kwames Platz -->
+  <div class="a dose" id="dose"><div class="boden"></div><div class="innen"><i style="left:16px;top:20px;width:86px;height:76px"></i><i style="left:104px;top:28px;width:70px;height:62px"></i></div><div class="deckel" id="dosedeckel"></div></div>
+  <div class="a handy" id="handy"><div class="licht" id="handylicht"></div><div class="schirm" id="handyschirm"><div class="zeilen" id="handyzeilen"><u style="width:80%"></u><u style="width:55%"></u><u style="width:70%"></u><u style="width:40%"></u><u style="width:75%"></u><u style="width:60%"></u><u style="width:80%"></u><u style="width:50%"></u><u style="width:70%"></u><u style="width:45%"></u></div></div></div>
+  <!-- Platz des Gesellen -->
+  <div class="a teller" id="teller"><div class="t"></div><div class="b"></div></div>
+  <div class="a becher" id="becher" data-gruppe="becher"><div class="henkel"></div><div class="rand"></div><div class="kaffee"></div></div>
+  <svg class="a dampf" id="dampf" viewBox="0 0 120 120" data-frei><g id="dampfg" style="transform-origin:60px 60px" fill="none" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" opacity=".9">
+    <path d="M60 60c0-14 16-18 22-8"/><path d="M60 60c14 0 18 16 8 22"/><path d="M60 60c0 14-16 18-22 8"/><path d="M60 60c-14 0-18-16-8-22"/></g></svg>
+
+  <div class="a portrait" id="kwame" style="width:230px;height:230px" data-gruppe="kwame"></div>
+  <div class="a portrait" id="geselle" style="width:230px;height:230px" data-gruppe="geselle"></div>
+
+  <!-- Tablett: Untersetzer, Tassen, Zähler -->
+  <div class="a untersetzer" id="uA" data-gruppe="A"></div>
+  <div class="a untersetzer" id="uB" data-gruppe="B"></div>
+  <div class="a untersetzer" id="uC" data-gruppe="C"></div>
+  <div class="a zaehler" id="zaehler"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="76" fill="var(--surface)"/><circle cx="80" cy="80" r="62" stroke="var(--b100)" stroke-width="12" fill="none"/>
+    <circle id="lauf" cx="80" cy="80" r="62" stroke="var(--b500)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 80 80)" style="stroke-dasharray:1 1"/></svg><b id="ziffer">?</b></div>
+  <div class="a tasse" id="tA" data-gruppe="A"></div>
+  <div class="a tasse" id="tB" data-gruppe="B"></div>
+  <div class="a tasse" id="tC" data-gruppe="C"></div>
+  <div class="a welle gruen" id="wC1" style="width:240px;height:240px" data-frei></div>
+  <div class="a welle gruen" id="wC2" style="width:240px;height:240px" data-frei></div>
+
+  <!-- Szene 1–4: Gespräch -->
+  <div class="a welle" id="wM1" style="width:200px;height:200px" data-frei></div>
+  <div class="a welle" id="wM2" style="width:200px;height:200px" data-frei></div>
+  <div class="a ball" id="bWo"><div class="bs"></div><div class="bk"><div class="rund"></div><div class="kal"><span>Sa · So</span></div><div class="grau"></div></div></div>
+  <div class="a frage" id="frage1">?</div>
+  <div class="a blase" id="gut3"><i class="pkt" style="left:54px"></i></div>
+  <div class="a blase rechts" id="denk3" style="width:200px"><i class="pkt" style="left:46px"></i><i class="pkt" style="left:89px"></i><i class="pkt" style="left:132px"></i></div>
+  <svg class="a stille" id="stille3" viewBox="0 0 640 40" data-frei><path class="zeichnen" pathLength="1" d="M20 20H620" stroke="var(--n400)" stroke-width="10" stroke-linecap="round" stroke-dasharray=".035 .03" fill="none"/></svg>
+  <div class="a ball" id="bGe"><div class="bs"></div><div class="bk"><div class="rund"></div><div class="ic" id="bGeIc"></div><div class="grau"></div></div></div>
+  <div class="a privat" id="privat3"><svg class="sch" viewBox="0 0 170 150"><path d="M85 6l58 20v42c0 40-26 64-58 76-32-12-58-36-58-76V26Z" fill="var(--b500)"/><path d="M85 26l38 13v29c0 27-17 43-38 52Z" fill="var(--b400)"/>
+    <rect x="64" y="66" width="42" height="34" rx="6" fill="var(--surface)"/><path d="M72 66v-8a13 13 0 0 1 26 0v8" stroke="var(--surface)" stroke-width="7" fill="none"/></svg><span class="etikett">privat</span></div>
+  <div class="a" id="wolke3" style="width:240px">{{wolke}}</div>
+  <div class="a" id="fussball4" style="width:120px">{{fussball~f4}}</div>
+  <svg class="a zurueck" id="pfeil4" viewBox="0 0 560 520" data-frei><path class="zeichnen" pathLength="1" d="M70 470C40 300 160 120 470 60" stroke="var(--b500)" stroke-width="12" stroke-linecap="round" fill="none" style="stroke-dasharray:1 1"/>
+    <path id="pfeil4s" d="M440 30l46 28-38 38" stroke="var(--b500)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a berg" id="berg4"><svg viewBox="0 0 260 180"><rect width="260" height="180" fill="var(--info-bg,var(--b50))"/>
+    <circle id="sonne4" cx="190" cy="56" r="26" fill="var(--warning)"/>
+    <path d="M-10 170L90 50l60 70 30-30 90 80Z" fill="var(--b400)"/><path d="M90 50l22 26-14 6-8-10-10 12-12-6Z" fill="var(--surface)"/>
+    <path class="zeichnen" pathLength="1" d="M30 168C70 150 60 128 100 120s40-26 80-30" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray=".05 .05" fill="none"/></svg></div>
+  <svg class="a wimpel" id="verein4" viewBox="0 0 170 190"><rect x="20" y="10" width="10" height="176" rx="5" fill="var(--b700)"/>
+    <path d="M30 18h120l-28 44 28 44H30Z" fill="var(--b500)"/><path d="M30 18h120l-6 9H30Z" fill="var(--b400)"/>
+    <circle cx="80" cy="62" r="24" fill="var(--surface)"/><path d="M80 48l12 9-5 14H73l-5-14Z" fill="var(--b700)"/></svg>
+  <div class="a plakette lila" id="herz4" data-frei></div>
+
+  <!-- Szene 5: Themen -->
+  <div class="a tischset" id="tischset" data-gruppe="gut"></div>
+  <div class="a kopf" id="kopfGut" data-gruppe="gut" style="background:var(--success);"><div class="wtext" id="tbGut" style="position:relative"><div class="titel" style="color:var(--surface)">Gut</div></div></div>
+  <div class="a kopf" id="kopfNicht" style="background:var(--n300)"><div class="wtext" id="tbNicht" style="position:relative"><div class="titel" style="color:var(--n700)">Lieber nicht</div></div></div>
+  <svg class="a zurueck" id="bumerang5" viewBox="0 0 560 520" data-frei><path class="zeichnen" pathLength="1" d="M70 470C60 260 260 80 470 60C420 260 260 420 70 470" stroke="var(--b500)" stroke-width="12" stroke-linecap="round" fill="none" style="stroke-dasharray:1 1"/></svg>
+  <div class="a" id="ohr5" style="width:120px" data-frei>{{ohr}}</div>
+  <div class="a welle" id="wO1" style="width:170px;height:170px" data-frei></div>
+  <div class="a welle" id="wO2" style="width:170px;height:170px" data-frei></div>
+
+  <!-- Szene 6 -->
+  <div class="a blase" id="lang6" style="width:420px;height:150px"><i class="z" style="top:26px;width:370px"></i><i class="z" style="top:46px;width:330px"></i><i class="z" style="top:66px;width:370px"></i><i class="z" style="top:86px;width:300px"></i><i class="z" style="top:106px;width:350px"></i></div>
+  <div class="a blase" id="kurz6a" style="width:150px;height:110px"><i class="z" style="top:26px;width:100px"></i><i class="z" style="top:48px;width:80px"></i><i class="z" style="top:70px;width:96px"></i></div>
+  <div class="a blase rechts" id="kurz6b" style="width:150px;height:110px"><i class="z" style="top:26px;width:96px"></i><i class="z" style="top:48px;width:106px"></i><i class="z" style="top:70px;width:70px"></i></div>
+  <div class="a plakette gruen" id="ok6" data-frei></div>
+  <div class="a welle" id="wG1" style="width:200px;height:200px" data-frei></div>
+  <div class="a welle" id="wG2" style="width:200px;height:200px" data-frei></div>
+  <div class="a plakette gruen" id="ok6b" data-frei></div>
+
+  <div class="a serviette" id="serv3"><div class="wtext" id="tb3"><div class="titel">A: Gespräch vorbei ·</div><div class="titel">B: zu privat</div></div></div>
+  <div class="a serviette" id="serv4"><div class="wtext" id="tb4"><div class="titel">C: kurz antworten</div><div class="titel">+ Gegenfrage</div></div></div>
+</div>
+<div id="nacht"></div>
+
+<div class="decke" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Kurz antworten, zurückfragen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Smalltalk muss nicht perfekt sein: kurz antworten, eine Gegenfrage stellen, zuhören – und private Themen wie Gehalt lieber weglassen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WN = (n, k) => A(satz(n).woerter[k].start);
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: (basis.r || 0) + (von.r || 0) });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { const r0 = wertBei(id, 'r', t); for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: r0 + (i % 2 ? w : -w) }, 'sinus'); tw(id, t + n * .1, .25, { r: r0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const nicken = (id, t, h = 10) => { const y = wertBei(id, 'y', t); tw(id, t, .13, { y: y + h, sy: .96 }, 'sinus'); tw(id, t + .13, .3, { y, sy: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
+const kurve = (keys, t) => { let v = keys[0][1]; for (const [a, w, d = .6] of keys.slice(1)) if (t >= a) v = lerp(v, w, E.inout(clamp((t - a) / d))); return v; };
+// Wellen: Ringe an einer Stelle, je Zeitpunkt einer, abwechselnd auf den Elementen der Liste
+function wellen(ids, zeiten, x, y, d = .9, gross = 1.6) {
+  ids = [].concat(ids);
+  ids.forEach(id => { if (!AKTEURE.get(el(id))) akteur(id, { x, y, o: 0, s: .7 }); });
+  zeiten.forEach((t, k) => { const id = ids[k % ids.length]; set(id, t, { x, y, o: .95, s: .7 }); tw(id, t + .001, d, { o: 0, s: gross }, 'weich'); });
+}
+
+/* ---------- Kamera: Mittelpunkt (x, y) und Zoom (s) der Welt, Akzente, Unschärfe bei schnellen Fahrten ---------- */
+const CAM = el('cam');
+const V = {
+  uhr: [1050, 150, 1.1],         // Wand mit Uhr und Schild, Tür; unten die Tischkante
+  sit: [1360, 880, .88],         // Kwame unten, der Geselle oben, rechts Platz für die Serviette
+  tab: [3000, 860, 1.2],         // Tablett mit drei Tassen
+  ecke: [640, 660, 1.45],        // Tischecke mit den drei Tassen (Auflösung)
+  themen: [1690, 1000, .68],     // ganzer Platz mit Tischset und Boden
+};
+akteur(CAM, { x: 1000, y: 40, s: 1.75 }, true);
+const kam = (t, d, v, e = 'inout') => { tw(CAM, t, d, { x: v[0], y: v[1], s: v[2] }, e); cue(t, 'whoosh'); };
+const AKZ = [];
+const akzent = (t, z = .03) => AKZ.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wisch" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischB" stdDeviation="0 0"/></filter></svg>');
+const camBei = t => { const a = AKTEURE.get(CAM); return [wert(a, 'x', t), wert(a, 'y', t), wert(a, 's', t)]; };
+HOOKS.push(t => {
+  let [cx, cy, z] = camBei(t);
+  for (const [a0, h] of AKZ) { const d = (t - a0) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  WELT.style.transform = `translate(${(960 - cx * z).toFixed(2)}px,${(540 - cy * z).toFixed(2)}px) scale(${z.toFixed(5)})`;
+  const [px, py] = camBei(t - 1 / 30);
+  const bx = Math.min(14, Math.abs(cx - px) * z * .09), by = Math.min(14, Math.abs(cy - py) * z * .09);
+  el('wischB').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  WELT.style.filter = bx + by > .4 ? 'url(#wisch)' : '';
+});
+
+/* ---------- Porträts: Mund exakt in den eigenen Sätzen (sprache.json), blinzeln, nicken beim Zuhören, Blick aufs Handy ---------- */
+el('kwame').innerHTML = tpl('portraitKwame'); el('kwame').dataset.sprecher = 'Kwame';
+el('geselle').innerHTML = tpl('portraitGeselle'); el('geselle').dataset.sprecher = 'Geselle';
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, BLICK = {};
+const froh = (id, a, b) => (FROH[id] ??= []).push([a, b]);
+const blick = (id, a, b) => (BLICK[id] ??= []).push([a, b]);       // Blick nach unten (aufs Handy)
+const rampe = (t, a, b, d = .35) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const b = (BLICK[p.id] || []).reduce((m, [a, c]) => Math.max(m, rampe(t, a, c)), 0);
+    p.querySelector('.figur').style.transform = `translate(${(18 * b).toFixed(2)}px,${(aktiv ? 0 : nick) + 10 * b}px) rotate(${(nick + 9 * b).toFixed(2)}deg)`;
+    p.style.borderColor = aktiv ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Wanduhr: Minuten nach 12 Uhr ---------- */
+const UHR = [[0, -1]];
+HOOKS.push(t => {
+  const m = kurve(UHR, t);
+  el('uhrH').style.transform = `rotate(${(m / 2).toFixed(2)}deg)`;
+  el('uhrM').style.transform = `rotate(${(m * 6).toFixed(2)}deg)`;
+});
+// Tag und Nacht (Zeitraffer): Abdunklung über der ganzen Welt
+const NACHT = [[0, 0]];
+HOOKS.push(t => { el('nacht').style.opacity = kurve(NACHT, t).toFixed(3); });
+
+/* ---------- Bälle: Wurf über den Tisch – der Ball kommt der Kamera näher, der Schatten bleibt am Tisch ---------- */
+const FLUG = {};
+function wurf(id, t0, d, x, y, h = 1, e = 'inout') { tw(id, t0, d, { x, y }, e); (FLUG[id] ??= []).push([t0, d, h]); }
+const GRAU = {};
+HOOKS.push(t => {
+  document.querySelectorAll('.ball').forEach(b => {
+    let h = 0; for (const [t0, d, hh] of FLUG[b.id] || []) { const p = clamp((t - t0) / d); h += hh * Math.sin(Math.PI * p); }
+    b.querySelector('.bk').style.transform = `translate(${(-10 * h).toFixed(1)}px,${(-46 * h).toFixed(1)}px) scale(${(1 + .32 * h).toFixed(3)})`;
+    const s = b.querySelector('.bs'); s.style.opacity = (1 - .55 * Math.min(1, h)).toFixed(3); s.style.transform = `scale(${(1 - .25 * Math.min(1, h)).toFixed(3)})`;
+    if (GRAU[b.id]) b.querySelector('.grau').style.opacity = (.62 * kurve(GRAU[b.id], t)).toFixed(3);
+  });
+});
+function ball(id, inhalt, label = null, grau = false) {
+  WELT.insertAdjacentHTML('beforeend', `<div class="a ball" id="${id}"${label ? ` data-gruppe="${id}"` : ''}><div class="bs"></div><div class="bk"><div class="rund"></div><div class="ic">${inhalt}</div><div class="grau"></div></div></div>` +
+    (label ? `<div class="a etikett${grau ? ' grau' : ''}" id="${id}L" data-gruppe="${id}">${label}</div>` : ''));
+}
+
+/* ---------- Tassen: umgedreht (Boden mit Buchstabe nach oben), Henkel rechts; heben = näher zur Kamera ---------- */
+const HUB = {};
+function tasseBau(L) {
+  const id = 't' + L;
+  el(id).innerHTML = `<div class="ts"><svg viewBox="0 0 260 230"><ellipse cx="122" cy="126" rx="104" ry="104" fill="var(--b700)" opacity=".28"/></svg></div>
+    <div class="tk"><svg viewBox="0 0 260 230"><path d="M196 80h26a34 34 0 0 1 0 68h-26" stroke="var(--b600)" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <circle cx="115" cy="115" r="100" fill="var(--b600)"/><circle cx="115" cy="111" r="96" fill="var(--b500)"/><circle cx="115" cy="111" r="70" fill="var(--b400)"/>
+      <circle cx="115" cy="111" r="58" fill="var(--b500)"/><circle cx="115" cy="111" r="104" fill="none" stroke="var(--surface)" stroke-width="10" id="${id}licht" opacity="0"/>
+      <text x="115" y="140" text-anchor="middle" font-family="Inter" font-weight="800" font-size="84" fill="var(--surface)">${L}</text></svg>
+      <div class="marke ${L === 'C' ? 'gruen' : 'rot'}" id="${id}m">${tpl(L === 'C' ? 'svgHaken' : 'svgX')}</div></div>`;
+  el(`${id}m`).style.transformOrigin = '50% 50%';
+  rel(`${id}m`, { s: 0, o: 0 });
+  HUB[id] = [[0, 0]];
+}
+['A', 'B', 'C'].forEach(tasseBau);
+HOOKS.push(t => ['tA', 'tB', 'tC'].forEach(id => {
+  const h = kurve(HUB[id], t), e = el(id);
+  e.querySelector('.tk').style.transform = `translate(${(-16 * h).toFixed(1)}px,${(-150 * h).toFixed(1)}px) scale(${(1 + .18 * h).toFixed(3)})`;
+  e.querySelector('.ts').style.transform = `scale(${(1 - .12 * h).toFixed(3)})`;
+  e.querySelector('.ts').style.opacity = (1 - .5 * h).toFixed(3);
+}));
+const heben = (L, t, h = 1, d = .5) => HUB['t' + L].push([t, h, d]);
+const LICHT = { tA: [[0, 0]], tB: [[0, 0]], tC: [[0, 0]] };
+HOOKS.push(t => ['tA', 'tB', 'tC'].forEach(id => { el(id + 'licht').setAttribute('opacity', kurve(LICHT[id], t).toFixed(3)); }));
+function markeAuf(L, t) {
+  const id = 't' + L;
+  set(`${id}m`, t - .01, { o: 1 }); tw(`${id}m`, t, .45, { s: 1 }, 'back');
+  tw(id, t, .08, { sy: .93, sx: 1.04 }, 'sinus'); tw(id, t + .08, .4, { sy: 1, sx: 1 }, 'sanft');
+  wackeln(id, t + .05, 3, 2); cue(t, 'plopp'); cue(t + .05, L === 'C' ? 'erfolg' : 'klick'); akzent(t, .045);
+}
+
+/* ---------- Untersetzer: Symbole unter den Tassen ---------- */
+el('uA').innerHTML = `<div class="blase" id="sA1" style="left:24px;top:60px;width:110px;height:84px"><i class="pkt" style="left:44px;top:31px"></i></div>
+  <div id="sA2" style="left:112px;top:36px;width:110px;height:170px"><div id="sA2l" style="position:absolute;left:-26px;top:-20px;width:162px;height:210px;border-radius:50px;background:radial-gradient(closest-side,rgba(255,255,255,1),rgba(201,186,250,0));opacity:0"></div>${tpl('tHandy')}</div>`;
+el('uB').innerHTML = `<div id="sB1" style="left:40px;top:56px;width:150px">${tpl('tMuenzen')}</div><div class="frage" id="sB2" style="left:142px;top:30px;width:70px;height:70px;font-size:44px;line-height:70px">?</div>`;
+el('uC').innerHTML = `<div class="blase" id="sC1" style="left:22px;top:44px;width:110px;height:80px"><i class="z" style="top:24px;width:66px"></i><i class="z" style="top:44px;width:50px"></i></div>
+  <div class="blase rechts" id="sC2" style="left:108px;top:120px;width:110px;height:80px"><i class="z" style="top:24px;width:66px"></i><i class="z" style="top:44px;width:50px"></i></div>`;
+[['sA1', '20% 100%'], ['sA2', '50% 50%'], ['sB1', '50% 90%'], ['sB2', '50% 50%'], ['sC1', '20% 100%'], ['sC2', '80% 100%']].forEach(([id, o]) => rel(id, { s: 0 }, o));
+rel('sA2l', { o: 0 });
+
+/* ================= 1 · Mittagspause: Uhr, Kwame allein, der Geselle setzt sich dazu ================= */
+const XK = 800, YK = 1255, XG = 1450, YG = 465;                   // Plätze von Kwame und dem Gesellen
+{
+  akteur('boden', { x: 2000, y: 1610 });
+  akteur('uhr', { x: 450, y: 10 });
+  // „Mittagspause“: der Minutenzeiger springt auf 12, Ding, das Schild schwingt
+  const tMi = W('Mittagspause', 1);
+  UHR.push([tMi - .1, 0, .35]); cue(tMi + .2, 'ding'); bump('uhr', tMi + .2, 1.06);
+  el('schild1').style.transformOrigin = '50% -30px';
+  akteur('schild1', { x: 1000, y: 10, o: 0, r: -4 });
+  tw('schild1', tMi - .25, .3, { o: 1 }); tw('schild1', tMi - .25, .5, { r: 3 }, 'sinus'); tw('schild1', tMi + .25, .5, { r: -1.5 }, 'sinus'); tw('schild1', tMi + .75, .6, { r: 0 }, 'sinus');
+  titelEin('tb1', tMi + .05);
+  // Kamera: von der Wand hinunter zum Tisch
+  kam(SA(2) - .5, 1.5, V.sit);
+  // Kwame sitzt allein am Tisch
+  akteur('stuhlK', { x: XK, y: YK + 90 }); akteur('stuhlG', { x: XG, y: YG - 90 });
+  akteur('kwame', { x: XK, y: YK });
+  akteur('dose', { x: 560, y: 1040, r: -2 }); rel('dosedeckel', {}, '50% 0');
+  akteur('handy', { x: 1110, y: 1060, r: 3 }); rel('handylicht', { o: 0 });
+  const tKw = W('Kwame', 2), tAl = W('allein', 2), tTi = W('Tisch', 2), tHa = W('Handy', 2);
+  huepfen('kwame', tKw, 14); cue(tKw, 'pop');
+  wackeln('stuhlG', tAl, 3, 3); cue(tAl, 'klick');
+  tw('dosedeckel', tTi - .1, .45, { sy: -.18 }, 'inout'); cue(tTi, 'klick');
+  blick('kwame', tHa - .3, W('Geselle', 3) + .3);
+  tw('handylicht', tHa - .1, .35, { o: .9 }); bump('handy', tHa, 1.08); cue(tHa, 'ding');
+  tw('handylicht', W('setzt', 3), .4, { o: 0 });
+  // „Ein Geselle setzt sich zu ihm“: Bogen von oben, Stuhl rutscht heran, Landung
+  const tGe = W('Geselle', 3), tSe = W('setzt', 3), tIh = W('ihm', 3);
+  akteur('geselle', { x: XG + 380, y: YG - 520, s: .8, o: 0 });
+  tw('geselle', tGe - .25, .2, { o: 1 }); tw('geselle', tGe - .25, .9, { x: XG, y: YG, s: 1 }, 'inout', { bogen: -140 }); cue(tGe - .25, 'whoosh');
+  landen('geselle', tGe + .65); cue(tGe + .65, 'plopp');
+  tw('stuhlG', tSe - .1, .5, { y: YG - 70 }, 'sanft'); cue(tSe - .1, 'klick'); tw('stuhlG', tSe + .4, .3, { y: YG - 90 }, 'sinus');
+  // Becher rutscht heran, Dampf kringelt
+  akteur('becher', { x: 1760, y: 520, o: 0, s: .8 });
+  tw('becher', tIh - .1, .2, { o: 1 }); tw('becher', tIh - .1, .6, { x: 1660, y: 570, s: 1 }, 'sanft'); cue(tIh, 'whoosh');
+  akteur('dampf', { x: 1660, y: 560, o: 0, s: .7 });
+  tw('dampf', tIh + .5, .5, { o: .85, s: 1 });
+  HOOKS.push(t => { el('dampfg').style.transform = `rotate(${(t * 40).toFixed(1)}deg) scale(${(1 + .06 * Math.sin(t * 2.3)).toFixed(3)})`; });
+  pop('teller', tSe + .1, { x: 1240, y: 560 }, 'pop');
+  // „Mahlzeit, Kwame!“: Schallbögen zu Kwame
+  const tMa = W('Mahlzeit', 4);
+  wellen(['wM1', 'wM2'], [tMa, tMa + .3, tMa + .6], XG, YG + 20, .9, 1.9);
+  nicken('kwame', W('Kwame', 4) + .2, 8); froh('geselle', SE(4) - .1, SA(5) + .1);
+  // „Na, wie war dein Wochenende?“: der Ball mit dem Kalenderblatt fliegt über den Tisch zu Kwame
+  const tWo = W('Wochenende', 5);
+  pop('bWo', W('Na', 5), { x: XG - 10, y: YG + 230 }, 'pop');
+  wurf('bWo', tWo - .2, .9, 930, 1060, 1.1); cue(tWo - .2, 'whoosh');
+  landen('bWo', tWo + .7); cue(tWo + .7, 'plopp'); bump('kwame', tWo + .75, 1.04);
+  pop('frage1', SE(5) - .2, { x: 1010, y: 1215 }, 'pop'); wackeln('frage1', SE(5) + .3, 3, 6);
+  akzent(tWo + .7, .03);
+}
+
+/* ================= 2 · Was würdest du tun? Drei Tassen auf dem Tablett ================= */
+const P2 = SE(5) + .25;
+kam(P2, 1.1, V.tab);
+const TX = { A: 2700, B: 3000, C: 3300 }, TY = 790;
+{
+  ['A', 'B', 'C'].forEach(L => { akteur('u' + L, { x: TX[L], y: TY }); akteur('t' + L, { x: TX[L] + 15, y: TY + 4 }); });
+  akteur('zaehler', { x: 3000, y: 1066 });
+  // „Was würdest du tun?“: das Fragezeichen auf dem Teller pocht, die Tassen wackeln der Reihe nach
+  const tTu = W('tun', 6);
+  ['A', 'B', 'C'].forEach((L, k) => { wackeln('t' + L, W('Was', 6) + k * .14, 2, 3); });
+  bump('zaehler', tTu, 1.12); cue(tTu, 'tipp'); akzent(tTu, .03);
+  // A: Tasse hebt sich, darunter Blase mit Punkt – das Handy leuchtet auf und schiebt die Blase weg
+  const tA = WN(7, 0), tGu = W('Gut', 7), tWe = W('weiter', 7), tHa = W('Handy', 7);
+  heben('A', tA - .2); cue(tA - .2, 'whoosh');
+  tw('sA1', tGu - .1, .45, { s: 1 }, 'back'); cue(tGu, 'pop');
+  tw('sA2', tWe - .15, .45, { s: 1 }, 'back'); cue(tWe, 'pop');
+  tw('sA2l', tHa - .1, .3, { o: .95 }); bump('sA2', tHa, 1.1); cue(tHa, 'ding');
+  tw('sA1', tHa + .1, .45, { x: -30, s: .6, o: .3 }, 'inout');
+  heben('A', SA(8) - .45, 0, .45); cue(SA(8) - .1, 'klick');
+  // B: Münzstapel mit Fragezeichen, der Stapel wackelt
+  const tB = WN(8, 0), tVi = W('viel', 8), tVe = W('verdient', 8);
+  heben('B', tB - .2); cue(tB - .2, 'whoosh');
+  tw('sB1', tVi - .2, .45, { s: 1 }, 'back'); cue(tVi, 'muenze');
+  tw('sB2', tVe - .1, .45, { s: 1 }, 'back'); cue(tVe, 'pop');
+  wackeln('sB1', tVe + .2, 4, 5);
+  heben('B', SA(9) - .45, 0, .45); cue(SA(9) - .1, 'klick');
+  // C: zwei Blasen, die hin und her springen
+  const tC = WN(9, 0), tKu = W('Kurz', 9), tGf = W('Gegenfrage', 9);
+  heben('C', tC - .2); cue(tC - .2, 'whoosh');
+  tw('sC1', tKu - .1, .45, { s: 1 }, 'back'); cue(tKu, 'pop');
+  tw('sC2', tGf - .1, .45, { s: 1 }, 'back'); cue(tGf, 'pop');
+  for (let k = 0; k < 3; k++) { huepfen('sC1', tGf + .45 + k * .5, 12); huepfen('sC2', tGf + .7 + k * .5, 12); }
+  heben('C', SE(9) + .1, 0, .45); cue(SE(9) + .45, 'klick');
+  // Denkpause: Ring läuft leer, Ziffern 3 – 2 – 1, ein Lichtrand wandert über die Tassen
+  const c0 = SE(9) + .45, c1 = SA(10) - .2;
+  const ZIFFERN = [[c0, '3'], [c0 + 1, '2'], [c0 + 2, '1']];
+  ZIFFERN.forEach(([t]) => { cue(t, 'tipp'); bump('zaehler', t, 1.1); });
+  HOOKS.push(t => {
+    el('lauf').style.strokeDashoffset = -clamp((t - c0) / (c1 - c0));
+    let z = '?', seit = 9;
+    for (const [tz, n] of ZIFFERN) if (t >= tz) { z = n; seit = t - tz; }
+    if (t > c1) { z = '?'; seit = 9; }
+    const zf = el('ziffer'); zf.textContent = z; zf.style.transform = `scale(${1 + .45 * (1 - E.out(clamp(seit / .3)))})`;
+  });
+  ['A', 'B', 'C'].forEach((L, k) => {
+    const t = c0 + .1 + k * 1;
+    LICHT['t' + L].push([t, 1, .2], [t + .85, 0, .25]);
+    bump('t' + L, t, 1.05);
+  });
+}
+
+/* ================= 3 · Option A und B am Tisch ================= */
+const ECK = { A: [450, 620], B: [640, 620], C: [830, 620] };          // Tischecke: hier landen die Tassen
+const P3 = SA(10) - .05;
+{
+  // „Option Ah:“ – Tasse A hebt sich, rotes ✕, dann fliegt sie in die Tischecke; die Kamera folgt
+  const tAh = WN(10, 1);
+  heben('A', P3, 1, .45); cue(P3, 'whoosh');
+  markeAuf('A', tAh);
+  const tF = tAh + .3;
+  tw('tA', tF, 1.05, { x: ECK.A[0], y: ECK.A[1], s: .6 }, 'inout'); heben('A', tF + .55, 0, .5); cue(tF + .95, 'plopp');
+  kam(tF, 1.05, V.sit);
+  // Serviette mit dem Text im Bild rutscht herein
+  const tGs = W('Gespräch', 12), tPr = W('privates', 13);
+  ein('serv3', SA(11) - .2, { x: 2000, y: 1010, r: -2 }, { x: 160, r: 3 }, 'whoosh');
+  titelEin('tb3', tGs - .1, [tGs - .1, tGs, W('vorbei', 12), WN(13, 1), W('zu', 14) - 1.6 > tPr ? tPr : tPr, tPr + .08]);
+  const ws3 = [...document.querySelectorAll('#tb3 .w')]; [0, 4].forEach(k => ws3[k].classList.add('rot'));
+  // Kwame sagt nur „Gut“ (kleine Blase) und schaut wieder aufs Handy
+  const tGu = W('Gut', 10), tSc = W('schaut', 10), tHa = W('Handy', 10);
+  aus('frage1', tGu - .5, .25);
+  el('gut3').style.transformOrigin = '20% 100%';
+  pop('gut3', tGu - .05, { x: 1030, y: 1205 }, 'pop');
+  aus('gut3', tSc + .2, .3);
+  blick('kwame', tSc - .1, SE(12) + .2);
+  tw('handylicht', tHa - .2, .35, { o: .95 }); bump('handy', tHa, 1.08); cue(tHa, 'ding');
+  // „Der Geselle denkt: Er will nicht reden.“ – Denkblase, dann trinkt er seinen Kaffee
+  const tDe = W('denkt', 11), tRe = W('reden', 11);
+  el('denk3').style.transformOrigin = '85% 100%';
+  pop('denk3', tDe - .1, { x: 1700, y: 380 }, 'pop');
+  ['denk3', 'geselle'].forEach(id => wackeln(id, tRe, 3, 3));
+  aus('denk3', SE(11) + .1, .3);
+  const tGsp = W('Gespräch', 12), tSn = W('schnell', 12), tVo = W('vorbei', 12);
+  tw('becher', tGsp - .3, .45, { x: XG + 95, y: YG + 70, s: 1.15 }, 'inout'); tw('dampf', tGsp - .3, .2, { o: 0 });
+  tw('becher', tGsp + .15, .25, { r: -3 }, 'sinus'); tw('becher', tSn + .1, .4, { x: 1660, y: 570, s: 1, r: 0 }, 'inout');
+  // „… ist schnell vorbei“: der Ball wird grau und rollt vom Tisch auf den Boden; eine Wand aus Stille
+  GRAU.bWo = [[0, 0], [tSn - .2, 1, .4]];
+  wurf('bWo', tSn, .8, 1180, 1370, .35, 'in'); tw('bWo', tSn, .8, { s: .62, r: -3 }, 'in'); landen('bWo', tSn + .8); cue(tSn + .8, 'plopp');
+  akteur('stille3', { x: 1130, y: 860, r: 39, o: 1 });
+  tw('stille3', tVo - .1, .6, { draw: 1 }, 'out'); cue(tVo, 'klick'); akzent(tVo, .035);
+  // „Option Beh:“ – Tasse B fliegt vom Tablett herein und landet neben A, rotes ✕
+  const tOB = SA(13), tBe = WN(13, 1);
+  tw('handylicht', tOB - .4, .3, { o: 0 }); tw('stille3', tOB - .4, .3, { o: 0 });
+  akteur('tB', { x: TX.B + 15, y: TY + 4 }); set('tB', tOB - .9, { x: 2550, y: 520, s: .75 });
+  heben('B', tOB - .95, 1, .01);
+  tw('tB', tOB - .85, .95, { x: ECK.B[0], y: ECK.B[1], s: .6 }, 'inout'); cue(tOB - .85, 'whoosh');
+  heben('B', tOB - .2, .55, .3);
+  markeAuf('B', tBe); heben('B', tBe + .35, 0, .4); cue(tBe + .7, 'plopp');
+  // „Das Gehalt …“: Ball mit Münzen fliegt zum Gesellen, prallt am Schild „privat“ ab und fällt zu Boden
+  el('bGeIc').innerHTML = tpl('tMuenzen');
+  const tGh = W('Gehalt', 13), tSe = W('sehr', 13), tTh = W('Thema', 13);
+  pop('bGe', tGh - .25, { x: 960, y: 1060 }, 'pop');
+  wurf('bGe', tGh + .2, .9, XG - 40, YG + 250, 1.1);
+  pop('privat3', tPr - .15, { x: XG - 20, y: YG + 230 }, 'plopp');
+  el('privat3').style.transformOrigin = '50% 40%';
+  // Abprall genau beim Ankommen (tGh + 1.1)
+  const tPa = tGh + 1.1;
+  wurf('bGe', tPa, .9, 1500, 1370, .5, 'in'); tw('bGe', tPa, .9, { s: .62, r: 3 }, 'in'); cue(tPa, 'klick'); bump('privat3', tPa, 1.15);
+  GRAU.bGe = [[0, 0], [tPa + .2, 1, .4]];
+  landen('bGe', tPa + .9); cue(tPa + .9, 'plopp');
+  aus('privat3', tTh + .5, .35);
+  // „Der Geselle fühlt sich unwohl“: er rückt mit dem Stuhl ein Stück weg
+  const tUn = W('unwohl', 14), tSt = W('Stimmung', 14), tKo = W('komisch', 14);
+  tw(['geselle', 'stuhlG'], tUn - .2, .6, { x: XG + 110 }, 'inout'); cue(tUn - .2, 'whoosh');
+  tw('geselle', tUn + .4, .3, { r: 3 }, 'sinus'); tw('geselle', tUn + .7, .4, { r: 0 }, 'sinus');
+  tw('becher', tUn - .1, .6, { x: 1760 }, 'inout'); tw('dampf', tUn - .1, .6, { x: 1760, o: 0 }, 'inout');
+  // „… die Stimmung wird komisch“: graue Wolke über dem Tisch
+  el('wolke3').style.transformOrigin = '50% 60%';
+  pop('wolke3', tSt - .1, { x: 1120, y: 760 }, 'plopp');
+  wackeln('wolke3', tKo, 4, 4); akzent(tKo, .03);
+  HOOKS.push(t => { if (t > tKo) el('wolke3').style.transform += ` translateY(${(4 * Math.sin((t - tKo) * 2.4)).toFixed(1)}px)`; });
+  textAus('serv3', SE(14) + .15);
+}
+
+/* ================= 4 · Option C: kurz antworten, Gegenfrage, zuhören ================= */
+const P4 = SE(14) + .3;
+{
+  kam(P4, .95, V.tab);
+  // Am Tisch aufräumen, während die Kamera beim Tablett ist
+  const tR = P4 + .9;
+  ['bWo', 'bGe', 'wolke3', 'serv3'].forEach(id => set(id, tR, { o: 0 }));
+  set(['geselle', 'stuhlG'], tR, { x: XG }); set('becher', tR, { x: 1660, y: 570 }); set('dampf', tR, { x: 1660, o: .85 });
+  // „Und Option Zeh:“ – Tasse C hebt sich, grüner Haken, fliegt in die Tischecke; die Kamera folgt
+  const tZe = WN(15, 2);
+  heben('C', W('Option', 15) - .1, 1, .45); cue(W('Option', 15) - .1, 'whoosh');
+  markeAuf('C', tZe);
+  const tF = tZe + .35;
+  tw('tC', tF, 1.0, { x: ECK.C[0], y: ECK.C[1], s: .6 }, 'inout'); heben('C', tF + .5, 0, .5); cue(tF + .9, 'plopp');
+  kam(tF, 1.0, V.sit);
+  tw(['tA', 'tB'], tF + .8, .5, { o: .55 });
+  // Serviette: „C: kurz antworten + Gegenfrage“
+  const tGu = W('gut', 16), tWo = W('Wochenende', 18);
+  ein('serv4', tF + .6, { x: 2000, y: 1010, r: 2 }, { x: 160, r: -3 }, 'whoosh');
+  titelEin('tb4', tGu, [tGu, tGu + .08, tGu + .16, tWo - .1, tWo - .02]);
+  $('#tb4 .w').classList.add('gruen');
+  // Der Gesprächs-Ball liegt wieder vor Kwame
+  akteur('bW4', {});
+}
+</script>
+</body></html>
