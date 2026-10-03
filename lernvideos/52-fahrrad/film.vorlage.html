@@ -123,8 +123,8 @@
 .handy .sym{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .handy .sym svg{width:48px}
 /* 7 · Notizzettel */
-.zettel{width:440px;padding:26px 30px 28px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:16px}
-.zettel .zeile{font:800 34px/42px Inter;color:var(--ink);white-space:pre;min-height:42px}
+.zettel{width:540px;padding:26px 30px 28px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:16px}
+.zettel .zeile{font:800 44px/52px Inter;color:var(--ink);white-space:pre;min-height:42px}
 .zettel .zeile .cursor{display:inline-block;width:4px;height:34px;margin-left:3px;vertical-align:-5px;background:var(--b500)}
 .zettel .platz{display:flex;gap:10px}
 .zettel .platz i{width:50px;height:18px;border-radius:9px;background:var(--n200)}
@@ -134,7 +134,7 @@
 .halt{position:absolute;left:0;top:0;width:76px;height:76px;border-radius:999px;background:var(--surface);border:7px solid var(--b300);
   display:flex;align-items:center;justify-content:center;font:800 32px/1 Inter;color:var(--b600);box-shadow:0 8px 22px rgba(22,19,37,.3)}
 .halt.mythos{border-color:var(--error)} .halt.stimmt{border-color:var(--success)}
-.hname{position:absolute;left:0;top:0;font:800 28px/34px Inter;color:var(--surface);white-space:nowrap}
+.hname{position:absolute;left:0;top:0;font:800 32px/38px Inter;color:var(--surface);white-space:nowrap}
 .hstempel{position:absolute;left:0;top:0;width:170px;height:54px;border-radius:12px;border:5px solid var(--error);background:var(--error-bg);
   color:var(--error-text);display:flex;align-items:center;justify-content:center;font:800 26px/1 Inter;letter-spacing:.1em;text-transform:uppercase}
 .hstempel.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
@@ -198,7 +198,7 @@
   <div class="a handy" id="handy3"><div class="schirm"><div class="gruen" id="hg3"></div>
     <div class="sym" id="hs3a"></div><div class="sym" id="hs3b"></div><div class="sym" id="hs3c"></div></div></div>
   <div class="a plakette rot" id="x3"></div>
-  <div class="a" id="buegel7" style="width:110px">{{buegelschloss}}</div>
+  <div class="a" id="buegel7" style="width:150px">{{buegelschloss}}</div>
   <div class="a" id="schluessel7" style="width:76px;transform-origin:30% 50%">{{schluessel}}</div>
 </div>
 </div>
@@ -836,11 +836,11 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   tw('rk', tAb, .9, { x: -400 }, 'in');                    // Kwame biegt ab
   spur(tAb, 'rad', 560, tAn - tAb); bremsen(Y, tAn - .1);
   const X = CAM[7];
-  neu(`<div class="a" id="betrieb7" style="width:380px">{{betrieb}}</div>
+  neu(`<div class="a" id="betrieb7" style="width:420px">{{betrieb}}</div>
     <div class="a tafel tipp" id="tafel7" style="transform-origin:50% 100%"><div class="pf" style="left:100px"></div><div class="pf" style="right:100px"></div>
       <div class="flaeche"><div class="seite"><div id="tt7"><div class="titel">Tipp: Rahmen anschließen</div></div></div></div></div>
-    <div class="a" id="stand7a" style="width:200px" data-gruppe="rad7a">{{fahrradstaender}}</div>
-    <div class="a" id="stand7b" style="width:200px" data-gruppe="rad7b">{{fahrradstaender~b}}</div>
+    <div class="a" id="stand7a" style="width:260px" data-gruppe="rad7a">{{fahrradstaender}}</div>
+    <div class="a" id="stand7b" style="width:260px" data-gruppe="rad7b">{{fahrradstaender~b}}</div>
     <div class="a fahrer" id="r7b" data-gruppe="rad7b"></div>
     <svg class="a" id="vr7b" viewBox="0 0 80 80" style="width:85px;height:85px" data-gruppe="rad7b"></svg>
     <div class="a" id="kleinschloss7" style="width:60px" data-gruppe="rad7b">{{schloss}}</div>
@@ -849,14 +849,14 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
     <div class="a plakette gruen" id="ok7a">${tpl('svgHakenW')}</div>
     <div class="a zettel" id="zettel7"><div class="zeile" id="tipp7"></div><div class="platz" id="platz7"><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="a" id="stift7" style="width:100px" data-frei>{{stift}}</div>
-    <div class="a plakette gruen" id="ok7b">${tpl('svgHakenW')}</div>`);
+    <div class="a plakette gruen" id="ok7b" data-frei>${tpl('svgHakenW')}</div>`);
   // Der Betrieb und das Tipp-Schild
-  akteur('betrieb7', { x: X + 1430, y: 560 - 0 });
+  akteur('betrieb7', { x: X + 330, y: 690 - 58 * 420 / 160 });
   const tT = A(satz(32).start) - .4;
   akteur('tafel7', { x: X + 1420, y: 430, sy: 0, o: 0 }); set('tafel7', tT - .1, { o: 1 }); tw('tafel7', tT - .1, .6, { sy: 1 }, 'back'); cue(tT, 'pop');
   titelEin('tt7', tT + .2);
   // zwei Fahrradständer auf dem Gehweg, rechts steht ein Rad – nur das Vorderrad ist abgeschlossen
-  const G = 975, SA = 760, SB = 1240, SYs = G - 82;
+  const G = 975, SA = 760, SB = 1240, SYs = G - 107;
   ein('stand7a', tT, { x: X + SA, y: SYs }, { y: 60 }); ein('stand7b', tT + .1, { x: X + SB, y: SYs }, { y: 60 });
   rad('r7b', { x: X + SB - 15, y: G - 135 * SY, s: SY }, { ohneVR: true, staender: true, farbe: 'var(--b400)' });
   ein('r7b', tT + .15, { x: X + SB - 15, y: G - 135 * SY, s: SY }, { y: 60 });
@@ -892,7 +892,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   bump('buegel7', tS, 1.15); pop('ok7a', tS + .1, { x: X + SA + 90, y: SYs - 140 }, 'erfolg'); akzent(tS, .04); froh('py', tS + .1);
   // Rahmennummer: auf dem Zettel tippt sich „Rahmennummer:“, der Stift schreibt, Haken
   const tZ = W('schreib', 34) - .35;
-  ein('zettel7', tZ, { x: X + 640, y: 310 }, { y: -50 }, 'whoosh');
+  ein('zettel7', tZ, { x: X + 760, y: 300 }, { y: -50 }, 'whoosh');
   const TEXT = 'Rahmennummer:', z0 = W('Rahmennummer', 34) - .05, z1 = WE('Rahmennummer', 34) + .1;
   for (let i = 0; i < TEXT.length; i += 2) cue(z0 + i * (z1 - z0) / TEXT.length, 'tipp');
   HOOKS.push(t => { const n = Math.round(clamp((t - z0) / (z1 - z0)) * TEXT.length);
@@ -900,10 +900,10 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   const PL = [...el('platz7').querySelectorAll('i')];
   HOOKS.push(t => PL.forEach((p, i) => { p.style.opacity = t > z1 + .1 + i * .1 ? 1 : 0; }));
   akteur('stift7', { x: X + 920, y: 470, o: 0, s: .8 });
-  tw('stift7', z1 - .2, .2, { o: 1 }); tw('stift7', z1 - .2, .4, { x: X + 540, y: 350, s: 1 }, 'inout', { bogen: 30 });
-  tw('stift7', z1 + .2, .6, { x: X + 760 }, 'inout'); cue(z1 + .2, 'kritzeln');
+  tw('stift7', z1 - .2, .2, { o: 1 }); tw('stift7', z1 - .2, .4, { x: X + 620, y: 350, s: 1 }, 'inout', { bogen: 30 });
+  tw('stift7', z1 + .2, .6, { x: X + 860 }, 'inout'); cue(z1 + .2, 'kritzeln');
   tw('stift7', z1 + .85, .4, { x: X + 940, y: 450, o: 0, s: .8 }, 'in');
-  pop('ok7b', z1 + .9, { x: X + 900, y: 230 }, 'erfolg'); bump('zettel7', z1 + .9, 1.05);
+  pop('ok7b', z1 + .9, { x: X + 1010, y: 380 }, 'erfolg'); bump('zettel7', z1 + .9, 1.05);
 }
 
 /* ---------- 8 · Die Strecke: Wie viele hattest du richtig? ---------- */
@@ -917,7 +917,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   el('standS').innerHTML = `${tpl('svgHaken')}<span><span id="zS">0</span> × Stimmt</span>`;
   pop('standM', tW + .4, { x: 760, y: 200 }, null); pop('standS', tW + .5, { x: 1160, y: 200 }, null);
   // Linie zeichnet sich, Yusuf fährt sie ab, an jedem Halt schlägt ein Stempel auf
-  const tL0 = tW + .5, tL1 = W('richtig', 35) + 1.1, U = HALTE.map((_, i) => .07 + i * .172);
+  const tL0 = tW + .5, tL1 = W('richtig', 35) + 1.1, U = HALTE.map((_, i) => .06 + i * .16);
   const LAND = [];
   HALTE.forEach(([name, u], i) => {
     const pt = pfad.getPointAtLength(U[i] * L), tH = tL0 + (tL1 - tL0) * U[i] / U.at(-1) * .95;
