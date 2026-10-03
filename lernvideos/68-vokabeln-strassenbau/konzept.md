@@ -115,7 +115,7 @@ Geselle: Amir, heute machen wir den Gehweg in der Schulstraße neu.
 Amir: Gut, die Tragschicht ist schon fest gewalzt.
 Geselle: Dann setzen wir zuerst die Bordsteine.
 Amir: Und danach die Pflastersteine, mit Gefälle zur Straße.
-Geselle: Genau. Am Ende kommt die Rüttelplatte.
+Geselle: Genau, und am Ende kommt die Rüttelplatte.
 Amir: Alles klar. Warnweste hab ich an!
 
 ## Schreibweise im Untertitel

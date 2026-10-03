@@ -113,7 +113,7 @@ Sabine: Ohne Gehörschutz geht hier niemand an die Säge.
 (Pause 0.8)
 Sabine: Kwame, heute machen wir eine Arbeitsplatte für eine Küche.
 Kwame: Super, die Rohplatte liegt schon an der Säge.
-Sabine: Gut. Prüf zuerst die Maße.
+Sabine: Gut, prüf zuerst die Maße.
 Kwame: Hab ich gemacht. Danach schleife ich die Kanten.
 Sabine: Und die Oberfläche wird poliert. Denk an Maske und Gehörschutz.
 Kwame: Hab ich beides schon auf!
