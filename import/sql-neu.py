@@ -2,7 +2,8 @@
 """SQL für neue Lektionen aus einem Plan (direkt per Supabase-MCP ausführen, ersetzt die alte Function-Aktion 'kurs').
 
   python3 import/sql-neu.py import/plan-66-78.json meta              Abschnitt (quiz_kategorien) + Abzeichen anlegen
-  python3 import/sql-neu.py import/plan-66-78.json kurs <ordner> ...  Lektion anlegen/aktualisieren (+ Fähigkeiten);
+  python3 import/sql-neu.py import/plan-66-78.json kurs <ordner> ...  Lektion anlegen/aktualisieren (+ Fähigkeiten)
+  python3 import/sql-neu.py import/plan-66-78.json fragen <ordner> ... Quizfragen anlegen/abgleichen (ein DO-Block);
                                                                      danach sql-aktualisieren.py fragen <ordner> ausführen
 
 Voraussetzung: Video, Untertitel und Titelbild sind hochgeladen (import/ids.json hat video, vtt, titelbild).
@@ -34,3 +35,33 @@ on conflict (id) do update set titel = excluded.titel, beschreibung = excluded.b
   badge_id = excluded.badge_id, sort = excluded.sort, kategorie_id = excluded.kategorie_id, titelbild_path = excluded.titelbild_path, version = kurse.version + 1;""")
         for a in l['achsen']:
             print(f"insert into kurs_faehigkeiten (kurs_id, achse) select {q(e['kurs_id'])}, {q(a)} where not exists (select 1 from kurs_faehigkeiten where kurs_id = {q(e['kurs_id'])} and achse = {q(a)});")
+
+if art == 'fragen':   # kompakter Fragen-Abgleich für mehrere Lektionen in einem DO-Block
+    alle = []
+    for o in sys.argv[3:]:
+        l = next(x for x in plan['lektionen'] if x['ordner'] == o)
+        fr = json.load(open(os.path.join(ROOT, o, 'fragen.json')))
+        alle.append({'o': o, 'k': ids[l['schluessel']]['kurs_id'], 'q': [{'f': f['frage'].strip(), 'z': int(f['zeit_sekunden']),
+                     'a': [x.strip() for x in f['antworten']], 'r': f['richtig']} for f in fr['fragen']]})
+    j = json.dumps(alle, ensure_ascii=False); assert '$j$' not in j
+    print(f"""do $do$ declare l jsonb; q jsonb; i int; qid uuid; a int; kat int;
+begin
+ for l in select * from jsonb_array_elements($j${j}$j$::jsonb) loop
+  select kategorie_id into kat from kurse where id = (l->>'k')::uuid; i := 0;
+  for q in select * from jsonb_array_elements(l->'q') loop
+   i := i + 1; qid := null;
+   select id into qid from quiz_questions where external_id = 'kurse-repo:' || (l->>'o') || ':' || i;
+   if qid is null then
+    insert into quiz_questions (kategorie_id, kurs_id, frage, aktiv, external_id, cefr_level, zeit_sekunden, sort)
+    values (kat, (l->>'k')::uuid, q->>'f', true, 'kurse-repo:' || (l->>'o') || ':' || i, 'B1', (q->>'z')::int, i * 10) returning id into qid;
+   else
+    update quiz_questions set frage = q->>'f', zeit_sekunden = (q->>'z')::int, sort = i * 10, aktiv = true, kurs_id = (l->>'k')::uuid, kategorie_id = kat where id = qid;
+   end if;
+   for a in 0 .. jsonb_array_length(q->'a') - 1 loop
+    update quiz_options set text = q->'a'->>a, ist_richtig = (a = (q->>'r')::int), aktiv = true where question_id = qid and sort = (a + 1) * 10;
+    if not found then insert into quiz_options (question_id, text, ist_richtig, sort, aktiv) values (qid, q->'a'->>a, a = (q->>'r')::int, (a + 1) * 10, true); end if;
+   end loop;
+  end loop;
+  update quiz_questions set aktiv = false where kurs_id = (l->>'k')::uuid and external_id like 'kurse-repo:' || (l->>'o') || ':%' and split_part(external_id, ':', 3)::int > i;
+ end loop;
+end $do$;""")
