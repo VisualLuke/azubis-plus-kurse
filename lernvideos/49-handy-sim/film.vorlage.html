@@ -89,18 +89,24 @@
 /* ---------- Format „Was würdest du tun?“ ---------- */
 .buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
 .buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
-.okarte{width:360px;height:430px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3)}
+.buehne.quiz .dunkel::before{content:'';position:absolute;inset:22px;border:10px solid var(--b400);border-radius:34px;opacity:.5}
+.buehne.quiz .stange{position:absolute;left:140px;right:140px;top:42px;height:14px;border-radius:7px;background:var(--b300);box-shadow:0 4px 0 var(--b600)}
+/* Optionen als Tarif-Preisschilder an Fäden */
+.okarte{width:360px;height:430px}
 .okarte > *{position:absolute}
-.okarte .rahmen{inset:0;border-radius:36px;box-shadow:0 0 0 9px var(--b300);opacity:0}
-.okarte .rahmen.rot{box-shadow:0 0 0 9px var(--error)}
-.okarte .rahmen.gruen{box-shadow:0 0 0 9px var(--success),0 0 60px 10px rgba(31,169,113,.45)}
-.okarte .knopf{left:132px;top:28px;width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);
-  font:800 56px/96px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
-.okarte .sym{left:30px;top:146px;width:300px;height:260px}
+.okarte .faden{left:178px;top:-125px;width:4px;height:152px;border-radius:2px;background:var(--b200)}
+.okarte .form{left:0;top:0;width:360px;height:430px;filter:drop-shadow(0 22px 26px rgba(22,19,37,.28))}
+.okarte .rahmen{left:0;top:0;width:360px;height:430px;opacity:0;overflow:visible}
+.okarte .rahmen path{stroke:var(--b300)}
+.okarte .rahmen.rot path{stroke:var(--error)}
+.okarte .rahmen.gruen path{stroke:var(--success)} .okarte .rahmen.gruen{filter:drop-shadow(0 0 22px rgba(31,169,113,.7))}
+.okarte .knopf{left:138px;top:62px;width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);
+  font:800 50px/84px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.okarte .sym{left:30px;top:156px;width:300px;height:260px}
 .okarte .sym > *{position:absolute;left:0;top:0}
 .okarte .sym > svg{width:300px;height:260px}
 .okarte .sym > svg *{transform-box:fill-box;transform-origin:center}
-.okarte .marke{right:-24px;top:-24px;width:92px;height:92px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+.okarte .marke{right:-26px;top:64px;width:92px;height:92px;border-radius:999px;display:flex;align-items:center;justify-content:center;
   box-shadow:0 8px 20px rgba(22,19,37,.25)}
 .okarte .marke svg{width:46px}
 .okarte .marke.rot{background:var(--error)} .okarte .marke.gruen{background:var(--success)}
@@ -119,6 +125,21 @@
 .zusatz > svg{position:absolute;left:16px;top:8px;width:36px;height:36px}
 .zusatz .klammer{position:absolute;left:-16px;top:6px;width:24px;height:40px}
 .zusatz .plus{position:absolute;right:-12px;top:-12px;width:30px;height:30px;border-radius:999px;background:var(--warning);color:var(--surface);font:800 24px/30px Inter;text-align:center}
+.abreiss{width:160px;height:184px}
+.abreiss .bind{position:absolute;left:0;right:0;top:0;height:34px;border-radius:14px 14px 4px 4px;background:var(--b500);z-index:1}
+.abreiss .bind i{position:absolute;top:-8px;width:12px;height:22px;border-radius:6px;background:var(--b700)}
+.abreiss .seite{position:absolute;left:0;right:0;top:30px;bottom:0}
+.abreiss .seite,.blattflug{background:var(--surface);border-radius:0 0 14px 14px;box-shadow:0 8px 20px rgba(22,19,37,.14);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.abreiss small,.blattflug small{font:600 20px/1 Inter;color:var(--n500)}
+.abreiss b,.blattflug b{font:800 72px/1 Inter;color:var(--ink);margin-top:6px}
+.blattflug{width:160px;height:154px}
+.rechnung{width:190px;height:80px;border-radius:14px 14px 0 0;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14)}
+.rechnung .kopf{position:absolute;left:18px;top:16px;font:800 22px/1 Inter;color:var(--b600)}
+.rechnung p{position:absolute;left:18px;width:96px;height:8px;border-radius:4px;background:var(--n200);opacity:0}
+.rechnung svg{position:absolute;left:0;bottom:-11px;width:190px;height:12px}
+.taler.klein{width:18px;height:18px;box-shadow:inset 0 0 0 3px var(--warning-text)}
+.taler.klein::after{display:none}
+.taler.plus{background:var(--error-bg);box-shadow:inset 0 0 0 3px var(--error)}
 /* Option B: Vertrag, Sperre, Stempel-Abdruck */
 .blatt2{width:170px;height:210px;border-radius:14px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16)}
 .blatt2 i{position:absolute;left:22px;height:9px;border-radius:5px;background:var(--n200)}
@@ -128,10 +149,13 @@
   display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 30px/38px Inter;color:var(--error-text);text-align:center}
 .sperre small{font:600 24px/30px Inter;color:var(--n700)}
 .sperre .plakette{position:absolute;left:73px;top:-38px;width:64px;height:64px}
-.abdruck{padding:6px 14px;border:5px solid var(--error);border-radius:12px;font:800 22px/1 Inter;color:var(--error);letter-spacing:.02em;white-space:nowrap;background:var(--surface)}
+.abdruck{padding:5px 12px;border:5px solid var(--error);border-radius:12px;font:800 20px/1 Inter;color:var(--error);letter-spacing:.02em;white-space:nowrap;background:var(--surface)}
 /* Option C: Vertragszusammenfassung */
-.zf{width:300px;height:380px;border-radius:22px;background:var(--surface);box-shadow:0 16px 40px rgba(22,19,37,.18)}
-.zf .kopf{position:absolute;left:24px;right:20px;top:22px;font:800 25px/31px Inter;color:var(--b600)}
+.zf{width:300px;height:364px}
+.zf .falte{position:absolute;left:0;right:0;top:0;background:var(--surface);transform-origin:50% 0;box-shadow:0 10px 24px rgba(22,19,37,.12)}
+.zf .falte .schatten{position:absolute;inset:0;background:var(--b700);opacity:0;border-radius:inherit}
+.zf .falte:first-child{border-radius:22px 22px 0 0} .zf .falte:last-child{border-radius:0 0 22px 22px}
+.zf .kopf{position:absolute;left:24px;right:20px;top:20px;font:800 25px/31px Inter;color:var(--b600)}
 .zf .reihe{position:absolute;left:18px;right:18px;height:64px;border-radius:16px;display:flex;align-items:center;gap:14px;padding:0 14px;
   font:700 25px/1 Inter;color:var(--ink)}
 .zf .reihe .hl{position:absolute;inset:0;border-radius:16px;background:var(--b100);box-shadow:inset 0 0 0 4px var(--b400);opacity:0}
@@ -220,6 +244,8 @@
   <div class="a" id="boerse2" style="width:140px">{{geldboerse}}</div>
   <div class="a" id="handy2" style="width:150px">{{handy~h2}}</div>
   <div class="a" id="vertrag2" style="width:200px">{{vertrag}}</div>
+  <div class="a abreiss" id="kal2"><div class="bind"><i style="left:34px"></i><i style="right:34px"></i></div><div class="seite"><small>Monat</small><b>1</b></div></div>
+  <div class="a rechnung" id="rech2"><div class="kopf">Rechnung</div><svg viewBox="0 0 190 12"><path d="M0 0h190v1l-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10-9.5-10-9.5 10L0 1Z" fill="var(--surface)"/></svg></div>
   <div class="a zusatz" id="zus2a" data-frei></div>
   <div class="a zusatz" id="zus2b" data-frei></div>
   <div class="a blatt2" id="blatt2"><div class="kopf"></div><i style="top:56px;width:120px"></i><i style="top:78px;width:104px"></i><i style="top:100px;width:116px"></i><i style="top:122px;width:80px"></i>
@@ -227,6 +253,7 @@
   <div class="a sperre" id="sperre2"><span class="plakette rot" id="sperre2x"></span>Laden:<br>kein Widerruf</div>
   <div class="a" id="bk2" style="width:180px">{{briefkasten}}</div>
   <div class="a abdruck" id="abdruck2" data-frei>unterschrieben</div>
+  <div class="a abreiss" id="kal2b"><div class="bind"><i style="left:34px"></i><i style="right:34px"></i></div><div class="seite"><small>Monat</small><b>1</b></div></div>
   <div class="a" id="stempel2" style="width:120px" data-frei>{{stempel}}</div>
 
   <!-- 3 · Option C -->
@@ -234,10 +261,11 @@
   <div class="a eingang" id="tuer3" data-frei><div class="innen"></div><div class="blatt"><div class="fenster"></div></div></div>
   <div class="a schiene" id="schiene3" style="width:300px"></div>
   <div class="a haenge" id="schild3"><svg viewBox="0 0 270 46"><path d="M60 0L44 46M210 0l16 46" stroke="var(--n400)" stroke-width="4" stroke-linecap="round"/></svg><div class="tafel">Nur heute!</div></div>
-  <div class="a zf" id="zf3" data-gruppe="t3"><div class="kopf">Vertrags-<br>zusammenfassung</div>
-    <div class="reihe" id="r3a" style="top:116px"><i class="hl" id="r3ah"></i><span class="ic" id="r3ai"></span><span>Preis</span></div>
-    <div class="reihe" id="r3b" style="top:196px"><i class="hl" id="r3bh"></i><span class="ic" id="r3bi"></span><span>Laufzeit</span></div>
-    <div class="reihe" id="r3c" style="top:276px"><i class="hl" id="r3ch"></i><span class="ic" id="r3ci"></span><span>Kündigung</span></div></div>
+  <div class="a zf" id="zf3" data-gruppe="t3">
+    <div class="falte" id="zh0" style="height:100px"><div class="kopf">Vertrags-<br>zusammenfassung</div><i class="schatten"></i></div>
+    <div class="falte" id="zh1" style="height:88px"><div class="reihe" id="r3a" style="top:12px"><i class="hl" id="r3ah"></i><span class="ic" id="r3ai"></span><span>Preis</span></div><i class="schatten"></i></div>
+    <div class="falte" id="zh2" style="height:88px"><div class="reihe" id="r3b" style="top:12px"><i class="hl" id="r3bh"></i><span class="ic" id="r3bi"></span><span>Laufzeit</span></div><i class="schatten"></i></div>
+    <div class="falte" id="zh3" style="height:88px"><div class="reihe" id="r3c" style="top:12px"><i class="hl" id="r3ch"></i><span class="ic" id="r3ci"></span><span>Kündigung</span></div><i class="schatten"></i></div></div>
   <div class="a tresen" id="tresen3" style="width:470px" data-gruppe="t3"><div class="platte"></div><div class="front"></div></div>
   <div class="a teller" id="teller3" data-gruppe="t3"></div>
   <div class="a handybox" id="handy3" data-gruppe="t3"><div class="glas"><i></i></div></div>
@@ -346,8 +374,9 @@ const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (
 const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
 const beben = (id, t, a = 6, d = .45) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 80) * (1 - p / d)).toFixed(2)}px)`; });
 // Pendel: gedämpftes Schwingen um den Aufhängepunkt (feste Frequenz)
-const pendel = (id, t, a = 7, d = 2.2) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` rotate(${(a * Math.sin(p * 9) * Math.pow(1 - p / d, 2)).toFixed(2)}deg)`; });
+const pendel = (id, t, a = 7, d = 2.2, oben = 0) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translate(0px,${-oben}px) rotate(${(a * Math.sin(p * (oben ? 5 : 9)) * Math.pow(1 - p / d, 2)).toFixed(2)}deg) translate(0px,${oben}px)`; });
 
+document.querySelectorAll('.buehne.quiz .dunkel').forEach(d => { d.innerHTML = '<i class="stange"></i>'; });
 document.querySelectorAll('.portrait.yusuf').forEach(p => { p.innerHTML = tpl('tplYusuf'); p.dataset.sprecher = 'Yusuf'; });
 document.querySelectorAll('.handybox').forEach((h, k) => h.insertAdjacentHTML('afterbegin', tpl('tplHandy').replaceAll('il-handy-g', `il-handy-hb${k}-g`)));
 ['ok4', 'ok5'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
@@ -447,6 +476,7 @@ HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
 }));
 const FARBE = { A: 'rot', B: 'rot', C: 'gruen' };
 const KX = [540, 960, 1380], KY = 490;
+const HANG = sk => 150 + 340 * sk;   // Mitte eines Schilds der Größe sk, dessen Faden oben an der Stange (y 150) hängt
 const papier = (x, y, w, h) => `<rect x="${x + 5}" y="${y + 6}" width="${w}" height="${h}" rx="12" fill="var(--b700)" opacity=".18"/>
   <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="var(--surface)" stroke="var(--n300)" stroke-width="4"/>
   <rect x="${x + 18}" y="${y + 20}" width="${w * .45}" height="12" rx="6" fill="var(--b300)"/>
@@ -503,7 +533,10 @@ const MARKE = { A: () => tpl('svgX'), B: () => tpl('svgX'), C: () => tpl('svgHak
 function karten(i, fertig = true, marken = '') {
   WELT.insertAdjacentHTML('beforeend', ['A', 'B', 'C'].map(L => {
     const p = `k${i}${L}`;
-    return `<div class="a okarte" id="${p}"><div class="rahmen" id="${p}r"></div><div class="knopf" id="${p}kn">${L}</div>
+    return `<div class="a okarte" id="${p}"><div class="faden" id="${p}f"></div>
+      <svg class="form" viewBox="0 0 360 430"><path d="M70 0H290L360 70V400a30 30 0 0 1-30 30H30a30 30 0 0 1-30-30V70Z" fill="var(--surface)"/><circle cx="180" cy="34" r="13" fill="var(--b100)" stroke="var(--b300)" stroke-width="5"/>
+        <path d="M30 404h300" stroke="var(--b100)" stroke-width="4" stroke-dasharray="10 8"/></svg>
+      <svg class="rahmen" id="${p}r" viewBox="0 0 360 430"><path d="M70 0H290L360 70V400a30 30 0 0 1-30 30H30a30 30 0 0 1-30-30V70Z" fill="none" stroke-width="9"/></svg><div class="knopf" id="${p}kn">${L}</div>
       <div class="sym">${SYM[L](p)}</div><div class="marke ${FARBE[L]}" id="${p}m">${MARKE[L]()}</div></div>`;
   }).join(''));
   ['A', 'B', 'C'].forEach(L => {
@@ -513,7 +546,7 @@ function karten(i, fertig = true, marken = '') {
     akteur(`${p}m`, marken.includes(L) ? {} : { s: 0, o: 0 }, true);
     akteur(`${p}r`, marken.includes(L) ? { o: 1 } : { o: 0 }, true);
     if (marken.includes(L)) el(`${p}r`).classList.add(FARBE[L]);
-    akteur(`${p}kn`, {}, true);
+    akteur(`${p}kn`, {}, true); akteur(`${p}f`, {}, true);
   });
 }
 function markeAuf(p, L, t) {
@@ -528,11 +561,12 @@ function durchspielen({ i, L, tVor, tMarke, tK, tb, marken, zeiten }) {
   karten(i, true, marken);
   ['A', 'B', 'C'].forEach((M, k) => akteur(`k${i}${M}`, { x: X + KX[k], y: KY }));
   const p = `k${i}${L}`, andere = ['A', 'B', 'C'].filter(M => M !== L).map(M => `k${i}${M}`);
-  tw(p, tVor, .7, { s: 1.12, y: KY - 10 }, 'sanft'); cue(tVor, 'whoosh');
-  tw(andere, tVor, .7, { s: .9, o: .45 }, 'inout');
+  tw(p, tVor, .7, { s: 1.12, y: HANG(1.12) }, 'sanft'); cue(tVor, 'whoosh');
+  tw(andere, tVor, .7, { s: .9, y: HANG(.9), o: .45 }, 'inout');
   bump(`${p}kn`, tMarke - .25, 1.2);
   markeAuf(p, L, tMarke);
   aus(andere, tK - .1, .4);
+  tw(['A', 'B', 'C'].map(M => `k${i}${M}f`), tK - .1, .35, { o: 0 });
   tw(p, tK, .9, { x: X + 232, y: 250, s: .5 }, 'inout');
   titelEin(tb, tK + .4, zeiten);
   return X;
@@ -541,6 +575,21 @@ function durchspielen({ i, L, tVor, tMarke, tK, tb, marken, zeiten }) {
 const DREH = [];
 HOOKS.push(t => DREH.forEach(([id, t0, d]) => { const p = (t - t0) / d; if (p > 0 && p < 1) el(id).style.transform += ` scaleX(${Math.cos(2 * Math.PI * E.inout(p)).toFixed(3)})`; }));
 const glanz = (id, t) => { rel(id, { x: 0 }); tw(id, t, .7, { x: 190 }, 'inout'); set(id, t + .75, { x: 0 }); };
+
+// Abreißkalender: zeigt Monat 1 … 24; bei jedem Wechsel fliegt das alte Blatt weg (Zeitraffer)
+function abreissen(id, x, y, t0, t1, pre) {
+  const T = Array.from({ length: 23 }, (_, k) => t0 + (k + 1) * (t1 - t0) / 23);
+  const n = t => 1 + T.filter(tk => t >= tk).length;
+  HOOKS.push(t => { el(id).querySelector('.seite b').textContent = n(t); });
+  T.forEach((tk, k) => {
+    const f = pre + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a blattflug" id="${f}" data-frei><small>Monat</small><b>${k + 1}</b></div>`);
+    akteur(f, { x, y: y + 15, o: 0 });
+    set(f, tk, { o: 1 }); tw(f, tk, .5, { x: x + 120 + (k % 3) * 20, y: y - 120 - (k % 2) * 30, r: 16 + (k % 4) * 4, s: .8 }, 'in'); tw(f, tk + .2, .3, { o: 0 }, 'in');
+    if (k % 3 === 0) cue(tk, 'tipp');
+  });
+  return n;
+}
 
 /* ---------- 0 · Handyladen: Yusuf braucht eine SIM-Karte ---------- */
 {
@@ -589,7 +638,7 @@ const glanz = (id, t) => { rel(id, { x: 0 }); tw(id, t, .7, { x: 190 }, 'inout')
   wackeln('yusuf0', tHe + .1, 3, 2);
   // „Mit Vertrag über 24 Monate“: ein langer Vertrag rollt sich über den Tresen aus, 24 Felder füllen sich
   const tVt = W('Vertrag', 6), tVi = W('vierundzwanzig', 6), tMo = WE('Monate', 6);
-  akteur('rolle0', { x: X + 1440, y: 782, sy: 0, o: 0 });
+  akteur('rolle0', { x: X + 1440, y: 778, sy: 0, o: 0 });
   set('rolle0', tVt - .25, { o: 1 }); tw('rolle0', tVt - .25, .6, { sy: 1 }, 'sanft'); cue(tVt - .25, 'whoosh');
   rel('zahl0', {}, '0 50%'); bump('zahl0', tVi, 1.12);
   HOOKS.push(t => { const n = Math.floor(24 * clamp((t - tVi) / (tMo - tVi))); for (let k = 0; k < 24; k++) el('rz' + k).style.background = k < n ? 'var(--b500)' : ''; });
@@ -612,13 +661,14 @@ pan2(P1, 1);
 {
   const X = S(1);
   quiz(1);
-  pop('frage1', P1 + .55, { x: X + 960, y: 215 }); schweben('frage1', 5);
+  pop('frage1', P1 + .55, { x: X + 960, y: 830 }); schweben('frage1', 5);
   wackeln('frage1', W('tun', 8) - .1, 3, 4);
   karten(1, false);
   [['A', 9], ['B', 10], ['C', 11]].forEach(([L, n], k) => {
     const p = `k1${L}`, t0 = SA(n) - .35;
-    akteur(p, { x: X + KX[k] - 120, y: KY + 360, o: 0, s: .75, r: -3 });
-    tw(p, t0, .2, { o: 1 }); tw(p, t0, .85, { x: X + KX[k], y: KY }, 'inout', { bogen: 90 }); tw(p, t0, .85, { r: 0, s: 1 }, 'sanft');
+    akteur(p, { x: X + KX[k], y: KY - 330, o: 0, r: 0 });
+    tw(p, t0, .25, { o: 1 }); tw(p, t0, .75, { y: KY }, 'sanft');
+    pendel(p, t0 + .5, 5, 2.6, 340);   // Drehpunkt oben an der Stange
     cue(t0, 'whoosh'); bump(`${p}kn`, SA(n), 1.25); cue(SA(n), 'pop');
   });
   // A: Blatt, Stift kritzelt schnell (Zickzack), rotes „!“ auf „heute“
@@ -653,6 +703,7 @@ pan2(P1, 1);
   WELT.insertAdjacentHTML('beforeend', `<div class="a ring3" id="ring1"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
     <circle id="lauf1" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer1">?</b></div>`);
   const c0 = SE(11) + .3, c1 = WE('Eins', 14) + .25;
+  aus('frage1', SE(11) - .25, .3);
   pop('ring1', SE(11) + .05, { x: X + 960, y: 830 });
   const ZIFFERN = [[W('Drei', 12), '3'], [W('Zwei', 13), '2'], [W('Eins', 14), '1']];
   ZIFFERN.forEach(([t], k) => { cue(t, 'klick'); bump(`k1${'ABC'[k]}`, t + .03, 1.05); });
@@ -669,7 +720,7 @@ pan2(P1, 1);
     tw(`k1${L}r`, t, .2, { o: 1 }, 'out'); tw(`k1${L}r`, t + dl * .85, .25, { o: 0 }, 'in');
     bump(`k1${L}`, t, 1.05); cue(t, 'tipp');
   });
-  aus(['ring1', 'frage1'], c1 + .05, .35);
+  aus('ring1', c1 + .05, .35);
 }
 
 /* ---------- 2 · Option A: 24 Monate zahlen – Option B: zurückgeben geht nicht ---------- */
@@ -683,30 +734,26 @@ pan2(P2, 2);
   // Yusuf, seine Geldbörse und das teure Handy
   ein('yusuf2', tK + .3, { x: X + 1020, y: 650 }, { x: -50 }, 'pop');
   ein('boerse2', tK + .45, { x: X + 1200, y: 780 }, { y: 50 });
-  ein('handy2', tK + .55, { x: X + 1600, y: 735 }, { x: 60 }, 'whoosh');
-  // „zahlt … zwei Jahre lang“: 24 Monatsblätter fächern sich auf
+  ein('handy2', tK + .55, { x: X + 1380, y: 745 }, { x: 60 }, 'whoosh');
+  // „zahlt … zwei Jahre lang jeden Monat“: Zeitraffer – Kalenderblätter rauschen ab, für jeden Monat fliegt eine Münze auf die Rechnung
   const tZa = W('zahlt', 15), tZw = W('zwei', 15), tJe = W('jeden', 15);
   bump('boerse2', tZa, 1.1); cue(tZa, 'muenze');
-  const KAL = [];
+  ein('kal2', tK + .5, { x: X + 1330, y: 420 }, { y: -40 });
+  const BX = X + 1505, BY = 236;
+  akteur('rech2', { x: BX, y: BY - 30, o: 0 }, true);
+  tw('rech2', tK + .6, .4, { o: 1 }); tw('rech2', tK + .6, .5, { y: BY }, 'sanft');
+  const R0 = tZw - .1, R1 = SE(15) + .7, MON = abreissen('kal2', X + 1330, 420, R0, R1, 'kf2');
+  for (let k = 0; k < 24; k++) el('rech2').insertAdjacentHTML('beforeend', `<p id="rz2${k}" style="top:${54 + k * 17}px;width:${70 + (k * 37) % 40}px"></p>`);
+  HOOKS.push(t => { const n = MON(t) - (t < R0 ? 1 : 0); el('rech2').style.height = (70 + 17 * n) + 'px'; for (let k = 0; k < 24; k++) el('rz2' + k).style.opacity = k < n ? 1 : 0; });
   for (let k = 0; k < 24; k++) {
-    const c = k % 6, r = Math.floor(k / 6), id = 'kb2' + k;
-    WELT.insertAdjacentHTML('beforeend', `<div class="a kblatt" id="${id}"><b>${k + 1}</b></div>`);
-    const x = X + 1275 + c * 74, y = 312 + r * 74; KAL.push([x, y]);
-    const t = tZw - .2 + k * .045;
-    akteur(id, { x: X + 1460, y: 420, s: .3, o: 0 });
-    tw(id, t, .15, { o: 1 }); tw(id, t, .55, { x, y, s: 1 }, 'sanft');
-    if (k % 4 === 0) cue(t, 'tipp');
-  }
-  akzent(W('Jahre', 15), .035);
-  // „jeden Monat“: aus der Geldbörse fliegt auf jedes Blatt eine Münze
-  for (let k = 0; k < 24; k++) {
-    const id = 'mz2' + k, [x, y] = KAL[k], t = tJe - .35 + k * .07;
-    WELT.insertAdjacentHTML('beforeend', `<div class="a taler" id="${id}" data-frei></div>`);
+    const id = 'mz2' + k, t = (k ? R0 + k * (R1 - R0) / 23 : R0) - .75;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a taler klein" id="${id}" data-frei></div>`);
     akteur(id, { x: X + 1200, y: 760, o: 0, s: .6 });
-    set(id, t, { o: 1 }); flug(id, t, .8, x, y + 14, 60, { s: 1 }); landen(id, t + .8);
-    if (k % 3 === 0) cue(t + .8, 'muenze');
+    set(id, t, { o: 1 }); flug(id, t, .75, BX + 140, BY + 58 + k * 17, 60, { s: 1 }); landen(id, t + .75);
+    if (k % 3 === 0) cue(t + .75, 'muenze');
   }
-  tw('boerse2', tJe, .25, { sy: .93 }, 'sinus'); tw('boerse2', tJe + 1.8, .3, { sy: 1 }, 'sanft');
+  akzent(W('Jahre', 15), .035); akzent(R1, .03);
+  tw('boerse2', tJe, .25, { sy: .93 }, 'sinus'); tw('boerse2', R1, .3, { sy: 1 }, 'sanft');
   // „Und im Vertrag stecken Zusatzoptionen“: zwei Zusatz-Kärtchen hängen sich mit Büroklammern an den Vertrag
   const tVt = W('Vertrag', 16), tZo = W('Zusatzoptionen', 16), tBr = W('braucht', 16);
   pop('vertrag2', tVt - .1, { x: X + 1060, y: 380 }); cue(tVt, 'pop');
@@ -716,30 +763,31 @@ pan2(P2, 2);
     landen(id, tZo + d + .55); cue(tZo + d + .55, 'klick');
   });
   wackeln('vertrag2', tZo + .9, 3, 2);
-  // „die er gar nicht braucht“: die Münzen werden mehr – auf jedes Blatt eine zweite
+  // „die er gar nicht braucht“: die Münzen werden mehr – in jeder Zeile der Rechnung eine zweite
   for (let k = 0; k < 24; k++) {
-    const id = 'mz2b' + k, [x, y] = KAL[k], t = W('gar', 16) + k * .04;
-    WELT.insertAdjacentHTML('beforeend', `<div class="a taler" id="${id}" data-frei></div>`);
-    pop(id, t, { x: x + 11, y: y + 9 }, k % 4 === 0 ? 'muenze' : null);
+    const id = 'mz2b' + k, t = W('gar', 16) + k * .04;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a taler klein plus" id="${id}" data-frei></div>`);
+    pop(id, t, { x: BX + 164, y: BY + 58 + k * 17 }, k % 4 === 0 ? 'muenze' : null);
   }
+  bump('rech2', W('braucht', 16), 1.03);
   wackeln('yusuf2', tBr, 3, 3); akzent(tBr, .04);
   // Option B: Karte B als zweite Kachel, rote Marke; Option A räumt auf
   const tOB = SA(17) - .15;
-  const A_IDS = ['boerse2', 'handy2', 'vertrag2', 'zus2a', 'zus2b', ...KAL.flatMap((_, k) => ['kb2' + k, 'mz2' + k, 'mz2b' + k])];
+  const A_IDS = ['boerse2', 'handy2', 'vertrag2', 'zus2a', 'zus2b', 'kal2', 'rech2', ...Array.from({ length: 24 }, (_, k) => ['mz2' + k, 'mz2b' + k]).flat()];
   aus(A_IDS, tOB - .2, .35);
   set('k2B', tOB - .05, { x: X + 442, y: 330, s: 0, o: 1 });
   tw('k2B', tOB, .6, { s: .5, y: 250 }, 'back'); cue(tOB, 'whoosh');
   bump('k2Bkn', tB - .2, 1.2);
   markeAuf('k2B', 'B', tB);
   // Vertrag (unterschrieben), Briefkasten, die Sperre „Laden: kein Widerruf“
-  ein('blatt2', tB + .1, { x: X + 1215, y: 520 }, { y: 60 }, 'whoosh');
+  ein('blatt2', tB + .1, { x: X + 1240, y: 520 }, { y: 60 }, 'whoosh');
   ein('bk2', tB + .25, { x: X + 1650, y: 560 }, { x: 60 });
   const tKl = W('klappt', 17), tMe = W('meistens', 17), tNi = W('nicht', 17);
   pop('sperre2', tMe - .2, { x: X + 1460, y: 520 }, 'plopp');
   rel('sperre2x', { s: 0 }, '50% 50%'); tw('sperre2x', tMe + .1, .45, { s: 1 }, 'back');
   // „Das klappt …“: der Vertrag fliegt los – prallt an der Sperre ab und fällt zurück
   tw('blatt2', tKl - .2, .5, { x: X + 1300, y: 470, s: .6, r: 3 }, 'in', { bogen: 60 }); cue(tKl - .2, 'whoosh');
-  tw('blatt2', tKl + .3, .55, { x: X + 1215, y: 520, s: 1, r: 0 }, 'sanft', { bogen: 50 }); cue(tKl + .3, 'plopp');
+  tw('blatt2', tKl + .3, .55, { x: X + 1240, y: 520, s: 1, r: 0 }, 'sanft', { bogen: 50 }); cue(tKl + .3, 'plopp');
   beben('sperre2', tKl + .3, 7, .5); akzent(tKl + .3, .05);
   bump('sperre2', tNi, 1.08); wackeln('yusuf2', tNi, 3, 2.5);
   // „im Laden … kein Widerrufsrecht“
@@ -747,14 +795,16 @@ pan2(P2, 2);
   wackeln('sperre2', W('Widerrufsrecht', 18), 3, 2);
   // „Unterschrieben ist unterschrieben“: der Stempel schlägt mit Wackler auf
   const tU1 = W('Unterschrieben', 19), tU2 = W('unterschrieben', 19);
-  akteur('stempel2', { x: X + 1215, y: 380, o: 0 });
+  akteur('stempel2', { x: X + 1240, y: 380, o: 0 });
   tw('stempel2', tU1 - .5, .25, { o: 1 }); tw('stempel2', tU1 - .5, .35, { y: 460 }, 'out');
   tw('stempel2', tU1 - .12, .12, { y: 532 }, 'in'); landen('stempel2', tU1); cue(tU1, 'plopp');
-  akteur('abdruck2', { x: X + 1215, y: 565, s: 1.3, o: 0, r: -3 });
+  akteur('abdruck2', { x: X + 1240, y: 565, s: 1.3, o: 0, r: -3 });
   set('abdruck2', tU1, { o: 1 }); tw('abdruck2', tU1, .3, { s: 1 }, 'out'); wackeln('blatt2', tU1, 3, 2.5);
   akzent(tU1, .05);
   tw('stempel2', tU1 + .35, .45, { y: 420, o: 0 }, 'inout');
   bump('abdruck2', tU2, 1.1); cue(tU2, 'klick');
+  ein('kal2b', tU1 - .3, { x: X + 1470, y: 755 }, { y: 50 }, 'pop');
+  abreissen('kal2b', X + 1470, 755, tU1 + .3, SE(19) + .25, 'kf2b');
   textAus('tb2', SE(19) + .1);
 }
 
@@ -786,6 +836,13 @@ pan2(P3, 3);
   // „Die muss der Anbieter dir vor dem Vertrag geben“: das Blatt kommt zu Yusuf
   const tMu = W('muss', 23), tGe = W('geben', 23);
   bump('zf3', tMu, 1.05); cue(tMu, 'klick');
+  // Überraschung: die Zusammenfassung entfaltet sich wie eine Ziehharmonika
+  const tAn = W('Anbieter', 23), ZH = [100, 88, 88, 88];
+  const offen = k => t => k === 0 ? 1 : E.sanft(clamp((t - tAn - (k - 1) * .22) / .5));
+  HOOKS.push(t => { let y = 0; ZH.forEach((h, k) => { const q = offen(k)(t), sk = .09 + .91 * q;
+    el('zh' + k).style.transform = `translateY(${y.toFixed(1)}px) scaleY(${sk.toFixed(3)})`;
+    el('zh' + k).querySelector('.schatten').style.opacity = ((1 - Math.min(1, q)) * (k % 2 ? .45 : .25)).toFixed(3); y += h * sk; }); });
+  [0, 1, 2].forEach(k => cue(tAn + k * .22, k ? 'klick' : 'whoosh')); akzent(tAn + .3, .04);
   tw('zf3', tGe - .2, .6, { x: X + 1380 }, 'sanft'); nicken('yusuf3', tGe, 8); cue(tGe, 'ding');
   // „Darauf stehen Preis, Laufzeit und Kündigung“: drei Zeilen leuchten auf
   [['r3a', 'Preis'], ['r3b', 'Laufzeit'], ['r3c', 'Kündigung']].forEach(([r, w]) => {
@@ -922,12 +979,12 @@ pan2(P6, 6);
   karten(6, true, 'AB');
   ['A', 'B', 'C'].forEach((M, k) => akteur(`k6${M}`, { x: X + KX[k], y: KY }));
   const tBe = W('beste', 33), tC = WN(33, 4);
-  tw(['k6A', 'k6B'], tBe, .6, { o: .35, s: .9 }, 'inout');
-  tw('k6C', tBe, .7, { s: 1.12, y: KY - 20 }, 'sanft'); cue(tBe, 'whoosh');
+  tw(['k6A', 'k6B'], tBe, .6, { o: .35, s: .9, y: HANG(.9) }, 'inout');
+  tw('k6C', tBe, .7, { s: 1.12, y: HANG(1.12) }, 'sanft'); cue(tBe, 'whoosh');
   bump('k6Ckn', tC - .25, 1.2);
   markeAuf('k6C', 'C', tC);
   HOOKS.push(t => { const d = t - tC; if (d > 0) el('k6Cr').style.opacity = .75 + .25 * Math.sin(d * 5); });
-  akteur('tinte6', { x: X + KX[2], y: KY - 20, o: 0, s: 1.12 });
+  akteur('tinte6', { x: X + KX[2], y: HANG(1.12), o: 0, s: 1.12 });
   set('tinte6', tC + .05, { o: .9 }); tw('tinte6', tC + .05, 1.1, { o: 0, s: 1.4 }, 'weich');
   bump('k6Cm', tC + .5, 1.15);
   // „Lass dich nicht drängen“: die Waage auf Karte C wiegt noch einmal, C pocht

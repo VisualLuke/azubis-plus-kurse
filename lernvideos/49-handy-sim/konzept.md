@@ -11,21 +11,24 @@
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
 | 1 | Helle Bühne in der Bildmitte: Handyladen (Ladentisch, Regal mit Handys ohne Logo, Aufsteller); Yusuf (Porträt) hüpft herein, neben ihm schwebt eine leere SIM-Karten-Form mit „?“; auf „neueste Handy“ fährt ein Handy auf einem Drehteller aus dem Tisch und dreht sich, Glanzlicht; Yusuf spricht, seine Augen werden groß, dann „?“ bei „teuer“; auf „Nur heute“ klappt ein rotes Schild herunter und wackelt, auf „vierundzwanzig Monate“ entrollt sich ein langer Vertrag über den Tisch, ein Stift rollt auf „unterschreib“ zu Yusuf | Nur heute! · 24 Monate |
-| 2 | Dunkle Quiz-Bühne: drei Optionskarten A/B/C fliegen auf ihren Buchstaben herein, jedes Symbol spielt: A Stift unterschreibt schnell (Zickzack); B Stift unterschreibt, dann Pfeil zurück zu einem Briefkasten („zurückgeben?“); C Blatt „Vertragszusammenfassung“ wandert in eine Tasche, daneben eine Waage, die zwei Angebote wiegt | A · B · C |
-| 3 | Denkpause: Countdown-Ring läuft leer (erst „?“), ein Lichtrahmen wandert über A → B → C, 3 – 2 – 1 ploppen auf den gesprochenen Zahlen | 3 – 2 – 1 |
-| 4 | Karte A nach vorn, rote Marke ✕, wird zur Kachel; helle Bühne: ein Kalender mit 24 Monatsblättern fächert sich auf, von Yusufs Geldbörse fliegt auf jedes Blatt eine Münze; auf „Zusatzoptionen“ ploppen zwei kleine Zusatz-Kärtchen an den Vertrag und hängen sich mit Büroklammern dran, die Münzen werden mehr. Karte B als zweite Kachel, rote Marke ✕: der Vertrag fliegt zum Briefkasten, prallt an einem Schild „Laden: kein Widerruf“ ab und fällt zurück, Stempel „unterschrieben“ schlägt mit Wackler auf | A: zu teuer · B: kein Widerruf im Laden |
-| 5 | Karte C nach vorn, grüne Marke ✓; Laden hell: Yusuf spricht ruhig, das rote Schild „Nur heute!“ verblasst; das Blatt „Vertragszusammenfassung“ gleitet aus dem Tisch; auf „Preis“, „Laufzeit“, „Kündigung“ leuchten drei Zeilen auf dem Blatt auf (Rahmen wächst mit); Blatt fliegt in Yusufs Tasche, Yusuf geht hinaus, die Ladentür schwingt zu | C: Zusammenfassung mitnehmen · vergleichen |
+| 2 | Schaufenster des Ladens (dunkle Bühne mit Fensterrahmen und Stange): drei Tarif-Preisschilder A/B/C schwingen an Fäden herunter (Pendel), jedes Symbol spielt: A Stift unterschreibt schnell (Zickzack); B Stift unterschreibt, dann Pfeil zurück zu einem Briefkasten („zurückgeben?“); C Blatt „Vertragszusammenfassung“ wandert in eine Tasche, daneben eine Waage, die zwei Angebote wiegt | A · B · C |
+| 3 | Denkpause: Countdown-Ring läuft leer (erst „?“), ein Lichtrahmen wandert über die Schilder A → B → C, 3 – 2 – 1 ploppen auf den gesprochenen Zahlen | 3 – 2 – 1 |
+| 4 | Schild A nach vorn, rote Marke ✕, wird zur Kachel; helle Bühne als Zeitraffer über 24 Monate: ein Abreißkalender rauscht von Monat 1 bis 24, für jeden Monat fliegt eine Münze aus Yusufs Geldbörse auf eine Rechnung, die immer länger wird; auf „Zusatzoptionen“ hängen sich zwei Zusatz-Kärtchen mit Büroklammern an den Vertrag, in jeder Zeile der Rechnung kommt eine zweite Münze dazu. Schild B als zweite Kachel, rote Marke ✕: der Vertrag fliegt zum Briefkasten, prallt an einem Schild „Laden: kein Widerruf“ ab und fällt zurück, Stempel „unterschrieben“ schlägt mit Wackler auf, danach rauscht ein Abreißkalender durch die 24 Monate | A: zu teuer · B: kein Widerruf im Laden |
+| 5 | Karte C nach vorn, grüne Marke ✓; Laden hell: Yusuf spricht ruhig, das rote Schild „Nur heute!“ verblasst; das Blatt „Vertragszusammenfassung“ gleitet zusammengefaltet hinter dem Tresen hervor und entfaltet sich auf „Anbieter“ wie eine Ziehharmonika; auf „Preis“, „Laufzeit“, „Kündigung“ leuchten die drei Falten auf; das Blatt fliegt in Yusufs Tasche, Yusuf freut sich | C: Zusammenfassung mitnehmen · vergleichen |
 | 6 | Zuhause: Waage mit zwei Karten „Prepaid“ und „Vertrag“; auf „Guthaben“ füllt sich ein Balken auf der Prepaid-Karte, auf „im Griff“ legt sich ein Schloss auf die Geldbörse; auf „ausweisen“ wird ein Pass vor die Kamera eines Handys gehalten, Scan-Linie, Haken; auf „Vertrag“ kippt die Waage: Zeitstrahl mit 24 Feldern läuft voll, danach erscheinen einzelne Monatsfelder, auf „jeden Monat“ springt ein kleiner Kündigen-Knopf auf | Prepaid: Kosten im Griff · Vertrag: max. 24 Monate |
-| 7 | Weltkarte (neutral, ohne Grenzen), vom Handy startet ein Anruf-Bogen in die Ferne, ein Zähler mit Münzen rattert schnell hoch, rotes „!“; auf „Tarif“ Lupe über einer Tarif-Karte, Zeile „Ausland“ leuchtet; auf „Internet“ und „Weh-Lahn“ Router mit Wellen, der Bogen wird grün, der Zähler steht still, Yusuf lächelt; Schluss: alle drei Karten, A und B verblassen, C wächst und leuchtet grün, grüne Welle | Anrufe ins Ausland: Tarif prüfen · WLAN |
+| 7 | Globus (neutral, ohne Grenzen), vom Handy startet ein Anruf-Bogen in die Ferne, ein Münzstapel wächst schnell, rotes „!“; auf „Tarif“ Lupe über einer Tarif-Karte, Zeile „Ausland“ leuchtet; auf „Internet“ und „Weh-Lahn“ Router mit Wellen, der Bogen wird grün, der Zähler steht still, Yusuf lächelt; Schluss: die drei Preisschilder im Schaufenster, A und B verblassen, C kommt nach vorn und leuchtet grün, grüne Welle, die Waage auf C wiegt noch einmal | Anrufe ins Ausland: Tarif prüfen · WLAN |
 
 Abspann: „Lass dich nicht drängen.“ und die Kernbotschaft.
 
-## Layout „Was würdest du tun?“
+## Layout „Was würdest du tun?“ – Schaufenster mit Preisschildern
 
-Wie `../39-kunde-beschwert-sich/konzept.md`: helle Situations-Bühne (900 × 720), dunkel-violette Quiz-Bühne 1680 × 880 mit
-drei weißen Optionskarten (Buchstabe + spielendes Symbol), Countdown-Ring unter den Karten; beim Durchspielen kommt die Karte
-nach vorn, die Marke schlägt auf (rot ✕ / grün ✓), die Karte wird zur Kachel links oben, die Bühne wird hell und klein,
-darunter steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der Bildmitte (`kamera.basis.x = -360`).
+Technik wie `../39-kunde-beschwert-sich/` (Bühnen, Kamera, Marke, Countdown), aber eigenes Bild: Die Quiz-Bühne ist das
+Schaufenster des Handyladens (dunkel-violett, Fensterrahmen, Stange oben). Die Optionen sind keine Karten, sondern drei
+Tarif-Preisschilder mit Loch und Faden, die von der Stange herunterschwingen (Pendel um den Aufhängepunkt). Beim Durchspielen
+kommt das Schild nach vorn, die Marke schlägt auf (rot ✕ / grün ✓), der Faden löst sich und das Schild wird zur Kachel links oben,
+die Bühne wird hell und klein, darunter steigt der Text im Bild. Option A und B laufen als Zeitraffer über 24 Monate
+(Abreißkalender, wachsende Rechnung); die Vertragszusammenfassung entfaltet sich als Ziehharmonika. Ohne Kurstitel steht die
+erste Bühne in der Bildmitte (`kamera.basis.x = -360`).
 
 ## Abweichungen vom Briefing
 

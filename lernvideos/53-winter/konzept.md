@@ -48,7 +48,7 @@ Erzähler: Morgens und abends ist es dunkel. Trag helle Kleidung und Reflektoren
 Erzähler: Bei Schnee und Eis wird es glatt. Trag feste Schuhe mit gutem Profil. Mach kleine Schritte und tritt mit dem ganzen Fuß auf. Und nimm die Hände aus den Taschen. Dann kannst du dich besser abfangen.
 
 ### Szene 4
-Erzähler: Wer räumt und streut den Gehweg vor dem Haus? Das regelt die Gemeinde. Oft gibt sie die Pflicht an die Eigentümer weiter. Manchmal steht im Mietvertrag oder in der Hausordnung, dass die Mieter dran sind. Lies nach und frag im Zweifel deinen Vermieter.
+Erzähler: Wer räumt und streut den Gehweg vor dem Haus? Das regelt die Gemeinde. Oft gibt sie die Pflicht an die Eigentümer weiter. Manchmal steht im Mietvertrag, dass die Mieter dran sind. Oft auch in der Hausordnung, die zum Mietvertrag gehört. Lies nach und frag im Zweifel deinen Vermieter.
 
 ### Szene 5
 Erzähler: Zieh dich im Zwiebellook an. Also lieber mehrere dünne Schichten statt einer dicken Jacke. Die Luft dazwischen hält warm. Und drinnen ziehst du einfach eine Schicht aus.

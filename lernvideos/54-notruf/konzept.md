@@ -68,7 +68,7 @@ Erzählerin: Zwei …
 Erzählerin: Eins …
 
 ### Szene 4
-Erzählerin: Option Ah ist gefährlich. Rauch ist giftig. Schon wenige Atemzüge können lebensgefährlich sein.
+Erzählerin: Option Ah ist gefährlich: Niemand ruft die Feuerwehr. Das Feuer wird größer, und Rauch ist giftig. Schon wenige Atemzüge können lebensgefährlich sein.
 (Pause 0.4)
 Erzählerin: Option Beh: Der Vermieter kann nicht löschen. Und bis er kommt, vergeht wertvolle Zeit.
 
@@ -81,7 +81,7 @@ Erzählerin: Dann beantwortet Mai alle Fragen. Sie legt nicht zuerst auf. Kurz d
 Erzählerin: Beim Notruf zählt: Wo ist es passiert? Was ist passiert? Wie viele Menschen sind verletzt? Und dann wartest du auf Rückfragen. Der Anruf ist kostenlos, auch vom Handy ohne Guthaben.
 
 ### Szene 7
-Erzählerin: Die eins-eins-zwei ist für Feuerwehr und Rettungsdienst. Die eins-eins-null ist für die Polizei. Du bist krank, aber es ist kein Notfall? Dann hilft nachts und am Wochenende die eins-eins-sechs eins-eins-sieben, der ärztliche Bereitschaftsdienst.
+Erzählerin: Die eins-eins-zwei ist für Feuerwehr und Rettungsdienst. Die eins-eins-null ist für die Polizei. Du bist krank, aber es ist kein Notfall? Dann hilft die eins-eins-sechs eins-eins-sieben, der ärztliche Bereitschaftsdienst, zum Beispiel nachts, am Wochenende und an Feiertagen.
 
 ### Szene 8
 Erzählerin: Die beste Wahl ist Zeh. Bei Rauch und Brandgeruch rufst du lieber einmal zu viel an als einmal zu wenig. Brennt es bei dir, gilt: raus, Tür zu, eins-eins-zwei. Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt. Bau sie also nie ab.

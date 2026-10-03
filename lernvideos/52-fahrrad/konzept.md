@@ -56,7 +56,7 @@ Erzähler: Das ist ein Mythos! Es gibt keine Helmpflicht für das Fahrrad. Aber 
 (Pause 1)
 Erzähler: „Im Dunkeln muss am Fahrrad das Licht an sein.“
 (Pause 3)
-Erzähler: Das stimmt! Bei Dämmerung und Dunkelheit brauchst du Licht, vorne weiß und hinten rot. Auch Lampen mit Akku sind erlaubt. Ohne Licht kann es ein Bußgeld geben.
+Erzähler: Das stimmt! Bei Dämmerung und Dunkelheit brauchst du Licht, vorne weiß und hinten rot. Auch Lampen mit Akku sind erlaubt, wenn sie ein Prüfzeichen haben. Ohne Licht kann es ein Bußgeld geben.
 
 ### Szene 4
 (Pause 1)
@@ -68,7 +68,7 @@ Erzähler: Das stimmt! Beim Fahren darfst du das Handy nicht in der Hand halten,
 (Pause 1)
 Erzähler: „Auf dem Gehweg darf ich Rad fahren. Da ist es sicherer.“
 (Pause 3)
-Erzähler: Das ist ein Mythos! Als Erwachsener fährst du auf der Straße oder auf dem Radweg. Auf dem Gehweg nur, wenn ein Schild das Radfahren erlaubt.
+Erzähler: Das ist ein Mythos! Du fährst auf der Straße oder auf dem Radweg, nicht auf dem Gehweg. Auf dem Gehweg nur, wenn ein Schild das Radfahren erlaubt.
 
 ### Szene 6
 (Pause 1)
@@ -117,10 +117,10 @@ Stand: 03.10.2026
 | Ein Helm schützt den Kopf, gute Idee / „aber klug“ | ADAC: Helm wird dringend empfohlen, senkt das Risiko schwerer Kopfverletzungen deutlich [1] |
 | Bei Dämmerung und Dunkelheit Licht an | § 17 Abs. 1 StVO: bei Dämmerung, Dunkelheit oder wenn die Sicht es erfordert, Beleuchtung benutzen [2] |
 | Vorne weiß, hinten rot / „vorne weiß, hinten rot“ | § 67 StVZO: Scheinwerfer weiß, Schlussleuchte rot [3]; ADFC [4] |
-| Lampen mit Akku sind erlaubt | § 67 StVZO, seit 2013 auch Batterie-/Akku-Leuchten (mit Prüfzeichen) [3][4] |
+| Lampen mit Akku sind erlaubt, wenn sie ein Prüfzeichen haben | § 67 StVZO, seit 2013 auch Batterie-/Akku-Leuchten, nur mit amtlichem Prüfzeichen (Wellenlinie, „K“, Nummer) [3][4] |
 | Ohne Licht kann es ein Bußgeld geben | BKatV: 20 € (Stand 2026) [9][4] – Betrag nicht im Video |
 | Handy beim Fahren nicht in der Hand halten, auch nicht kurz / „erst anhalten“ | § 23 Abs. 1a StVO gilt für alle Fahrzeugführenden, also auch Radfahrende: Gerät darf nicht aufgenommen oder gehalten werden [5]; Runter vom Gas: 55 € (seit 2017, Stand 2026) [6] |
-| Erwachsene fahren auf der Straße oder auf dem Radweg, nicht auf dem Gehweg | § 2 Abs. 1 und 4 StVO: Fahrzeuge benutzen die Fahrbahn, Radwege dürfen/müssen benutzt werden; Gehweg nur für Kinder (Abs. 5) oder wenn freigegeben [7] |
+| Du fährst auf der Straße oder auf dem Radweg, nicht auf dem Gehweg (ohne Altersregel, Vorgabe: keine Regeln für unter 18) | § 2 Abs. 1 und 4 StVO: Fahrzeuge benutzen die Fahrbahn, Radwege dürfen/müssen benutzt werden; Gehweg nur für Kinder (Abs. 5) oder wenn freigegeben [7] |
 | Gehweg nur, wenn ein Schild es erlaubt | Zusatzzeichen „Radverkehr frei“ (dann Schrittgeschwindigkeit) bzw. gemeinsamer Geh- und Radweg [8] |
 | Radweg-Pflicht nur mit blauem, rundem Schild mit Fahrrad / „nur mit blauem Schild“ | § 2 Abs. 4 Satz 2 StVO: Benutzungspflicht nur bei Zeichen 237, 240 oder 241 (alle blau, rund) [7][8] |
 | Sonst darfst du auch auf der Straße fahren | § 2 Abs. 4 StVO: rechte Radwege ohne diese Zeichen dürfen benutzt werden (keine Pflicht) [7] |

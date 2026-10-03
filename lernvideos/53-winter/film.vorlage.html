@@ -18,16 +18,30 @@
   --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
 }
 #kamera{position:absolute;inset:0;transform-origin:960px 540px}
-.buehne{width:900px;height:680px;border-radius:44px;overflow:hidden}
+/* Ein Wintertag: der Himmel liegt fest hinter der Welt, die Straße läuft als Panorama durch alle Szenen */
+#himmel{position:absolute;inset:0;background:linear-gradient(var(--b100),var(--b50) 75%);overflow:hidden}
+#himmel .nacht{position:absolute;inset:0;background:linear-gradient(var(--b700),var(--b600) 70%,var(--b500));opacity:0}
+#himmel .daemmer{position:absolute;inset:0;background:linear-gradient(rgba(252,241,221,0) 30%,var(--warning-bg) 75%);opacity:0}
+#himmel .stern{position:absolute;width:6px;height:6px;border-radius:999px;background:var(--surface);opacity:0}
+#sonneH,#mondH{position:absolute;left:0;top:0;width:150px}
+.buehne{width:1920px;height:1080px;border-radius:0;background:none;overflow:visible}
 .titel{font-size:58px;line-height:68px}
 .unter{font-size:38px;line-height:50px}
 
-/* Bühne: Nacht, Schneeboden, Flocken */
-.nacht{position:absolute;left:0;top:0;right:0;bottom:130px;background:linear-gradient(var(--b700),var(--b600) 80%,var(--b500));opacity:0}
-.boden{position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(var(--surface),var(--b50));border-top:5px solid var(--b100)}
+/* Boden und Flocken */
+.boden{position:absolute;left:0;right:0;top:750px;bottom:-220px;background:linear-gradient(var(--surface),var(--b50) 45%);border-top:5px solid var(--b100)}
 .boden .nachtB{position:absolute;inset:0;background:var(--b600);opacity:0}
 .flocken{position:absolute;inset:0}
-.flocke{position:absolute;left:0;top:0;border-radius:999px;background:var(--surface);box-shadow:0 0 0 2px rgba(201,186,250,.55);opacity:0}
+.flocke{position:absolute;left:0;top:0;border-radius:999px;background:var(--surface);box-shadow:0 0 0 2px rgba(201,186,250,.5);opacity:0}
+
+/* Text im Bild auf einer Tafel */
+.block{left:110px;width:680px}
+.tafel{padding:42px 48px 48px;border-radius:40px;background:var(--surface);box-shadow:0 24px 60px rgba(22,19,37,.18)}
+/* Tageszeit-Uhr */
+#tagesuhr{position:absolute;right:60px;top:52px;width:124px;height:124px;border-radius:999px;background:var(--surface);border:6px solid var(--b200);box-shadow:0 10px 28px rgba(22,19,37,.16)}
+#tagesuhr svg{position:absolute;inset:0;width:100%;height:100%}
+#gestoeber{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,var(--surface),var(--b50));clip-path:circle(0% at 50% 50%)}
+#blitz{position:absolute;inset:0;background:var(--surface);opacity:0;pointer-events:none}
 
 /* Porträts */
 .portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
@@ -106,14 +120,16 @@
 </style></head><body>
 
 <template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene schal">{{figur-schal}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div><div class="ebene muetze">{{muetze}}</div></div></template>
+<template id="f-amir5"><div class="figur"><div class="ebene">{{figur-amir~5}}</div><div class="ebene l1">{{lage-shirt}}</div><div class="ebene l2">{{lage-pulli}}</div><div class="ebene l3">{{lage-jacke}}</div><div class="ebene schal">{{figur-schal~5}}</div><div class="ebene augen">{{figur-augen~5}}</div><div class="ebene zu">{{figur-mund-zu~5}}</div><div class="ebene auf">{{figur-mund-auf~5}}</div><div class="ebene froh">{{figur-mund-froh~5}}</div><div class="ebene muetze">{{muetze~5}}</div></div></template>
 <template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
 <template id="svgSpur"><svg viewBox="0 0 46 78"><path d="M23 4c11 0 17 9 17 22 0 10-4 16-6 22h-22c-2-6-6-12-6-22 0-13 6-22 17-22Z" fill="var(--b200)"/><rect x="11" y="54" width="24" height="20" rx="10" fill="var(--b200)"/><g fill="var(--b100)"><path d="M14 18l4-4 4 4-4 4Z"/><path d="M24 18l4-4 4 4-4 4Z"/><path d="M14 30l4-4 4 4-4 4Z"/><path d="M24 30l4-4 4 4-4 4Z"/><path d="M19 42l4-4 4 4-4 4Z"/><path d="M15 64l4-4 4 4-4 4Z"/><path d="M23 64l4-4 4 4-4 4Z"/></g></svg></template>
 
+<div id="himmel"><div class="nacht"></div><div class="daemmer"></div><div id="sterne"></div><div class="flocken" id="fern"></div>
+  <div id="sonneH">{{sonne}}</div><div id="mondH">{{mond}}</div></div>
+
 <div id="kamera"><div id="welt">
   <!-- 1 · Winter: dunkel, kalt, glatt (Bühne mittig, ohne Titel) -->
-  <div class="a buehne" id="bue0"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
-  <div class="a" id="sonne1" style="width:150px">{{sonne}}</div>
-  <div class="a" id="mond1" style="width:130px">{{mond}}</div>
+  <div class="a buehne" id="bue0"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a" id="haus1a" style="width:220px" data-frei>{{haus-schnee}}</div>
   <div class="a" id="licht1a" style="width:220px" data-frei>{{haus-licht}}</div>
   <div class="a" id="haus1b" style="width:160px" data-frei>{{haus-schnee~b}}</div>
@@ -135,8 +151,7 @@
   <div class="a plakette gruen" id="ok1" data-frei></div>
 
   <!-- 2 · Dunkel: hell und Reflektoren, Licht am Rad -->
-  <div class="a buehne" id="bue1"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
-  <div class="a" id="mond2" style="width:110px">{{mond~2}}</div>
+  <div class="a buehne" id="bue1"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a stange" id="stange2" style="width:560px" data-gruppe="stange2"></div>
   <div class="a" id="dunkel2" style="width:260px" data-gruppe="stange2">{{jacke-dunkel}}</div>
   <div class="a" id="hell2" style="width:260px" data-gruppe="stange2">{{jacke-hell}}</div>
@@ -154,7 +169,7 @@
   <div class="a" id="stempel2" style="width:170px" data-frei>{{stempel}}</div>
 
   <!-- 3 · Glatt: Schuhe mit Profil, kleine Schritte, Hände frei -->
-  <div class="a buehne" id="bue2"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a buehne" id="bue2"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a eis" id="eis3" style="width:620px;height:52px" data-frei><i id="glanz3"></i></div>
   <div class="a spur" id="sp3a" data-frei></div><div class="a spur" id="sp3b" data-frei></div><div class="a spur" id="sp3c" data-frei></div>
   <div class="a spur" id="sp3d" data-frei></div><div class="a spur" id="sp3e" data-frei></div>
@@ -166,7 +181,7 @@
   <div class="a portrait" id="am3" data-f="amir" style="width:230px;height:230px"></div>
 
   <!-- 4 · Wer räumt? -->
-  <div class="a buehne" id="bue3"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a buehne" id="bue3"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a" id="rathaus4" style="width:200px">{{rathaus}}</div>
   <div class="a" id="haus4" style="width:250px">{{haus-schnee~4}}</div>
   <div class="a welle gruen" id="welle4" data-frei></div>
@@ -176,30 +191,33 @@
   <div class="a" id="schieber4" style="width:160px" data-frei>{{titelbild-schneeschieber}}</div>
   <div class="a" id="brief4" style="width:110px" data-frei>{{brief}}</div>
   <div class="a frage" id="frage4">?</div>
-  <div class="a dok" id="dokA4"><b>Mietvertrag</b><div class="linie"></div><div class="linie" style="width:80%"></div><div class="linie"></div><div class="linie" style="width:65%"></div><div class="linie" style="width:85%"></div></div>
-  <div class="a dok" id="dokB4"><b>Hausordnung</b><div class="linie"></div><div class="linie" style="width:75%"></div><div class="fund" id="fund4">Winterdienst</div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div></div>
+  <div class="a dok" id="dokA4" data-gruppe="dok4"><b>Mietvertrag</b><div class="linie"></div><div class="linie" style="width:75%"></div><div class="fund" id="fund4">Winterdienst</div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div></div>
+  <div class="a dok" id="dokB4" data-gruppe="dok4"><b>Hausordnung</b><div class="linie"></div><div class="linie" style="width:80%"></div><div class="linie"></div><div class="linie" style="width:65%"></div><div class="linie" style="width:85%"></div></div>
+  <svg class="a" id="klammer4" viewBox="0 0 40 90" style="width:40px;height:90px" data-gruppe="dok4"><path d="M14 80V16a8 8 0 0 1 16 0v56a5 5 0 0 1-10 0V24" stroke="var(--b400)" stroke-width="5" stroke-linecap="round" fill="none"/></svg>
   <div class="a" id="lupe4" style="width:150px" data-frei>{{lupe}}</div>
   <div class="a frage" id="frageV4" data-frei>?</div>
   <div class="a plakette gruen" id="ok4" data-frei></div>
 
-  <!-- 5 · Zwiebellook -->
-  <div class="a buehne" id="bue4"><div class="nacht"></div><div class="flocken"></div></div>
-  <div class="a stange" id="stange5" style="width:730px" data-gruppe="st5"></div>
-  <div class="a" id="dicke5" style="width:280px" data-gruppe="st5">{{daunenjacke}}</div>
-  <div class="a" id="hemd5" style="width:280px" data-gruppe="st5">{{hemd}}</div>
-  <div class="a" id="pulli5" style="width:280px" data-gruppe="st5">{{pulli}}</div>
-  <div class="a" id="offen5" style="width:280px" data-gruppe="st5">{{jacke-offen}}</div>
-  <svg class="a" id="luft5" viewBox="0 0 220 160" style="width:220px;height:160px" data-frei>
-    <g stroke="var(--warning)" stroke-width="7" stroke-linecap="round" fill="none"><path pathLength="1" d="M40 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M110 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M180 150c-14-18 14-30 0-48s14-30 0-48"/></g></svg>
-  <div class="a glut" id="glut5" style="width:420px;height:420px" data-frei></div>
-  <div class="a" id="muetze5" style="width:130px">{{muetze-ding}}</div>
-  <div class="a" id="schal5" style="width:130px">{{schal-ding}}</div>
-  <div class="a" id="hand5" style="width:130px">{{faeustlinge}}</div>
+  <!-- 5 · Zwiebellook: Amir zieht sich Schicht für Schicht an -->
+  <div class="a buehne" id="bue4"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a stange" id="stange5" style="width:400px" data-gruppe="st5"></div>
+  <div class="a" id="dicke5" style="width:240px" data-gruppe="st5">{{daunenjacke}}</div>
+  <div class="a" id="ablage5" style="width:240px" data-gruppe="st5">{{jacke-offen~ab}}</div>
+  <div class="a glut" id="glut5" style="width:460px;height:460px" data-frei></div>
+  <svg class="a" id="luft5" viewBox="0 0 400 160" style="width:400px;height:160px" data-frei>
+    <g stroke="var(--warning)" stroke-width="7" stroke-linecap="round" fill="none"><path pathLength="1" d="M30 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M90 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M310 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M370 150c-14-18 14-30 0-48s14-30 0-48"/></g></svg>
+  <div class="a portrait" id="am5" data-f="amir5" style="width:300px;height:300px"></div>
+  <div class="a" id="hemd5" style="width:220px" data-frei>{{hemd}}</div>
+  <div class="a" id="pulli5" style="width:220px" data-frei>{{pulli}}</div>
+  <div class="a" id="offen5" style="width:220px" data-frei>{{jacke-offen}}</div>
+  <div class="a" id="muetze5" style="width:130px" data-frei>{{muetze-ding}}</div>
+  <div class="a" id="schal5" style="width:130px" data-frei>{{schal-ding}}</div>
+  <div class="a" id="hand5" style="width:140px">{{faeustlinge}}</div>
   <div class="a" id="thermo5" style="width:180px" data-gruppe="th5">{{thermometer~5}}</div>
   <div class="a" id="saeule5" style="width:180px;transform-origin:50% 78.75%" data-gruppe="th5">{{thermo-saeule~5}}</div>
 
   <!-- 6 · Verspätung: früher los -->
-  <div class="a buehne" id="bue5"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a buehne" id="bue5"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a anzeige" id="anz6"><div class="zeile">Bus<span id="vB6">Verspätung</span></div><div class="zeile">Bahn<span id="vZ6">Verspätung</span></div></div>
   <div class="a" id="halt6" style="width:200px">{{haltestelle~6}}</div>
   <div class="a spur" id="sp6a" data-frei></div><div class="a spur" id="sp6b" data-frei></div><div class="a spur" id="sp6c" data-frei></div><div class="a spur" id="sp6d" data-frei></div>
@@ -215,7 +233,7 @@
   <div class="a plakette gruen" id="ok6" data-frei></div>
 
   <!-- 7 · Erkältet: vor Arbeitsbeginn melden -->
-  <div class="a buehne" id="bue6"><div class="nacht"></div><div class="flocken"></div></div>
+  <div class="a buehne" id="bue6"><div class="flocken"></div></div>
   <div class="a" id="thermo7" style="width:200px" data-gruppe="th7">{{thermometer~7}}</div>
   <div class="a" id="saeule7" style="width:200px;transform-origin:50% 78.75%" data-gruppe="th7">{{thermo-saeule~7}}</div>
   <div class="a" id="tuch7" style="width:200px;transform-origin:50% 40%" data-gruppe="box7">{{taschentuch}}</div>
@@ -235,26 +253,37 @@
   <div class="a" id="ks7" style="width:150px">{{krankschreibung}}</div>
   <div class="a geist" id="ksG7" style="width:150px" data-frei>{{krankschreibung~g}}</div>
 
-  <!-- 8 · Zusammenfassung -->
-  <div class="a buehne" id="bue7"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
-  <div class="a" id="sonne8" style="width:130px">{{sonne~8}}</div>
-  <div class="a kachel" id="k8a"><div class="bild">{{reflektor~8}}</div><b>Sichtbar</b></div>
-  <div class="a kachel" id="k8b"><div class="bild">{{titelbild-winterstiefel~8}}</div><b>Rutschfest</b></div>
-  <div class="a kachel" id="k8c"><div class="bild">{{pulli~8}}</div><b>Warm</b></div>
-  <div class="a kachel" id="k8d"><div class="bild">{{wecker-blatt~8}}</div><b>Früh los</b></div>
-  <div class="a plakette gruen" id="ok8a" data-frei></div><div class="a plakette gruen" id="ok8b" data-frei></div>
-  <div class="a plakette gruen" id="ok8c" data-frei></div><div class="a plakette gruen" id="ok8d" data-frei></div>
+  <!-- 8 · Abend: die vier Dinge docken an Amir an -->
+  <div class="a buehne" id="bue7"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a" id="haus8" style="width:200px" data-frei>{{haus-schnee~8}}</div>
+  <div class="a" id="licht8" style="width:200px" data-frei>{{haus-licht~8}}</div>
+  <div class="a" id="lat8" style="width:240px" data-frei>{{laterne~8}}</div>
+  <div class="a" id="latan8" style="width:240px" data-frei>{{laterne-an~8}}</div>
+  <div class="a glut" id="glut8" style="width:200px;height:200px" data-frei></div>
+  <svg class="a" id="kreis8" viewBox="0 0 520 520" style="width:520px;height:520px" data-frei><circle pathLength="1" cx="260" cy="260" r="230" stroke="var(--b300)" stroke-width="6" stroke-dasharray=".02 .025" fill="none" transform="rotate(-90 260 260)"/></svg>
   <div class="a welle gruen" id="welle8" data-frei></div>
-  <div class="a portrait" id="am8" data-f="amir" style="width:130px;height:130px"></div>
+  <div class="a portrait" id="am8" data-f="amir" style="width:220px;height:220px"></div>
+  <div class="a" id="d8a" style="width:120px" data-frei>{{reflektor~8}}</div>
+  <div class="a" id="d8b" style="width:130px" data-frei>{{titelbild-winterstiefel~8}}</div>
+  <div class="a" id="d8c" style="width:130px" data-frei>{{pulli~8}}</div>
+  <div class="a" id="d8d" style="width:130px" data-gruppe="w8">{{wecker-blatt~8}}</div>
+  <svg class="a" id="z8d" viewBox="0 0 160 160" style="width:130px;height:130px;transform-origin:50% 55%" data-gruppe="w8"><path d="M80 88V62" stroke="var(--b700)" stroke-width="4.5" stroke-linecap="round"/><path d="M80 88V72" stroke="var(--ink)" stroke-width="5.5" stroke-linecap="round" transform="rotate(-60 80 88)"/><circle cx="80" cy="88" r="4.5" fill="var(--b700)"/></svg>
 </div></div>
 
-<div class="block" id="tb2"><div class="titel">Hell + Reflektoren</div><div class="unter">am Rad: Licht an</div></div>
-<div class="block" id="tb3"><div class="titel">Feste Schuhe mit Profil</div><div class="unter">kleine Schritte</div></div>
-<div class="block" id="tb4"><div class="titel">Wer räumt?</div><div class="unter">Mietvertrag &amp; Hausordnung</div></div>
-<div class="block" id="tb5"><div class="titel">Zwiebellook:</div><div class="unter">mehrere dünne Schichten</div></div>
-<div class="block" id="tb6"><div class="titel">Im Winter: früher losfahren</div></div>
-<div class="block" id="tb7"><div class="titel">Krank?</div><div class="unter">Vor Arbeitsbeginn melden</div></div>
-<div class="block" id="tb8"><div class="titel">Sichtbar · Rutschfest · Warm · Früh los</div></div>
+<div class="block" id="tb2"><div class="tafel"><div class="titel">Hell + Reflektoren</div><div class="unter">am Rad: Licht an</div></div></div>
+<div class="block" id="tb3"><div class="tafel"><div class="titel">Feste Schuhe mit Profil</div><div class="unter">kleine Schritte</div></div></div>
+<div class="block" id="tb4"><div class="tafel"><div class="titel">Wer räumt?</div><div class="unter">Mietvertrag &amp; Hausordnung</div></div></div>
+<div class="block" id="tb5"><div class="tafel"><div class="titel">Zwiebellook:</div><div class="unter">mehrere dünne Schichten</div></div></div>
+<div class="block" id="tb6"><div class="tafel"><div class="titel">Im Winter: früher losfahren</div></div></div>
+<div class="block" id="tb7"><div class="tafel"><div class="titel">Krank?</div><div class="unter">Vor Arbeitsbeginn melden</div></div></div>
+<div class="block" id="tb8"><div class="tafel"><div class="titel">Sichtbar · Rutschfest · Warm · Früh los</div></div></div>
+
+<div id="tagesuhr"><svg viewBox="0 0 124 124"><g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M56 14v8M56 90v8M14 56h8M90 56h8"/></g>
+  <path id="uhrH0" d="M56 56V32" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" style="transform-origin:56px 56px"/>
+  <path id="uhrM0" d="M56 56V20" stroke="var(--b500)" stroke-width="5" stroke-linecap="round" style="transform-origin:56px 56px"/>
+  <circle cx="56" cy="56" r="6" fill="var(--b700)"/></svg></div>
+<div id="gestoeber"></div>
+<div id="blitz"></div>
 
 <div class="deckel" id="abspann"><div class="ende">
   <div class="gross a" id="asTitel" style="position:relative">Gut durch den Winter.</div>
@@ -339,16 +368,15 @@ HOOKS.push(t => PORTRAITS.forEach((p, i) => {
   p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
 }));
 
-/* ---------- Kamera: Schwenk, Atmer, Akzente, Rütteln ---------- */
+/* ---------- Kamera: Fahrt entlang der Straße, Atmer, Akzente, Rütteln ---------- */
 const PANS = [], AKZENTE = [], RUETTELN = [];
 const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
 const akzent = (t, z = .035) => AKZENTE.push([t, z]);
 const ruetteln = (t, a = 10) => RUETTELN.push([t, a]);
 bewegungsunschaerfe(.1);
-const RUHE = i => i === 0 ? -360 : -S(i);
 HOOKS.push(t => {
   let z = 1, dx = 0, dy = 0;
-  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
   for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
   for (const [a, h] of RUETTELN) { const d = (t - a) / .5; if (d > 0 && d < 1) { const k = h * (1 - d) ** 2; dx += k * Math.sin(d * 38); dy += k * .6 * Math.sin(d * 29 + 1); } }
   const letzte = Math.max(0, ...PANS.filter(p => p <= t));
@@ -357,36 +385,71 @@ HOOKS.push(t => {
   const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
   $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
   $('#kamera').style.transform = `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${z})`;
-  for (let i = 0; i < N; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE(i))).toFixed(1)}px)`;
 });
 
-/* ---------- Bühnen-Licht und Schneefall ---------- */
-// NACHT[i](t) → 0…1 (Dunkelheit), SCHNEE[i](t) → 0…1 (Stärke)
-const NACHT = Array(N).fill(() => 0), SCHNEE = Array(N).fill(() => 1);
-const FLOCKEN = [];
-document.querySelectorAll('.buehne').forEach((b, i) => {
-  const box = b.querySelector('.flocken');
-  for (let k = 0; k < 24; k++) {
-    const f = document.createElement('div'); f.className = 'flocke';
-    const g = 8 + ((k * 7) % 9); f.style.width = f.style.height = g + 'px';
-    box.appendChild(f);
-    FLOCKEN.push({ f, i, x0: 30 + ((k * 137 + i * 61) % 840), y0: (k * 211 + i * 97) % 720, v: 38 + ((k * 53) % 40), ph: k * 1.7 + i, a: 10 + (k % 5) * 4, g });
+/* ---------- Ein Wintertag: Uhrzeit → Himmel, Sonne, Mond, Sterne, Tageszeit-Uhr ---------- */
+// STUNDE: Stützstellen [Filmzeit, Uhrzeit]; dazwischen weich. Über 24 = nächster Tag.
+const STUNDE = [];
+const stunde = t => {
+  if (!STUNDE.length || t <= STUNDE[0][0]) return STUNDE[0]?.[1] ?? 12;
+  for (let i = 1; i < STUNDE.length; i++) if (t <= STUNDE[i][0]) {
+    const [t0, h0] = STUNDE[i - 1], [t1, h1] = STUNDE[i]; return lerp(h0, h1, E.inout(clamp((t - t0) / (t1 - t0))));
   }
-});
+  return STUNDE[STUNDE.length - 1][1];
+};
+const nachtVon = hh => hh < 6.8 ? .86 : hh < 8.4 ? lerp(.86, 0, E.inout((hh - 6.8) / 1.6)) : hh < 15.6 ? 0 : hh < 17.2 ? lerp(0, .86, E.inout((hh - 15.6) / 1.6)) : .86;
+const daemmerVon = hh => Math.max(0, 1 - Math.abs(hh - 7.7) / .9, 1 - Math.abs(hh - 16.3) / .9);
+const NACHT_EXTRA = [];        // [t0, d, Stärke] zusätzlich (z. B. nichts)
+const nacht = t => nachtVon(((stunde(t) % 24) + 24) % 24);
+const sonne = $('#sonneH'), mond = $('#mondH'), STERNE = [];
+for (let k = 0; k < 18; k++) { const d = document.createElement('div'); d.className = 'stern'; d.style.left = (900 + (k * 157) % 960) + 'px'; d.style.top = (60 + (k * 89) % 330) + 'px'; $('#sterne').appendChild(d); STERNE.push(d); }
 HOOKS.push(t => {
-  document.querySelectorAll('.buehne').forEach((b, i) => {
-    const n = clamp(NACHT[i](t));
-    b.querySelector('.nacht').style.opacity = n.toFixed(3);
-    const nb = b.querySelector('.nachtB'); if (nb) nb.style.opacity = (n * .5).toFixed(3);
-  });
+  const h = stunde(t), hh = ((h % 24) + 24) % 24, n = nachtVon(hh);
+  $('#himmel .nacht').style.opacity = n.toFixed(3);
+  $('#himmel .daemmer').style.opacity = (daemmerVon(hh) * .85).toFixed(3);
+  document.querySelectorAll('.nachtB').forEach(e => { e.style.opacity = (n * .45).toFixed(3); });
+  STERNE.forEach((d, k) => { d.style.opacity = (n * (.45 + .4 * Math.sin(t * 1.3 + k))).toFixed(3); });
+  // Sonne zieht einen Bogen von links nach rechts (7.6 bis 16.4 Uhr), unter dem Boden ist sie verdeckt
+  const p = (hh - 7.6) / 8.8, sx = lerp(330, 1640, p), sy = 800 - 600 * Math.sin(Math.PI * clamp(p));
+  sonne.style.transform = `translate(${(sx - 75).toFixed(1)}px,${(sy - 75).toFixed(1)}px) rotate(${(t * 12).toFixed(1)}deg)`;
+  sonne.style.opacity = p > -.05 && p < 1.05 ? 1 : 0;
+  mond.style.transform = `translate(${1560 - 75}px,${(250 - 75 + 40 * (1 - n / .86)).toFixed(1)}px)`;
+  mond.style.opacity = clamp((n - .4) / .4).toFixed(3);
+  // Tageszeit-Uhr
+  $('#uhrH0').style.transform = `rotate(${(h * 30).toFixed(2)}deg)`;
+  $('#uhrM0').style.transform = `rotate(${(h * 360).toFixed(1)}deg)`;
+});
+
+/* ---------- Schnee in drei Ebenen: fern (am Himmel, langsam, klein), mittel und nah (in der Welt) ---------- */
+let SCHNEE = () => 1;
+const FLOCKEN = [];
+const flocken = (box, n, ebene, i) => { for (let k = 0; k < n; k++) {
+  const f = document.createElement('div'); f.className = 'flocke';
+  const g = ebene === 0 ? 4 + k % 3 : ebene === 1 ? 8 + k % 4 : 14 + k % 5; f.style.width = f.style.height = g + 'px';
+  if (ebene === 2) f.style.filter = 'blur(1.2px)';
+  box.appendChild(f);
+  FLOCKEN.push({ f, i, ebene, x0: (k * 137 + i * 61 + ebene * 43) % 1920, y0: (k * 211 + i * 97 + ebene * 31) % 1100, v: [22, 48, 85][ebene] + (k * 13) % 18,
+    ph: k * 1.7 + i, a: [6, 14, 22][ebene] + (k % 4) * 3, o: [.55, .85, .95][ebene] });
+} };
+flocken($('#fern'), 46, 0, -1);
+document.querySelectorAll('.buehne').forEach((b, i) => { const box = b.querySelector('.flocken'); flocken(box, 18, 1, i); flocken(box, 8, 2, i); });
+HOOKS.push(t => {
+  const s = clamp(SCHNEE(t)), wx = -wert(kamera, 'x', t);
   for (const F of FLOCKEN) {
-    const s = clamp(SCHNEE[F.i](t));
-    const y = ((F.y0 + t * F.v) % 720) - 20, x = F.x0 + F.a * Math.sin(t * .9 + F.ph);
-    F.f.style.opacity = (s * .95).toFixed(3);
+    if (F.i >= 0 && Math.abs(S(F.i) - wx) > 2000) { F.f.style.opacity = 0; continue; }
+    const y = ((F.y0 + t * F.v) % 1100) - 20, x = F.x0 + F.a * Math.sin(t * .9 + F.ph);
+    F.f.style.opacity = (s * F.o).toFixed(3);
     F.f.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
   }
 });
 const rampe = (t0, d, von = 0, bis = 1) => t => lerp(von, bis, E.inout(clamp((t - t0) / d)));
+// Text im Bild: die Tafel kommt mit dem ersten Wort
+const _titelEin = titelEin;
+titelEin = (id, t0, zeiten) => {
+  _titelEin(id, t0, zeiten);
+  const tz = Array.isArray(zeiten) ? Math.min(...zeiten.filter(z => z != null)) : t0;
+  const k = $(`#${id} .tafel`); akteur(k, { o: 0, y: 40, s: .94 }, true); tw(k, tz - .25, .55, { o: 1, y: 0, s: 1 }, 'sanft');
+};
 
 /* ================= 1 · Winter: dunkel, kalt, glatt (mittig, ohne Titel) ================= */
 const X0 = S(0);
@@ -622,28 +685,28 @@ pan2(SE(12) + .3, 3);
   HOOKS.push(t => { const an = t >= W('dran', 16) - .05; const f = el('fund4'); f.style.background = an ? 'var(--success-bg)' : 'transparent'; f.style.borderColor = an ? 'var(--success)' : 'transparent'; f.style.color = an ? 'var(--success-text)' : 'var(--n300)'; });
   bump('dokB4', W('dran', 16), 1.04);
   // Lies nach und frag deinen Vermieter: Fragezeichen fliegt zum Haus, Haken kommt zurück
-  bump('lupe4', W('Lies', 17), 1.1);
-  tw('lupe4', W('frag', 17) - .2, .3, { o: 0, s: .7 }, 'in');
+  bump('lupe4', W('Lies', 18), 1.1);
+  tw('lupe4', W('frag', 18) - .2, .3, { o: 0, s: .7 }, 'in');
   akteur('frageV4', { x: X3 + 1310, y: 300, o: 0, s: .5 });
-  const tF = W('frag', 17);
+  const tF = W('frag', 18);
   tw('frageV4', tF, .2, { o: 1, s: 1 }, 'back'); cue(tF, 'pop');
-  flug('frageV4', W('Vermieter', 17) - .45, .7, HX, HY - 150, 80, { s: .6 }); tw('frageV4', W('Vermieter', 17) + .15, .15, { o: 0 });
-  bump('haus4', W('Vermieter', 17) + .25, 1.06); cue(W('Vermieter', 17) + .25, 'plopp');
+  flug('frageV4', W('Vermieter', 18) - .45, .7, HX, HY - 150, 80, { s: .6 }); tw('frageV4', W('Vermieter', 18) + .15, .15, { o: 0 });
+  bump('haus4', W('Vermieter', 18) + .25, 1.06); cue(W('Vermieter', 18) + .25, 'plopp');
   akteur('ok4', { x: HX, y: HY - 150, o: 0, s: .4 });
-  const tO = W('Vermieter', 17) + .35;
+  const tO = W('Vermieter', 18) + .35;
   tw('ok4', tO, .15, { o: 1 }); flug('ok4', tO, .7, X3 + 1450, 300, 70, { s: 1 }); cue(tO + .7, 'erfolg');
-  textAus('tb4', SE(17) + .2);
+  textAus('tb4', SE(18) + .2);
 }
 
 /* ================= 5 · Zwiebellook ================= */
 const X4 = S(4);
-pan2(SE(17) + .3, 4);
+pan2(SE(18) + .3, 4);
 {
   SCHNEE[4] = () => .55;
-  titelEin('tb5', W('Zwiebellook', 18) - .25, { unter: W('mehrere', 19) - .2 });
+  titelEin('tb5', W('Zwiebellook', 19) - .25, { unter: W('mehrere', 20) - .2 });
   const SY = 300, JY = SY + 65 * 1.75;
-  ein('stange5', SE(17) + .7, { x: X4 + 1320, y: SY }, { y: -40 });
-  ein('dicke5', W('Zieh', 18) - .1, { x: X4 + 1080, y: JY + 2 }, { y: -50 }, 'whoosh');
+  ein('stange5', SE(18) + .7, { x: X4 + 1320, y: SY }, { y: -40 });
+  ein('dicke5', W('Zieh', 19) - .1, { x: X4 + 1080, y: JY + 2 }, { y: -50 }, 'whoosh');
   // dünne Schichten fliegen nacheinander auf den zweiten Bügel
   const LX = X4 + 1340;
   [['hemd5', 'mehrere'], ['pulli5', 'dünne'], ['offen5', 'Schichten']].forEach(([id, w], k) => {
@@ -652,173 +715,173 @@ pan2(SE(17) + .3, 4);
     tw(id, t0, .15, { o: 1 }); flug(id, t0, .55, LX, JY, 60, { s: 1, r: 0 }); landen(id, t0 + .55, .6); cue(t0, 'whoosh'); cue(t0 + .55, 'plopp');
   });
   // statt einer dicken Jacke: die dicke Jacke tritt zurück
-  wackeln('dicke5', W('dicken', 19), 3, 3);
-  tw('dicke5', W('Jacke', 19), .6, { o: .45, s: .92 }, 'inout');
+  wackeln('dicke5', W('dicken', 20), 3, 3);
+  tw('dicke5', W('Jacke', 20), .6, { o: .45, s: .92 }, 'inout');
   // Die Luft dazwischen hält warm: warme Wellen steigen zwischen den Schichten auf
   akteur('luft5', { x: LX, y: JY + 20, o: 0 });
-  const tLu = W('Luft', 20) - .1;
+  const tLu = W('Luft', 21) - .1;
   tw('luft5', tLu, .2, { o: 1 }); el('luft5').querySelectorAll('path').forEach((p, i) => strich(p, tLu + i * .12, .7));
-  tw('luft5', tLu, 1.6, { y: JY - 40 }, 'out'); tw('luft5', W('warm', 20) + .4, .5, { o: 0 }, 'in');
+  tw('luft5', tLu, 1.6, { y: JY - 40 }, 'out'); tw('luft5', W('warm', 21) + .4, .5, { o: 0 }, 'in');
   cue(tLu, 'scan');
-  akteur('glut5', { x: LX, y: JY, o: 0, s: .7 }); tw('glut5', W('warm', 20) - .1, .6, { o: .8, s: 1 }, 'weich'); tw('glut5', W('warm', 20) + 1.4, .6, { o: 0 }, 'inout');
-  akzent(W('warm', 20), .03);
+  akteur('glut5', { x: LX, y: JY, o: 0, s: .7 }); tw('glut5', W('warm', 21) - .1, .6, { o: .8, s: 1 }, 'weich'); tw('glut5', W('warm', 21) + 1.4, .6, { o: 0 }, 'inout');
+  akzent(W('warm', 21), .03);
   // Mütze, Schal und Handschuhe ploppen auf
-  pop('muetze5', W('hält', 20), { x: X4 + 1000, y: 690 }); pop('schal5', W('hält', 20) + .15, { x: X4 + 1160, y: 690 }, null); pop('hand5', W('hält', 20) + .3, { x: X4 + 1320, y: 690 });
+  pop('muetze5', W('hält', 21), { x: X4 + 1000, y: 690 }); pop('schal5', W('hält', 21) + .15, { x: X4 + 1160, y: 690 }, null); pop('hand5', W('hält', 21) + .3, { x: X4 + 1320, y: 690 });
   schweben(['muetze5', 'schal5', 'hand5'], 3);
   // drinnen: Thermometer steigt, eine Schicht fliegt ab an den freien Platz
-  ein('thermo5', W('drinnen', 21) - .3, { x: X4 + 1600, y: 680 }, { y: 60 }, 'pop'); ein('saeule5', W('drinnen', 21) - .3, { x: X4 + 1600, y: 680 }, { y: 60 });
-  set('saeule5', 0, { sy: .2 }); tw('saeule5', W('drinnen', 21) + .1, 1.0, { sy: .75 }, 'inout'); cue(W('drinnen', 21) + .1, 'scan');
-  const tA = W('Schicht', 21) - .1;
+  ein('thermo5', W('drinnen', 22) - .3, { x: X4 + 1600, y: 680 }, { y: 60 }, 'pop'); ein('saeule5', W('drinnen', 22) - .3, { x: X4 + 1600, y: 680 }, { y: 60 });
+  set('saeule5', 0, { sy: .2 }); tw('saeule5', W('drinnen', 22) + .1, 1.0, { sy: .75 }, 'inout'); cue(W('drinnen', 22) + .1, 'scan');
+  const tA = W('Schicht', 22) - .1;
   flug('offen5', tA, .65, X4 + 1590, JY, 70); landen('offen5', tA + .65, .6); cue(tA, 'whoosh'); cue(tA + .65, 'plopp');
   zusatz('offen5', t => { const d = t - tA; return d > 0 && d < .65 ? `rotate(${(4 * Math.sin(Math.PI * d / .65)).toFixed(2)}deg)` : ''; });
-  huepfen('pulli5', W('aus', 21), 8);
-  textAus('tb5', SE(21) + .2);
+  huepfen('pulli5', W('aus', 22), 8);
+  textAus('tb5', SE(22) + .2);
 }
 
 /* ================= 6 · Verspätung: früher losfahren ================= */
 const X5 = S(5);
-pan2(SE(21) + .3, 5);
+pan2(SE(22) + .3, 5);
 {
-  NACHT[5] = rampe(SE(21), .1, .25, .25);
-  titelEin('tb6', W('Fahr', 24) - .25);
-  ein('halt6', SE(21) + .65, { x: X5 + 980, y: steh(200) }, { y: 70 });
-  ein('anz6', SE(21) + .8, { x: X5 + 1180, y: 335 }, { y: -60 }, 'whoosh');
+  NACHT[5] = rampe(SE(22), .1, .25, .25);
+  titelEin('tb6', W('Fahr', 25) - .25);
+  ein('halt6', SE(22) + .65, { x: X5 + 980, y: steh(200) }, { y: 70 });
+  ein('anz6', SE(22) + .8, { x: X5 + 1180, y: 335 }, { y: -60 }, 'whoosh');
   // Verspätung blinkt
-  const tV = W('Verspätung', 22) - .1;
+  const tV = W('Verspätung', 23) - .1;
   HOOKS.push(t => { const d = t - tV; ['vB6', 'vZ6'].forEach((id, i) => { const dd = d - i * .15; el(id).style.opacity = dd < 0 ? 0 : dd < 2.4 ? (Math.floor(dd * 3) % 2 ? .35 : 1) : 1; }); });
   cue(tV, 'ding');
   // Bus rollt langsam ein, Schnee rutscht vom Dach
-  const BX = X5 + 1200, BY = steh(260, 131) - 2, tB = W('Bus', 22) - .3;
+  const BX = X5 + 1200, BY = steh(260, 131) - 2, tB = W('Bus', 23) - .3;
   akteur('bus6', { x: BX + 420, y: BY, o: 0 });
   akteur('dach6', { x: BX + 420 - 15, y: BY - 70, o: 0 });
   tw(['bus6', 'dach6'], tB, .3, { o: 1 }); tw('bus6', tB, 2.2, { x: BX }, 'out'); tw('dach6', tB, 2.2, { x: BX - 15 }, 'out'); cue(tB, 'whoosh');
   tw('bus6', tB + 2.2, .1, { r: 1.5 }, 'sinus'); tw('bus6', tB + 2.3, .45, { r: 0 }, 'sanft');
   tw('dach6', tB + 2.15, .55, { x: BX - 150, y: BY - 50, r: -8 }, 'in'); tw('dach6', tB + 2.55, .45, { y: BY + 70, o: 0, r: -20 }, 'in'); cue(tB + 2.2, 'whoosh');
   // zu Fuß: Fußspuren, langsam
-  const tF = W('Auch', 23);
+  const tF = W('Auch', 24);
   [['sp6a', 1440], ['sp6b', 1540], ['sp6c', 1640], ['sp6d', 1740]].slice(0, 3).forEach(([id, x], k) => {
     akteur(id, { x: X5 + x, y: 806, o: 0, r: 90 }); tw(id, tF + k * .45, .3, { o: 1 }, 'out'); cue(tF + k * .45, 'tipp');
   });
   // früher: Wecker klingelt, Zeiger springt eine Viertelstunde zurück
   const WX = X5 + 1580, WY = 345;
-  ['wecker6', 'zeigerM6', 'zeigerH6', 'puffer6'].forEach(id => ein(id, W('länger', 23) - .1, { x: WX, y: WY }, { y: -60 }));
+  ['wecker6', 'zeigerM6', 'zeigerH6', 'puffer6'].forEach(id => ein(id, W('länger', 24) - .1, { x: WX, y: WY }, { y: -60 }));
   set('zeigerM6', 0, { r: 0 }); set('zeigerH6', 0, { r: 210 });
-  HOOKS.push(t => { const d = t - W('länger', 23); el('zeigerM6').style.transform += d > 0 && d < 1.6 ? ` rotate(${(d * 60).toFixed(1)}deg)` : ''; });
-  set('zeigerM6', W('länger', 23) + 1.6, { r: 96 });
-  const tW = W('früher', 24) - .15;
+  HOOKS.push(t => { const d = t - W('länger', 24); el('zeigerM6').style.transform += d > 0 && d < 1.6 ? ` rotate(${(d * 60).toFixed(1)}deg)` : ''; });
+  set('zeigerM6', W('länger', 24) + 1.6, { r: 96 });
+  const tW = W('früher', 25) - .15;
   for (let i = 0; i < 8; i++) tw('wecker6', tW + i * .06, .06, { r: i % 2 ? 6 : -6 }, 'sinus');
   tw('wecker6', tW + .48, .2, { r: 0 }, 'sinus'); cue(tW, 'ding'); cue(tW + .25, 'ding');
   wellen('welle6', [tW, tW + .3], WX, WY, .8, 180);
-  tw('zeigerM6', W('los', 24) - .15, .5, { r: 6 }, 'back'); cue(W('los', 24) - .15, 'klick');
-  tw('zeigerH6', W('los', 24) - .15, .5, { r: 202 }, 'back');
-  akteur('puffer6', { x: WX, y: WY, o: 0 }); tw('puffer6', W('los', 24) - .1, .2, { o: 1 });
-  strich(el('puffer6').querySelector('path'), W('los', 24) - .1, .5);
-  akzent(W('früher', 24), .04);
+  tw('zeigerM6', W('los', 25) - .15, .5, { r: 6 }, 'back'); cue(W('los', 25) - .15, 'klick');
+  tw('zeigerH6', W('los', 25) - .15, .5, { r: 202 }, 'back');
+  akteur('puffer6', { x: WX, y: WY, o: 0 }); tw('puffer6', W('los', 25) - .1, .2, { o: 1 });
+  strich(el('puffer6').querySelector('path'), W('los', 25) - .1, .5);
+  akzent(W('früher', 25), .04);
   // Amir läuft los und kommt pünktlich am Betrieb an
-  ein('betrieb6', W('Denn', 25) - .5, { x: X5 + 1590, y: steh(220, 138) }, { x: 80 }, 'whoosh');
-  const tLauf = W('los', 24) + .1;
+  ein('betrieb6', W('Denn', 26) - .5, { x: X5 + 1590, y: steh(220, 138) }, { x: 80 }, 'whoosh');
+  const tLauf = W('los', 25) + .1;
   akteur('am6', { x: X5 + 1040, y: 540, o: 0, s: .5 });
   tw('am6', tLauf, .25, { o: 1, s: 1 }, 'back'); cue(tLauf, 'pop');
   for (let i = 0; i < 4; i++) tw('am6', tLauf + .3 + i * .28, .28, { x: X5 + 1040 + (i + 1) * 92, y: 560 }, 'sinus', { bogen: 26 });
-  froh('am6', W('pünktlich', 25));
-  pop('ok6', W('pünktlich', 25), { x: X5 + 1470, y: 470 }, 'erfolg');
+  froh('am6', W('pünktlich', 26));
+  pop('ok6', W('pünktlich', 26), { x: X5 + 1470, y: 470 }, 'erfolg');
   // trotzdem: Uhr pocht
-  bump('wecker6', W('trotzdem', 25), 1.12); bump('zeigerM6', W('trotzdem', 25), 1.12); bump('zeigerH6', W('trotzdem', 25), 1.12); bump('puffer6', W('trotzdem', 25), 1.12);
-  cue(W('trotzdem', 25), 'plopp');
-  textAus('tb6', SE(25) + .2);
+  bump('wecker6', W('trotzdem', 26), 1.12); bump('zeigerM6', W('trotzdem', 26), 1.12); bump('zeigerH6', W('trotzdem', 26), 1.12); bump('puffer6', W('trotzdem', 26), 1.12);
+  cue(W('trotzdem', 26), 'plopp');
+  textAus('tb6', SE(26) + .2);
 }
 
 /* ================= 7 · Erkältet: vor Arbeitsbeginn melden ================= */
 const X6 = S(6);
-pan2(SE(25) + .3, 6);
+pan2(SE(26) + .3, 6);
 {
   SCHNEE[6] = () => .45;
-  titelEin('tb7', W('erkältet', 26) - .3, { unter: W('Arbeitsbeginn', 27) - .3 });
+  titelEin('tb7', W('erkältet', 27) - .3, { unter: W('Arbeitsbeginn', 28) - .3 });
   const AX = X6 + 1110, AY = 470;
-  ein('am7', SE(25) + .7, { x: AX, y: AY }, { y: 80 }, 'pop');
+  ein('am7', SE(26) + .7, { x: AX, y: AY }, { y: 80 }, 'pop');
   // erkältet: Fieber steigt, Taschentuch schießt heraus, Amir wird blass, Niesen
-  ein('thermo7', W('wenn', 26) - .2, { x: X6 + 1360, y: 470 }, { y: 60 }); ein('saeule7', W('wenn', 26) - .2, { x: X6 + 1360, y: 470 }, { y: 60 });
-  set('saeule7', 0, { sy: .25 }); tw('saeule7', W('erkältet', 26) - .1, 1.0, { sy: 1 }, 'inout'); cue(W('erkältet', 26) - .1, 'scan');
-  wackeln('thermo7', W('hast', 26), 4, 3); wackeln('saeule7', W('hast', 26), 4, 3);
-  ein('box7', W('wenn', 26), { x: X6 + 1580, y: 520 }, { y: 60 }, 'whoosh');
+  ein('thermo7', W('wenn', 27) - .2, { x: X6 + 1360, y: 470 }, { y: 60 }); ein('saeule7', W('wenn', 27) - .2, { x: X6 + 1360, y: 470 }, { y: 60 });
+  set('saeule7', 0, { sy: .25 }); tw('saeule7', W('erkältet', 27) - .1, 1.0, { sy: 1 }, 'inout'); cue(W('erkältet', 27) - .1, 'scan');
+  wackeln('thermo7', W('hast', 27), 4, 3); wackeln('saeule7', W('hast', 27), 4, 3);
+  ein('box7', W('wenn', 27), { x: X6 + 1580, y: 520 }, { y: 60 }, 'whoosh');
   akteur('tuch7', { x: X6 + 1580, y: 560, o: 0, s: .6 });
-  const tT = W('erkältet', 26) + .1;
+  const tT = W('erkältet', 27) + .1;
   tw('tuch7', tT, .1, { o: 1 }); tw('tuch7', tT, .45, { y: 500, s: 1.1 }, 'back'); tw('tuch7', tT + .45, .3, { r: 3 }, 'sinus'); tw('tuch7', tT + .75, .3, { r: 0 }, 'sinus'); cue(tT, 'pop');
-  HOOKS.push(t => { const g = E.inout(clamp((t - W('erkältet', 26)) / .8)) * (1 - E.inout(clamp((t - W('krank', 27)) / .8)));
+  HOOKS.push(t => { const g = E.inout(clamp((t - W('erkältet', 27)) / .8)) * (1 - E.inout(clamp((t - W('krank', 28)) / .8)));
     el('am7').style.filter = g > .01 ? `saturate(${(1 - .65 * g).toFixed(3)}) brightness(${(1 + .12 * g).toFixed(3)})` : ''; });
-  const tN = WE('hast', 26) - .1;
+  const tN = WE('hast', 27) - .1;
   mund('am7', tN - .3, 'auf'); tw('am7', tN - .3, .3, { y: AY - 10 }, 'sinus'); tw('am7', tN, .15, { y: AY + 8, sx: 1.05, sy: .94 }, 'in'); tw('am7', tN + .15, .4, { y: AY, sx: 1, sy: 1 }, 'sanft');
   wellen('nies7', [tN, tN + .2], AX, AY + 30, .8, 260); cue(tN, 'whoosh'); ruetteln(tN, 5);
   mund('am7', tN + .5, 'zu');
   // vor Arbeitsbeginn im Betrieb melden: Handy ruft den Betrieb an, Uhr steht vor Arbeitsbeginn
-  aus(['thermo7', 'saeule7', 'box7', 'tuch7'], W('Dann', 27) - .2, .3);
-  tw('am7', W('Dann', 27), .6, { x: X6 + 1040, y: 400, s: .78 }, 'inout');
-  ein('handy7', W('melde', 27) - .1, { x: X6 + 1190, y: 520 }, { y: 60 }, 'pop');
-  ein('betrieb7', W('melde', 27) + .1, { x: X6 + 1580, y: 520 }, { x: 80 }, 'whoosh');
+  aus(['thermo7', 'saeule7', 'box7', 'tuch7'], W('Dann', 28) - .2, .3);
+  tw('am7', W('Dann', 28), .6, { x: X6 + 1040, y: 400, s: .78 }, 'inout');
+  ein('handy7', W('melde', 28) - .1, { x: X6 + 1190, y: 520 }, { y: 60 }, 'pop');
+  ein('betrieb7', W('melde', 28) + .1, { x: X6 + 1580, y: 520 }, { x: 80 }, 'whoosh');
   const UX = X6 + 1580, UY = 300;
-  ['uhr7', 'uhrM7', 'uhrH7'].forEach(id => ein(id, W('Arbeitsbeginn', 27) - .2, { x: UX, y: UY }, { y: -50 }));
+  ['uhr7', 'uhrM7', 'uhrH7'].forEach(id => ein(id, W('Arbeitsbeginn', 28) - .2, { x: UX, y: UY }, { y: -50 }));
   set('uhrM7', 0, { r: 0 }); set('uhrH7', 0, { r: 200 });
-  tw('uhrM7', W('Arbeitsbeginn', 27) + .1, 1.0, { r: 270 }, 'inout'); tw('uhrH7', W('Arbeitsbeginn', 27) + .1, 1.0, { r: 222 }, 'inout'); cue(W('Arbeitsbeginn', 27) + .1, 'scan');
+  tw('uhrM7', W('Arbeitsbeginn', 28) + .1, 1.0, { r: 270 }, 'inout'); tw('uhrH7', W('Arbeitsbeginn', 28) + .1, 1.0, { r: 222 }, 'inout'); cue(W('Arbeitsbeginn', 28) + .1, 'scan');
   // Anruf: gestrichelter Bogen vom Handy zum Betrieb, Betrieb klingelt
   const pfad = el('anruf7').querySelector('path');
   pfad.setAttribute('d', `M${1190 + 50} 470C${1300} 380 ${1440} 390 ${1500} 450`);
   akteur('anruf7', { x: X6 + 960, y: 540, o: 0 });
-  tw('anruf7', W('Betrieb', 27) - .4, .1, { o: 1 });
-  HOOKS.push(t => { const p = E.inout(clamp((t - W('Betrieb', 27) + .4) / .5)); pfad.style.strokeDasharray = '.025 .02'; pfad.style.strokeDashoffset = -t * .2; pfad.style.opacity = p; pfad.style.clipPath = ''; });
-  wellen('ring7', [W('Betrieb', 27), W('Betrieb', 27) + .35], X6 + 1580, 520, .8, 220); cue(W('Betrieb', 27), 'ding');
-  wackeln('handy7', W('Betrieb', 27) - .2, 5, 4);
-  pop('ok7', W('krank', 27), { x: X6 + 1670, y: 420 }, 'erfolg');
+  tw('anruf7', W('Betrieb', 28) - .4, .1, { o: 1 });
+  HOOKS.push(t => { const p = E.inout(clamp((t - W('Betrieb', 28) + .4) / .5)); pfad.style.strokeDasharray = '.025 .02'; pfad.style.strokeDashoffset = -t * .2; pfad.style.opacity = p; pfad.style.clipPath = ''; });
+  wellen('ring7', [W('Betrieb', 28), W('Betrieb', 28) + .35], X6 + 1580, 520, .8, 220); cue(W('Betrieb', 28), 'ding');
+  wackeln('handy7', W('Betrieb', 28) - .2, 5, 4);
+  pop('ok7', W('krank', 28), { x: X6 + 1670, y: 420 }, 'erfolg');
   // Krankschreibung: Kalender läuft, Tag 4, Arztpraxis
-  aus(['betrieb7', 'uhr7', 'uhrM7', 'uhrH7', 'ok7', 'anruf7', 'handy7'], W('Dauert', 28) - .3, .3);
-  ein('praxis7', W('Dauert', 28) - .1, { x: X6 + 1580, y: 420 }, { x: 80 }, 'whoosh');
-  ein('tage7', W('Dauert', 28) - .1, { x: X6 + 1320, y: 710 }, { y: 70 });
+  aus(['betrieb7', 'uhr7', 'uhrM7', 'uhrH7', 'ok7', 'anruf7', 'handy7'], W('Dauert', 29) - .3, .3);
+  ein('praxis7', W('Dauert', 29) - .1, { x: X6 + 1580, y: 420 }, { x: 80 }, 'whoosh');
+  ein('tage7', W('Dauert', 29) - .1, { x: X6 + 1320, y: 710 }, { y: 70 });
   const TAG = ['t1', 't2', 't3', 't4', 't5'];
-  const tTag = [W('Dauert', 28) + .2, W('länger', 28), W('als', 28), W('drei', 28) + .1];
+  const tTag = [W('Dauert', 29) + .2, W('länger', 29), W('als', 29), W('drei', 29) + .1];
   HOOKS.push(t => TAG.forEach((id, i) => {
-    const e = el(id), an = i < 3 && t >= tTag[i], vier = i === 3 && t >= W('Tage', 28);
+    const e = el(id), an = i < 3 && t >= tTag[i], vier = i === 3 && t >= W('Tage', 29);
     e.className = 'tag' + (an ? ' krank' : '') + (vier ? ' vier' : '');
-    const d = t - (i < 3 ? tTag[i] : W('Tage', 28));
+    const d = t - (i < 3 ? tTag[i] : W('Tage', 29));
     e.style.transform = (i < 4 && d > 0 && d < .4) ? `scale(${1 + .12 * Math.sin(Math.PI * d / .4)})` : '';
   }));
-  tTag.slice(0, 3).forEach(t => cue(t, 'klick')); cue(W('Tage', 28), 'ding'); akzent(W('Tage', 28), .03);
+  tTag.slice(0, 3).forEach(t => cue(t, 'klick')); cue(W('Tage', 29), 'ding'); akzent(W('Tage', 29), .03);
   const K4 = X6 + 1320 + (110 + 16) * 1, K1 = X6 + 1320 - (110 + 16) * 2;
   akteur('ks7', { x: X6 + 1580, y: 420, o: 0, s: .4 });
-  const tK = W('Krankschreibung', 28) - .2;
+  const tK = W('Krankschreibung', 29) - .2;
   tw('ks7', tK, .1, { o: 1 }); flug('ks7', tK, .8, K4, 548, 130, { s: .82 }); landen('ks7', tK + .8, .6); cue(tK, 'whoosh'); cue(tK + .8, 'plopp');
   bump('praxis7', tK, 1.06);
   // früher: Krankschreibung schiebt sich (gestrichelt) auf Tag 1 vor
   akteur('ksG7', { x: K4, y: 548, o: 0, s: .82 });
-  const tG = W('früher', 29) - .45;
+  const tG = W('früher', 30) - .45;
   tw('ksG7', tG, .2, { o: 1 }); tw('ksG7', tG, .9, { x: K1 }, 'inout'); cue(tG, 'whoosh');
-  bump('t1', W('früher', 29) + .5, 1.1);
-  textAus('tb7', SE(29) + .2);
+  bump('t1', W('früher', 30) + .5, 1.1);
+  textAus('tb7', SE(30) + .2);
 }
 
 /* ================= 8 · Sichtbar · Rutschfest · Warm · Früh los ================= */
 const X7 = S(7);
-pan2(SE(29) + .3, 7);
+pan2(SE(30) + .3, 7);
 {
-  NACHT[7] = rampe(W('Dann', 31) - .2, 1.6, .55, 0);
-  titelEin('tb8', 0, [W('sichtbar', 30) - .15, null, W('rutschfeste', 30) - .15, null, W('warme', 30) - .15, null, W('früher', 30) - .15, W('losfahren', 30) - .1]);
+  NACHT[7] = rampe(W('Dann', 32) - .2, 1.6, .55, 0);
+  titelEin('tb8', 0, [W('sichtbar', 31) - .15, null, W('rutschfeste', 31) - .15, null, W('warme', 31) - .15, null, W('früher', 31) - .15, W('losfahren', 31) - .1]);
   const KX = [1028, 1236, 1444, 1652], KY = 640, KW = ['sichtbar', 'rutschfeste', 'warme', 'früher'], KID = ['k8a', 'k8b', 'k8c', 'k8d'], OK = ['ok8a', 'ok8b', 'ok8c', 'ok8d'];
-  KID.forEach((id, i) => pop(id, W('Also', 30) - .2 + i * .12, { x: X7 + KX[i], y: KY }, i % 2 ? null : 'pop', 'sanft'));
+  KID.forEach((id, i) => pop(id, W('Also', 31) - .2 + i * .12, { x: X7 + KX[i], y: KY }, i % 2 ? null : 'pop', 'sanft'));
   // Amir springt von Kachel zu Kachel
   const AY = 455;
   akteur('am8', { x: X7 + KX[0] - 40, y: AY + 40, o: 0, s: .5 });
-  tw('am8', W('Also', 30) + .3, .3, { o: 1, s: 1, x: X7 + KX[0], y: AY }, 'back'); cue(W('Also', 30) + .3, 'pop');
+  tw('am8', W('Also', 31) + .3, .3, { o: 1, s: 1, x: X7 + KX[0], y: AY }, 'back'); cue(W('Also', 31) + .3, 'pop');
   KW.forEach((w, i) => {
     const t0 = W(w, 30) - .45;
     if (i) { flug('am8', t0, .42, X7 + KX[i], AY, 70); landen('am8', t0 + .42, .7); cue(t0 + .42, 'plopp'); }
     bump(KID[i], t0 + .45, 1.08);
     pop(OK[i], t0 + .5, { x: X7 + KX[i] + 66, y: KY - 74 }, 'ding');
   });
-  froh('am8', W('sichtbar', 30));
+  froh('am8', W('sichtbar', 31));
   // Sonne geht auf
   akteur('sonne8', { x: X7 + 1640, y: 470, o: 0, s: .7 });
-  tw('sonne8', W('Dann', 31) - .2, 1.4, { y: 310, o: 1, s: 1 }, 'inout'); cue(W('Dann', 31), 'whoosh');
-  zusatz('sonne8', t => t > W('Dann', 31) ? `rotate(${((t - W('Dann', 31)) * 18).toFixed(1)}deg)` : '');
-  huepfen('am8', W('gut', 31) - .1, 22); welle('welle8', W('gut', 31), X7 + KX[3], AY, 1.1, 180); cue(W('gut', 31), 'erfolg'); akzent(W('gut', 31), .04);
-  KID.forEach((id, i) => huepfen(id, W('Winter', 31) + i * .07, 10));
+  tw('sonne8', W('Dann', 32) - .2, 1.4, { y: 310, o: 1, s: 1 }, 'inout'); cue(W('Dann', 32), 'whoosh');
+  zusatz('sonne8', t => t > W('Dann', 32) ? `rotate(${((t - W('Dann', 32)) * 18).toFixed(1)}deg)` : '');
+  huepfen('am8', W('gut', 32) - .1, 22); welle('welle8', W('gut', 32), X7 + KX[3], AY, 1.1, 180); cue(W('gut', 32), 'erfolg'); akzent(W('gut', 32), .04);
+  KID.forEach((id, i) => huepfen(id, W('Winter', 32) + i * .07, 10));
 }
 
 /* ---------- Abspann ---------- */
