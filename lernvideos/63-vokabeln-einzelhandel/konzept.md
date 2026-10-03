@@ -117,7 +117,7 @@ Priya: Die Lampe geht nicht? Dann ist das eine Reklamation.
 (Pause 0.8)
 Filialleiterin: Priya, gleich kommt die Ware. Prüf sie bitte mit dem Lieferschein.
 Priya: Mach ich. Dann fülle ich die Regale auf.
-Filialleiterin: Gut. Ab zwölf Uhr bist du an der Kasse. Zähl das Wechselgeld immer laut vor.
+Filialleiterin: Gut, ab zwölf Uhr bist du an der Kasse. Zähl das Wechselgeld immer laut vor.
 Priya: Und wenn ein Kunde etwas umtauschen will?
 Filialleiterin: Bei einem Umtausch oder einer Reklamation rufst du mich. Und denk dran: Am Samstag ist Inventur in der ganzen Filiale.
 Priya: Alles klar!
