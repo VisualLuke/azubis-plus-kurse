@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Lob und Feedback</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  /* Backstube: Fliesen und Arbeitsplatte aus Token-Mischungen */
+  --fuge:color-mix(in srgb,var(--b100) 80%,var(--b50));
+  --fliesen:linear-gradient(90deg,var(--fuge) 4px,transparent 4px) 0 0/120px 90px,linear-gradient(var(--fuge) 4px,transparent 4px) 0 0/120px 90px,
+    linear-gradient(var(--b50),color-mix(in srgb,var(--b100) 45%,var(--b50)) 790px);
+}
+html,body{background:var(--b50)}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+#cam{display:none}
+.a{z-index:10}
+.d{position:absolute;left:0;top:0}
+.buehne.b73{width:3300px;height:1080px;border-radius:0;background:none;z-index:0}
+
+/* Wand, Arbeitsplatte, rechte Hälfte (teilt sich in Szene 5) */
+#land{left:-2000px;top:-1200px;width:9600px;height:3600px;background:var(--fliesen);background-position:80px 60px,80px 60px,0 0}
+#land::after{content:'';position:absolute;left:0;right:0;top:1990px;bottom:0;background:var(--b100)}
+.theke{top:790px;height:1600px;background:linear-gradient(var(--b300) 0 6px,var(--b200) 6px 26px,var(--b300) 26px 30px,transparent 30px),
+  repeating-linear-gradient(90deg,transparent 0 236px,color-mix(in srgb,var(--b300) 70%,var(--b200)) 236px 240px),linear-gradient(var(--b200),var(--b300) 320px)}
+#thekeL{left:-2000px;width:2960px}
+#leer5{left:960px;top:-1200px;width:4000px;height:3600px;background:linear-gradient(var(--surface),var(--b50) 1600px,var(--b100) 1990px)}
+#rechts{position:absolute;left:0;top:0;width:0;height:0}
+#wandR{left:960px;top:-1200px;width:5200px;height:1990px;background:var(--fliesen);background-position:0 60px,0 60px,0 0}
+#thekeR{left:960px;width:5200px}
+
+/* Fenster mit Morgengrauen */
+.fenster{width:220px;height:260px;border-radius:22px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.10);padding:12px}
+.fenster .himmel{position:absolute;inset:12px;border-radius:12px;overflow:hidden;background:linear-gradient(var(--b600),var(--b400) 55%,var(--b200))}
+.fenster .hell{position:absolute;inset:0;background:linear-gradient(var(--b400),var(--b200) 60%,var(--warning-bg));opacity:0}
+.fenster .sonne{position:absolute;left:50%;bottom:-46px;width:110px;height:110px;margin-left:-55px;border-radius:999px;background:radial-gradient(var(--warning-bg),color-mix(in srgb,var(--warning-bg) 0%,transparent) 70%)}
+.fenster .kreuz{position:absolute;inset:12px}
+.fenster .kreuz::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:var(--surface)}
+.fenster .kreuz::after{content:'';position:absolute;top:46%;left:0;right:0;height:10px;background:var(--surface)}
+.fenster .bank{position:absolute;left:-14px;right:-14px;bottom:-14px;height:18px;border-radius:9px;background:var(--b200)}
+
+/* Mischpult: Regler „Lob“, Anzeige, Messgerät „Bedeutung“ */
+.pult{width:720px;height:340px;border-radius:34px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.10),inset 0 0 0 3px var(--b100)}
+.pult .schraube{position:absolute;width:12px;height:12px;border-radius:999px;background:var(--b100)}
+.mod{position:absolute;top:0;height:340px}
+.pt{position:absolute;font:800 26px/30px Inter;color:var(--b600);letter-spacing:.04em;white-space:nowrap}
+.pk{position:absolute;font:600 20px/24px Inter;color:var(--n500);white-space:nowrap}
+.rspur{position:absolute;left:104px;top:70px;width:16px;height:230px;border-radius:8px;background:var(--b100);box-shadow:inset 0 2px 4px rgba(22,19,37,.12)}
+.rfuell{position:absolute;left:104px;top:70px;width:16px;height:230px;border-radius:8px;background:linear-gradient(var(--b300),var(--b500));transform-origin:50% 100%}
+.rstrich{position:absolute;left:74px;width:18px;height:4px;border-radius:2px;background:var(--n300)}
+.knopf{position:absolute;left:74px;top:283px;width:76px;height:34px;border-radius:12px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 4px 10px rgba(58,37,153,.3)}
+.knopf::after{content:'';position:absolute;left:16px;right:16px;top:15px;height:4px;border-radius:2px;background:var(--surface)}
+.anzeige{position:absolute;left:222px;top:22px;width:270px;height:296px;border-radius:22px;background:var(--b50);box-shadow:inset 0 0 0 3px var(--b100);overflow:hidden}
+.eq{position:absolute;left:30px;right:30px;bottom:34px;height:150px;display:flex;align-items:flex-end;justify-content:space-between}
+.eq i{display:block;width:20px;height:150px;border-radius:10px;background:linear-gradient(var(--b300),var(--b500));transform-origin:50% 100%;transform:scaleY(.08)}
+.anz{position:absolute;left:0;top:0}
+.miniblase{padding:10px 18px;border-radius:20px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12);font:700 26px/32px Inter;white-space:nowrap;color:var(--ink)}
+.minifrage{width:54px;height:54px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 34px/54px Inter;text-align:center}
+.nadel{position:absolute;left:107px;top:144px;width:6px;height:78px;border-radius:3px;background:var(--b700);transform-origin:50% 100%}
+.nabe{position:absolute;left:99px;top:211px;width:22px;height:22px;border-radius:999px;background:var(--b500);box-shadow:0 0 0 4px var(--surface)}
+.punkt73{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:999px;background:var(--b500)}
+.ring73{position:absolute;border-radius:999px;border:4px solid var(--b500);opacity:0}
+
+/* Schild über dem Ofen (Text im Bild) */
+.tafel{width:560px;height:200px;border-radius:26px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.10),inset 0 0 0 4px var(--b100);transform-origin:50% 0}
+.tafel .haken{position:absolute;top:-10px;width:18px;height:18px;border-radius:999px;background:var(--b300);box-shadow:0 0 0 5px var(--b100)}
+.tafeltext{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.tafeltext .titel{font:800 40px/50px Inter;letter-spacing:-.01em;color:var(--ink)}
+.tafeltext .titel.gross{font-size:62px;line-height:72px}
+.titel .w.hell .wi{color:var(--b500)}
+
+/* Ofen, Blech, Zeit */
+.blech{width:260px;height:34px;border-radius:8px 8px 12px 12px;background:linear-gradient(var(--n200),var(--n300));box-shadow:inset 0 5px 0 var(--surface),0 6px 12px rgba(22,19,37,.12)}
+.zeitring{width:64px;height:64px}
+.zeitbalken{width:94px;height:26px;border-radius:13px;background:var(--b700);overflow:hidden;padding:4px}
+.zeitbalken i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--warning),var(--warning-bg));transform-origin:0 50%;transform:scaleX(0)}
+.dampf{position:absolute;width:20px;height:70px;border-radius:999px;background:linear-gradient(transparent,color-mix(in srgb,var(--surface) 85%,transparent));opacity:0}
+
+/* Sprechblasen (Inhalt, kein Untertitel) */
+.blase{padding:16px 28px;border-radius:30px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.12);font:700 34px/42px Inter;color:var(--ink);white-space:nowrap;text-align:center}
+.blase::after{content:'';position:absolute;width:28px;height:28px;background:var(--surface);left:var(--sx,34px);bottom:-11px;transform:rotate(45deg);border-radius:4px}
+.blase.links::after{left:-11px;bottom:auto;top:var(--sy,50%);margin-top:-14px}
+.blase.rechts::after{left:auto;right:-11px;bottom:auto;top:var(--sy,50%);margin-top:-14px}
+.blase.gross{font-size:38px;line-height:48px;padding:20px 34px}
+.blase .z2{display:block}
+.gold{padding:18px 34px;border-radius:32px;background:linear-gradient(var(--warning-bg),color-mix(in srgb,var(--warning) 30%,var(--warning-bg)));
+  box-shadow:inset 0 0 0 5px var(--warning),inset 0 10px 0 5px color-mix(in srgb,var(--surface) 55%,transparent),0 10px 26px rgba(156,103,18,.22);
+  font:800 44px/52px Inter;color:var(--ink);white-space:nowrap}
+.gold::after{content:'';position:absolute;width:30px;height:30px;left:-13px;top:50%;margin-top:-15px;transform:rotate(45deg);border-radius:4px;
+  background:color-mix(in srgb,var(--warning) 15%,var(--warning-bg));box-shadow:inset 4px -4px 0 var(--warning)}
+.plakette{width:70px;height:70px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.lila{background:var(--b500)}
+.frage{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* Szene 3: Sache-Karte, Schutzrahmen, Feedback-Bogen */
+.sache{width:250px;height:150px;border-radius:26px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center;gap:4px}
+.sache .ic{width:96px;height:96px}
+.sache b{font:800 40px/1 Inter;color:var(--b500)}
+.schutz{border-radius:999px;border:8px solid var(--b300);box-shadow:0 0 0 10px color-mix(in srgb,var(--b200) 45%,transparent),0 0 30px 8px color-mix(in srgb,var(--b300) 45%,transparent)}
+.bogen{width:400px;height:270px;border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);padding:22px 26px}
+.bogen .kopf{font:800 24px/30px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase;text-align:center;margin-bottom:16px}
+.bogen .spalten{display:flex;gap:26px}
+.bogen .sp{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px}
+.bogen .icon{width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center}
+.bogen .icon svg{width:24px}
+.bogen .zl{height:12px;border-radius:6px;background:var(--n200);align-self:stretch;transform-origin:0 50%;transform:scaleX(0)}
+
+/* Szene 5: geteilte Bühne */
+.fuge5{width:10px;height:730px;border-radius:5px;background:var(--b500);box-shadow:0 0 18px 6px color-mix(in srgb,var(--b400) 55%,transparent);transform-origin:50% 0}
+.feld{width:860px;height:700px;border-radius:40px;border:5px dashed var(--b300);background:color-mix(in srgb,var(--surface) 70%,transparent);z-index:0}
+.unten{z-index:0}
+.grossfrage{width:190px;height:190px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 128px/190px Inter;text-align:center;box-shadow:0 10px 30px rgba(90,63,230,.3)}
+.etikett .titel{font:800 50px/60px Inter;letter-spacing:-.01em;color:var(--b600);white-space:nowrap}
+.geist{width:100px;height:200px;border-radius:22px;border:4px dashed var(--b300)}
+.geist i{position:absolute;left:20px;top:120px;width:52px;height:26px;border-radius:9px;border:4px dashed var(--b400)}
+.wolke{width:420px;height:170px;border-radius:85px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12),inset 0 0 0 4px var(--b100);display:flex;align-items:center;justify-content:space-evenly;padding:0 26px}
+.wolke .sym{width:72px;height:72px}
+.dot{border-radius:999px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12),inset 0 0 0 3px var(--b100)}
+
+/* Porträts im Kreis */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Abspann: weiße Platte steigt auf */
+#platte{position:absolute;left:0;top:0;width:1920px;height:1080px;background:var(--surface);z-index:50;transform:translateY(110%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+#platte .icons{display:flex;gap:28px;margin-bottom:34px}
+#platte .icons div{width:150px;height:150px}
+#abspTitel .titel{font:800 104px/116px Inter;letter-spacing:-.03em;color:var(--ink)}
+#asUnter{font:500 46px/60px Inter;color:var(--n700);margin-top:22px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHoch"><svg viewBox="0 0 40 40"><path d="M20 32V9M10 18l10-10 10 10" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgSprech"><svg viewBox="0 0 72 72"><path d="M10 16a8 8 0 0 1 8-8h36a8 8 0 0 1 8 8v24a8 8 0 0 1-8 8H32l-12 12V48h-2a8 8 0 0 1-8-8Z" fill="var(--b500)"/><path d="M22 22h28M22 33h18" stroke="var(--b100)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHerz"><svg viewBox="0 0 72 72"><path d="M36 62C14 48 6 36 6 25a14 14 0 0 1 30-6 14 14 0 0 1 30 6c0 11-8 23-30 37Z" fill="var(--b400)"/><path d="M16 25c1-5 5-8 10-8" stroke="var(--b100)" stroke-width="5" stroke-linecap="round" fill="none"/></svg></template>
+<template id="f-Yusuf">{{figur-yusuf}}</template>
+<template id="f-Bäckermeisterin">{{figur-baeckermeisterin}}</template>
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div>
+  <div class="ebene trauer"><svg viewBox="0 0 160 160"><path d="M74 90q6-4.5 12 0" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+
+<div id="kamera"><div id="welt">
+  <div class="d" id="land"></div>
+  <div class="d theke" id="thekeL"></div>
+  <div class="a buehne b73" id="bue"></div>
+
+  <!-- Szene 5: was unter der rechten Hälfte liegt (leere Wand, Fragezeichen, Gedanken) -->
+  <div class="d" id="leer5"></div>
+  <div class="a feld" id="feld5" data-frei></div>
+  <div class="a grossfrage unten" id="frage5">?</div>
+  <div class="a etikett unten" id="tbBei"><div class="titel">Bei dir?</div></div>
+  <div class="a geist unten" id="geist5"><i id="geistKnopf"></i></div>
+  <div class="a wolke unten" id="wolke5"><div class="sym" id="sym1"></div><div class="sym" id="sym2"></div><div class="sym" id="sym3"></div><div class="sym" id="sym4"></div></div>
+  <div class="a dot unten" id="dot1" style="width:20px;height:20px"></div>
+  <div class="a dot unten" id="dot2" style="width:28px;height:28px"></div>
+  <div class="a dot unten" id="dot3" style="width:38px;height:38px"></div>
+
+  <!-- rechte Hälfte der Backstube: Fenster, Schild, Ofen, Blech – und der Knetbereich (Szene 3) -->
+  <div id="rechts">
+    <div class="d" id="wandR"></div>
+    <div class="d theke" id="thekeR"></div>
+    <div class="a fenster" id="fenster"><div class="himmel"><div class="hell" id="himmelHell"></div><div class="sonne" id="sonne"></div></div><div class="kreuz"></div><div class="bank"></div></div>
+    <div class="a tafel" id="tafel"><div class="haken" style="left:60px"></div><div class="haken" style="right:60px"></div>
+      <div class="tafeltext" id="tb2"><div class="titel">Lob ist oft kurz –</div><div class="titel">„Passt so“ heißt</div><div class="titel">meistens: gut</div></div>
+      <div class="tafeltext" id="tb3"><div class="titel">Kritik ist oft</div><div class="titel">direkt – sie meint</div><div class="titel">die Sache</div></div>
+      <div class="tafeltext" id="tb6"><div class="titel gross">Frag nach</div></div>
+    </div>
+    <div class="a" id="ofenInnen" style="width:440px;z-index:2" data-gruppe="ofen">{{ofen-innen}}</div>
+    <div class="a" id="ofenGlut" style="width:440px;z-index:4" data-gruppe="ofen">{{ofen-glut}}</div>
+    <div class="a" id="ofen" style="width:440px;z-index:5" data-gruppe="ofen">{{ofen}}</div>
+    <div class="a" id="ofenTuer" style="width:440px;z-index:6;transform-origin:50% 71%" data-gruppe="ofen">{{ofen-tuer}}</div>
+    <svg class="a zeitring" id="zeitring" viewBox="0 0 64 64" style="z-index:7" data-gruppe="ofen"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--b600)" stroke-width="6"/>
+      <circle id="zeitbogen" cx="32" cy="32" r="26" fill="none" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(-90 32 32)"/></svg>
+    <div class="a zeitbalken" id="zeitbalken" style="z-index:7" data-gruppe="ofen"><i id="zeitfuell"></i></div>
+    <div class="a blech" id="blech" data-gruppe="ofen"><div class="dampf" id="dampf1" style="left:50px;top:-110px"></div><div class="dampf" id="dampf2" style="left:120px;top:-130px"></div><div class="dampf" id="dampf3" style="left:190px;top:-112px"></div></div>
+    <div class="a" id="bA" style="width:90px" data-frei>{{broetchen}}</div>
+    <div class="a" id="bB" style="width:90px" data-gruppe="ofen">{{broetchen~b}}</div>
+    <div class="a" id="bC" style="width:90px" data-gruppe="ofen">{{broetchen~c}}</div>
+    <div class="a" id="krusteB" style="width:130px" data-gruppe="ofen"><div id="krusteBild">{{broetchen~k}}</div></div>
+    <div class="a" id="korb" style="width:190px" data-gruppe="ofen">{{korb}}</div>
+    <!-- Knetbereich -->
+    <div class="a" id="teig3" style="width:300px" data-gruppe="schuessel">{{teig}}</div>
+    <div class="a" id="schuessel3" style="width:300px" data-gruppe="schuessel">{{schuessel}}</div>
+    <div class="a" id="stuhlL" style="width:190px;height:190px" data-gruppe="yus"><div style="transform:scaleX(-1)">{{stuhl}}</div></div>
+    <div class="a" id="stuhlR" style="width:190px" data-gruppe="mei3">{{stuhl~r}}</div>
+    <div class="a" id="tisch3" style="width:280px">{{tisch-rund}}</div>
+    <div class="a bogen" id="bogen3"><div class="kopf">Feedback</div><div class="spalten">
+      <div class="sp"><div class="icon" id="bogenGut" style="background:var(--success)"></div><i class="zl"></i><i class="zl" style="width:80%;align-self:flex-start"></i><i class="zl" style="width:90%;align-self:flex-start"></i></div>
+      <div class="sp"><div class="icon" id="bogenHoch" style="background:var(--b500)"></div><i class="zl"></i><i class="zl" style="width:70%;align-self:flex-start"></i><i class="zl" style="width:85%;align-self:flex-start"></i></div></div></div>
+  </div>
+
+  <!-- links: Mischpult -->
+  <div class="a pult" id="pult">
+    <div class="schraube" style="left:18px;top:18px"></div><div class="schraube" style="right:18px;top:18px"></div>
+    <div class="schraube" style="left:18px;bottom:18px"></div><div class="schraube" style="right:18px;bottom:18px"></div>
+    <div class="anzeige" id="anzeige">
+      <div class="eq" id="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="anz miniblase" id="dBlase">Passt so.</div>
+      <div class="anz minifrage" id="dFrage">?</div>
+      <div class="anz" id="dBroet" style="width:150px">{{broetchen~d}}</div>
+      <div class="anz" id="dLupe" style="width:130px">{{lupe}}</div>
+      <div class="anz miniblase" id="dKlar" style="font-size:32px;line-height:40px;padding:14px 22px">Passt so.</div>
+    </div>
+    <div class="mod" id="modL" style="left:0;width:210px">
+      <b class="pt" style="left:40px;top:22px">LOB</b>
+      <div class="rstrich" style="top:70px"></div><div class="rstrich" style="top:116px"></div><div class="rstrich" style="top:162px"></div>
+      <div class="rstrich" style="top:208px"></div><div class="rstrich" style="top:254px"></div><div class="rstrich" style="top:296px"></div>
+      <div class="rspur"></div><div class="rfuell" id="rfuell"></div>
+      <span class="pk" style="left:136px;top:60px">laut</span><span class="pk" style="left:136px;top:286px" id="pkLeise">leise</span>
+      <div class="knopf" id="knopf"></div>
+    </div>
+    <div class="mod" id="modR" style="left:500px;width:220px">
+      <b class="pt" style="left:6px;top:22px">BEDEUTUNG</b>
+      <svg style="position:absolute;left:10px;top:92px;width:200px;height:150px" viewBox="0 0 200 150">
+        <path d="M22 130A78 78 0 0 1 178 130" stroke="var(--b100)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path id="skala" d="M22 130A78 78 0 0 1 178 130" stroke="var(--b400)" stroke-width="16" stroke-linecap="round" fill="none" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+        <path d="M100 40v10M38 74l8 6M162 74l-8 6" stroke="var(--n300)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <div class="nadel" id="nadel"></div><div class="nabe"></div>
+      <span class="pk" style="left:6px;top:244px">wenig</span><span class="pk" style="left:170px;top:244px" id="pkViel">viel</span>
+    </div>
+    <div id="punkte"></div>
+    <div class="ring73" id="glimmL"></div><div class="ring73" id="glimmR"></div>
+  </div>
+  <div class="a fuge5" id="fuge5" data-frei></div>
+  <div class="a etikett" id="tbDE"><div class="titel">In Deutschland</div></div>
+  <div class="a tafel" id="band4" style="width:640px;height:84px;border-radius:22px;transform-origin:50% 50%"><div class="tafeltext" id="tb4"><div class="titel" style="font-size:36px;line-height:44px">Klar und direkt gilt als ehrlich</div></div></div>
+
+  <!-- Gegenstände und Blasen, die wandern -->
+  <div class="a blase" id="blase1" data-gruppe="ofen" style="--sx:30px">Passt so.</div>
+  <div class="a blase" id="blase2" data-gruppe="ofen" style="--sx:30px">Gut so.</div>
+  <div class="a gold" id="gold1" data-gruppe="ofen">Das ist gut!</div>
+  <div class="a gold" id="gold2" data-gruppe="ofen">Das ist gut!</div>
+  <div class="a plakette gruen" id="haken2" data-frei></div>
+  <div class="a" id="hL" style="width:110px" data-frei>{{broetchen-halb}}</div>
+  <div class="a" id="hR" style="width:110px" data-frei>{{broetchen-halb~r}}</div>
+  <div class="a" id="herz1" style="width:80px" data-frei>{{herz}}</div>
+  <div class="a frage" id="frage1">?</div>
+  <div class="a blase rechts" id="kritik3" data-gruppe="ofen" style="--sy:40%"><span>Der Teig ist zu fest.</span><span class="z2" id="kritikZ2">Nimm etwas mehr Wasser.</span></div>
+  <div class="a sache" id="sache3" data-gruppe="ofen"><div class="ic">{{teig~s}}</div><b>+</b><div class="ic" style="width:80px;height:80px">{{tropfen}}</div></div>
+  <div class="a schutz" id="schutz3" style="width:300px;height:300px" data-frei></div>
+  <div class="a blase links" id="y1" style="--sy:62%">War das so richtig?</div>
+  <div class="a blase links" id="y2" style="--sy:40%">Was kann ich noch<br>besser machen?</div>
+  <div class="a blase gross" id="m6" style="--sx:150px">Die Brötchen sind<br>wirklich gut.</div>
+  <div class="a plakette gruen" id="haken6" data-frei></div>
+  <div class="a plakette lila" id="hoch6" data-frei></div>
+  <svg class="a" id="linie6" viewBox="0 0 560 160" style="width:560px;height:160px" data-frei>
+    <path class="zeichnen" pathLength="1" d="M18 120C150 20 410 20 542 120" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+  <div class="a frage" id="lauf6" style="width:56px;height:56px;font-size:34px;line-height:56px" data-frei>?</div>
+  <div class="a welle" id="welle2" style="width:260px;height:260px" data-frei></div>
+  <div class="a welle" id="welle6" style="width:420px;height:420px" data-frei></div>
+</div></div>
+
+<div id="platte"><div class="icons"><div>{{regler}}</div><div>{{zeiger}}</div></div>
+  <div id="abspTitel"><div class="titel">Anders ist nicht falsch.</div></div>
+  <div id="asUnter">Leises Lob ist auch Lob.</div></div>
+<div id="cam"></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WN = (n, i) => A(satz(n).woerter[i].start);
+const SA = n => A(satz(n).start), SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const lerp = (a, b, p) => a + (b - a) * p;
+const faerben = (id, woerter) => el(id).querySelectorAll('.w').forEach(w => { if (woerter.includes(w.textContent.trim())) w.classList.add('hell'); });
+
+/* ---------- Helfer: Auftritte, Hüpfen, Bump, Flug, Wellen ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y }, 'weich');
+  tw(id, t + .32, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .44, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const weg = (ids, t, d = .35) => tw(ids, t, d, { o: 0 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const pendel = (id, t, a = 6, n = 5, d = .3) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.5, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const welle = (id, t, x, y, d = .9, s1 = 1.6) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: s1 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
+// Rütteln mit fester Frequenz (kein Flackern), weich ein- und ausgeblendet
+const RUETTELN = [];
+const ruetteln = (ids, t0, t1, a = 3) => [].concat(ids).forEach(id => RUETTELN.push([id, t0, t1, a]));
+// z-Ebene über die Zeit (in den Ofen hinein: hinter die Ofenfront)
+const ZK = {};
+const zset = (ids, t, z) => [].concat(ids).forEach(id => (ZK[id] ??= []).push([t, z]));
+
+/* ---------- Kamera: Mitte (x, y) und Zoom (log) als Akteur; Fahrten mit Unschärfe, Zoom-Atmer, Akzente ---------- */
+akteur('cam', { x: 1490, y: 640, r: Math.log(1.45) }, true);
+const FAHRTEN = [], AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+function fahrt(t, x, y, z = 1, d = 1, atmen = .06, bogen = 0, snd = 'whoosh') { tw('cam', t, d, { x, y, r: Math.log(z) }, 'inout', { bogen }); FAHRTEN.push([t, d, atmen]); if (snd) cue(t, snd); }
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const camAk = AKTEURE.get(el('cam'));
+const camBei = t => ({ x: wert(camAk, 'x', t), y: wert(camAk, 'y', t), z: Math.exp(wert(camAk, 'r', t)) });
+HOOKS.push(t => {
+  const c = camBei(t), v = camBei(t - 1 / 30);
+  let z = c.z;
+  for (const [t0, d, atmen] of FAHRTEN) if (atmen) z *= 1 - atmen * Math.sin(Math.PI * clamp((t - t0) / d));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...FAHRTEN.filter(f => f[0] + f[1] <= t).map(f => f[0] + f[1]));
+  z *= 1 + .02 * E.inout(clamp((t - letzte) / 11));
+  WELT.style.transform = `translate(${(960 - c.x).toFixed(2)}px,${(540 - c.y).toFixed(2)}px)`;
+  $('#kamera').style.transform = `scale(${z.toFixed(5)})`;
+  const bx = Math.min(18, Math.abs(c.x - v.x) * c.z * .09), by = Math.min(18, Math.abs(c.y - v.y) * c.z * .09);
+  $('#wischerBlur').setAttribute('stdDeviation', `${(bx / c.z).toFixed(2)} ${(by / c.z).toFixed(2)}`);
+  WELT.style.filter = bx + by > .3 ? 'url(#wischer)' : '';
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen, blinzeln, nicken, froh/traurig, Blick zur Seite ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = [], TRAUER = [], KOPF = [], BLICK = [];
+const froh = (id, a, b = 1e9) => FROH.push([id, a, b]);
+const trauer = (id, a, b = 1e9) => TRAUER.push([id, a, b]);
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+const blick = (id, a, b) => BLICK.push([id, a, b]);
+const rampe = (t, a, b, d = .35) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+function portrait(id, wer, gr, attr = '') {
+  WELT.insertAdjacentHTML('beforeend', `<div class="a portrait" id="${id}" style="width:${gr}px;height:${gr}px" ${attr}><div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${tpl('gesicht')}</div></div>`);
+  el(id).dataset.sprecher = wer;
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = pegelBei(t);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE_Z.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const f = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    const tr = !spricht && !f && TRAUER.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf).toFixed(3)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.trauer').style.opacity = tr && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f || tr ? 0 : 1;
+    const b = BLICK.reduce((m, [id, a, e]) => id === p.id ? Math.max(m, rampe(t, a, e, .4)) : m, 0);
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `translateX(${(3.2 * b).toFixed(2)}px) scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(${(5 * b).toFixed(2)}px,${y.toFixed(2)}px) rotate(${(r + 3 * b).toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+  for (const [id, t0, t1, a] of RUETTELN) if (t > t0 && t < t1) { const k = Math.min(1, (t - t0) / .2, (t1 - t) / .2);
+    el(id).style.transform += ` translate(${(a * k * Math.sin(t * 61)).toFixed(2)}px,${(a * .5 * k * Math.sin(t * 47 + 1)).toFixed(2)}px)`; }
+  for (const [id, l] of Object.entries(ZK)) { let z = ''; for (const [a, w] of l) if (t >= a) z = w; el(id).style.zIndex = z; }
+});
+
+/* ================= Aufbau der Backstube ================= */
+akteur('bue', { x: 1650, y: 540 });
+['haken2', 'haken6'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('hoch6').innerHTML = tpl('svgHoch');
+el('bogenGut').innerHTML = tpl('svgHaken'); el('bogenHoch').innerHTML = tpl('svgHoch');
+el('sym1').innerHTML = tpl('svgSprech'); el('sym2').innerHTML = tpl('svgHerz');
+el('sym3').innerHTML = `{{regler~w}}`; el('sym4').innerHTML = `{{broetchen~w}}`;
+portrait('mei', 'Bäckermeisterin', 230);
+portrait('mei3', 'Bäckermeisterin', 170, 'data-gruppe="mei3"');
+portrait('yus', 'Yusuf', 250, 'data-gruppe="yus"');
+
+const OX = 1540, OY = 600;                       // Ofen-Mitte; Ofenloch um (OX, 627)
+const P_AUS = { x: OX, y: 880, s: 1 }, P_MITTE = { x: OX, y: 655, s: .93 }, P_IN = { x: OX, y: 645, s: .8 };
+const YX = 340, YY = 670;                        // Yusufs Platz in der Backstube
+akteur('pult', { x: 430, y: 230 });
+akteur('fenster', { x: 1100, y: 200 });
+akteur('tafel', { x: 1540, y: -260, o: 0 });
+['ofenInnen', 'ofenGlut', 'ofen', 'ofenTuer'].forEach(id => akteur(id, { x: OX, y: OY }));
+akteur('ofenGlut', { x: OX, y: OY, o: .35 });
+akteur('zeitring', { x: 1435, y: 509, o: 0 });
+akteur('zeitbalken', { x: 1609, y: 509 });
+akteur('korb', { x: 1250, y: 870 });
+
+/* ---------- Ofen: Tür, Blech mit Mitfahrern, Backen (Glut, Zeitring, Zeitbalken) ---------- */
+function tuerAuf(t) { tw('ofenTuer', t, .3, { sy: 0 }, 'inout'); set('ofenTuer', t + .31, { o: 0 }); cue(t, 'klick'); }
+function tuerZu(t) { set('ofenTuer', t - .01, { o: 1 }); tw('ofenTuer', t, .3, { sy: 1 }, 'inout'); cue(t + .3, 'plopp'); }
+// Blech fährt (mit Mitfahrern [id, dx, dy, s]) – Mitfahrer behalten ihren Platz auf dem Blech
+function blechFahrt(t, d, z, mit = [], e = 'inout') {
+  tw('blech', t, d, { x: z.x, y: z.y, s: z.s }, e);
+  for (const [id, dx, dy, s0 = 1] of mit) tw(id, t, d, { x: z.x + dx * z.s, y: z.y + dy * z.s, s: s0 * z.s }, e);
+}
+const rein = (t, mit = []) => { blechFahrt(t, .45, P_MITTE, mit); zset(['blech', ...mit.map(m => m[0])], t + .45, 3); blechFahrt(t + .45, .3, P_IN, mit); cue(t, 'whoosh'); };
+const raus = (t, mit = []) => { blechFahrt(t, .3, P_MITTE, mit); zset(['blech', ...mit.map(m => m[0])], t + .3, 10); blechFahrt(t + .3, .45, P_AUS, mit); cue(t + .3, 'whoosh'); };
+const BACKEN = [];
+function backen(t0, t1) {
+  BACKEN.push([t0, t1]); cue(t0, 'scan');
+  ruetteln(['ofen', 'ofenTuer', 'ofenGlut', 'ofenInnen', 'zeitring', 'zeitbalken'], t0 + .1, t1 - .05, 2);
+}
+set('zeitring', 0, { o: 0 });
+HOOKS.push(t => {
+  let p = 0, an = 0, glut = .35;
+  for (const [a, b] of BACKEN) {
+    if (t >= a - .25 && t <= b + .45) { an = Math.max(an, Math.min(clamp((t - a + .25) / .25), clamp((b + .45 - t) / .3))); }
+    if (t >= a && t <= b + .45) p = clamp((t - a) / (b - a));
+    glut = Math.max(glut, .35 + .6 * rampe(t, a - .1, b, .3));
+  }
+  $('#zeitbogen').style.strokeDashoffset = (1 - p).toFixed(3);
+  $('#zeitring').style.opacity = an.toFixed(3);
+  $('#zeitfuell').style.transform = `scaleX(${p.toFixed(3)})`;
+  $('#ofenGlut').style.opacity = (glut * (.9 + .1 * Math.sin(t * 7))).toFixed(3);
+});
+
+/* ---------- Mischpult: Regler (Lautstärke) und Zeiger (Bedeutung) ---------- */
+rel('knopf', { y: 0 }); rel('rfuell', { sy: 0 }, '50% 100%'); rel('nadel', { r: -80 }, '50% 100%');
+const regler = (t, v, d = .8, e = 'inout') => { tw('knopf', t, d, { y: -230 * v }, e); tw('rfuell', t, d, { sy: Math.max(.001, v) }, e); };
+const zeiger = (t, w, d = .7, e = 'back') => tw('nadel', t, d, { r: -80 + 160 * w }, e);
+HOOKS.push(t => {
+  const r = wertBei('nadel', 'r', t), w = clamp((r + 80) / 160);
+  $('#skala').style.strokeDashoffset = (1 - w).toFixed(3);
+});
+rel('modL', { x: 0 }); rel('modR', { x: 0 });
+rel('anzeige', { o: .55 });
+// Anzeige: Pegel-Balken bei den Figuren (nur in ihren Sätzen), sonst ruhig
+const EQ = [...document.querySelectorAll('#eq i')];
+let EQ_AN = 1e9;
+HOOKS.push(t => {
+  const pegel = pegelBei(t);
+  const wer = SAETZE_Z.find(s => t >= s.a && t <= s.b)?.w;
+  const figur = wer && wer !== 'Erzählerin';
+  EQ.forEach((b, i) => {
+    const ruhe = .08 + .05 * (.5 + .5 * Math.sin(t * 2.3 + i * .9));
+    const v = clamp(-wertBei('knopf', 'y', t) / 230);
+    const h = t < EQ_AN ? .06 : figur ? clamp(.1 + pegel * (.3 + .7 * v) * (.5 + .5 * Math.abs(Math.sin(t * 11 + i * 1.7)))) : ruhe;
+    b.style.transform = `scaleY(${h.toFixed(3)})`;
+  });
+});
+['dBlase', 'dFrage', 'dBroet', 'dLupe', 'dKlar'].forEach(id => rel(id, { o: 0 }));
+rel('eq', { o: 1 });
+// gepunktete Linie leise – viel (Szene 4), Punkte setzen sich nacheinander
+const PUNKTE = [];
+for (let k = 0; k < 11; k++) {
+  const u = k / 10, x = (1 - u) ** 2 * 300 + 2 * (1 - u) * u * 430 + u * u * 560, y = (1 - u) ** 2 * 310 + 2 * (1 - u) * u * 334 + u * u * 266;
+  $('#punkte').insertAdjacentHTML('beforeend', `<i class="punkt73" id="pk${k}" style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px"></i>`);
+  rel('pk' + k, { s: 0 }); PUNKTE.push('pk' + k);
+}
+// Glimmen um „leise“ und „viel“
+Object.assign(el('glimmL').style, { left: '262px', top: '276px', width: '84px', height: '44px' });
+Object.assign(el('glimmR').style, { left: '520px', top: '234px', width: '70px', height: '44px' });
+rel('glimmL', { o: 0 }); rel('glimmR', { o: 0 });
+
+/* ================= 1 · Yusufs erste Brötchen ================= */
+// Blech gleitet aus dem Ofen, Dampf steigt
+const AUF_BLECH = [['bA', -70, -43], ['bB', 0, -43], ['bC', 70, -43]];
+akteur('blech', P_IN); AUF_BLECH.forEach(([id, dx, dy]) => akteur(id, { x: OX + dx * .8, y: 645 + dy * .8, s: .8 }));
+zset(['blech', 'bA', 'bB', 'bC'], 0, 3);
+set('ofenTuer', 0, { sy: 1 });
+tuerAuf(.25);
+raus(.5, AUF_BLECH);
+landen('blech', 1.25);
+tuerZu(1.5);
+HOOKS.push(t => ['dampf1', 'dampf2', 'dampf3'].forEach((id, k) => {
+  const q = ((t - 1.2 + k * .55) / 1.7) % 1, an = t > 1.2 && t < 11.5;
+  el(id).style.opacity = an ? (Math.sin(Math.PI * q) * .75).toFixed(3) : 0;
+  el(id).style.transform = `translate(${(6 * Math.sin(t * 2 + k)).toFixed(1)}px,${(-60 * q).toFixed(1)}px) scaleX(${(1 + .5 * q).toFixed(2)})`;
+}));
+// Morgengrauen: Himmel wird heller
+HOOKS.push(t => { const p = E.inout(clamp(t / 14)); $('#himmelHell').style.opacity = p.toFixed(3); $('#sonne').style.transform = `translateY(${(-24 * p).toFixed(1)}px)`; });
+fahrt(.6, 960, 540, 1, 2.0, 0, 0, null);
+cue(.6, 'whoosh');
+// Yusuf kommt, hüpft stolz
+akteur('yus', { x: YX, y: YY, s: 0 });
+tw('yus', W('Mal', 1) - .2, .65, { s: 1 }, 'sanft'); cue(W('Mal', 1) - .2, 'pop');
+froh('yus', W('Mal', 1), W('Bäckermeisterin', 3));
+huepfen('yus', W('allein', 1), 20); huepfen('yus', W('gebacken', 1) + .1, 16);
+// früh am Morgen: das Mischpult schaltet sich ein
+tw('anzeige', W('früh', 2), .5, { o: 1 }); EQ_AN = W('früh', 2) + .1; cue(W('früh', 2), 'klick');
+regler(W('angefangen', 2), .5, .9, 'sanft'); zeiger(W('angefangen', 2) + .1, .5, .9, 'sanft');
+// stolz: Porträt wächst kurz, ein kleines Herz steigt auf
+bump('yus', W('stolz', 2), 1.12); cue(W('stolz', 2), 'ding');
+akteur('herz1', { x: YX + 120, y: YY - 110, s: 0 });
+tw('herz1', W('stolz', 2) + .05, .45, { s: 1 }, 'back');
+tw('herz1', W('stolz', 2) + .2, 1.6, { y: YY - 225, x: YX + 160 }, 'out'); tw('herz1', W('stolz', 2) + 1.2, .6, { o: 0 });
+// Die Bäckermeisterin kommt
+akteur('mei', { x: 1050, y: 640, s: 0 });
+tw('mei', W('Bäckermeisterin', 3) - .1, .6, { s: 1 }, 'sanft'); cue(W('Bäckermeisterin', 3) - .1, 'pop');
+nicken('yus', W('Bäckermeisterin', 3) + .3);
+// nimmt ein Brötchen – es fliegt im Bogen zu ihr
+const TN = W('nimmt', 3);
+zset('bA', TN, 12);
+flug('bA', TN, .85, 1150, 742, 150, { s: 1.1 }); landen('bA', TN + .85); cue(TN + .85, 'plopp');
+// bricht es auf: zwei Hälften mit Krume
+const TB = W('bricht', 3) + .15;
+set('bA', TB, { o: 0 });
+akteur('hL', { x: 1150 - 22, y: 742, o: 0 }); akteur('hR', { x: 1150 + 22, y: 742, o: 0, sx: -1 });
+set(['hL', 'hR'], TB, { o: 1 }); zset(['hL', 'hR'], 0, 12);
+tw('hL', TB, .5, { x: 1150 - 52, y: 736, r: -3 }, 'sanft'); tw('hR', TB, .5, { x: 1150 + 52, y: 736, r: 3 }, 'sanft');
+cue(TB, 'klick'); akzent(TB, .025);
+// „Passt so, Yusuf.“ – kleine Blase, der Lob-Regler fährt fast ganz nach unten
+pop('blase1', W('Passt', 4) - .05, { x: 1175, y: 432, s: .92 });
+regler(W('Passt', 4) + .3, .12, 1.0, 'inout'); cue(W('Passt', 4) + .3, 'scan');
+// geht weiter an die Arbeit
+const TG = W('geht', 5);
+tw('mei', TG, .8, { x: 1290, o: 0 }, 'in'); tw(['hL', 'hR'], TG, .8, { o: 0 }, 'in');
+tw('hL', TG, .8, { x: 1290 - 40 }, 'in'); tw('hR', TG, .8, { x: 1290 + 64 }, 'in');
+cue(TG, 'whoosh');
+// Yusuf ist enttäuscht: Lächeln fällt, Porträt sinkt, der Zeiger sinkt mit
+const TE = W('enttäuscht', 6);
+tw('yus', TE, .7, { y: YY + 24, s: .95 }, 'inout');
+zeiger(TE + .1, .18, .9, 'inout');
+// seine Frage
+pop('frage1', W('Nur', 7), { x: 545, y: 492 });
+wackeln('frage1', W('nicht', 8), 4, 3);
+
+/* ================= 2 · Der Ofen übersetzt ================= */
+// Die anderen Brötchen springen in den Korb
+flug('bB', SE(8) + .05, .55, 1225, 873, 90); landen('bB', SE(8) + .6); cue(SE(8) + .6, 'plopp');
+flug('bC', SE(8) + .2, .55, 1282, 868, 80); landen('bC', SE(8) + .75);
+// Yusuf schiebt die kleine Blase aufs Blech – Kamera fährt an den Ofen
+const T2 = SE(8) + .35;
+aus('frage1', T2 - .1, .3);
+bump('yus', T2, 1.06); tw('yus', T2, .3, { r: 3 }, 'sinus'); tw('yus', T2 + .3, .4, { r: 0 }, 'sanft');
+flug('blase1', T2 + .05, .6, OX, 820, 140, { s: .8 }); landen('blase1', T2 + .65); cue(T2 + .65, 'plopp');
+fahrt(T2, 1460, 620, 1.3, 1.0, .03);
+tuerAuf(T2 + .5);
+rein(T2 + .72, [['blase1', 0, -60, .8]]);
+tuerZu(T2 + 1.5);
+const TGUT = W('gut', 9);
+backen(T2 + 1.62, TGUT - .1);
+// … heraus kommt dieselbe Blase, groß und goldbraun: „Das ist gut!“
+set('blase1', TGUT - .3, { o: 0 });
+akteur('gold1', { x: OX, y: 645 - 66 * .8, s: .44, o: 0 }); zset('gold1', 0, 3); set('gold1', TGUT - .3, { o: 1 });
+tuerAuf(TGUT - .05); cue(TGUT, 'ding');
+raus(TGUT + .15, [['gold1', 0, -66, .55]]);
+landen('blech', TGUT + .9);
+tw('gold1', TGUT + .9, .5, { s: 1.12 }, 'back'); cue(TGUT + .9, 'pop');
+fahrt(TGUT + .55, 960, 540, 1, 1.1, .03);
+const TG1 = TGUT + 1.35;
+flug('gold1', TG1, .85, 712, 492, 150, { s: 1 }); landen('gold1', TG1 + .85); cue(TG1 + .85, 'erfolg');
+zset('gold1', TG1, 12);
+tuerZu(TGUT + 1.2);
+// Der Zeiger „Bedeutung“ springt nach oben – der Regler bleibt unten
+zeiger(TG1 + .9, .88, .75, 'back'); cue(TG1 + .9, 'scan'); akzent(TG1 + 1.0, .045);
+welle('welle2', TG1 + 1.1, 680, 280, .9, 1.25);
+trauer('yus', TE, TG1 + .95);
+tw('yus', TG1 + .9, .6, { y: YY, s: 1 }, 'sanft');
+froh('yus', TG1 + .95, SE(12) + 1.5);
+huepfen('yus', TG1 + 1.6, 18);
+// Schild über dem Ofen fällt herein, Text steigt aus der Maske
+tw('tafel', W('Arbeit', 10) - .2, .55, { y: 175, o: 1 }, 'out'); pendel('tafel', W('Arbeit', 10) + .35, 5, 4, .32); cue(W('Arbeit', 10) - .2, 'whoosh');
+titelEin('tb2', 0, [W('Lob', 10) + .45, W('Lob', 10) + .55, W('oft', 10), W('kurz', 10), W('kurz', 10) + .12,
+  W('Passt', 11), WN(11, 1), W('heißt', 11), W('meistens', 11), WN(11, 9)]);
+faerben('tb2', ['„Passt', 'so“', 'gut']);
+// „Gut so“: zweite Blase läuft durch den Ofen
+const TGS = W('Gut', 11);
+pop('blase2', TGS - .1, { x: 1175, y: 432, s: .92 });
+flug('blase2', TGS + .25, .55, OX, 822, 120, { s: .8 }); landen('blase2', TGS + .8); cue(TGS + .8, 'plopp');
+tuerAuf(TGS + .62);
+rein(TGS + .85, [['blase2', 0, -58, .8]]);
+tuerZu(TGS + 1.6);
+const TD = W('Das', 11);
+backen(TGS + 1.66, TD - .1);
+set('blase2', TD - .3, { o: 0 });
+akteur('gold2', { x: OX, y: 645 - 66 * .8, s: .44, o: 0 }); zset('gold2', 0, 3); set('gold2', TD - .3, { o: 1 });
+tuerAuf(TD - .05); cue(TD, 'ding');
+raus(TD + .1, [['gold2', 0, -66, .55]]);
+landen('blech', TD + .85);
+tw('gold2', TD + .85, .45, { s: 1.12 }, 'back');
+zset('gold2', TD + 1.2, 12);
+flug('gold2', TD + 1.2, .8, 748, 640, 120, { s: 1 }); landen('gold2', TD + 2.0); cue(TD + 2.0, 'erfolg');
+tuerZu(TD + 1.1);
+bump('nadel', TD + 2.0, 1.05);
+// Und wenn alles in Ordnung ist: ein leeres Blech – heraus kommt ein kleiner grüner Haken
+const TH = W('alles', 12);
+tuerAuf(TH - .2);
+rein(TH, []);
+tuerZu(TH + .8);
+const TN0 = W('gar', 12);
+backen(TH + .9, TN0 - .1);
+akteur('haken2', { x: OX, y: 645 - 52 * .8, s: 0 }); zset('haken2', 0, 3);
+set('haken2', TN0 - .3, { s: .6 * .8 });
+tuerAuf(TN0 - .1);
+raus(TN0 + .05, [['haken2', 0, -52, .6]]);
+tw('haken2', TN0 + .8, .3, { s: 1 }, 'back');
+zset('haken2', TN0 + .9, 12);
+flug('haken2', TN0 + .9, .6, YX + 112, YY - 100, 140); cue(TN0 + 1.5, 'ding');
+landen('haken2', TN0 + 1.5);
+tuerZu(TN0 + .9);
+bump('yus', TN0 + 1.55, 1.06);
+schweben(['gold1', 'gold2'], 3);
+
+/* ================= 3 · Kritik meint die Sache (Kamerafahrt zum Knetbereich) ================= */
+const T3 = SE(12) + 1.0;
+fahrt(T3, 2180, 540, 1, 1.4, .08);
+textAus('tb2', T3 - .2);
+weg(['gold1', 'gold2'], T3 - .1, .4); tw('haken2', T3 - .15, .3, { s: 0 }, 'in');
+tw('yus', T3 - .05, 1.45, { x: 2600, y: 700 }, 'inout', { bogen: 90 }); landen('yus', T3 + 1.4);
+const TK = W('Kritik', 13);
+// Schüssel mit Teig
+akteur('teig3', { x: 1980, y: 690 }); akteur('schuessel3', { x: 1980, y: 690 });
+titelEin('tb3', 0, [TK, TK + .1, W('oft', 13), W('direkt', 13), W('direkt', 13) + .12, W('nicht', 15), W('nicht', 15) + .12, W('dich', 15) - .05, W('dich', 15) + .08]);
+faerben('tb3', ['Sache']);
+// zum Beispiel: die Bäckermeisterin (klein) und ihre Blase
+akteur('mei3', { x: 2480, y: 330, s: 0 });
+tw('mei3', W('Beispiel', 13) - .2, .55, { s: 1 }, 'sanft'); cue(W('Beispiel', 13) - .2, 'pop');
+pop('kritik3', W('Der', 13) - .1, { x: 2066, y: 384 });
+rel('kritikZ2', { o: 0, y: 14 }); tw('kritikZ2', W('Nimm', 14) - .05, .4, { o: 1, y: 0 }, 'sanft');
+// Der Teig gibt beim Drücken nicht nach – steif
+const TT = W('Teig', 13);
+tw('teig3', TT, .12, { sy: .93, sx: 1.03 }, 'sinus'); tw('teig3', TT + .12, .25, { sy: 1, sx: 1 }, 'out');
+wackeln('teig3', W('fest', 13), 4, 1.5); ruetteln(['teig3', 'schuessel3'], W('fest', 13), W('fest', 13) + .5, 2.5);
+cue(TT, 'plopp'); akzent(W('fest', 13), .025);
+tw('teig3', W('Wasser', 14), .5, { sy: 1.03 }, 'sinus'); tw('teig3', W('Wasser', 14) + .5, .4, { sy: 1 }, 'sanft');
+// Der Ofen übersetzt: heraus kommt die Sache (Teig + Wasser)
+const TU = W('Das', 15);
+tuerAuf(TU - .25);
+zset('kritik3', TU, 12);
+flug('kritik3', TU, .55, OX, 620, 160, { s: .32 }); zset('kritik3', TU + .5, 3); tw('kritik3', TU + .5, .1, { o: 0 }); cue(TU, 'whoosh');
+tuerZu(TU + .55);
+backen(TU + .65, W('Teig', 15) - .05);
+akteur('sache3', { x: OX, y: 625, s: .3, o: 0 }); zset('sache3', 0, 3);
+tuerAuf(W('Teig', 15) - .05);
+set('sache3', W('Teig', 15) + .05, { o: 1 }); zset('sache3', W('Teig', 15) + .3, 12);
+tw('sache3', W('Teig', 15) + .05, .25, { s: .55, y: 640 }, 'out');
+flug('sache3', W('Teig', 15) + .3, .75, 2066, 384, 150, { s: 1 }); landen('sache3', W('Teig', 15) + 1.05); cue(W('Teig', 15) + 1.05, 'ding');
+tuerZu(W('Teig', 15) + .7);
+// … nicht um dich: ein Schutzrahmen legt sich um Yusuf
+akteur('schutz3', { x: 2600, y: 700, s: .8, o: 0 });
+tw('schutz3', W('dich', 15) - .1, .45, { s: 1, o: 1 }, 'sanft'); tw('schutz3', W('dich', 15) + 1.3, .5, { o: 0, s: 1.08 }, 'in');
+cue(W('dich', 15) - .1, 'erfolg');
+nicken('yus', W('dich', 15) + .2);
+// Feedbackgespräche: Tisch, zwei Stühle, beide setzen sich
+const TF = W('Betrieben', 16);
+ein('tisch3', TF - .1, { x: 2730, y: 880 }, { x: 200 }, 'whoosh');
+ein('stuhlL', TF, { x: 2520, y: 885, sx: -1 }, { x: 200 });
+ein('stuhlR', TF + .1, { x: 2940, y: 885 }, { x: 200 });
+tw('yus', TF + .35, .8, { x: 2520, y: 768, s: .78 }, 'inout', { bogen: 60 });
+tw('mei3', TF + .45, .8, { x: 2940, y: 768, s: 1.15 }, 'inout', { bogen: 80 });
+landen('yus', TF + 1.15); landen('mei3', TF + 1.25);
+// Feedback-Bogen fällt auf den Tisch, füllt sich Zeile für Zeile
+akteur('bogen3', { x: 2730, y: -300 });
+const TFB = W('Feedbackgespräche', 16);
+tw('bogen3', TFB - .2, .6, { y: 392 }, 'out'); landen('bogen3', TFB + .4); cue(TFB + .35, 'plopp');
+const ZL = [...document.querySelectorAll('#bogen3 .zl')];
+ZL.forEach(z => rel(z, { sx: 0 }, '0 50%'));
+rel('bogenGut', { s: 1 }); rel('bogenHoch', { s: 1 });
+[0, 1, 2].forEach(k => { tw(ZL[k], W('gut', 17) + k * .18, .5, { sx: 1 }, 'weich'); tw(ZL[3 + k], W('lernen', 17) - .1 + k * .18, .5, { sx: 1 }, 'weich'); });
+bump('bogenGut', W('gut', 17), 1.25); cue(W('gut', 17), 'ding');
+bump('bogenHoch', W('lernen', 17) - .1, 1.25); cue(W('lernen', 17) - .1, 'ding');
+nicken('yus', W('genauer', 17)); nicken('mei3', W('läuft', 17));
+froh('yus', W('gut', 17), SE(17) + 1); froh('mei3', W('gut', 17), SE(17) + 1);
+
+/* ================= 4 · Warum? Zoom auf das Mischpult ================= */
+const T4 = SE(17) + .5;
+fahrt(T4, 430, 262, 1.9, 1.45, .05, 60);
+textAus('tb3', T4);
+weg(['mei3', 'yus'], T4 + .5, .3);
+tw('eq', SA(18) - .6, .4, { o: 0 });
+// Warum so kurz? – die kleine Blase und ein Fragezeichen in der Anzeige
+const TW = W('Warum', 18);
+Object.assign(el('dBlase').style, { left: '40px', top: '110px' }); Object.assign(el('dFrage').style, { left: '178px', top: '46px' });
+akteur(el('dBlase'), { o: 0, y: 30 }, true); tw('dBlase', TW - .1, .5, { o: 1, y: 0 }, 'sanft');
+akteur(el('dFrage'), { o: 0, s: 0 }, true); tw('dFrage', W('kurz', 18) - .1, .45, { o: 1, s: 1 }, 'back'); cue(W('kurz', 18) - .1, 'pop');
+wackeln('dFrage', W('kurz', 18) + .5, 4, 6);
+HOOKS.push(t => { const d = t - W('kurz', 18); if (d > 0 && d < .8) el('knopf').style.transform += ` translateX(${(4 * Math.sin(d * 40) * (1 - d / .8)).toFixed(2)}px)`; });
+// … um die Sache: ein Brötchen rückt in die Mitte, die Lupe kommt
+const TS = W('Sache', 19);
+tw(['dBlase', 'dFrage'], TS - .6, .3, { o: 0 });
+Object.assign(el('dBroet').style, { left: '60px', top: '80px' }); Object.assign(el('dLupe').style, { left: '90px', top: '126px' });
+akteur(el('dBroet'), { o: 0, x: -200 }, true); tw('dBroet', TS - .45, .55, { o: 1, x: 0 }, 'sanft'); cue(TS - .45, 'whoosh');
+akteur(el('dLupe'), { o: 0, x: 160, y: -60, r: 0 }, true);
+tw('dLupe', TS - .05, .5, { o: 1, x: -10, y: -10 }, 'sanft'); bump('dLupe', TS + .45, 1.12); cue(TS + .45, 'ding');
+// Klar und direkt: verschwommene Blase wird scharf, Band mit Text
+const TKL = W('Klar', 20);
+tw(['dBroet', 'dLupe'], TKL - .5, .35, { o: 0 });
+Object.assign(el('dKlar').style, { left: '44px', top: '110px' });
+tw('dKlar', TKL - .2, .4, { o: 1 }, 'out');
+HOOKS.push(t => { const p = E.inout(clamp((t - TKL) / 1.3)); el('dKlar').style.filter = `blur(${(11 * (1 - p)).toFixed(2)}px)`; });
+cue(TKL + .9, 'klick');
+akteur('band4', { x: 430, y: 472, o: 0 });
+tw('band4', TKL - .25, .45, { o: 1 }, 'out');
+titelEin('tb4', 0, [TKL, W('und', 20), W('direkt', 20), W('gilt', 20), W('als', 20), W('ehrlich', 20)]); faerben('tb4', ['ehrlich']);
+// ehrlich: Regler und Zeiger rücken nebeneinander, Punkte verbinden „leise“ und „viel“
+const TEH = W('ehrlich', 20);
+tw('dKlar', TEH - .3, .3, { o: 0 });
+tw('anzeige', TEH - .2, .35, { o: 0 });
+tw('modL', TEH - .1, .7, { x: 125 }, 'sanft'); tw('modR', TEH - .1, .7, { x: -125 }, 'sanft'); cue(TEH - .1, 'whoosh');
+PUNKTE.forEach((p, k) => { tw(p, TEH + .55 + k * .07, .3, { s: 1 }, 'back'); });
+cue(TEH + .55, 'tipp');
+tw('glimmL', TEH + .5, .3, { o: 1 }); tw('glimmR', TEH + 1.2, .3, { o: 1 });
+bump('glimmL', W('Zeit', 20), 1.15); bump('glimmR', W('Zeit', 20) + .1, 1.15); cue(W('Zeit', 20), 'ding');
+
+/* ================= 5 · Und bei dir? Die Backstube teilt sich ================= */
+const T5 = SE(20) + .5;
+fahrt(T5, 960, 540, 1, 1.3, .04);
+aus('band4', T5 - .2, .35);
+tw(['glimmL', 'glimmR', ...PUNKTE], T5, .3, { o: 0 });
+tw('modL', T5 + .2, .7, { x: 0 }, 'inout'); tw('modR', T5 + .2, .7, { x: 0 }, 'inout');
+tw('anzeige', T5 + .7, .4, { o: 1 }); tw('eq', T5 + .7, .4, { o: 1 });
+// Yusuf steht an der Fuge in der Mitte
+set('yus', T5 + .9, { x: 960, y: 940, s: .92, o: 0 });
+tw('yus', T5 + 1.0, .45, { o: 1 }, 'out'); tw('yus', T5 + 1.0, .6, { y: 800 }, 'weich'); cue(T5 + 1.0, 'pop');
+// Die Fliesenfuge leuchtet auf, die rechte Hälfte gleitet weg
+const TL = W('In', 21);
+akteur('fuge5', { x: 960, y: 425, o: 0, sy: 0 });     // Oberkante bei y 60, wächst von oben nach unten
+set('fuge5', TL, { o: 1 }); tw('fuge5', TL, .55, { sy: 1 }, 'inout'); cue(TL, 'scan');
+const TSP = TL + .6, DX = 1150;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - TSP) / 1.2)), q = E.inout(clamp((t - T6Z) / 1.0));
+  const dx = DX * (p - q), o = 1 - clamp((t - TSP - .6) / .6) + clamp((t - T6Z) / .4);
+  const r = el('rechts');
+  r.style.transform = dx > .01 ? `translateX(${dx.toFixed(1)}px)` : '';
+  r.style.opacity = o < .999 ? clamp(o).toFixed(3) : '';
+});
+cue(TSP, 'whoosh');
+akteur('feld5', { x: 1440, y: 420, o: 0 }); tw('feld5', TSP + .3, .6, { o: 1 }, 'out');
+// Beschriftung: links „In Deutschland“, rechts „Bei dir?“ mit großem Fragezeichen
+akteur('tbDE', { x: 430, y: 474 });
+titelEin('tbDE', 0, [W('Ländern', 21) + .1, W('Ländern', 21) + .2]);
+pop('frage5', W('anders', 21), { x: 1440, y: 262 }, 'pop');
+akteur('tbBei', { x: 1440, y: 452 });
+titelEin('tbBei', 0, [W('bei', 22), W('dir', 22)]);
+// ähnlich … oder ganz anders: ein gestrichelter Regler erscheint und verwischt wieder
+akteur('geist5', { x: 1180, y: 300, o: 0, s: .8 });
+tw('geist5', W('ähnlich', 22) - .1, .45, { o: 1, s: 1 }, 'sanft');
+rel('geistKnopf', { y: 0 });
+const TAN = W('anders', 22);
+[[-90, .18], [-20, .16], [-120, .16], [0, .2]].forEach(([y, d], k) => tw('geistKnopf', TAN - .5 + k * .18, d, { y }, 'inout'));
+tw('geist5', TAN - .5, .25, { sx: 1.12, sy: .9 }, 'sinus'); tw('geist5', TAN - .25, .35, { sx: .92, sy: 1.08 }, 'sinus'); tw('geist5', TAN + .1, .3, { sx: 1, sy: 1 }, 'sanft');
+tw('geist5', TAN + .55, .5, { o: 0, s: .9 }, 'in');
+// Und wie ist das bei dir? – Yusuf schaut nach rechts, das Gedankenbläschen füllt sich (Denkpause)
+const TU5 = W('Und', 23);
+blick('yus', TU5, SA(24) - .5);
+pop('dot1', TU5 + .35, { x: 1068, y: 652 }, 'pop');
+pop('dot2', TU5 + .55, { x: 1104, y: 616 }, null);
+pop('dot3', TU5 + .75, { x: 1150, y: 578 }, null);
+pop('wolke5', TU5 + 1.0, { x: 1392, y: 592 }, 'plopp', 'sanft');
+['sym1', 'sym2', 'sym3', 'sym4'].forEach((s, k) => { rel(s, { s: 0 }); const t0 = SE(23) + .15 + k * .6; tw(s, t0, .45, { s: 1 }, 'back'); cue(t0, 'pop'); });
+// Fragezeichen pulsiert (feste Frequenz)
+HOOKS.push(t => { const a = rampe(t, W('dir', 22), SA(24) - .7, .5); if (a > 0) el('frage5').style.transform += ` scale(${(1 + .07 * a * Math.sin(t * 6.2)).toFixed(4)})`; });
+nicken('yus', SE(23) + 1.6, 1.0);
+
+/* ================= 6 · Frag nach – die Backstube wieder ganz ================= */
+const T6Z = SA(24) - .6;
+weg(['wolke5', 'dot1', 'dot2', 'dot3', 'tbBei', 'frage5', 'feld5', 'tbDE'], T6Z - .25, .4);
+tw('fuge5', T6Z + 1.0, .4, { o: 0 }); cue(T6Z + 1.0, 'klick');
+akzent(T6Z + 1.0, .02);
+tw('yus', T6Z + .3, .9, { x: YX, y: YY, s: 1 }, 'inout', { bogen: 70 }); landen('yus', T6Z + 1.2);
+// Die Bäckermeisterin kommt zurück
+set('mei', T6Z, { x: 1260, y: 640, s: 1, o: 0 });
+tw('mei', T6Z + 1.0, .6, { x: 1050, o: 1 }, 'weich'); cue(T6Z + 1.0, 'whoosh');
+// Yusufs Fragen
+pop('y1', W('War', 25) - .1, { x: 695, y: 498 });
+pop('y2', W('Was', 26) - .1, { x: 702, y: 640 });
+// Ihre Antwort ist diesmal größer, der Regler fährt ein gutes Stück hoch
+const TM = SA(27);
+aus(['y1', 'y2'], TM - .35, .3);
+pop('m6', TM, { x: 1086, y: 418 }, 'pop', 'sanft');
+regler(W('wirklich', 27), .6, .9, 'sanft'); cue(W('wirklich', 27), 'scan'); akzent(W('wirklich', 27) + .2, .03);
+bump('nadel', W('gut', 27), 1.05);
+froh('yus', W('gut', 27), SA(29));
+// Kruste: ein Brötchen hüpft aus dem Korb, seine Kruste wird einen Ton dunkler
+akteur('krusteB', { x: 1250, y: 880, s: .6, o: 0 });
+set('krusteB', W('Kruste', 28) - .15, { o: 1 }); zset('krusteB', 0, 9);
+flug('krusteB', W('Kruste', 28) - .15, .6, 1272, 700, 70, { s: 1.15 }); landen('krusteB', W('Kruste', 28) + .45); cue(W('Kruste', 28) + .45, 'plopp');
+HOOKS.push(t => { const p = E.inout(clamp((t - W('dunkler', 28)) / .9)); el('krusteBild').style.filter = p > 0 ? `brightness(${(1 - .26 * p).toFixed(3)}) saturate(${(1 + .3 * p).toFixed(3)})` : ''; });
+bump('krusteB', W('dunkler', 28) + .3, 1.1); cue(W('dunkler', 28), 'kritzeln');
+schweben('krusteB', 3);
+// Yusuf weiß jetzt genau: was gut ist (Haken) und was er noch üben kann (Pfeil)
+aus('m6', SA(29) - .2, .35);
+pop('haken6', W('gut', 29), { x: YX + 112, y: YY - 104 }, 'ding'); zset(['haken6', 'hoch6', 'lauf6'], 0, 12);
+pop('hoch6', W('üben', 29), { x: YX + 138, y: YY - 20 }, 'ding');
+tw('krusteB', SE(29) - .4, .55, { x: 1250, y: 880, s: .6, o: 0 }, 'inout');
+// Nachfragen zeigt Interesse: Linie zwischen beiden, beide lächeln
+titelEin('tb6', 0, [W('Nachfragen', 30), W('Nachfragen', 30) + .25]); faerben('tb6', ['Frag']);
+bump('tafel', W('Nachfragen', 30) + .3, 1.04);
+akteur('linie6', { x: 708, y: 548, o: 0, draw: 0 });
+const TI = W('Interesse', 30);
+set('linie6', TI - .2, { o: 1 }); tw('linie6', TI - .2, .7, { draw: 1 }, 'inout'); cue(TI - .2, 'scan');
+froh('yus', TI, 1e9); froh('mei', TI, 1e9);
+nicken('yus', TI + .3); nicken('mei', TI + .5);
+// Du darfst immer fragen: ein Fragezeichen läuft die Linie entlang
+akteur('lauf6', { x: 450, y: 596, s: 0 });
+const TFR = W('darfst', 31);
+tw('lauf6', TFR - .1, .35, { s: 1 }, 'back'); cue(TFR - .1, 'pop');
+HOOKS.push(t => { const p = E.inout(clamp((t - TFR - .2) / 1.3)); if (t > TFR - .1 && t < W('fragen', 31) + 1.0) {
+  const u = p, x = (1 - u) ** 3 * 18 + 3 * (1 - u) ** 2 * u * 150 + 3 * (1 - u) * u * u * 410 + u ** 3 * 542, y = (1 - u) ** 3 * 120 + 3 * (1 - u) ** 2 * u * 20 + 3 * (1 - u) * u * u * 20 + u ** 3 * 120;
+  el('lauf6').style.transform += ` translate(${(x - 18).toFixed(1)}px,${(y - 120).toFixed(1)}px)`; } });
+tw('lauf6', W('fragen', 31) + .7, .3, { o: 0 }); bump('mei', W('fragen', 31) + .3, 1.05); cue(W('fragen', 31) + .3, 'ding');
+// Viel Lob oder wenig Lob: der Regler fährt hoch und runter – die Bedeutung bleibt
+regler(W('Viel', 32), .92, .6, 'back'); akzent(W('Viel', 32) + .1, .03); cue(W('Viel', 32), 'scan');
+regler(W('wenig', 32), .15, .6, 'inout'); cue(W('wenig', 32), 'scan');
+bump('nadel', W('Lob', 32) + .2, 1.06); bump('nadel', WN(32, 4) + .2, 1.06);
+// Anders ist nicht falsch: eine Welle geht durch die Backstube
+const TA = W('Anders', 32);
+welle('welle6', TA - .1, 960, 540, 1.1, 2.6); cue(TA - .1, 'erfolg');
+[['pult', 0], ['yus', .1], ['mei', .2], ['tafel', .3], ['korb', .35], ['blech', .4]].forEach(([id, d]) => huepfen(id, TA + d, 14));
+
+/* ---------- Abspann: weiße Platte steigt auf ---------- */
+const AB = TA + .45;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .9)); const pl = el('platte');
+  pl.style.transform = `translateY(${(110 * (1 - p)).toFixed(2)}%)`; pl.style.borderRadius = `${(80 * (1 - p)).toFixed(1)}px ${(80 * (1 - p)).toFixed(1)}px 0 0`; });
+cue(AB, 'whoosh');
+titelEin('abspTitel', AB + .6); faerben('abspTitel', ['Anders']);
+akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + 1.5, .6, { o: 1, y: 0 }, 'weich');
+document.querySelectorAll('#platte .icons div').forEach((d, k) => { akteur(d, { s: 0 }, true); tw(d, AB + .5 + k * .15, .5, { s: 1 }, 'back'); });
+start(Math.max(ENDE_SPRACHE + 3.6, AB + 5), ENDE_SPRACHE + 2.2);
+</script>
+</body></html>

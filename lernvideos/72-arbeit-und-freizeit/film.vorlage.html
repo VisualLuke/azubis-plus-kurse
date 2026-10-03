@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Arbeit und Freizeit trennen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+/* Leitidee: der Tag als Lichtbogen. Eine einzige Welt (Werkstatt | Schalter | Zimmer unter dem Bogen), die Kamera fährt darin. */
+html,body{background:var(--b50)}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+#bue{width:1920px;height:1080px;border-radius:0;background:none}
+.himmel{position:absolute;left:-700px;top:-500px;width:3320px;height:1300px}
+#himmelTag{background:linear-gradient(var(--b100),var(--b50) 92%)}
+#himmelNacht{background:linear-gradient(var(--b700),var(--b600) 55%,var(--b400) 95%);opacity:0}
+.boden{position:absolute;left:-700px;top:800px;width:3320px;height:700px}
+#bodenTag{background:linear-gradient(var(--b200),var(--b100) 40%)}
+#bodenNacht{background:linear-gradient(var(--b600),var(--b700) 45%);opacity:0}
+#bogen{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+/* Räume */
+.raum{width:600px;height:290px;border-radius:34px 34px 8px 8px;overflow:hidden;box-shadow:0 14px 34px rgba(58,37,153,.14)}
+.raum.werk{background:linear-gradient(var(--surface),var(--n200))}
+.raum.zim{background:linear-gradient(var(--surface),var(--b50) 60%,var(--b100))}
+.raum .fb{position:absolute;left:0;right:0;bottom:0;height:30px}
+.raum.werk .fb{background:var(--n300)}
+.raum.zim .fb{background:var(--b200)}
+.raum .leiste{position:absolute;left:0;right:0;bottom:30px;height:6px;background:var(--surface);opacity:.7}
+.dunkel{width:600px;height:290px;border-radius:34px 34px 8px 8px;background:var(--b700)}
+.kegel{width:230px;height:120px;clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);background:linear-gradient(var(--warning-bg),rgba(255,255,255,0))}
+.fenster{width:112px;height:84px;border-radius:12px;border:7px solid var(--b300);background:linear-gradient(160deg,var(--surface),var(--b100));overflow:hidden}
+.fenster::before{content:'';position:absolute;left:46px;top:0;bottom:0;width:6px;background:var(--b300)}
+.fenster::after{content:'';position:absolute;left:12px;top:10px;width:16px;height:46px;border-radius:8px;background:var(--surface);opacity:.8;transform:skewX(-14deg)}
+.tisch72{width:96px;height:60px}
+.tisch72 i{position:absolute;left:0;top:0;width:96px;height:12px;border-radius:6px;background:var(--b600)}
+.tisch72 b{position:absolute;top:10px;width:8px;height:50px;border-radius:3px;background:var(--b700)}
+.blatt72{width:72px;height:76px;border-radius:12px;background:var(--surface);box-shadow:0 6px 16px rgba(58,37,153,.18);overflow:hidden;text-align:center;font:800 28px/1 Inter;color:var(--b600)}
+.blatt72::before{content:'';display:block;height:18px;background:var(--b500);margin-bottom:12px}
+.tuch{width:270px;height:76px;border-radius:36px 36px 10px 10px;background:linear-gradient(var(--b200),var(--b300));box-shadow:0 8px 18px rgba(58,37,153,.2)}
+.tuch i{position:absolute;top:18px;bottom:6px;width:5px;border-radius:3px;background:var(--surface);opacity:.35}
+.vorhang{width:74px;height:548px;border-radius:0 0 18px 18px;background:repeating-linear-gradient(90deg,var(--b100) 0 14px,var(--b200) 14px 18px,var(--b100) 18px 24px);opacity:.95;
+  box-shadow:0 8px 20px rgba(58,37,153,.15);transform-origin:50% 0}
+.vorhang::before{content:'';position:absolute;left:-14px;right:-14px;top:-8px;height:14px;border-radius:7px;background:var(--b500)}
+
+/* Schalter */
+.sockel{padding:8px 22px;border-radius:14px;background:var(--b500);color:var(--surface);font:800 25px/30px Inter;white-space:nowrap;box-shadow:0 8px 18px rgba(58,37,153,.25)}
+
+/* Schild am Bogen (Wochentag) */
+.kal72{width:184px;height:66px;border-radius:16px;background:var(--surface);box-shadow:0 8px 20px rgba(58,37,153,.18);display:flex;align-items:center;justify-content:center;gap:12px;
+  font:800 28px/1 Inter;color:var(--ink);transform-origin:50% -40px}
+.kal72 svg{width:30px;height:30px;flex:none}
+.kal72::before,.kal72::after{content:'';position:absolute;top:-40px;width:4px;height:42px;border-radius:2px;background:var(--b400)}
+.kal72::before{left:52px}.kal72::after{right:52px}
+
+.sonne72{width:66px;height:66px;border-radius:999px;background:var(--warning);box-shadow:0 0 0 12px var(--warning-bg)}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.22)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.plak{width:60px;height:60px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(22,19,37,.18)}
+.plak svg{width:34px}
+.plak.rot{background:var(--error)} .plak.gruen{background:var(--success)} .plak.gelb{background:var(--warning)} .plak.lila{background:var(--b500)}
+.frage72{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.chip72{padding:12px 28px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 32px/38px Inter;white-space:nowrap;box-shadow:0 8px 22px rgba(58,37,153,.16)}
+.chip72.brand{background:var(--b500);color:var(--surface)}
+.blase{background:var(--surface);border-radius:22px;box-shadow:0 8px 22px rgba(58,37,153,.18)}
+.blase::after{content:'';position:absolute;left:24px;bottom:-12px;width:24px;height:24px;background:var(--surface);transform:rotate(45deg);border-radius:4px}
+.blase.rechts::after{left:auto;right:24px}
+.nachricht{width:190px;height:86px;padding:16px 18px;display:flex;gap:14px;align-items:center}
+.nachricht .ic{width:52px;height:52px;flex:none;border-radius:999px;background:var(--b100);display:flex;align-items:center;justify-content:center}
+.nachricht .ic svg{width:30px}
+.nachricht .zl{flex:1;display:flex;flex-direction:column;gap:9px}
+.nachricht .zl i{display:block;height:10px;border-radius:5px;background:var(--b200);transform-origin:0 50%}
+.mini{width:58px;height:44px;display:flex;align-items:center;justify-content:center;gap:5px}
+.mini i{width:8px;height:8px;border-radius:999px;background:var(--b400)}
+.mini::after{left:14px;bottom:-8px;width:16px;height:16px}
+.zz{font:800 30px/1 Inter;color:var(--b400)}
+.akku72{width:136px;height:66px}
+.akku72 .huelle{position:absolute;left:0;top:0;width:124px;height:66px;border:7px solid var(--b700);border-radius:18px;background:var(--surface)}
+.akku72 .kappe{position:absolute;right:0;top:21px;width:12px;height:24px;border-radius:0 7px 7px 0;background:var(--b700)}
+.akku72 .fuell{position:absolute;left:7px;top:7px;width:110px;height:52px;padding:5px}
+.akku72 .fuell i{display:block;height:100%;border-radius:9px;transform-origin:0 50%}
+.zaehler{padding:12px 30px 12px 18px;border-radius:999px;background:var(--surface);display:flex;align-items:center;gap:14px;font:800 36px/42px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 8px 22px rgba(58,37,153,.2)}
+.zaehler svg{width:42px;height:42px;flex:none}
+.zaehler.fest{background:var(--b500);color:var(--surface)}
+.buchauf{width:330px;height:200px}
+.buchauf .seite{position:absolute;top:0;width:165px;height:200px;background:var(--surface);box-shadow:0 10px 24px rgba(58,37,153,.2);padding:30px 22px;display:flex;flex-direction:column;gap:14px}
+.buchauf .seite.l{left:0;border-radius:16px 4px 4px 16px;border-right:3px solid var(--b200)}
+.buchauf .seite.r{right:0;border-radius:4px 16px 16px 4px}
+.buchauf .seite i{display:block;height:9px;border-radius:5px;background:var(--b100)}
+.buchauf .para{font:800 46px/1 Inter;color:var(--b500);margin-bottom:4px}
+.buchauf .rand{position:absolute;left:-10px;right:-10px;bottom:-10px;height:30px;border-radius:0 0 18px 18px;background:var(--b600);z-index:-1}
+.band72{padding:10px 22px;border-radius:12px 12px 4px 4px;background:var(--b500);color:var(--surface);font:800 28px/34px Inter;white-space:nowrap;box-shadow:0 6px 16px rgba(58,37,153,.25)}
+.feld72{width:820px;height:830px;border-radius:48px;background:var(--b50);border:5px dashed var(--b300)}
+.feld72 svg{position:absolute;left:0;top:0;width:820px;height:830px;overflow:visible}
+.frageGross{font:800 230px/1 Inter;color:var(--b500)}
+.kreis72{width:180px;height:180px;border-radius:999px;border:6px solid var(--b300);display:flex;align-items:center;justify-content:center;mix-blend-mode:multiply}
+.kreis72 svg{width:84px}
+.kreis72.a1{background:var(--b100)} .kreis72.a2{background:var(--b50)}
+.denk{width:340px;height:150px;border-radius:999px;background:var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.18);display:flex;align-items:center;justify-content:center;gap:16px}
+.denk span{width:60px;height:60px;display:block}
+.punkt72{border-radius:999px;background:var(--surface);box-shadow:0 6px 14px rgba(58,37,153,.15)}
+.ringsvg{width:200px;height:200px}
+.ast{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+/* Text im Bild: weiße Tafel oben in der Mitte (Wörter steigen aus der Maske) */
+.tafel{position:absolute;left:0;right:0;top:46px;margin:0 auto;width:fit-content;max-width:1500px;padding:14px 40px 18px;border-radius:30px;background:var(--surface);
+  box-shadow:0 12px 30px rgba(58,37,153,.16);text-align:center}
+.tafel .titel{font:700 46px/58px Inter;letter-spacing:-.01em;color:var(--ink)}
+.tafel .unter{font:600 36px/46px Inter;color:var(--b600);margin-top:4px}
+.tafel .w.hell .wi{color:var(--b500)}
+#schluss{position:absolute;left:0;right:0;top:850px;text-align:center;color:var(--surface)}
+#schluss .titel{font:800 78px/90px Inter;letter-spacing:-.02em;color:var(--surface)}
+#schlussKlein{font:500 38px/50px Inter;color:var(--b100);margin-top:10px}
+.unsichtbar{display:none}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <div class="himmel" id="himmelTag"></div><div class="himmel" id="himmelNacht"></div>
+  <div class="boden" id="bodenTag"></div><div class="boden" id="bodenNacht"></div>
+  <div class="a buehne" id="bue"></div>
+
+  <!-- Der Lichtbogen (Tag oben, Nacht unten), Hängematte, Ruhezeit-Spur -->
+  <svg id="bogen" viewBox="0 0 1920 1080">
+    <path id="bogenGlanz" fill="none" stroke="var(--surface)" stroke-width="30" stroke-linecap="round" opacity=".55" pathLength="1"/>
+    <path id="bogenTag" fill="none" stroke="var(--b300)" stroke-width="9" stroke-linecap="round" pathLength="1"/>
+    <path id="bogenNacht" fill="none" stroke="var(--b300)" stroke-width="7" stroke-linecap="round" stroke-dasharray="4 22" opacity="0"/>
+    <path id="arbeitSpur" fill="none" stroke="var(--b400)" stroke-width="16" stroke-linecap="round" pathLength="1" opacity="0"/>
+    <path id="ruheSpur" fill="none" stroke="var(--b500)" stroke-width="18" stroke-linecap="round" opacity="0"/>
+    <path id="welleSpur" fill="none" stroke="var(--surface)" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray=".08 2" opacity="0"/>
+    <g id="kerben" opacity="0"><circle id="kerbeA" r="11" fill="var(--b500)" stroke="var(--surface)" stroke-width="5"/><circle id="kerbeF" r="11" fill="var(--b500)" stroke="var(--surface)" stroke-width="5"/></g>
+    <g id="matte" opacity="0">
+      <path id="seil1" stroke="var(--b400)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path id="seil2" stroke="var(--b400)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <g id="tuchM"><path d="M462 400Q572 478 682 400L682 412Q572 492 462 412Z" fill="var(--b300)"/><path d="M462 400Q572 478 682 400" stroke="var(--b500)" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path d="M500 424Q572 462 644 424" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".5"/></g>
+    </g>
+  </svg>
+  <div class="a sonne72" id="sonne" data-frei></div>
+  <div class="a" id="mond" style="width:84px" data-frei>{{mond}}</div>
+  <div class="a kal72" id="tagSo" data-gruppe="tag"><svg viewBox="0 0 30 30"><rect x="3" y="6" width="24" height="21" rx="5" fill="var(--b500)"/><rect x="6" y="12" width="18" height="12" rx="2" fill="var(--surface)"/><rect x="8" y="2" width="4" height="7" rx="2" fill="var(--b700)"/><rect x="18" y="2" width="4" height="7" rx="2" fill="var(--b700)"/></svg>Sonntag</div>
+  <div class="a kal72" id="tagMo" data-gruppe="tag"><svg viewBox="0 0 30 30"><rect x="3" y="6" width="24" height="21" rx="5" fill="var(--b500)"/><rect x="6" y="12" width="18" height="12" rx="2" fill="var(--surface)"/><rect x="8" y="2" width="4" height="7" rx="2" fill="var(--b700)"/><rect x="18" y="2" width="4" height="7" rx="2" fill="var(--b700)"/></svg>Montag</div>
+
+  <!-- Werkstatt (Arbeit) -->
+  <div class="a raum werk" id="werkstatt" data-frei><div class="leiste"></div><div class="fb"></div></div>
+  <div class="a fenster" id="fenster" data-gruppe="werk"></div>
+  <div class="a" id="lampeW" style="width:110px" data-gruppe="werk">{{haengelampe}}</div>
+  <div class="a kegel" id="kegelW" data-frei></div>
+  <div class="a" id="bank" style="width:240px" data-gruppe="bank">{{werkbank-leer}}</div>
+  <div class="a" id="stueck" style="width:100px" data-gruppe="bank">{{werkstueck}}</div>
+  <div class="a" id="schluessel" style="width:100px" data-gruppe="bank">{{schraubenschluessel}}</div>
+  <div class="a tuch" id="tuch" data-gruppe="bank"><i style="left:60px"></i><i style="left:130px"></i><i style="left:200px"></i></div>
+
+  <!-- Zimmer (Freizeit) -->
+  <div class="a raum zim" id="zimmer" data-frei><div class="leiste"></div><div class="fb"></div></div>
+  <div class="a" id="lampeZ" style="width:110px" data-gruppe="zim">{{haengelampe~z}}</div>
+  <div class="a kegel" id="kegelZ" data-frei></div>
+  <div class="a" id="sofa" style="width:270px" data-frei>{{sofa}}</div>
+  <div class="a" id="pflanze" style="width:130px">{{pflanze}}</div>
+  <div class="a tisch72" id="tisch" data-gruppe="handy"><i></i><b style="left:10px"></b><b style="right:10px"></b></div>
+  <div class="a" id="handy" style="width:90px" data-gruppe="handy">{{handy}}</div>
+  <div class="a blatt72" id="blattSa">Sa</div>
+  <div class="a blatt72" id="blattSo">So</div>
+
+  <!-- draußen: Urlaub -->
+  <div class="a" id="koffer" style="width:120px">{{koffer}}</div>
+  <div class="a" id="liege" style="width:124px">{{liegestuhl}}</div>
+
+  <div class="a vorhang" id="vorhang" data-frei></div>
+  <div class="a dunkel" id="dunkelW" data-frei></div>
+  <div class="a dunkel" id="dunkelZ" data-frei></div>
+
+  <!-- Kippschalter „Feierabend“ -->
+  <div class="a" id="schalter" style="width:200px" data-gruppe="schalter">{{kippschalter}}</div>
+  <div class="a" id="hebel" style="width:200px;transform-origin:50% 60%" data-gruppe="schalter">{{kippschalter-hebel}}</div>
+  <div class="a sockel" id="sockel" data-gruppe="schalter">Feierabend</div>
+  <div class="a welle" id="welleS" style="width:230px;height:230px" data-frei></div>
+
+  <!-- Gesetz -->
+  <div class="a band72" id="lesezeichen" data-gruppe="buch">Erholung</div>
+  <div class="a" id="buchZu" style="width:180px" data-gruppe="buch">{{grundgesetz}}</div>
+  <div class="a buchauf" id="buchAuf" data-gruppe="buch"><div class="rand"></div>
+    <div class="seite l"><div class="para">§</div><i></i><i style="width:80%"></i><i style="width:90%"></i></div>
+    <div class="seite r"><i></i><i style="width:70%"></i><i></i><i style="width:85%"></i><i style="width:60%"></i></div></div>
+  <div class="a zaehler" id="zaehler"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="17" fill="none" stroke="currentColor" stroke-width="4"/><path d="M21 11v10l7 5" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/></svg><span id="zahl">0 Std.</span></div>
+  <div class="a welle" id="welleZ" style="width:300px;height:300px" data-frei></div>
+
+  <!-- Kolleginnen: Faden, aus dem Blätter wachsen -->
+  <svg class="ast" id="ast" viewBox="0 0 1920 1080"><path id="faden" fill="none" stroke="var(--b400)" stroke-width="5" stroke-linecap="round"/>
+    <path id="ranke" fill="none" stroke="var(--success)" stroke-width="5" stroke-linecap="round"/><g id="blaetter"></g></svg>
+
+  <!-- Gesundheit -->
+  <svg class="a" id="schild" viewBox="0 0 1500 440" style="width:1500px;height:440px" data-frei><path class="zeichnen" pathLength="1" d="M750 26H90a60 60 0 0 0-60 60V354a60 60 0 0 0 60 60H1410a60 60 0 0 0 60-60V86a60 60 0 0 0-60-60H750" fill="none" stroke="var(--b400)" stroke-width="8" stroke-linecap="round"/></svg>
+  <div class="a" id="herz" style="width:160px">{{herz}}</div>
+  <div class="a welle" id="welleH" style="width:260px;height:260px" data-frei></div>
+
+  <!-- Und bei dir? -->
+  <div class="a feld72" id="feld" data-frei><svg viewBox="0 0 820 830"><path id="bogenLeer" fill="none" stroke="var(--b300)" stroke-width="8" stroke-linecap="round" stroke-dasharray="3 22"/></svg></div>
+  <div class="a kreis72 a1" id="kreisA" data-gruppe="venn"><svg viewBox="0 0 40 40"><path d="M27 5a9 9 0 0 0-8.4 12.2L6.3 29.5a3.3 3.3 0 0 0 4.7 4.7l12.3-12.3A9 9 0 0 0 35 13l-5.5 5.5-5.6-1.4-1.4-5.6L28 6A9 9 0 0 0 27 5Z" fill="var(--b500)"/></svg></div>
+  <div class="a kreis72 a2" id="kreisB" data-gruppe="venn"><svg viewBox="0 0 40 40"><rect x="5" y="15" width="30" height="13" rx="4" fill="var(--b500)"/><rect x="3" y="19" width="7" height="13" rx="3" fill="var(--b600)"/><rect x="30" y="19" width="7" height="13" rx="3" fill="var(--b600)"/><rect x="9" y="9" width="22" height="10" rx="4" fill="var(--b400)"/><rect x="8" y="31" width="3" height="5" rx="1" fill="var(--b700)"/><rect x="29" y="31" width="3" height="5" rx="1" fill="var(--b700)"/></svg></div>
+  <div class="a frageGross" id="frageG">?</div>
+  <div class="a chip72" id="chipDe">In Deutschland</div>
+  <div class="a chip72 brand" id="chipDu">Bei dir?</div>
+  <div class="a punkt72" id="dp1" style="width:24px;height:24px" data-gruppe="denk"></div>
+  <div class="a punkt72" id="dp2" style="width:38px;height:38px" data-gruppe="denk"></div>
+  <div class="a denk" id="denk" data-gruppe="denk"><span id="sy1"></span><span id="sy2"></span><span id="sy3"></span><span id="sy4"></span></div>
+  <div class="a" id="ringP" style="width:236px;height:236px" data-frei><svg class="ringsvg" viewBox="0 0 236 236" style="width:236px;height:236px"><circle cx="118" cy="118" r="110" fill="none" stroke="var(--b100)" stroke-width="8"/><circle id="ringPfad" cx="118" cy="118" r="110" fill="none" stroke="var(--b500)" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(-90 118 118)"/></svg></div>
+  <div class="a" id="ringU" style="width:200px;height:200px" data-frei><svg viewBox="0 0 200 200" style="width:200px;height:200px"><circle id="ringUPfad" cx="100" cy="100" r="92" fill="none" stroke="var(--b500)" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(-90 100 100)"/></svg></div>
+
+  <!-- Figuren -->
+  <div class="a portrait" id="chefin" style="width:140px;height:140px"><div class="figur"><div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen~c}}</div>
+    <div class="ebene zu">{{figur-mund-zu~c}}</div><div class="ebene auf">{{figur-mund-auf~c}}</div><div class="ebene froh">{{figur-mund-froh~c}}</div></div></div>
+  <div class="a portrait" id="priya" style="width:140px;height:140px" data-gruppe="priya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- Nachrichten, Sorgen, Rückmeldungen -->
+  <div class="a blase nachricht" id="nachricht"><div class="ic"><svg viewBox="0 0 40 40"><path d="M27 5a9 9 0 0 0-8.4 12.2L6.3 29.5a3.3 3.3 0 0 0 4.7 4.7l12.3-12.3A9 9 0 0 0 35 13l-5.5 5.5-5.6-1.4-1.4-5.6L28 6A9 9 0 0 0 27 5Z" fill="var(--b500)"/></svg></div>
+    <div class="zl"><i id="nz1"></i><i id="nz2" style="width:70%"></i></div></div>
+  <div class="a" id="flieger" style="width:120px">{{papierflieger}}</div>
+  <div class="a frage72" id="frage1" data-gruppe="priya">?</div>
+  <div class="a" id="wolke" style="width:170px">{{wolke}}</div>
+  <div class="a" id="regen" style="width:120px;height:90px" data-frei><svg viewBox="0 0 120 90" style="width:120px;height:90px"><g id="tropfen" stroke="var(--n300)" stroke-width="5" stroke-linecap="round"><path d="M30 10v14"/><path d="M60 10v14"/><path d="M90 10v14"/></g></svg></div>
+  <div class="a blase mini" id="mini1" data-gruppe="handy"><i></i><i></i><i></i></div>
+  <div class="a blase mini" id="mini2" data-gruppe="handy"><i></i><i></i><i></i></div>
+  <div class="a blase mini" id="mini3" data-gruppe="handy"><i></i><i></i><i></i></div>
+  <div id="zzz" style="position:absolute;left:0;top:0"><span class="zz" style="position:absolute">z</span><span class="zz" style="position:absolute">z</span><span class="zz" style="position:absolute">z</span></div>
+  <div class="a plak lila" id="mondH" data-gruppe="handy"><svg viewBox="0 0 40 40"><path d="M25 7a13 13 0 1 0 9 22A11 11 0 0 1 25 7Z" fill="var(--surface)"/></svg></div>
+  <div class="a akku72" id="akku"><div class="huelle"><div class="fuell"><i id="akkuI"></i></div></div><div class="kappe"></div></div>
+  <div class="a plak rot" id="plakX" data-gruppe="bank"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a plak gruen" id="plakOk" data-gruppe="bank"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plak gelb" id="plakAcht"><svg viewBox="0 0 40 40"><path d="M20 9v14" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/><circle cx="20" cy="31" r="3.6" fill="var(--surface)"/></svg></div>
+  <div class="a blase" id="antwortH" style="width:92px;height:76px"><svg viewBox="0 0 40 40" style="position:absolute;left:24px;top:16px;width:44px"><path d="M20 34C8 26 4 20 4 14a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 6-4 12-16 20Z" fill="var(--b500)"/></svg></div>
+  <div class="a blase rechts" id="denkC" style="width:130px;height:104px" data-gruppe="chefin"><div style="position:absolute;left:12px;top:-2px;width:106px">{{liegestuhl~c}}</div></div>
+  <div class="a blase" id="frageB" style="width:76px;height:68px;background:var(--b500)"><div style="font:800 40px/68px Inter;color:var(--surface);text-align:center">?</div></div>
+  <div class="a blase rechts" id="antwortOk" style="width:86px;height:72px"><svg viewBox="0 0 40 40" style="position:absolute;left:21px;top:14px;width:44px"><path d="M9 21l7 7 15-16" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+</div></div>
+
+<div id="camU" class="unsichtbar"></div><div id="sU" class="unsichtbar"></div><div id="mU" class="unsichtbar"></div><div id="nU" class="unsichtbar"></div>
+<div id="drawU" class="unsichtbar"></div><div id="fadenU" class="unsichtbar"></div><div id="akkuU" class="unsichtbar"></div><div id="kippU" class="unsichtbar"></div>
+
+<div class="tafel" id="tb2"><div class="titel">Feierabend und Wochenende: <span class="hell">Freizeit</span></div></div>
+<div class="tafel" id="tb3"><div class="titel"><span class="hell">Ruhezeit</span> zwischen zwei Arbeitstagen:</div><div class="unter">meist mindestens 11 Stunden</div></div>
+<div class="tafel" id="tb4"><div class="titel">Erholung schützt die <span class="hell">Gesundheit</span></div></div>
+<div class="tafel" id="tb6"><div class="titel">Dringende Fragen in der <span class="hell">Arbeitszeit</span></div></div>
+<div id="schluss"><div class="titel" id="schlussTitel">Anders ist nicht falsch.</div><div id="schlussKlein">Feierabend heißt: abschalten – für alle.</div></div>
+
+<template id="icSonne"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="12" fill="var(--b500)"/><g stroke="var(--b500)" stroke-width="5" stroke-linecap="round"><path d="M30 5v6M30 49v6M5 30h6M49 30h6M12 12l4 4M44 44l4 4M48 12l-4 4M16 44l-4 4"/></g></svg></template>
+<template id="icMond"><svg viewBox="0 0 60 60"><path d="M36 8a22 22 0 1 0 16 36A18 18 0 0 1 36 8Z" fill="var(--b500)"/></svg></template>
+<template id="icHandy"><svg viewBox="0 0 60 60"><rect x="16" y="5" width="28" height="50" rx="7" fill="var(--b500)"/><rect x="20" y="11" width="20" height="34" rx="3" fill="var(--b100)"/><circle cx="30" cy="50" r="2.5" fill="var(--b100)"/></svg></template>
+<template id="icHerz"><svg viewBox="0 0 60 60"><path d="M30 52C12 40 6 31 6 22a12 12 0 0 1 24-5 12 12 0 0 1 24 5c0 9-6 18-24 30Z" fill="var(--b500)"/></svg></template>
+<template id="icBlatt"><path d="M0 0c10-14 26-16 34-12C30-2 16 6 0 0Z" fill="var(--success)"/></template>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+// kleine Elemente ploppen mit Überschwung; eigenes s bleibt Ziel, Start immer bei 0
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .45, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y }, 'weich');
+  tw(id, t + .32, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .44, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wieder = (ids, t, d = .45) => tw(ids, t, d, { o: 1, s: 1 }, 'sanft');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const welle = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); [].concat(zeiten).forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
+
+/* ---------- Der Bogen: Punkt auf dem Tagesbogen (u = 0 Morgen links … 1 Nacht rechts) ---------- */
+const MX = 960, MY = 800, RX = 800, RY = 560, RYN = 190;
+const P = u => [MX - RX * Math.cos(Math.PI * u), MY - RY * Math.sin(Math.PI * u)];
+const f1 = n => n.toFixed(1);
+const U_START = .12, U_FEIER = .68;
+{
+  const [ax, ay] = P(U_START), [fx, fy] = P(U_FEIER);
+  const tag = `M${MX - RX} ${MY}A${RX} ${RY} 0 0 1 ${MX + RX} ${MY}`;
+  el('bogenTag').setAttribute('d', tag); el('bogenGlanz').setAttribute('d', tag); el('welleSpur').setAttribute('d', tag);
+  el('bogenNacht').setAttribute('d', `M${MX + RX} ${MY}A${RX} ${RYN} 0 0 1 ${MX - RX} ${MY}`);
+  el('arbeitSpur').setAttribute('d', `M${f1(ax)} ${f1(ay)}A${RX} ${RY} 0 0 1 ${f1(fx)} ${f1(fy)}`);
+  el('ruheSpur').setAttribute('d', `M${f1(fx)} ${f1(fy)}A${RX} ${RY} 0 0 1 ${MX + RX} ${MY}A${RX} ${RYN} 0 0 1 ${MX - RX} ${MY}A${RX} ${RY} 0 0 1 ${f1(ax)} ${f1(ay)}`);
+  el('kerbeA').setAttribute('cx', f1(ax)); el('kerbeA').setAttribute('cy', f1(ay));
+  el('kerbeF').setAttribute('cx', f1(fx)); el('kerbeF').setAttribute('cy', f1(fy));
+  // Hängematte an zwei Punkten des Bogens
+  const [h1x, h1y] = P(.27), [h2x, h2y] = P(.40);
+  el('seil1').setAttribute('d', `M${f1(h1x)} ${f1(h1y)}L462 402`); el('seil2').setAttribute('d', `M${f1(h2x)} ${f1(h2y)}L682 402`);
+  // leerer Bogen im Feld „Bei dir?“ (Feld links oben bei 1042/170)
+  const FX0 = 1042 + 5, FY0 = 170 + 5, xs = 1080, ys = MY - RY * Math.sqrt(1 - ((xs - MX) / RX) ** 2);
+  el('bogenLeer').setAttribute('d', `M${f1(xs - FX0)} ${f1(ys - FY0)}A${RX} ${RY} 0 0 1 ${MX + RX - FX0} ${MY - FY0}`);
+}
+const RUHE = el('ruheSpur'), RUHE_L = RUHE.getTotalLength();
+RUHE.style.strokeDasharray = `${RUHE_L} ${RUHE_L}`; RUHE.style.strokeDashoffset = RUHE_L;
+
+/* ---------- Kamera: Fokus (x, y) und Zoom (s) als Akteur, dazu Akzente und ein ruhiger Atem ---------- */
+const AKZENTE = [];
+const akzent = (t, z = .03) => AKZENTE.push([t, z]);
+akteur('camU', { x: 960, y: 600, s: 1.12 }, true);
+const WX = 960, WY = 600, WZ = 1.08;   // Totale
+const fahrt = (t0, d, x, y, s, snd = true) => { tw('camU', t0, d, { x, y, s }, 'inout'); if (snd && d >= .7) cue(t0, 'whoosh'); };
+HOOKS.push(t => {
+  const fx = wertBei('camU', 'x', t), fy = wertBei('camU', 'y', t);
+  let z = wertBei('camU', 's', t);
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .006 * (1 - Math.cos(t * 2 * Math.PI / 14));
+  $('#kamera').style.transform = `translate(${(960 - fx * z).toFixed(2)}px,${(540 - fy * z).toFixed(2)}px) scale(${z.toFixed(5)})`;
+});
+
+/* ---------- Himmel, Sonne, Mond ---------- */
+akteur('nU', { x: 0 }, true);                     // Nacht 0 … 1
+akteur('sU', { x: .56, o: 0, s: 1 }, true);       // Sonne: x = Stelle auf dem Bogen
+akteur('mU', { x: 0, o: 0, s: 1 }, true);         // Mond
+const nacht = (t, n, d = 1.2) => tw('nU', t, d, { x: n }, 'inout');
+const sonne = (t, d, u, e = 'inout') => tw('sU', t, d, { x: u }, e);
+// Ruhezeit-Spur: Sonne bzw. Mond laufen an ihrer Spitze mit
+let RUHE_T0 = Infinity, RUHE_T1 = Infinity;
+const sonneEl = el('sonne'), mondEl = el('mond');
+const platz = (e, x, y, s, o) => { e.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) translate(-50%,-50%) scale(${s.toFixed(4)})`;
+  e.style.opacity = o.toFixed(3); e.style.visibility = o <= .001 || s < .001 ? 'hidden' : 'visible'; };
+HOOKS.push(t => {
+  const n = wertBei('nU', 'x', t);
+  el('himmelNacht').style.opacity = n.toFixed(3); el('bodenNacht').style.opacity = n.toFixed(3);
+  let [sx, sy] = P(wertBei('sU', 'x', t)), so = wertBei('sU', 'o', t), ss = wertBei('sU', 's', t);
+  let [mx, my] = P(wertBei('mU', 'x', t)), mo = wertBei('mU', 'o', t), ms = wertBei('mU', 's', t);
+  if (t >= RUHE_T0 && t < RUHE_T1 + .2) {
+    const p = E.inout(clamp((t - RUHE_T0) / (RUHE_T1 - RUHE_T0))), pt = RUHE.getPointAtLength(p * RUHE_L);
+    const unten = pt.y > MY + 2;       // Nachtteil der Spur
+    if (unten) { mx = pt.x; my = pt.y; mo = 1; ms = 1; so = 0; } else { sx = pt.x; sy = pt.y; so = 1; ss = 1; mo = 0; }
+  }
+  platz(sonneEl, sx, sy, ss, so); platz(mondEl, mx, my, ms, mo);
+});
+
+/* ---------- Licht in den Räumen: 'an' (Lampe), 'aus' (dunkel), 'tag' (Tageslicht) ---------- */
+const LICHT = { an: [0, 1], aus: [.52, 0], tag: [0, 0] };
+const licht = (raum, t, art, d = .35) => { const [dk, kg] = LICHT[art]; tw('dunkel' + raum, t, d, { o: dk }, 'inout'); tw('kegel' + raum, t, d, { o: kg }, 'inout'); };
+
+/* ---------- Kippschalter ---------- */
+const kippen = (t, frei) => {
+  tw('hebel', t, .2, { r: frei ? 30 : -30 }, 'back'); cue(t, 'klick');
+  tw('schalter', t + .02, .08, { sy: .95, sx: 1.03 }, 'sinus'); tw('schalter', t + .1, .3, { sy: 1, sx: 1 }, 'sanft');
+  welle('welleS', [t], 960, 712, .7);
+};
+
+/* ---------- Figuren: Mund exakt in den eigenen Sätzen, blinzeln, Blick, nicken, müde ---------- */
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+el('priya').dataset.sprecher = 'Priya';
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, BLICK = {}, MUEDE = {}, GRUEBELN = {};
+const froh = (id, a, b = Infinity) => (FROH[id] ??= []).push([a, b]);
+const blick = (id, t, dx, dy = 0, d = .25) => { (BLICK[id] ??= []).push([t, dx, dy, d]); BLICK[id].sort((a, b) => a[0] - b[0]); };
+const blickWert = (id, t) => { let x = 0, y = 0; for (const [t0, dx, dy, d] of BLICK[id] || []) { if (t < t0) break; const u = E.sinus(clamp((t - t0) / d)); x += (dx - x) * u; y += (dy - y) * u; } return [x, y]; };
+const rampe = (t, a, b, d = .35) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  PORTRAITS.forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf).toFixed(3)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (f && auf <= .12) ? 0 : 1;
+    const mued = (MUEDE[p.id] || []).reduce((m, [a, b]) => Math.max(m, rampe(t, a, b, .5)), 0);
+    const z = (t * .29 + i * .37) % 1, [bx, by] = blickWert(p.id, t);
+    const lid = z < .035 ? .12 : 1 - .5 * mued;
+    p.querySelector('.augen').style.transform = `translate(${(3.2 * bx).toFixed(2)}%,${(2.4 * by + 2 * mued).toFixed(2)}%) scaleY(${lid.toFixed(3)})`;
+    const gr = (GRUEBELN[p.id] || []).reduce((m, [a, b]) => Math.max(m, rampe(t, a, b, .4)), 0);
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const neig = 6 * gr * (.7 + .3 * Math.sin(t * 1.6)) + 5 * mued;
+    p.querySelector('.figur').style.transform = `rotate(${(nick + neig).toFixed(2)}deg) translateY(${(aktiv ? 0 : nick + 4 * mued).toFixed(2)}px)`;
+    p.style.borderColor = aktiv ? 'var(--b300)' : '';
+  });
+});
+// Priya wandert zwischen festen Plätzen
+const PLATZ = { sofa: [1320, 676], werk: [432, 690], schalter: [960, 560], mitte: [1172, 468] };
+const geh = (t, wohin, d = .8, h = 110, extra = {}) => { const [x, y] = PLATZ[wohin]; flug('priya', t, d, x, y, h, extra); landen('priya', t + d); cue(t, 'whoosh'); cue(t + d, 'plopp'); };
+
+/* ---------- Text im Bild (Tafel oben) ---------- */
+const tafel = (id, t0, zeiten, tAus, hell = []) => {
+  titelEin(id, t0, zeiten);
+  el(id).querySelectorAll('.w').forEach(w => { if (hell.includes(w.textContent.trim())) w.classList.add('hell'); });
+  const a = AKTEURE.get(el(id)); a.basis.o = 0; a.basis.y = -24;
+  tw(id, t0 - .4, .45, { o: 1, y: 0 }, 'sanft');
+  tw(id, tAus, .4, { o: 0, y: -24 }, 'in');
+};
+
+/* =====================================================================================
+   1 · Sonntagnachmittag: Priya schreibt ihrer Chefin – keine Antwort
+   ===================================================================================== */
+fahrt(.1, 2.6, WX, WY, WZ, false);
+akteur('bue', { x: 960, y: 540 });
+// der Bogen zeichnet sich von links nach rechts
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - .1) / 1.4));
+  el('bogenTag').style.strokeDasharray = '1 1'; el('bogenTag').style.strokeDashoffset = 1 - p;
+  el('bogenGlanz').style.strokeDasharray = '1 1'; el('bogenGlanz').style.strokeDashoffset = 1 - p;
+  el('kerben').style.opacity = clamp((t - 1.3) / .4);
+});
+cue(.1, 'whoosh');
+// Räume steigen auf, Werkstatt geschlossen (Sonntag), Zimmer hell
+ein('werkstatt', .3, { x: 600, y: 655 }, { y: 70 }, 'whoosh');
+ein('zimmer', .45, { x: 1320, y: 655 }, { y: 70 });
+akteur('dunkelW', { x: 600, y: 655, o: 0 }); tw('dunkelW', .75, .5, { o: .52 }, 'inout');
+akteur('dunkelZ', { x: 1320, y: 655, o: 0 });
+akteur('kegelW', { x: 600, y: 657, o: 0 });
+akteur('kegelZ', { x: 1320, y: 657, o: 0 }); tw('kegelZ', 1.0, .5, { o: 1 });
+ein('fenster', .55, { x: 728, y: 574 }, { y: 40 });
+ein('lampeW', .5, { x: 600, y: 565 }, { y: -40 });
+ein('bank', .6, { x: 620, y: 701 }, { y: 50 });
+ein('stueck', .7, { x: 572, y: 661 }, { y: 40 });
+ein('schluessel', .75, { x: 672, y: 671 }, { y: 40 });
+ein('lampeZ', .65, { x: 1320, y: 565 }, { y: -40 });
+ein('sofa', .75, { x: 1320, y: 702 }, { y: 50 });
+ein('pflanze', .85, { x: 1552, y: 748 }, { y: 40 });
+ein('tisch', .8, { x: 1120, y: 772 }, { y: 40 });
+ein('handy', .9, { x: 1120, y: 700 }, { y: 40 });
+pop('schalter', .7, { x: 960, y: 712 });
+pop('hebel', .78, { x: 960, y: 712, r: 30 }, null);
+pop('sockel', .9, { x: 960, y: 812 }, null);
+// Sonne am Nachmittag, Schild „Sonntag“ fällt an den Bogen und pendelt
+akteur('sU', { x: .56, o: 0, s: 0 }, true);
+tw('sU', W('Sonntagnachmittag', 1) - .45, .01, { o: 1 }); tw('sU', W('Sonntagnachmittag', 1) - .45, .55, { s: 1 }, 'back'); cue(W('Sonntagnachmittag', 1) - .45, 'pop');
+akteur('tagSo', { x: 960, y: 250, o: 0 });
+tw('tagSo', W('Sonntagnachmittag', 1) + .05, .2, { o: 1 }); tw('tagSo', W('Sonntagnachmittag', 1) + .05, .5, { y: 306 }, 'back'); cue(W('Sonntagnachmittag', 1) + .1, 'plopp');
+[4, -3, 2, -1, 0].forEach((r, i) => tw('tagSo', W('Sonntagnachmittag', 1) + .5 + i * .32, .32, { r }, 'sinus'));
+akteur('tagMo', { x: 960, y: 306, o: 0, sy: 0 });
+
+// Priya auf dem Sofa, eine Frage zur Arbeit
+fahrt(W('Priya', 2) - .65, 1.3, 1250, 612, 1.45);
+pop('priya', W('Priya', 2) - .2, { x: PLATZ.sofa[0], y: PLATZ.sofa[1] });
+pop('frage1', W('Frage', 2) - .05, { x: 1436, y: 600 });
+// sie schreibt: Nachricht mit Werkzeug-Zeichen tippt sich
+blick('priya', W('schreibt', 2) - .3, -1, .4);
+bump('handy', W('schreibt', 2) - .1, 1.12);
+pop('nachricht', W('schreibt', 2), { x: 1150, y: 596 });
+['nz1', 'nz2'].forEach((z, i) => { rel(z, { sx: 0 }); tw(z, W('ihrer', 2) - .1 + i * .55, .6, { sx: 1 }, 'lin'); });
+for (let i = 0; i < 7; i++) cue(W('ihrer', 2) - .1 + i * .16, 'tipp');
+// … und faltet sich zum Papierflieger
+const FALT = W('Nachricht', 2) + .1;
+tw('nachricht', FALT, .3, { sx: .15, sy: .5, r: -3, o: 0 }, 'in'); cue(FALT, 'kritzeln');
+akteur('flieger', { x: 1150, y: 596, s: 0, sx: -1 });
+tw('flieger', FALT + .22, .4, { s: .9 }, 'back');
+// Flug zur Werkstatt – das Fenster ist zu
+const FLUG0 = FALT + .7, FENSTER = FLUG0 + 1.25;
+fahrt(FALT + .3, 1.5, 960, 560, 1.08);
+flug('flieger', FLUG0, 1.25, 812, 566, 150, { s: 1 }); cue(FLUG0, 'whoosh');
+tw('flieger', FLUG0, .5, { r: -8 }, 'sinus'); tw('flieger', FLUG0 + .5, .75, { r: 6 }, 'sinus');
+tw('flieger', FENSTER, .28, { x: 850, y: 545, r: -6 }, 'out'); cue(FENSTER, 'plopp');
+wackeln('fenster', FENSTER, 3, 2);
+// … also steigt er auf und landet sanft in der Hängematte am Bogen
+const MATTE = FENSTER + 1.55;
+flug('flieger', FENSTER + .3, 1.25, 572, 414, 70, { r: 0, s: .9 }); cue(FENSTER + .3, 'whoosh');
+landen('flieger', MATTE); cue(MATTE, 'plopp');
+HOOKS.push(t => { el('matte').style.opacity = clamp((t - 1.3) / .5); });
+// Die Hängematte schaukelt (Anstoß bei der Landung, danach leises Wiegen, solange der Flieger wartet)
+let KIPP = Infinity;
+const schaukel = t => {
+  if (t < MATTE) return 0;
+  const d = t - MATTE;
+  return 9 * Math.sin(d * 3.4) * Math.exp(-d * .9) + 2.2 * Math.sin(d * 1.3) * clamp(d / 2);
+};
+HOOKS.push(t => {
+  const sw = t < KIPP + .1 ? schaukel(t) : 0;
+  const kipp = 22 * E.inout(clamp((t - KIPP) / .45)) * (1 - E.inout(clamp((t - KIPP - 1.1) / .6)));
+  el('tuchM').setAttribute('transform', `translate(${sw.toFixed(2)} 0) rotate(${(-kipp).toFixed(2)} 572 410)`);
+  el('seil1').setAttribute('transform', `translate(${(sw * .5).toFixed(2)} 0)`); el('seil2').setAttribute('transform', `translate(${(sw * .5).toFixed(2)} 0)`);
+  if (t >= MATTE && t < KIPP + .1) el('flieger').style.transform += ` translateX(${sw.toFixed(2)}px)`;
+});
+
+// Eine Stunde später: Sonne wandert, ein Uhr-Ring läuft um Priya
+sonne(W('Stunde', 3) - .2, 1.8, .7);
+akteur('ringU', { x: PLATZ.sofa[0], y: PLATZ.sofa[1], o: 0 });
+tw('ringU', W('Stunde', 3) - .2, .3, { o: 1 });
+HOOKS.push(t => { const p = clamp((t - W('Stunde', 3)) / (WE('da', 3) - W('Stunde', 3) + .3)); el('ringUPfad').style.strokeDashoffset = (1 - E.inout(p)).toFixed(4); });
+cue(W('Stunde', 3), 'scan');
+blick('priya', W('keine', 3) - .2, -1, .5); wackeln('handy', W('keine', 3), 3, 3);
+// Am Abend: Sonne sinkt, Himmel wird violett, Lampe im Zimmer leuchtet
+tw('ringU', W('Abend', 4) - .1, .4, { o: 0 });
+sonne(W('Abend', 4) - .3, 1.6, .9); nacht(W('Abend', 4) - .2, .72, 1.8);
+wackeln('handy', W('nichts', 4) - .1, 4, 3); cue(W('nichts', 4), 'klick');
+// Priya wird unruhig: kleine graue Sorgenwolke
+fahrt(W('Priya', 5) - .4, 1.6, 1290, 640, 1.85);
+blick('priya', W('wird', 5), -.4, -.6);
+ein('wolke', W('unruhig', 5) - .2, { x: 1188, y: 568 }, { y: -30 }, 'whoosh');
+schweben('wolke', 4);
+akteur('regen', { x: 1188, y: 640, o: 0 });
+tw('regen', W('sauer', 6) - .1, .3, { o: 1 }); tw('regen', W('Nein', 8) - .1, .3, { o: 0 });
+HOOKS.push(t => { el('tropfen').setAttribute('transform', `translate(0 ${((t * 52) % 40).toFixed(1)})`); el('tropfen').style.opacity = (1 - ((t * 52) % 40) / 40).toFixed(2); });
+blick('priya', W('Ist', 6) - .1, 0, 0);
+wackeln('frage1', W('sauer', 6), 4, 3); wackeln('wolke', W('falsch', 7) - .05, 4, 3); wackeln('frage1', W('falsch', 7), 3, 3);
+
+/* =====================================================================================
+   2 · Feierabend und Wochenende: Freizeit
+   ===================================================================================== */
+const S2 = W('Nein', 8);
+fahrt(S2 - .35, 1.2, WX, WY, WZ);
+tw('wolke', S2, .45, { s: 1.25, o: 0 }, 'in'); cue(S2, 'pop');
+aus('frage1', S2 + .1); froh('priya', W('sicher', 8), W('In', 9));
+aus('tagSo', W('sicher', 8));
+// neuer, gewöhnlicher Tag: Sonne geht rechts unter und links wieder auf
+sonne(S2 - .2, .6, 1.0); tw('sU', S2 - .2, .6, { o: 0 });
+set('sU', S2 + .5, { x: 0 }); tw('sU', W('sicher', 8), .4, { o: 1 });
+sonne(W('sicher', 8), W('Feierabend', 9) - W('sicher', 8), U_FEIER, 'sinus');
+nacht(W('sicher', 8) - .1, 0, 1.1);
+licht('W', W('nicht', 8) - .1, 'tag'); licht('Z', W('nicht', 8) - .1, 'tag');
+kippen(W('nicht', 8), false);
+geh(W('nicht', 8) + .15, 'werk', .9, 130);
+blick('priya', W('nicht', 8) + .15, 0, 0);
+// Feierabend: Schalter klappt um, Werkstatt aus, Zimmer an
+const FEIER = W('Feierabend', 9);
+kippen(FEIER, true); akzent(FEIER, .03);
+licht('W', FEIER + .05, 'aus'); licht('Z', FEIER + .05, 'an');
+nacht(FEIER + .1, .35, 1.4);
+geh(FEIER + .2, 'sofa', .9, 130);
+tafel('tb2', FEIER - .15, [FEIER - .15, W('Wochenende', 9) - .3, W('Wochenende', 9) - .12, W('Freizeit', 9) - .12], SE(12) + .35, ['Freizeit']);
+pop('blattSa', W('Wochenende', 9) - .05, { x: 1470, y: 588 });
+pop('blattSo', W('Wochenende', 9) + .12, { x: 1552, y: 588 }, null);
+huepfen('priya', W('Freizeit', 9), 16); froh('priya', W('Freizeit', 9), W('Viele', 11));
+// In vielen Betrieben erwartet niemand, dass du abends antwortest: die Nachrichten schlafen ein
+fahrt(W('Betrieben', 10) - .5, 1.2, 1040, 640, 1.32);
+const MINI = [['mini1', 1062, 636], ['mini2', 1120, 616], ['mini3', 1178, 636]];
+MINI.forEach(([id, x, y], i) => pop(id, W('erwartet', 10) - .1 + i * .12, { x, y }, i ? null : 'pop'));
+const SCHLAF = W('niemand', 10);
+MINI.forEach(([id, x, y], i) => { tw(id, SCHLAF + i * .1, .5, { y: y + 10, r: i === 1 ? 0 : (i ? 3 : -3), sy: .9 }, 'inout'); tw(id, SCHLAF + i * .1, .5, { o: .55 }, 'inout'); });
+const ZZZ = [];
+const zzz = (t0, t1, x, y) => ZZZ.push([t0, t1, x, y]);
+zzz(SCHLAF + .2, W('Viele', 11) + .3, 1120, 590);
+HOOKS.push(t => {
+  const zs = el('zzz').children, aktiv = ZZZ.find(([a, b]) => t >= a && t < b + 1.2);
+  [...zs].forEach((z, i) => {
+    if (!aktiv) { z.style.opacity = 0; return; }
+    const [a, b, x, y] = aktiv, ph = ((t - a) / 1.5 + i / 3) % 1, start = a + i * .5;
+    const o = t < start ? 0 : Math.sin(Math.PI * ph) * (1 - clamp((t - b) / 1.0));
+    z.style.opacity = o.toFixed(3);
+    z.style.transform = `translate(${(x + 26 * ph + 8 * Math.sin(ph * 6)).toFixed(1)}px,${(y - 70 * ph).toFixed(1)}px) scale(${(.6 + .6 * ph).toFixed(3)})`;
+  });
+});
+nacht(W('abends', 10) - .1, .6, 1.2); sonne(W('abends', 10) - .1, 1.4, .86);
+bump('blattSo', W('Sonntag', 10), 1.18);
+pop('mondH', W('antwortest', 10), { x: 1120, y: 694 });
+// Viele schalten bewusst ab: Schalter leuchtet, die Arbeit wird zugedeckt
+fahrt(W('Viele', 11) - .3, 1.1, 780, 640, 1.38);
+welle('welleS', [W('schalten', 11), W('schalten', 11) + .35], 960, 712, .8); bump('schalter', W('schalten', 11), 1.06); bump('hebel', W('schalten', 11), 1.06);
+cue(W('schalten', 11), 'klick');
+aus(['mini1', 'mini2', 'mini3'], W('lassen', 11));
+akteur('tuch', { x: 620, y: 560, o: 0 });
+tw('tuch', W('Arbeit', 11) - .2, .15, { o: 1 }); tw('tuch', W('Arbeit', 11) - .2, .42, { y: 668 }, 'in');
+landen('tuch', W('Arbeit', 11) + .22); cue(W('Arbeit', 11) + .22, 'plopp');
+tw('dunkelW', W('ruhen', 11), .6, { o: .62 }, 'inout');
+// Urlaub: Koffer rollt herein, daneben die Liege
+fahrt(W('Urlaub', 12) - .55, 1.05, 1500, 650, 1.42);
+akteur('koffer', { x: 1880, y: 754, o: 0 });
+tw('koffer', W('Urlaub', 12) - .25, .2, { o: 1 }); tw('koffer', W('Urlaub', 12) - .25, .75, { x: 1672 }, 'out'); cue(W('Urlaub', 12) - .25, 'whoosh');
+[3, -3, 2, 0].forEach((r, i) => tw('koffer', W('Urlaub', 12) - .25 + i * .17, .17, { r }, 'sinus'));
+ein('liege', W('Erholung', 12) - .2, { x: 1836, y: 754 }, { y: 40 }, 'pop');
+froh('priya', W('Erholung', 12), W('Warum', 19)); huepfen('priya', W('Erholung', 12) + .1, 14);
+aus('mondH', SE(12) + .3);
+
+/* =====================================================================================
+   3 · Gesetz: Ruhezeit, Erholungsurlaub – Kolleginnen trennen oft Arbeit und Privates
+   ===================================================================================== */
+fahrt(W('Das', 13) - .6, 1.1, WX, WY, WZ);
+nacht(W('Das', 13) - .4, .3, 1.0);
+ein('buchZu', W('Gesetz', 13) - .45, { x: 960, y: 402 }, { y: -70 }, 'whoosh');
+landen('buchZu', W('Gesetz', 13) + .15); cue(W('Gesetz', 13) + .15, 'plopp'); akzent(W('Gesetz', 13), .025);
+// Ruhezeit: Spur vom Feierabend durch die Nacht bis zum nächsten Morgen, Zähler rastet bei 11 ein
+HOOKS.push(t => {
+  el('bogenNacht').style.opacity = (E.inout(clamp((t - W('Zwischen', 14)) / .6)) * (1 - E.inout(clamp((t - W('Und', 15) + .2) / .5)))).toFixed(3);
+  const a = E.inout(clamp((t - W('zwei', 14)) / .7));
+  el('arbeitSpur').style.opacity = (.75 * clamp((t - W('zwei', 14)) / .1) * (1 - E.inout(clamp((t - W('Ruhezeit', 14) + .1) / .5))) ).toFixed(3);
+  el('arbeitSpur').style.strokeDasharray = '1 1'; el('arbeitSpur').style.strokeDashoffset = (1 - a).toFixed(4);
+});
+cue(W('zwei', 14), 'scan');
+// Sonne steht zum Feierabend bereit
+tw('sU', W('Das', 13) - .3, .4, { o: 0 }); set('sU', W('Das', 13) + .2, { x: U_FEIER, s: 0 });
+tw('sU', W('Zwischen', 14) - .3, .01, { o: 1 }); tw('sU', W('Zwischen', 14) - .3, .5, { s: 1 }, 'back'); cue(W('Zwischen', 14) - .3, 'pop');
+RUHE_T0 = W('Ruhezeit', 14) - .05; RUHE_T1 = WE('Stunden', 14) + .15;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - RUHE_T0) / (RUHE_T1 - RUHE_T0)));
+  RUHE.style.strokeDashoffset = ((1 - p) * RUHE_L).toFixed(1);
+  RUHE.style.opacity = (clamp((t - RUHE_T0) / .1) * (1 - E.inout(clamp((t - W('Und', 15) + .2) / .5)))).toFixed(3);
+  const n = Math.round(11 * p); el('zahl').textContent = `${n} Std.`;
+  el('zaehler').classList.toggle('fest', t >= RUHE_T1);
+});
+// nach der Spur: Sonne bleibt am Morgen stehen
+set('sU', RUHE_T1 + .1, { x: U_START, o: 1, s: 1 });
+cue(RUHE_T0, 'scan');
+pop('zaehler', RUHE_T0 - .15, { x: 960, y: 906 });
+bump('zaehler', RUHE_T1, 1.16); cue(RUHE_T1, 'plopp'); akzent(RUHE_T1, .035);
+welle('welleZ', [RUHE_T1], 960, 906, .8);
+tw('zaehler', W('Und', 15) - .2, .35, { o: 0, s: .8 }, 'in');
+tafel('tb3', W('Zwischen', 14) - .2, { unter: W('meistens', 14) - .1 }, SE(14) + .45, ['Ruhezeit']);
+// Erholungsurlaub: das Gesetzbuch klappt auf, das Lesezeichen „Erholung“ springt heraus
+fahrt(W('heißt', 15) - .5, 1.0, 960, 452, 1.38);
+const AUF = W('Gesetz', 15) - .05;
+tw('buchZu', AUF, .18, { sx: 0 }, 'in'); cue(AUF, 'klick');
+akteur('buchAuf', { x: 960, y: 402, sx: 0 }); set('buchAuf', AUF + .17, { sx: .02 }); tw('buchAuf', AUF + .18, .32, { sx: 1 }, 'out');
+set('buchZu', AUF + .2, { o: 0 });
+akteur('lesezeichen', { x: 960, y: 360, o: 0 });
+tw('lesezeichen', W('Erholungsurlaub', 15) - .05, .1, { o: 1 }); tw('lesezeichen', W('Erholungsurlaub', 15) - .05, .5, { y: 278 }, 'back'); cue(W('Erholungsurlaub', 15), 'pop');
+akzent(W('Erholungsurlaub', 15) + .2, .03);
+bump('koffer', W('Urlaub', 15), 1.1);
+// Kolleginnen und Kollegen: zusammen in der Werkstatt …
+const S16 = W('Auch', 16);
+fahrt(S16 - .45, 1.1, 960, 622, 1.18);
+tw(['buchAuf', 'lesezeichen'], S16 - .35, .4, { o: 0, y: 330 }, 'in');
+tw('tuch', S16 - .2, .4, { y: 600, o: 0 }, 'in');
+nacht(S16 - .3, 0, .9); sonne(S16 - .3, 1.0, .32);
+licht('W', S16 - .1, 'tag'); licht('Z', S16 - .1, 'tag'); kippen(S16 - .05, false);
+pop('chefin', W('Kolleginnen', 16) - .1, { x: 815, y: 690 });
+geh(W('Kollegen', 16) - .45, 'werk', .85, 120);
+// … dann trennen sie Arbeit und Privates: Priya geht heim, ein Vorhang schiebt sich dazwischen
+geh(W('trennen', 16) - .1, 'sofa', .95, 150);
+akteur('vorhang', { x: 960, y: 524, sy: 0, o: 0 });
+tw('vorhang', W('Arbeit', 16) - .15, .1, { o: 1 }); tw('vorhang', W('Arbeit', 16) - .15, .9, { sy: 1 }, 'weich'); cue(W('Arbeit', 16) - .15, 'whoosh');
+froh('priya', W('Privates', 16), W('Sie', 17)); froh('chefin', W('Kolleginnen', 16) + .2, W('Sie', 17));
+// Sie sind nicht automatisch Freunde: ein Faden reicht nur bis zum Vorhang …
+const FADEN = 'M876 650C930 500 1180 490 1262 618';
+el('faden').setAttribute('d', FADEN); el('ranke').setAttribute('d', FADEN);
+const FL = el('faden').getTotalLength();
+akteur('fadenU', { x: 0 }, true);
+tw('fadenU', W('Sie', 17) - .1, W('nicht', 17) - W('Sie', 17) + .5, { x: .3 }, 'inout'); cue(W('Sie', 17), 'scan');
+// … Freundschaft wächst langsam: Blatt für Blatt
+tw('fadenU', W('Freundschaft', 18), SE(18) - W('Freundschaft', 18) + .7, { x: 1 }, 'sinus');
+const BLAETTER = [[.38, -1], [.5, 1], [.62, -1], [.74, 1], [.86, -1]];
+el('blaetter').innerHTML = BLAETTER.map((_, i) => `<g id="bl${i}">${tpl('icBlatt')}</g>`).join('');
+HOOKS.push(t => {
+  const p = wertBei('fadenU', 'x', t), weg = 1 - E.inout(clamp((t - W('Warum', 19) + .7) / .4));
+  // gestrichelter Faden bis p, ab dem Vorhang (p > .3) wächst darauf eine Ranke
+  const len = p * FL, n = Math.floor(len / 15), rest = Math.min(2, len - n * 15);
+  el('faden').style.strokeDasharray = (n ? Array(n).fill('2 13').join(' ') + ' ' : '') + `${rest.toFixed(2)} ${(FL + 20).toFixed(0)}`;
+  el('faden').style.opacity = (len > .5 ? weg : 0).toFixed(3);
+  const r0 = .3 * FL, ra = Math.max(0, len - r0);
+  el('ranke').style.strokeDasharray = `${ra.toFixed(1)} ${(2 * FL).toFixed(0)}`; el('ranke').style.strokeDashoffset = (-r0).toFixed(1);
+  el('ranke').style.opacity = (ra > .5 ? weg : 0).toFixed(3);
+  BLAETTER.forEach(([u, seite], i) => {
+    const g = el('bl' + i), s = Math.max(0, E.back(clamp((p - u) / .08))) * weg;
+    const q = el('faden').getPointAtLength(u * FL), q2 = el('faden').getPointAtLength(Math.min(FL, u * FL + 2));
+    const w = Math.atan2(q2.y - q.y, q2.x - q.x) * 180 / Math.PI - 40 * seite;
+    g.setAttribute('transform', `translate(${q.x.toFixed(1)} ${q.y.toFixed(1)}) rotate(${w.toFixed(1)}) scale(${s.toFixed(3)} ${(seite * s).toFixed(3)})`);
+    g.style.opacity = s > .01 ? 1 : 0;
+  });
+});
+{ // Blatt-Geräusche: Zeitpunkt, an dem der Faden (sinus von .3 bis 1) das Blatt erreicht
+  const T0 = W('Freundschaft', 18), D = SE(18) - W('Freundschaft', 18) + .7;
+  BLAETTER.forEach(([u]) => cue(T0 + D * Math.acos(1 - 2 * (u - .3) / .7) / Math.PI, 'pop'));
+}
+froh('priya', W('wächst', 18), W('Warum', 19)); froh('chefin', W('wächst', 18), W('Warum', 19));
+blick('priya', W('Sie', 17), -1, 0); blick('chefin', W('Sie', 17), 1, 0); blick('priya', W('Warum', 19), 0, 0); blick('chefin', W('Warum', 19), 0, 0);
+
+/* =====================================================================================
+   4 · Warum? Wer zu wenig Ruhe hat, ist müde – Erholung schützt die Gesundheit
+   ===================================================================================== */
+const S19 = W('Warum', 19);
+tw('vorhang', S19 - .7, .5, { sy: 0 }, 'in'); set('vorhang', S19 - .2, { o: 0 });
+aus('chefin', S19 - .6);
+fahrt(S19 - .4, 1.1, 610, 650, 1.7);
+geh(S19 - .3, 'werk', .9, 140);
+// Akku über Priya wird leer, sie wird müde
+pop('akku', W('Wer', 20) - .1, { x: 432, y: 566 });
+akteur('akkuU', { x: 1 }, true);
+tw('akkuU', W('wenig', 20), WE('müde', 20) - W('wenig', 20) + .2, { x: .14 }, 'inout'); cue(W('wenig', 20), 'scan');
+HOOKS.push(t => {
+  const f = wertBei('akkuU', 'x', t), i = el('akkuI');
+  i.style.transform = `scaleX(${f.toFixed(3)})`;
+  i.style.background = f < .3 ? 'var(--error)' : f > .985 && t > W('Pausen', 22) ? 'var(--success)' : 'var(--b500)';
+});
+(MUEDE.priya ??= []).push([W('müde', 20) - .1, W('neue', 22)]);
+// Fehler: Werkstück bekommt ein rotes Kreuz
+wackeln('stueck', W('Fehler', 21) - .05, 3, 3);
+pop('plakX', W('Fehler', 21), { x: 606, y: 632 }, 'plopp');
+// Unfälle: der Schraubenschlüssel rutscht ab und fällt
+const RUTSCH = W('Unfälle', 21) - .3;
+tw('schluessel', RUTSCH, .3, { x: 712, r: 14 }, 'in'); cue(RUTSCH, 'kritzeln');
+tw('schluessel', RUTSCH + .3, .38, { x: 762, y: 786, r: 0 }, 'in');
+landen('schluessel', RUTSCH + .68); cue(RUTSCH + .68, 'plopp'); wackeln('schluessel', RUTSCH + .7, 3, 3);
+pop('plakAcht', RUTSCH + .85, { x: 772, y: 724 });
+// Pausen und freie Tage: Schalter um, Priya geht heim, der Akku lädt
+const S22 = W('Pausen', 22);
+fahrt(S22 - .35, 1.1, 960, 640, 1.24);
+kippen(S22, true); licht('W', S22 + .05, 'aus'); licht('Z', S22 + .05, 'an');
+sonne(S22 - .1, 1.1, .86); nacht(S22, .5, 1.2);
+geh(S22 + .15, 'sofa', 1.0, 150);
+flug('akku', S22 + .15, 1.0, 1186, 606, 150);
+bump('blattSa', W('freie', 22), 1.15); bump('blattSo', W('freie', 22) + .12, 1.15); cue(W('freie', 22), 'pop');
+tw('akkuU', W('geben', 22) - .1, WE('Kraft', 22) - W('geben', 22) + .3, { x: 1 }, 'inout'); cue(W('geben', 22), 'scan');
+cue(WE('Kraft', 22) + .2, 'erfolg'); bump('akku', WE('Kraft', 22) + .2, 1.12);
+froh('priya', W('Kraft', 22), W('Erholung', 24) + 3);
+// Am nächsten Tag: konzentriert und sicher
+const S23 = W('Dann', 23);
+sonne(S23 - .35, .45, 1.0); tw('sU', S23 - .35, .45, { o: 0 });
+set('sU', S23 + .15, { x: 0 }); tw('sU', S23 + .2, .3, { o: 1 }); sonne(S23 + .2, 1.2, .3);
+nacht(S23 - .1, 0, 1.0);
+kippen(W('arbeitest', 23), false); licht('W', W('arbeitest', 23) + .05, 'tag'); licht('Z', W('arbeitest', 23) + .05, 'tag');
+geh(W('arbeitest', 23) + .1, 'werk', 1.0, 150);
+flug('akku', W('arbeitest', 23) + .1, 1.0, 432, 566, 150);
+fahrt(W('nächsten', 23) - .2, 1.0, 610, 650, 1.7);
+tw('plakX', W('konzentriert', 23) - .1, .25, { s: 0 }, 'in');
+pop('plakOk', W('konzentriert', 23) + .1, { x: 606, y: 632 }, 'erfolg');
+aus('plakAcht', W('sicher', 23) - .4, .25);
+flug('schluessel', W('sicher', 23) - .3, .55, 672, 671, 90, { r: 0 }); landen('schluessel', W('sicher', 23) + .25); cue(W('sicher', 23) + .25, 'plopp');
+bump('bank', W('sicher', 23) + .25, 1.03);
+// Erholung schützt die Gesundheit: Herz-Schild legt sich um die Szene
+const S24 = W('Erholung', 24);
+aus(['koffer', 'liege'], S24 - .3, .4);
+fahrt(S24 - .45, 1.1, WX, WY, WZ);
+aus(['plakOk', 'akku'], S24 - .2);
+tafel('tb4', S24 - .1, [S24 - .1, W('schützt', 24) - .12, W('die', 24) - .12, W('Gesundheit', 24) - .12], SE(24) + .5, ['Gesundheit']);
+pop('herz', W('schützt', 24) - .15, { x: 960, y: 396 }, 'pop');
+akteur('schild', { x: 960, y: 640, o: 0, draw: 0 });
+tw('schild', W('schützt', 24), .05, { o: 1 }); tw('schild', W('schützt', 24), 1.2, { draw: 1 }, 'inout'); cue(W('schützt', 24), 'scan');
+welle('welleH', [W('Gesundheit', 24), W('Gesundheit', 24) + .45], 960, 396, 1.0); cue(W('Gesundheit', 24), 'erfolg'); akzent(W('Gesundheit', 24), .035);
+schweben('herz', 4);
+
+/* =====================================================================================
+   5 · In vielen Ländern … Und wie ist das bei dir?
+   ===================================================================================== */
+const S25 = W('In', 25);
+aus(['herz', 'schild'], S25 - .45, .4);
+fahrt(S25 - .4, 1.1, 960, 585, 1.0);
+kippen(S25 - .2, true); licht('W', S25 - .15, 'aus'); sonne(S25 - .3, 1.0, .86); nacht(S25 - .2, .45, 1.0);
+// rechte Hälfte räumt sich: ein leeres Feld fährt herein
+const ZIMMER_DINGE = ['zimmer', 'lampeZ', 'sofa', 'pflanze', 'tisch', 'handy', 'blattSa', 'blattSo', 'koffer', 'liege'];
+const ZW = W('Ländern', 25) - .55;
+tw([...ZIMMER_DINGE, 'kegelZ', 'dunkelZ'], ZW, .4, { o: 0 }, 'in');
+akteur('feld', { x: 1452 + 760, y: 585, o: 0 });
+tw('feld', ZW + .1, .25, { o: 1 }); tw('feld', ZW + .1, .8, { x: 1452 }, 'sanft'); cue(ZW + .1, 'whoosh');
+pop('chipDe', W('Ländern', 25) + .1, { x: 600, y: 904 });
+geh(W('Ländern', 25) + .1, 'mitte', .8, 80, { s: 1.35 });
+// Arbeit und Freizeit: zwei Kreise, die zusammenrücken
+pop('kreisA', W('Arbeit', 25) - .1, { x: 1420, y: 640 });
+pop('kreisB', W('Freizeit', 25) - .1, { x: 1680, y: 640 }, null);
+tw('kreisA', W('enger', 25) - .1, .7, { x: 1500 }, 'inout'); tw('kreisB', W('enger', 25) - .1, .7, { x: 1600 }, 'inout'); cue(W('enger', 25), 'whoosh');
+bump('kreisA', W('verbunden', 25) + .2, 1.06); bump('kreisB', W('verbunden', 25) + .2, 1.06);
+// vielleicht ähnlich (auseinander), vielleicht ganz anders (ganz zusammen)
+tw('kreisA', W('ähnlich', 26) - .2, .6, { x: 1440 }, 'inout'); tw('kreisB', W('ähnlich', 26) - .2, .6, { x: 1660 }, 'inout');
+tw('kreisA', W('anders', 26) - .3, .6, { x: 1548 }, 'inout'); tw('kreisB', W('anders', 26) - .3, .6, { x: 1552 }, 'inout'); cue(W('anders', 26) - .3, 'whoosh');
+huepfen('kreisB', W('anders', 26) + .35, 14);
+// Und wie ist das bei dir? – großes Fragezeichen, Priya grübelt
+aus(['kreisA', 'kreisB'], W('Und', 27) - .1, .3);
+pop('frageG', W('wie', 27) - .05, { x: 1610, y: 600 }, 'pop', 'sanft');
+pop('chipDu', W('bei', 27), { x: 1452, y: 904 });
+akzent(W('dir', 27), .03);
+blick('priya', W('wie', 27), 1, -.6);
+(GRUEBELN.priya ??= []).push([SE(27) - .2, W('Am', 28) - .4]);
+// Denkpause: Ring läuft, Gedankenbläschen füllt sich, Fragezeichen pulsiert
+const P0 = SE(27) + .05, P1 = W('Am', 28) - .35;
+akteur('ringP', { x: PLATZ.mitte[0], y: PLATZ.mitte[1], o: 0, s: 1 });
+tw('ringP', P0, .3, { o: 1 });
+HOOKS.push(t => { el('ringPfad').style.strokeDashoffset = (1 - clamp((t - P0) / (P1 - P0))).toFixed(4); });
+pop('dp1', P0 + .1, { x: 1300, y: 368 }, null); pop('dp2', P0 + .25, { x: 1342, y: 322 }, 'pop');
+pop('denk', P0 + .4, { x: 1520, y: 262 }, 'pop', 'sanft');
+['icSonne', 'icMond', 'icHandy', 'icHerz'].forEach((ic, i) => {
+  const s = el('sy' + (i + 1)); s.innerHTML = tpl(ic); rel(s, { s: 0 }, '50% 50%');
+  const t = P0 + .85 + i * .62; tw(s, t, .45, { s: 1 }, 'back'); cue(t, 'pop');
+});
+HOOKS.push(t => {
+  const d = t - W('wie', 27) - .4;
+  if (d > 0 && t < P1) el('frageG').style.transform += ` scale(${(1 + .07 * Math.sin(d * 4.2) * clamp(d / .5)).toFixed(4)})`;
+});
+
+/* =====================================================================================
+   6 · Montagmorgen: die Antwort kommt – dringende Fragen in der Arbeitszeit, selbst abschalten
+   ===================================================================================== */
+const S28 = W('Am', 28);
+tw('feld', S28 - .45, .7, { x: 1452 + 760, o: 0 }, 'inout'); cue(S28 - .45, 'whoosh');
+tw('frageG', S28 - .45, .5, { x: 1610 + 600, o: 0 }, 'in'); tw('chipDu', S28 - .45, .5, { x: 1452 + 600, o: 0 }, 'in');
+aus(['denk', 'dp1', 'dp2', 'ringP', 'chipDe'], S28 - .5, .3);
+tw(ZIMMER_DINGE.filter(d => d !== 'koffer' && d !== 'liege'), S28 - .15, .45, { o: 1 }, 'sanft');
+tw(['dunkelZ'], S28 - .15, .45, { o: 0 });
+geh(S28 - .2, 'sofa', .8, 80, { s: 1 });
+blick('priya', S28 - .2, -.6, 0);
+// Montagssonne geht links auf, Schild „Montag“, Werkstatt öffnet
+const MO = W('Montagmorgen', 28);
+tw('sU', S28 - 1.0, .45, { o: 0 }); set('sU', S28 - .5, { x: 0 }); tw('sU', MO - .3, .3, { o: 1 }); sonne(MO - .3, 1.1, .16);
+nacht(MO - .3, 0, 1.0);
+set('tagMo', MO - .2, { o: 1 }); tw('tagMo', MO - .2, .45, { sy: 1 }, 'back'); cue(MO - .2, 'klick');
+[3, -2, 1, 0].forEach((r, i) => tw('tagMo', MO + .25 + i * .3, .3, { r }, 'sinus'));
+kippen(MO - .1, false); licht('W', MO - .05, 'tag'); licht('Z', MO - .05, 'tag');
+tw('chefin', S28 - .3, .45, { o: 1, s: 1 }, 'sanft'); cue(S28 - .3, 'pop');
+// Die Hängematte kippt, der Flieger segelt zur Chefin
+KIPP = MO + .05;
+const FL0 = KIPP + .3;
+tw('flieger', FL0, .9, { x: 800, y: 612, r: 8, s: .7 }, 'inout', { bogen: -30 }); cue(FL0, 'whoosh');
+tw('flieger', FL0, .3, { sx: 1 }, 'inout');
+tw('flieger', FL0 + .75, .2, { o: 0, s: .3 }, 'in');
+bump('chefin', FL0 + .9, 1.12); cue(FL0 + .9, 'ding'); froh('chefin', FL0 + .9, W('Jetzt', 30) + 1);
+// ihre Antwort mit Herz fliegt zu Priya
+pop('antwortH', W('Antwort', 28) - .1, { x: 872, y: 572 }, 'pop');
+flug('antwortH', W('Antwort', 28) + .25, 1.0, 1212, 566, 120); cue(W('Antwort', 28) + .25, 'whoosh');
+bump('antwortH', W('Antwort', 28) + 1.25, 1.15); cue(W('Antwort', 28) + 1.25, 'erfolg');
+froh('priya', W('Antwort', 28) + 1.2, Infinity); huepfen('priya', W('Antwort', 28) + 1.3, 16);
+blick('priya', W('Antwort', 28) + .4, 1, -.4); blick('priya', W('Meine', 29), -1, 0);
+// Meine Chefin hatte am Sonntag einfach frei
+fahrt(W('Meine', 29) - .45, 1.0, 860, 640, 1.42);
+aus('antwortH', W('Meine', 29) - .2);
+pop('denkC', W('Sonntag', 29) - .35, { x: 916, y: 560 }, 'pop');
+bump('denkC', W('frei', 29), 1.1);
+// Jetzt: dringende Fragen in der Arbeitszeit
+const S30 = W('Jetzt', 30);
+aus('denkC', S30 - .2);
+geh(S30, 'werk', 1.0, 160);
+blick('priya', S30 + 1, 1, 0); blick('chefin', S30 + 1, -1, 0);
+fahrt(S30 + .05, 1.1, 620, 650, 1.6);
+sonne(W('dringende', 30), SE(30) - W('dringende', 30) + .4, .5, 'sinus');
+tafel('tb6', W('dringende', 30) - .12, [W('dringende', 30) - .12, W('Fragen', 30) - .12, W('in', 30) - .1, W('der', 30) - .05, W('Arbeitszeit', 30) - .1], W('Abends', 31) + .2, ['Arbeitszeit']);
+pop('frageB', W('Fragen', 30) - .1, { x: 520, y: 578 }, 'pop');
+flug('frageB', W('Fragen', 30) + .3, .7, 760, 610, 70, { s: .4 }); tw('frageB', W('Fragen', 30) + .85, .15, { o: 0 });
+huepfen('chefin', W('Fragen', 30) + 1.0, 12); cue(W('Fragen', 30) + 1.0, 'plopp');
+akteur('antwortOk', { x: 860, y: 572, s: 0 });
+tw('antwortOk', W('Arbeitszeit', 30) - .05, .4, { s: 1 }, 'back'); cue(W('Arbeitszeit', 30) - .05, 'pop');
+flug('antwortOk', W('Arbeitszeit', 30) + .35, .75, 360, 578, 90); cue(W('Arbeitszeit', 30) + 1.1, 'erfolg');
+bump('antwortOk', W('Arbeitszeit', 30) + 1.1, 1.12);
+// Abends erwarte ich keine Antwort mehr
+const S31 = W('Abends', 31);
+aus('antwortOk', S31 - .3);
+fahrt(S31 - .3, 1.1, 1080, 622, 1.32);
+sonne(S31 - .1, 1.4, .9); nacht(S31, .62, 1.4);
+tw('chefin', S31 + .1, .4, { o: 0, s: .85 }, 'in'); cue(S31 + .1, 'whoosh');
+geh(S31 + .2, 'sofa', 1.0, 160);
+blick('priya', S31 + 1.3, -1, .4);
+// eine Nachricht von ihr wartet – bis morgen (Mond)
+tw('mini2', W('erwarte', 31) - .1, .4, { o: 1, s: 1, sy: 1, y: 616, r: 0 }, 'sanft'); cue(W('erwarte', 31) - .1, 'pop');
+tw('mini2', W('keine', 31) + .1, .3, { o: 0, s: .85 }, 'in');
+tw('mondH', W('keine', 31) + .2, .45, { o: 1, s: 1 }, 'back'); cue(W('keine', 31) + .2, 'pop');
+// Und ich darf selbst auch abschalten: Priya legt den Schalter um
+const S32 = W('Und', 32);
+geh(S32 - .15, 'schalter', .65, 70);
+blick('priya', S32 + .5, 0, .8);
+const AB = W('abschalten', 32);
+tw('priya', AB - .12, .12, { y: PLATZ.schalter[1] + 18 }, 'in'); tw('priya', AB, .3, { y: PLATZ.schalter[1] }, 'sanft');
+kippen(AB, true); akzent(AB, .03);
+licht('W', AB + .05, 'aus'); licht('Z', AB + .05, 'an');
+bump('mondH', AB + .2, 1.15);
+zzz(AB + .3, SE(33), 1120, 600);
+geh(AB + .45, 'sofa', .75, 90);
+tw('priya', AB + 1.3, .6, { r: -3 }, 'sanft');
+blick('priya', AB + 1.3, 0, 0);
+
+/* =====================================================================================
+   Schluss: Anders ist nicht falsch.
+   ===================================================================================== */
+const S33 = W('Ob', 33);
+fahrt(S33 - .2, 2.4, 960, 572, 1.04);
+nacht(S33, 1, 2.6); sonne(S33, 1.6, 1.0); tw('sU', S33 + .6, 1.0, { o: 0 });
+set('mU', S33 + .6, { x: .04, o: 0 }); tw('mU', S33 + .7, .6, { o: 1 }); tw('mU', S33 + .7, 5.5, { x: .2 }, 'weich');
+HOOKS.push(t => {
+  const d = (t - W('trennt', 33) + .3) / 1.8;
+  el('welleSpur').style.opacity = d > 0 && d < 1 ? Math.sin(Math.PI * d).toFixed(3) : 0;
+  el('welleSpur').style.strokeDashoffset = (.08 - 1.16 * E.inout(clamp(d))).toFixed(4);
+});
+cue(W('trennt', 33) - .3, 'scan');
+titelEin('schluss', 0, [W('Anders', 33) - .15, W('ist', 33) - .1, W('nicht', 33) - .1, W('falsch', 33) - .1]);
+akteur('schlussKlein', { o: 0, y: 30 }, true); tw('schlussKlein', ENDE_SPRACHE + .7, .8, { o: 1, y: 0 }, 'weich');
+cue(W('Anders', 33), 'erfolg');
+
+start(ENDE_SPRACHE + 4.2, ENDE_SPRACHE + 2.2);
+</script>
+</body></html>

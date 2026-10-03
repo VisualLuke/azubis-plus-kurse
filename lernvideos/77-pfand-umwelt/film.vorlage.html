@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Pfand und Umwelt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+/* Leitidee: Die Reise einer Flasche auf der Kreislauf-Bahn. Die Welt ist eine große Schleife mit Stationen;
+   die Kamera fährt die Bahn entlang, fliegt für das „Warum“ hoch und taucht wieder ein. */
+html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b200))}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.buehne{width:1920px;height:1080px;border-radius:0;background:none}
+.hg{position:absolute;left:0;top:0}
+
+/* Stationen als Diorama-Karten */
+.station{position:absolute;width:1840px;height:1000px;border-radius:60px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,255,255,.5));box-shadow:0 24px 70px rgba(58,37,153,.10),inset 0 0 0 3px rgba(255,255,255,.7)}
+.station .boden{position:absolute;left:0;right:0;top:800px;bottom:0;background:linear-gradient(var(--b100),var(--b50))}
+.station .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:var(--b200)}
+.station .leiste{position:absolute;left:0;right:0;top:770px;height:30px;background:rgba(201,186,250,.35)}
+#bahnen{position:absolute;left:0;top:0;width:10px;height:10px;overflow:visible}
+
+/* Etikett: Text im Bild als Produkt-Etikett */
+.etikett{background:var(--surface);border-radius:26px;padding:26px 40px 26px;box-shadow:0 14px 36px rgba(58,37,153,.14);border-top:12px solid var(--b500);white-space:nowrap}
+.etikett .titel{font:800 50px/60px Inter;letter-spacing:-.02em;color:var(--ink)}
+.etikett .titel .w.akz .wi{color:var(--b500)}
+.etikett .unter{font:600 32px/40px Inter;color:var(--n700);margin-top:8px}
+
+/* Teile */
+.teil{width:220px}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.18)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.frage{width:92px;height:92px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 58px/92px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:6px solid var(--b400);opacity:0;width:200px;height:200px}
+.welle.gold{border-color:var(--warning)}
+.mi{transform-box:fill-box;transform-origin:center}
+.sprech{padding:26px 44px;border-radius:44px;background:var(--surface);font:800 44px/54px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 14px 34px rgba(58,37,153,.16)}
+.sprech::after{content:'';position:absolute;right:-26px;top:46px;border:18px solid transparent;border-left:34px solid var(--surface);border-right:0}
+.sprech b{color:var(--b500)}
+.chip{display:flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 30px/36px Inter;white-space:nowrap;box-shadow:0 8px 20px rgba(58,37,153,.14)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.muenze77{width:110px}
+.plakette{width:76px;height:76px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(22,19,37,.18);border:5px solid var(--surface)}
+.plakette svg{width:36px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+
+/* 1 · Pausenraum */
+.tisch{width:520px;height:230px}
+/* 2 · Lupe */
+.lupe2{width:330px;height:330px;border-radius:999px;background:var(--surface);border:12px solid var(--b500);box-shadow:0 18px 44px rgba(58,37,153,.22);display:flex;align-items:center;justify-content:center}
+.lupe2 svg{width:250px}
+.lupe2 .stiel{position:absolute;left:12px;bottom:-62px;width:30px;height:110px;border-radius:15px;background:var(--b700);transform:rotate(38deg);transform-origin:50% 0}
+/* 3 · Mehrweg */
+.regal3{width:240px;height:270px}
+.wasch3{width:330px;height:250px}
+.duese3{width:180px;height:200px}
+/* 4 · Automat */
+.klappe{width:150px;height:150px;border-radius:999px;background:radial-gradient(circle at 40% 35%,var(--b200),var(--b400));box-shadow:inset 0 0 0 5px var(--b300)}
+.scan{width:200px;height:14px;border-radius:7px;background:var(--b300);box-shadow:0 0 22px 6px rgba(164,139,244,.55)}
+.anzeige{width:150px;height:58px;font:800 30px/58px Inter;color:var(--b200);text-align:center}
+.bon{width:104px;height:150px;background:var(--surface);border-radius:6px 6px 0 0;box-shadow:0 8px 20px rgba(22,19,37,.14);padding:16px 14px;display:flex;flex-direction:column;gap:9px;transform-origin:50% 100%}
+.bon i{display:block;height:7px;border-radius:4px;background:var(--n200)}
+.bon b{font:800 24px/28px Inter;color:var(--b700);text-align:right;margin-top:auto}
+.bon::after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:10px;background:linear-gradient(-45deg,transparent 5px,var(--surface) 0) 0 0/10px 10px,linear-gradient(45deg,transparent 5px,var(--surface) 0) 0 0/10px 10px}
+/* 5 · Presse, Würfel */
+.presse5{width:250px;height:290px}
+.stempel5{width:170px;height:36px;border-radius:10px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 6px 14px rgba(58,37,153,.25)}
+.wuerfel5{width:300px;height:250px}
+.wuerfel5 i{position:absolute;width:86px;height:86px;border-radius:16px;box-shadow:inset 0 -10px 0 rgba(58,37,153,.18),0 6px 14px rgba(58,37,153,.14)}
+/* 6 · Und bei dir? */
+.feld6{width:700px;height:780px;border-radius:48px}
+.feld6.links{background:var(--surface);box-shadow:0 18px 50px rgba(58,37,153,.14)}
+.feld6.rechts{background:rgba(255,255,255,.45);border:6px dashed var(--b300)}
+.feld6 .kopf6{position:absolute;left:0;right:0;top:-34px;display:flex;justify-content:center}
+.feld6 .kopf6 > div{padding:10px 34px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 40px/48px Inter;box-shadow:0 10px 24px rgba(90,63,230,.3);white-space:nowrap}
+.feld6.rechts .kopf6 > div{background:var(--surface);color:var(--b600);box-shadow:0 10px 24px rgba(58,37,153,.16)}
+.gross6{position:absolute;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font:800 300px/1 Inter;color:var(--b500)}
+.denk6{width:340px;height:340px}
+.dp{border-radius:999px;background:var(--surface);box-shadow:0 6px 16px rgba(58,37,153,.15)}
+.sym6{width:96px}
+/* 7 · Tipps */
+.tipps7 .tz{display:flex;align-items:center;gap:26px;margin-bottom:46px}
+.tipps7 .titel{font:800 54px/64px Inter;letter-spacing:-.02em;color:var(--ink)}
+.tipps7 .titel .w.akz .wi{color:var(--b500)}
+.kapsel{width:56px;height:56px;flex:none;border-radius:999px;background:var(--b500);box-shadow:inset 0 -6px 0 var(--b700),0 6px 14px rgba(90,63,230,.3)}
+.kapsel::before{content:'';position:absolute;inset:12px;border-radius:999px;border:4px dashed var(--b200)}
+.panel7{width:860px;height:880px;border-radius:52px;background:rgba(255,255,255,.75);box-shadow:0 18px 50px rgba(58,37,153,.1)}
+.woche7{width:400px;padding:18px 20px 22px;border-radius:26px;background:var(--surface);box-shadow:0 12px 30px rgba(58,37,153,.16)}
+.woche7 .wk{height:16px;border-radius:8px;background:var(--b500);margin-bottom:16px}
+.woche7 .tage{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.woche7 .tage span{height:58px;border-radius:12px;background:var(--b50);font:700 19px/22px Inter;color:var(--b300);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.woche7 .tage span.ziel{background:var(--b100);color:var(--b600)}
+.strahl7{width:22px;height:180px;border-radius:11px;background:linear-gradient(var(--b200),var(--b300));transform-origin:50% 0}
+.platte7{width:1400px;height:440px;border-radius:56px;background:var(--surface);box-shadow:0 30px 80px rgba(58,37,153,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px}
+.platte7 .satz7{font:800 96px/106px Inter;letter-spacing:-.03em;color:var(--b700);white-space:nowrap}
+
+#wisch{position:absolute;left:0;top:-200px;width:2700px;height:1480px;background:linear-gradient(90deg,var(--b400),var(--b500) 40%,var(--b700));transform:translateX(-3000px) skewX(-14deg)}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0 at 50% 50%)}
+.deckel .gross{font:800 104px/114px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:500 40px/54px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1400px}
+</style></head><body>
+
+<template id="portraitYusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- Stationen (Hintergrund) -->
+  <div class="station" id="st1"><div class="leiste"></div><div class="boden"></div></div>
+  <div class="station" id="st2"><div class="leiste"></div><div class="boden"></div></div>
+  <div class="station" id="st3"><div class="leiste"></div><div class="boden"></div></div>
+  <div class="station" id="st4"><div class="leiste"></div><div class="boden"></div></div>
+  <div class="station" id="st5" style="background:linear-gradient(180deg,var(--surface),var(--b50) 40%)">
+    <svg class="hg" viewBox="0 0 1840 1000" style="width:1840px;height:1000px">
+      <circle id="sonne5" cx="1560" cy="150" r="70" fill="var(--warning-bg)"/>
+      <path d="M0 470C240 380 420 420 640 460S1100 380 1340 420 1700 470 1840 430V1000H0Z" fill="var(--b100)"/>
+      <path d="M0 560C300 520 560 600 900 560S1500 520 1840 580V1000H0Z" fill="var(--b50)"/>
+      <path d="M0 860C260 820 520 900 840 850S1460 800 1840 860V960C1500 900 1180 950 860 930S260 900 0 950Z" fill="var(--b200)"/>
+      <path d="M120 890C300 870 440 905 600 885M980 870C1150 855 1300 880 1460 865" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none" opacity=".7"/>
+      <g fill="var(--b200)"><rect x="220" y="330" width="40" height="280" rx="10"/><rect x="760" y="330" width="40" height="300" rx="10"/><rect x="1300" y="330" width="40" height="280" rx="10"/></g>
+      <g><rect x="1660" y="420" width="16" height="90" rx="6" fill="var(--b300)"/><circle cx="1668" cy="400" r="54" fill="var(--b200)"/><circle cx="1690" cy="430" r="36" fill="var(--b300)" opacity=".5"/></g>
+      <g><rect x="60" y="440" width="14" height="80" rx="6" fill="var(--b300)"/><circle cx="67" cy="420" r="46" fill="var(--b200)"/></g>
+    </svg>
+  </div>
+  <div class="station" id="st6"></div>
+  <div class="station" id="st7"></div>
+
+  <div class="a buehne" id="bue1"></div><div class="a buehne" id="bue2"></div><div class="a buehne" id="bue3"></div>
+  <div class="a buehne" id="bue4"></div><div class="a buehne" id="bue5"></div><div class="a buehne" id="bue6"></div><div class="a buehne" id="bue7"></div>
+
+  <svg id="bahnen">
+    <defs>
+      <clipPath id="clipFl" clipPathUnits="userSpaceOnUse"><rect id="clipFlR" x="0" y="0" width="160" height="160"/></clipPath>
+      <clipPath id="clipGlas" clipPathUnits="userSpaceOnUse"><rect id="clipGlasR" x="0" y="0" width="160" height="160"/></clipPath>
+      <clipPath id="clipTf" clipPathUnits="userSpaceOnUse"><rect id="clipTfR" x="0" y="160" width="160" height="160"/></clipPath>
+    </defs>
+    <g id="ring3g">
+      <path class="band3" id="ast3s" pathLength="1" stroke="rgba(58,37,153,.08)" stroke-width="62" fill="none" transform="translate(0 10)"/>
+      <path class="band3" id="ast3a" pathLength="1" stroke="var(--b200)" stroke-width="46" fill="none"/>
+      <path class="band3" id="ast3b" pathLength="1" stroke="var(--surface)" stroke-width="32" fill="none"/>
+      <path class="band3" id="loop3s" pathLength="1" stroke="rgba(58,37,153,.08)" stroke-width="62" fill="none" transform="translate(0 10)"/>
+      <path class="band3" id="loop3a" pathLength="1" stroke="var(--b200)" stroke-width="46" fill="none"/>
+      <path class="band3" id="loop3b" pathLength="1" stroke="var(--surface)" stroke-width="32" fill="none"/>
+      <path id="loop3lauf" stroke="var(--b300)" stroke-width="6" stroke-dasharray="16 26" fill="none" opacity="0"/>
+      <path id="loop3" fill="none" stroke="none"/>
+    </g>
+    <path id="ringS" stroke="rgba(58,37,153,.08)" stroke-width="62" fill="none" transform="translate(0 10)"/>
+    <path id="ringA" stroke="var(--b200)" stroke-width="46" fill="none"/>
+    <path id="ringB" stroke="var(--surface)" stroke-width="32" fill="none"/>
+    <path id="ringLauf" stroke="var(--b300)" stroke-width="6" stroke-dasharray="16 26" fill="none"/>
+    <path id="ringPuls" pathLength="1" stroke="var(--b500)" stroke-width="14" stroke-linecap="round" fill="none" stroke-dasharray="0 1" opacity="0"/>
+    <path id="ring" fill="none" stroke="none"/>
+  </svg>
+
+  <!-- ============ 1 · Pausenraum ============ -->
+  <div class="a teil" id="uhr1" style="width:160px" data-gruppe="uhr1"><svg viewBox="0 0 160 160"><svg>{{uhr}}</svg><g id="uhrZ"><svg>{{uhr-zeiger}}</svg></g><g id="uhrS"><svg>{{uhr-stunde}}</svg></g></svg></div>
+  <div class="a teil" id="eimer1" style="width:230px" data-gruppe="eimer1">{{muelleimer}}</div>
+  <div class="a teil" id="deckel1" style="width:230px" data-gruppe="eimer1">{{muelleimer-deckel}}</div>
+  <svg class="a tisch" id="tisch1" viewBox="0 0 520 230" data-gruppe="tisch1"><rect x="10" y="0" width="500" height="34" rx="17" fill="var(--b300)"/><rect x="10" y="0" width="500" height="22" rx="11" fill="var(--b200)"/>
+    <rect x="70" y="30" width="26" height="200" rx="10" fill="var(--b300)"/><rect x="424" y="30" width="26" height="200" rx="10" fill="var(--b300)"/></svg>
+  <div class="a teil" id="tasse1" style="width:130px" data-gruppe="tisch1">{{tasse}}</div>
+  <div class="a portrait" id="yus1" style="width:300px;height:300px" data-gruppe="yus1"></div>
+  <div class="a frage" id="frage1" data-gruppe="yus1">?</div>
+  <div class="a teil" id="fl" data-gruppe="fl"><svg viewBox="0 0 160 160"><svg>{{pet-flasche}}</svg><g clip-path="url(#clipFl)"><svg>{{pet-flasche-voll}}</svg></g>
+    <g transform="translate(80 70)"><g class="mi" id="flCoin"></g></g></svg></div>
+  <div class="a welle gold" id="welle1" data-frei></div>
+  <div class="a sprech" id="halt1">Halt, da ist <b>Pfand</b> drauf!</div>
+
+  <!-- ============ 2 · Laden: Kühlregal und Kasse ============ -->
+  <div class="a teil" id="regal2" style="width:560px" data-gruppe="regal2">{{kuehlregal}}</div>
+  <div class="a teil" id="kasse2" style="width:360px" data-gruppe="kasse2">{{kasse}}</div>
+  <div class="a muenze77" id="preis2" style="width:120px" data-gruppe="kasse2"></div>
+  <div class="a muenze77" id="pfand2" style="width:88px" data-gruppe="kasse2" data-dreht></div>
+  <div class="a chip" id="cpreis2" data-gruppe="kasse2">Preis</div>
+  <div class="a chip brand" id="cpfand2" data-gruppe="kasse2">+ Pfand</div>
+  <div class="a teil" id="saft2" style="width:220px" data-gruppe="reihe2">{{saftflasche}}</div>
+  <div class="a teil" id="dose2" style="width:220px" data-gruppe="reihe2">{{limodose}}</div>
+  <div class="a muenze77" id="mz2a" style="width:76px" data-gruppe="reihe2"></div>
+  <div class="a muenze77" id="mz2b" style="width:76px" data-gruppe="reihe2"></div>
+  <div class="a" id="strahl2" style="width:340px;height:300px" data-frei><svg viewBox="0 0 340 300" style="width:340px;height:300px"><path d="M0 300L250 0H340L28 300Z" fill="var(--b200)" opacity=".45"/></svg></div>
+  <div class="a lupe2" id="lupe2" data-gruppe="lupe2"><div class="stiel"></div>{{pfand-zeichen}}</div>
+  <div class="a welle" id="welle2" data-frei></div>
+  <div class="a" id="tb2w"><div class="etikett" id="tb2"><div class="titel">Einweg-Pfand: meist <span class="akz">25 Cent</span></div><div class="unter">Zeichen auf dem Etikett</div></div></div>
+
+  <!-- ============ 3 · Mehrweg-Schleife ============ -->
+  <svg class="a regal3" id="regal3" viewBox="0 0 240 270" data-gruppe="regal3"><rect x="6" y="0" width="228" height="26" rx="10" fill="var(--b300)"/><rect x="6" y="0" width="228" height="16" rx="8" fill="var(--b200)"/>
+    <rect x="14" y="20" width="20" height="250" rx="8" fill="var(--b300)"/><rect x="206" y="20" width="20" height="250" rx="8" fill="var(--b300)"/><rect x="34" y="26" width="172" height="240" fill="var(--b100)" opacity=".55"/></svg>
+  <svg class="a duese3" id="duese3" viewBox="0 0 180 200" data-gruppe="duese3"><rect x="20" y="0" width="140" height="96" rx="20" fill="var(--b500)"/><rect x="20" y="0" width="140" height="70" rx="20" fill="var(--b400)"/>
+    <rect x="44" y="22" width="92" height="28" rx="10" fill="var(--b700)" opacity=".5"/><g id="duesenkopf"><rect x="74" y="92" width="32" height="60" rx="8" fill="var(--n300)"/><rect x="68" y="146" width="44" height="18" rx="7" fill="var(--b600)"/></g></svg>
+  <div class="a" id="strahl3" style="width:16px;height:120px;border-radius:8px;background:var(--b400);transform-origin:50% 0" data-gruppe="duese3"></div>
+  <div class="a teil" id="glas" data-gruppe="glas"><svg viewBox="0 0 160 160"><g clip-path="url(#clipGlas)"><svg>{{glasflasche-saft}}</svg></g><svg>{{glasflasche}}</svg>
+    <rect id="glanz3" x="54" y="10" width="12" height="140" fill="var(--surface)" opacity="0" transform="skewX(-12)"/>
+    <g transform="translate(118 44)"><g class="mi" id="zaehlG"><rect x="-21" y="-17" width="42" height="34" rx="12" fill="var(--b500)"/><rect x="-21" y="-17" width="42" height="34" rx="12" fill="none" stroke="var(--surface)" stroke-width="3"/><text id="zaehlT" y="8" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="22" fill="var(--surface)">1</text></g></g></svg></div>
+  <svg class="a wasch3" id="wasch3" viewBox="0 0 330 250" data-gruppe="glas"><path d="M10 250V70a60 60 0 0 1 60-60h190a60 60 0 0 1 60 60v180h-44V82a34 34 0 0 0-34-34H88a34 34 0 0 0-34 34v168Z" fill="var(--b400)"/>
+    <path d="M10 250V70a60 60 0 0 1 60-60h190a60 60 0 0 1 60 60v8H10Z" fill="var(--b500)"/>
+    <g id="buerste3a" transform="translate(70 120)"><circle r="36" fill="var(--b200)"/><g stroke="var(--surface)" stroke-width="6" stroke-linecap="round"><path d="M-30 0H30M0-30V30M-21-21L21 21M21-21L-21 21"/></g></g>
+    <g id="buerste3b" transform="translate(260 120)"><circle r="36" fill="var(--b200)"/><g stroke="var(--surface)" stroke-width="6" stroke-linecap="round"><path d="M-30 0H30M0-30V30M-21-21L21 21M21-21L-21 21"/></g></g>
+    <g id="schaum3" fill="var(--surface)"></g></svg>
+  <div class="a muenze77" id="m8" style="width:116px" data-gruppe="m3"></div>
+  <div class="a muenze77" id="m15" style="width:128px" data-gruppe="m3"></div>
+  <div class="a" id="tb3w"><div class="etikett" id="tb3"><div class="titel">Mehrweg: meist <span class="akz">8 oder 15 Cent</span></div><div class="unter">wird wieder gefüllt</div></div></div>
+
+  <!-- ============ 4 · Rückgabe im Supermarkt ============ -->
+  <div class="a portrait" id="yus4" style="width:220px;height:220px" data-gruppe="yus4"></div>
+  <div class="a frage" id="frage4" data-gruppe="yus4">?</div>
+  <div class="a teil" id="laden4" style="width:620px" data-gruppe="laden4">{{laden}}</div>
+  <div class="a teil" id="auto4" style="width:520px" data-gruppe="auto4">{{automat}}</div>
+  <div class="a anzeige" id="anz4" data-gruppe="auto4">25 ct</div>
+  <div class="a bon" id="bon4" data-gruppe="auto4"><i style="width:60%"></i><i></i><i style="width:80%"></i><i style="width:50%"></i><b>25 ct</b></div>
+  <div class="a teil" id="fl4" data-gruppe="auto4"><svg viewBox="0 0 160 160"><svg>{{pet-flasche~b}}</svg><g transform="translate(80 70)"><g class="mi" id="fl4Coin"></g></g></svg></div>
+  <div class="a klappe" id="klappe4" data-gruppe="auto4"></div>
+  <div class="a scan" id="scan4" data-gruppe="auto4"></div>
+  <div class="a teil" id="kasse4" style="width:330px" data-gruppe="kasse4">{{kasse~b}}</div>
+  <div class="a teil" id="geldH4" style="width:230px" data-gruppe="geld4">{{portemonnaie-hinten}}</div>
+  <div class="a muenze77" id="c41" style="width:70px" data-gruppe="geld4"></div>
+  <div class="a muenze77" id="c42" style="width:70px" data-gruppe="geld4"></div>
+  <div class="a muenze77" id="c43" style="width:70px" data-gruppe="geld4"></div>
+  <div class="a teil" id="geldV4" style="width:230px" data-gruppe="geld4">{{portemonnaie-vorne}}</div>
+  <div class="a teil" id="ein4" style="width:170px" data-gruppe="paar4">{{pet-flasche~c}}</div>
+  <div class="a teil" id="dose4" style="width:170px" data-gruppe="paar4">{{limodose~b}}</div>
+  <div class="a teil" id="ladA" style="width:300px" data-gruppe="ladA">{{laden~a}}</div>
+  <div class="a teil" id="ladB" style="width:300px" data-gruppe="ladB">{{laden~c}}</div>
+  <div class="a teil" id="ladC" style="width:300px" data-gruppe="ladC">{{laden~d}}</div>
+  <div class="a plakette gruen" id="hkA" data-gruppe="ladA"></div>
+  <div class="a plakette gruen" id="hkB" data-gruppe="ladB"></div>
+  <div class="a plakette gruen" id="hkC" data-gruppe="ladC"></div>
+  <div class="a welle" id="welle4" data-frei></div>
+  <div class="a" id="tb4w"><div class="etikett" id="tb4"><div class="titel">Automat <span class="akz">→</span> Bon <span class="akz">→</span> Kasse</div></div></div>
+
+  <!-- ============ 5 · Warum? Landschaft unter der Bahn ============ -->
+  <div class="hg" id="blumen5"></div>
+  <div class="a teil" id="lit1" style="width:150px">{{pet-flasche~l1}}</div>
+  <div class="a teil" id="lit2" style="width:150px">{{limodose~l2}}</div>
+  <div class="a teil" id="lit3" style="width:150px">{{saftflasche~l3}}</div>
+  <div class="a teil" id="lit4" style="width:150px">{{limodose~l4}}</div>
+  <div class="a teil" id="lit5" style="width:150px">{{pet-flasche~l5}}</div>
+  <svg class="a presse5" id="presse5" viewBox="0 0 250 290" data-gruppe="presse5"><rect x="10" y="0" width="230" height="56" rx="18" fill="var(--b500)"/><rect x="10" y="0" width="230" height="38" rx="18" fill="var(--b400)"/>
+    <rect x="18" y="40" width="28" height="250" rx="10" fill="var(--b300)"/><rect x="204" y="40" width="28" height="250" rx="10" fill="var(--b300)"/>
+    <rect x="112" y="50" width="26" height="40" rx="6" fill="var(--n300)"/></svg>
+  <div class="a stempel5" id="stempel5" data-gruppe="presse5"></div>
+  <div class="a teil" id="fl5" style="width:180px" data-gruppe="presse5">{{pet-flasche~f5}}</div>
+  <svg class="hg" id="koerner5" style="width:10px;height:10px;overflow:visible"></svg>
+  <div class="a teil" id="neu5" style="width:180px" data-gruppe="neu5">{{pet-flasche~n5}}</div>
+  <div class="a teil" id="glas5" style="width:180px" data-gruppe="glas5"><svg viewBox="0 0 160 160"><svg>{{glasflasche-saft~g5}}</svg><svg>{{glasflasche~g5}}</svg>
+    <g transform="translate(118 44)"><g class="mi"><rect x="-26" y="-17" width="52" height="34" rx="12" fill="var(--b500)" id="zaehl5R"/><text id="zaehl5" y="8" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="22" fill="var(--surface)">3</text></g></g></svg></div>
+  <div class="a welle" id="welle5" data-frei></div>
+  <div class="a wuerfel5" id="wuerfel5" data-gruppe="wuerfel5"></div>
+  <div class="a" id="tb5w"><div class="etikett" id="tb5"><div class="titel">Pfand: weniger Müll in der <span class="akz">Natur</span></div><div class="unter">Rohstoffe sparen</div></div></div>
+
+  <!-- ============ 6 · Und bei dir? ============ -->
+  <div class="a feld6 links" id="links6" data-gruppe="links6">
+    <svg class="hg" viewBox="0 0 700 780" style="width:700px;height:780px">
+      <g transform="translate(350 430)">
+        <path id="mini6" d="M-150 150H150A150 150 0 0 0 150-150H-150A150 150 0 0 0-150 150Z" stroke="var(--b200)" stroke-width="40" fill="none"/>
+        <path d="M-150 150H150A150 150 0 0 0 150-150H-150A150 150 0 0 0-150 150Z" stroke="var(--surface)" stroke-width="26" fill="none"/>
+        <path id="mini6lauf" d="M-150 150H150A150 150 0 0 0 150-150H-150A150 150 0 0 0-150 150Z" stroke="var(--b300)" stroke-width="5" stroke-dasharray="12 18" fill="none"/>
+      </g>
+    </svg>
+    <div class="hg" style="left:120px;top:150px;width:150px">{{kuehlregal~m6}}</div>
+    <div class="hg" style="left:430px;top:150px;width:150px">{{automat~m6}}</div>
+    <div class="hg" style="left:270px;top:350px;width:160px" id="mmz6"></div>
+    <div class="hg" id="miniFl6" style="width:110px;left:-55px;top:-55px">{{pet-flasche~m6}}</div>
+    <div class="kopf6"><div id="tb6a"><div class="titel">In Deutschland</div></div></div>
+  </div>
+  <div class="a feld6 rechts" id="rechts6" data-gruppe="rechts6">
+    <svg class="hg" id="ring6" viewBox="0 0 700 780" style="width:700px;height:780px"><circle cx="350" cy="420" r="200" stroke="var(--b100)" stroke-width="16" fill="none"/>
+      <circle id="ring6f" pathLength="1" cx="350" cy="420" r="200" stroke="var(--b400)" stroke-width="16" stroke-linecap="round" fill="none" transform="rotate(-90 350 420)" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+      <path id="geist6" d="M210 520H490A100 100 0 0 0 490 320H210A100 100 0 0 0 210 520Z" stroke="var(--b300)" stroke-width="10" stroke-dasharray="4 22" stroke-linecap="round" fill="none" opacity="0"/>
+      <g id="punkte6" fill="var(--b300)" opacity="0"></g></svg>
+    <div class="gross6" id="frage6" style="top:30px">?</div>
+    <div class="kopf6"><div id="tb6b"><div class="titel">Bei dir?</div></div></div>
+  </div>
+  <svg class="a denk6" id="denk6" viewBox="0 0 340 340" data-gruppe="denk6"><g fill="var(--surface)" style="filter:drop-shadow(0 10px 18px rgba(58,37,153,.16))">
+    <circle cx="170" cy="170" r="132"/><circle cx="70" cy="110" r="62"/><circle cx="270" cy="110" r="62"/><circle cx="70" cy="235" r="60"/><circle cx="270" cy="235" r="60"/><circle cx="170" cy="62" r="60"/><circle cx="170" cy="280" r="56"/></g></svg>
+  <div class="a teil sym6" id="sy1" data-gruppe="denk6">{{pet-flasche~s1}}</div>
+  <div class="a teil sym6" id="sy2" data-gruppe="denk6">{{korb}}</div>
+  <div class="a teil sym6" id="sy3" data-gruppe="denk6">{{muenze}}</div>
+  <div class="a teil sym6" id="sy4" data-gruppe="denk6">{{wasserhahn~s4}}</div>
+  <svg class="a sym6" id="sy5" viewBox="0 0 100 100" data-gruppe="denk6"><path d="M24 58a28 28 0 0 1 44-34" stroke="var(--b500)" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M62 12l14 15-20 4Z" fill="var(--b500)"/>
+    <path d="M76 42a28 28 0 0 1-44 34" stroke="var(--b500)" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M38 88L24 73l20-4Z" fill="var(--b500)"/></svg>
+  <div class="a dp" id="dp1" style="width:26px;height:26px" data-gruppe="denk6"></div>
+  <div class="a dp" id="dp2" style="width:42px;height:42px" data-gruppe="denk6"></div>
+  <div class="a portrait" id="yus6" style="width:240px;height:240px" data-gruppe="yus6"></div>
+
+  <!-- ============ 7 · Anders ist nicht falsch: Tipps ============ -->
+  <div class="hg panel7" id="panel7"></div>
+  <div class="a portrait" id="yus7" style="width:210px;height:210px" data-gruppe="yus7"></div>
+  <div class="a teil" id="tascheH" style="width:340px" data-gruppe="tasche7">{{tasche-hinten}}</div>
+  <div class="a teil" id="tb1" style="width:150px" data-gruppe="tasche7">{{pet-flasche~t1}}</div>
+  <div class="a teil" id="tb2f" style="width:150px" data-gruppe="tasche7">{{saftflasche~t2}}</div>
+  <div class="a teil" id="tb3f" style="width:150px" data-gruppe="tasche7">{{limodose~t3}}</div>
+  <div class="a teil" id="tascheV" style="width:340px" data-gruppe="tasche7">{{tasche-vorne}}</div>
+  <div class="a woche7" id="woche7" data-gruppe="woche7"><div class="wk"></div><div class="tage" id="tage7"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span class="ziel" id="sa7">Sa</span><span>So</span></div></div>
+  <div class="a teil" id="wsym7" style="width:62px" data-gruppe="woche7">{{pet-flasche~w7}}</div>
+  <div class="a teil" id="eimer7" style="width:210px" data-gruppe="eimer7">{{muelleimer~e7}}</div>
+  <div class="a teil" id="deckel7" style="width:210px" data-gruppe="eimer7">{{muelleimer-deckel~e7}}</div>
+  <div class="a plakette rot" id="kreuz7" data-gruppe="eimer7"></div>
+  <div class="a teil" id="hahn7" style="width:300px" data-gruppe="hahn7">{{wasserhahn}}</div>
+  <div class="a strahl7" id="strahl7" data-gruppe="hahn7"></div>
+  <svg class="hg" id="ring7" style="width:10px;height:10px;overflow:visible"><g id="ring7g" opacity="0">
+    <circle id="ring7band" r="190" stroke="var(--b200)" stroke-width="40" fill="none"/><circle r="190" stroke="var(--surface)" stroke-width="26" fill="none"/>
+    <circle id="ring7lauf" r="190" stroke="var(--b300)" stroke-width="5" stroke-dasharray="12 18" fill="none"/></g></svg>
+  <div class="a teil" id="tf7" style="width:230px" data-gruppe="hahn7"><svg viewBox="0 0 160 160"><g clip-path="url(#clipTf)"><svg>{{trinkflasche-wasser}}</svg></g><svg>{{trinkflasche}}</svg></svg></div>
+  <div class="a plakette gruen" id="ok7" data-gruppe="hahn7"></div>
+  <div class="a welle" id="welle7" data-frei></div>
+  <div class="a tipps7" id="tipps7w"><div id="tipps7">
+    <div class="tz"><span class="kapsel" id="kp1"></span><div class="titel">Leere Flaschen sammeln</div></div>
+    <div class="tz"><span class="kapsel" id="kp2"></span><div class="titel"><span class="akz">zurückbringen</span></div></div>
+    <div class="tz"><span class="kapsel" id="kp3"></span><div class="titel">Leitungswasser = <span class="akz">Trinkwasser</span></div></div>
+  </div></div>
+  <div class="a platte7" id="platte7" data-frei><div class="satz7" id="satz7"><div class="titel">Anders ist nicht falsch.</div></div>
+    <svg viewBox="0 0 700 120" style="width:700px;height:120px" id="kreis7">
+      <path id="weg7" d="M40 92H560" stroke="var(--b200)" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <path d="M40 92H560" stroke="var(--b300)" stroke-width="4" stroke-dasharray="10 14" fill="none" id="weg7lauf"/>
+      <g id="mini7fl"></g><g id="mini7laden" transform="translate(630 60)"></g></svg></div>
+
+
+  <!-- Mitfahrer für den Überblick -->
+  <div class="a teil" id="mf1" style="width:180px">{{pet-flasche~x1}}</div>
+  <div class="a teil" id="mf2" style="width:180px">{{limodose~x2}}</div>
+  <div class="a teil" id="mf3" style="width:180px">{{saftflasche~x3}}</div>
+  <div class="a teil" id="mf4" style="width:180px">{{glasflasche~x4}}</div>
+  <div class="a teil" id="mf5" style="width:180px">{{pet-flasche~x5}}</div>
+</div></div>
+
+<div id="wisch"></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Leer heißt nicht wertlos.</div>
+  <div class="klein a" id="asKlein" style="position:relative">Leere Flaschen und Dosen zurück in den Laden – das schont die Umwelt.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/*SKRIPT*/
+</script>
+</body></html>
