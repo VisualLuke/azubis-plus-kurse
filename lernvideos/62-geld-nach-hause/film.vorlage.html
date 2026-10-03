@@ -453,7 +453,12 @@ const wellen = (id, zeiten, x, y, d, g) => {
 // Linien zeichnen: path mit pathLength=1, p von 0 bis 1 in [t0, t0+d]
 const STRICHE = [];
 const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
-HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => {
+  const v = E[e](clamp((t - t0) / d));
+  p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - v;
+  // Pfeilspitzen erst zeigen, wenn die Linie (fast) fertig gezeichnet ist
+  if (p.hasAttribute('marker-end') || p.hasAttribute('marker-start')) p.style.markerEnd = p.style.markerStart = v > .9 ? '' : 'none';
+}));
 // Deckkraft innerer Teile (rel. Akteure)
 const innen = (sel, basis = { o: 0 }) => akteur(typeof sel === 'string' ? $(sel) : sel, basis, true);
 
@@ -672,7 +677,7 @@ const R23 = [P(2, 1640, 300), P(2, 2300, 260), P(3, 980, 1300), P(3, 980, F3 - 5
 const R34 = [P(3, 1640, F3 - 42.75), P(3, 2250, F3 - 42.75), P(4, 985, -200), P(4, 985, 470)];
 const R45 = [P(4, 1360, 830 - 180 - 46.3 * .9), P(4, 1950, 620), P(5, 1150, 1150), P(5, 1150, 520)];
 const R56 = [P(5, 1320, 900), P(5, 1560, 1300), P(6, 1080, -220), P(6, 1320, 180)];
-const R67 = [P(6, 1770, 560), P(6, 2250, 560), P(7, 1320, 1400), P(7, 1320, 900)];
+const R67 = [P(6, 1770, 560), P(6, 2150, 1150), P(7, 1320, 1400), P(7, 1320, 900)];
 const R78 = [P(7, 1770, 540), P(7, 2250, 540), P(8, 1320, 1400), P(8, 1320, 900)];
 const fort23 = route(R23), fort34 = route(R34), fort45 = route(R45);
 const fort56 = route(R56, 'var(--error)', 'var(--error)'), fort67 = route(R67, 'var(--error)', 'var(--error)'), fort78 = route(R78);
@@ -761,7 +766,7 @@ const PH = 46.3, yAuf = (k, h) => BASIS - h - PH * PS[k];
   const GEB = [['geb4a', 0, 0], ['geb4b1', 1, -12], ['geb4b2', 1, 26], ['geb4c', 2, 0]];
   GEB.forEach(([id, k, dx], n) => popS(id, W('Gebühr', 12) - .15 + n * .1, 4, SP[k] + 74 + dx, 478 - (dx > 0 ? 10 : 0), {}, n ? null : 'muenze'));
   pos('kl4a', 4, SP[0] - 70, 584, { o: 0 }); pos('kl4c', 4, SP[2] - 60, 584, { o: 0 });
-  tw(['kl4a', 'kl4c'], W('Gebühr', 12) + .4, .5, { o: .8 });
+  tw(['kl4a', 'kl4c'], W('Gebühr', 12) + .4, .5, { o: .6 });
   // Wie viel kommt am Ende an? Die drei Pakete fahren los, verlieren unterwegs verschieden viel
   const SCH = { 0: ['sc4a', .62], 2: ['sc4c', .8] };
   ['p4a', 'p4b', 'p4c'].forEach((id, k) => {
