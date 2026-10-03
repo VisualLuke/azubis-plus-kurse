@@ -114,10 +114,10 @@ body{background:linear-gradient(var(--info-bg),var(--bg) 70%)}
 .walze65 .mark{position:absolute;left:50%;top:0;width:0;height:0;margin-left:-16px;border:16px solid transparent;border-top:22px solid var(--b500)}
 .walze65 .sch{position:absolute;inset:0;background:linear-gradient(90deg,var(--n200),transparent 25%,transparent 75%,var(--n200))}
 /* Liste auf dem Klemmbrett */
-.liste65{width:200px}
-.liste65 div{display:flex;align-items:center;gap:12px;height:44px}
-.liste65 .bx{width:30px;height:30px;border-radius:8px;border:4px solid var(--b300);background:var(--surface);display:flex;align-items:center;justify-content:center}
-.liste65 .bx svg{width:24px}
+.liste65{width:124px}
+.liste65 div{display:flex;align-items:center;gap:10px;height:42px}
+.liste65 .bx{width:28px;height:28px;flex:none;border-radius:8px;border:4px solid var(--b300);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.liste65 .bx svg{width:22px}
 .liste65 .ln{height:10px;border-radius:5px;background:var(--n200);flex:1}
 .kblatt65{width:150px;height:170px;border-radius:20px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.12);overflow:hidden;text-align:center}
 .kblatt65::before{content:'';display:block;height:40px;background:var(--b400)}
@@ -292,7 +292,7 @@ function kameraBei(t) {
   let z = v.z;
   for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
   const letzte = Math.max(0, ...KAM.filter(k => k.t0 + k.d <= t).map(k => k.t0 + k.d));
-  z *= 1 + .025 * E.inout(clamp((t - letzte) / 9));
+  z *= 1 + (t > P11 ? .006 : .025) * E.inout(clamp((t - letzte) / 9));
   return { x: v.x, y: v.y, z };
 }
 // Bildschirmpunkt (sx, sy) bei Kamera c → Weltpunkt
@@ -1035,7 +1035,7 @@ const VAN = { x: -1150, y: 1850 }, VB = 640, VS = VB / 160;
   fahr(tV, 1.4, VAN.x); cue(tV, 'whoosh');
   HOOKS.push(t => RAD.forEach((r, n) => { el('rad' + n).style.transform += ` rotate(${((vanX(t) - VX0) / (19 * VS) * 57.3).toFixed(1)}deg)`; }));
   landen('van', tV + 1.4); cue(tV + 1.4, 'klick');
-  const k = karte(9, { art: 'der', wort: 'Kundendienst', gr: 76, oese: [-1560, 1270], z: C.z, anker: t => [vanX(t) + 10, VAN.y - 200] });
+  const k = karte(9, { art: 'der', wort: 'Kundendienst', gr: 66, oese: [-1560, 1270], z: C.z, anker: t => [vanX(t) + 10, VAN.y - 200] });
   k.ein(W('Der', 41) - .1); k.chip(W('Der', 41)); k.wort(W('Kundendienst', 41));
   leuchten('van', W('Kundendienst', 41), W('Kundendienst', 41) + 1.2, 'var(--b400)');
   // Ihr fahrt zu den Kunden: die Schiebetür geht auf, die Werkzeugtasche hüpft heraus
@@ -1046,10 +1046,10 @@ const VAN = { x: -1150, y: 1850 }, VB = 640, VS = VB / 160;
   tw('ta10', tKu + .35, .1, { o: 1 }); flug('ta10', tKu + .35, .6, VAN.x + 420, 1990, 160, { s: 1 }); landen('ta10', tKu + .95); cue(tKu + .95, 'plopp');
   // wartet die Anlagen: Klemmbrett, die Liste hakt sich ab, das Tuch wischt
   const KB = { x: -480, y: 1640 };
-  bild('kl10', 't-klemm', 260, 'data-gruppe="kl10"');
+  bild('kl10', 't-klemm', 320, 'data-gruppe="kl10"');
   pop('kl10', W('wartet', 42) - .25, { ...KB }, 'pop');
   neu('li10', [0, 1, 2].map(n => `<div><span class="bx" id="li10b${n}"><span id="li10h${n}">${tpl('svgHakenL')}</span></span><span class="ln"></span></div>`).join(''), '', 'data-gruppe="kl10"', 'liste65');
-  pop('li10', W('wartet', 42) - .15, { x: KB.x - 6, y: KB.y + 14 }, null);
+  pop('li10', W('wartet', 42) - .15, { x: KB.x + 2, y: KB.y + 22 }, null);
   [0, 1, 2].forEach(n => { akteur('li10h' + n, { s: 0 }, true); const t0 = W('Anlagen', 42) - .3 + n * .28; tw('li10h' + n, t0, .4, { s: 1 }, 'back'); cue(t0, 'klick'); });
   bild('tu10', 't-tuch', 120, 'data-frei');
   akteur('tu10', { x: KB.x + 130, y: KB.y - 60, o: 0, r: -3 });
@@ -1067,11 +1067,11 @@ const VAN = { x: -1150, y: 1850 }, VB = 640, VS = VB / 160;
   const sl = satzleiste(10, 43, 'der', ['kundendienst']);
   sl.ein(SA(43) - .45);
   aus(['kl10', 'li10', 'sc10'], SA(43) - .3, .3);
-  neu('kb10', '<b>heute</b><span>erster Tag</span>', '', '', 'kblatt65');
-  pop('kb10', W('Heute', 43), { x: -480, y: 1600 }, 'pop');
+  neu('kb10', '<b style="margin-top:40px">heute</b>', '', '', 'kblatt65');
+  pop('kb10', W('Heute', 43), { x: -1940, y: 1650 }, 'pop');
   portrait('kw10', 'Kwame', 230);
   const tE = W('ersten', 43) - .2;
-  pop('kw10', tE, { x: -780, y: 1960 - 115 }, 'pop'); FROH.push(['kw10', tE + .4, 99]);
+  pop('kw10', tE, { x: -470, y: 1800 }, 'pop'); FROH.push(['kw10', tE + .4, 99]);
   const tEin = W('Kundendienst', 43) + .05;
   flug('ta10', tEin, .5, VAN.x - 12, VAN.y - 30, 120, { s: .5 }); tw('ta10', tEin + .4, .1, { o: 0 }); cue(tEin, 'whoosh');
   tw('kw10', tEin + .2, .45, { x: VAN.x + 10, y: VAN.y - 40, s: .3, o: 0 }, 'in');
@@ -1093,22 +1093,22 @@ const P11 = SE(43) + .4;
     HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; }); };
   // zwei Termine im Kundendienst: Plaketten 1 und 2 am Bad und am Wohnzimmer
   const tKd = W('Kundendienst', 44);
-  wort11('c11kd', 'der', 'Kundendienst', 960, 64, tKd);
+  wort11('c11kd', 'der', 'Kundendienst', 240, 430, tKd);
   const tTe = W('zwei', 44);
   neu('n111', '1', '', 'data-frei', 'plakette lila', KARTEN); neu('n112', '2', '', 'data-frei', 'plakette lila', KARTEN);
-  const p1 = WP(C, 560, 250), p2 = WP(C, 1115, 590);
+  const p1 = WP(C, 340, 300), p2 = WP(C, 960, 590);
   pop('n111', tTe - .05, { x: p1.x, y: p1.y, s: 1 / zc }, 'pop'); pop('n112', tTe + .15, { x: p2.x, y: p2.y, s: 1 / zc }, 'pop');
   nicken('kw11', W('Termine', 44) + .2, 1);
   // Ein Wasserhahn tropft: Bad
   const tWh = W('Wasserhahn', 46);
-  leuchten('arm2', tWh - .1, tWh + 1.6, 'var(--info)', 1.6); wort11('c11wh', 'der', 'Wasserhahn', 560, 335, tWh);
+  leuchten('arm2', tWh - .1, tWh + 1.6, 'var(--info)', 1.6); wort11('c11wh', 'der', 'Wasserhahn', 700, 320, tWh);
   // Dreh das Ventil zu: Keller, der Hebel dreht
   const tVe = W('Ventil', 47);
   tw('v1h', tVe - .3, .01, { r: 0 }); tw('v1h', tVe, .4, { r: -90 }, 'sanft'); cue(tVe, 'klick');
-  leuchten('v1', tVe - .1, tVe + 1.4, 'var(--warning)', 1.6); wort11('c11ve', 'das', 'Ventil', 250, 895, tVe);
+  leuchten('v1', tVe - .1, tVe + 1.4, 'var(--warning)', 1.6); wort11('c11ve', 'das', 'Ventil', 560, 860, tVe);
   // wechsle die Dichtung
   const tDi = W('Dichtung', 47);
-  wort11('c11di', 'die', 'Dichtung', 560, 420, tDi);
+  wort11('c11di', 'die', 'Dichtung', 520, 450, tDi);
   // Dann nehme ich die Rohrzange mit: Zange erscheint an Kwames Porträt
   const tRz = W('Rohrzange', 48);
   bild('z11', 't-zange', 150, '', '', HUD); pop('z11', tRz - .1, { x: 1740, y: 400 }, 'pop');
@@ -1116,22 +1116,22 @@ const P11 = SE(43) + .4;
   // Gut, danach ein Heizkörper, der nicht warm wird: Wohnzimmer, kalt
   const tHk = W('Heizkörper', 49);
   tw('kalt-wohn', tHk - .1, .5, { o: .25 }); leuchten('hk-wohn', tHk - .1, tHk + 1.6, 'var(--info)', 1.6);
-  wort11('c11hk', 'der', 'Heizkörper', 1115, 670, tHk);
+  wort11('c11hk', 'der', 'Heizkörper', 1150, 655, tHk);
   // Prüf das Thermostat, den Heizkessel mache ich
   const tTh = W('Thermostat', 50);
-  leuchten('th-wohn', tTh - .1, tTh + 1.4, 'var(--warning)', 1.8); wort11('c11th', 'das', 'Thermostat', 1340, 600, tTh);
+  leuchten('th-wohn', tTh - .1, tTh + 1.4, 'var(--warning)', 1.8); wort11('c11th', 'das', 'Thermostat', 1330, 570, tTh);
   const tKe = W('Heizkessel', 50);
-  leuchten('kessel', tKe - .1, tKe + 1.6, 'var(--warning)', 1.6); wort11('c11ke', 'der', 'Heizkessel', 1090, 880, tKe);
+  leuchten('kessel', tKe - .1, tKe + 1.6, 'var(--warning)', 1.6); wort11('c11ke', 'der', 'Heizkessel', 1250, 900, tKe);
   nicken('ge11', W('mache', 50), 1);
   // Und wann kommt die Wärmepumpe? – Nächste Woche.
   const tWp = W('Wärmepumpe', 51);
-  leuchten('wp', tWp - .1, tWp + 1.6, 'var(--b400)', 1.6); drehe(tWp, 1.5, .5); wort11('c11wp', 'die', 'Wärmepumpe', 1520, 610, tWp);
+  leuchten('wp', tWp - .1, tWp + 1.6, 'var(--b400)', 1.6); drehe(tWp, 1.5, .5); wort11('c11wp', 'die', 'Wärmepumpe', 1640, 640, tWp);
   neu('kb11', '<b>nächste</b><span>Woche</span>', '', 'data-frei', 'kblatt65', KARTEN);
-  const pk = WP(C, 1600, 400); pop('kb11', W('Nächste', 52), { x: pk.x, y: pk.y, s: 1 / zc }, 'pop');
+  const pk = WP(C, 1765, 870); pop('kb11', W('Nächste', 52), { x: pk.x, y: pk.y, s: 1 / zc }, 'pop');
   // Da lernst du viel! – Haken, alle Leitungen laufen, beide freuen sich
   const tDa = W('lernst', 53);
   plakette('ok11', 'gruen', 'svgHaken', '', HUD); el('ok11').style.cssText += ';width:110px;height:110px'; el('ok11').querySelector('svg').style.width = '54px';
-  pop('ok11', tDa, { x: 960, y: 160 }, 'erfolg'); akzent(tDa, .045);
+  pop('ok11', tDa, { x: 868, y: 175 }, 'erfolg'); akzent(tDa, .045);
   FROH.push(['kw11', tDa, 99], ['ge11', tDa + .1, 99]);
   [...KALT, ...HEIZ].forEach((r, n) => fluss(r, tDa + n * .05, 150)); drehe(tDa, 1.4, .5);
   tw('kalt-wohn', tDa, .5, { o: 0 }); ['wohn', 'schlaf', 'kueche'].forEach(n => leuchten('hk-' + n, tDa + .2, ENDE_SPRACHE + 2, 'var(--error)', .9));

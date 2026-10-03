@@ -188,7 +188,7 @@ html,body{background:var(--b50)}
 .paket .band{position:absolute;left:100px;width:50px;top:-26px;height:90px;background:var(--b400);opacity:.85;transform-origin:50% 0}
 .paket .adr{position:absolute;left:24px;bottom:24px;width:120px;height:74px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300)}
 .paket .adr i{position:absolute;left:14px;height:9px;border-radius:5px;background:var(--n300)}
-.rampe{width:300px;height:90px;border-radius:10px 10px 0 0;background:linear-gradient(var(--b300),var(--b500))}
+.rampe{width:360px;height:90px;border-radius:10px 10px 0 0;background:linear-gradient(var(--b300),var(--b500))}
 .rampe::before{content:'';position:absolute;left:0;right:0;top:0;height:14px;border-radius:10px 10px 0 0;background:repeating-linear-gradient(90deg,var(--warning) 0 26px,var(--ink) 26px 52px)}
 /* Gabelstapler: Fahrbereich, Abstandspfeil, Hubmast-Verlängerung, Warnleuchte */
 .zone{border-radius:18px;border:7px dashed var(--warning);background:color-mix(in srgb,var(--warning) 14%,transparent)}
@@ -967,22 +967,22 @@ function wagen(id, gr, attr = '') {
   ein('au9', P + .6, { x: X + 1020, y: Y + 330, r: -1.5 }, { y: 90 }, 'whoosh');
   // Regal mit Fächern; Licht an den Fächern des Auftrags
   const L = 1190, R = 1840, B1 = 470, B2 = 700;
-  const fest = [[1265, B1, 'b'], [1600, B1, 'a'], [1265, B2, 'c'], [1430, B2, 'a'], [1760, B2, 'b']];
+  const fest = [[1265, B1, 'b'], [1600, B1, 'a'], [1265, B2, 'c'], [1430, B2, 'a'], [1740, B2, 'b']];
   neu('rz9', `<i style="left:0;top:0;bottom:0;width:16px"></i><i style="left:${(R - L) / 2 - 8}px;top:0;bottom:0;width:16px"></i><i style="right:0;top:0;bottom:0;width:16px"></i>
     <b style="top:${B1 - 300}px"></b><b style="top:${B2 - 300}px"></b>${fest.map(([x, b, f]) => `<div class="ware ${f}" style="position:absolute;left:${x - L - 30}px;top:${b - 300 - 60}px;width:60px;height:60px;opacity:.9"></div>`).join('')}`,
     `width:${R - L}px;height:${GY - 300}px`, 'data-gruppe="rz9"', 'regalzeile');
   ein('rz9', P + .7, { x: X + (L + R) / 2, y: Y + (300 + GY) / 2 }, { y: 90 }, 'whoosh');
-  const PICK = [[1430, B1, 'a'], [1600, B2, 'b'], [1760, B1, 'c']];
+  const PICK = [[1430, B1, 'a'], [1600, B2, 'b'], [1740, B1, 'c']];
   PICK.forEach(([x, b, f], n) => {
     neu('wa9' + n, '', 'width:60px;height:60px', 'data-gruppe="rz9"', 'ware ' + f); pop('wa9' + n, P + .95 + n * .1, { x: X + x, y: Y + b - 30 }, null);
     neu('li9' + n, '', '', 'data-gruppe="rz9"', 'licht'); akteur('li9' + n, { x: X + x, y: Y + b + 9 });
   });
   // Kommissionierwagen rollt herein und fährt die Fächer ab
-  const wg = wagen('rw9', 240, 'data-gruppe="rw9"'), WO = wg.oben(Y + GY);
+  const wg = wagen('rw9', 290, 'data-gruppe="rw9"'), WO = wg.oben(Y + GY);
   wg.setzen(X + 1050 - 160, Y + GY, { o: 0 });
   const tW = W('Kommissionierung', 39) - .2;
   tw('rw9', tW, .25, { o: 1 }); wg.fahren(tW, X + 1050, .8);
-  const T = [W('suchst', 40) - .4, W('Ware', 40) - .3, W('Auftrag', 40) - .35], OFF = [-58, 0, 58];
+  const T = [W('suchst', 40) - .4, W('Ware', 40) - .3, W('Auftrag', 40) - .35], OFF = [-70, 0, 70];
   PICK.forEach(([x, b], n) => {
     const t = T[n];
     HOOKS.push(z => el('li9' + n).classList.toggle('an', z >= t && z < t + 1.2)); cue(t, 'klick');
@@ -1012,18 +1012,18 @@ function wagen(id, gr, attr = '') {
   k.ein(P + .15); k.scan(W('Der', 42)); k.wort(W('Versand', 42));
   const sl = schild(i, 44, 'der', ['versand']); sl.ein(SA(44) - .55);
   // Wagen mit drei Teilen rollt heran
-  const wg = wagen('rw10', 240, 'data-gruppe="rw10"'), WO = wg.oben(Y + GY);
+  const wg = wagen('rw10', 290, 'data-gruppe="rw10"'), WO = wg.oben(Y + GY);
   wg.setzen(X + 1010 - 180, Y + GY, { o: 0 });
-  ['a', 'b', 'c'].forEach((f, n) => { neu('wa10' + n, '', 'width:60px;height:60px', 'data-gruppe="rw10"', 'ware ' + f); akteur('wa10' + n, { x: X + 1010 - 180 + [-58, 0, 58][n], y: WO - 30, o: 0 }); wg.mit.push('wa10' + n); });
+  ['a', 'b', 'c'].forEach((f, n) => { neu('wa10' + n, '', 'width:60px;height:60px', 'data-gruppe="rw10"', 'ware ' + f); akteur('wa10' + n, { x: X + 1010 - 180 + [-70, 0, 70][n], y: WO - 30, o: 0 }); wg.mit.push('wa10' + n); });
   tw(['rw10', 'wa100', 'wa101', 'wa102'], P + .55, .25, { o: 1 }); wg.fahren(P + .55, X + 1010, .8);
   // Paket (offen) und Rampe mit Lastwagen
   const PX = X + 1300, PY = Y + GY - 85;
   neu('pk10', `<div class="kl l" id="pk10l"></div><div class="kl r" id="pk10r"></div><div class="deckel" id="pk10d"></div><div class="band" id="pk10b"></div><div class="adr" id="pk10a"><i style="top:16px;width:70px"></i><i style="top:32px;width:90px"></i><i style="top:48px;width:56px"></i></div>`, '', 'data-gruppe="pk10"', 'paket');
   ein('pk10', P + .75, { x: PX, y: PY }, { y: 80 }, 'plopp');
   akteur('pk10l', { r: -14 }, true); akteur('pk10r', { r: 14 }, true); akteur('pk10d', { sy: 0 }, true); akteur('pk10b', { sy: 0 }, true); akteur('pk10a', { s: 0 }, true);
-  bild('lk10', 't-lkw', 260, 'data-gruppe="ra10"');
-  const LY = Y + 870 - (148 - 80) * 260 / 160;
-  ein('lk10', P + .85, { x: X + 1700, y: LY }, { y: 60 }, 'whoosh');
+  bild('lk10', 't-lkw', 300, 'data-gruppe="ra10"');
+  const LY = Y + 870 - (148 - 80) * 300 / 160;
+  ein('lk10', P + .85, { x: X + 1680, y: LY }, { y: 60 }, 'whoosh');
   neu('ra10', '', '', 'data-gruppe="ra10"', 'rampe');
   ein('ra10', P + .8, { x: X + 1650, y: Y + GY - 45 }, { y: 60 });
   // Der Versand: die Teile springen in den Karton
@@ -1046,7 +1046,7 @@ function wagen(id, gr, attr = '') {
     const t = tR + .2 + n * .15, y = n ? Y + 870 - 105 - 46 - 18 : Y + 870 - 46;
     akteur(id, { x, y: y - 300, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .38, { y }, 'in'); landen(id, t + .38); cue(t + .38, 'klick');
   });
-  haken('ok10', W('fertig', 44), X + 1650, Y + 600);
+  haken('ok10', W('fertig', 44), X + 1470, Y + 560);
   const tL = W('Versand', 44) - .2;
   aus('ok10', tL - .1, .25);
   ['pk10', 'pz10', 'py10'].forEach((id, n) => { tw(id, tL + n * .08, .45, { x: X + 1700, y: LY - 20, s: .3, o: 0 }, 'in'); });
@@ -1058,9 +1058,9 @@ function wagen(id, gr, attr = '') {
 
 /* ================= 11 · Übersicht: das ganze Regal, Dialog Kollege – Yusuf ================= */
 {
-  const tZ = SE(44) + .15;
-  fahrt(tZ, C0.x, C0.y, Z0, 1.6, false);
-  cue(tZ + 1.5, 'erfolg');
+  const tZ = SE(44) + .1;
+  fahrt(tZ, C0.x, C0.y, Z0, 1.3, false);
+  cue(tZ + 1.25, 'erfolg');
   tw(['kg0', 'kg1', 'kg2'], tZ + 1.0, .5, { o: 1 });
   [2, 3, 4, 7, 6, 5, 8, 9, 10].forEach((i, n) => { bump('kt' + i, tZ + 1.3 + n * .07, 1.06); });
   // Leuchtrahmen je Fach
@@ -1074,8 +1074,8 @@ function wagen(id, gr, attr = '') {
   // Porträts links und rechts neben dem Regal
   const pK = W0(205, 560), pY = W0(1715, 560);
   portrait('ko11', 'Kollege', 240); portrait('yu11', 'Yusuf', 240); WESTE.yu11 = -1;
-  ein('ko11', SA(45) - .6, { x: pK.x, y: pK.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
-  ein('yu11', SA(45) - .45, { x: pY.x, y: pY.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
+  ein('ko11', tZ + 1.15, { x: pK.x, y: pK.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
+  ein('yu11', tZ + 1.3, { x: pY.x, y: pY.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
   nicken('yu11', W('Yusuf', 45) + .1, 1);
   // Wörter: das Fach leuchtet, der Chip ploppt in seiner Artikelfarbe auf, blinkt, steht unten in der Reihe
   const CH = [['der', 'Wareneingang', W('Wareneingang', 45), 3], ['der', 'Lieferschein', W('Lieferschein', 46), 3], ['die', 'Paletten', W('Paletten', 48), 4],
