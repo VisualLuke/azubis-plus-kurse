@@ -33,10 +33,10 @@ body{background:linear-gradient(var(--info-bg),var(--bg) 70%)}
 .mauer65{position:absolute;background:repeating-linear-gradient(45deg,var(--b300) 0 18px,var(--b400) 18px 22px)}
 .dach65{position:absolute;background:linear-gradient(var(--b500),var(--b600))}
 .dachinnen65{position:absolute;background:linear-gradient(var(--b100),var(--b200))}
-.raum65{position:absolute;overflow:hidden;border-radius:6px 6px 0 0;background:linear-gradient(var(--b50),var(--b100) calc(100% - 60px),transparent calc(100% - 60px))}
-.raum65.keller{background:linear-gradient(var(--n200),var(--b100) calc(100% - 60px),transparent calc(100% - 60px))}
-.raum65 .leiste{position:absolute;left:0;right:0;bottom:60px;height:26px;background:var(--b200)}
-.raum65 .platte65{position:absolute;left:-60px;right:-60px;bottom:0;height:60px;background:repeating-linear-gradient(45deg,var(--b300) 0 18px,var(--b400) 18px 22px)}
+.raum65{position:absolute;overflow:hidden;border-radius:6px 6px 0 0;background:linear-gradient(var(--b50),var(--b100) calc(100% - 90px),transparent calc(100% - 90px))}
+.raum65.keller{background:linear-gradient(var(--n200),var(--b100) calc(100% - 90px),transparent calc(100% - 90px))}
+.raum65 .leiste{position:absolute;left:0;right:0;bottom:90px;height:26px;background:var(--b200)}
+.raum65 .platte65{position:absolute;left:-60px;right:-60px;bottom:30px;height:60px;background:repeating-linear-gradient(45deg,var(--b300) 0 18px,var(--b400) 18px 22px)}
 .raum65.keller .leiste{background:var(--n300)}
 .buehne.aussen{background:none;border-radius:0}
 .fliesen{position:absolute;left:0;right:0;height:114px;
@@ -322,7 +322,7 @@ HAUS.insertAdjacentHTML('beforeend', `
   <div class="mauer65" style="${box(-60, -60, XR1 + 60, KE1 + 60)}"></div>`);
 const RAEUME = { bad: [XL0, OG0, XL1, OG1], schlaf: [XR0, OG0, XR1, OG1], kueche: [XL0, EG0, XL1, EG1], wohn: [XR0, EG0, XR1, EG1], kellerL: [XL0, KE0, XL1, KE1], kellerR: [XR0, KE0, XR1, KE1] };
 for (const [n, [x0, y0, x1, y1]] of Object.entries(RAEUME))
-  HAUS.insertAdjacentHTML('beforeend', `<div class="a buehne raum65${n.startsWith('keller') ? ' keller' : ''}" id="r-${n}" style="${box(x0, y0, x1, y1 + 60)}"><div class="leiste"></div><div class="platte65"></div></div>`);
+  HAUS.insertAdjacentHTML('beforeend', `<div class="a buehne raum65${n.startsWith('keller') ? ' keller' : ''}" id="r-${n}" style="${box(x0, y0, x1, y1 + 90)}"><div class="leiste"></div><div class="platte65"></div></div>`);
 // Garten und Straße: Bühnen ohne Fläche (nur für die Kantenprüfung)
 HAUS.insertAdjacentHTML('beforeend', `<div class="a buehne aussen" id="r-garten" style="${box(XR1 + 120, 800, 6900, 3300)}"></div><div class="a buehne aussen" id="r-strasse" style="${box(-3000, 900, -120, 2400)}"></div>`);
 const raum = (n, html) => el('r-' + n).insertAdjacentHTML('afterbegin', html);
