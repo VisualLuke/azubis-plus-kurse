@@ -84,5 +84,5 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 61 | [Dein Geld im Monat planen](61-geld-planen/) | Erklärvideo | Erzählerin | 2:14 | fertig |
 | 62 | [Geld nach Hause schicken](62-geld-nach-hause/) | Erklärvideo | Erzähler | 2:03 | fertig |
 | 63 | [Wortschatz Einzelhandel](63-vokabeln-einzelhandel/) | Fachvokabeln | Erzähler, Priya, Filialleiterin | 2:22 | fertig |
-| 64 | [Wortschatz Lager und Logistik](64-vokabeln-lager/) | Fachvokabeln | Erzählerin, Yusuf, Kollege | – | in Arbeit |
+| 64 | [Wortschatz Lager und Logistik](64-vokabeln-lager/) | Fachvokabeln | Erzählerin, Yusuf, Kollege | 2:37 | fertig |
 | 65 | [Wortschatz Sanitär, Heizung, Klima](65-vokabeln-shk/) | Fachvokabeln | Erzählerin, Kwame, Geselle | 2:38 | fertig |

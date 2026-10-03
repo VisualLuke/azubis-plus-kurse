@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Schreibt import/lektionen.md: alle Lektionen in App-Reihenfolge mit Kurs-ID in Supabase, Kategorie, Position."""
+"""Schrieb import/lektionen.md für den ersten Import (29.09.2026). Seit 03.10.2026 wird lektionen.md aus Supabase erzeugt (Reihenfolge des Teams + Lernvideos 46–65) – dieses Skript nicht mehr laufen lassen, es würde den Stand überschreiben."""
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 plan = json.load(open(os.path.join(ROOT, 'import/plan.json')))

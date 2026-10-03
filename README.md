@@ -14,15 +14,15 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 
 ### Lernvideos
 
-Die 45 Lernvideos aus den Briefings liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
+Die 65 Lernvideos (1–45 aus den Briefings, 46–65 aus eigener Recherche mit Faktencheck) liegen in [`lernvideos/`](lernvideos/) (eigene Nummerierung, Fortschritt und Korrekturen dort).
 
 ### In der App
 
-Alle 49 Videos (Kurse 1–4 und Lernvideos 1–45) sind seit 29.09.2026 als **Lektionen** in Supabase angelegt: in 8 Abschnitten
-(= Kategorien), mit Titelbild, Untertiteln, Quizfragen und einem Abzeichen je Abschnitt. **Reihenfolge, Kategorie, Position und
+Alle 69 Videos (Kurse 1–4, Lernvideos 1–45 seit 29.09.2026, Lernvideos 46–65 seit 03.10.2026) sind als **Lektionen** in Supabase
+angelegt: in 10 Abschnitten (= Kategorien, u. a. „Unterwegs & sicher“), mit Titelbild, Untertiteln, Quizfragen und einem Abzeichen je Abschnitt. **Reihenfolge, Kategorie, Position und
 Kurs-ID je Lektion: [`import/lektionen.md`](import/lektionen.md).** Ab jetzt werden die Lektionen im Kurs-Editor gepflegt.
 
-`import/` enthält den Plan (`plan.py` → `plan.md`/`plan.json`), die Anleitungen für Fragen und Titelbilder, die Abzeichen
+`import/` enthält den Plan (`plan.py` → `plan.md`/`plan.json`; für 46–65 `plan-46-65.json` und `daten-46-65.py`), die Anleitungen für Fragen und Titelbilder, die Abzeichen
 (`abzeichen/`, `abzeichen.mjs`), die Kurs-IDs und Storage-Pfade (`ids.json`) und den Datenbau (`daten.py`).
 Je Lektion liegen `fragen.json` (Stand beim Import) und `titelbild.json`/`titelbild.png` (`werkzeug/titelbild.mjs`) im Ordner.
 Ein neues Video kommt über den Kurs-Editor in die App (Video, `.vtt` mit demselben Namen daneben, Schalter „KI“).
