@@ -537,7 +537,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   ['ledN', 'ledM'].forEach((id, k) => { el(id).style.left = `${[880, 1745][k] - 8}px`; el(id).style.top = '410px'; });
   akteur('bett', { x: 1780, y: 551 });
   const tPi = W('piept', 4), tLa = W('laut', 4), tRm = W('Rauchmelder', 4);
-  blinken('ledN', tPi - .05, A(58), .7);
+  blinken('ledN', tPi - .05, SA(19) + .26, .7);
   const piep = piepZeiten(tPi - .05, SE(5) + 1.2, .7);
   wellen(['pN1', 'pN2'], piep, 880, 420, 1.1, 1.8);
   piep.forEach((z, k) => { if (z < SE(5) + .5) cue(z, 'tipp'); });
@@ -600,7 +600,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   const KP = { A: [1700, 505], B: [1290, 782], C: [2172, 1000] };
   const karte = (L, t) => { const [x, y] = KP[L]; pop('k' + L, t, { x, y }, 'pop'); };
   // A: „In die eigene Wohnung gehen“ – Mais Tür schließt sich; „Vielleicht ist nur das Essen angebrannt“ – Gedanke mit Topf und Dampf
-  const tA = WN(7, 0), tB = WN(9, 0), tC = WN(10, 0);
+  const tA = WN(7, 1), tB = WN(9, 1), tC = WN(10, 1);   // die Buchstaben in „Antwort A/B/C“
   pop('hA', tA, { x: 1584, y: 104 }); zeichne('A', tA, .8); karte('A', tA + .55);
   rel('kAtb', { sx: .15 }); rel('kAg', { s: 0 }, '0% 100%'); rel('kAp', {}); rel('kAd', { o: 0 });
   const tWo = W('Wohnung', 7), tEs = W('Essen', 8), tAn = W('angebrannt', 8);
@@ -673,7 +673,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   akzent(tFw, .03);
   // „Das Feuer wird größer, und Rauch ist giftig“ – Glut hinter der Nachbartür wächst, der Rauch wird dicht und dunkel
   const tFe = W('Feuer', 15), tGr = W('größer', 15), tRa = W('Rauch', 15), tGi = W('giftig', 15);
-  GLUT.push(['glutN', [[0, 0], [tFe - .3, .55, 1], [tGr, 1, 1.4], [P4 + 13.6, 1.15, 2], [A(50.2) + 1.0, .1, .5], [W('Vermieter', 17), .7, 2.5], [W('vergeht', 18), 1.15, 2], [SE(18) + .25, .15, .5]]]);
+  GLUT.push(['glutN', [[0, 0], [tFe - .3, .55, 1], [tGr, 1, 1.4], [SA(17) + .28, 1.15, 2], [SA(17) + .72, .1, .5], [W('Vermieter', 17), .7, 2.5], [W('vergeht', 18), 1.15, 2], [SE(18) + .25, .15, .5]]]);
   const DICHTE_T = RAUCH[0].dichte, DICHTE_N = RAUCH[1].dichte;
   LICHT_M.push([P4 + 1.4, 1, .5], [SE(16) + .2, 0, .4]);
   DICHTE_T.push([tGr - .2, 1.1, 1.6], [tGi, 1.5, 2], [SE(16) + .3, .45, .5], [W('Vermieter', 17), 1.0, 2.5], [W('vergeht', 18), 1.6, 2], [SE(18) + .25, .2, .5], [SA(25), .1, 2]);
@@ -694,7 +694,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   tw('tuerMb', tZ, .25, { sx: .12 }, 'inout'); tw('mai', tZ + .05, .6, { x: 1252, y: 560 }, 'inout'); tw('tuerMb', tZ + .55, .25, { sx: 1 }, 'inout');
   cue(tZ, 'whoosh');
   kam(tZ, .9, 1290, 600, 1.45);
-  // B: „Option Beh: Der Vermieter kann nicht löschen“
+  // B: „Antwort B: Der Vermieter kann nicht löschen“
   const tBe = WN(17, 1), tVe = W('Vermieter', 17), tLo = W('löschen', 17), tNc = W('nicht', 17);
   bump('hB', tZ + .4, 1.25); markeHud('B', tBe, false);
   WEG_O.B.push([tZ + .2, 1, .4], [SE(18) + .1, 0, .4]); ZEICHNEN.B.push([tZ + .2, .3]);
@@ -909,7 +909,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   aus(['tor1', 'tor2', 's112', 's110', 's116', 'muetze', 'thermo', 'mond2', 'kal'], P8 + 2.4, .2);
   tw('auto', P8, .01, { o: 0 });
   // die drei Wege noch einmal: A und B blass, C leuchtet grün
-  const tBe = W('beste', 35), tC = WN(35, 4);
+  const tBe = W('beste', 35), tC = WN(35, 5);
   WEG_O.A.push([P8 + 1.2, .35, .5]); WEG_O.B.push([P8 + 1.2, .35, .5]); WEG_O.C.push([P8 + 1.2, .35, .5], [tC - .1, 1, .3]);
   ['A', 'B', 'C'].forEach(L => ZEICHNEN[L].push([P8 + 1.2, .01]));
   HOOKS.push(t => { const g = t >= tC - .1; el('wC').querySelector('.wegl').style.stroke = g ? 'var(--success)' : ''; el('spC').style.stroke = g ? 'var(--success)' : ''; });

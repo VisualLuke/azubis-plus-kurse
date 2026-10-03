@@ -110,7 +110,7 @@ Erzählerin: Das Gefälle. Die Fläche ist ein bisschen schräg. So kann das Reg
 Geselle: Prüf das Gefälle, sonst bleibt das Wasser stehen.
 
 ### Szene 11
-(Pause 0.8)
+(Pause 2.4)
 Geselle: Amir, heute machen wir den Gehweg in der Schulstraße neu.
 Amir: Gut, die Tragschicht ist schon fest gewalzt.
 Geselle: Dann setzen wir zuerst die Bordsteine.

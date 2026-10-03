@@ -608,10 +608,10 @@ pan2(P1, 1);
   karten(1, false);
   // Karten fliegen auf ihrem Buchstaben auf Bögen herein
   [['A', 7], ['B', 8], ['C', 9]].forEach(([L, n], k) => {
-    const p = `k1${L}`, t0 = SA(n) - .35;
+    const p = `k1${L}`, t0 = WN(n, 1) - .35;   // auf den Buchstaben nach „Antwort“
     akteur(p, { x: X + KX[k] - 120, y: KY + 360, o: 0, s: .75, r: -3 });
     tw(p, t0, .2, { o: 1 }); tw(p, t0, .85, { x: X + KX[k], y: KY }, 'inout', { bogen: 90 }); tw(p, t0, .85, { r: 0, s: 1 }, 'sanft');
-    cue(t0, 'whoosh'); bump(`${p}kn`, SA(n), 1.25); cue(SA(n), 'pop');
+    cue(t0, 'whoosh'); bump(`${p}kn`, WN(n, 1), 1.25); cue(WN(n, 1), 'pop');
   });
   // A: „Ja, ja, okay“ – die Sprechblase nickt dreimal, dann roter Knopf, der Schirm geht aus
   set('k1Abl', W('Einfach', 7), { s: 0 }); tw('k1Abl', W('Einfach', 7), .45, { s: 1 }, 'back'); cue(W('Einfach', 7), 'pop');
@@ -869,7 +869,7 @@ pan2(P5, 5);
   quiz(5, tK);
   karten(5, true, 'AB');
   ['A', 'B', 'C'].forEach((M, k) => akteur(`k5${M}`, { x: X + KX[k], y: KY }));
-  const tBe = W('beste', 32), tC = WN(32, 4);
+  const tBe = W('beste', 32), tC = WN(32, 5);   // „Die beste Wahl ist Antwort C“
   tw(['k5A', 'k5B'], tBe, .6, { o: .35, s: .9 }, 'inout');
   tw('k5C', tBe, .7, { s: 1.12, y: KY - 20 }, 'sanft'); cue(tBe, 'whoosh');
   bump('k5Ckn', tC - .25, 1.2);

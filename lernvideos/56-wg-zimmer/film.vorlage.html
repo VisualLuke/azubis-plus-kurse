@@ -531,8 +531,8 @@ HOOKS.push(t => [0, 1, 2].forEach(k => { el('pk' + k).style.transform = `transla
   const tSu = W('sucht', 1), tAn = W('Anzeige', 2);
   tw('suchtipp', tSu - .2, .8, { sx: 1 }, 'out'); cue(tSu, 'tipp'); cue(tSu + .25, 'tipp');
   rel('sucheHaus', {}, '50% 50%');
-  bump('sucheHaus', W('Weh', 1), 1.15);
-  tw('kacheln', W('Weh', 1) + .1, tAn - W('Weh', 1) - .1, { y: -1060 }, 'weich'); cue(W('Weh', 1) + .1, 'whoosh');
+  bump('sucheHaus', W('WG', 1), 1.15);
+  tw('kacheln', W('WG', 1) + .1, tAn - W('WG', 1) - .1, { y: -1060 }, 'weich'); cue(W('WG', 1) + .1, 'whoosh');
   // „Da sieht er eine Anzeige“: eine Kachel springt nach vorn und wird zur Anzeige
   tw('feed', tAn - .15, .3, { o: 0 });
   tw('anz', tAn - .1, .2, { o: 1 }); tw('anz', tAn - .1, .7, { s: 1 }, 'sanft'); cue(tAn - .1, 'pop'); akzent(tAn, .03);
@@ -626,12 +626,12 @@ const P2 = SE(8) + .45;
   kam(P2, 980, 540, 1, 1.1);
   bump('frage', SA(9) + .1, 1.2); wackeln('frage', W('tun', 9) - .05, 3, 5); cue(SA(9) + .1, 'pop');
   tw('tray', SA(9) - .2, .5, { o: 1, y: 0 }, 'sanft');
-  // Entwürfe fliegen auf „Ah“, „Beh“, „Zeh“ aus dem Eingabefeld
+  // Entwürfe fliegen auf „Antwort A/B/C“ aus dem Eingabefeld, der Knopf pocht auf dem Buchstaben
   [['dA', 10], ['dB', 11], ['dC', 12]].forEach(([id, n]) => {
     const t = SA(n) - .3;
     rel(id, { s: .6, y: 420, o: 0 }, '50% 100%');
     tw(id, t, .15, { o: 1 }); tw(id, t, .6, { s: 1, y: 0 }, 'sanft'); cue(t, 'whoosh');
-    bump(id + 'k', SA(n) + .05, 1.25); cue(SA(n) + .05, 'pop');
+    bump(id + 'k', WN(n, 1) + .05, 1.25); cue(WN(n, 1) + .05, 'pop');
   });
   // A: der Geldschein rast davon, die Sanduhr hetzt
   const tUe = W('überweisen', 10), tBe = W('bevor', 10), tBk = W('bekommt', 10);
@@ -686,7 +686,7 @@ const REW = (t, d = .9) => { tw('rew', t, .3, { s: 1 }, 'back'); tw('rew', t + d
   // Yusuf rückt nach links unten, der Unbekannte erscheint als graues Profil ohne Gesicht
   tw('yus', P4 + .1, .7, { x: 250, y: 820, s: .7 }, 'inout'); cue(P4 + .1, 'whoosh');
   const tOA = WN(16, 1), tYu = W('Yusuf', 16), tUe = W('überweist', 16);
-  // „Option Ah“: Entwurf A leuchtet, B und C treten zurück; A rutscht ins Eingabefeld
+  // „Antwort A“: Entwurf A leuchtet, B und C treten zurück; A rutscht ins Eingabefeld
   bump('dA', tOA - .1, 1.04); tw('dAr', tOA - .1, .2, { o: 1 }); cue(tOA, 'klick');
   tw(['dB', 'dC'], tOA, .4, { o: .4, s: .94 }, 'inout');
   tw('tray', tYu - .2, .4, { o: 0, y: 60 }, 'in');
@@ -846,7 +846,7 @@ const P6 = SE(24) + .35;
   ein('tuer', P6 + .45, { x: 1400, y: 590 }, { x: 160 }, 'whoosh');
   ein('klingel', P6 + .6, { x: 1630, y: 470 }, { x: 120 });
   rel('tuerblatt', {});
-  const tHi = W('hin', 25), tLe = W('lernt', 25), tWG = W('Weh', 25), tKe = W('kennen', 25);
+  const tHi = W('hin', 25), tLe = W('lernt', 25), tWG = W('WG', 25), tKe = W('kennen', 25);
   huepfen('yus', tHi, 18);
   bump('klingel', tLe - .1, 1.1); wellen('kw0', [tLe], 1630, 440); wellen('kw1', [tLe + .35], 1630, 440); cue(tLe, 'ding'); cue(tLe + .35, 'ding');
   tw('tuerblatt', tWG - .1, .55, { sx: .12 }, 'inout'); cue(tWG - .1, 'whoosh');
@@ -947,7 +947,7 @@ const P7 = SE(29) + .3;
   titelEin('tb7', tKa, [tKa, tKa + .08, tSt - .2, tSt - .12, tSt - .04, tHo, tHo + .08, tKm]);
 }
 
-/* ================= Szene 8: Zeh ist die beste Wahl – und wenn schon Geld weg ist ================= */
+/* ================= Szene 8: C ist die beste Wahl – und wenn schon Geld weg ist ================= */
 const P8 = SE(32) + .3;
 {
   aus(['mo1', 'mo2', 'mo3', 'moSchl', 'st1', 'st2', 'st3', 'deckel7'], P8, .35);
@@ -957,7 +957,7 @@ const P8 = SE(32) + .3;
   ['dAr', 'dBr'].forEach(id => tw(id, P8 - .2, .01, { o: 0 }));
   ['dAx', 'dBx'].forEach(id => tw(id, P8 - .2, .01, { s: 1 }));
   tw('tray', P8, .45, { o: 1, y: 0 }, 'sanft'); cue(P8, 'whoosh');
-  const tBe = W('beste', 33), tC = WN(33, 4);
+  const tBe = W('beste', 33), tC = WN(33, 5);
   tw(['dA', 'dB'], tBe, .5, { o: .4, s: .94 }, 'inout');
   bump('dC', tBe, 1.05); bump('dCk', tC - .2, 1.2);
   el('dCr').classList.add('gruen'); tw('dCr', tC - .05, .25, { o: 1 });
