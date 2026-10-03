@@ -152,7 +152,7 @@
 .k-ring{width:250px;height:250px}
 
 /* Szene 6 */
-.k-karte{width:1000px;height:560px;border-radius:46px;background:linear-gradient(var(--b50),var(--b100));border:8px solid var(--surface);
+.k-karte{width:1000px;height:590px;border-radius:46px;background:linear-gradient(var(--b50),var(--b100));border:8px solid var(--surface);
   box-shadow:0 22px 54px rgba(58,37,153,.24);z-index:230}
 .k-dampf{position:absolute;left:0;top:0;width:210px;height:150px;z-index:236}
 .k-schluss{position:absolute;left:460px;top:812px;width:1000px;text-align:center;z-index:245}
@@ -245,7 +245,7 @@
     <div class="a k-abdruck" id="abdruck3" data-frei><div class="ic" data-ic="UhrStempel" style="width:50px"></div>Zusage</div>
     <div class="a" id="stempel3" style="width:170px" data-frei>{{stempel}}</div>
     <div class="a kz mittel t200" id="zNeu3" style="width:170px;height:170px"><b style="white-space:normal;font-size:27px;line-height:32px">Neuer<br>Termin?</b></div>
-    <div class="a k-handy gross" id="handy3"><div class="schirm"><div class="k-bl raus" id="bl3"></div>
+    <div class="a k-handy gross" id="handy3" data-dreht><div class="schirm"><div class="k-bl raus" id="bl3"></div>
       <div class="k-anruf" id="anruf3"><div class="knopf" data-ic="Tel"></div>Anruf</div></div></div>
     <div class="a k-brief" id="brief3" data-frei><i></i><i></i><i></i></div>
     <div class="a plakette lila" id="ok3" data-frei></div>
@@ -642,9 +642,9 @@ titelEin('tb3', T3 + .3, [W('Uhrzeit', 13) - .15, null, W('Versprechen', 13) - .
 akteur('zGross3', { x: 330, y: 470, r: -2 });
 // Versprechen: Uhr-Stempel schlägt auf
 const VS = W('Versprechen', 13) + .1;
-akteur('stempel3', { x: 492, y: -60, o: 0 });
-tw('stempel3', VS - .55, .2, { o: 1 }); tw('stempel3', VS - .55, .3, { y: 20 }, 'sinus');
-tw('stempel3', VS - .2, .18, { y: 250 }, 'in'); tw('stempel3', VS - .02, .5, { y: 20, o: 0 }, 'weich');
+akteur('stempel3', { x: 760, y: 170, o: 0 });
+tw('stempel3', VS - .65, .2, { o: 1 }); tw('stempel3', VS - .65, .45, { x: 492, y: 175 }, 'inout');
+tw('stempel3', VS - .2, .18, { y: 250 }, 'in'); tw('stempel3', VS - .02, .55, { x: 760, y: 175, o: 0 }, 'weich');
 cue(VS - .02, 'plopp'); akzent(VS, .045);
 akteur('abdruck3', { x: 492, y: 322, o: 0, r: -4, s: 1.35 }); tw('abdruck3', VS - .02, .16, { o: 1, s: 1 }, 'out');
 wackeln('zGross3', VS, 3, 2);
@@ -667,7 +667,7 @@ rel('anruf3', { o: 0 }); tw('anruf3', W('Anruf', 14) - .25, .3, { o: 1 });
 wackeln('handy3', W('Anruf', 14) - .1, 6, 1.8); cue(W('Anruf', 14) - .1, 'ding'); cue(W('Anruf', 14) + .35, 'ding');
 wellen('welle3', [W('Anruf', 14) - .1, W('Anruf', 14) + .4], 920, 470, .48);
 // ganz normal: ein neuer Termin wird gesucht
-kleben('zNeu3', W('normal', 15) - .1, { x: 655, y: 340, r: 2 }, { x: 260, y: -120, r: 12, bogen: 90 });
+kleben('zNeu3', W('normal', 15) - .1, { x: 672, y: 345, r: 2 }, { x: 260, y: -120, r: 12, bogen: 90 });
 pop('ok3', W('unhöflich', 15), { x: 1050, y: 230 }, 'erfolg');
 // Wer einfach nicht kommt: leerer Stuhl, die Uhr läuft
 tw('anruf3', W('Wer', 16) - .3, .25, { o: 0 });
@@ -846,7 +846,7 @@ pop('ok6', W('kochen', 32) - .1, { x: KX + SP(3) + 62, y: KY + Z1 - 62 }, 'erfol
 // Das Donnerstag-Feld zoomt auf: Mai und Ana kochen zusammen
 const KZ = W('beiden', 32) - .25;
 akteur('karte6', { x: KX + SP(3), y: KY + Z1, s: .13, o: 0 });
-tw('karte6', KZ, .1, { o: 1 }); tw('karte6', KZ, .85, { x: 960, y: 645, s: 1 }, 'sanft'); cue(KZ, 'whoosh');
+tw('karte6', KZ, .1, { o: 1 }); tw('karte6', KZ, .85, { x: 960, y: 632, s: 1 }, 'sanft'); cue(KZ, 'whoosh');
 aus('handy6', KZ - .1, .3);
 tw(['zDeko6a', 'zDeko6b', 'zAbsage6', 'zMai', 'ok6'], KZ + .75, .2, { o: 0 });
 flug('mai', KZ + .35, .85, 715, 618, 120); flug('ana', KZ + .45, .85, 1205, 618, 120);
@@ -861,7 +861,7 @@ pop('zRund6', W('Spontan', 33) - .1, { x: 548, y: 440, r: -2 }); huepfen('zRund6
 pop('zEck6', W('geplant', 33) - .1, { x: 1372, y: 440, r: 2 });
 titelEin('tbEnde', W('Anders', 33) - .15, [W('Anders', 33) - .15, W('ist', 33) - .1, W('nicht', 33) - .1, W('falsch', 33) - .1]); hell('tbEnde', ['Anders']);
 const WARM = W('falsch', 33) + .3;
-welle('welle6', WARM, 960, 645, 1.6); cue(WARM, 'erfolg');
+welle('welle6', WARM, 960, 632, 1.6); cue(WARM, 'erfolg');
 huepfen('mai', WARM, 14); huepfen('ana', WARM + .12, 14); bump('topf6', WARM + .2, 1.06);
 bump('zRund6', WARM + .3, 1.1); bump('zEck6', WARM + .35, 1.1);
 

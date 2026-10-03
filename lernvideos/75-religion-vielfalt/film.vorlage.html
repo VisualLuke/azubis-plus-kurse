@@ -664,7 +664,7 @@ HOOKS.push(t => { el('paneel').style.transform = `translateX(${f1(-1180 * (1 - k
   // ein Licht springt vom Rad in das Feld – und bleibt dort
   const LU = lichtNahe(0, tU - .7);
   LU.los = { t: tU - .7 };
-  const ZIELX = UX - 202 + 52, ZIELY = UY;
+  const ZIELX = UX - 196 + 52, ZIELY = UY;
   const fliegen = () => { const [fx, fy] = lichtPos(LU, tU - .7); return [ZIELX - fx, ZIELY - fy]; };
   const [ox, oy] = fliegen();
   tw(LU.id, tU - .7, 1.1, { x: ox, y: oy, s: .56 }, 'inout', { bogen: 220 }); cue(tU - .7, 'whoosh');
@@ -730,7 +730,7 @@ HOOKS.push(t => { el('paneel').style.transform = `translateX(${f1(-1180 * (1 - k
   for (let k = 0; k < 12; k++) if (k !== 11 && k !== 3) GLANZ[k].push([W('Viele', 19) + .3, .35, .8], [W('Mitfeiern', 21), 1, .8]);
   GLANZ[11].push([tW - .1, 1.5, .4]); GLANZ[3].push([tO - .1, 1.5, .4]);
   GLANZ[11].push([W('Mitfeiern', 21), 1, .8]); GLANZ[3].push([W('Mitfeiern', 21), 1, .8]);
-  bump('li11', tW, 1.25); bump('li3', tO, 1.25); cue(tW, 'ding'); cue(tO, 'ding');
+  [['li11', tW], ['li3', tO]].forEach(([id, t]) => { tw(id, t - .1, .3, { s: 1.22 }, 'sinus'); tw(id, t + .2, .6, { s: 1 }, 'sanft'); }); cue(tW, 'ding'); cue(tO, 'ding');
   neu('chW5', 'Weihnachten', 'font-size:64px;line-height:74px;padding:16px 38px', '', 'chip');
   neu('chO5', 'Ostern', 'font-size:64px;line-height:74px;padding:16px 38px', '', 'chip');
   pop('chW5', tW + .05, { x: -40, y: -140 }); pop('chO5', tO + .05, { x: 110, y: -5 });
@@ -805,7 +805,7 @@ const K = 1 / C.split[2];
   const [lx, ly] = P(470, 150), [rx, ry] = P(1450, 150);
   neu('chDe6', `<i style="width:${22 * K}px;height:${22 * K}px;border-radius:999px;background:var(--b500)"></i>In Deutschland`, `font-size:${32 * K}px;line-height:${40 * K}px;padding:${14 * K}px ${30 * K}px;gap:${14 * K}px;box-shadow:0 ${6 * K}px ${20 * K}px rgba(22,19,37,.09)`, '', 'chip');
   neu('chDu6', `<i style="width:${22 * K}px;height:${22 * K}px;border-radius:999px;background:var(--b300)"></i>Bei dir?`, `font-size:${32 * K}px;line-height:${40 * K}px;padding:${14 * K}px ${30 * K}px;gap:${14 * K}px;box-shadow:0 ${6 * K}px ${20 * K}px rgba(22,19,37,.09)`, '', 'chip');
-  pop('chDe6', tSp + .3, { x: lx, y: ly }); pop('chDu6', tSp + .7, { x: rx, y: ry });
+  pop('chDe6', tSp + .3, { x: lx, y: ly }, 'pop', 'sanft'); pop('chDu6', tSp + .7, { x: rx, y: ry }, 'pop', 'sanft');
   // rechts: ein leeres, gestricheltes Rad mit großem Fragezeichen
   const [dx, dy] = P(1450, 565);
   let sp = '';
@@ -860,7 +860,7 @@ const K = 1 / C.split[2];
     neu('pk6' + i, '', `width:${r * K}px;height:${r * K}px;border-radius:999px;background:var(--surface);box-shadow:0 ${4 * K}px ${12 * K}px rgba(22,19,37,.1)`, 'data-frei');
     pop('pk6' + i, tW + i * .15, { x, y }, i ? null : 'pop');
   });
-  pop('wolke6', tW + .35, { x: wx, y: wy }, 'pop', 'sanft');
+  akteur('wolke6', { x: wx, y: wy, s: 0 }); tw('wolke6', tW + .35, .95, { s: 1 }, 'sanft'); cue(tW + .35, 'pop');
   // Positionen in der Wolke (ungeordnet), Zeiten in der Pause
   const tP = SE(28) + .15;
   [['wy1', 110, 75, 0, -2], ['wy2', 516, 345, .65, 2], ['wy3', 389, 25, 1.3, -1], ['wy4', 712, 95, 1.95, 3], ['wy5', 224, 395, 2.6, 1]].forEach(([id, x, y, d, r]) => {

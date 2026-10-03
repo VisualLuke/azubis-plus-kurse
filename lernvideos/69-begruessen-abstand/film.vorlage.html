@@ -123,7 +123,7 @@
 .glied .gelenk{position:absolute;left:3px;top:6px;width:6px;height:6px;border-radius:50%;background:var(--b600)}
 
 /* Welle durch die Fläche, Schlussplatte, Abspann */
-.wellenring{width:400px;height:400px;border-radius:50%;border:14px solid var(--b300);opacity:0}
+.wellenring{width:400px;height:400px;border-radius:50%;border:8px solid var(--b300);opacity:0}
 .platte{z-index:6000;padding:30px 60px 34px;border-radius:34px;background:var(--surface);box-shadow:0 22px 50px rgba(58,37,153,.18);text-align:center}
 .platte .titel{font:800 72px/84px Inter;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
 .platte .titel .w:last-child .wi{color:var(--b500)}
@@ -269,7 +269,7 @@ const wippen = (id, t, h = 14) => { const y = wertBei(id, 'y', t); tw(id, t, .1,
 
 /* ---------- Kamera: fährt über das Brett (x, y), zoomt (s); Akzente auf Schlüsselwörtern ---------- */
 const KAM = $('#kamera'), WELT = $('#welt'), BRETT = $('#brett');
-rel('cam', { x: 960, y: 540, s: 1 });
+rel('cam', { x: 960, y: 540, s: .94 });
 const FAHRTEN = [], AKZENTE = [];
 const fahrt = (t0, d, x, y, s = null, dip = .07) => { tw('cam', t0, d, s == null ? { x, y } : { x, y, s }, 'inout'); FAHRTEN.push([t0, d, dip]); cue(t0, 'whoosh'); };
 const akzent = (t, z = .035) => AKZENTE.push([t, z]);
@@ -414,7 +414,7 @@ HOOKS.push(t => {
 
 /* ================= 1 · Kwames erster Tag: Sabine streckt die Hand aus, der Geselle nickt ================= */
 // Erste Bühne mittig, ohne Titel. Die Kamera schwebt beim Start leicht heran.
-set('cam', 0, { s: .94 }); tw('cam', 0, 2.2, { s: 1 }, 'weich');
+tw('cam', 0, 2.2, { s: 1 }, 'weich');
 steher('bank', 1420, 470); steher('sofa', 1430, -790); steher('thermo', 230, 720, { o: 0, hoch: 0 });
 // Werkbank und Geselle stehen schon; Kwame springt aufs Startfeld
 rel('start1', { x: 574, y: 654, s: .9, o: .6 });
@@ -569,7 +569,7 @@ tw('kipp', tK, 1.7, { r: aKipp }, 'inout'); cue(tK, 'whoosh');
 fahrt(tK, 1.7, 960, 320, .92, .02);
 // Kälte? Thermometer fällt ins Bild, der Balken steigt auf eine warme mittlere Höhe
 akteur('thermoI', { sy: .08 }, true);
-set('thermo', W('Kälte', 19) - .45, { o: 1, hoch: 700 });
+set('thermo', W('Kälte', 19) - .46, { o: 1, hoch: 700 });
 tw('thermo', W('Kälte', 19) - .45, .42, { hoch: 0 }, 'in'); landen('thermo', W('Kälte', 19) - .03, 1.3); cue(W('Kälte', 19) - .03, 'plopp');
 tw('thermoI', W('Kälte', 19) + .3, 1.1, { sy: .58 }, 'sanft'); cue(W('Kälte', 19) + .3, 'scan');
 karte('karte4', W('Abstand', 20) - .9, 960, -140, [W('Abstand', 20), W('Abstand', 20) + .3, W('Respekt', 20) - .1, W('Respekt', 20) + .25, W('Respekt', 20) + .4]);
@@ -577,7 +577,7 @@ karte('karte4', W('Abstand', 20) - .9, 960, -140, [W('Abstand', 20), W('Abstand'
 const tRaum = W('eigenen', 20);
 ['kw', 'sab', 'ges'].forEach((id, i) => {
   const t = tRaum + i * .18;
-  set('l_' + id, t, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in');
+  set('l_' + id, t - .01, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in');
   bump('k_' + id, t, 1.08); cue(t, 'ding');
 });
 // zu nah: jemand rückt in Kwames Kreis – beide Kreise wabbeln, Kwame weicht zurück
@@ -727,10 +727,10 @@ froh('sab', W('Umarmung', 29)); froh('kw', W('Umarmung', 29)); froh('ges', W('Um
 tw(['hdSab', 'hdKw', 'nickGes'], W('Jede', 29) - .1, .35, { s: 0, o: 0 }, 'in');
 const tRe = W('Respekt', 29) - .1;
 akteur('welle6', { x: 960, y: 1760, s: .1, o: 0 });
-set('welle6', W('Jede', 29), { o: .85 }); tw('welle6', W('Jede', 29), 2.4, { s: 6 }, 'out'); tw('welle6', W('Jede', 29), 2.4, { o: 0 }, 'in'); cue(W('Jede', 29), 'scan');
+set('welle6', W('Jede', 29) - .01, { o: .85 }); tw('welle6', W('Jede', 29), 2.4, { s: 6 }, 'out'); tw('welle6', W('Jede', 29), 2.4, { o: 0 }, 'in'); cue(W('Jede', 29), 'scan');
 [['n1', 0], ['n2', .05], ['sab', .25], ['kw', .45], ['ges', .7]].forEach(([id, d]) => {
   const t = W('Jede', 29) + .2 + d;
-  set('l_' + id, t, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in'); bump('k_' + id, t, 1.07);
+  set('l_' + id, t - .01, { o: 1, s: 1 }); tw('l_' + id, t, 1.3, { s: 1.3 }, 'out'); tw('l_' + id, t, 1.3, { o: 0 }, 'in'); bump('k_' + id, t, 1.07);
 });
 ['n1', 'n2', 'sab', 'kw', 'ges'].forEach((id, i) => wippen(id, tRe + i * .1, 12));
 cue(tRe, 'erfolg');
