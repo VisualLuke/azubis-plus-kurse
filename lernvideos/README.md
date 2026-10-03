@@ -1,6 +1,6 @@
-# Lernvideos – 45 Kurse für internationale Azubis
+# Lernvideos – 65 Kurse für internationale Azubis
 
-Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“. Nummern und Themen aus dem Briefing,
+Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“; 46–65 aus eigener Recherche ([`BRIEFING-46-65.md`](BRIEFING-46-65.md), Faktencheck in [`faktencheck-46-65.md`](faktencheck-46-65.md)). Nummern und Themen aus dem Briefing,
 Sprechertext je Kurs in `NN-thema/konzept.md` (Abschnitt `## Sprechertext`), Korrekturen am Briefing in `korrekturen.md`.
 
 Ablauf je Kurs:
@@ -16,7 +16,7 @@ node werkzeug/rendern.mjs lernvideos/01-krankenkasse            # film.mp4 + fil
 Stimmen: Erklärvideos meist Erzähler (`K8bIZwDsGMHreGKTIVHN`), einzelne Erzählerin (`oClOrzqamOXmtcB8iqTj`);
 Rollen siehe `werkzeug/stimme.mjs`. Modell Eleven v4.
 
-**Stand 29.09.2026:** alle 45 fertig. Die aktuelle Fassung jedes Videos ist `film.mp4` im Kursordner (mit `film-poster.png`
+**Stand 03.10.2026:** 1–45 fertig (29.09.), 46–65 neu (03.10.). Die aktuelle Fassung jedes Videos ist `film.mp4` im Kursordner (mit `film-poster.png`
 und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 
 | Nr. | Thema | Format | Stimme | Länge | Status |
@@ -66,3 +66,23 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 43 | [Wie funktioniert die Demokratie?](43-demokratie/) | Erklärvideo | Erzählerin | 2:02 | fertig |
 | 44 | [Das Grundgesetz – deine Grundrechte](44-grundgesetz/) | Erklärvideo | Erzähler | 1:39 | fertig |
 | 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | 1:55 | fertig |
+| 46 | [Die ersten 14 Tage](46-die-ersten-14-tage/) | Erklärvideo | Erzähler | 2:00 | fertig |
+| 47 | [Steuer-ID und Sozialversicherungsnummer](47-steuer-id/) | Erklärvideo | Erzählerin | 2:07 | fertig |
+| 48 | [Der erste Termin bei der Ausländerbehörde](48-auslaenderbehoerde/) | Der schlechte Tag | Erzähler, Priya | 1:52 | fertig |
+| 49 | [Handy und SIM-Karte](49-handy-sim/) | Was würdest du tun? | Erzählerin, Yusuf | 2:01 | fertig |
+| 50 | [Zu Fuß im Straßenverkehr](50-zu-fuss/) | Erklärvideo | Erzählerin | 1:45 | fertig |
+| 51 | [Bus und Bahn](51-bus-und-bahn/) | Was würdest du tun? | Erzähler, Kwame | 2:00 | fertig |
+| 52 | [Fahrrad fahren](52-fahrrad/) | Mythos oder Wahrheit | Erzähler | 2:16 | fertig |
+| 53 | [Sicher im Winter](53-winter/) | Erklärvideo | Erzähler | 1:46 | fertig |
+| 54 | [Notruf richtig nutzen](54-notruf/) | Was würdest du tun? | Erzählerin, Mai | 2:25 | fertig |
+| 55 | [Heizen und Lüften](55-heizen-lueften/) | Der schlechte Tag | Erzählerin, Priya | 2:12 | fertig |
+| 56 | [Ein WG-Zimmer finden](56-wg-zimmer/) | Was würdest du tun? | Erzähler, Yusuf | 2:11 | fertig |
+| 57 | [Das Berichtsheft führen](57-berichtsheft/) | Podcast | Kwame, Sabine | 1:39 | fertig |
+| 58 | [Arbeitsschutz und Schutzkleidung](58-arbeitsschutz/) | Erklärvideo | Erzähler | 1:52 | fertig |
+| 59 | [Du oder Sie?](59-du-oder-sie/) | Heimat vs. Deutschland | Erzählerin | 2:02 | fertig |
+| 60 | [Smalltalk in der Pause](60-smalltalk/) | Was würdest du tun? | Erzählerin, Kwame, Geselle | 1:55 | fertig |
+| 61 | [Dein Geld im Monat planen](61-geld-planen/) | Erklärvideo | Erzählerin | 2:14 | fertig |
+| 62 | [Geld nach Hause schicken](62-geld-nach-hause/) | Erklärvideo | Erzähler | 2:03 | fertig |
+| 63 | [Wortschatz Einzelhandel](63-vokabeln-einzelhandel/) | Fachvokabeln | Erzähler, Priya, Filialleiterin | 2:22 | fertig |
+| 64 | [Wortschatz Lager und Logistik](64-vokabeln-lager/) | Fachvokabeln | Erzählerin, Yusuf, Kollege | – | in Arbeit |
+| 65 | [Wortschatz Sanitär, Heizung, Klima](65-vokabeln-shk/) | Fachvokabeln | Erzählerin, Kwame, Geselle | 2:38 | fertig |
