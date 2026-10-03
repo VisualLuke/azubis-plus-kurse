@@ -1,6 +1,6 @@
-# Lernvideos – 68 Kurse für internationale Azubis
+# Lernvideos – 80 Kurse für internationale Azubis
 
-Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“; 46–65 aus eigener Recherche, 66–68 auf Wunsch des Nutzers ([`BRIEFING-46-65.md`](BRIEFING-46-65.md), Faktencheck in [`faktencheck-46-65.md`](faktencheck-46-65.md)). Nummern und Themen aus dem Briefing,
+Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“; 46–65 aus eigener Recherche, 66–80 auf Wunsch des Nutzers (69–78 Kultur & Miteinander: [`BRIEFING-69-78.md`](BRIEFING-69-78.md); 79–80 Rassismus und Liebe/Vielfalt: [`BRIEFING-79-80.md`](BRIEFING-79-80.md)) ([`BRIEFING-46-65.md`](BRIEFING-46-65.md), Faktencheck in [`faktencheck-46-65.md`](faktencheck-46-65.md)). Nummern und Themen aus dem Briefing,
 Sprechertext je Kurs in `NN-thema/konzept.md` (Abschnitt `## Sprechertext`), Korrekturen am Briefing in `korrekturen.md`.
 
 Ablauf je Kurs:
@@ -89,3 +89,15 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 66 | [Nützliche Apps für den Start](66-nuetzliche-apps/) | Erklärvideo | Erzählerin (Ana als Figur) | 1:53 | fertig |
 | 67 | [Wortschatz Naturwerkstein](67-vokabeln-naturstein/) | Fachvokabeln | Erzähler, Kwame, Sabine | 2:47 | fertig |
 | 68 | [Wortschatz Straßenbau](68-vokabeln-strassenbau/) | Fachvokabeln | Erzählerin, Amir, Geselle | 2:45 | fertig |
+| 69 | [Begrüßen und Abstand](69-begruessen-abstand/) | In Deutschland … und bei dir? | Erzählerin, Kwame | 1:58 | fertig |
+| 70 | [Termine und Verabredungen](70-termine-verabredungen/) | In Deutschland … und bei dir? | Erzähler, Mai | 2:02 | fertig |
+| 71 | [Eingeladen sein](71-eingeladen-sein/) | In Deutschland … und bei dir? | Erzählerin, Amir | 1:59 | fertig |
+| 72 | [Arbeit und Freizeit trennen](72-arbeit-und-freizeit/) | In Deutschland … und bei dir? | Erzähler, Priya | 2:04 | fertig |
+| 73 | [Lob und Feedback](73-lob-und-feedback/) | In Deutschland … und bei dir? | Erzählerin, Yusuf, Bäckermeisterin | 1:56 | fertig |
+| 74 | [Gleichberechtigung im Alltag](74-gleichberechtigung/) | In Deutschland … und bei dir? | Erzähler, Priya | 1:57 | fertig |
+| 75 | [Religion und Vielfalt](75-religion-vielfalt/) | In Deutschland … und bei dir? | Erzählerin, Amir | 1:58 | fertig |
+| 76 | [Regeln und Vertrauen](76-regeln-vertrauen/) | In Deutschland … und bei dir? | Erzähler, Ana | 1:55 | fertig |
+| 77 | [Pfand und Umwelt](77-pfand-umwelt/) | In Deutschland … und bei dir? | Erzählerin, Yusuf | 2:02 | fertig |
+| 78 | [Familie und Selbstständigkeit](78-familie-selbststaendigkeit/) | In Deutschland … und bei dir? | Erzähler, Mai | 1:53 | fertig |
+| 79 | [Rassismus – alle sind gleich viel wert](79-rassismus/) | Was würdest du tun? (Rechte) | Erzählerin, Kwame, Jonas | 2:24 | fertig |
+| 80 | [Liebe ist frei](80-liebe-ist-frei/) | Was würdest du tun? (Rechte) | Erzähler, Ana, Sabine | 2:12 | fertig |
