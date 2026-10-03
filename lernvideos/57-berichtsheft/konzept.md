@@ -2,35 +2,39 @@
 
 - **Quelle:** Briefing Lernvideos 46–65 (eigene Recherche), Lektion 57
 - **Zielgruppe:** Azubis im 1. Lehrjahr, auch international; einfaches Deutsch (B1)
-- **Format:** Podcast, Kwame (Azubi, Elektro) und Sabine (Ausbilderin) im Gespräch; Porträts links (Sabine) und rechts (Kwame),
-  in der Mitte die Bühne mit den animierten Einblendungen
-- **Setting:** Werkstatt am Freitagnachmittag, Werkbank mit Laptop und einem Ordner; Wanduhr kurz nach zwei
+- **Format:** Podcast, Kwame (Azubi, Elektro) und Sabine (Ausbilderin) im Gespräch. Leitidee: Draufsicht auf einen Schreibtisch,
+  die Porträts sitzen oben (Sabine links, Kwame rechts), in der Mitte liegt das Berichtsheft und blättert Woche für Woche um
+- **Setting:** Schreibtisch von oben: Spiralheft, Kugelschreiber, Klebezettel, Lupe; die Prüfungstür als Karte auf dem Tisch
 - **Länge:** geplant ca. 1:45–2:00 Min.
 - **Kernbotschaft:** Das Berichtsheft ist Pflicht und deine Eintrittskarte zur Prüfung. Schreib jede Woche, während der Arbeitszeit.
 - **Aufnahme:** `sprache.mp3` + `sprache.json`, erzeugt mit `node werkzeug/stimme.mjs lernvideos/57-berichtsheft` (ElevenLabs, Eleven v4)
 
-Roter Faden: ein **Berichtsheft**, das mit dem Gespräch wächst – Woche für Woche kommt eine Seite dazu; am Ende wird der Stapel
-zur Eintrittskarte vor der Tür „Prüfung“.
+Roter Faden: das **Berichtsheft** liegt aufgeschlagen auf dem Tisch. Szenenwechsel = Umblättern (die Seite hebt sich in 3D
+und fällt nach links), Einträge schreibt ein Kugelschreiber, Stichpunkte kommen als Klebezettel, Unterschriften werden live
+gezogen; bei „Prüfung“ wird das Heft zur Eintrittskarte vor der Prüfungstür. Überraschende Momente: das Etikett dreht sich wie
+eine Münze, auf „abends“ geht das Licht am Tisch aus, vier Wochen flattern auf „Einmal im Monat“ in einem Zug um, am Ende ist
+das zugeklappte Heft dick geworden und öffnet die Tür.
 
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
-| 1 | Werkstatt in der Bildmitte: Werkbank schiebt sich herein, Wanduhr springt auf kurz nach zwei, Sicherungskasten an der Wand; Kwame und Sabine (Porträts) ploppen links und rechts auf; auf „Berichtsheft“ fliegt ein Heft auf die Werkbank, schlägt auf und klappt auf, leere Zeilen; Fragezeichen über Kwame; auf „Ausbildungsnachweis“ dreht sich das Heft wie eine Münze und zeigt hinten das Etikett „Ausbildungsnachweis“, auf „Gesetz“ fällt ein Paragrafenzeichen daneben und rastet mit Wackler ein | Berichtsheft = Ausbildungsnachweis |
-| 2 | Das Heft wird zur Eintrittskarte: Tür „Abschlussprüfung“ mit Schloss neben dem Heft; ohne Heft (gestrichelter Umriss) prallt der Weg an der Tür ab (rotes ✕); auf „Anmeldung“ heftet sich ein Anmeldeblatt an, das Heft verwandelt sich in eine Eintrittskarte und fliegt zur Kammer (Gebäude ohne Logo); auf „zu sehen“ fährt eine Lupe darüber, Haken, die Tür geht einen Spalt auf | Ohne Berichtsheft keine Prüfung |
-| 3 | Zwei Wege teilen sich: links ein Heft mit Stift (Papier), rechts Laptop/Tablet (digital), beide bekommen einen Haken; Ausbildungsvertrag fliegt herein, eine Zeile leuchtet und eine Lupe fährt darüber; Kalenderleiste Mo–Fr: auf „jede Woche“ springt am Freitag ein großer Stempel „Woche“, auf „jeden Tag“ ploppen fünf kleine Haken an allen Tagen | Papier oder digital · jede Woche |
-| 4 | Laptop klappt auf, ein Wochenblatt mit drei farbigen Feldern: „Betrieb“ (Steckdose wird montiert, Leitung zieht sich von der Rolle durch ein Rohr, Lampe geht an), „Berufsschule“ (Schule, Tafel mit Stichwort, Buch klappt auf), „Unterweisung“ (Helm und Schild mit Haken); jedes Feld tippt sich voll, sobald es genannt wird; auf „Stichworte“ schrumpfen lange Sätze zu kurzen Stichpunkten (Wörter springen weg, Punkte bleiben) | Betrieb · Schule · Unterweisungen |
-| 5 | Abend-Fenster mit Mond und Sofa erscheinen, das Heft fliegt hin – auf „Nein“ wackelt die Szene, das Heft fliegt zurück in die Werkstatt; die Wanduhr leuchtet (Arbeitszeit, Uhrzeiger laufen durch den Nachmittag); auf „kostenlos“ rutschen Heft und Laptop über die Werkbank zu Kwame, Chip „kostenlos“ mit Haken | Während der Arbeitszeit · kostenlos |
-| 6 | Kalender: vier Wochen-Seiten flattern ab und stapeln sich; Sabine bekommt das Heft, eine Lupe fährt über die Seiten, ihr Stift unterschreibt mit Schwung, Haken; zwei Sprechblasen zwischen beiden (grüner Haken „gut“, Fragezeichen „fehlt“); auf „vergesse“ fliegen leere Seiten herein, auf „nicht mehr“ verblassen die Bilder darauf zu grauen Nebeln, Kwame kratzt sich am Kopf (Porträt wackelt), eine kleine Uhr läuft rot bis zur Prüfungstür, die Schranke bleibt unten | Jeden Monat: ansehen & unterschreiben |
-| 7 | Zurück in der Werkstatt: das Heft wächst Seite für Seite zu einem dicken Ordner, auf jedes Stichwort aus Kwames Satz springt ein Symbol hinein (Kalender, Werkzeug, Schule, Helm, Stift); auf „gelernt“ fächert sich der Ordner auf, bunte Seiten schweben wie ein Fächer, ein Fortschrittsbalken „1. Lehrjahr“ füllt sich; Kwame lacht, Sabine nickt, die Prüfungstür im Hintergrund leuchtet grün | Jede Woche · unterschreiben lassen |
+| 1 | Leerer Tisch, die Porträts ploppen auf; auf „Azubis“ / „reden“ tauchen Sprechblasen auf, auf „Berichtsheft“ rutscht das zugeklappte Heft von unten herein und schiebt sie weg; „Muss ich …?“: Fragezeichen bei Kwame, der Stift rollt herein; „musst“: Haken auf dem Umschlag; „Ausbildungsnachweis“: das Etikett dreht sich wie eine Münze; „Gesetz“: ein Stempel schlägt ein Paragrafenzeichen auf den Umschlag | Berichtsheft = Ausbildungsnachweis |
+| 2 | Das Heft rückt nach links, rechts kommt die Tür „Abschlussprüfung“; „Ohne Berichtsheft“: ein leerer, gestrichelter Umriss läuft zur Tür und prallt ab (rotes ✕); „Anmeldung“: ein Anmeldeblatt kommt von Sabines Seite aufs Heft; „Prüfung“: das Heft dreht sich zur Eintrittskarte; „Kammer“: Kammer-Gebäude (ohne Logo), die Karte fliegt hin, „sehen“: Lupe, Haken; dann öffnet die Karte die Tür (grünes Licht) | Ohne Berichtsheft keine Prüfung |
+| 3 | Das Heft kommt zurück und schlägt auf; „Papier“: der Kugelschreiber schreibt drei Zeilen auf die linke Seite, Haken; „digital“: ein Tablet auf der rechten Seite, Zeilen tippen sich, Haken; Woche Mo–Fr, „jede Woche“: Klammer und Klebezettel „1 × pro Woche“, „jeden Tag“: an jedem Tag ein kleiner Haken; „Ausbildungsvertrag“: Vertrag rutscht auf den Tisch, die Lupe liest | Papier oder digital · jede Woche |
+| 4 | Umblättern; „Betrieb“: gelber Zettel mit Steckdose, der Stift schreibt „Steckdosen montiert“, „Leitungen verlegt“ im Takt der Wörter; „Berufsschule“: blauer Zettel mit Schule, zwei Zeilen; „Unterweisungen“: grüner Zettel mit Schutzhelm, „Sicherheit“; „Stichworte reichen“: lange Zeilen schrumpfen zu Stichpunkten | Betrieb · Schule · Unterweisungen |
+| 5 | Umblättern; „abends zu Hause“: das Licht am Tisch geht aus, Mond und Sofa auf den Seiten; „Nein“: Wackler, Licht an, beides verschwindet; „Arbeitszeit“: Uhr, die Zeiger laufen von acht bis vier, ein Bogen zeichnet sich; „schreiben“: der Stift schreibt; „Heft“ / „Programm“: Heft und Laptop fliegen vom Betrieb zu Kwames Seite, Chip „kostenlos“ | Während der Arbeitszeit · kostenlos |
+| 6 | „Einmal im Monat“: vier gefüllte Wochen flattern um; „schaue … an“: Lupe über beide Seiten; „unterschreibe“: die Unterschrift wird gezogen, Haken; „sprechen“: Sprechblasen auf beiden Seiten, Zettel „✓ gut“ und „? fehlt noch“; „vergesse“: leere Seiten flattern um, Kwame wiegt den Kopf; „schwer“: Lücken auf den Seiten, das Heft sackt; „nicht mehr“: die Erinnerung bei Kwame (Steckdose, Schule, Helm) verschwimmt grau; „Prüfung“ / „Seiten“: kleine Prüfungstür mit rotem ✕, die Lücken werden rot | Jeden Monat: ansehen & unterschreiben |
+| 7 | Umblättern; im Takt von Kwames Satz kleben Zettel „Jede Woche“, „Betrieb“, „Schule“, „Unterweisung“, dann wird unterschrieben; „Genau“: das Heft klappt zu und ist dick geworden; die Prüfungstür kommt, auf „gelernt“ geht sie auf (grün), das Heft hüpft davor, Haken | Jede Woche · unterschreiben lassen |
 
-Umsetzung: Gesprächsformat wie `../33-erste-woche-berufsschule` und `../38-betriebsrat-jav` (Porträts links/rechts, Mund mit
-dem Pegel der Aufnahme, der Sprecher wird größer und bekommt einen Rand, die Zuhörerin bzw. der Zuhörer nickt). Wer spricht,
-kommt exakt aus `sprache.json` (`satz(n).sprecher`, `start`, `ende`). Text im Bild oben auf der Bühne, Wörter steigen aus einer
-Maske; jede Animation hängt an einem Wort aus `sprache.json`. Schwenk mit Bewegungsunschärfe, Kamera-Akzente auf „Gesetz“,
-„Prüfung“, „jede Woche“, „Arbeitszeit“, „unterschreibe“. Abspann: „Jede Woche ein Eintrag.“ und die Kernbotschaft.
+Umsetzung: Gesprächsformat mit Technik wie `../38-betriebsrat-jav` (Mund mit dem Pegel der Aufnahme, der Sprecher wird größer
+und bekommt einen Rand, der Zuhörer nickt), aber eigener Bildaufbau (Tisch von oben, Porträts oben in den Ecken, Text im Bild
+oben zwischen beiden). Wer spricht, kommt exakt aus `sprache.json` (`satz(n).sprecher`, `start`, `ende`). Wörter des Texts im
+Bild steigen aus einer Maske; jede Animation hängt an einem Wort aus `sprache.json`. Kamera: Einfahrt, leichtes Zurückweichen
+beim Umblättern, Akzente auf „musst“, „Gesetz“, „Prüfung“, „Woche“, „Arbeitszeit“, „unterschreibe“, „schwer“, „Seiten“.
+Abspann: „Jede Woche ein Eintrag.“ – „Dein Berichtsheft ist deine Eintrittskarte zur Prüfung.“
 
-Kursspezifische Teile (neu, Stil C): `berichtsheft`, `paragraf`, `schranke-tuer`, `steckdose`, `kabelrolle`, `fortschritt`;
-vorhanden: `heft`, `laptop`, `vertrag`, `kalender`, `stempel`, `stift`, `lupe`, `schule`, `buch`, `helm`, `kammer-ihk`,
-`kammer-hwk`, `uhr`, `mond`, `sofa-*` (Kopie aus Kurs 35).
+Teile in `teile/`: neu `kammer` (Kammer-Gebäude ohne Schriftzug), `schutzhelm`; Kopien `steckdose` (29), `schule` (06),
+`laptop` (04), `lupe` (01), `kalender` (10), `mond-gelb` (10), `sofa` (04); aus `teile/`: `heft`, `vertrag`, `stempel`, `stift`,
+`uhr`, `betrieb`, Figuren. Heft, Seiten, Zettel, Tür, Eintrittskarte und Tablet sind in der Vorlage gezeichnet (Token-Farben).
 
 ## Abweichungen vom Briefing
 
