@@ -154,7 +154,7 @@
 .punkt-g{border-radius:999px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
 .uhr57 .zg{position:absolute;left:0;top:0;width:100%}
 .uhr57 .std,.uhr57 .min{transform-origin:80px 76px}
-#nacht{position:absolute;left:0;top:0;width:1920px;height:1080px;background:color-mix(in srgb,var(--b700) 52%,transparent);pointer-events:none}
+#nacht{position:absolute;left:0;top:0;width:1920px;height:1080px;background:color-mix(in srgb,var(--b700) 42%,transparent);pointer-events:none}
 
 .vorhang57{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
 .vorhang57 .gross{font:800 96px/108px Inter;letter-spacing:-.03em;text-align:center}
@@ -207,7 +207,7 @@
         <span class="hand" id="h4c">Sicherheit</span></div>
     </div>
     <div class="seite l" id="b2">
-      <div class="a" id="mond5" style="width:210px">{{mond}}</div>
+      <div class="a" id="mond5" style="width:210px">{{mond-gelb}}</div>
       <div class="a uhr57" id="uhr5" style="width:270px">{{uhr}}
         <svg class="zg" viewBox="0 0 160 160"><path class="zeichnen" id="bogen5" pathLength="1" d="M80 20a56 56 0 1 1-48.5 84" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/>
           <path class="std" d="M80 76V54" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><path class="min" d="M80 76V44" stroke="var(--b600)" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="76" r="5" fill="var(--b700)"/></svg></div>
@@ -216,7 +216,7 @@
     <!-- Blatt 3: abends? Nein – Arbeitszeit -->
     <div class="seite r" id="f3"><div class="nr">Nr. 3</div>
       <div class="a" id="sofa5" style="width:250px">{{sofa}}</div>
-      <svg class="a kritzel" id="kritzel5" viewBox="0 0 440 200" style="width:420px">
+      <svg class="a kritzel" id="kritzel5" viewBox="0 0 440 200" style="width:420px" data-frei>
         <path class="zeichnen" pathLength="1" d="M6 30c14-14 22 10 34-4s20 8 32-6 18 12 32-2 22 8 34-6 18 10 30-4 22 10 36-4 18 8 32-4 20 10 34-2"/>
         <path class="zeichnen" pathLength="1" d="M6 98c12-12 20 8 32-4s22 10 34-4 16 8 30-4 24 10 36-2 18 8 30-6 20 10 34-2"/>
         <path class="zeichnen" pathLength="1" d="M6 166c14-12 22 10 34-2s18 8 32-6 20 10 34-2"/>
@@ -388,7 +388,8 @@ const aufschlag = (id, t, basis, h = 220, snd = 'plopp') => {
 const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
 // Kopfzeile (Text im Bild), Wörter aus der Maske
 function kopf(i, zeiten, hell = []) {
-  akteur('kopf' + i, { x: 460, y: 108 }, true);
+  akteur('kopf' + i, { x: 460, y: 108, o: 0 }, true);
+  set('kopf' + i, Math.min(...zeiten) - .05, { o: 1 });
   titelEin('tb' + i, 0, zeiten);
   const w = document.querySelectorAll(`#tb${i} .w`); hell.forEach(k => w[k].classList.add('hell'));
 }
@@ -495,9 +496,9 @@ function KRATZ(t, id) { if (id !== 'kwame') return 0; let r = 0; for (const a of
 /* ================= 1 · Das Heft kommt auf den Tisch ================= */
 kopf(1, [W('Offiziell', 4) - .1, W('Ausbildungsnachweis', 4) - .25, W('Ausbildungsnachweis', 4) - .05], [2]);
 // die anderen Azubis reden: Sprechblasen auf dem Tisch
-pop('sb1a', W('Azubis', 1) - .1, { x: 760, y: 560 });
-pop('sb1b', W('reden', 1) - .1, { x: 1160, y: 520 }, null);
-pop('sb1c', W('immer', 1) - .05, { x: 960, y: 690 }, 'pop');
+pop('sb1a', W('Sabine', 1) + .1, { x: 760, y: 560 });
+pop('sb1b', W('Azubis', 1) - .1, { x: 1160, y: 520 }, null);
+pop('sb1c', W('reden', 1) - .05, { x: 960, y: 690 }, 'pop');
 schweben(['sb1a', 'sb1b', 'sb1c'], 3);
 // … vom Berichtsheft: das Heft rutscht von unten herein und schiebt die Blasen weg
 const T_HEFT = W('Berichtsheft', 1) - .2;
@@ -779,6 +780,8 @@ pop('tuer6', W('Prüfung', 26) - .15, { x: 245, y: 640 });
   pop('nein6', W('fehlen', 26), { x: 300, y: 690 }); wackeln('tuer6', W('fehlen', 26) + .1, 4, 3);
   cue(t, 'plopp'); akzent(t, .035); }
 
+kopfAus(6, SE(26) + .2);
+
 /* ================= 7 · Jede Woche, unterschreiben lassen ================= */
 const T7 = SE(26) + .3;
 aus(['gedanke6', 'gp6a', 'gp6b', 'tuer6', 'nein6'], T7, .35);
@@ -819,10 +822,12 @@ akteur('ok7', { x: 470, y: 470, s: 0 });
   // Heft fliegt im Bogen zur Tür und wird klein
   tw('heft', tg + .2, .9, { x: TX7 - 80, y: TY - 70, s: .3 }, 'inout', { bogen: 120 }); cue(tg + .2, 'whoosh');
   tw('heft', tg + 1.0, .25, { o: 0, s: .15 }, 'in');
-  cue(tg + 1.1, 'erfolg'); akzent(tg + 1.1, .04); bump('tuer', tg + 1.15, 1.05); }
+  cue(tg + 1.1, 'erfolg'); akzent(tg + 1.1, .04); bump('tuer', tg + 1.15, 1.05);
+  set('ok2', tg + 1.1, { x: TX7, y: TY - 300, s: 0, o: 1, r: 0 }); tw('ok2', tg + 1.15, .5, { s: 1.5 }, 'back');
+  }
 
 /* ---------- Abspann ---------- */
-const AB = ENDE_SPRACHE + 2.4;
+const AB = ENDE_SPRACHE + 2.2;
 HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
 cue(AB, 'whoosh');
 akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');

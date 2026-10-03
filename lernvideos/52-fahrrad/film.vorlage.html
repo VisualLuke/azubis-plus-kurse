@@ -28,7 +28,7 @@
 .band.rad{top:830px;height:70px;background:var(--b200)}
 .band.geh{top:900px;height:90px;background:var(--n200);background-image:repeating-linear-gradient(90deg,transparent 0 86px,var(--n300) 86px 90px)}
 .band.wiese{top:990px;height:300px;background:var(--b100)}
-#nacht{position:absolute;left:-400px;top:-300px;height:1700px;background:linear-gradient(170deg,var(--b600),var(--b700));opacity:0}
+#nacht{position:absolute;left:-400px;top:-300px;height:1700px;background:linear-gradient(170deg,var(--b700),var(--ink));opacity:0}
 .buehne.rahmen{width:1920px;height:1080px;background:none;border-radius:0}
 
 /* Bausteine */
@@ -36,6 +36,8 @@
   background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.12)}
 .chip svg{width:34px;height:34px;flex:none}
 .chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gross{font-size:34px;line-height:40px;padding:14px 30px 14px 18px}
+.chip.gross svg{width:44px;height:44px}
 .welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
 .welle.gruen{border-color:var(--success)} .welle.gelb{border-color:var(--warning)} .welle.rot{border-color:var(--error)} .welle.weiss{border-color:var(--surface)}
 .plakette{width:84px;height:84px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
@@ -92,7 +94,7 @@
 .fahrer .kopf{position:absolute;left:66px;top:28px;width:120px;height:120px}
 .fahrer .kopf .portrait{position:absolute;inset:0;border-width:6px}
 .fahrer .helm{position:absolute;left:26px;top:-8px;width:68px}
-.fahrer .akkul{position:absolute;left:186px;top:110px;width:48px}
+.fahrer .akkul{position:absolute;left:183px;top:103px;width:58px}
 
 /* 1 · Gesetzbuch */
 .gbuch{width:540px;height:340px}
@@ -108,9 +110,9 @@
   background:linear-gradient(155deg,var(--b500),var(--b700));display:flex;align-items:center;justify-content:center;
   font:800 130px/1 Inter;color:var(--b200);box-shadow:0 12px 30px rgba(22,19,37,.18)}
 /* 2 · Akku */
-.akku{display:flex;align-items:center;gap:14px;padding:12px 24px 12px 16px;border-radius:999px;background:var(--surface);
-  font:800 28px/34px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 8px 24px rgba(22,19,37,.25)}
-.batt{position:relative;width:74px;height:38px;border:5px solid var(--ink);border-radius:10px;padding:3px;display:flex;gap:3px}
+.akku{display:flex;align-items:center;gap:16px;padding:14px 30px 14px 20px;border-radius:999px;background:var(--surface);
+  font:800 36px/42px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 8px 24px rgba(22,19,37,.25)}
+.batt{position:relative;width:86px;height:44px;border:5px solid var(--ink);border-radius:10px;padding:3px;display:flex;gap:3px}
 .batt::after{content:'';position:absolute;right:-12px;top:8px;width:7px;height:12px;border-radius:0 4px 4px 0;background:var(--ink)}
 .batt i{flex:1;border-radius:3px;background:var(--success)}
 /* 3 · Handy */
@@ -181,7 +183,7 @@
   <svg class="a" id="kegel" viewBox="0 0 380 210" style="width:380px;height:210px;transform-origin:0 10px">
     <defs><linearGradient id="kegelG" x2="1"><stop offset="0" stop-color="var(--surface)" stop-opacity=".8"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></linearGradient></defs>
     <path d="M0 4L380 112V206L0 16Z" fill="url(#kegelG)"/></svg>
-  <div class="a" id="auto6" style="width:260px">{{auto}}</div>
+  <div class="a" id="auto6" style="width:380px">{{auto}}</div>
   <div class="a" id="warn6" style="width:110px">{{warndreieck}}</div>
   <div class="a fahrer" id="rk"><div class="kopf" id="kopfK"><div class="portrait" id="pk" data-f="kwame"></div></div></div>
   <div class="a fahrer" id="ry"><div class="kopf" id="kopfY"><div class="portrait" id="py" data-f="yusuf"></div><div class="helm" id="helmY"></div></div>
@@ -256,8 +258,9 @@ const klasse = (id, k, t, an = true) => HOOKS.push(tt => el(id).classList.toggle
 /* ---------- Strecke: Stationen, Kamera fährt mit ---------- */
 const CAM = [0, 2000, 4000, 6000, 8800, 10800, 12800, 15400];
 const WB = 19000;
-const BODEN = { fern: 745, nah: 815, rad: 878, geh: 962 };
-const yRad = (b, s = 1) => BODEN[b] - 135 * s;            // Mittelpunkt des Fahrer-Containers
+const BODEN = { fern: 718, nah: 815, rad: 878, geh: 962 };
+const SY = 1.15;                                         // Größe von Yusufs Rad
+const yRad = (b, s = SY) => BODEN[b] - 135 * s;            // Mittelpunkt des Fahrer-Containers
 const camX = t => -wert(kamera, 'x', t);
 const PANS = [], AKZENTE = [];
 const akzent = (t, z = .035) => AKZENTE.push([t, z]);
@@ -295,7 +298,7 @@ CAM.forEach((c, k) => { neu(`<div class="a buehne rahmen" id="rahmen${k}"></div>
     <circle cx="0" cy="-150" r="62" fill="var(--b200)"/><circle cx="-34" cy="-118" r="40" fill="var(--b200)"/><circle cx="36" cy="-122" r="42" fill="var(--b200)"/>
     <path d="M-30 -178q14-20 40-18" stroke="var(--b100)" stroke-width="10" stroke-linecap="round" fill="none"/></g>`;
   const LAMPEN = [], BAEUME = [];
-  CAM.forEach((c, k) => { LAMPEN.push(c + 170, c - 640); BAEUME.push([c + 390, .8], [c - 260, 1], [c - 1050, .9]); });
+  CAM.forEach((c, k) => { LAMPEN.push(c + 170, c - 820); BAEUME.push([c + 390, .8], [c - 260, 1], [c - 1050, .9]); });
   const laterne = x => `<g transform="translate(${x} 692)"><rect x="-6" y="-300" width="12" height="300" rx="5" fill="var(--n400)"/>
     <path d="M0 -296q0-24 34-24h20" stroke="var(--n400)" stroke-width="10" fill="none" stroke-linecap="round"/>
     <path d="M34 -326h44l-8 18h-28Z" fill="var(--b700)"/></g>`;
@@ -485,7 +488,7 @@ function station(k, { c, v, u, titel, boden = 'rad' }) {
 
 /* ================= Ablauf ================= */
 const Y = 'ry';
-rad(Y, { x: -420, y: yRad('rad') }, { vorne: true, kurbel: 'kurbelY' });
+rad(Y, { x: -420, y: yRad('rad'), s: SY }, { vorne: true, kurbel: 'kurbelY' });
 akteur('kurbelY', { x: 0 });
 akteur('kopfY', { x: -230, y: 70, s: 0 }, true);
 akteur('helmY', { o: 0 }, true);
@@ -569,7 +572,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   tw('helmY', tH, .15, { o: 1 }); flug('helmY', tH, .5, 0, 0, 120, { s: 1 }); cue(tH, 'whoosh');
   landen('helmY', tH + .5); cue(tH + .5, 'plopp');
   // schützt: ein Stoß prallt am Helm ab, der Schutzring pulsiert
-  const tS = W('schützt', 7) - .1, KX = 536, KY = 620;
+  const tS = W('schützt', 7) - .1, KX = 532, KY = 622;
   akteur('stoss1', { x: X + KX + 320, y: KY - 90, o: 0 });
   tw('stoss1', tS, .1, { o: 1 }); tw('stoss1', tS, .25, { x: X + KX + 110, y: KY - 40 }, 'in');
   tw('stoss1', tS + .25, .45, { x: X + KX + 300, y: KY - 140, r: -20 }, 'out'); tw('stoss1', tS + .45, .3, { o: 0 });
@@ -611,9 +614,9 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
     ['pa', 'pb'].forEach(n => el(`${Y}-${n}r`).setAttribute('opacity', v.toFixed(2))); });
   // Auch Lampen mit Akku: eine Akku-Lampe steckt am Lenker ein, der Ladebalken füllt sich – mit Prüfzeichen
   neu(`<div class="a akku" id="akku2"><span class="batt"><i></i><i></i><i></i><i></i></span>Akku</div>
-    <div class="a chip" id="pruef2">${tpl('svgPruef')}Prüfzeichen</div>
+    <div class="a chip gross" id="pruef2">${tpl('svgPruef')}Prüfzeichen</div>
     <div class="a plakette gruen" id="ok2">${tpl('svgHakenW')}</div>
-    <div class="a" id="zettel2" style="width:150px">{{strafzettel}}</div>`);
+    <div class="a" id="zettel2" style="width:200px">{{strafzettel}}</div>`);
   const tAk = W('Akku', 12) - .4;
   akteur('akkuY', { x: 260, y: -260, o: 0, s: 1.3 }, true);
   tw('akkuY', tAk, .15, { o: 1 }); flug('akkuY', tAk, .5, 0, 0, 60, { s: 1 }); cue(tAk, 'whoosh');
@@ -648,9 +651,10 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   const tStop = W('halt', 18) - .1;
   const camEnde = rollen(W('Fahren', 16) - .3, tStop, 110, .7, .7);
   CAM[3.5] = camEnde;
+  aus(['sch3', 'anz3'], W('Fahren', 16) + .3, .4);           // Schranke bleibt zurück (sonst läuft sie durchs Handy)
   HOOKS.push(t => { const v = t > W('Fahren', 16) && t < tStop ? 1 : 0; if (v) el(Y).style.transform += ` translateY(${(1.5 * Math.sin(t * 9)).toFixed(1)}px)`; });
   // das Handy in der Hand vibriert
-  const HX = 690, HY = 600;
+  const HX = 705, HY = 590;
   const tHa = W('Handy', 16) - .15;
   ein('handy3', tHa, { x: HX, y: HY }, { y: 40 }, 'pop');
   const VIB = [W('Handy', 16) + .1, W('kurz', 16) - .1, W('schreiben', 17), W('telefonieren', 17)];
@@ -697,10 +701,10 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   neu(`<div class="a glanz" id="gl4f" style="width:1900px;height:140px" data-frei></div>
     <div class="a glanz" id="gl4r" style="width:1900px;height:70px" data-frei></div>
     <div class="a glanz rot" id="gl4g" style="width:1900px;height:90px" data-frei></div>
-    <div class="a glanz" id="gl4z" style="width:640px;height:90px;border-radius:18px" data-frei></div>
+    <div class="a glanz" id="gl4z" style="width:700px;height:90px;border-radius:18px" data-frei></div>
     <svg class="a" id="spuren4" viewBox="0 0 700 90" style="width:700px;height:90px" data-frei></svg>
-    <div class="a" id="zs4" style="width:170px;height:330px" data-frei><div style="position:absolute;left:79px;top:60px;width:12px;height:270px;border-radius:5px;background:linear-gradient(90deg,var(--n300),var(--n400))"></div>
-      <div id="zsp4" style="position:absolute;left:0;top:0;width:170px;transform-origin:50% 30%">{{zusatzschild}}</div></div>
+    <div class="a" id="zs4" style="width:260px;height:330px" data-frei><div style="position:absolute;left:123px;top:90px;width:14px;height:240px;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))"></div>
+      <div id="zsp4" style="position:absolute;left:0;top:0;width:260px;transform-origin:50% 30%">{{zusatzschild}}</div></div>
     <div class="a plakette rot" id="x4">${tpl('svgXW')}</div>`);
   [['gl4f', 760], ['gl4r', 865], ['gl4g', 945]].forEach(([id, y]) => akteur(id, { x: X + 960, y, o: 0 }));
   // Fußspuren auf dem Gehweg
@@ -710,7 +714,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   // Du fährst auf der Straße – oder auf dem Radweg
   const tSt = W('Straße', 22) - .3;
   spur(tSt, 'nah', 600); cue(tSt, 'whoosh');
-  tw('gl4f', tSt + .25, .3, { o: .35 }); tw('gl4f', tSt + 1.1, .4, { o: 0 }); cue(tSt + .3, 'ding');
+  tw('gl4f', tSt + .25, .3, { o: .25 }); tw('gl4f', tSt + 1.1, .4, { o: 0 }); cue(tSt + .3, 'ding');
   const tRw = W('Radweg', 22) - .3;
   spur(tRw, 'rad', 620); cue(tRw, 'whoosh');
   tw('gl4r', tRw + .25, .3, { o: .45 }); tw('gl4r', tRw + 1.1, .4, { o: 0 }); cue(tRw + .3, 'ding'); akzent(tRw + .3, .03);
@@ -727,12 +731,12 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   aus('x4', WE('Gehweg', 22) + .2, .3);
   // Auf dem Gehweg nur mit Schild: „Radverkehr frei“ klappt herunter – im Schritttempo auf den Gehweg
   const tSch = W('Schild', 23) - .5;
-  akteur('zs4', { x: X + 1000, y: 985 - 165, o: 0, sy: 0 }); AKTEURE.get(el('zs4')).el.style.transformOrigin = '50% 100%';
+  akteur('zs4', { x: X + 1150, y: 985 - 165, o: 0, sy: 0 }); AKTEURE.get(el('zs4')).el.style.transformOrigin = '50% 100%';
   set('zs4', tSch, { o: 1 }); tw('zs4', tSch, .45, { sy: 1 }, 'back'); cue(tSch, 'pop');
   akteur('zsp4', { sy: 0 }, true); tw('zsp4', tSch + .35, .45, { sy: 1 }, 'back'); cue(tSch + .4, 'klick');
   bump('zsp4', W('Radfahren', 23), 1.08);
   const tEr = W('erlaubt', 23) - .1;
-  akteur('gl4z', { x: X + 900, y: 945, o: 0 }); tw('gl4z', tEr, .3, { o: .35 }); cue(tEr, 'erfolg'); akzent(tEr, .035);
+  akteur('gl4z', { x: X + 960, y: 945, o: 0 }); tw('gl4z', tEr, .3, { o: .35 }); cue(tEr, 'erfolg'); akzent(tEr, .035);
   spur(tEr, 'geh', 620, .6);
   tw(Y, tEr + .6, SE(23) + .2 - tEr - .6, { x: 760 }, 'sinus');
 }
@@ -742,8 +746,9 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   const tAb = SE(23) + .2, tAn = A(satz(24).start) - .15;
   reise(tAb, tAn - tAb, CAM[5]); spur(tAb + .1, 'rad', 560, tAn - tAb - .1); bremsen(Y, tAn - .1);
   const { X, tF } = station(5, { c: 24, v: 25, u: 'mythos', titel: 'MYTHOS – nur mit blauem Schild' });
-  neu(`<div class="a" id="schild5" style="width:240px;transform-origin:50% 95%" data-frei>{{schild-radweg}}</div>
-    <div class="a chip brand" id="pflicht5">Pflicht</div>
+  neu(`<div class="a" id="schild5" style="width:240px;height:420px;transform-origin:50% 100%" data-frei><div style="position:absolute;left:113px;top:165px;width:14px;height:255px;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))"></div>
+      <div style="position:absolute;left:0;top:0;width:240px">{{schild-radweg}}</div></div>
+    <div class="a chip brand gross" id="pflicht5">Pflicht</div>
     <svg class="a" id="pfeile5" viewBox="0 0 560 200" style="width:560px;height:200px" data-frei>
       <g id="pz5" stroke="var(--b500)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pz5p" pathLength="1" d="M10 150H500"/><path id="pz5k" d="M478 124l30 26-30 26"/></g>
       <g id="pa5" stroke="var(--surface)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pa5p" pathLength="1" d="M10 150H500"/><path id="pa5k" d="M478 124l30 26-30 26"/></g>
@@ -755,7 +760,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   akteur('gl5f', { x: X + 960, y: 760, o: 0 });
   // blaues, rundes Schild: es wächst aus dem Boden am Wegrand
   const tB = W('blaues', 26) - .15;
-  akteur('schild5', { x: X + 850, y: 985 - 108, o: 0, sy: 0 });
+  akteur('schild5', { x: X + 800, y: 985 - 210, o: 0, sy: 0 });
   set('schild5', tB, { o: 1 }); tw('schild5', tB, .7, { sy: 1 }, 'back'); cue(tB, 'pop');
   bump('schild5', W('Schild', 26) - .05, 1.08); akzent(W('Schild', 26), .035);
   // mit Fahrrad: ein Pfeil zeigt – du musst auf dem Radweg bleiben; Chip „Pflicht“
@@ -767,7 +772,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   const tP = W('Fahrrad', 26) - .2, tSo = W('Sonst', 27) - .25;
   HOOKS.push(t => { el('pz5').setAttribute('opacity', t > tP && t < tSo ? 1 : 0); });
   zeichne('pz5', tP); cue(tP, 'scan');
-  pop('pflicht5', tP + .3, { x: X + 850, y: 690 }, 'plopp'); akzent(tP + .3, .03);
+  pop('pflicht5', tP + .3, { x: X + 640, y: 470 }, 'plopp'); akzent(tP + .3, .03);
   wackeln('schild5', W('steht', 26), 2, 2);
   // Sonst: das Schild kippt weg, zwei Pfeile – beide grün, Yusuf nimmt die Straße
   tw('schild5', tSo, .5, { r: 80, o: 0 }, 'in'); cue(tSo, 'whoosh'); aus('pflicht5', tSo, .3);
@@ -779,7 +784,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   cue(tD, 'ding'); cue(tD + .12, 'ding'); akzent(tD, .03);
   const tSt = W('Straße', 27) - .25;
   spur(tSt, 'nah', 760, .9); cue(tSt, 'whoosh');
-  tw('gl5f', tSt + .3, .3, { o: .3 }); tw('gl5f', tSt + 1.3, .4, { o: 0 });
+  tw('gl5f', tSt + .3, .3, { o: .22 }); tw('gl5f', tSt + 1.3, .4, { o: 0 });
   HOOKS.push(t => { ['pa5', 'pb5'].forEach(g => el(g).style.opacity = t > tSt + .5 ? (1 - clamp((t - tSt - .5) / .4)).toFixed(2) : ''); });
   pop('ok5', tSt + .9, { x: X + 780, y: 470 }, 'erfolg');
 }
@@ -790,10 +795,10 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   reise(tAb, tAn - tAb, CAM[6]); tw(Y, tAb, tAn - tAb, { x: 600 }, 'inout'); bremsen(Y, tAn - .1);
   const { X, tF } = station(6, { c: 28, v: 29, u: 'stimmt', titel: 'STIMMT – wenn niemand behindert wird', boden: 'nah' });
   // Zu zweit: Kwame kommt auf der äußeren Spur dazu
-  const SK = .92;
+  const SK = 1;
   rad('rk', { x: -300, y: yRad('fern', SK), s: SK }, { vorne: true, farbe: 'var(--b300)' });
   const tKw = W('zweit', 28) - .4;
-  tw('rk', tKw, 1.1, { x: 630 }, 'out'); cue(tKw, 'whoosh'); bremsen('rk', tKw + .95);
+  tw('rk', tKw, 1.1, { x: 700 }, 'out'); cue(tKw, 'whoosh'); bremsen('rk', tKw + .95);
   klingel('rk', tKw + 1.1, 'wkK'); froh('pk', tKw + 1.1);
   // Die Schranke ist offen: beide fahren langsam weiter, die Klingeln klingeln im Takt
   const t0 = tF + .5, tEnde = SE(31) + .2;
@@ -803,21 +808,21 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   klingel(Y, tKl, 'wkY'); klingel('rk', tKl + .32, 'wkK'); klingel(Y, tKl + .64, null); klingel('rk', tKl + .96, null);
   froh('py', tKl);
   // behindert: von hinten kommt ein Auto und muss bremsen, Warn-Dreieck
-  const CY = 745 - 71 * .92, tC = W('niemanden', 30) - .4, CX = 290;
-  akteur('auto6', { x: -300, y: CY, s: .92 });
+  const CY = BODEN.fern - 44 * 380 / 160, tC = W('niemanden', 30) - .4, CX = 390;
+  akteur('auto6', { x: -400, y: CY });
   tw('auto6', tC, 1, { x: CX }, 'out'); cue(tC, 'whoosh');
   tw('auto6', tC + .85, .1, { r: 2 }, 'sinus'); tw('auto6', tC + .95, .35, { r: 0 }, 'sanft');
   const tW = W('behindert', 30);
-  pop('warn6', tW, { x: CX, y: CY - 145 }, 'plopp'); wackeln('warn6', tW + .5, 4, 3); akzent(tW, .045);
+  pop('warn6', tW, { x: CX - 20, y: CY - 150 }, 'plopp'); wackeln('warn6', tW + .5, 4, 3); akzent(tW, .045);
   froh('pk', tW, false); froh('py', tW, false);
   // hintereinander: Kwame lässt sich zurückfallen und reiht sich hinter Yusuf ein, das Auto überholt mit Abstand
   const tH = W('Sonst', 31);
   tw(Y, tH, 1.1, { x: 820 }, 'inout');
-  tw('rk', tH, 1.3, { x: 480, y: yRad('nah', SK), s: SK }, 'inout'); cue(tH, 'whoosh');
+  tw('rk', tH, 1.3, { x: 440, y: yRad('nah', SK), s: SK }, 'inout'); cue(tH, 'whoosh');
   tw('auto6', tH, .4, { x: CX - 60 }, 'out');
   const tU = W('hintereinander', 31) + .45;
   aus('warn6', tU - .2, .3);
-  tw('auto6', tU, 1.4, { x: 2250 }, 'in'); cue(tU + .2, 'whoosh');
+  tw('auto6', tU, 1.4, { x: 2350 }, 'in'); cue(tU + .2, 'whoosh');
   froh('pk', tU + .3); froh('py', tU + .4);
   neu(`<div class="a plakette gruen" id="ok6">${tpl('svgHakenW')}</div>`, VORNE);
   pop('ok6', tU + .9, { x: 330, y: 420 }, 'erfolg'); akzent(tU + .9, .035);
@@ -853,17 +858,17 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   // zwei Fahrradständer auf dem Gehweg, rechts steht ein Rad – nur das Vorderrad ist abgeschlossen
   const G = 975, SA = 760, SB = 1240, SYs = G - 82;
   ein('stand7a', tT, { x: X + SA, y: SYs }, { y: 60 }); ein('stand7b', tT + .1, { x: X + SB, y: SYs }, { y: 60 });
-  rad('r7b', { x: X + SB - 15, y: G - 135, s: 1 }, { ohneVR: true, staender: true, farbe: 'var(--b400)' });
-  ein('r7b', tT + .15, { x: X + SB - 15, y: G - 135 }, { y: 60 });
+  rad('r7b', { x: X + SB - 15, y: G - 135 * SY, s: SY }, { ohneVR: true, staender: true, farbe: 'var(--b400)' });
+  ein('r7b', tT + .15, { x: X + SB - 15, y: G - 135 * SY, s: SY }, { y: 60 });
   const [vx, vy] = radPunkt('r7b', 182, 110, tT + 2);
   el('vr7b').innerHTML = `<circle cx="40" cy="40" r="34" fill="none" stroke="var(--ink)" stroke-width="8"/><circle cx="40" cy="40" r="27" fill="none" stroke="var(--n300)" stroke-width="2"/>
     <path d="M14 40H66M40 14V66M21.6 21.6L58.4 58.4M58.4 21.6L21.6 58.4" stroke="var(--n300)" stroke-width="1.6"/><circle cx="40" cy="40" r="5.5" fill="var(--n300)"/>`;
-  ein('vr7b', tT + .15, { x: vx, y: vy, s: 1.25 * 80 / 85 }, { y: 60 });
+  ein('vr7b', tT + .15, { x: vx, y: vy, s: 1.25 * SY * 80 / 85 }, { y: 60 });
   ein('kleinschloss7', tT + .25, { x: vx + 4, y: vy - 30 }, { y: 60 });
   // Schließ dein Rad: Yusuf steigt ab und schiebt das Rad an den Ständer
   const tR = W('Schließ', 32) - .35;
   tw('kopfY', tR, .5, { x: -150, y: 80 }, 'inout', { bogen: 60 }); cue(tR, 'pop');
-  tw(Y, tR + .4, .9, { x: SA - 15, y: G - 135 }, 'inout'); cue(tR + .4, 'whoosh');
+  tw(Y, tR + .4, .9, { x: SA - 15, y: G - 135 * SY }, 'inout'); cue(tR + .4, 'whoosh');
   tw(`${Y}-st`, tR + 1.2, .35, { r: 13 }, 'back'); cue(tR + 1.3, 'klick');
   // Rahmen: das Bügelschloss legt sich um Rahmen und Ständer und schnappt zu, der Schlüssel dreht sich
   const tRa = W('Rahmen', 32) - .3, [bx, by] = radPunkt(Y, 128, 96, tR + 2);
@@ -880,7 +885,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   bump('stand7b', W('Fahrradständer', 32) + .12, 1.06);
   // Nimm ein gutes Schloss: das rechte Rad hebt ab und schwebt weg – nur das Vorderrad bleibt, rotes ✕
   const tN = W('Nimm', 33) - .25;
-  tw('r7b', tN, .3, { y: G - 165 }, 'out'); tw('r7b', tN + .3, 1.1, { x: X + SB + 360, y: G - 520, o: 0, r: 3 }, 'in'); cue(tN, 'whoosh');
+  tw('r7b', tN, .3, { y: G - 135 * SY - 30 }, 'out'); tw('r7b', tN + .3, 1.1, { x: X + SB + 360, y: G - 520, o: 0, r: 3 }, 'in'); cue(tN, 'whoosh');
   pop('x7', W('gutes', 33) - .05, { x: X + SB, y: SYs - 165 }, 'plopp'); wackeln('x7', W('gutes', 33) + .4, 3, 4);
   froh('py', W('gutes', 33), false);
   const tS = W('Schloss', 33) - .1;

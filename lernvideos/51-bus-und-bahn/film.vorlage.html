@@ -44,7 +44,9 @@
   font:800 40px/1 Inter;color:var(--b700);white-space:nowrap;letter-spacing:-.01em}
 .hpill .hk{width:64px;height:64px;border-radius:999px;background:var(--warning);border:5px solid var(--warning-bg);font:800 34px/54px Inter;color:var(--b700);text-align:center;flex:none}
 .hpill.rot{color:var(--error-text)} .hpill.gruen{color:var(--success-text)}
+.tafel{position:absolute;left:-900px;top:-32px;width:1800px;text-align:center}
 .tafel .titel{font:700 54px/64px Inter;letter-spacing:-.02em;white-space:nowrap}
+#schallC svg{transform:scaleX(-1)}
 .titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)} .titel .w.hell .wi{color:var(--b500)}
 
 /* Bausteine */
@@ -363,16 +365,16 @@
       <path id="rDe" pathLength="1" d="M104 22L104 58L122 92L112 146" stroke="var(--info)"/></g></svg></div>
   <div class="a monat" id="monatD" data-gruppe="kD"><div class="kopf4"></div><div class="tage" id="tageD"></div>
     <svg class="torte" viewBox="0 0 58 58"><circle cx="29" cy="29" r="26" fill="var(--b100)"/><path id="torteD" fill="var(--success)"/></svg><div class="job" id="jobD"></div></div>
-  <div class="a swatch" id="swDa" style="background:var(--b700)"></div><div class="a" id="lgDa" style="width:130px">{{bus}}</div>
-  <div class="a swatch" id="swDb" style="background:var(--b400)"></div><div class="a" id="lgDb" style="width:130px">{{strassenbahn}}</div>
-  <div class="a swatch" id="swDc" style="background:var(--warning)"></div><div class="a" id="lgDc" style="width:130px">{{regionalzug}}</div>
-  <div class="a swatch" id="swDd" style="background:var(--n300)"></div><div class="a" id="lgDd" style="width:130px">{{fernzug}}</div>
-  <div class="a" id="betrD" style="width:230px">{{betrieb}}</div>
+  <div class="a swatch" id="swDa" style="background:var(--b700)"></div><div class="a" id="lgDa" style="width:150px">{{bus}}</div>
+  <div class="a swatch" id="swDb" style="background:var(--b400)"></div><div class="a" id="lgDb" style="width:150px">{{strassenbahn}}</div>
+  <div class="a swatch" id="swDc" style="background:var(--warning)"></div><div class="a" id="lgDc" style="width:150px">{{regionalzug}}</div>
+  <div class="a swatch" id="swDd" style="background:var(--n300)"></div><div class="a" id="lgDd" style="width:150px">{{fernzug}}</div>
+  <div class="a" id="betrD" style="width:300px">{{betrieb}}</div>
   <div class="a frage" id="frageD" data-frei>?</div>
   <div class="a" id="muenzeD" style="width:76px" data-frei>{{muenze}}</div>
-  <div class="a papier" id="papierD"><div class="stub"></div><div class="perf"></div><i class="zl" style="top:26px;width:120px"></i><i class="zl" style="top:46px;width:60px"></i>
+  <div class="a papier" id="papierD" data-gruppe="ent"><div class="stub"></div><div class="perf"></div><i class="zl" style="top:26px;width:120px"></i><i class="zl" style="top:46px;width:60px"></i>
     <div class="feld"></div><div class="datum" id="datumD">12.10.<br>06:58</div></div>
-  <div class="a entwerter" id="entwD"><div class="saeule"></div><div class="geh"></div><div class="anz"><i id="entwDa"></i></div><div class="schl"></div>
+  <div class="a entwerter" id="entwD" data-gruppe="ent"><div class="saeule"></div><div class="geh"></div><div class="anz"><i id="entwDa"></i></div><div class="schl"></div>
     <svg class="pf" viewBox="0 0 44 44"><path d="M36 22H10M20 12L10 22l10 10" stroke="var(--warning)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
   <svg class="a stoss" id="stossD" viewBox="0 0 120 60" data-frei><path d="M20 50L6 30M60 44V14M100 50l14-20" stroke="var(--b500)" stroke-width="7" stroke-linecap="round"/></svg>
 
@@ -385,8 +387,8 @@
     <div class="zeile"><span class="ic"></span><b>07:08</b></div></div></div></div>
   <div class="a" id="weckZ" style="width:140px;height:140px"><div style="position:absolute;inset:0">{{wecker-leer}}</div>
     <svg viewBox="0 0 160 160" style="position:absolute;inset:0"><path id="weckZh" d="M80 88V68" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" style="transform-origin:80px 88px"/><path id="weckZm" d="M80 88V60" stroke="var(--b700)" stroke-width="4.5" stroke-linecap="round" style="transform-origin:80px 88px"/><circle cx="80" cy="88" r="4.5" fill="var(--b700)"/></svg></div>
-  <div class="a" id="betrZ" style="width:240px" data-gruppe="bZ">{{betrieb~z}}</div>
-  <div class="a uhr" id="uhrZ"></div>
+  <div class="a" id="betrZ" style="width:300px" data-gruppe="bZ">{{betrieb~z}}</div>
+  <div class="a uhr" id="uhrZ" style="width:150px;height:150px"></div>
   <div class="a portrait kwame" id="kwZ" style="width:150px;height:150px" data-gruppe="bZ"></div>
   <div class="a plakette gruen" id="okZ" data-frei></div>
 
@@ -521,6 +523,7 @@ HOOKS.push(t => {
 });
 
 /* ================= Liniennetz: Stationen, Linien, Kamerafahrten ================= */
+const ZS = 1.12;                                     // Zoom an den Stationen
 const ST = { H: [960, 540], A: [4900, 240], B: [5200, 1550], C: [5600, 2660], D: [7300, 2660], Z: [9000, 2660] };
 const LY = k => ST[k][1] - 410;                     // Höhe der Linie (Haltestellen-Schild) über der Station
 // Linien als Polygonzüge (45°-Knicke wie auf einem Liniennetzplan)
@@ -538,7 +541,7 @@ for (const [k, L] of Object.entries(LINIEN)) {
   L.len = s;
   for (const [g, cls] of [['mantel', 'm'], ['linien', 'l']]) {
     const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); p.setAttribute('pathLength', '1'); p.id = `pf${cls}${k}`;
-    if (cls === 'l') p.setAttribute('stroke', L.farbe);
+    if (cls === 'l') p.style.stroke = L.farbe;
     p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1; el(g).appendChild(p);
   }
   L.zeich = [[0, 0, 0]];                            // [t0, d, Länge] – gezeichnet bis
@@ -553,7 +556,8 @@ const laenge = (k, x, y) => { const L = LINIEN[k]; let best = 0, bd = 1e9; for (
 const glatt = (k, l, r = 140) => { let x = 0, y = 0, n = 0; for (let d = -r; d <= r; d += r / 4) { const p = punkt(k, l + d); x += p[0]; y += p[1]; n++; } return [x / n, y / n]; };
 const zeichnen = (k, t0, d, l) => LINIEN[k].zeich.push([t0, d, l]);
 const gezeichnet = (k, t) => { let v = 0; for (const [a, d, l] of LINIEN[k].zeich) if (t >= a) v = lerp(v, l, E.inout(clamp((t - a) / Math.max(d, 1e-4)))); return v; };
-HOOKS.push(t => { for (const [k, L] of Object.entries(LINIEN)) { const v = 1 - gezeichnet(k, t) / L.len; el('pfl' + k).style.strokeDashoffset = v; el('pfm' + k).style.strokeDashoffset = v; } });
+HOOKS.push(t => { for (const [k, L] of Object.entries(LINIEN)) { const g = gezeichnet(k, t), v = 1 - g / L.len, vis = g > 2 ? 'visible' : 'hidden';
+  for (const id of ['pfl' + k, 'pfm' + k]) { el(id).style.strokeDashoffset = v; el(id).style.visibility = vis; } } });
 
 // Kamera: Mittelpunkt (x, y) in der Welt und Zoom z; Fahrten folgen dem Zug auf der Linie
 const KAM = [];
@@ -563,7 +567,7 @@ const ZUG = [];
 function fahrt(k, t0, d, l0, l1, ziel, dip = .12) {
   KAM.push({ t0, d, k, l0, l1, ziel, dip }); ZUG.push({ k, t0, d, l0, l1 }); zeichnen(k, t0, d, l1); cue(t0, 'whoosh'); cue(t0 + d - .15, 'plopp');
 }
-const KAM0 = { x: 960, y: 540, z: 1 };
+const KAM0 = { x: 960, y: 540, z: ZS };
 function kamBei(t) {
   let s = { ...KAM0 };
   for (const g of KAM) {
@@ -613,19 +617,16 @@ function station(k, tPill, opt = {}) {
 }
 const stop = (lk, k) => laenge(lk, ST[k][0] - STW[k] / 2 - 50, LY(k));
 const P = (k, dx, dy) => ({ x: ST[k][0] + dx, y: ST[k][1] + dy });
-const tafel = (k, zeiten, t0) => { const w = el('tb' + k); w.style.transform = 'translate(-50%,-50%)'; titelEin('tb' + k, t0 ?? zeiten[0], zeiten); };
-// Tafel ist zentriert: der äußere Halter sitzt auf der Mitte, der Titelblock verschiebt sich um die halbe Breite
-document.querySelectorAll('.tafel').forEach(b => { b.style.position = 'absolute'; b.style.left = '0'; b.style.top = '0'; });
-HOOKS.push(() => document.querySelectorAll('.tafel').forEach(b => { b.style.transform = `translate(${-b.offsetWidth / 2}px,${-b.offsetHeight / 2}px) ` + b.style.transform.replace(/translate\(-?[\d.]+px, ?-?[\d.]+px\) ?/, ''); }));
+const tafel = (k, zeiten) => titelEin('tb' + k, zeiten[0], zeiten);
 
 /* ---------- H · Haltestelle: kurz vor sieben, kein Ticket, Automat kaputt ---------- */
 {
   station('H', null);
   const Q = (dx, dy) => P('H', dx, dy);
   zeichnen('H', 0, 0, 1);         // Startstück der Linie über dem Schild
-  ein('haus0', A(-.55), Q(-370, 35), { y: -40 }, 'whoosh');
-  ein('plan0', A(-.4), Q(-430, 45), { y: -30 });
-  ein('dfi0', A(-.35), Q(-360, -62), { y: -30 });
+  ein('haus0', A(-.55), Q(-360, 35), { y: -40 }, 'whoosh');
+  ein('plan0', A(-.4), Q(-420, 45), { y: -30 });
+  ein('dfi0', A(-.35), Q(-350, -62), { y: -30 });
   ein('mast0', A(-.45), Q(-120, 5), { y: -40 });
   rel('h0', {}, '50% 50%');
   uhrBau('uhr0', { minuten: 400 });                        // 6:40
@@ -791,10 +792,9 @@ function markeAuf(L, t) {
   HOOKS.push(t => { const d = clamp((t - tNa) / 1.1); el('sCzg').style.transform = `rotate(${(E.inout(d) * 120).toFixed(1)}deg)`; });
   // Denkpause: die Echtzeit-Anzeige zählt herunter (? → 3 → 2 → 1), die Lichter gehen aus, Lichtrahmen wandert A → B → C
   const c0 = SE(11) + .3, c1 = WE('Eins', 14) + .25;
-  kamZu(SE(11) + .1, 1, 2440, 560, .86);
+  kamZu(SE(11) + .1, 1, 2640, 560, .9);
   const ZIF = [[W('Drei', 12), '3'], [W('Zwei', 13), '2'], [W('Eins', 14), '1']];
   ZIF.forEach(([t]) => { cue(t, 'klick'); bump('dfiW', t, 1.06); });
-  el('dfiWz').parentElement.style.position = 'absolute';
   HOOKS.push(t => {
     let z = '?', seit = 9;
     for (const [tz, n] of ZIF) if (t >= tz) { z = n; seit = t - tz; }
@@ -815,7 +815,7 @@ function markeAuf(L, t) {
 /* ---------- A · Option A: zum Schild, ✕, die Linie entlang bis „Kontrolle“ ---------- */
 const P2 = WE('Eins', 14) + .3;
 {
-  const [x, y] = SCH.A, tMarke = WN(15, 1), tR = tMarke + .3, ziel = { x: ST.A[0], y: ST.A[1], z: 1 };
+  const [x, y] = SCH.A, tMarke = WN(15, 1), tR = tMarke + .3, ziel = { x: ST.A[0], y: ST.A[1], z: ZS };
   kamZu(P2, .7, x - 120, y + 60, 1.12);
   bump('sAb', tMarke - .25, 1.2); markeAuf('A', tMarke);
   station('A', tR + 1.0);
@@ -852,7 +852,7 @@ const P2 = WE('Eins', 14) + .3;
     tw(id, t0, .25, { s: 1 }, 'back'); flug(id, t0, .6, Z.x, Z.y, 90, { r });
     landen(id, t0 + .6); cue(t0 + .6, 'muenze');
   });
-  bump(['pmhA', 'pmvA'], tSe, 1.08); akzent(tSe, .055); wackeln('kwA', W('Euro', 16), 3, 2);
+  bump('pmhA', tSe, 1.08); bump('pmvA', tSe, 1.08); akzent(tSe, .055); wackeln('kwA', W('Euro', 16), 3, 2);
   tafel('A', [tK + .3, tK + .38, tK + .46, W('oft', 16), tSe, tSe + .08]);
   document.querySelectorAll('#tbA .w').forEach((w, k) => { if (k >= 3) w.classList.add('rot'); });
   textAus('tbA', SE(16) + .05);
@@ -860,7 +860,7 @@ const P2 = WE('Eins', 14) + .3;
 
 /* ---------- B · Option B: zurück zur Weiche, ✕, die Linie entlang bis „Zu spät“ ---------- */
 {
-  const tZ = SE(16) + .1, [x, y] = SCH.B, tMarke = WN(17, 1), tR = tMarke + .28, ziel = { x: ST.B[0], y: ST.B[1], z: 1 };
+  const tZ = SE(16) + .1, [x, y] = SCH.B, tMarke = WN(17, 1), tR = tMarke + .28, ziel = { x: ST.B[0], y: ST.B[1], z: ZS };
   kamZu(tZ, tMarke - tZ - .15, x - 120, y, 1.08, .3); cue(tZ, 'whoosh');
   bump('sBb', tMarke - .25, 1.2); markeAuf('B', tMarke);
   station('B', tR + .95);
@@ -895,13 +895,13 @@ const P2 = WE('Eins', 14) + .3;
   tw('zsBx', tSp, .45, { s: 1 }, 'back'); wackeln('zsBx', tSp + .4, 4, 8); cue(tSp, 'klick');
   wellen('wlB', [tSp + .05], Q(80 + 230, -125 - 115 + 41).x, Q(0, -199).y, 1);
   akzent(tSp, .05); wackeln('kwB', tSp + .1, 4, 3);
-  tafel('B', [tK + .3, tTi, tBe, tBe + .08, tFa]);
+  tafel('B', [tTi, tBe, tBe + .08, tFa]);
   textAus('tbB', SE(20) + .05);
 }
 
 /* ---------- C · Option C: zurück zur Weiche, ✓, die Linie entlang bis „Geschafft“ ---------- */
 {
-  const tZ = SE(20) + .1, [x, y] = SCH.C, tMarke = WN(21, 2), tR = tMarke + .25, ziel = { x: ST.C[0], y: ST.C[1], z: 1 };
+  const tZ = SE(20) + .1, [x, y] = SCH.C, tMarke = WN(21, 2), tR = tMarke + .25, ziel = { x: ST.C[0], y: ST.C[1], z: ZS };
   kamZu(tZ, tMarke - tZ - .15, x - 120, y - 40, 1.08, .3); cue(tZ, 'whoosh');
   bump('sCb', tMarke - .25, 1.2); markeAuf('C', tMarke);
   station('C', tR + .95);
@@ -967,29 +967,30 @@ const P2 = WE('Eins', 14) + .3;
   const bars = [...el('lautC').children];
   bars.forEach((b, k) => { akteur(b, {}, true); if (k >= 1) tw(b, tLe + (3 - k) * .1, .35, { sy: .18, o: .35 }, 'inout'); });
   cue(tLe, 'tipp'); nicken('kwC2', tLe + .2, 8);
-  tafel('C', [tK + .3, tTi, tTi + .08, W('vor', 34) > 0 ? tAp : tAp, tAp + .08, tAp + .16]);
+  tafel('C', [tK + .3, tTi, tAp, tAp + .08, tAp + .16]);
   document.querySelectorAll('#tbC .w').forEach(w => w.classList.add('gruen'));
   textAus('tbC', SE(26) + .1);
 }
 
 /* ---------- D · weiter auf Linie C: Monatsabo, ganz Deutschland, Jobticket, entwerten ---------- */
 {
-  const tR = SE(26) + .1, ziel = { x: ST.D[0], y: ST.D[1], z: 1 };
+  const tR = SE(26) + .1, ziel = { x: ST.D[0], y: ST.D[1], z: ZS };
   station('D', tR + .8);
-  fahrt('C', tR, 1.05, stop('C', 'C') + STW.C + 100, stop('C', 'D'), ziel, .12);
+  const l0 = stop('C', 'C') + STW.C + 100;
+  zeichnen('C', tR - .3, .3, l0);
+  fahrt('C', tR, 1.05, l0, stop('C', 'D'), ziel, .12);
   const Q = (dx, dy) => P('D', dx, dy);
   // „Du fährst jeden Tag?“: Woche Mo–Fr, eine Bahn hüpft von Tag zu Tag
   const tFa = W('fährst', 27), tJe = W('jeden', 27), tTg = W('Tag', 27);
   ein('wocheD', tR + .85, Q(0, 0), { y: 50 }, 'whoosh');
   const tage = [...document.querySelectorAll('#wocheD .tag i')];
-  akteur('wtramD', {});
   const TX = k => Q(-252 + k * 126, -18);
   WELT.insertAdjacentHTML('beforeend', `<div class="a" id="wtramD" style="width:96px" data-frei>${tpl('svgTramD')}</div>`);
   akteur('wtramD', { ...TX(0), y: TX(0).y - 70, s: 0 });
   tw('wtramD', tJe - .2, .3, { s: 1 }, 'back');
-  const tH = k => tJe - .1 + k * ((tTg + .45 - tJe) / 4);
+  const tH = k => tJe - .1 + k * ((tTg + .7 - tJe) / 4);
   for (let k = 0; k < 5; k++) {
-    if (k) flug('wtramD', tH(k) - .2, .2, TX(k).x, TX(k).y - 70, 26);
+    if (k) tw('wtramD', tH(k) - .3, .3, { x: TX(k).x, y: TX(k).y - 70 }, 'sinus', { bogen: 22 });
     HOOKS.push(t => tage[k].classList.toggle('an', t >= tH(k)));
     cue(tH(k), 'tipp');
   }
@@ -1006,7 +1007,7 @@ const P2 = WE('Eins', 14) + .3;
   // „mit Bus und Bahn im Nahverkehr in ganz Deutschland“: Linien laufen über die Karte, der Fernzug bleibt grau
   const tBu = W('Bus', 29), tBa = W('Bahn', 29), tNv = W('Nahverkehr', 29), tGa = W('ganz', 29), tDe = W('Deutschland', 29);
   const RD = { rDa: [tBu, .8], rDb: [tBa, .8], rDc: [tNv, .9], rDd: [tGa, .7], rDe: [tDe, .7] };
-  HOOKS.push(t => { for (const [id, [a, d]] of Object.entries(RD)) el(id).style.strokeDashoffset = 1 - E.inout(clamp((t - a) / d)); });
+  HOOKS.push(t => { for (const [id, [a, d]] of Object.entries(RD)) { const g = E.inout(clamp((t - a) / d)); el(id).style.strokeDashoffset = 1 - g; el(id).style.visibility = g > .01 ? 'visible' : 'hidden'; } });
   Object.keys(RD).forEach(id => el(id).style.strokeDasharray = '1 1');
   [['a', tBu, -195], ['b', tBa, -65], ['c', tNv, 65], ['d', tDe + .3, 195]].forEach(([k, t, dy]) => {
     ein('lg' + 'D' + k, t - .1, Q(330, dy), { x: 50 }, 'pop');
@@ -1017,13 +1018,13 @@ const P2 = WE('Eins', 14) + .3;
   aus(['lgDa', 'lgDb', 'lgDc', 'lgDd', 'swDa', 'swDb', 'swDc', 'swDd'], SA(30) - .3, .35);
   // „Frag in deinem Betrieb nach einem Jobticket“: Betrieb, Fragezeichen, Job-Plakette an der Karte
   const tFr = W('Frag', 30), tBe = W('Betrieb', 30), tJo = W('Jobticket', 30);
-  ein('betrD', tBe - .25, Q(300, -15), { x: 60 }, 'whoosh');
-  pop('frageD', tFr, Q(420, -170)); wackeln('frageD', tFr + .4, 3, 5);
+  ein('betrD', tBe - .25, Q(320, -10), { x: 60 }, 'whoosh');
+  pop('frageD', tFr, Q(440, -180)); wackeln('frageD', tFr + .4, 3, 5);
   rel('jobD', { s: 0 }, '50% 50%'); tw('jobD', tJo, .4, { s: 1 }, 'back'); bump('monatD', tJo, 1.08); cue(tJo, 'pop');
   aus('frageD', SA(31) - .2, .3);
   // „Oft zahlt der Betrieb dann einen Teil dazu“: eine Münze rollt vom Betrieb zur Karte, ein Viertel wird grün
   const tZa = W('zahlt', 31), tTe = W('Teil', 31);
-  akteur('muenzeD', { ...Q(300, 40), s: 0 });
+  akteur('muenzeD', { ...Q(320, 40), s: 0 });
   tw('muenzeD', tZa - .1, .3, { s: 1 }, 'back'); cue(tZa, 'muenze');
   flug('muenzeD', tZa + .25, .8, Q(-200, 30).x, Q(-200, 30).y, 120, { s: .5 });
   tw('muenzeD', tZa + 1.0, .15, { o: 0 });
@@ -1041,7 +1042,7 @@ const P2 = WE('Eins', 14) + .3;
   tw('entwD', tAl, .08, { sy: .9, sx: 1.05 }, 'sinus'); tw('entwD', tAl + .08, .4, { sy: 1, sx: 1 }, 'sanft'); beben('entwD', tAl, 5, .4); cue(tAl, 'klick'); cue(tAl + .05, 'plopp');
   HOOKS.push(t => el('entwDa').style.background = t >= tAl && t < tAl + 1.6 ? 'var(--success)' : '');
   pop('stossD', tAl, Q(260, -175), null); tw('stossD', tAl + .4, .25, { o: 0 });
-  tw('papierD', tSt - .15, .5, { x: PA.x, s: 1 }, 'sanft'); cue(tSt, 'whoosh');
+  tw('papierD', tSt - .15, .55, { x: PA.x, s: 1 }, 'inout'); cue(tSt, 'whoosh');
   set('datumD', tSt + .25, { o: 1 }); tw('datumD', tSt + .25, .3, { s: 1, r: -3 }, 'back'); cue(tSt + .3, 'klick'); akzent(tSt + .3, .04);
   tafel('D', [tMo, tMo + .08, tJo, tJo + .08, tPa, tEn]);
   document.querySelectorAll('#tbD .w').forEach(w => { if (w.textContent.trim() !== '·') w.classList.add('hell'); });
@@ -1051,34 +1052,34 @@ const P2 = WE('Eins', 14) + .3;
 /* ---------- Auflösung: Überblick über das Netz – A und B werden grau, C leuchtet grün; Ziel „Betrieb“ ---------- */
 {
   const tO = SE(32) + .2, tBe = W('beste', 33), tC = WN(33, 4);
-  kamZu(tO, 1.3, 4900, 1250, .2); cue(tO, 'whoosh');
-  zeichnen('C', tO, .1, LINIEN.C.len);
+  kamZu(tO, 1.3, 4980, 1260, .19); cue(tO, 'whoosh');
+  zeichnen('C', tO + .2, 1, LINIEN.C.len);
   // Stationsschild „Betrieb“ und Ziel-Bühne stehen schon (sichtbar im Überblick)
   station('Z', tO + .4);
   HOOKS.push(t => {
     const g = E.inout(clamp((t - tBe) / .8)), gr = E.inout(clamp((t - tC) / .6));
-    el('pflA').setAttribute('stroke', `color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--la))`);
-    el('pflB').setAttribute('stroke', `color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--lb))`);
-    el('pflC').setAttribute('stroke', `color-mix(in srgb, var(--success) ${(gr * 100).toFixed(0)}%, var(--lc))`);
+    el('pflA').style.stroke = (`color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--la))`);
+    el('pflB').style.stroke = (`color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--lb))`);
+    el('pflC').style.stroke = (`color-mix(in srgb, var(--success) ${(gr * 100).toFixed(0)}%, var(--lc))`);
     el('glanzC').style.opacity = (.35 * gr).toFixed(3);
     const w = t - tC; el('welleC').style.opacity = w > 0 && w < 1.6 ? 1 : 0; el('welleC').style.strokeDashoffset = -clamp(w / 1.5);
   });
   tw(['sA', 'sB', 'bueA', 'bueB'], tBe, .6, { o: .4 }, 'inout');
   markeAuf('C', tC); bump('sC', tC + .3, 1.15); cue(tC + .3, 'whoosh');
   // dann: Kamera fährt ans Ende der grünen Linie – Ziel „Betrieb“
-  const tIn = tC + 1.1, Q = (dx, dy) => P('Z', dx, dy);
-  kamZu(tIn, 1.3, ST.Z[0], ST.Z[1], 1, 0); cue(tIn, 'whoosh');
-  const tK = tIn + 1.0;
+  const tIn = tC + .8, Q = (dx, dy) => P('Z', dx, dy);
+  kamZu(tIn, 1.2, ST.Z[0], ST.Z[1], ZS, 0); cue(tIn, 'whoosh');
+  const tK = tIn + .9;
   // „Kauf dein Ticket immer vor der Fahrt“: Handy mit Ticket und Haken
   const T = eticket('hyZ'), HZ = Q(-250, -20);
   el('abfZ').style.opacity = 0;
-  ein('hyZ', tK, HZ, { y: 80 }, 'whoosh');
+  ein('hyZ', tK, { ...HZ, s: 1.15 }, { y: 80 }, 'whoosh');
   const tTi = W('Ticket', 34), tVo = W('vor', 34);
   tw(T.tk, tK + .2, .45, { s: 1 }, 'back'); T.qr.forEach(q => tw(q, tK + .3, .3, { s: 1 }, 'back'));
   tw(T.ok, tVo, .45, { s: 1 }, 'back'); cue(tVo, 'erfolg'); bump('hyZ', tTi, 1.05);
   // „Schau morgens in der App, ob deine Bahn Verspätung hat“: Wecker klingelt, Abfahrten, „+5 min“ blinkt gelb
   const tMo = W('morgens', 35), tAp = W('App', 35), tVe = W('Verspätung', 35);
-  ein('weckZ', tMo - .2, Q(-40, 175), { y: 50 }, 'pop');
+  ein('weckZ', tMo - .2, Q(-60, 175), { y: 50 }, 'pop');
   rel('weckZh', {}); rel('weckZm', {});
   const WK = [[0, 380]];      // 6:20
   HOOKS.push(t => { const m = kurve(WK, t, .45); el('weckZh').style.transform = `rotate(${(m / 2).toFixed(2)}deg)`; el('weckZm').style.transform = `rotate(${(m * 6).toFixed(2)}deg)`; });
@@ -1092,19 +1093,19 @@ const P2 = WE('Eins', 14) + .3;
   akzent(tVe, .035);
   // „Und wenn du pünktlich sein musst, fahr lieber eine Bahn früher“: Betrieb mit Uhr, der Wecker springt eine Bahn zurück
   const tPu = W('pünktlich', 36), tFr = W('früher', 36), tLi = W('lieber', 36);
-  ein('betrZ', tPu - .3, Q(300, -30), { x: 60 }, 'whoosh');
+  ein('betrZ', tPu - .3, Q(300, -40), { x: 60 }, 'whoosh');
   uhrBau('uhrZ', { minuten: 435 });      // 7:15
-  ein('uhrZ', tPu, Q(110, -165), { y: -40 }, 'pop');
+  ein('uhrZ', tPu, Q(100, -160), { y: -40 }, 'pop');
   WK.push([tFr - .1, 370]); cue(tFr, 'whoosh'); wackeln('weckZ', tFr, 3, 6);
   tw('zZbr', tLi, .25, { o: 0 }); tw('zZar', tFr, .3, { o: 1 }); bump('hyZ', tFr + .1, 1.05);
   // Kwame kommt am Betrieb an – grüner Puffer an der Uhr, Haken
   const tAn = SE(36) + .15;
-  akteur('kwZ', { ...Q(110, 170), o: 0, s: .7 });
+  akteur('kwZ', { ...Q(140, 170), o: 0, s: .7 });
   tw('kwZ', tLi - .3, .3, { o: 1, s: 1 }, 'back'); cue(tLi - .3, 'pop');
   flug('kwZ', tAn, .6, Q(300, 160).x, Q(300, 160).y, 70); landen('kwZ', tAn + .6); cue(tAn + .6, 'plopp');
   UHREN.uhrZ.bogen = [tAn + .5, .7, 15, 15]; bump('uhrZ', tAn + .6, 1.1);
   pop('okZ', tAn + .8, Q(420, 60), 'erfolg'); froh('kwZ', tAn + .6, tAn + 6); akzent(tAn + .8, .03);
-  tafel('Z', [tK + .2, tK + .28, tLi, tLi + .08, tFr]);
+  tafel('Z', [tK + .2, tK + .28, tK + .36, tLi, tLi + .08, tFr]);
   document.querySelectorAll('#tbZ .w').forEach(w => w.classList.add('gruen'));
 }
 
