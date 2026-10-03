@@ -22,6 +22,7 @@ html,body{background:var(--b50)}
 #halle{position:absolute;left:-4000px;top:-6000px;width:13760px;height:10500px;
   background:linear-gradient(var(--b50) 0,var(--b100) 66.6%,var(--b200) 66.67%,var(--b100) 100%)}
 #halle .linie{position:absolute;left:0;right:0;top:7900px;height:46px;background:var(--warning);opacity:.75}
+#halle .decke{position:absolute;left:0;right:0;height:120px;background:linear-gradient(var(--b500),var(--b700))}
 #halle .saeule{position:absolute;top:0;height:7080px;width:150px;background:linear-gradient(90deg,var(--b100),var(--b200))}
 
 /* ================= Regalfach = Bühne (1920 × 1080): Rückwand, Stützen, Traversen, Rollenbahn, Scan-Tor ================= */
@@ -335,6 +336,7 @@ const Z0 = .2, C0 = { x: 2880, y: -110 };
 const W0 = (sx, sy) => ({ x: C0.x + (sx - 960) / Z0, y: C0.y + (sy - 540) / Z0 });
 
 // Hallenwand: Säulen links und rechts des Regals
+el('halle').insertAdjacentHTML('beforeend', `<div class="decke" style="top:${W0(0, 22).y + 6000}px"></div>`);
 [-1500, -900, 6660, 7260].forEach(x => el('halle').insertAdjacentHTML('beforeend', `<div class="saeule" style="left:${x + 4000}px"></div>`));
 
 // Fächer anlegen (Bühnen) – in Reihen von unten nach oben
@@ -530,12 +532,12 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   }
   // Hallenlampen schwingen herein und gehen nacheinander an
   [560, 960, 1360].forEach((sx, n) => {
-    const p = W0(sx, 0), b = 150 / Z0, id = 'lp' + n;
+    const p = W0(sx, 0), b = 112 / Z0, id = 'lp' + n;
     neu('kg' + n, '', '', 'data-frei', 'kegel');
-    akteur('kg' + n, { x: p.x, y: p.y + 85 / Z0 + 1300, o: 0 });
+    akteur('kg' + n, { x: p.x, y: p.y + 120 / Z0 + 1300, o: 0 });
     bild(id, 't-lampe', b, 'data-frei', 'transform-origin:50% 0');
     akteur(id, { x: p.x - b / 2, y: p.y - 280 / Z0 }, true);
-    tw(id, .55 + n * .15, .7, { y: p.y - 40 / Z0 }, 'sanft'); pendel(id, 1.1 + n * .15, 6, 5, .4);
+    tw(id, .55 + n * .15, .7, { y: p.y + 46 / Z0 }, 'sanft'); pendel(id, 1.1 + n * .15, 6, 5, .4);
     const tL = 1.6 + n * .22;
     tw('kg' + n, tL, .25, { o: 1 }, 'out'); cue(tL, 'klick');
   });
