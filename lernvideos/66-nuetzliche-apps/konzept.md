@@ -48,19 +48,19 @@ Abspann: „Die richtigen Apps machen vieles leichter.“
 Erzählerin: Das ist Ana. Sie ist neu in Deutschland, und ihr Handy ist noch fast leer. Ein paar gute Apps machen den Start viel leichter. Hier sind die wichtigsten.
 
 ### Szene 2
-Erzählerin: Für Bahnfahrten gibt es den Deh-Beh-Navigator. Dort suchst du deine Verbindung, kaufst dein Ticket und siehst, ob dein Zug Verspätung hat. Auch das Deutschlandticket bekommst du dort.
+Erzählerin: Für Bahnfahrten gibt es den DB Navigator. Dort suchst du deine Verbindung, kaufst dein Ticket und siehst, ob dein Zug Verspätung hat. Auch das Deutschlandticket bekommst du dort.
 
 ### Szene 3
 Erzählerin: Für Bus und Bahn in deiner Stadt hat dein Verkehrsverbund oft eine eigene App. Dort findest du den Fahrplan und die Tickets für deine Region.
 
 ### Szene 4
-Erzählerin: Du suchst ein Zimmer? Bei Weh-Geh-Gesucht findest du Weh-Geh-Zimmer und kleine Wohnungen. Schreib eine kurze, freundliche Nachricht über dich. Dann bekommst du eher eine Antwort.
+Erzählerin: Du suchst ein Zimmer? Bei WG-Gesucht findest du WG-Zimmer und kleine Wohnungen. Schreib eine kurze, freundliche Nachricht über dich. Dann bekommst du eher eine Antwort.
 
 ### Szene 5
 Erzählerin: Bei Kleinanzeigen verkaufen Leute gebrauchte Sachen, zum Beispiel Möbel, Fahrräder oder Lampen. Das spart viel Geld. Aber Achtung: Überweise nie Geld vorab. Schau dir alles zuerst an.
 
 ### Szene 6
-Erzählerin: Auch deine Krankenkasse hat eine App, zum Beispiel die Ah-Oh-Kah. Damit bekommst du Bescheinigungen und schickst Unterlagen einfach als Foto.
+Erzählerin: Auch deine Krankenkasse hat eine App, zum Beispiel die AOK. Damit bekommst du Bescheinigungen und schickst Unterlagen einfach als Foto.
 
 ### Szene 7
 Erzählerin: Und dann die Azubis Plus App. Hier lernst du mit Lektionen wie dieser. Du legst deine Dokumente sicher ab. Und du behältst deine Aufgaben und Fristen im Blick.
@@ -73,10 +73,6 @@ Erzählerin: So hat Ana alles dabei: für den Weg zur Arbeit, für die Wohnung u
 
 ## Schreibweise im Untertitel
 
-- Deh-Beh-Navigator → DB Navigator
-- Weh-Geh-Gesucht → WG-Gesucht
-- Weh-Geh-Zimmer → WG-Zimmer
-- Ah-Oh-Kah → AOK
 
 ## Quellen
 
@@ -100,3 +96,5 @@ Eigene Kenntnis der Apps (Stand 10/2026); nur allgemeine Funktionen, keine Preis
 | Krankenkassen-Apps (z. B. AOK): Bescheinigungen bekommen, Unterlagen als Foto einreichen | 4 – Funktionsumfang je Kasse verschieden, darum „zum Beispiel“ |
 | Azubis Plus App: Lektionen, Dokumente, Aufgaben und Fristen | WeWeb-Components `lektionen_game_overview`, `helperapp_dokumente`, `helperapp_arrival` |
 | Apps nur aus dem offiziellen Store, Anbieter prüfen, nur nötige Berechtigungen | 5, 6 |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

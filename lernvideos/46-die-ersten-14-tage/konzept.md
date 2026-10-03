@@ -63,28 +63,25 @@ Erzähler: Schritt eins: die Wohnung anmelden. Das musst du innerhalb von zwei W
 Erzähler: Beim Termin bekommst du die Meldebescheinigung. Dieses Papier brauchst du später noch oft.
 
 ### Szene 4
-Erzähler: Schritt zwei: das Bankkonto. Nimm deinen Pass mit, und frag vorher, was deine Bank noch braucht. Deine Ih-Bahn gibst du dann deinem Betrieb. Auf dieses Konto kommt dein Gehalt.
+Erzähler: Schritt zwei: das Bankkonto. Nimm deinen Pass mit, und frag vorher, was deine Bank noch braucht. Deine IBAN gibst du dann deinem Betrieb. Auf dieses Konto kommt dein Gehalt.
 
 ### Szene 5
-Erzähler: Schritt drei: die Krankenkasse. Du suchst sie dir selbst aus, zum Beispiel die Ah-Oh-Kah. Dafür hast du zwei Wochen ab dem Start deiner Ausbildung. Sag deinem Betrieb, welche Kasse du gewählt hast. Den Rest machen Betrieb und Kasse.
+Erzähler: Schritt drei: die Krankenkasse. Du suchst sie dir selbst aus, zum Beispiel die AOK. Dafür hast du zwei Wochen ab dem Start deiner Ausbildung. Sag deinem Betrieb, welche Kasse du gewählt hast. Den Rest machen Betrieb und Kasse.
 
 ### Szene 6
 Erzähler: Ein paar Wochen nach der Anmeldung kommt deine Steuer-Aidih per Post. Du musst sie nicht beantragen. Schau also jeden Tag in den Briefkasten. Wichtig: Dein Name muss am Briefkasten stehen. Und gib die Nummer gleich deinem Betrieb.
 
 ### Szene 7
-Erzähler: Und dein Handy? Für den Anfang reicht eine Pri-Peid-Karte. Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass.
+Erzähler: Und dein Handy? Für den Anfang reicht eine Prepaid-Karte. Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass.
 
 ### Szene 8
-Erzähler: Mach von jedem wichtigen Papier ein Foto und leg es in der Azubis Plus Hälper-App unter Dokumente ab. Und denk dran: Termine früh buchen, dann eins nach dem anderen.
+Erzähler: Mach von jedem wichtigen Papier ein Foto und leg es in der Azubis Plus Helper-App unter Dokumente ab. Und denk dran: Termine früh buchen, dann eins nach dem anderen.
 
 ## Schreibweise im Untertitel
 
 - vierzehn Tage → 14 Tage
-- Ih-Bahn → IBAN
-- Ah-Oh-Kah → AOK
 - Steuer-Aidih → Steuer-ID
-- Pri-Peid-Karte → Prepaid-Karte
-- Hälper-App unter Dokumente → Helper App unter „Dokumente“
+- Helper-App unter Dokumente → Helper App unter „Dokumente“
 
 ## Quellen
 
@@ -122,3 +119,5 @@ Erzähler: Mach von jedem wichtigen Papier ein Foto und leg es in der Azubis Plu
 | Name muss am Briefkasten stehen, sonst kommt der Brief nicht an | [13] |
 | Prepaid-Karte: beim Kauf ausweisen, z. B. mit dem Pass („Handy: Prepaid + Ausweis“) | [10] |
 | Foto der Papiere (Meldebescheinigung, Wohnungsgeberbestätigung, Brief der Krankenkasse, Steuer-ID-Brief) in der Azubis Plus Helper App ablegen | Vorgabe „Ablage = Helper App“ (CLAUDE.md) |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

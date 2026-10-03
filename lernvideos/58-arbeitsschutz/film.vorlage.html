@@ -550,14 +550,14 @@ const AW = { x: FX + AM.x, y: FY + AM.y };          // … in der Welt
     if (id === 'iGehoer') { tw(id, tl, .1, { sx: 1.25 }, 'out'); tw(id, tl + .1, .12, { sx: .9 }, 'in'); tw(id, tl + .22, .3, { sx: 1 }, 'sanft'); cue(tl + .1, 'klick'); }
     bump('p' + p, tl, 1.06);
   }
-  // „persönliche Schutzausrüstung“ tippt sich in die Kopfzeile, auf „Peh-Ess-Ah“ bleibt das Kürzel
+  // „persönliche Schutzausrüstung“ tippt sich in die Kopfzeile, auf „PSA“ bleibt das Kürzel
   const LANG = 'Persönliche Schutzausrüstung', tL0 = W('persönliche', 9) - .1, tL1 = WE('Schutzausrüstung', 9);
   pop('kopfLang', tL0 - .1, { x: 900, y: 112 }, null, 'sanft');
   HOOKS.push(t => { const n = Math.round(clamp((t - tL0) / (tL1 - tL0)) * LANG.length); el('kopfLang').textContent = LANG.slice(0, Math.max(1, n)); });
   for (let k = 0; k < 6; k++) cue(tL0 + k * (tL1 - tL0) / 6, 'tipp');
   const tK = W('kurz', 9);
   tw('kopfLang', tK, .3, { sx: .05, o: 0 }, 'in');
-  const tP = W('Peh-Ess-Ah', 9) - .04;
+  const tP = W('PSA', 9) - .04;
   akteur('kopfPSA', { x: 900, y: 112, o: 0 }); tw('kopfPSA', tP - .12, .12, { o: 1 });
   [['kP', 0, 'iBrille'], ['kS', .3, 'iGehoer'], ['kA', .55, 'iHand']].forEach(([id, d, it]) => {
     akteur(id, { s: 0 }, true); tw(id, tP + d, .4, { s: 1 }, 'back'); cue(tP + d, 'pop'); bump(it, tP + d, 1.12);

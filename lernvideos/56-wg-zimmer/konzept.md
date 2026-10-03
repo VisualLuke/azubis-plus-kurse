@@ -47,7 +47,7 @@ aus anderen Kursen `warndreieck`, `globus`, `pin`, `sonne`, `pflanze`, `bett-ein
 - „Kaution höchstens drei Kaltmieten“ ergänzt um „erst ab Start der Miete, auf Wunsch in drei Raten“ (§ 551 BGB), weil gerade
   die Vorab-Zahlung das Warnsignal ist.
 - Die echte WG (Szene 6) zeigt Ana und Kwame als Mitbewohner (keine weiteren Menschen).
-- Aussprache: „WG“ als „Weh-Geh“, die Optionen als „Ah“, „Beh“, „Zeh“ (sonst englisch gelesen), „Option C:“ als
+- Aussprache: „WG“ normal geschrieben (Hörprobe 03.10.2026), die Optionen als „Ah“, „Beh“, „Zeh“ (sonst englisch gelesen), „Option C:“ als
   „Und Option Zeh:“ (kein Ein-Wort-Satz). Im Bild und im Untertitel bleiben WG und A, B, C.
 
 ## Sprechertext
@@ -57,7 +57,7 @@ aus anderen Kursen `warndreieck`, `globus`, `pin`, `sonne`, `pflanze`, `bett-ein
 @stimme Yusuf: hfqsl1OMbiWsgPpht3el
 
 ### Szene 1
-Erzähler: Yusuf sucht ein Weh-Geh-Zimmer. Da sieht er eine Anzeige: groß, hell, zentral und sehr billig. Er schreibt sofort.
+Erzähler: Yusuf sucht ein WG-Zimmer. Da sieht er eine Anzeige: groß, hell, zentral und sehr billig. Er schreibt sofort.
 Yusuf: Das ist perfekt! Wann kann ich mir das Zimmer ansehen?
 Erzähler: Die Antwort: „Ich wohne gerade im Ausland. Überweise mir die Kaution, dann schicke ich dir den Schlüssel per Post. Und schick mir eine Kopie von deinem Ausweis.“
 
@@ -84,7 +84,7 @@ Yusuf: Ich zahle erst, wenn ich das Zimmer gesehen habe und einen Vertrag habe.
 Erzähler: Der Vermieter meldet sich nie wieder. Es war Betrug.
 
 ### Szene 6
-Erzähler: Beim nächsten Zimmer geht Yusuf hin und lernt die Weh-Geh kennen. Er bekommt einen schriftlichen Vertrag. Und er bekommt die Wohnungsgeberbestätigung. Die braucht er, um sich beim Bürgeramt anzumelden. Seinen Ausweis zeigt er nur, er gibt keine Kopie an Fremde.
+Erzähler: Beim nächsten Zimmer geht Yusuf hin und lernt die WG kennen. Er bekommt einen schriftlichen Vertrag. Und er bekommt die Wohnungsgeberbestätigung. Die braucht er, um sich beim Bürgeramt anzumelden. Seinen Ausweis zeigt er nur, er gibt keine Kopie an Fremde.
 
 ### Szene 7
 Erzähler: So erkennst du Betrug: sehr billig, Vermieter im Ausland, Geld vorab, Schlüssel per Post. Eine echte Kaution musst du erst zum Start der Miete zahlen, auf Wunsch in drei Raten. Und sie ist höchstens drei Kaltmieten.
@@ -96,7 +96,6 @@ Erzähler: Die beste Wahl ist Zeh. Und wenn du schon Geld überwiesen hast: Mach
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
-- Weh-Geh → WG
 - Option Ah → Option A
 - Option Beh → Option B
 - Option Zeh → Option C
@@ -146,3 +145,5 @@ Suchergebnisse dieser Seiten belegt und beim Produzieren noch einmal im Browser 
 | Echte Kaution erst ab Start der Miete, auf Wunsch in drei Raten / „Kaution: erst ab Mietstart“ | § 551 Abs. 2 BGB (9): Recht auf drei gleiche monatliche Teilzahlungen, erste Rate zu Beginn des Mietverhältnisses; VZ (6): Kaution erst fällig, wenn das Mietverhältnis beginnt |
 | Kaution höchstens drei Kaltmieten / „max. 3 Kaltmieten“ | § 551 Abs. 1 BGB (9): höchstens das Dreifache der Monatsmiete ohne Betriebskosten. Stand: 03.10.2026 |
 | Fotos von allen Nachrichten, sofort Bank anrufen, zur Polizei / „Fotos sichern · Bank · Polizei“ | Polizei NDS (3): Anzeige erstatten, E-Mail-Verkehr speichern, Screenshots machen; Polizei (1, 2): Angebote der Polizei melden; Bank sofort informieren, um die Zahlung evtl. zu stoppen: Hinweis aus den Polizei-Seiten (3, 5) laut Suchergebnis |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

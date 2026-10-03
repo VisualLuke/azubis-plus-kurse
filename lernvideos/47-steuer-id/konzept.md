@@ -73,7 +73,7 @@ Erzählerin: Dein Betrieb braucht sie, um dich bei der Krankenkasse anzumelden. 
 Erzählerin: Zwei Nummern, zwei Aufgaben. Die Steuer-Aidih hat elf Ziffern und ist für die Steuer. Die Sozialversicherungsnummer hat zwölf Zeichen, auch einen Buchstaben. Sie ist für die Sozialversicherung, also zum Beispiel für Rente und Krankenkasse.
 
 ### Szene 8
-Erzählerin: Beide Nummern sind persönlich. Leg die Briefe sicher ab, zum Beispiel als Foto in der Azubis Plus Hälper-App unter Dokumente. Gib die Nummern nur an Stellen, die sie wirklich brauchen, wie deinen Betrieb. Und nie an Fremde, die per E-Mail oder Telefon danach fragen.
+Erzählerin: Beide Nummern sind persönlich. Leg die Briefe sicher ab, zum Beispiel als Foto in der Azubis Plus Helper-App unter Dokumente. Gib die Nummern nur an Stellen, die sie wirklich brauchen, wie deinen Betrieb. Und nie an Fremde, die per E-Mail oder Telefon danach fragen.
 
 ## Schreibweise im Untertitel
 
@@ -81,7 +81,7 @@ Erzählerin: Beide Nummern sind persönlich. Leg die Briefe sicher ab, zum Beisp
 - elf Ziffern → 11 Ziffern
 - zwölf Zeichen → 12 Zeichen
 - drei Monaten → 3 Monaten
-- Hälper-App unter Dokumente → Helper App unter „Dokumente“
+- Helper-App unter Dokumente → Helper App unter „Dokumente“
 
 ## Quellen
 
@@ -121,3 +121,5 @@ Erzählerin: Beide Nummern sind persönlich. Leg die Briefe sicher ab, zum Beisp
 | SV-Nummer gehört zur Sozialversicherung (Rente, Krankenkasse) („SV-Nummer = Sozialversicherung“) | [8], [10] |
 | Nummern nur an Stellen, die sie brauchen; nie an Fremde per E-Mail oder Telefon („Nur an Stellen, die sie brauchen“) | [13] (Behörde warnt vor Täuschungsversuchen); [14] (z. B. Banken brauchen die Steuer-ID) |
 | Ablage in der Azubis Plus Helper App | Vorgabe „Ablage = Helper App“ (CLAUDE.md) |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

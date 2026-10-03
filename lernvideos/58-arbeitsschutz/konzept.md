@@ -27,7 +27,7 @@ Umsetzung (Leitidee „Rundgang“): oben ein breites Werkstatt-Fenster, darunte
 und dem Text im Bild (Wörter steigen aus einer Maske). Szene 1 steht ohne Titel in der Bildmitte: Amir hüpft vor das
 geschlossene Rolltor, das Tor fährt hoch. Szenenwechsel als Ego-Kamerafahrt: der alte Raum gleitet an der Kamera vorbei,
 Regalsäulen ziehen am Gangrand vorüber, der Mittelstreifen fließt; zum Schluss fährt die Kamera rückwärts. Szene 3/4 als
-Ausrüstungs-Menü (vier Plätze um Amirs Porträt, Kopfzeile tippt „Persönliche Schutzausrüstung“, auf „Peh-Ess-Ah“ bleibt
+Ausrüstungs-Menü (vier Plätze um Amirs Porträt, Kopfzeile tippt „Persönliche Schutzausrüstung“, auf „PSA“ bleibt
 „PSA“); Szene 5 Wendetafeln, die beim Umklappen die Bühne kurz in ihrer Farbe tönen; Szene 6 grüne Fluchtweg-Linie auf
 dem Boden bis zur Tür. Jede Animation hängt an einem Wort aus `sprache.json`; Kamera-Akzente auf „Unterweisung“,
 „kostenlos“, „sofort“, „Rot“, „frei“, „sofort“ (Szene 7). Abspann: Das Rolltor fährt herunter, darauf „Sicher arbeiten.“
@@ -61,7 +61,7 @@ Erzähler: Amirs erster Tag in der Werkstatt. Überall Maschinen, Werkzeug und S
 Erzähler: Zuerst bekommst du eine Unterweisung. Dein Betrieb erklärt dir die Gefahren an deinem Arbeitsplatz und wie du dich schützt. Das passiert, bevor du anfängst, und danach mindestens einmal im Jahr. Die Unterweisung ist Arbeitszeit.
 
 ### Szene 3
-Erzähler: Für viele Arbeiten brauchst du Schutzausrüstung, zum Beispiel Sicherheitsschuhe, Handschuhe, Schutzbrille oder Gehörschutz. Das heißt persönliche Schutzausrüstung, kurz Peh-Ess-Ah. Die Peh-Ess-Ah bekommst du vom Betrieb, und sie ist für dich kostenlos.
+Erzähler: Für viele Arbeiten brauchst du Schutzausrüstung, zum Beispiel Sicherheitsschuhe, Handschuhe, Schutzbrille oder Gehörschutz. Das heißt persönliche Schutzausrüstung, kurz PSA. Die PSA bekommst du vom Betrieb, und sie ist für dich kostenlos.
 
 ### Szene 4
 Erzähler: Du musst sie auch benutzen, so wie es in der Unterweisung erklärt wurde. Schau sie vor der Arbeit kurz an. Ist etwas kaputt, sag es sofort.
@@ -82,7 +82,6 @@ Erzähler: Und wenn du unsicher bist, frag lieber einmal mehr. Fragen ist besser
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
-- Peh-Ess-Ah → PSA
 
 ## Quellen
 
@@ -125,3 +124,5 @@ Suchergebnisse dieser Seiten belegt und beim Produzieren noch einmal im Browser 
 | Wissen, wo der Erste-Hilfe-Kasten hängt / „Erste Hilfe: wo?“ | DGUV Vorschrift 1 § 25 (8): Erste-Hilfe-Material schnell erreichbar, gekennzeichnet; Beschäftigte werden über den Standort unterrichtet |
 | Kaputtes Kabel, Öl auf dem Boden sofort dem Ausbilder/der Vorgesetzten melden / „Mängel sofort melden“ | § 16 Abs. 1 ArbSchG (4): jede festgestellte unmittelbare erhebliche Gefahr und jeden Defekt an Schutzsystemen unverzüglich dem Arbeitgeber oder zuständigen Vorgesetzten melden; § 16 Abs. 2: auch sonstige Gefahren und Mängel mitteilen |
 | Im Zweifel fragen / „Im Zweifel: fragen“ | Ratschlag, keine Rechtsregel; gestützt auf § 12 ArbSchG (1) (Unterweisung bei neuen Aufgaben) und § 15 Abs. 1 ArbSchG (3) (gemäß Unterweisung und Weisung handeln) |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

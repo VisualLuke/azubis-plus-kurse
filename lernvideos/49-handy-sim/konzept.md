@@ -42,7 +42,7 @@ erste Bühne in der Bildmitte (`kamera.basis.x = -360`).
   Zeitgründen nicht erklärt.
 - Kündigung online (Kündigungsbutton) nicht gesprochen, nur der Kündigen-Knopf im Bild – er gilt nur, wo man auch online
   abschließen kann.
-- Aussprache: Buchstaben der Optionen deutsch („Ah“, „Beh“, „Zeh“), „Simm-Karte“, „Pri-Peid“, „Weh-Lahn“; Rückführung
+- Aussprache: Buchstaben der Optionen deutsch („Ah“, „Beh“, „Zeh“), „SIM-Karte“, „Prepaid“, „WLAN“ normal geschrieben (Hörprobe 03.10.2026); Rückführung
   unter „Schreibweise im Untertitel“.
 
 ## Sprechertext
@@ -52,7 +52,7 @@ erste Bühne in der Bildmitte (`kamera.basis.x = -360`).
 @stimme Yusuf: hfqsl1OMbiWsgPpht3el
 
 ### Szene 1
-Erzählerin: Yusuf braucht eine Simm-Karte. Im Laden zeigt ihm ein Verkäufer das neueste Handy.
+Erzählerin: Yusuf braucht eine SIM-Karte. Im Laden zeigt ihm ein Verkäufer das neueste Handy.
 Yusuf: Wow, das ist schön. Aber ist das nicht sehr teuer?
 Erzählerin: Der Verkäufer sagt: Nur heute! Mit Vertrag über vierundzwanzig Monate. Unterschreib einfach hier.
 
@@ -78,14 +78,13 @@ Yusuf: Danke, ich überlege noch. Kann ich die Vertragszusammenfassung mitnehmen
 Erzählerin: Die muss der Anbieter dir vor dem Vertrag geben. Darauf stehen Preis, Laufzeit und Kündigung.
 
 ### Szene 6
-Erzählerin: Für den Anfang reicht oft eine Pri-Peid-Karte. Du lädst Guthaben auf und hast die Kosten im Griff. Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass. Ein Vertrag läuft höchstens vierundzwanzig Monate. Danach kannst du jeden Monat kündigen.
+Erzählerin: Für den Anfang reicht oft eine Prepaid-Karte. Du lädst Guthaben auf und hast die Kosten im Griff. Beim Kauf musst du dich ausweisen, zum Beispiel mit deinem Pass. Ein Vertrag läuft höchstens vierundzwanzig Monate. Danach kannst du jeden Monat kündigen.
 
 ### Szene 7
-Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und können teuer sein. Prüf deinen Tarif, oder telefonier übers Internet im Weh-Lahn. Die beste Wahl ist Zeh. Lass dich nicht drängen.
+Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und können teuer sein. Prüf deinen Tarif, oder telefonier übers Internet im WLAN. Die beste Wahl ist Zeh. Lass dich nicht drängen.
 
 ## Schreibweise im Untertitel
 
-- Simm-Karte → SIM-Karte
 - vierundzwanzig Monate → 24 Monate
 - Option Ah → Option A
 - Option Beh → Option B
@@ -94,8 +93,6 @@ Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und k�
 - Beh: → B:
 - Zeh: → C:
 - ist Zeh → ist C
-- Pri-Peid-Karte → Prepaid-Karte
-- Weh-Lahn → WLAN
 
 ## Quellen
 
@@ -125,3 +122,5 @@ Erzählerin: Und Anrufe nach Hause? Die sind in vielen Tarifen nicht drin und k�
 | Danach jeden Monat kündbar | [1] (nach Ablauf der Mindestlaufzeit jederzeit mit einem Monat Frist) |
 | Anrufe nach Hause sind in vielen Tarifen nicht drin und können teuer sein; Tarif prüfen („Anrufe ins Ausland: Tarif prüfen“) | [9], [10] |
 | Übers Internet im WLAN telefonieren („WLAN“) | [9], [10] |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.

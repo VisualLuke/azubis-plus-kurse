@@ -54,7 +54,7 @@ Wörtern gefüllt; der Schlussdialog läuft vor dem Regal, bei jedem Wort leucht
   Yusuf hält Abstand. Die Altersgrenze aus der Vorschrift wird nicht genannt (keine Regeln zum Alter).
 - „das Hochregal“: kein eigener Duden-Eintrag, Artikel und Plural folgen „das Regal – die Regale“; Duden verwendet „Hochregalen“
   in der Bedeutung von „Hochregallager“ (siehe Faktencheck).
-- Für die Stimme „Skänner“ und „Skänn“ (Aussprache nach Duden [ˈskɛnɐ]), im Bild und Untertitel „Scanner“ und „Scann“.
+- „Scanner“ und „Scann“ in normaler Schreibweise (Hörprobe 03.10.2026; vorher Lautschrift „Skänner“).
 - Yusuf ist in früheren Lernvideos Azubi Bäcker (27); hier macht er eine Ausbildung im Lager (Rolle laut Briefing).
   Falls das stört: Szene 1 auf „Yusuf arbeitet heute im Lager.“ ändern.
 
@@ -110,10 +110,10 @@ Yusuf: Lagerplatz zwölf ist noch frei.
 
 ### Szene 8
 (Pause 0.8)
-Erzählerin: Der Skänner.
+Erzählerin: Der Scanner.
 (Pause 0.5)
-Erzählerin: Die Skänner. Er liest den Strichcode. Dann weiß das System, wo die Ware ist.
-Kollege: Skänn zuerst den Lagerplatz, dann die Ware.
+Erzählerin: Die Scanner. Er liest den Strichcode. Dann weiß das System, wo die Ware ist.
+Kollege: Scann zuerst den Lagerplatz, dann die Ware.
 
 ### Szene 9
 (Pause 0.8)
@@ -129,7 +129,7 @@ Yusuf: Die Pakete sind fertig für den Versand.
 (Pause 0.8)
 Kollege: Yusuf, am Wareneingang steht eine neue Lieferung. Prüf sie bitte mit dem Lieferschein.
 Yusuf: Mach ich. Zwei Paletten, alles in Ordnung.
-Kollege: Gut, ich fahre sie mit dem Gabelstapler ins Hochregal. Du skännst die Lagerplätze.
+Kollege: Gut, ich fahre sie mit dem Gabelstapler ins Hochregal. Du scannst die Lagerplätze.
 Yusuf: Und was mache ich danach?
 Kollege: Danach kommt die Kommissionierung. Der Versand braucht die Pakete bis vierzehn Uhr.
 Yusuf: Alles klar. Sicherheitsschuhe hab ich an!
@@ -138,9 +138,6 @@ Yusuf: Alles klar. Sicherheitsschuhe hab ich an!
 
 Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
 
-- Skänner → Scanner
-- Skänn → Scann
-- skännst → scannst
 - zwanzig Kartons → 20 Kartons
 - Lagerplatz zwölf → Lagerplatz 12
 - vierzehn Uhr → 14 Uhr
@@ -207,3 +204,5 @@ Aussagen:
 | „Du suchst die Ware für einen Auftrag zusammen.“ | VDI 3590: Kommissionieren = Zusammenstellen von Teilmengen (Artikeln) aus einer Gesamtmenge (Sortiment) aufgrund von Aufträgen [17] |
 | „Hier wird die Ware verpackt und verschickt.“ | Duden Versand (Versenden; Versandabteilung) [11]; Ausbildungsrahmenplan „Verpacken“, „Versenden von Gütern“ [12] |
 | Beispielsätze und Dialog (20 Kartons, Lagerplatz 12, 14 Uhr) | Beispiele, keine Sachaussagen |
+
+Aussprache 03.10.2026 (Hörprobe, Nutzer): Abkürzungen und Anglizismen in normaler Schreibweise (AOK, IBAN, Prepaid, SIM, WG, WLAN, PSA, Scanner, Helper, DB Navigator); nur „Steuer-Aidih“ bleibt Lautschrift.
