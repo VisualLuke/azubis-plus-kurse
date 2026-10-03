@@ -261,6 +261,7 @@
         <path class="zeichnen" pathLength="1" d="M18 62c10-30 22-46 30-40s-12 44-4 44 14-36 24-34-4 30 4 30 12-22 20-22 2 20 10 20 16-18 26-18 8 16 18 14 20-14 30-14 40 8 60 4"/></svg>
       <div class="a plakette gruen" id="ok7"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
     </div>
+    <div class="seite l" id="b11"></div>
     <div class="ruecken" id="ruecken"></div>
   </div>
 
@@ -437,6 +438,7 @@ const welt = (seite, lx, ly, t) => { const s = wertBei('heft', 's', t); return [
 const SPX = 43.5, SPY = -37.5;                  // Mitte = Spitze + Versatz
 const RUHE = [1740, 940];
 akteur('stift', { x: 2120, y: RUHE[1] + SPY });
+akteur('lupe', { x: 0, y: 1300, o: 0 });
 const stiftHin = (t, x, y, d = .45) => { tw('stift', t, d, { x: x + SPX, y: y + SPY, s: 1.06 }, 'inout'); tw('stift', t + d - .1, .15, { s: 1 }, 'out'); };
 const stiftRuhe = (t, d = .5) => tw('stift', t, d, { x: RUHE[0] + SPX, y: RUHE[1] + SPY, s: 1 }, 'inout');
 // schreibt eine Zeile von (x0,y) nach (x1,y): kleine Auf-und-ab-Bewegung der Spitze
@@ -538,7 +540,6 @@ tw('heft', T2, .8, { x: 360, y: 400, s: .8 }, 'inout'); cue(T2, 'whoosh');
 const TX = 1450, TY = 640;
 ein('tuer', T2 + .2, { x: TX, y: TY }, { x: 160, y: 0 });
 akteur('tblatt', { sx: 1 }, true);
-akteur('licht', { o: 1 }, true);
 bump('tuer', W('wichtig', 6), 1.04);
 kopf(2, [W('Ohne', 7) - .1, W('Berichtsheft', 7) - .1, W('nicht', 7) - .1, W('Abschlussprüfung', 7) - .05], [3]);
 // Ohne Berichtsheft: ein leerer Umriss läuft zur Tür und prallt ab
@@ -568,7 +569,7 @@ const KX = 1000, KY = 450;
 ein('kammer2', W('bekommt', 8) - .2, { x: KX, y: KY }, { y: -80 }, 'whoosh');
 flug('ticket2', W('Kammer', 8) - .05, .65, KX, KY + 225, 90, { r: 0 }); cue(W('Kammer', 8) - .05, 'whoosh');
 { const t = W('sehen', 8) - .25;
-  akteur('lupe', { x: KX - 260, y: KY + 380, o: 0, r: 0 });
+  set('lupe', t - .25, { x: KX - 260, y: KY + 380, o: 0, r: 0, s: 1 });
   tw('lupe', t - .2, .2, { o: 1 });
   tw('lupe', t - .2, .45, { x: KX - 70, y: KY + 210 }, 'inout'); tw('lupe', t + .25, .4, { x: KX + 50, y: KY + 220 }, 'inout');
   cue(t, 'scan');
@@ -598,10 +599,8 @@ huepfen('stift', W('Hand', 9), 14);
 akteur('kritzel3', { x: 270, y: 210 });
 akteur('ok3a', { x: 270, y: 390, s: 0 });
 { const t0 = W('Papier', 10) - .35, d = 1.05;
-  const z = [[0, 30], [1, 98], [2, 166]];
-  z.forEach(([i]) => {});
   zeichne('kritzel3', t0, d);
-  const [x0, y0] = welt('l', 50, 110 + 30 * 0, t0);
+  const [x0, y0] = welt('l', 56, 140, t0);
   stiftHin(t0 - .35, x0, y0, .35);
   zeileSchreiben(t0, t0 + d * .45, x0, x0 + 400, y0, 7);
   zeileSchreiben(t0 + d * .45, t0 + d * .8, x0, x0 + 360, y0 + 68, 7);
@@ -628,7 +627,6 @@ for (let i = 0; i < 5; i++) { tw('hk3_' + i, W('jeden', 11) + i * .09, .35, { s:
 // Was gilt, steht in deinem Ausbildungsvertrag: Vertrag rutscht auf den Tisch, die Lupe liest
 ein('vertrag3', W('Was', 12) - .1, { x: 250, y: 700, r: -2 }, { x: -200, y: 0, r: -8 }, 'whoosh');
 { const t = W('steht', 12) - .1;
-  akteur('lupe', { x: 120, y: 900, o: 0 });
   set('lupe', t, { x: 120, y: 900, o: 0, s: 1 });
   tw('lupe', t, .2, { o: 1 }); tw('lupe', t, .5, { x: 230, y: 690 }, 'inout'); tw('lupe', t + .5, .7, { x: 290, y: 705 }, 'sinus');
   cue(t, 'scan');
@@ -645,19 +643,19 @@ kopf(4, [W('Betrieb', 14) - .1, W('Berufsschule', 15) - .3, W('Berufsschule', 15
 { const t = W('was', 13); stiftHin(t, 960, 620, .5); wackeln('stift', t + .55, 4, 6); }
 // Betrieb: gelber Zettel, der Stift schreibt die Stichworte
 kleben('z4a', W('Betrieb', 14), { x: 270, y: 175, r: -1.5 });
-{ const t = W('Steckdosen', 14) - .1, t1 = WE('montiert', 14), [x, y] = welt('l', 52, 196, t);
+{ const t = W('Steckdosen', 14) - .1, t1 = WE('montiert', 14), [x, y] = welt('l', 112, 194, t);
   handschrift('h4a', t, t1); stiftHin(t - .4, x, y, .35); zeileSchreiben(t, t1, x, x + 255, y, 5); }
-{ const t = W('Leitungen', 14) - .1, t1 = WE('verlegt', 14), [x, y] = welt('l', 52, 240, t);
+{ const t = W('Leitungen', 14) - .1, t1 = WE('verlegt', 14), [x, y] = welt('l', 112, 240, t);
   handschrift('h4b', t, t1); tw('stift', t - .2, .2, { x: x + SPX, y: y + SPY }, 'inout'); zeileSchreiben(t, t1, x, x + 225, y, 5); }
 // Berufsschule: blauer Zettel, zwei Zeilen
 stiftRuhe(WE('verlegt', 14) + .1, .45);
 kleben('z4b', W('Themen', 15), { x: 270, y: 165, r: 1.5 });
-{ const t = W('Berufsschule', 15) - .1, [x, y] = welt('r', 52, 192, t);
+{ const t = W('Berufsschule', 15) - .1, [x, y] = welt('r', 112, 191, t);
   zeichne('kr4a', t, .55); zeichne('kr4b', t + .6, .4);
   stiftHin(t - .35, x, y, .35); zeileSchreiben(t, t + .55, x, x + 300, y, 6); zeileSchreiben(t + .6, t + 1, x, x + 220, y + 40, 6); }
 // Unterweisungen: grüner Zettel, „Sicherheit“
 kleben('z4c', W('Unterweisungen', 16) + .1, { x: 270, y: 440, r: -1 });
-{ const t = W('Sicherheit', 16) - .1, t1 = WE('Sicherheit', 16) + .1, [x, y] = welt('r', 52, 474, t);
+{ const t = W('Sicherheit', 16) - .1, t1 = WE('Sicherheit', 16) + .1, [x, y] = welt('r', 112, 481, t);
   handschrift('h4c', t, t1); tw('stift', t - .35, .35, { x: x + SPX, y: y + SPY }, 'inout'); zeileSchreiben(t, t1, x, x + 140, y, 5); }
 stiftRuhe(WE('Sicherheit', 16) + .2, .45);
 // Stichworte reichen: lange Zeilen schrumpfen zu Stichpunkten
@@ -702,7 +700,7 @@ zeichne('uhr5', W('Arbeitszeit', 19) - .1, 1.1, 'inout');
   akzent(t1 + .3, .035); cue(t1, 'whoosh'); }
 // … schreiben: der Stift schreibt auf die rechte Seite
 akteur('kritzel5', { x: 270, y: 280 });
-{ const t0 = W('schreiben', 19) - .2, d = .9, [x, y] = welt('r', 60, 210, t0);
+{ const t0 = W('schreiben', 19) - .2, d = .9, [x, y] = welt('r', 66, 214, t0);
   zeichne('kritzel5', t0, d); stiftHin(t0 - .35, x, y, .35);
   zeileSchreiben(t0, t0 + d * .45, x, x + 340, y, 7); zeileSchreiben(t0 + d * .45, t0 + d * .8, x, x + 300, y + 64, 7); zeileSchreiben(t0 + d * .8, t0 + d, x, x + 130, y + 128, 7);
   stiftRuhe(t0 + d + .1, .45); }
@@ -766,7 +764,8 @@ KRATZ_T.push(W('vergesse', 23));
 pop('gp6a', W('Nach', 25) - .15, { x: 1700, y: 360 }, null);
 pop('gp6b', W('Nach', 25) - .05, { x: 1680, y: 400 }, null);
 pop('gedanke6', W('paar', 25), { x: 1670, y: 530 });
-['gi6a', 'gi6b', 'gi6c'].forEach((id, i) => pop(id, W('Monaten', 25) + i * .1, {}, i ? null : 'pop'));
+['gi6a', 'gi6b', 'gi6c'].forEach((id, i) => { akteur(id, { s: 0 }, true); tw(id, W('Monaten', 25) + i * .1, .5, { s: 1 }, 'back'); });
+cue(W('Monaten', 25), 'pop');
 { const t1 = W('nicht', 25) - .05;
   HOOKS.push(t => { const p = E.inout(clamp((t - t1) / 1.1));
     ['gi6a', 'gi6b', 'gi6c'].forEach(id => { el(id).style.filter = p > 0 ? `blur(${(p * 7).toFixed(2)}px) grayscale(${p.toFixed(2)})` : ''; }); });
@@ -811,7 +810,6 @@ akteur('ok7', { x: 470, y: 470, s: 0 });
   cue(te, 'pop'); bump('heft', te + .5, 1.03); }
 // … wie viel du schon gelernt hast: Tür erscheint, das Heft fliegt hinein, Licht wird grün
 { const t = W('siehst', 28) - .1, TX7 = 1530;
-  akteur('tblatt', { sx: 1 }, true);
   set('tblatt', t - .1, { sx: 1 }); set('tuer', t - .1, { x: TX7 + 160, y: TY, o: 0, s: 1, sx: 1, sy: 1 });
   tw('tuer', t, .5, { o: 1 }, 'out'); tw('tuer', t, .55, { x: TX7 }, 'weich'); cue(t, 'whoosh');
   HOOKS.push(tt => { if (tt >= t - .1 && tt < W('gelernt', 28) + .2) el('licht').classList.remove('gruen'); });
@@ -819,7 +817,7 @@ akteur('ok7', { x: 470, y: 470, s: 0 });
   tw('tblatt', tg, .5, { sx: .25 }, 'out'); cue(tg, 'klick');
   HOOKS.push(tt => { if (tt >= W('gelernt', 28) + .2) el('licht').classList.add('gruen'); });
   // Heft fliegt im Bogen zur Tür und wird klein
-  tw('heft', tg + .2, .9, { x: TX7 - 80, y: TY - 160, s: .3 }, 'inout', { bogen: 120 }); cue(tg + .2, 'whoosh');
+  tw('heft', tg + .2, .9, { x: TX7 - 80, y: TY - 70, s: .3 }, 'inout', { bogen: 120 }); cue(tg + .2, 'whoosh');
   tw('heft', tg + 1.0, .25, { o: 0, s: .15 }, 'in');
   cue(tg + 1.1, 'erfolg'); akzent(tg + 1.1, .04); bump('tuer', tg + 1.15, 1.05); }
 

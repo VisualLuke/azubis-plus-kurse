@@ -132,7 +132,7 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
 #zeilen{position:absolute;inset:0;background:repeating-linear-gradient(var(--ink) 0 2px,transparent 2px 6px);opacity:0}
 .spur{position:absolute;left:0;width:1920px;background:var(--surface)}
 #lichtband{position:absolute;left:0;top:-200px;width:900px;height:1480px;background:linear-gradient(90deg,transparent,var(--warning-bg) 30%,var(--surface) 50%,var(--warning-bg) 70%,transparent)}
-#rTitel{position:absolute;left:0;top:0;display:flex;align-items:center;gap:26px;padding:20px 40px 24px 30px;border-radius:999px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.3)}
+#rTitel{position:relative;display:flex;align-items:center;gap:26px;padding:20px 40px 24px 30px;border-radius:999px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.3)}
 #rTitel .titel{font:800 64px/76px Inter;letter-spacing:-.02em;color:var(--b700);white-space:nowrap}
 #rTitel .ic{width:76px;height:76px}
 /* Nebenkosten (Szene 9) */
@@ -199,9 +199,9 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
     <div class="dunst" id="dunst"></div>
   </div>
 
-  <div class="a" id="schimmel" style="width:300px" data-gruppe="schrank">{{schimmelfleck}}</div>
-  <div class="a" id="schimmelA" style="width:110px" data-gruppe="schrank">{{schimmelfleck~a}}</div>
-  <div class="a" id="schimmelB" style="width:90px" data-gruppe="schrank">{{schimmelfleck~b}}</div>
+  <div class="a" id="schimmel" style="width:300px" data-gruppe="zimmer">{{schimmelfleck}}</div>
+  <div class="a" id="schimmelA" style="width:110px" data-gruppe="zimmer">{{schimmelfleck~a}}</div>
+  <div class="a" id="schimmelB" style="width:90px" data-gruppe="zimmer">{{schimmelfleck~b}}</div>
   <div class="a" id="heiz" style="width:290px" data-gruppe="heiz">{{heizung}}</div>
   <div class="a dial" id="dial" data-gruppe="heiz"></div>
   <div class="a gauge" id="gauge"></div>
@@ -210,32 +210,31 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
   <div class="a zettel" id="blatt1" data-frei><b></b></div>
   <div class="a zettel" id="blatt2" data-frei><b></b></div>
   <div class="a zettel" id="blatt3" data-frei><b></b></div>
-  <div class="a" id="bett" style="width:390px">{{bett}}</div>
+  <div class="a" id="bett" style="width:390px" data-gruppe="zimmer">{{bett}}</div>
   <div class="a" id="staender" style="width:300px" data-gruppe="waesche">{{waeschestaender}}</div>
   <div class="a" id="hemd" style="width:150px" data-gruppe="waesche">{{hemd}}</div>
   <div class="a" id="tuch" style="width:140px" data-gruppe="waesche">{{handtuch}}</div>
-  <div class="a" id="schrank" style="width:450px" data-gruppe="schrank">{{kleiderschrank}}</div>
+  <div class="a" id="schrank" style="width:450px" data-gruppe="zimmer">{{kleiderschrank}}</div>
   <div class="a" id="muenze1" style="width:90px" data-frei>{{muenze}}</div>
   <div class="a geruch" id="geruch" data-frei><svg viewBox="0 0 150 130"><g stroke="var(--b400)" stroke-width="7" fill="none" stroke-linecap="round">
     <path id="gr1" d="M30 120q-14-18 0-36t0-36 0-36"/><path id="gr2" d="M75 120q-14-18 0-36t0-36 0-36"/><path id="gr3" d="M120 120q-14-18 0-36t0-36 0-36"/></g></svg></div>
-  <div class="a schadenbrief" id="brief3">{{brief}}<div class="q">?</div></div>
+  <div class="a schadenbrief" id="brief3" data-frei>{{brief}}<div class="q">?</div></div>
   <div class="a" id="mz3a" style="width:70px" data-frei>{{muenze~a}}</div>
   <div class="a" id="mz3b" style="width:70px" data-frei>{{muenze~b}}</div>
   <div class="a" id="mz3c" style="width:70px" data-frei>{{muenze~c}}</div>
 
   <!-- richtiger Tag -->
-  <div class="a chip" id="kippNein"><span class="ic"></span><span id="kippStrich" style="position:absolute;left:14px;top:30px;width:52px;height:6px;border-radius:3px;background:var(--error);transform:rotate(-40deg)"></span>Kipp</div>
+  <div class="a chip" id="kippNein" data-frei><span class="ic"></span><span id="kippStrich" style="position:absolute;left:14px;top:30px;width:52px;height:6px;border-radius:3px;background:var(--error);transform:rotate(-40deg)"></span>Kipp</div>
   <div class="a" id="sanduhr" style="width:120px">{{sanduhr}}</div>
   <div class="a" id="dusche" style="width:120px" data-frei>{{dusche}}</div>
   <div class="a" id="topf" style="width:120px" data-frei>{{topf}}</div>
   <div class="a chip gruen" id="c20" data-frei><span class="ic"></span>20 °C</div>
   <div class="a chip mond" id="c17" data-frei><span class="ic"></span>17 °C</div>
-  <div class="a" id="massband" style="width:120px" data-frei>{{massband}}</div>
   <div class="a trocken" id="trocken"><span class="ic"></span>Trockenraum<span class="ic2"></span></div>
   <div class="a" id="fleck8" style="width:90px">{{schimmelfleck~c}}</div>
   <div class="a" id="handy8" style="width:190px" data-gruppe="handy8">{{handy}}</div>
   <div class="a schirm" id="schirm8" style="width:88px;height:162px" data-gruppe="handy8"><div class="cam"><div class="fl" style="opacity:.8"></div></div><div class="blitz" id="blitz8"></div></div>
-  <div class="a nachricht" id="msg8">
+  <div class="a nachricht" id="msg8" data-frei>
     <div class="kopf"><div class="av" id="avSchmitt"></div>Herr Schmitt</div>
     <div class="inhalt"><div class="zl" id="z8a" style="width:62%"></div><div class="zl" id="z8b" style="width:92%"></div><div class="zl wort" id="z8w">Schimmel</div>
       <div class="zl" id="z8c" style="width:78%"></div><div class="foto" id="foto8"><i>{{schimmelfleck~d}}</i></div><div class="gesendet" id="ges8">✓✓</div></div></div>
@@ -277,13 +276,13 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
     <path id="spaltLuft" d="M1250 640V250" fill="none" stroke="var(--info-bg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="20 26" opacity="0"/>
     <g id="tropfen"></g>
   </svg>
-  <div class="a lupe" id="lupe"><div class="w"></div><div class="sk" id="lupeSk"></div><svg class="zug" id="lupeZug" viewBox="0 0 260 40"><path d="M10 22h240" stroke="var(--info)" stroke-width="10" stroke-linecap="round" stroke-dasharray="18 14"/></svg>
+  <div class="a lupe" id="lupe" data-frei><div class="w"></div><div class="sk" id="lupeSk"></div><svg class="zug" id="lupeZug" viewBox="0 0 260 40"><path d="M10 22h240" stroke="var(--info)" stroke-width="10" stroke-linecap="round" stroke-dasharray="18 14"/></svg>
     <div class="mb" id="lupeMb">{{massband~l}}</div><div class="cm" id="lupeCm">ein paar cm</div></div>
-  <div class="a portrait" id="priya" style="width:200px;height:200px" data-figur="Priya"></div>
-  <div class="a marke" id="m9a"><u></u>Lüften</div>
-  <div class="a marke" id="m9b"><u></u>Heizen</div>
-  <div class="a marke" id="m9c"><u></u>Abstand</div>
-  <div class="a marke" id="m9d"><u></u>Melden</div>
+  <div class="a portrait" id="priya" style="width:200px;height:200px" data-figur="Priya" data-gruppe="zimmer"></div>
+  <div class="a marke" id="m9a" data-frei><u></u>Lüften</div>
+  <div class="a marke" id="m9b" data-frei><u></u>Heizen</div>
+  <div class="a marke" id="m9c" data-frei><u></u>Abstand</div>
+  <div class="a marke" id="m9d" data-frei><u></u>Melden</div>
 </div></div>
 
 <!-- Nebenkosten (Bildschirm-Ebene, Szene 9) -->
@@ -316,8 +315,8 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
     <rect x="88" y="78" width="26" height="94" rx="8" fill="var(--b500)"/><rect x="136" y="78" width="26" height="94" rx="8" fill="var(--b500)"/></svg></div>
   <div class="a" id="rewIc" style="width:230px;height:230px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
     <g id="rewTri"><path d="M126 82v86l-62-43Z" fill="var(--b500)"/><path d="M190 82v86l-62-43Z" fill="var(--b500)"/></g></svg></div>
-  <div class="a" id="rTitel"><div class="ic"><svg viewBox="0 0 92 92"><path d="M44 18v56L8 46Z" fill="var(--b500)"/><path d="M84 18v56L48 46Z" fill="var(--b500)"/></svg></div>
-    <div id="tbR"><div class="titel">Nochmal – aber richtig</div></div></div>
+  <div style="position:absolute;left:0;right:0;top:790px;display:flex;justify-content:center"><div id="rTitel"><div class="ic"><svg viewBox="0 0 92 92"><path d="M44 18v56L8 46Z" fill="var(--b500)"/><path d="M84 18v56L48 46Z" fill="var(--b500)"/></svg></div>
+    <div id="tbR"><div class="titel">Nochmal – aber richtig</div></div></div></div>
   <div id="lichtband"></div>
 </div>
 
@@ -366,6 +365,7 @@ const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12
 const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
 const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
 const wellen = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.6 }, 'weich'); }); };
+const wiederPop = (id, t, p, snd = null) => { tw(id, t, .001, { ...p, s: 0, sx: 1, sy: 1, r: 0, o: 1 }); tw(id, t + .002, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
 const atmen = (id, t) => { tw(id, t, .35, { sy: 1.1, sx: .95 }, 'sinus'); tw(id, t + .35, .25, { sy: .94, sx: 1.05 }, 'sinus'); tw(id, t + .6, .45, { sy: 1, sx: 1 }, 'sanft'); };
 // Text im Bild: Karte gleitet herein, Wörter steigen aus der Maske
 function titel(id, t0, zeiten, farben = {}, pos = { x: 150, y: 52 }) {
@@ -396,7 +396,7 @@ const ZUST = {};
 function zustand(n, v) { const d = document.createElement('div'); d.id = 'z_' + n; el('zustand').appendChild(d); ZUST[n] = d; akteur(d, { x: v }, true); }
 const zw = (n, t, d, v, e = 'inout') => tw(ZUST[n], t, d, { x: v }, e);
 const zv = (n, t) => wert(AKTEURE.get(ZUST[n]), 'x', ZT(t));
-[['thermo', 0], ['kipp', 0], ['offen', 0], ['heiz', .15], ['temp', 18], ['feuchte', .3], ['wandKalt', 0], ['ecke', 0], ['fenKalt', 0],
+[['thermo', 0], ['kipp', 0], ['offen', 0], ['heiz', .35], ['temp', 18], ['feuchte', .3], ['wandKalt', 0], ['ecke', 0], ['fenKalt', 0],
  ['stoss', 0], ['nacht', 0], ['tuer', 0], ['schnee', .5], ['fahne', 0], ['linie16', 0], ['luftSpalt', 0], ['kamX', 960], ['kamY', 540], ['kamZ', 1]].forEach(([n, v]) => zustand(n, v));
 // Kamera: Fokus (Welt-Koordinaten) und Zoom; akzent() wirkt in Echtzeit
 const AKZENTE = [];
@@ -588,16 +588,14 @@ akteur('#priya .schal', { o: 1 }, true);
   const T0 = A(-.6);
   akteur('bue0', { x: 960, y: 600, o: 0, s: .94 }); tw('bue0', T0, .5, { o: 1 }, 'out'); tw('bue0', T0, .8, { s: 1 }, 'sanft'); cue(T0, 'whoosh');
   const P1 = P(420, 526); ein('heiz', T0 + .25, { ...P1 }, { y: 50 });
-  const PD = P(554, 497); ein('dial', T0 + .3, { ...PD }, { y: 50 });
+  const PD = P(540, 488); ein('dial', T0 + .3, { ...PD }, { y: 50 });
   ein('gauge', T0 + .35, { ...P(650, 250) }, { y: -40 });
   ein('hygro', T0 + .4, { ...P(790, 220) }, { y: -40 });
   ein('kal', T0 + .45, { ...P(1200, 125) }, { y: -40 });
   ein('bett', T0 + .3, { ...P(1030, 520) }, { y: 60 });
   ein('schrank', T0 + .2, { ...P(1390, 420) }, { y: 60 }, 'whoosh');
   akteur('schimmel', { ...P(1390, 430), s: 0 }); akteur('schimmelA', { ...P(1250, 300), s: 0 }); akteur('schimmelB', { ...P(1530, 560), s: 0 });
-  zw('temp', 0, .01, 18); zw('heiz', 0, .01, .35); zw('feuchte', 0, .01, .3);
 }
-akteur('kamera', {}, true);
 
 /* ================= 1 · Fenster auf Kipp, Heizung aus ================= */
 {
@@ -617,7 +615,7 @@ akteur('kamera', {}, true);
   const tH = W('Heizung', 3), tAus = W('aus', 3);
   zw('heiz', tAus - .1, .45, 0, 'back'); cue(tAus - .1, 'klick'); bump('dial', tAus - .1, 1.15);
   zw('temp', tAus, 3, 13, 'inout'); zw('wandKalt', tAus, 2, .6, 'inout');
-  titel('tb1', tK - .1, [tF - .1, tF - .02, tK - .1, tK - .02, tH, tH + .08, tAus], { 2: 'rot', 6: 'rot' });
+  titel('tb1', tK - .1, [tF - .1, tF - .02, tK - .1, tK - .02, tH, tAus], { 2: 'rot', 5: 'rot' });
   // Priya: frische Luft – tief einatmen; Heizen ist teuer: Münze springt aus dem Heizkörper, sie schiebt sie weg
   kam(SE(3) + .1, 1, 760, 520, 1.12);
   waermebild(W('Frische', 4) - .2, 0);
@@ -636,12 +634,12 @@ akteur('kamera', {}, true);
   kam(tAb - .4, 1.1, 960, 540, 1);
   zw('nacht', tAb - .2, 1.2, 1, 'inout'); cue(tAb, 'whoosh');
   const tW = W('Wäsche', 6);
-  akteur('staender', { ...P(760, 538), sx: 0, o: 0 }); tw('staender', tW - .35, .1, { o: 1 }); tw('staender', tW - .35, .55, { sx: 1 }, 'back'); cue(tW - .35, 'klick');
+  akteur('staender', { ...P(730, 538), sx: 0, o: 0 }); tw('staender', tW - .35, .1, { o: 1 }); tw('staender', tW - .35, .55, { sx: 1 }, 'back'); cue(tW - .35, 'klick');
   akteur('hemd', { ...P(700, 534), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
   tw('hemd', tW, .15, { o: 1 }); flug('hemd', tW, .6, LX + 700, LY + 534, 140, { s: 1 }); cue(tW, 'whoosh'); landen('hemd', tW + .6);
   akteur('tuch', { ...P(818, 528), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
   tw('tuch', tW + .35, .15, { o: 1 }); flug('tuch', tW + .35, .6, LX + 818, LY + 528, 140, { s: 1 }); cue(tW + .35, 'whoosh'); landen('tuch', tW + .95);
-  titel('tb2', tW, [tW, tW + .08, W('Zimmer', 6), W('Schrank', 7), W('Schrank', 7) + .08, W('Außenwand', 7) - .1, W('Außenwand', 7) - .02], { 2: 'rot', 6: 'rot' });
+  titel('tb2', tW, [tW, tW + .08, W('Zimmer', 6), W('Zimmer', 6) + .08, W('Schrank', 7), W('Schrank', 7) + .08, W('Schrank', 7) + .16, W('Außenwand', 7) - .05], { 2: 'rot', 7: 'rot' });
   // Schrank an der kalten Außenwand: Akzent, Wärmebild zeigt die kalte Ecke hinter dem Schrank
   const tS = W('Schrank', 7);
   bump('schrank', tS, 1.04); akzent(tS, .035);
@@ -652,7 +650,7 @@ akteur('kamera', {}, true);
   for (let k = 0; k < 46; k++) {
     const r = hash(k + 3), r2 = hash(k + 101), r3 = hash(k + 211);
     const zumSchrank = k % 3 !== 2;
-    tropfen({ b: tW + .9 + k * .1, q: { x: 680 + 160 * r, y: 520 }, c: { x: 520 + 640 * r2, y: 130 + 200 * r3 },
+    tropfen({ b: tW + .9 + k * .07, q: { x: 680 + 160 * r, y: 520 }, c: { x: 520 + 640 * r2, y: 130 + 200 * r3 },
       m: W('feuchte', 8) + .1 + 1.4 * r3, md: 1.6, art: 'kleben',
       z: zumSchrank ? { x: 1280 + 220 * r, y: 290 + 320 * r2 } : { x: 300 + 240 * r, y: 395 + 20 * r2 } });
   }
@@ -673,7 +671,7 @@ akteur('kamera', {}, true);
   // Die Wand hinter dem Schrank ist dunkel: Priya schiebt den Schrank zur Seite, Flecken wachsen in Ringen
   const tWa = W('Wand', 9);
   kam(tWa - .5, 1, 1180, 470, 1.25);
-  tw('priya', tWa - .6, .7, { x: LX + 1150, y: LY + 250 }, 'sanft');
+  tw('priya', tWa - .6, .7, { x: LX + 1130, y: LY + 300 }, 'sanft');
   tw('schrank', tWa - .2, .7, { x: LX + 1100 }, 'sanft'); cue(tWa - .2, 'whoosh');
   tw('schimmel', W('dunkel', 9) - .2, 1.1, { s: 1 }, 'sanft'); cue(W('dunkel', 9), 'plopp');
   const tSc = W('Schimmel', 10);
@@ -724,7 +722,7 @@ akteur('kamera', {}, true);
       s.style.transform = `translateY(${(((t - tR) * (380 + k * 170) + k * 230) % 1180 - 50).toFixed(1)}px)`; }
   });
   // Titel unten mittig; dann ein Lichtband wischt den hellen Tag ins Zimmer
-  titelEin('tbR', tR + 1.1); akteur('rTitel', { x: 580, y: 840, o: 0 }, true); tw('rTitel', tR + .9, .4, { o: 1 }, 'out'); tw('rTitel', tC + .5, .35, { o: 0, y: 860 }, 'in');
+  titelEin('tbR', tR + 1.1); akteur('rTitel', { y: 30, o: 0 }, true); tw('rTitel', tR + .9, .4, { o: 1 }, 'out'); tw('rTitel', tR + .9, .6, { y: 0 }, 'sanft'); tw('rTitel', tC + .5, .35, { o: 0, y: 20 }, 'in');
   HOOKS.push(t => { const p = clamp((t - (tC - .55)) / 1.1); el('lichtband').style.transform = `translateX(${lerp(-1000, 2100, E.inout(p)).toFixed(1)}px) skewX(-12deg)`; el('lichtband').style.visibility = p > 0 && p < 1 ? 'visible' : 'hidden'; });
   cue(tC - .5, 'whoosh');
   titelAus('tb3', TS - .3);   // (wird beim Zurückspulen vom Text selbst rückwärts erledigt)
@@ -753,7 +751,7 @@ zuruecksetzen();
   kam(W('Fenster', 18) - .3, 1, 640, 470, 1.3);
   zw('kipp', W('Fenster', 18), .35, .4, 'out'); zw('kipp', tKi + .05, .35, 0, 'back'); cue(tKi + .05, 'klick');
   el('kippNein').querySelector('.ic').innerHTML = tpl('svgKipp');
-  pop('kippNein', tN, { ...P(700, 140) }); akteur('kippStrich', { sx: 0 }, true); tw('kippStrich', tKi, .3, { sx: 1 }, 'out'); cue(tKi, 'plopp'); wackeln('kippNein', tKi + .2, 2, 4);
+  pop('kippNein', tN, { ...P(420, 170) }); akteur('kippStrich', { sx: 0, r: -40 }, true); tw('kippStrich', tKi, .3, { sx: 1 }, 'out'); cue(tKi, 'plopp'); wackeln('kippNein', tKi + .2, 2, 4);
   aus('kippNein', W('macht', 19));
   // ganz auf: beide Flügel schwingen auf, kräftiger Luftstrom fegt die Tröpfchen hinaus
   zw('offen', tAuf - .05, .6, 1, 'back'); cue(tAuf - .05, 'whoosh'); akzent(tAuf, .05);
@@ -762,7 +760,7 @@ zuruecksetzen();
   zw('stoss', tAuf + .2, .6, 1, 'out'); zw('feuchte', tAuf + .6, 2.4, .2, 'inout'); zw('fenKalt', tAuf + .3, 1, .45, 'out');
   // fünf Minuten: Sanduhr dreht sich einmal und rieselt
   const tFu = W('fünf', 19);
-  pop('sanduhr', tFu - .2, { ...P(700, 150) }); tw('sanduhr', tFu + .1, .6, { r: 180 }, 'inout'); cue(tFu + .1, 'whoosh');
+  pop('sanduhr', tFu - .2, { ...P(150, 150) }); tw('sanduhr', tFu + .1, .6, { r: 180 }, 'inout'); cue(tFu + .1, 'whoosh');
   tw('sanduhr', W('dann', 19) - .1, .01, { r: 0 });
   // dann wieder zu
   const tZu = W('zu', 19);
@@ -771,7 +769,7 @@ zuruecksetzen();
   waermebild(SE(19) + .1, 0);
   const tSt = W('Stoßlüften', 20);
   akzent(tSt, .04); bump('hygro', tSt, 1.1);
-  titel('tb5', tSt - .1, [tSt - .1, tSt, W('zwei', 21), W('zwei', 21) + .08, W('dreimal', 21) - .05, W('am', 21), W('Tag', 21), W('Minuten', 19) > 0 ? W('Tag', 21) + .25 : 0, W('Tag', 21) + .33, W('Tag', 21) + .41], { 0: 'gruen' });
+  titel('tb5', tSt - .1, [tSt - .1, tSt, W('zwei', 21), W('dreimal', 21) - .05, W('am', 21), W('Tag', 21), W('Tag', 21) + .25, W('Tag', 21) + .33, W('Tag', 21) + .41], { 0: 'gruen' });
   // nach dem Duschen und Kochen: Tür auf, Dampf zieht herein, das Fenster geht kurz auf und der Dampf saust hinaus
   const tDu = W('Duschen', 21), tKo = W('Kochen', 21);
   zw('tuer', tDu - .5, .5, 1, 'sanft'); cue(tDu - .5, 'klick');
@@ -793,12 +791,12 @@ zuruecksetzen();
   zw('temp', W('an', 22), 2.2, 20, 'inout'); zw('wandKalt', W('an', 22), 1.5, 0);
   const t20 = W('zwanzig', 23);
   el('c20').querySelector('.ic').innerHTML = tpl('svgSofa'); el('c17').querySelector('.ic').innerHTML = tpl('svgMond');
-  pop('c20', t20, { ...P(760, 150) }, 'ding'); bump('gauge', t20, 1.06);
+  pop('c20', t20, { ...P(790, 390) }, 'ding'); bump('gauge', t20, 1.06);
   // zum Schlafen: Schwenk zum Bett, Thermometer sinkt auf 17 °C
   const tSch = W('Schlafen', 23);
   kam(tSch - .3, 1.1, 820, 470, 1.15);
   zw('heiz', tSch, .5, .55, 'inout'); zw('temp', tSch, 1.6, 17, 'inout');
-  pop('c17', W('siebzehn', 23), { ...P(1030, 360) }, 'ding'); bump('bett', W('siebzehn', 23), 1.04);
+  pop('c17', W('siebzehn', 23), { ...P(1030, 410) }, 'ding'); bump('bett', W('siebzehn', 23), 1.04);
   // Unter sechzehn Grad: rote Linie, das Thermometer stößt nicht darunter und federt zurück
   const t16 = W('sechzehn', 24);
   kam(t16 - .5, 1, 700, 430, 1.25); akzent(t16, .05);
@@ -845,7 +843,7 @@ zuruecksetzen();
   const tWs = W('Wäsche', 27), tTr = W('Trockenraum', 27);
   kam(tWs - .3, 1, 760, 520, 1.1);
   tw('priya', tWs - .3, .7, { x: LX + 1010, y: LY + 300 }, 'sanft');
-  pop('staender', tWs - .15, { ...P(760, 538) }); pop('hemd', tWs - .05, { ...P(700, 534) }, null); pop('tuch', tWs + .05, { ...P(818, 528) }, null);
+  wiederPop('staender', tWs - .15, P(730, 538), 'pop'); wiederPop('hemd', tWs - .05, P(700, 534)); wiederPop('tuch', tWs + .05, P(818, 528));
   el('trocken').querySelector('.ic').innerHTML = tpl('svgWaesche'); el('trocken').querySelector('.ic2').innerHTML = tpl('svgRunter');
   pop('trocken', tTr - .2, { ...P(250, 150) }, 'ding');
   zw('tuer', tTr, .4, 1, 'sanft'); cue(tTr, 'klick');
@@ -858,7 +856,7 @@ zuruecksetzen();
   zw('offen', tOe - .1, .4, 1, 'back'); cue(tOe - .1, 'whoosh'); zw('stoss', tOe, .3, .7);
   zw('offen', SE(28) - .1, .4, 0, 'inout'); zw('stoss', SE(28) - .2, .4, 0); cue(SE(28) + .3, 'klick');
   bump('hygro', W('öfter', 28), 1.12); cue(W('öfter', 28), 'ding');
-  titel('tb7', tSc, [tSc, tSc + .08, W('Außenwand', 26) - .3, W('Außenwand', 26) - .22, tWs, tWs + .08], { 0: 'gruen' });
+  titel('tb7', tSc, [tSc, tSc + .08, tSc + .16, tSc + .24, tWs - .1, tWs, tWs + .08], { 0: 'gruen' });
   titelAus('tb7', SE(28) + .3);
 }
 
@@ -866,11 +864,11 @@ zuruecksetzen();
 {
   const tFl = W('Fleck', 29);
   kam(W('Und', 29), 1, 1100, 420, 1.12);
-  pop('fleck8', tFl - .1, { ...P(1530, 120) }, 'plopp'); wackeln('fleck8', tFl + .4, 2, 3);
+  pop('fleck8', tFl - .1, { ...P(1490, 110) }, 'plopp'); wackeln('fleck8', tFl + .4, 2, 3);
   BLICK.push(['priya', tFl, W('sofort', 29) + .3, 6, -4]); wackeln('priya', W('sieht', 29), 2, 3);
   const tSo = W('sofort', 29);
   akzent(tSo, .05); huepfen('priya', tSo - .05, 14);
-  pop('schmitt', W('Vermieter', 29) - .1, { ...P(1410, 690) });
+  pop('schmitt', W('Vermieter', 29) - .1, { ...P(170, 150) });
   // schriftlich und mit Foto: Handy hoch, die Kamera blitzt
   const tSchr = W('schriftlich', 30), tFo = W('Foto', 30);
   ein('handy8', tSchr - .4, { ...P(1180, 300), r: -3 }, { x: 40, y: 60 }, 'whoosh'); ein('schirm8', tSchr - .4, { ...P(1180, 300), r: -3 }, { x: 40, y: 60 });
@@ -888,11 +886,11 @@ zuruecksetzen();
   // Senden: Nachricht fliegt zu Herrn Schmitt; er liest, nickt und hält den Schraubenschlüssel hoch
   const tSe = SE(32) + .1;
   tw('ges8', tSe, .2, { o: 1 }); cue(tSe, 'klick');
-  bump('msg8', tSe, 1.04); flug('msg8', tSe + .2, .7, LX + 1300, LY + 640, 120, { s: .25, o: 0 }); cue(tSe + .2, 'whoosh');
+  bump('msg8', tSe, 1.04); flug('msg8', tSe + .2, .7, LX + 170, LY + 150, 120, { s: .25, o: 0 }); cue(tSe + .2, 'whoosh');
   bump('schmitt', tSe + .85, 1.1); BLICK.push(['schmitt', W('Guten', 31), tSe + 2, -6, -2]); NICK.push(['schmitt', tSe + .9, tSe + 2]);
   FROH.push(['schmitt', tSe + 1.2, 999], ['priya', tSe + 1.3, 999]);
-  akteur('schluessel', { ...P(1560, 620), s: 0, r: -30 }); tw('schluessel', tSe + 1.2, .5, { s: 1, r: -8 }, 'back'); cue(tSe + 1.2, 'pop'); wackeln('schluessel', tSe + 1.7, 2, 6);
-  el('ok8').innerHTML = tpl('svgHaken'); pop('ok8', tSe + 1.5, { ...P(1300, 580) }, 'erfolg');
+  akteur('schluessel', { ...P(330, 180), s: 0, r: -30 }); tw('schluessel', tSe + 1.2, .5, { s: 1, r: -8 }, 'back'); cue(tSe + 1.2, 'pop'); wackeln('schluessel', tSe + 1.7, 2, 6);
+  el('ok8').innerHTML = tpl('svgHaken'); pop('ok8', tSe + 1.5, { ...P(290, 275) }, 'erfolg');
   titel('tb8', W('sofort', 29) - .1, [tFl, tFl + .08, tSo - .1, W('Vermieter', 29)], { 0: 'gruen' });
   titelAus('tb8', SE(32) + .6);
   aus(['handy8', 'schirm8'], SE(32) + .5);
@@ -923,21 +921,21 @@ const T9 = SA(33) - .2;
     document.querySelectorAll('#haus .hk').forEach(r => r.setAttribute('opacity', (th * .6).toFixed(3)));
     $('#fahneG').setAttribute('opacity', (f * th).toFixed(3));
     $('#fahne1').setAttribute('ry', (620 + 60 * Math.sin(t * 2.3)).toFixed(0)); $('#fahne2').setAttribute('cy', (-1650 - 80 * Math.sin(t * 1.7)).toFixed(0));
-    el('aussen').style.opacity = clamp((zv('kamZ', t) < .9 ? 1 : 0) * (1 - (zv('kamZ', t) - .3) / .6) * 1.4).toFixed(3);
+    el('aussen').style.opacity = clamp((1 - zv('kamZ', t)) / .5).toFixed(3);
   });
   // Übrigens: Kamera fährt aus dem Zimmer heraus – es ist ein Fenster in einem Haus im Schnee
-  kam(T9, 1.8, 1100, 300, .26, 'inout'); cue(T9, 'whoosh');
+  kam(T9, 1.8, 1100, -150, .26, 'inout'); cue(T9, 'whoosh');
   zw('schnee', T9, .1, 1);
   // Nebenkosten: Umschlag fliegt herein und öffnet sich zur Abrechnung
   const tNk = W('Nebenkosten', 33);
   ['umschlag', 'abr', 'klappe', 'balkenRot', 'balkenGruen'].forEach(echt);
-  akteur('umschlag', { x: 1680, y: 600, o: 0, r: 8 }); tw('umschlag', tNk - .6, .3, { o: 1 }); tw('umschlag', tNk - .6, .8, { x: 1290, y: 560, r: -2 }, 'sanft'); cue(tNk - .6, 'whoosh');
+  akteur('umschlag', { x: -200, y: 600, o: 0, r: -8 }); tw('umschlag', tNk - .6, .3, { o: 1 }); tw('umschlag', tNk - .6, .8, { x: 400, y: 560, r: 2 }, 'sanft'); cue(tNk - .6, 'whoosh');
   const tAb = W('Abrechnung', 34);
   akteur('klappe', { sy: 1 }, true); tw('klappe', W('Einmal', 34) + .2, .4, { sy: -1 }, 'inout'); cue(W('Einmal', 34) + .2, 'klick');
   tw('umschlag', tAb - .4, .4, { o: 0, y: 640 }, 'in');
   el('abr').querySelector('.kopf .ic').innerHTML = tpl('svgFlamme');
   el('icKipp').innerHTML = tpl('svgFensterKipp'); el('icZu').innerHTML = tpl('svgFensterZu');
-  akteur('abr', { x: 1240, y: 480, o: 0, s: .7 }); tw('abr', tAb - .35, .3, { o: 1 }); tw('abr', tAb - .35, .6, { s: 1 }, 'back'); cue(tAb - .35, 'pop');
+  akteur('abr', { x: 400, y: 540, o: 0, s: .7 }); tw('abr', tAb - .35, .3, { o: 1 }); tw('abr', tAb - .35, .6, { s: 1 }, 'back'); cue(tAb - .35, 'pop');
   akteur('balkenRot', { sx: 0 }, true); akteur('balkenGruen', { sx: 0 }, true);
   // Wer dauernd kippt, heizt nach draußen: Wärmebild des Hauses, das gekippte Fenster bläst Wärme hinaus
   const tKp = W('kippt', 35), tDr = W('draußen', 35), tMe = W('mehr', 35);
@@ -951,13 +949,12 @@ const T9 = SA(33) - .2;
   waermebild(tAl - .3, 0); zw('fahne', tAl, .5, 0);
   tw('abr', tAl - .3, .4, { o: 0, y: 520 }, 'in');
   kam(tAl - .2, 1.6, 960, 540, 1, 'inout'); cue(tAl - .2, 'whoosh');
-  const M = [['m9a', W('lüften', 36), P(420, 70)], ['m9b', W('heizen', 36), P(560, 420)], ['m9c', W('Abstand', 36), P(1260, 190)], ['m9d', W('melden', 36), P(1010, 470)]];
+  const M = [['m9a', W('lüften', 36), P(420, 260)], ['m9b', W('heizen', 36), P(420, 545)], ['m9c', W('Abstand', 36), P(1390, 420)], ['m9d', W('melden', 36), P(1010, 140)]];
   M.forEach(([id, t, p]) => { el(id).querySelector('u').innerHTML = tpl('svgHakenG'); pop(id, t, p, 'erfolg'); });
   bump('dial', W('heizen', 36), 1.15); bump('schrank', W('Abstand', 36), 1.04);
   zw('offen', W('lüften', 36) - .1, .4, 1, 'back'); zw('offen', W('heizen', 36) + .2, .5, 0, 'inout');
   // Melden: Handy ploppt kurz bei Priya auf
-  pop('handy8', W('Schimmel', 36), { ...P(1180, 300), r: -3 }, null); pop('schirm8', W('Schimmel', 36), { ...P(1180, 300), r: -3 }, null);
-  titel('tb9', W('lüften', 36) - .1, [W('lüften', 36) - .1, W('heizen', 36) - .1, W('heizen', 36) - .02, W('Abstand', 36) - .1, W('Abstand', 36) - .02, W('melden', 36) - .1]);
+  titel('tb9', W('lüften', 36) - .1, [W('lüften', 36) - .1, W('heizen', 36) - .18, W('heizen', 36) - .1, W('Abstand', 36) - .18, W('Abstand', 36) - .1, W('melden', 36) - .18, W('melden', 36) - .1]);
   // Priya strahlt, der Schal fliegt ab
   const tE = ENDE_SPRACHE + .2;
   huepfen('priya', tE, 16); tw('#priya .schal', tE + .1, .7, { y: 120, r: 20, o: 0 }, 'in'); cue(tE + .1, 'whoosh');
