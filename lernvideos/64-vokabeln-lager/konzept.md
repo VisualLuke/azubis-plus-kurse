@@ -25,13 +25,24 @@ Abspann: „Schneller und sicherer.“ und die Kernbotschaft.
 
 ## Layout
 
-Übernommen aus Lernvideo 41 bzw. 31 (Format „Fachvokabeln“): Wortkarte links (Artikel-Chip, Fortschrittspunkte, Wort aus der
-Maske, Zeile „Plural“), darunter die Satzleiste mit Porträt des Sprechers und dem Beispielsatz, der sich im Takt der Stimme
-tippt; rechts die Bühne (900 × 720). Artikel-Farben **der = b500 · die = success · das = warning**.
+Eigene Bildidee (nicht das Layout aus 41/31): Die ganze Welt ist **ein Hochregal aus 3 × 3 Fächern** in einer Lagerhalle.
+Jede Wortkarte ist ein **Karton mit Strichcode**, der auf einer Rollenbahn in sein Regalfach fährt; ein Scan-Tor fährt mit
+einer roten Laserlinie darüber, am Strichcode piept es, dann klebt der Artikel-Aufkleber (der = b500 · die = success ·
+das = warning) und das Wort steigt aus der Maske. Der Beispielsatz steht auf einem **Hängeschild** an zwei Ketten (mit
+Porträt des Sprechers) und tippt sich im Takt der Stimme. Die Kamera fährt wie ein Regalbediengerät von Fach zu Fach
+(Schlangenlinie: unten 2 → 3 → 4, hoch zu 5, dann 6 → 7, hoch zu 8, dann 9 → 10). Anfang: Rolltor geht auf, das Regal wächst
+aus dem Boden, Zoom ins erste Fach. Überraschung am Ende: Die Kamera zieht aus Fach 10 heraus, das ganze Regal ist mit allen
+Wörtern gefüllt; der Schlussdialog läuft vor dem Regal, bei jedem Wort leuchtet sein Fach. Abspann auf einem Rolltor, das herunterfährt.
 
 ## Abweichungen
 
 - Kein Kurstitel im Video (Vorgabe): Szene 1 stellt nur Yusuf vor; die Halle steht mittig, darunter die Farb-Legende der · die · das.
+- Produktion (03.10.2026): Bildaufbau nach der Leitidee „Hochregal“ (siehe Layout) statt Wortkarte links/Bühne rechts.
+  Szene 6: Der Stapler steht vor dem Regal und hebt die Palette direkt ins oberste Fach (kein Fahrer sichtbar).
+  Szene 11: statt Bildfenster leuchtet bei jedem Wort sein Fach im Regal; die Chips reihen sich unten ein, bei „vierzehn Uhr“
+  dreht eine Uhr auf 14:00.
+- Sprechertext: „Gut. Ich fahre sie …“ → „Gut, ich fahre sie …“ (kein Satz aus nur einem Wort; sonst liest die Stimme ihn
+  leicht englisch). Inhalt unverändert.
 - Die zweite Rolle ist im Briefing „Geselle“ (Figur `figur-geselle`, Erzähler-Stimme). Im Lager (IHK-Beruf) gibt es keine
   Gesellen – im Text heißt die Rolle deshalb „Kollege“ (eine Fachkraft im Lager); Figur und Stimme bleiben wie im Briefing.
   Yusuf trägt eine Warnweste als Ebene über dem Porträt (Markenfarben, kursspezifisch in `teile/`).

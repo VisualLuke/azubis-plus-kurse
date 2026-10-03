@@ -303,7 +303,7 @@ HOOKS.push(t => {
   const c = kameraBei(t), c0 = kameraBei(t - 1 / 30);
   WELT.style.transform = `translate(${(960 - c.z * c.x).toFixed(2)}px,${(540 - c.z * c.y).toFixed(2)}px) scale(${c.z.toFixed(5)})`;
   const dx = (c.x - c0.x) * c.z, dy = (c.y - c0.y) * c.z, dz = Math.abs(Math.log(c.z / c0.z)) * 900;
-  const bx = Math.min(16, Math.abs(dx) * .09 + dz * .04), by = Math.min(16, Math.abs(dy) * .09 + dz * .04);
+  const bx = Math.min(10, Math.abs(dx) * .06 + dz * .03), by = Math.min(10, Math.abs(dy) * .06 + dz * .03);
   el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
   el('kamera').style.filter = bx + by > .6 ? 'url(#wischer)' : '';
 });
@@ -882,7 +882,7 @@ const P7 = SE(25) + .3;
   leuchten('th-wohn', tT + .5, tT + 1.6, 'var(--warning)', 1.3);
   const ch = chip('ch7', 'das', 'Thermostat', WP(CT, 560, 430).x, WP(CT, 560, 430).y, CT.z); ch.ein(W('Thermostat', 28));
   const WZ = WP(CT, 1260, 330);
-  neu('walze', `<div class="zz" id="wz">${['', '❄', '1', '2', '3', '4', '5'].map(z => `<b>${z}</b>`).join('')}</div><div class="sch"></div><div class="mark"></div>`, '', 'data-gruppe="walze"', 'walze65');
+  neu('walze', `<div class="zz" id="wz">${['', '', '1', '2', '3', '4', '5'].map(z => `<b>${z}</b>`).join('')}</div><div class="sch"></div><div class="mark"></div>`, '', 'data-gruppe="walze"', 'walze65');
   pop('walze', W('Thermostat', 28) + .15, { x: WZ.x, y: WZ.y, s: 1 / CT.z }, 'pop');
   const WALZE = [[0, 3]];
   const walze = (t, n) => WALZE.push([t, n]);

@@ -25,10 +25,16 @@ Abspann: „Teile kennen. Sicher arbeiten.“ und die Kernbotschaft.
 
 ## Layout
 
-Übernommen aus Lernvideo 41 bzw. 29 (Format „Fachvokabeln“): Wortkarte links (Artikel-Chip, Fortschrittspunkte, Wort aus der
-Maske, Zeile „Plural“), darunter die Satzleiste mit Porträt des Sprechers und dem Beispielsatz, der sich im Takt der Stimme
-tippt; rechts die Bühne (900 × 720). Artikel-Farben **der = b500 · die = success · das = warning**. Bühne hier ein Bad im Umbau
-bzw. ein Heizungskeller statt der Küche.
+Format „Fachvokabeln“ (Technik aus Lernvideo 41: Artikel-Farben **der = b500 · die = success · das = warning**, Wortkarte
+mit Artikel-Chip, Fortschritt, Wort aus der Maske, Zeile „Plural“; Beispielsatz tippt sich im Takt der Stimme), aber eigener
+Bildaufbau: **Querschnitt durch ein Haus** (Bad, Schlafzimmer, Küche, Wohnzimmer, zwei Kellerräume, Garten mit Wärmepumpe,
+Straße). Wasser fließt blau, Heizwasser rot, Gas gelb durch die Leitungen. Die Kamera fährt durch das Haus und folgt den
+Leitungen (Steigleitung hinunter in den Keller, Heizwasser vom Kessel zu den Heizkörpern, hinaus in den Garten und unter die
+Erde, über das ganze Haus auf die Straße). Jede Wortkarte ist ein **Anhänger**, der an einem Faden an dem Bauteil hängt, das
+gerade aufleuchtet; beim Plural zieht die Kamera auf und zeigt dieselben Teile im ganzen Haus. Der Beispielsatz steht oben in
+einer Leiste mit dem Porträt des Sprechers. Überraschung: In Szene 5 taucht die Kamera in die Armatur, eine Schnitt-Lupe zeigt
+die Dichtung zwischen zwei Teilen (ohne Dichtung spritzt Wasser aus dem Spalt). Im Schlussdialog ist das ganze Haus zu sehen,
+jedes Wort erscheint als Chip an seinem Bauteil, bis das Haus beschriftet ist. Abspann: Wasser steigt und füllt das Bild.
 
 ## Abweichungen
 
@@ -43,6 +49,9 @@ bzw. ein Heizungskeller statt der Küche.
 - Szene 10: „der Kundendienst“ ohne Plural (Duden: in der Bedeutung „Service für Kunden“ ohne Plural).
 - Kunden und Bewohner werden nicht gezeigt, nur Haus, Transporter und Thermometer (keine Menschen außer den Figuren);
   Geräte, Transporter und Werkzeug ohne Marke oder Logo.
+- Szene 11: „Gut. Danach ein Heizkörper …“ ist für die Stimme zu „Gut, danach ein Heizkörper …“ zusammengezogen (kein Satz aus
+  nur einem Wort, sonst Gefahr englischer Aussprache). Inhalt unverändert.
+- Szenentabelle oben: Bildideen aus der Planung; umgesetzt im Hausquerschnitt (siehe Layout), Handlungen sinngemäß.
 - Kwame ist in früheren Lernvideos Azubi Elektroniker (29, 32); hier macht er eine Ausbildung im SHK-Handwerk (Rolle laut
   Briefing). Falls das stört: Szene 1 auf „Kwame hilft heute im Bad und im Heizungskeller.“ ändern.
 
