@@ -163,7 +163,7 @@ html,body{background:var(--b50)}
   <svg class="a ringe" id="ringL" viewBox="0 0 300 220" data-gruppe="ring"><defs><linearGradient id="rgL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--b300)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient></defs>
     <circle cx="110" cy="110" r="78" stroke="url(#rgL)" stroke-width="26" fill="none"/><path d="M58 74a70 70 0 0 1 34-24" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none" opacity=".7"/></svg>
   <svg class="a ringe" id="ringR" viewBox="0 0 300 220" data-gruppe="ring"><circle cx="190" cy="110" r="78" stroke="url(#rgL)" stroke-width="26" fill="none"/><path d="M138 74a70 70 0 0 1 34-24" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none" opacity=".7"/></svg>
-  <svg class="a ringe" id="ringV" viewBox="0 0 300 220" data-gruppe="ring"><path d="M188 42a78 78 0 0 1 0 136" stroke="url(#rgL)" stroke-width="26" fill="none"/></svg>
+  <svg class="a ringe" id="ringV" viewBox="0 0 300 220" data-gruppe="ring"><defs><linearGradient id="rgV" gradientUnits="userSpaceOnUse" x1="32" y1="32" x2="188" y2="188"><stop offset="0" stop-color="var(--b300)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient></defs><!-- Verschränkung: unten liegt der linke Ring über dem rechten (Stück des linken Rings, mit ihm bewegt) --><path d="M173.9 154.7A78 78 0 0 1 116.8 187.7" stroke="url(#rgV)" stroke-width="26" fill="none"/></svg>
 
   <!-- Szene 3: an der Wand rechts -->
   <div class="a dienst" id="dienst" data-gruppe="dienst"><h4>Dienstplan</h4></div>
@@ -562,10 +562,10 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
   anpinnen('kal17', SS(11) - .15, { dx: -200, dy: -200 }, 'kal17pin');
   rel('kal17a', {}); rel('kal17b', { sy: 0 });
   tw('kal17a', W('zweitausendsiebzehn', 11) - .1, .2, { sy: 0 }, 'in'); tw('kal17b', W('zweitausendsiebzehn', 11) + .1, .3, { sy: 1 }, 'sanft'); cue(W('zweitausendsiebzehn', 11) + .1, 'plopp');
-  akteur('ringL', { x: 1250, y: -250, o: 0, r: -40 }); akteur('ringR', { x: 2500, y: -250, o: 0, r: 40 }); akteur('ringV', { x: 2500, y: -250, o: 0, r: 40 });
+  akteur('ringL', { x: 1250, y: -250, o: 0, r: -40 }); akteur('ringR', { x: 2500, y: -250, o: 0, r: 40 }); akteur('ringV', { x: 1250, y: -250, o: 0, r: -40 });
   const tR = W('heiraten', 11) - .55;
-  tw('ringL', tR, .1, { o: 1 }); tw('ringL', tR, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
-  tw(['ringR', 'ringV'], tR + .08, .1, { o: 1 }); tw(['ringR', 'ringV'], tR + .08, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
+  tw(['ringL', 'ringV'], tR, .1, { o: 1 }); tw(['ringL', 'ringV'], tR, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
+  tw('ringR', tR + .08, .1, { o: 1 }); tw('ringR', tR + .08, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
   cue(tR + .6, 'ding'); bump('ringL', tR + .68, 1.12); bump('ringR', tR + .68, 1.12); bump('ringV', tR + .68, 1.12);
   akzent(W('heiraten', 11) + .1, .03);
   // offen zeigen: die Straßenkarte, zwei Spuren laufen nebeneinander
