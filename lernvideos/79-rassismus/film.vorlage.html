@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Alle sind gleich viel wert</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --s2:var(--077b8197-bd4b-4580-a609-33092c57cbb5,#F2F0F7);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+/* Leitidee: die Front eines hellen Mietshauses mit großer Klingelanlage – die Kamera fährt an der Hauswand entlang,
+   in Fenster hinein und wieder heraus. Am Ende leuchten alle Klingelschilder gleich. */
+html,body{background:linear-gradient(180deg,var(--b100),var(--b50) 55%,var(--bg))}
+#rahmen{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.buehne{background:none;border-radius:0}
+#bau{position:absolute;left:-1000px;top:-2600px;width:18500px;height:7000px}
+#bau svg{width:18500px;height:7000px}
+.deko{position:absolute}
+.deko svg{width:100%}
+.fl{position:absolute;width:272px;height:352px;border-radius:12px;opacity:0;
+  background:radial-gradient(ellipse at 50% 30%,var(--surface),var(--b100) 75%);box-shadow:0 0 40px 10px rgba(255,255,255,.55)}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 12px 28px rgba(58,37,153,.22)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.ruf{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 62px/96px Inter;text-align:center;box-shadow:0 8px 20px rgba(90,63,230,.3)}
+
+/* Klingelanlage */
+.anlage{width:440px;height:600px;border-radius:30px;background:linear-gradient(160deg,var(--b200),var(--b300));
+  box-shadow:0 18px 40px rgba(58,37,153,.25),inset 0 0 0 4px var(--b300)}
+.anlage .platte{position:absolute;inset:16px;border-radius:20px;background:linear-gradient(170deg,var(--surface),var(--b50))}
+.anlage .gitter{position:absolute;left:150px;top:34px;width:108px;height:48px;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.anlage .gitter i{width:10px;height:10px;border-radius:5px;background:var(--b300)}
+.ks{position:absolute;width:188px;height:58px}
+.ks>div{position:absolute;left:0;top:0;width:150px;height:58px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font:700 22px/1 Inter;white-space:nowrap}
+.ks .v1{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 3px var(--n200)}
+.ks .v2{background:var(--n200);color:var(--n700);font-weight:600;font-style:italic}
+.ks .v3{background:var(--b100);color:var(--b700);font-size:20px}
+.ks .v4{background:var(--s2);color:var(--n500);font-weight:500;box-shadow:inset 0 0 0 2px var(--n300)}
+.ks .ksu{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 3px var(--b300);opacity:0}
+.ks .ksv{background:var(--b500);color:var(--surface);box-shadow:0 0 18px 4px rgba(90,63,230,.45);opacity:0}
+.ks .knopf{position:absolute;left:158px;top:14px;width:30px;height:30px;border-radius:15px;background:radial-gradient(circle at 40% 35%,var(--b300),var(--b600))}
+
+/* Handys */
+.tel{width:400px;height:720px;border-radius:58px;background:var(--b700);box-shadow:0 22px 46px rgba(58,37,153,.3)}
+.tel .schirm{position:absolute;inset:16px;border-radius:44px;background:linear-gradient(var(--surface),var(--b50));overflow:hidden}
+.tel .tkopf{position:absolute;left:0;right:0;top:0;height:104px;background:var(--b500);color:var(--surface);font:800 30px/1 Inter;
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:22px}
+.tel .tkopf::before{content:'';position:absolute;left:142px;top:16px;width:84px;height:12px;border-radius:6px;background:var(--b700)}
+.msg{position:absolute;padding:16px 20px;font:600 28px/36px Inter}
+.msg.ich{right:16px;top:134px;width:300px;height:180px;border-radius:24px 24px 6px 24px;background:var(--b500);color:var(--surface)}
+.msg.du{left:16px;top:340px;width:300px;border-radius:24px 24px 24px 6px;background:var(--n200);color:var(--ink)}
+.tel .eingabe{position:absolute;left:22px;right:22px;bottom:28px;height:64px;border-radius:32px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--b200)}
+.tel .eingabe::after{content:'';position:absolute;right:8px;top:8px;width:48px;height:48px;border-radius:24px;background:var(--b500)}
+.nm{position:relative;display:table;font-weight:800;margin-top:2px}
+.ungl{width:92px;height:92px;border-radius:46px;background:var(--surface);color:var(--b500);font:800 64px/88px Inter;text-align:center;box-shadow:0 8px 20px rgba(58,37,153,.25),inset 0 0 0 5px var(--b500)}
+.nring{position:absolute;left:-10px;right:-10px;top:-4px;bottom:-4px;border-radius:12px;border:4px solid var(--surface);box-shadow:0 0 16px 4px rgba(255,255,255,.7)}
+.cursor{display:inline-block;width:3px;height:1em;margin-left:2px;vertical-align:-.12em;background:currentColor;border-radius:2px;opacity:0}
+.marke{width:56px;height:56px;border-radius:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(22,19,37,.18)}
+.marke.nein{background:var(--error)} .marke.ja{background:var(--success)}
+.marke svg{width:30px}
+.zettel79{width:190px;padding:14px 10px 16px;border-radius:10px;background:var(--surface);box-shadow:0 8px 18px rgba(58,37,153,.22);text-align:center;transform-origin:50% 0}
+.zettel79 b{display:block;font:800 30px/34px Inter;color:var(--ink)}
+.zettel79 i{display:block;width:16px;height:16px;border-radius:8px;background:var(--b500);margin:-24px auto 10px}
+.uhr79{width:200px;height:200px}
+.uhr79 .ebene{position:absolute;inset:0}
+.uhr79 .zg{transform-origin:50% 47.5%}
+.chip79{display:flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 34px/42px Inter;
+  white-space:nowrap;box-shadow:0 10px 24px rgba(90,63,230,.3)}
+.chip79.hell{background:var(--surface);color:var(--b700);box-shadow:0 10px 24px rgba(58,37,153,.18)}
+.chip79 .ic{width:46px;height:46px;flex:none}
+
+/* Raum hinter dem Fenster */
+.kt{width:380px;height:300px;border-radius:32px;background:var(--surface);box-shadow:0 16px 36px rgba(58,37,153,.18);text-align:center}
+.kt .ic{position:absolute;left:100px;top:22px;width:180px;height:180px}
+.kt b{position:absolute;left:0;right:0;bottom:30px;font:800 40px/48px Inter;color:var(--ink)}
+.miniks{position:absolute;left:12px;top:56px;width:156px;height:68px;border-radius:14px;background:var(--b50);box-shadow:inset 0 0 0 4px var(--b300),0 8px 16px rgba(58,37,153,.18)}
+.miniks i{position:absolute;left:18px;height:10px;border-radius:5px;background:var(--b300)}
+.miniks u{position:absolute;right:-30px;top:18px;width:32px;height:32px;border-radius:16px;background:radial-gradient(circle at 40% 35%,var(--b300),var(--b600))}
+.laut{width:300px;height:220px}
+.leise{width:44px;height:44px;border-radius:22px;background:var(--n300)}
+.haha{padding:22px 34px;border-radius:44px 44px 44px 12px;background:var(--n200);color:var(--n500);font:800 italic 44px/52px Inter;white-space:nowrap;
+  box-shadow:0 8px 18px rgba(22,19,37,.08)}
+.sym{width:200px;height:200px}
+.absage{padding:8px 20px;border-radius:12px;background:var(--n200);color:var(--n700);font:800 26px/32px Inter}
+
+/* Grundgesetz-Seite */
+.seite79{width:560px;height:340px;border-radius:22px;background:linear-gradient(170deg,var(--surface),var(--s2));box-shadow:0 18px 40px rgba(58,37,153,.22);padding:34px 40px}
+.seite79 small{display:block;font:700 24px/30px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.seite79 h3{font:800 64px/74px Inter;color:var(--ink);margin-top:4px}
+.seite79 p{font:700 32px/42px Inter;color:var(--n700);margin-top:14px;min-height:84px}
+.seite79 .tags{display:flex;gap:14px;margin-top:6px}
+.tag{padding:8px 18px;border-radius:999px;background:var(--b100);color:var(--b700);font:800 28px/34px Inter;display:inline-block}
+.item{width:340px;height:340px}
+.item .ic{position:absolute;inset:0}
+.stempel79{width:320px;height:320px}
+
+/* Zeitreise */
+.blatt33{width:620px;height:230px;border-radius:12px;background:linear-gradient(160deg,var(--surface),var(--s2));box-shadow:0 16px 36px rgba(22,19,37,.18);
+  text-align:center;padding-top:40px}
+.blatt33 b{display:block;font:800 92px/100px Inter;color:var(--n700);letter-spacing:-.01em}
+.blatt33 i{display:block;width:380px;height:10px;border-radius:5px;background:var(--n200);margin:24px auto 0}
+.seite49{width:460px;height:300px;border-radius:22px;background:linear-gradient(170deg,var(--surface),var(--b50));box-shadow:0 18px 40px rgba(58,37,153,.22);text-align:center;padding-top:30px}
+.seite49 small{display:block;font:700 26px/32px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.seite49 b{display:block;font:800 130px/150px Inter;color:var(--b500);letter-spacing:-.02em}
+.wo79{width:170px;height:170px}
+.sb79{width:170px;height:130px;border-radius:40px 40px 40px 12px;background:var(--surface);box-shadow:inset 0 0 0 6px var(--b500),0 10px 22px rgba(58,37,153,.2);
+  display:flex;align-items:center;justify-content:center;gap:12px}
+.sb79 i{width:20px;height:20px;border-radius:10px;background:var(--b500)}
+
+/* Pausenraum */
+.grau{width:320px;height:210px}
+.ring79{width:170px;height:170px}
+.ring79 svg{position:absolute;inset:0;width:170px;height:170px}
+.leer{width:150px;height:190px;border-radius:22px;background:var(--surface);box-shadow:inset 0 0 0 5px var(--b200),0 10px 22px rgba(58,37,153,.16)}
+.leer i{position:absolute;left:28px;right:28px;height:12px;border-radius:6px;background:var(--b100)}
+.gpunkt{border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(58,37,153,.18)}
+.stopp{width:250px;height:250px}
+.warm{width:220px;height:170px;border-radius:50px 50px 50px 14px;background:var(--surface);box-shadow:inset 0 0 0 6px var(--b300),0 12px 26px rgba(58,37,153,.2)}
+.warm div{position:absolute;left:30px;top:5px;width:160px}
+
+/* Notizblock und Hilfe-Türen */
+.block79{width:460px;height:400px;border-radius:26px;background:var(--surface);box-shadow:0 16px 36px rgba(58,37,153,.2);overflow:hidden}
+.block79 .bind{position:absolute;left:0;right:0;top:0;height:54px;background:var(--b500)}
+.block79 .bind i{position:absolute;top:16px;width:22px;height:22px;border-radius:11px;background:var(--b700)}
+.block79 .zeile{position:absolute;left:36px;right:36px;height:90px}
+.block79 .zeile b{position:absolute;left:0;top:22px;font:800 38px/46px Inter;color:var(--b600)}
+.block79 .zeile svg{position:absolute;left:130px;top:20px;width:260px;height:50px}
+.block79 .zeile u{position:absolute;left:0;right:0;bottom:6px;height:3px;background:var(--b100)}
+.tuer79{width:240px;height:420px}
+.tuer79 .rahmen{position:absolute;inset:0;border-radius:18px 18px 0 0;background:var(--b300)}
+.tuer79 .loch{position:absolute;left:14px;top:14px;right:14px;bottom:0;border-radius:10px 10px 0 0;background:linear-gradient(var(--surface),var(--b100))}
+.tuer79 .licht{position:absolute;left:14px;top:14px;right:14px;bottom:0;border-radius:10px 10px 0 0;background:radial-gradient(ellipse at 50% 40%,var(--surface),rgba(255,255,255,0) 75%);opacity:0}
+.tuer79 .blatt{position:absolute;left:14px;top:14px;right:14px;bottom:0;border-radius:10px 10px 0 0;background:linear-gradient(160deg,var(--b400),var(--b600));transform-origin:0 50%}
+.tuer79 .blatt i{position:absolute;right:16px;top:200px;width:12px;height:44px;border-radius:6px;background:var(--surface);opacity:.8}
+.tuer79 .blatt u{position:absolute;left:22px;right:22px;height:110px;border-radius:10px;border:4px solid rgba(255,255,255,.22)}
+.tschild79{position:absolute;left:-30px;right:-30px;top:-96px;height:76px;border-radius:14px;background:var(--surface);box-shadow:inset 0 0 0 4px var(--b500),0 8px 18px rgba(58,37,153,.18);
+  display:flex;align-items:center;justify-content:center;text-align:center;font:800 28px/32px Inter;color:var(--ink);white-space:nowrap}
+.tschild79.lang{font-size:22px;line-height:26px;top:-104px;height:84px;left:-36px;right:-36px}
+.notruf{display:flex;align-items:center;gap:14px;padding:12px 30px;border-radius:999px;background:var(--error);color:var(--surface);font:800 38px/46px Inter;white-space:nowrap;
+  box-shadow:0 10px 24px rgba(226,85,106,.35)}
+
+/* Text im Bild: Klingelschild unten in der Mitte */
+.capzeile{position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center;pointer-events:none}
+.tafel79{max-width:1360px;padding:22px 64px 26px;border-radius:26px;background:linear-gradient(170deg,var(--surface),var(--b50));text-align:center;
+  box-shadow:0 18px 44px rgba(58,37,153,.22),inset 0 0 0 4px var(--b200)}
+.tafel79::before,.tafel79::after{content:'';position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:8px;background:radial-gradient(circle at 40% 35%,var(--b200),var(--b400))}
+.tafel79::before{left:24px} .tafel79::after{right:24px}
+.tafel79 .eyebrow{font:700 24px/30px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin-bottom:6px}
+.tafel79 .titel{font:800 50px/60px Inter;letter-spacing:-.01em;color:var(--ink)}
+.tafel79 .unter{font:600 34px/44px Inter;color:var(--n700);margin-top:6px}
+
+#blende{position:absolute;inset:0;background:var(--b100);opacity:0}
+#wisch{position:absolute;left:0;top:-100px;width:2600px;height:1280px;background:linear-gradient(90deg,var(--b500),var(--b600));border-radius:0 640px 640px 0;transform:translateX(-2700px)}
+#wisch i{position:absolute;top:0;bottom:0;width:60px;background:var(--b400);opacity:.5}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(50% 50% 50% 50% round 30px)}
+.deckel .gross{font:800 112px/122px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 42px/56px Inter;color:var(--b100);margin-top:26px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Teile als Vorlagen -->
+<template id="t-kwame">{{figur-kwame}}</template>
+<template id="t-jonas">{{figur-jonas}}</template>
+<template id="t-augen">{{figur-augen}}</template>
+<template id="t-zu">{{figur-mund-zu}}</template>
+<template id="t-auf">{{figur-mund-auf}}</template>
+<template id="t-froh">{{figur-mund-froh}}</template>
+<template id="t-lupe">{{lupe}}</template>
+<template id="t-spiegel">{{spiegel}}</template>
+<template id="t-koffer">{{koffer}}</template>
+<template id="t-augenpaar">{{augen}}</template>
+<template id="t-brief">{{brief}}</template>
+<template id="t-gg">{{grundgesetz}}</template>
+<template id="t-werkbank">{{werkbank}}</template>
+<template id="t-betrieb">{{betrieb}}</template>
+<template id="t-haus">{{haus}}</template>
+<template id="t-schild">{{schild}}</template>
+<template id="t-paragraf">{{schutzschild}}</template>
+<template id="t-wolke">{{wolke}}</template>
+<template id="t-stopp">{{stopp}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-tisch">{{tisch}}</template>
+<template id="t-tasse">{{tasse}}</template>
+<template id="t-lampe">{{haengelampe}}</template>
+<template id="t-pflanze">{{pflanze}}</template>
+<template id="t-bild">{{bilderrahmen}}</template>
+<template id="t-stuhl">{{stuhl}}</template>
+
+<div id="rahmen"><div id="kamera"><div id="welt">
+  <div id="bau"></div>
+  <div id="deko"></div>
+  <div id="lichter"></div>
+
+  <!-- Bühnen (für die Prüfung) -->
+  <div class="a buehne" id="bueE" style="left:1500px;top:2000px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueH" style="left:3900px;top:2000px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueS" style="left:3900px;top:-1700px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueW" style="left:3900px;top:400px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueP" style="left:9000px;top:2000px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueR" style="left:14000px;top:2000px;width:2200px;height:1240px"></div>
+  <div class="a buehne" id="bueWeit" style="left:-1000px;top:-2600px;width:18500px;height:7000px"></div>
+
+  <!-- E · Eingang: Zettel an der Tür, Klingelanlage -->
+  <div class="a zettel79" id="zettel"><i></i><b>Zimmer frei</b></div>
+  <div class="a anlage" id="anlage" data-gruppe="anlage"><div class="platte"></div><div class="gitter"></div></div>
+  <svg class="a" id="unterstrich" viewBox="0 0 600 60" style="width:600px;height:60px" data-frei>
+    <path id="unterP" pathLength="1" d="M20 30H580" stroke="var(--b500)" stroke-width="16" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none"/></svg>
+  <div class="a portrait" id="kwame1" style="width:240px;height:240px" data-p="kwame"></div>
+
+  <!-- H · zwei Handys -->
+  <div class="a tel" id="telL" data-gruppe="telL"><div class="schirm"><div class="tkopf">Zimmer frei</div>
+    <div class="msg ich" id="mL"><span id="mLt"></span><span class="nm"><span id="nLt"></span><i class="nring" id="rL"></i></span><span class="cursor" id="cL"></span></div>
+    <div class="msg du" id="aL">Leider schon vergeben.</div><div class="eingabe"></div></div>
+    <div class="marke nein" id="bL" style="position:absolute;left:26px;top:456px"><svg viewBox="0 0 30 30"><path d="M8 8l14 14M22 8L8 22" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></div></div>
+  <div class="a tel" id="telR" data-gruppe="telR"><div class="schirm"><div class="tkopf">Zimmer frei</div>
+    <div class="msg ich" id="mR"><span id="mRt"></span><span class="nm"><span id="nRt"></span><i class="nring" id="rR"></i></span><span class="cursor" id="cR"></span></div>
+    <div class="msg du" id="aR">Gerne! Wann haben Sie Zeit?</div><div class="eingabe"></div></div>
+    <div class="marke ja" id="bR" style="position:absolute;left:26px;top:456px"><svg viewBox="0 0 30 30"><path d="M7 15l6 6L23 9" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+  <div class="a uhr79" id="uhr" data-gruppe="uhr"><div class="ebene">{{uhr}}</div><div class="ebene zg" id="uhrStd">{{uhr-stunde}}</div><div class="ebene zg" id="uhrMin">{{uhr-zeiger}}</div></div>
+  <div class="a chip79" id="plus10" data-gruppe="uhr">+10 Min.</div>
+  <div class="a ungl" id="ungl" data-frei>≠</div>
+  <svg class="a" id="verb" viewBox="0 0 1000 300" style="width:1000px;height:300px" data-frei>
+    <path id="verbP" pathLength="1" d="M0 0" stroke="var(--b500)" stroke-width="8" stroke-linecap="round" stroke-dasharray=".02 .02" fill="none"/></svg>
+  <div class="a" id="lupe" style="width:230px" data-frei></div>
+  <div class="a portrait" id="jonas1" style="width:240px;height:240px" data-p="jonas"></div>
+
+  <!-- R · Raum hinter dem Fenster: Was ist Rassismus? -->
+  <div class="a kt" id="kt1"><div class="ic"></div><b>Aussehen</b></div>
+  <div class="a kt" id="kt2"><div class="ic"><div class="miniks"><i style="top:18px;width:96px"></i><i style="top:40px;width:64px"></i><u></u></div></div><b>Name</b></div>
+  <div class="a kt" id="kt3"><div class="ic"></div><b>Herkunft</b></div>
+  <svg class="a laut" id="laut" viewBox="0 0 300 220" data-gruppe="laut"><path d="M40 20h220a30 30 0 0 1 30 30v100a30 30 0 0 1-30 30H110l-54 34 8-34H40a30 30 0 0 1-30-30V50a30 30 0 0 1 30-30Z" fill="var(--b600)"/>
+    <path d="M168 40l-52 64h36l-20 58 60-74h-38Z" fill="var(--surface)"/></svg>
+  <div class="a leise" id="leise" data-gruppe="laut"></div>
+  <div class="a haha" id="witz">ha ha</div>
+  <div class="a sym" id="blick"></div>
+  <div class="a sym" id="absage" data-gruppe="absage"></div>
+  <div class="a absage" id="absageT" data-gruppe="absage">Absage</div>
+  <svg class="a" id="rahmenR" viewBox="0 0 1700 330" style="width:1700px;height:330px" data-frei>
+    <rect id="rahmenP" pathLength="1" x="10" y="10" width="1680" height="310" rx="44" stroke="var(--b500)" stroke-width="10" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none"/></svg>
+
+  <!-- E · Grundgesetz -->
+  <div class="a" id="gg" style="width:220px" data-gruppe="gg"></div>
+  <div class="a seite79" id="seite" data-gruppe="gg"><small>Grundgesetz</small><h3>Artikel 3</h3><p><span id="ggT"></span><span class="cursor" id="ggC"></span></p>
+    <div class="tags"><span class="tag" id="tag1">Herkunft</span><span class="tag" id="tag2">Sprache</span><span class="tag" id="tag3">Glaube</span></div></div>
+
+  <!-- H · Gleichbehandlungsgesetz -->
+  <div class="a item" id="it1" data-gruppe="it1"><div class="ic"></div></div>
+  <div class="a item" id="it2" data-gruppe="it2"><div class="ic"></div></div>
+  <div class="a item" id="it3" data-gruppe="it3"><div class="ic"></div></div>
+  <div class="a chip79 hell" id="ch1" data-gruppe="it1"><div class="ic"></div>geschützt</div>
+  <div class="a chip79 hell" id="ch2" data-gruppe="it2"><div class="ic"></div>geschützt</div>
+  <div class="a chip79 hell" id="ch3" data-gruppe="it3"><div class="ic"></div>geschützt</div>
+  <div class="a stempel79" id="paragraf" data-frei></div>
+  <div class="a portrait" id="kwameH" style="width:240px;height:240px" data-p="kwame" data-gruppe="kwameH"></div>
+  <div class="a ruf" id="frageK" data-gruppe="kwameH">?</div>
+
+  <!-- S · Himmel: Zeitreise -->
+  <div class="a portrait" id="kwameS" style="width:230px;height:230px" data-p="kwame"></div>
+  <div class="a blatt33" id="blatt33"><b>1933 – 1945</b><i></i></div>
+  <svg class="a" id="punkte" viewBox="0 0 1320 210" style="width:1320px;height:210px"></svg>
+  <div class="a" id="gg2" style="width:200px" data-gruppe="gg2"></div>
+  <div class="a seite49" id="seite49" data-gruppe="gg2"><small>Grundgesetz</small><b>1949</b></div>
+
+  <!-- W · Fenster: heute -->
+  <div class="a wo79" id="wo1"></div><div class="a wo79" id="wo2"></div><div class="a wo79" id="wo3"></div><div class="a wo79" id="wo4"></div>
+  <div class="a sb79" id="sb1"><i></i><i></i><i></i></div><div class="a sb79" id="sb2"><i></i><i></i><i></i></div>
+  <div class="a sb79" id="sb3"><i></i><i></i><i></i></div><div class="a sb79" id="sb4"><i></i><i></i><i></i></div>
+
+  <!-- P · Pausenraum -->
+  <div class="a portrait" id="jonasP" style="width:260px;height:260px" data-p="jonas"></div>
+  <div class="a portrait" id="kwameP" style="width:260px;height:260px" data-p="kwame"></div>
+  <svg class="a grau" id="grau" viewBox="0 0 320 210" data-gruppe="grau"><path d="M50 14h220a36 36 0 0 1 36 36v84a36 36 0 0 1-36 36h-60l12 34-52-34H50a36 36 0 0 1-36-36V50a36 36 0 0 1 36-36Z" fill="var(--n300)"/>
+    <path d="M60 74c14-14 28 14 42 0s28 14 42 0 28 14 42 0 28 14 42 0" stroke="var(--n500)" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <path d="M60 116c14-14 28 14 42 0s28 14 42 0 28 14 42 0" stroke="var(--n500)" stroke-width="9" stroke-linecap="round" fill="none" opacity=".7"/></svg>
+  <div class="a haha" id="ha1" style="font-size:30px;padding:12px 22px">ha</div>
+  <div class="a haha" id="ha2" style="font-size:30px;padding:12px 22px">ha ha</div>
+  <div class="a haha" id="ha3" style="font-size:30px;padding:12px 22px">ha</div>
+  <div class="a ring79" id="ring"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="70" fill="var(--surface)"/><circle cx="85" cy="85" r="70" stroke="var(--b100)" stroke-width="14" fill="none"/>
+    <circle id="ringP" cx="85" cy="85" r="70" stroke="var(--b500)" stroke-width="14" fill="none" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" transform="rotate(-90 85 85)"/>
+    <path id="ringZ" d="M85 85V40" stroke="var(--b700)" stroke-width="8" stroke-linecap="round"/><circle cx="85" cy="85" r="8" fill="var(--b700)"/></svg></div>
+  <div class="a leer" id="kc1"><i style="top:46px"></i><i style="top:78px;right:50px"></i><i style="top:110px"></i></div>
+  <div class="a leer" id="kc2"><i style="top:46px"></i><i style="top:78px;right:50px"></i><i style="top:110px"></i></div>
+  <div class="a leer" id="kc3"><i style="top:46px"></i><i style="top:78px;right:50px"></i><i style="top:110px"></i></div>
+  <div class="a gpunkt" id="gp1" style="width:30px;height:30px" data-gruppe="denk"></div>
+  <div class="a gpunkt" id="gp2" style="width:46px;height:46px" data-gruppe="denk"></div>
+  <div class="a stopp" id="stopp" data-gruppe="grau"></div>
+  <div class="a warm" id="warm"><div></div></div>
+
+  <!-- H · Hilfe -->
+  <div class="a portrait" id="kwameH2" style="width:240px;height:240px" data-p="kwame"></div>
+  <div class="a portrait" id="jonasH2" style="width:220px;height:220px" data-p="jonas"></div>
+  <div class="a block79" id="notiz79"><div class="bind"><i style="left:60px"></i><i style="left:150px"></i><i style="left:240px"></i><i style="left:330px"></i></div>
+    <div class="zeile" style="top:80px"><b>Wann?</b><svg viewBox="0 0 260 50"><path id="kr1" pathLength="1" d="M6 30c20-18 34 14 56-2s30-14 50 0 34 12 54-4 34 10 60 2" stroke="var(--n400)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none"/></svg><u></u></div>
+    <div class="zeile" style="top:180px"><b>Wo?</b><svg viewBox="0 0 260 50"><path id="kr2" pathLength="1" d="M6 28c22-16 30 16 52 0s34-12 52 2 30 8 50-6 30 12 60 4" stroke="var(--n400)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none"/></svg><u></u></div>
+    <div class="zeile" style="top:280px"><b>Wer?</b><svg viewBox="0 0 260 50"><path id="kr3" pathLength="1" d="M6 30c18-14 34 12 54-2s32-12 52 0 34 14 56-2 32 10 52 2" stroke="var(--n400)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none"/></svg><u></u></div></div>
+  <div class="a tuer79" id="d1" data-gruppe="d1"><div class="rahmen"></div><div class="loch"></div><div class="licht"></div><div class="blatt"><u style="top:40px"></u><u style="top:220px;height:140px"></u><i></i></div><div class="tschild79">Ausbilder/in</div></div>
+  <div class="a tuer79" id="d2" data-gruppe="d2"><div class="rahmen"></div><div class="loch"></div><div class="licht"></div><div class="blatt"><u style="top:40px"></u><u style="top:220px;height:140px"></u><i></i></div><div class="tschild79">Betriebsrat</div></div>
+  <div class="a tuer79" id="d3" data-gruppe="d3"><div class="rahmen"></div><div class="loch"></div><div class="licht"></div><div class="blatt"><u style="top:40px"></u><u style="top:220px;height:140px"></u><i></i></div><div class="tschild79">Kammer</div></div>
+  <div class="a tuer79" id="d4" data-gruppe="d4"><div class="rahmen"></div><div class="loch"></div><div class="licht"></div><div class="blatt"><u style="top:40px"></u><u style="top:220px;height:140px"></u><i></i></div><div class="tschild79 lang">Antidiskriminierungs-<br>stelle</div></div>
+  <div class="a notruf" id="notruf"><svg viewBox="0 0 40 40" style="width:40px"><path d="M12 6c-3 0-6 3-6 7 0 12 9 21 21 21 4 0 7-3 7-6l-7-4-4 4c-4-2-8-6-10-10l4-4Z" fill="var(--surface)"/></svg>Notruf 110</div>
+</div></div></div>
+
+<!-- Text im Bild -->
+<div class="capzeile"><div class="tafel79" id="cap2"><div class="eyebrow" id="cap2e">Rassismus</div><div id="cap2t"><div class="titel">schlechter behandelt wegen</div><div class="unter">Aussehen, Name oder Herkunft</div></div></div></div>
+<div class="capzeile"><div class="tafel79" id="cap3"><div class="eyebrow" id="cap3e">In Deutschland</div><div id="cap3t"><div class="titel">Grundgesetz Artikel 3</div></div></div></div>
+<div class="capzeile"><div class="tafel79" id="cap3b"><div class="eyebrow" id="cap3be">Gleichbehandlungsgesetz</div><div id="cap3bt"><div class="titel">Ausbildung · Arbeit · Wohnung</div></div></div></div>
+<div class="capzeile"><div class="tafel79" id="cap4"><div class="eyebrow" id="cap4e">1949: Schutz im Grundgesetz</div><div id="cap4t"><div class="titel">„Nie wieder“</div></div></div></div>
+<div class="capzeile"><div class="tafel79" id="cap5"><div id="cap5t"><div class="titel">Was würdest du tun?</div></div></div></div>
+<div class="capzeile"><div class="tafel79" id="cap6"><div class="eyebrow" id="cap6e">Hilfe</div><div id="cap6t"><div class="titel">Ausbilder/in · Betriebsrat · Kammer</div><div class="unter">Antidiskriminierungsstelle · Notruf 110</div></div></div></div>
+
+<div id="blende"></div>
+<div id="wisch"><i style="left:2380px"></i><i style="left:2460px;width:30px"></i></div>
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Alle sind gleich viel wert.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Benachteiligung wegen Aussehen, Name oder Herkunft ist nicht erlaubt. Wenn es dich trifft, bist du nicht allein – es gibt Hilfe.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SS = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById('t-' + id).innerHTML;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+/* ---------- Straße: Mietshaus, Platz, Betrieb mit Pausenraum, Raum hinter dem Fenster ---------- */
+const GY = 3160;                                    // Gehweg-Kante
+const SPALTEN = [1650, 2170, 2690, 3210, 3730, 4250, 4770, 5290, 5810];
+const ETAGEN = [650, 1350, 2050];                   // Fenstermitten (3., 2., 1. Stock)
+{
+  const R = (x, y, w, h, f, extra = '') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" ${extra}/>`;
+  let s = `<svg viewBox="-1000 -2600 18500 7000">`;
+  // Boden und Gehweg
+  s += R(-1000, GY, 18500, 900, 'var(--b100)') + R(-1000, GY, 18500, 18, 'var(--b200)') + R(-1000, GY + 150, 18500, 10, 'var(--b200)', 'opacity=".6"');
+  for (let x = -900; x < 17500; x += 260) s += R(x, GY + 26, 6, 120, 'var(--b200)', 'opacity=".55"');
+  // Mietshaus A
+  s += R(1300, 300, 5000, GY - 300, 'var(--surface)');
+  s += R(1300, 300, 60, GY - 300, 'var(--b50)') + R(6240, 300, 60, GY - 300, 'var(--b50)');
+  for (const y of [1000, 1700, 2400]) s += R(1300, y - 12, 5000, 24, 'var(--b50)');
+  s += R(1240, 250, 5120, 70, 'var(--b300)', 'rx="16"') + R(1300, 3040, 5000, 120, 'var(--b100)');
+  s += R(2000, 120, 160, 140, 'var(--b200)', 'rx="10"') + R(1980, 100, 200, 34, 'var(--b300)', 'rx="10"');
+  s += R(5500, 140, 140, 120, 'var(--b200)', 'rx="10"') + R(5480, 120, 180, 30, 'var(--b300)', 'rx="10"');
+  const fenster = (cx, cy, w = 300, h = 380) => {
+    const x = cx - w / 2, y = cy - h / 2;
+    return R(x - 14, y - 14, w + 28, h + 28, 'var(--b300)', 'rx="22"') + R(x, y, w, h, 'var(--b100)', 'rx="12"') +
+      `<path d="M${x + 22} ${y + 70}l50-50M${x + 22} ${y + 120}l90-90" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" opacity=".7"/>` +
+      R(x - 30, y + h + 10, w + 60, 26, 'var(--b200)', 'rx="10"');
+  };
+  for (const y of ETAGEN) for (const x of SPALTEN) s += fenster(x, y);
+  // Eingang: Haustür mit Vordach und Hausnummer
+  s += R(1780, 2600, 340, GY - 2600, 'var(--b300)', 'rx="22"') + R(1800, 2620, 300, GY - 2620, 'var(--b100)', 'rx="14"');
+  s += R(1812, 2632, 276, GY - 2632, 'url(#tuerV)', 'rx="10"');
+  s += `<defs><linearGradient id="tuerV" x2="1" y2="1"><stop offset="0" stop-color="var(--b400)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient></defs>`;
+  s += R(1840, 2680, 220, 150, 'var(--b100)', 'rx="12" opacity=".55"') + R(2050, 2900, 14, 60, 'var(--surface)', 'rx="7"');
+  s += R(1730, 2540, 440, 40, 'var(--b400)', 'rx="14"') + R(1750, 2580, 400, 14, 'var(--b200)', 'rx="7"');
+  s += R(1700, GY - 26, 500, 26, 'var(--b200)', 'rx="8"');
+  // Platz zwischen den Häusern: Laterne, Bank
+  s += R(7350, 2200, 18, GY - 2200, 'var(--b400)', 'rx="9"') + R(7290, 2150, 140, 60, 'var(--b300)', 'rx="22"') + R(7310, 2200, 100, 18, 'var(--b100)', 'rx="9"');
+  s += R(7700, 2990, 420, 26, 'var(--b300)', 'rx="10"') + R(7700, 2930, 420, 18, 'var(--b200)', 'rx="9"') + R(7730, 3010, 16, GY - 3010, 'var(--b400)') + R(8074, 3010, 16, GY - 3010, 'var(--b400)');
+  // Betrieb B im Querschnitt (Pausenraum im Erdgeschoss)
+  s += R(8800, 1150, 2600, GY - 1150, 'var(--b200)') + R(8760, 1100, 2680, 70, 'var(--b300)', 'rx="16"');
+  for (const x of [9250, 9850, 10450, 11000]) s += R(x - 140, 1350, 280, 360, 'var(--b300)', 'rx="18"') + R(x - 126, 1364, 252, 332, 'var(--b100)', 'rx="10"');
+  s += R(8840, 1960, 2520, 40, 'var(--b300)');
+  s += R(9000, 2000, 2200, GY - 2000, 'var(--b50)') + R(9000, 3060, 2200, 100, 'var(--b100)') + R(9000, 3054, 2200, 8, 'var(--b200)');
+  s += R(9200, 2160, 420, 300, 'var(--b300)', 'rx="18"') + R(9214, 2174, 392, 272, 'var(--b100)', 'rx="10"') + R(9405, 2174, 10, 272, 'var(--b300)');
+  s += R(10780, 2140, 300, 520, 'var(--b100)', 'rx="16"') + R(10780, 2600, 300, 18, 'var(--b200)', 'rx="8"');
+  s += R(10830, 2190, 200, 150, 'var(--surface)', 'rx="10"');
+  // Raum R (hinter dem Fenster)
+  s += R(13600, 1700, 3000, 1800, 'var(--b50)') + R(13600, 3100, 3000, 400, 'var(--b100)') + R(13600, 3094, 3000, 10, 'var(--b200)');
+  s += R(15900, 2240, 260, 22, 'var(--b200)', 'rx="8"') + R(14000, 2240, 300, 22, 'var(--b200)', 'rx="8"');
+  s += R(13600, 2070, 3000, 18, 'var(--b100)') + R(14400, 3150, 1400, 40, 'var(--b200)', 'rx="20"');
+  s += '</svg>';
+  el('bau').innerHTML = s;
+}
+// Deko-Gegenstände: Name, x, y (Mitte), Breite
+const DEKO = [
+  ['wolke', 4300, -1560, 380], ['wolke', 5850, -1250, 420], ['wolke', 3000, -600, 520], ['wolke', 7600, -300, 600], ['wolke', 650, 900, 480], ['wolke', 8400, 800, 460],
+  ['pflanze', 1500, 3030, 220], ['pflanze', 6150, 3030, 220],
+  ['lampe', 9800, 2090, 260], ['tisch', 9835, 2900, 420], ['tasse', 9835, 2770, 130], ['stuhl', 10520, 3000, 220], ['bild', 10930, 2265, 150],
+  ['lampe', 15100, 2075, 240], ['bild', 14230, 2330, 200], ['pflanze', 16000, 2930, 300], ['stuhl', 14200, 2980, 260],
+];
+el('deko').innerHTML = DEKO.map(([n, x, y, w]) => `<div class="deko" style="left:${x - w / 2}px;top:${y - w / 2}px;width:${w}px">${tpl(n)}</div>`).join('');
+// Fensterlicht (für „viele Menschen“, „nicht allein“ und den Schluss)
+const LICHT = {};
+el('lichter').innerHTML = ETAGEN.flatMap((y, r) => SPALTEN.map((x, c) => `<div class="fl" id="fl${r}_${c}" style="left:${x - 136}px;top:${y - 176}px"></div>`)).join('');
+const LICHT_AN = [];        // [id, t]
+const licht = (r, c, t) => LICHT_AN.push([el(`fl${r}_${c}`), t]);
+HOOKS.push(t => { for (const [e, t0] of LICHT_AN) { const u = clamp((t - t0) / .5); if (u > 0) e.style.opacity = (.9 * E.out(u)).toFixed(3); else e.style.opacity = 0; } });
+
+/* ---------- Inhalte der Akteure ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  const f = p.dataset.p;
+  p.innerHTML = `<div class="figur"><div class="ebene">${tpl(f)}</div><div class="ebene augen">${tpl('augen')}</div>` +
+    `<div class="ebene zu">${tpl('zu')}</div><div class="ebene auf">${tpl('auf')}</div><div class="ebene froh">${tpl('froh')}</div></div>`;
+  p.dataset.sprecher = f === 'kwame' ? 'Kwame' : 'Jonas';
+});
+el('anlage').querySelector('.gitter').innerHTML = '<i></i>'.repeat(12);
+const NAMEN = ['Schneider', 'Nguyen', 'Yılmaz', 'Kowalski', 'Okafor', 'Haddad', 'Petrović', 'Weber', 'Rossi', 'Mensah', 'Fischer', 'Sharma'];
+// Schilder zu Beginn ungleich: verschiedene Stile, leicht versetzt und gekippt (höchstens ±3°)
+const UNGLEICH = [[6, -5, -2.5, 1.04, 'v1'], [-8, 4, 2, .9, 'v2'], [4, 7, 1.5, 1, 'v3'], [-5, -6, -3, .94, 'v4'], [9, 3, 2.5, .88, 'v2'], [-6, -4, -1.5, 1.06, 'v1'],
+  [3, 8, 3, .92, 'v3'], [-9, -3, -2, 1, 'v4'], [7, -7, 1, .95, 'v1'], [-4, 6, -2.8, 1.05, 'v2'], [8, -2, 2.2, .9, 'v4'], [-7, 5, -1, .97, 'v3']];
+NAMEN.forEach((n, i) => {
+  const sp = i % 2, ze = Math.floor(i / 2);
+  el('anlage').insertAdjacentHTML('beforeend', `<div class="ks" id="ks${i}" style="left:${36 + sp * 204}px;top:${112 + ze * 76}px">` +
+    `<div class="${UNGLEICH[i][4]}">${n}</div><div class="ksu">${n}</div><div class="ksv">${n}</div><i class="knopf"></i></div>`);
+});
+el('lupe').innerHTML = tpl('lupe');
+el('kt1').querySelector('.ic').innerHTML = tpl('spiegel');
+el('kt3').querySelector('.ic').innerHTML = tpl('koffer');
+el('blick').innerHTML = tpl('augenpaar');
+el('absage').innerHTML = tpl('brief');
+el('gg').innerHTML = tpl('gg'); el('gg2').innerHTML = tpl('gg');
+[['it1', 'werkbank'], ['it2', 'betrieb'], ['it3', 'haus']].forEach(([id, n]) => { el(id).querySelector('.ic').innerHTML = tpl(n); });
+['ch1', 'ch2', 'ch3'].forEach(id => { el(id).querySelector('.ic').innerHTML = tpl('schild'); });
+el('paragraf').innerHTML = tpl('paragraf');
+['wo1', 'wo2', 'wo3', 'wo4'].forEach(id => { el(id).innerHTML = tpl('wolke'); });
+el('stopp').innerHTML = tpl('stopp');
+el('warm').querySelector('div').innerHTML = tpl('herz');
+// Punkte der Zeitreise: drei Reihen gleich großer Punkte (keine Personen, keine Zeichen)
+{
+  let s = '';
+  for (let r = 0; r < 3; r++) for (let i = 0; i < 29; i++) s += `<circle class="pk" cx="${30 + i * 45 + (r % 2) * 22}" cy="${40 + r * 66}" r="13" fill="var(--n400)" stroke="var(--n400)" stroke-width="3" opacity="0"/>`;
+  el('punkte').innerHTML = s;
+}
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const sprung = (id, t, x, y, h = 80, d = .4) => {
+  tw(id, t, .1, { sy: .95, sx: 1.03 }, 'sinus');
+  tw(id, t + .07, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .1, .16, { sy: 1.03, sx: .98 }, 'sinus');
+  tw(id, t + .07 + d, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .19 + d, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t + .07 + d, 'plopp');
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); p.style.opacity = t > t0 ? 1 : 0; }));
+const TIPPEN = [];
+const tippText = (id, cursor, text, t0, d, cursorBis) => { TIPPEN.push([el(id), el(cursor), text, t0, d, cursorBis]); for (let i = 0; i < text.length; i += 3) cue(t0 + d * i / text.length, 'tipp'); };
+HOOKS.push(t => TIPPEN.forEach(([e, c, s, t0, d]) => {
+  const n = Math.round(s.length * clamp((t - t0) / d)), txt = s.slice(0, n);
+  if (e._v !== txt) { e.textContent = txt; e._v = txt; }
+}));
+// Cursor: blinkt zwischen Beginn und Ende des Tippens (über mehrere Tipp-Abschnitte)
+const CURSOR = [];
+const cursor = (id, a, b) => CURSOR.push([el(id), a, b]);
+HOOKS.push(t => CURSOR.forEach(([c, a, b]) => { c.style.opacity = t >= a && t < b ? (Math.floor((t - a) * 3) % 2 ? .25 : 1) : 0; }));
+const rel = (id, basis = {}) => akteur(id, basis, true);
+
+/* ---------- Figuren: Mund exakt in den eigenen Sätzen, blinzeln, nicken, froh ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, STUMM = {}, KOPF = {};
+const froh = (id, a, b = 999) => (FROH[id] ??= []).push([a, b]);
+const stumm = (id, a, b) => (STUMM[id] ??= []).push([a, b]);
+const kopf = (id, t, r, d = .4) => (KOPF[id] ??= []).push([t, r, d]);
+const kopfWert = (id, t) => { let v = 0; for (const [t0, r, d] of KOPF[id] || []) { if (t < t0) break; v += (r - v) * E.sinus(clamp((t - t0) / d)); } return v; };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  PORTRAITS.forEach((p, i) => {
+    const still = (STUMM[p.id] || []).some(([a, b]) => t >= a && t < b);
+    const aktiv = wer && p.dataset.sprecher === wer && !still;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${(nick + kopfWert(p.id, t)).toFixed(2)}deg) translateY(${aktiv ? 0 : nick}px)`;
+  });
+});
+PORTRAITS.forEach(p => { if (!AKTEURE.has(p)) akteur(p, { o: 0 }); });
+// Kopf schütteln (Jonas) und Kopf hängen lassen (Kwame)
+const schuetteln = (id, t, n = 4, w = 7) => { for (let i = 0; i < n; i++) kopf(id, t + i * .18, i % 2 ? w : -w, .18); kopf(id, t + n * .18, 0, .3); };
+
+/* ---------- Kamera: Fokus fx/fy, Zoom z; Fahrten an der Hauswand, in Fenster hinein ---------- */
+const FAHRTEN = [], AKZENTE = [];
+const Z0 = .873;
+let CAM0 = { fx: 2600, fy: 2620, z: Z0 };
+const fahrt = (t0, d, fx, fy, z, snd = 'whoosh', e = 'inout') => { FAHRTEN.push({ t0, d, fx, fy, z, e }); if (snd) cue(t0, snd); };
+const schnitt = (t0, fx, fy, z) => FAHRTEN.push({ t0, d: .001, fx, fy, z, e: 'lin' });
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+let FSORT = false;
+function cam(t) {
+  if (!FSORT) { FAHRTEN.sort((a, b) => a.t0 - b.t0); FSORT = true; }
+  let c = { ...CAM0 };
+  for (const f of FAHRTEN) {
+    if (t < f.t0) break;
+    const u = E[f.e](clamp((t - f.t0) / f.d));
+    const z = Math.exp(lerp(Math.log(c.z), Math.log(f.z), u));
+    const w = Math.abs(f.z - c.z) < 1e-6 ? u : (1 / z - 1 / c.z) / (1 / f.z - 1 / c.z);
+    c = { fx: lerp(c.fx, f.fx, w), fy: lerp(c.fy, f.fy, w), z };
+  }
+  let z = c.z;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .007 * (1 - Math.cos(t * 2 * Math.PI / 11));
+  return { fx: c.fx, fy: c.fy, z };
+}
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-2%" y="-2%" width="104%" height="104%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const GRAU = [];      // [t, wert]
+const grauWert = t => { let v = 0; for (const [a, g] of GRAU) if (t >= a) v = lerp(v, g, E.inout(clamp((t - a) / 1.0))); return v; };
+const BLENDE = [];    // [t0, d, ziel]
+const blendeWert = t => { let v = 0; for (const [a, d, g] of BLENDE) if (t >= a) v = lerp(v, g, E.inout(clamp((t - a) / d))); return v; };
+HOOKS.push(t => {
+  const k = cam(t), v = cam(t - 1 / 30);
+  $('#kamera').style.transform = `translate(${(960 - k.fx * k.z).toFixed(2)}px,${(540 - k.fy * k.z).toFixed(2)}px) scale(${k.z.toFixed(5)})`;
+  // Bewegungsunschärfe aus der Geschwindigkeit des Bildes (nicht über einen Schnitt hinweg)
+  const sx = Math.abs((k.fx - v.fx) * k.z), sy = Math.abs((k.fy - v.fy) * k.z), sz = Math.abs(Math.log(k.z / v.z)) * 900;
+  const sprung = sx > 600 || sy > 600 || sz > 600;
+  const bx = sprung ? 0 : Math.min(18, (sx + sz * .5) * .1), by = sprung ? 0 : Math.min(18, (sy + sz * .5) * .1);
+  el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('rahmen').style.filter = bx > .3 || by > .3 ? 'url(#wischer)' : '';
+  const g = grauWert(t);
+  el('welt').style.filter = g > .01 ? `grayscale(${g.toFixed(3)}) brightness(${(1 + .03 * g).toFixed(3)})` : '';
+  el('blende').style.opacity = blendeWert(t).toFixed(3);
+});
+// Wischblende: ein violettes Band läuft von links nach rechts über das Bild
+const WISCH = [];
+const wisch = t0 => { WISCH.push(t0); cue(t0, 'whoosh'); };
+HOOKS.push(t => { let x = -2700; for (const a of WISCH) { const u = (t - a) / 1.1; if (u > 0 && u < 1) x = lerp(-2700, 2000, E.inout(u)); } el('wisch').style.transform = `translateX(${x.toFixed(1)}px)`; });
+
+/* ---------- Text im Bild (Klingelschild unten) ---------- */
+const tafel = (id, t0, t1, zeiten) => {
+  akteur(id, { o: 0, y: 40, s: .96 }, true);
+  tw(id, t0, .55, { o: 1, y: 0, s: 1 }, 'sanft'); cue(t0, 'whoosh');
+  if (el(id + 'e')) { rel(id + 'e', { o: 0, y: 14 }); tw(id + 'e', t0 + .15, .4, { o: 1, y: 0 }, 'sanft'); }
+  titelEin(id + 't', t0 + .25, zeiten);
+  tw(id, t1, .4, { o: 0, y: 30 }, 'in');
+};
+
+/* ===================== 1 · Situation: zwei Anfragen, ein Unterschied ===================== */
+akteur('anlage', { x: 2450, y: 2740 });
+NAMEN.forEach((_, i) => { const [x, y, r, sx] = UNGLEICH[i]; rel('ks' + i, { x, y, r, sx }); });
+{
+  // Kwame hüpft vor die Klingelanlage, der Zettel „Zimmer frei“ flattert an der Tür
+  akteur('kwame1', { x: 3400, y: 2900, o: 0, s: .6 });
+  tw('kwame1', .15, .15, { o: 1 }); tw('kwame1', .15, .5, { s: 1 }, 'sanft');
+  sprung('kwame1', .2, 2950, 2900, 90, .45);
+  akteur('zettel', { x: 1950, y: 2760, o: 0, sy: 0 });
+  const tz = W('Zimmer', 1) - .15;
+  set('zettel', tz, { o: 1 }); tw('zettel', tz, .45, { sy: 1 }, 'back'); cue(tz, 'klick');
+  for (let i = 0; i < 4; i++) tw('zettel', tz + .4 + i * .18, .18, { r: [3, -2.5, 1.5, 0][i] }, 'sinus');
+  kopf('kwame1', W('Zimmer', 1), -5); kopf('kwame1', SE(1) + .2, 0);
+  // Kamerafahrt an der Hauswand entlang, Kwame hüpft mit
+  const tF = W('schreibe', 2) - .35;
+  fahrt(tF, 1.4, 5000, 2620, Z0);
+  [[3400, 2890], [3830, 2900], [4230, 2860]].forEach(([x, y], i) => sprung('kwame1', tF + .1 + i * .42, x, y, 70, .34));
+}
+// Handy links: Kwames Anfrage tippt sich, der Name zuletzt
+const NACHRICHT = 'Hallo! Ist das Zimmer noch frei? Viele Grüße,';
+{
+  const tH = W('Nachricht', 2) - .5;
+  akteur('telL', { x: 4660, y: 2900, o: 0, s: .92 });
+  tw('telL', tH, .2, { o: 1 }); tw('telL', tH, .7, { y: 2610, s: 1 }, 'sanft'); cue(tH, 'whoosh');
+  const t0 = W('Nachricht', 2) + .1, t1 = W('Namen', 2) - .05;
+  tippText('mLt', null, NACHRICHT, t0, t1 - t0);
+  tippText('nLt', null, 'Kwame', W('Namen', 2), .3);
+  cursor('cL', t0 - .2, WE('Namen', 2) + .5);
+  rel('mL', {}); tw('mL', WE('Namen', 2) + .4, .1, { s: .96 }, 'sinus'); tw('mL', WE('Namen', 2) + .5, .3, { s: 1 }, 'sanft'); cue(WE('Namen', 2) + .4, 'whoosh');
+  // Antwort: Leider schon vergeben.
+  rel('aL', { o: 0, y: 20, s: .9 });
+  tw('aL', W('Leider', 3) - .1, .4, { o: 1, y: 0, s: 1 }, 'back'); cue(W('Leider', 3) - .1, 'pop');
+  rel('bL', { s: 0 }); tw('bL', WE('vergeben', 3), .45, { s: 1 }, 'back'); cue(WE('vergeben', 3), 'klick');
+  // Kwame lässt den Kopf hängen
+  kopf('kwame1', W('vergeben', 3), -9, .6);
+  tw('kwame1', W('vergeben', 3), .5, { y: 2878 }, 'sinus');
+}
+// Uhr: zehn Minuten später
+{
+  const tU = W('Zehn', 4) - .2;
+  pop('uhr', tU, { x: 5000, y: 2700 });
+  HOOKS.push(t => { const u = E.inout(clamp((t - tU - .3) / 1.2)); el('uhrMin').style.transform = `rotate(${(u * 60).toFixed(1)}deg)`; el('uhrStd').style.transform = `rotate(${(u * 5).toFixed(2)}deg)`; });
+  pop('plus10', W('später', 4) - .05, { x: 5000, y: 2895 });
+  kopf('kwame1', SS(4), 0, .5);
+}
+// Handy rechts: Jonas schreibt dieselbe Nachricht
+{
+  pop('jonas1', W('Kollege', 4) - .05, { x: 5770, y: 2860 }, 'pop', 'sanft');
+  const tH = W('Jonas', 4) - .1;
+  akteur('telR', { x: 5340, y: 2900, o: 0, s: .92 });
+  tw('telR', tH, .2, { o: 1 }); tw('telR', tH, .7, { y: 2610, s: 1 }, 'sanft'); cue(tH, 'whoosh');
+  const t0 = W('dieselbe', 4) - .05, t1 = SE(4) - .25;
+  tippText('mRt', null, NACHRICHT, t0, t1 - t0);
+  tippText('nRt', null, 'Jonas', t1, .3);
+  cursor('cR', t0 - .2, SE(4) + .4);
+  rel('mR', {}); tw('mR', SE(4) + .2, .1, { s: .96 }, 'sinus'); tw('mR', SE(4) + .3, .3, { s: 1 }, 'sanft'); cue(SE(4) + .2, 'whoosh');
+  rel('aR', { o: 0, y: 20, s: .9 });
+  tw('aR', W('plötzlich', 5) - .1, .4, { o: 1, y: 0, s: 1 }, 'back'); cue(W('plötzlich', 5) - .1, 'pop');
+  rel('bR', { s: 0 }); tw('bR', W('frei', 5), .45, { s: 1 }, 'back'); cue(W('frei', 5), 'ding');
+  froh('jonas1', W('frei', 5) - .2, W('fair', 6) - .6);
+}
+// Die Lupe fährt über beide Nachrichten und findet nur einen Unterschied: den Namen
+{
+  const tL = SE(5) - .35;
+  akteur('lupe', { x: 4450, y: 2200, o: 0, s: .8, r: -3 });
+  tw('lupe', tL, .25, { o: 1, s: 1 }); cue(tL, 'whoosh');
+  // Zeile für Zeile über die linke Nachricht, dann hinüber
+  tw('lupe', tL, .5, { x: 4600, y: 2440 }, 'inout');
+  tw('lupe', tL + .5, .45, { x: 4740, y: 2480 }, 'inout'); cue(tL + .5, 'scan');
+  tw('lupe', tL + .95, .4, { x: 4700, y: 2540 }, 'inout');
+  tw('lupe', tL + 1.35, .8, { x: 5280, y: 2440, r: 3 }, 'inout', { bogen: 90 }); cue(tL + 1.35, 'whoosh');
+  tw('lupe', tL + 2.15, .45, { x: 5420, y: 2480 }, 'inout'); cue(tL + 2.15, 'scan');
+  tw('lupe', tL + 2.6, .4, { x: 5380, y: 2540, r: 0 }, 'inout');
+  // Ringe um die Namen, gestrichelte Verbindung
+  rel('rL', { o: 0, s: 1.5 }); rel('rR', { o: 0, s: 1.5 });
+  tw('rL', tL + 1.1, .4, { o: 1, s: 1 }, 'back'); cue(tL + 1.1, 'ding');
+  tw('rR', tL + 2.9, .4, { o: 1, s: 1 }, 'back'); cue(tL + 2.9, 'ding');
+  tw('lupe', tL + 3.2, .4, { o: 0, s: .8 }, 'in');
+  // Verbindung: Pfad zwischen den Namen – gemessen am Layout mit vollem Text, sobald die Schrift geladen ist
+  akteur('verb', { x: 5000, y: 2300 });
+  const TUNGL = tL + 3.3; cue(TUNGL, 'pop');
+  akteur('ungl', { x: 5000, y: 2542, s: 0 }); tw('ungl', TUNGL, .5, { s: 1 }, 'back');
+  let verbOk = false;
+  HOOKS.unshift(() => {
+    if (verbOk || document.fonts.status !== 'loaded') return;
+    const voll = [['mLt', NACHRICHT], ['nLt', 'Kwame'], ['mRt', NACHRICHT], ['nRt', 'Jonas']].map(([id, txt]) => { const e = el(id), alt = e.textContent; e.textContent = txt; return [e, alt]; });
+    const pos = (id, telX, telY) => { let x = 0, y = 0, e = el(id); while (e && !e.classList.contains('tel')) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [telX - 200 + x + el(id).offsetWidth / 2, telY - 360 + y]; };
+    const [ax, ay] = pos('rL', 4660, 2610), [bx, by] = pos('rR', 5340, 2610);
+    voll.forEach(([e, alt]) => { e.textContent = alt; e._v = alt; });
+    const ox = 5000 - 500, oy = 2300 - 150;
+    const aw = el('rL').offsetWidth / 2 + 4, ym = ay + el('rL').offsetHeight / 2 - oy;
+    el('verbP').setAttribute('d', `M${(ax + aw - ox).toFixed(1)} ${ym.toFixed(1)}H${(500 - 50).toFixed(1)}M${(500 + 50).toFixed(1)} ${ym.toFixed(1)}H${(bx - aw - ox).toFixed(1)}`);
+    AKTEURE.get(el('ungl')).basis.y = ym + oy;
+    verbOk = true;
+  });
+  strich('verbP', tL + 3.05, .6);
+  // Jonas: „Das ist nicht fair, Kwame.“ – schüttelt den Kopf; „Das ist Rassismus.“
+  schuetteln('jonas1', W('nicht', 6), 4, 6);
+  akzent(W('Rassismus', 7), .04);
+  bump('rL', W('Rassismus', 7), 1.12); bump('rR', W('Rassismus', 7), 1.12);
+}
+// Ins Fenster hinein (Szene 2)
+const T2 = SE(7) + .05;
+{
+  fahrt(T2, 1.25, 5290, 2050, 9, 'whoosh', 'in');
+  BLENDE.push([T2 + .75, .45, 1]);
+  aus(['telL', 'telR', 'uhr', 'plus10', 'kwame1', 'jonas1', 'verb', 'ungl'], T2 + 1.2, .05);
+}
+
+/* ===================== 2 · Was ist Rassismus? (Raum hinter dem Fenster) ===================== */
+const T2b = T2 + 1.3;
+{
+  schnitt(T2b, 15100, 2620, 1.5);
+  fahrt(T2b + .02, 1.4, 15100, 2620, Z0, null, 'out');
+  BLENDE.push([T2b + .05, .5, 0]);
+  tafel('cap2', W('schlechter', 8) - .1, SE(11) + .5, { unter: W('aussehen', 8) - .1 });
+  // drei Karten bauen sich auf ihre Wörter auf
+  [['kt1', W('aussehen', 8), 14500], ['kt2', W('Namen', 8), 15100], ['kt3', W('Land', 8) - .2, 15700]].forEach(([id, t, x], i) => {
+    akteur(id, { x, y: 2560, o: 0, s: .7, r: [-3, 2, -2][i] });
+    tw(id, t - .25, .2, { o: 1 }); tw(id, t - .25, .6, { y: 2340, s: 1, r: 0 }, 'back'); cue(t - .25, 'pop');
+    const ic = el(id).querySelector('.ic'); rel(ic, { s: .6 }); tw(ic, t + .1, .5, { s: 1 }, 'back');
+  });
+  // Koffer rollt kurz, Spiegel blitzt
+  wackeln('kt3', W('kommen', 8), 3, 2);
+  // laut: dicke Sprechblase mit Blitz wackelt
+  pop('laut', W('laut', 9) - .1, { x: 14460, y: 2710 });
+  tw('laut', W('laut', 9) + .35, .08, { x: 14472 }, 'sinus');
+  for (let i = 0; i < 6; i++) tw('laut', W('laut', 9) + .43 + i * .08, .08, { x: 14460 + (i % 2 ? 12 : -12), r: i % 2 ? 3 : -3 }, 'sinus');
+  tw('laut', W('laut', 9) + .91, .2, { x: 14460, r: 0 }, 'sinus');
+  bump('laut', W('Beleidigung', 9), 1.08); akzent(W('Beleidigung', 9), .03);
+  // leise: schrumpft zu einem kleinen grauen Punkt
+  tw('laut', W('leise', 10) - .15, .5, { s: .12, o: 0 }, 'inout'); cue(W('leise', 10) - .15, 'plopp');
+  pop('leise', W('leise', 10) + .2, { x: 14460, y: 2710 }, null, 'sanft');
+  // Witz, Blick, Absage
+  pop('witz', W('Witz', 10) - .1, { x: 15010, y: 2710 });
+  wackeln('witz', W('Witz', 10) + .35, 4, 3);
+  pop('blick', W('Blick', 10) - .1, { x: 15360, y: 2700 });
+  HOOKS.push(t => { const d = t - W('Blick', 10) - .3; el('blick').style.transform += d > 0 && d < .7 ? ` translateX(${(10 * Math.sin(d * 9)).toFixed(1)}px)` : ''; });
+  pop('absage', W('Absage', 10) - .15, { x: 15720, y: 2680 });
+  pop('absageT', W('Absage', 10) + .15, { x: 15720, y: 2800 }, 'klick');
+  // Auch das ist Rassismus: violetter Rahmen um alle
+  akteur('rahmenR', { x: 15090, y: 2710 });
+  strich('rahmenP', W('Auch', 11) - .2, .9); cue(W('Auch', 11) - .2, 'scan');
+  akzent(W('Rassismus', 11), .03);
+}
+// aus dem Fenster heraus zur Klingelanlage (Szene 3)
+const T3 = SE(11) + .15;
+{
+  BLENDE.push([T3, .4, 1]);
+  fahrt(T3, .45, 15100, 2620, 1.4, 'whoosh', 'in');
+  aus(['kt1', 'kt2', 'kt3', 'leise', 'witz', 'blick', 'absage', 'absageT', 'rahmenR'], T3 + .4, .05);
+  schnitt(T3 + .45, 2690, 2050, 9);
+  fahrt(T3 + .47, 1.5, 2450, 2740, 1.25, null, 'out');
+  BLENDE.push([T3 + .5, .45, 0]);
+}
+
+/* ===================== 3 · So ist es in Deutschland ===================== */
+{
+  // gleich viel wert: alle Schilder richten sich exakt aus und werden gleich
+  const tG = W('gleich', 12) - .1;
+  NAMEN.forEach((_, i) => {
+    const t = tG + (i % 2) * .05 + Math.floor(i / 2) * .05;
+    tw('ks' + i, t, .55, { x: 0, y: 0, r: 0, sx: 1 }, 'sanft');
+    const u = el('ks' + i).querySelector('.ksu'); rel(u, { o: 0 }); tw(u, t + .1, .4, { o: 1 }, 'inout');
+    if (i % 3 === 0) cue(t, 'klick');
+  });
+  cue(WE('viel', 12) + .1, 'ding'); bump('anlage', WE('viel', 12) + .1, 1.03); akzent(WE('viel', 12) + .1, .025);
+  // Grundgesetz: Buch fällt herein, eine Seite „Artikel 3“ fährt heraus
+  fahrt(W('Grundgesetz', 13) - .7, 1.1, 2950, 2700, .95);
+  const tB = W('Grundgesetz', 13) - .2;
+  akteur('gg', { x: 3330, y: 1900, r: -3, o: 0 });
+  set('gg', tB, { o: 1 }); tw('gg', tB, .5, { y: 2895, r: 0 }, 'in'); landen('gg', tB + .5, 1); cue(tB + .5, 'plopp');
+  tafel('cap3', W('Artikel', 13) - .2, SE(13) + .4, { 2: W('drei', 13) });
+  const tS = W('Artikel', 13) - .1;
+  akteur('seite', { x: 3330, y: 2880, o: 0, s: .35 });
+  tw('seite', tS, .15, { o: 1 }); tw('seite', tS, .65, { y: 2560, s: 1 }, 'sanft'); cue(tS, 'whoosh');
+  tw('gg', tS + .1, .4, { y: 2930, s: .9 }, 'sanft');
+  tippText('ggT', null, 'Niemand darf benachteiligt werden.', W('Niemand', 13), W('Herkunft', 13) - W('Niemand', 13) + .2);
+  cursor('ggC', W('Niemand', 13) - .2, W('Herkunft', 13) + .5);
+  [['tag1', 'Herkunft'], ['tag2', 'Sprache'], ['tag3', 'Glaubens']].forEach(([id, w]) => { rel(id, { s: 0 }); tw(id, W(w, 13) - .05, .45, { s: 1 }, 'back'); cue(W(w, 13) - .05, 'pop'); });
+  bump('seite', W('benachteiligt', 13), 1.04); akzent(W('benachteiligt', 13), .03);
+  aus(['seite', 'gg'], SE(13) + .3, .35);
+}
+// an der Hauswand entlang: Gleichbehandlungsgesetz
+{
+  fahrt(SE(13) + .35, 1.3, 5000, 2620, Z0);
+  tafel('cap3b', W('Gleichbehandlungsgesetz', 14) - .2, SE(15) + .4, [W('Ausbildung', 14) - .1, W('Arbeit', 14) - .1, W('Arbeit', 14), W('Wohnungssuche', 14) - .1, W('Wohnungssuche', 14)]);
+  [['it1', 'ch1', 'Ausbildung', 4350], ['it2', 'ch2', 'Arbeit', 5000], ['it3', 'ch3', 'Wohnungssuche', 5650]].forEach(([it, ch, w, x], i) => {
+    const t = W(w, 14) - .25;
+    akteur(it, { x, y: 2560, o: 0, s: .7 }); tw(it, t, .15, { o: 1 }); tw(it, t, .6, { s: 1 }, 'back'); cue(t, 'pop');
+    pop(ch, t + .45, { x, y: 2830 }, 'klick');
+    const ic = el(ch).querySelector('.ic'); rel(ic, { r: 0 }); wackeln(ic, t + .8, 3, 6);
+  });
+  // Straftaten: Paragraf-Schild schlägt mit Wackler auf
+  tw(['it1', 'it2', 'it3', 'ch1', 'ch2', 'ch3'], W('Rassistische', 15), .5, { o: .3 }, 'inout');
+  const tP = W('Straftaten', 15) - .3;
+  akteur('paragraf', { x: 5000, y: 1900, o: 0, s: 1.6, r: -3 });
+  tw('paragraf', tP, .1, { o: 1 }); tw('paragraf', tP, .32, { y: 2560, s: 1, r: 0 }, 'in');
+  landen('paragraf', tP + .32, 1.3); wackeln('paragraf', tP + .4, 4, 3); cue(tP + .32, 'plopp'); akzent(tP + .32, .05);
+  aus(['it1', 'it2', 'it3', 'ch1', 'ch2', 'ch3', 'paragraf'], SE(15) + .35, .35);
+}
+
+/* ===================== 4 · Warum? Zeitreise in den Himmel über dem Haus ===================== */
+{
+  pop('kwameH', SS(16) - .2, { x: 5000, y: 2720 }, 'pop', 'sanft');
+  pop('frageK', W('Warum', 16), { x: 5180, y: 2560, s: .85 }); wackeln('frageK', W('wichtig', 16), 4, 6);
+  kopf('kwameH', W('wichtig', 16), 6);
+  // die Kamera fährt am Haus nach oben in den Himmel
+  const tU = SE(16) + .05;
+  fahrt(tU, 1.9, 5000, -1080, Z0);
+  aus(['kwameH', 'frageK'], tU + 1.0, .05);
+  GRAU.push([W('Nationalsozialismus', 17) - .2, 1]);
+  pop('kwameS', tU + 1.5, { x: 4300, y: -800 }, null, 'sanft');
+  // altes Blatt
+  akteur('blatt33', { x: 5150, y: -1380, o: 0, s: .9, r: -2 });
+  tw('blatt33', W('Nationalsozialismus', 17), .8, { o: 1, s: 1, r: 0 }, 'inout');
+  // schweigend wächst eine lange Reihe gleich großer Punkte; auf „ermordet“ verlieren sie die Füllung
+  akteur('punkte', { x: 5230, y: -1010, o: 0 });
+  const PK = [...el('punkte').querySelectorAll('.pk')];
+  const tA = W('Millionen', 17) - .1, tE = W('ermordet', 17);
+  set('punkte', tA, { o: 1 }); tw('punkte', W('Schutz', 19) - .6, .8, { o: 0 }, 'inout');
+  HOOKS.push(t => {
+    const n = PK.length * clamp((t - tA) / (tE - tA - .1));
+    const leer = E.inout(clamp((t - tE) / 1.2)), weg = E.inout(clamp((t - W('Schutz', 19) + .6) / .8));
+    PK.forEach((c, i) => {
+      const k = (i % 29) * 3 + Math.floor(i / 29);       // spaltenweise von links nach rechts
+      const o = clamp(n - k) * (1 - weg);
+      c.setAttribute('opacity', o.toFixed(3)); c.setAttribute('fill-opacity', (1 - .85 * leer).toFixed(3));
+    });
+  });
+  kopf('kwameS', W('ermordet', 17), -5, .8); kopf('kwameS', SS(18), 0, .6);
+  // Nie wieder: das Bild wird wieder farbig
+  GRAU.push([W('Nie', 18) - .1, 0]); cue(W('Nie', 18), 'ding');
+  tafel('cap4', W('Nie', 18) - .3, SE(19) + .4, [W('Nie', 18), W('wieder', 18)]);
+  tw('blatt33', W('Schutz', 19) - .5, .6, { o: 0, y: -1440 }, 'in');
+  // 1949: das Grundgesetz kommt angeflogen, die Seite „1949“ fährt heraus
+  const tB = W('Schutz', 19) - .3;
+  akteur('gg2', { x: 6300, y: -1300, o: 0, r: 3 });
+  tw('gg2', tB, .15, { o: 1 }); tw('gg2', tB, .6, { x: 5230, y: -900, r: 0 }, 'inout', { bogen: 120 }); landen('gg2', tB + .6, .8); cue(tB, 'whoosh');
+  const tS = W('neunzehnhundertneunundvierzig', 19) - .15;
+  akteur('seite49', { x: 5230, y: -900, o: 0, s: .3 });
+  tw('seite49', tS, .15, { o: 1 }); tw('seite49', tS, .6, { y: -1240, s: 1 }, 'sanft'); cue(tS, 'pop');
+  bump('seite49', WE('neunzehnhundertneunundvierzig', 19), 1.06); cue(WE('neunzehnhundertneunundvierzig', 19), 'ding');
+  froh('kwameS', W('Grundgesetz', 19) - .2, SS(20) + .4); huepfen('kwameS', W('Grundgesetz', 19), 14);
+}
+// auch heute: zurück an die Hauswand, in einigen Fenstern ziehen graue Wolken auf
+{
+  const tH = W('Trotzdem', 20) - .5;
+  fahrt(tH, 1.5, 5000, 1020, Z0);
+  aus(['kwameS', 'gg2', 'seite49'], tH + .9, .05);
+  [[0, 5], [0, 6], [0, 7], [0, 8], [1, 5], [1, 6], [1, 7], [1, 8]].forEach(([r, c], i) => licht(r, c, tH + .9 + i * .08));
+  const ORTE = [[4250, 650], [5290, 650], [4770, 1350], [5810, 1350]];
+  ORTE.forEach(([x, y], i) => {
+    const t = W('viele', 20) + i * .2;
+    pop('wo' + (i + 1), t, { x, y: y + 10, s: .95 }, i % 2 ? null : 'plopp', 'sanft');
+    schweben('wo' + (i + 1), 4);
+    // darüber sprechen: aus den Wolken werden Sprechblasen
+    const t2 = W('sprechen', 21) - .4 + i * .15;
+    tw('wo' + (i + 1), t2, .3, { s: 0 }, 'in');
+    pop('sb' + (i + 1), t2 + .2, { x, y: y + 10 }, i % 2 ? null : 'pop');
+  });
+  akzent(W('Rassismus', 20), .03);
+  akzent(W('sprechen', 21), .03);
+}
+
+/* ===================== 5 · Was würdest du tun? Pausenraum ===================== */
+const T5 = SE(21) + .2;
+{
+  wisch(T5);
+  schnitt(T5 + .55, 10100, 2620, Z0);
+  aus(['sb1', 'sb2', 'sb3', 'sb4'], T5 + .5, .05);
+  pop('jonasP', T5 + .7, { x: 9500, y: 2660 }, 'pop', 'sanft');
+  pop('kwameP', T5 + .85, { x: 10170, y: 2660 }, null, 'sanft');
+  // aus dem Off: eine graue Blase ohne Gesicht
+  akteur('grau', { x: 11700, y: 2420, o: 0 });
+  const tG = W('Witz', 22) - .4;
+  tw('grau', tG, .1, { o: 1 }); tw('grau', tG, .6, { x: 10820 }, 'sanft'); cue(tG, 'whoosh');
+  for (let i = 0; i < 3; i++) tw('grau', tG + .7 + i * .12, .12, { r: i % 2 ? 2 : -2 }, 'sinus'); tw('grau', tG + 1.06, .2, { r: 0 }, 'sinus');
+  kopf('kwameP', W('Herkunft', 22), -8, .6); tw('kwameP', W('Kwame', 22), .5, { y: 2676 }, 'sinus');
+  kopf('jonasP', W('Kwame', 22), 6, .5);
+  // ein paar Leute lachen: kleine Lach-Blasen wackeln
+  [['ha1', 10990, 2700], ['ha2', 10790, 2840], ['ha3', 11010, 2960]].forEach(([id, x, y], i) => {
+    const t = W('lachen', 23) - .35 + i * .14;
+    pop(id, t, { x, y }, i === 1 ? null : 'pop');
+    for (let k = 0; k < 8; k++) tw(id, t + .5 + k * .15, .15, { r: k % 2 ? 4 : -4, y: y + (k % 2 ? 0 : -6) }, 'sinus');
+    tw(id, t + 1.7, .2, { r: 0, y }, 'sinus');
+  });
+  // Was würdest du tun? Kamera rückt an die beiden heran, Denkpause mit Ring und leeren Antwort-Kärtchen
+  fahrt(W('Was', 24) - .4, 1.1, 9850, 2600, 1.1);
+  tafel('cap5', W('Was', 24) - .1, SS(25) - .2, [W('Was', 24), W('würdest', 24), W('du', 24), W('tun', 24)]);
+  const tD = SE(24) + .05, tD1 = SS(25) - .2;
+  pop('ring', tD - .2, { x: 10390, y: 2290 });
+  HOOKS.push(t => { const u = clamp((t - tD) / (tD1 - tD)); el('ringP').style.strokeDashoffset = u.toFixed(4); el('ringZ').style.transform = `rotate(${(u * 360).toFixed(1)}deg)`; el('ringZ').style.transformOrigin = '85px 85px'; });
+  for (let s = 1; s < 4; s++) cue(tD + s * (tD1 - tD) / 4, 'klick');
+  kopf('jonasP', tD, -7, .8); kopf('jonasP', tD + 1.6, 7, 1.0); kopf('jonasP', tD1 - .3, 0, .4);
+  pop('gp1', tD + .1, { x: 9610, y: 2470 }, null, 'sanft'); pop('gp2', tD + .45, { x: 9660, y: 2410 }, null, 'sanft');
+  [['kc1', 9620, 2280], ['kc2', 9850, 2260], ['kc3', 10080, 2280]].forEach(([id, x, y], i) => {
+    pop(id, tD + .7 + i * .25, { x, y }, 'pop');
+    const ph = i * 1.3;
+    HOOKS.push(t => { const d = t - (tD + .7 + i * .25); if (d > .5) el(id).style.transform += ` scaleX(${Math.cos((d - .5) * 1.6 + ph * 0).toFixed(3)})`; });
+  });
+  aus(['ring', 'gp1', 'gp2', 'kc1', 'kc2', 'kc3'], tD1 - .1, .3);
+}
+
+/* ===================== 6 · Tipp: Lach nicht mit ===================== */
+{
+  fahrt(W('Tipp', 25) - .3, 1.0, 10100, 2620, Z0);
+  kopf('kwameP', SS(25), 0, .5);
+  // die Lach-Blasen verpuffen, das Stopp-Schild schiebt sich vor die graue Blase
+  ['ha1', 'ha2', 'ha3'].forEach((id, i) => { const t = W('Lach', 25) + i * .08; tw(id, t, .12, { s: 1.15 }, 'sinus'); tw(id, t + .12, .2, { s: 0, o: 0 }, 'in'); }); cue(W('Lach', 25), 'plopp');
+  akteur('stopp', { x: 9800, y: 2560, o: 0, s: .6 });
+  const tS = W('nicht', 25) - .15;
+  tw('stopp', tS, .15, { o: 1 }); tw('stopp', tS, .55, { x: 10600, s: 1 }, 'sanft'); cue(tS, 'whoosh');
+  landen('stopp', tS + .55, .6);
+  tw('grau', tS + .45, .15, { x: 10860 }, 'sinus'); tw('grau', tS + .6, .3, { x: 10820 }, 'sanft');
+  // Sag ruhig …: die graue Blase schrumpft zu einem kleinen Punkt
+  tw('grau', W('ruhig', 26), .6, { s: .2, o: .5 }, 'inout'); cue(W('ruhig', 26), 'plopp');
+  tw('grau', W('Ordnung', 26), .4, { s: 0, o: 0 }, 'in');
+  aus('stopp', W('Ordnung', 26) + .1, .35);
+  // Alles gut bei dir? – warme Blase mit Herz, beide lächeln
+  pop('warm', W('Alles', 27) - .1, { x: 9835, y: 2390 }, 'pop');
+  const hz = el('warm').querySelector('div'); rel(hz, { s: 0 }); tw(hz, W('Alles', 27) + .25, .5, { s: 1 }, 'back'); cue(W('dir', 27), 'ding');
+  froh('kwameP', W('dir', 27)); froh('jonasP', W('Alles', 27) - .1);
+  huepfen('kwameP', W('dir', 27) + .1, 14); huepfen('jonasP', W('dir', 27) + .25, 12);
+  schweben('warm', 4);
+}
+// Kamerafahrt die Straße entlang zurück zum Mietshaus
+{
+  const tF = SE(27) + .15;
+  fahrt(tF, 1.7, 5000, 2620, Z0);
+  aus(['jonasP', 'kwameP', 'warm'], tF + 1.2, .05);
+  pop('kwameH2', SS(28) + .2, { x: 4250, y: 2790 }, 'pop', 'sanft');
+  // Du bist nicht allein: Jonas kommt dazu, in den Fenstern geht das Licht an
+  pop('jonasH2', W('allein', 28) - .3, { x: 4520, y: 2810 }, 'pop', 'sanft');
+  froh('jonasH2', W('allein', 28)); froh('kwameH2', W('allein', 28) + .2, W('Schreib', 29));
+  [3, 4, 5, 6, 7, 8].forEach((c, i) => licht(2, c, W('nicht', 28) + i * .1));
+  cue(W('allein', 28), 'erfolg');
+  // aufschreiben: wann, wo, wer
+  pop('notiz79', W('Schreib', 29) - .15, { x: 5350, y: 2600 });
+  [['kr1', 'wann'], ['kr2', 'wo'], ['kr3', 'wer']].forEach(([p, w], i) => {
+    const z = el(p).closest('.zeile'); rel(z, { o: .35 }); tw(z, W(w, 29) - .1, .25, { o: 1 }, 'out');
+    strich(p, W(w, 29), .7, 'out'); cue(W(w, 29), 'kritzeln');
+  });
+  kopf('kwameH2', W('wann', 29), 5, .5); kopf('kwameH2', SE(29), 0, .5);
+}
+// Hilfe: vier Türen öffnen sich und leuchten
+{
+  const tT = W('Ausbilderin', 30) - 1.0;
+  fahrt(tT, .8, 5000, 2800, Z0, null);
+  aus('notiz79', tT, .35);
+  tw('kwameH2', tT, .6, { x: 4110, y: 2985, s: .72 }, 'inout'); tw('jonasH2', tT + .05, .6, { x: 4110, y: 2790, s: .7 }, 'inout');
+  tafel('cap6', W('Ausbilderin', 30) - .3, SE(32) + .6, [W('Ausbilderin', 30), W('Betriebsrat', 30) - .08, W('Betriebsrat', 30), W('Kammer', 30) - .08, W('Kammer', 30),
+    W('Antidiskriminierungsstelle', 31), W('Polizei', 32) - .08, W('Polizei', 32), W('eins', 32)]);
+  [['d1', W('Ausbilderin', 30), 4450], ['d2', W('Betriebsrat', 30), 4910], ['d3', W('Kammer', 30), 5370], ['d4', W('Antidiskriminierungsstelle', 31), 5830]].forEach(([id, t, x]) => {
+    akteur(id, { x, y: GY - 210, s: 0 });
+    tw(id, t - .25, .55, { s: 1 }, 'back'); cue(t - .25, 'pop');
+    const bl = el(id).querySelector('.blatt'), li = el(id).querySelector('.licht'), rh = el(id).querySelector('.rahmen');
+    rel(bl, {}); tw(bl, t + .25, .5, { sx: .14 }, 'out'); cue(t + .25, 'klick');
+    HOOKS.push(tt => { const d = tt - t - .3; const g = d > 0 ? Math.max(.45, Math.exp(-d / .9)) : 0;
+      li.style.opacity = (g).toFixed(3); rh.style.boxShadow = g > 0 ? `0 0 ${(36 * g).toFixed(1)}px ${(12 * g).toFixed(1)}px rgba(90,63,230,${(.35 * g).toFixed(3)})` : ''; });
+    const sch = el(id).querySelector('.tschild79'); rel(sch, {}); tw(sch, t + .2, .12, { s: 1.1 }, 'sinus'); tw(sch, t + .32, .4, { s: 1 }, 'sanft');
+  });
+  kopf('kwameH2', W('kostenlos', 31), 6, .4); kopf('kwameH2', WE('kostenlos', 31) + .2, 0, .4);
+  cue(W('kostenlos', 31), 'ding');
+  // Notruf 110 blinkt (feste Frequenz)
+  pop('notruf', W('Polizei', 32) - .1, { x: 5140, y: 2470 });
+  const tN = W('eins', 32);
+  HOOKS.push(t => { const d = t - tN; el('notruf').style.boxShadow = d > 0 && d < 2.4 ? `0 0 ${(26 * (.5 + .5 * Math.sin(d * 2 * Math.PI * 2.2))).toFixed(1)}px 8px rgba(226,85,106,.55)` : '0 10px 24px rgba(226,85,106,.35)'; });
+  bump('notruf', tN, 1.08); bump('notruf', W('null', 32), 1.08); cue(tN, 'ding');
+  aus(['d1', 'd2', 'd3', 'd4', 'notruf', 'kwameH2', 'jonasH2'], SE(32) + .5, .35);
+}
+
+/* ===================== Schluss: alle Klingelschilder leuchten gleich ===================== */
+{
+  fahrt(SE(32) + .25, 1.4, 2450, 2760, 1.1);
+  const tG = W('gleich', 33) - .15;
+  NAMEN.forEach((_, i) => { const v = el('ks' + i).querySelector('.ksv'); rel(v, { o: 0 }); tw(v, tG, .5, { o: 1 }, 'inout'); });
+  cue(tG, 'erfolg'); akzent(tG + .2, .03);
+  HOOKS.push(t => { const g = E.inout(clamp((t - tG) / .6)); el('anlage').style.boxShadow = `0 18px 40px rgba(58,37,153,.25),inset 0 0 0 4px var(--b300),0 0 ${(70 * g).toFixed(1)}px ${(16 * g).toFixed(1)}px rgba(90,63,230,${(.4 * g).toFixed(3)})`; });
+  akteur('unterstrich', { x: 2450, y: 3110 });
+  strich('unterP', W('viel', 33) - .1, .8); cue(W('viel', 33) - .1, 'scan');
+  // Egal, wie du aussiehst …: Zoom auf das ganze Haus, in allen Fenstern geht das Licht an
+  fahrt(W('Egal', 34) - .2, 2.4, 3800, 1720, .34, 'whoosh');
+  ETAGEN.forEach((_, r) => SPALTEN.forEach((_, c) => { if (!LICHT_AN.some(([e]) => e.id === `fl${r}_${c}`)) licht(r, c, W('aussiehst', 34) + c * .1 + r * .05); }));
+  cue(W('woher', 34), 'ding');
+}
+
+/* ---------- Abspann: das Klingelschild-Feld öffnet sich zum Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.1;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - AB) / .9)), k = cam(t);
+  const cx = 960 + (2450 - k.fx) * k.z, cy = 540 + (2740 - k.fy) * k.z, hw = 220 * k.z, hh = 300 * k.z;
+  const l = lerp(cx - hw, 0, p), r = lerp(1920 - cx - hw, 0, p), o = lerp(cy - hh, 0, p), u = lerp(1080 - cy - hh, 0, p);
+  $('#abspann').style.clipPath = p > 0 ? `inset(${o.toFixed(1)}px ${r.toFixed(1)}px ${u.toFixed(1)}px ${l.toFixed(1)}px round ${lerp(30 * k.z, 0, p).toFixed(1)}px)` : 'inset(50% 50% 50% 50%)';
+});
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .55, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .9, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 4.0, AB + 2.2);
+</script>
+</body></html>

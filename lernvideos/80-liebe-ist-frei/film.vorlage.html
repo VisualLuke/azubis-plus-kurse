@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Liebe ist frei</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --s2:var(--077b8197-bd4b-4580-a609-33092c57cbb5,#F2F0F7);
+  /* Regenbogen nur als schmales Band (Signalfarben hier mit Bedeutung) */
+  --rb1:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --rb2:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --rb3:var(--3d567a11-18f7-4e8e-b203-4592f46da5a2,#1FA971);
+  --rb4:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --rb5:var(--75c22b58-87ff-4db8-8246-cd9ce71db4a2,#5A3FE6);
+}
+/* Pausenraum: eine Wand mit großer Pinnwand – die Kamera taucht in Karten hinein und wieder heraus */
+html,body{background:var(--b50)}
+#rahmen{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.buehne{background:none;border-radius:0}
+#raum{position:absolute;left:-3000px;top:-1600px;width:12000px;height:5200px}
+#raum svg{width:12000px;height:5200px}
+.deko{position:absolute}
+.deko svg{width:100%}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:12px solid var(--surface);
+  box-shadow:0 18px 40px rgba(58,37,153,.25)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* Pinnwand-Karten */
+.pw-karte{width:480px;height:330px}
+.pw-karte .seite{position:absolute;inset:0;border-radius:14px;background:var(--surface);box-shadow:0 12px 26px rgba(58,37,153,.2);overflow:hidden}
+.pw-karte .bild{position:absolute;left:0;top:0;right:0;height:228px;background:linear-gradient(var(--b50),var(--b100));display:flex;align-items:center;justify-content:center}
+.pw-karte .bild > div{width:260px}
+.pw-karte .name{position:absolute;left:0;right:0;bottom:0;height:102px;font:800 50px/102px Inter;color:var(--ink);text-align:center;white-space:nowrap}
+.pw-karte .hinten{background:linear-gradient(160deg,var(--surface),var(--b50))}
+.pw-karte .paar{position:absolute;left:24px;right:24px;top:40px;height:250px;display:flex;align-items:center;justify-content:space-between}
+.pw-karte .paar > div{width:190px}
+.pw-karte .paar .mitte{position:absolute;left:50%;top:50%;width:80px;margin:-60px 0 0 -40px}
+.pw-pin{position:absolute;left:50%;top:-16px;width:46px;height:46px;margin-left:-23px;border-radius:999px;
+  background:radial-gradient(circle at 35% 30%,var(--b300),var(--b500) 45%,var(--b700));box-shadow:0 6px 8px rgba(58,37,153,.35)}
+.pw-pin::after{content:'';position:absolute;left:11px;top:9px;width:12px;height:9px;border-radius:999px;background:var(--surface);opacity:.75}
+.pw-karte .glanz{position:absolute;inset:-6px;border-radius:20px;box-shadow:0 0 0 8px var(--b300),0 0 40px 14px rgba(129,99,238,.45);opacity:0}
+
+/* Text im Bild: als Karte an der Pinnwand */
+.pw-text{padding:44px 60px 50px;border-radius:18px;background:var(--surface);box-shadow:0 16px 36px rgba(58,37,153,.22)}
+.pw-text::before{content:'';position:absolute;left:0;right:0;top:0;height:16px;border-radius:18px 18px 0 0;background:var(--b500)}
+.pw-text .eyebrow{font:800 40px/50px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin:6px 0 10px}
+.pw-text .titel{font:800 96px/108px Inter;letter-spacing:-.02em;color:var(--ink)}
+.pw-text .unter{font:700 60px/72px Inter;color:var(--n700);margin-top:14px}
+.pw-text .pw-pin{top:-20px;width:56px;height:56px;margin-left:-28px}
+
+/* Kleinteile */
+.ruf{width:150px;height:150px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 100px/150px Inter;text-align:center;box-shadow:0 10px 24px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:10px solid var(--b300);opacity:0}
+.pw-kal{width:250px;height:270px;border-radius:22px;background:var(--surface);box-shadow:0 12px 26px rgba(58,37,153,.2);overflow:hidden}
+.pw-kal .kopf{height:70px;background:var(--b500)}
+.pw-kal .blattk{position:absolute;left:0;right:0;top:70px;bottom:0;font:800 84px/200px Inter;color:var(--ink);text-align:center;transform-origin:50% 0;background:var(--surface)}
+.pw-chip{padding:18px 44px;border-radius:999px;background:var(--surface);color:var(--b700);font:800 64px/78px Inter;white-space:nowrap;
+  box-shadow:0 10px 24px rgba(58,37,153,.18);border:5px solid var(--b200)}
+.pw-chip.voll{background:var(--b500);color:var(--surface);border-color:var(--b500)}
+.pw-streifen{width:1240px;height:200px;border-radius:16px;background:var(--b100);box-shadow:inset 0 0 0 5px var(--b200)}
+.ringe{width:300px;height:220px}
+
+/* Szene 3: Dienstplan, Paragraf, Blasen, Tagebuch */
+.dienst{width:640px;height:1000px;border-radius:20px;background:var(--surface);box-shadow:0 16px 36px rgba(58,37,153,.2);padding:50px 50px}
+.dienst h4{font:800 64px/80px Inter;color:var(--ink);margin-bottom:34px}
+.dienst .zeile{position:relative;height:120px;display:flex;align-items:center;gap:30px;border-radius:16px;padding:0 20px}
+.dienst .zeile .hl{position:absolute;inset:0;border-radius:16px;background:var(--b100);opacity:0}
+.dienst .zeile b{position:relative;width:200px;font:700 48px/60px Inter;color:var(--ink)}
+.dienst .zeile i{position:relative;flex:1;height:40px;border-radius:999px;background:var(--b50);box-shadow:inset 0 0 0 3px var(--b100);overflow:hidden}
+.dienst .zeile i em{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:999px;background:var(--b400);transform-origin:0 50%}
+.paragraf{width:340px;height:340px}
+.blase-off{width:460px;height:250px;border-radius:120px 120px 120px 30px;background:var(--n200);box-shadow:0 12px 28px rgba(22,19,37,.14)}
+.blase-off svg{position:absolute;left:70px;top:65px;width:320px;height:120px}
+.blase-off .zipfel{position:absolute;right:40px;bottom:-30px;width:70px;height:70px;background:var(--n200);transform:rotate(45deg);border-radius:0 0 14px 0}
+.blase-off .strich{position:absolute;left:-30px;top:110px;width:520px;height:22px;border-radius:999px;background:var(--b500);transform-origin:0 50%;box-shadow:0 4px 10px rgba(58,37,153,.3)}
+.tagebuch{width:440px;height:520px}
+.tagebuch .ruecken{position:absolute;left:0;top:0;width:440px;height:520px;border-radius:24px;background:var(--b700)}
+.tagebuch .seiten{position:absolute;left:24px;top:18px;width:400px;height:486px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 4px var(--n200)}
+.tagebuch .seiten i{position:absolute;left:50px;right:50px;height:10px;border-radius:5px;background:var(--n200)}
+.tagebuch .deckel{position:absolute;left:0;top:0;width:440px;height:520px;border-radius:24px;background:linear-gradient(150deg,var(--b400),var(--b600));transform-origin:0 50%;
+  box-shadow:inset 30px 0 0 rgba(58,37,153,.35)}
+.tagebuch .deckel div{position:absolute;left:120px;top:150px;width:220px}
+.tagebuch .riemen{position:absolute;left:320px;top:230px;width:190px;height:70px;border-radius:0 18px 18px 0;background:var(--b700);transform-origin:0 50%}
+.tagebuch .schloss{position:absolute;left:400px;top:190px;width:150px}
+
+/* Szene 4: Zeitreise in der alten Karte */
+.altblatt{width:760px;height:900px;border-radius:12px;background:linear-gradient(160deg,var(--surface),var(--s2));box-shadow:0 20px 44px rgba(22,19,37,.22);padding:70px 70px}
+.altblatt .para{font:800 300px/300px Inter;color:var(--n700);text-align:center}
+.altblatt i{display:block;height:22px;border-radius:11px;background:var(--n200);margin-top:44px}
+.haelfte{position:absolute;left:0;top:0}
+.gitter{width:1920px;height:1320px}
+.gitter div{position:absolute;top:0;width:44px;height:1320px;border-radius:22px;background:linear-gradient(90deg,var(--n700),var(--n500),var(--n700))}
+.gitter .quer{left:0;width:1920px;height:44px;background:linear-gradient(var(--n700),var(--n500),var(--n700))}
+
+/* Szene 6: Hilfe-Karten */
+.hilfe{width:700px;height:130px;border-radius:16px;background:var(--surface);box-shadow:0 12px 26px rgba(58,37,153,.2);font:800 60px/130px Inter;color:var(--ink);padding-left:120px;white-space:nowrap}
+.hilfe::before{content:'';position:absolute;left:44px;top:41px;width:48px;height:48px;border-radius:999px;background:var(--b100);box-shadow:inset 0 0 0 10px var(--b500)}
+.hilfe .pw-pin{left:auto;right:30px;top:-14px}
+
+.deckblatt{position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(135deg,var(--b500),var(--b700));display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--surface);transform-origin:50% 0}
+.deckblatt .gross{font:800 104px/116px Inter;letter-spacing:-.03em;text-align:center}
+.deckblatt .band{width:900px;height:30px;margin:46px 0 40px;border-radius:15px;overflow:hidden;display:flex;flex-direction:column}
+.deckblatt .band i{flex:1}
+.deckblatt .klein{font:400 42px/58px Inter;color:var(--b100);text-align:center;max-width:1400px}
+.deckblatt .pw-pin{top:30px;width:70px;height:70px;margin-left:-35px}
+</style></head><body>
+
+<!-- Teile als Vorlagen -->
+<template id="t-ana">{{figur-ana}}</template>
+<template id="t-sabine">{{figur-sabine}}</template>
+<template id="t-augen">{{figur-augen}}</template>
+<template id="t-zu">{{figur-mund-zu}}</template>
+<template id="t-auf">{{figur-mund-auf}}</template>
+<template id="t-froh">{{figur-mund-froh}}</template>
+<template id="t-tasse">{{tasse}}</template>
+<template id="t-tasse2">{{tasse-violett}}</template>
+<template id="t-fahrrad">{{fahrrad}}</template>
+<template id="t-kuchen">{{kuchen}}</template>
+<template id="t-fussball">{{fussball}}</template>
+<template id="t-turnschuhe">{{turnschuhe}}</template>
+<template id="t-halbschuhe">{{halbschuhe}}</template>
+<template id="t-schluessel">{{schluessel-violett}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-kino">{{kinokarten}}</template>
+<template id="t-paragraf">{{paragraf}}</template>
+<template id="t-schloss">{{schloss}}</template>
+<template id="t-kerze">{{kerze}}</template>
+<template id="t-buch">{{buch}}</template>
+<template id="t-haeuser">{{stadthaeuser}}</template>
+<template id="t-uhr">{{uhr}}</template>
+
+<div id="rahmen"><div id="kamera"><div id="welt">
+  <div id="raum"></div>
+  <div id="deko"></div>
+
+  <!-- Bühnen (für die Prüfung): Pinnwand, Wand rechts mit Dienstplan -->
+  <div class="a buehne" id="bueWand" style="left:-560px;top:-260px;width:4520px;height:2440px"></div>
+  <div class="a buehne" id="bueRechts" style="left:3640px;top:-100px;width:3200px;height:2160px"></div>
+
+  <!-- Karten an der Pinnwand (werden per Skript gefüllt) -->
+  <div id="karten"></div>
+
+  <!-- Szene 2 -->
+  <div class="a pw-text" id="t2" data-gruppe="t2"><div class="pw-pin" id="t2pin"></div><div class="eyebrow" id="t2e">In Deutschland</div><div id="t2t"><div class="titel">Liebe ist frei</div><div class="unter">Ehe für alle seit 2017</div></div></div>
+  <div class="a pw-streifen" id="streifen" data-gruppe="chips"></div>
+  <div class="a pw-chip" id="chip1" data-gruppe="chips">schwul</div>
+  <div class="a pw-chip" id="chip2" data-gruppe="chips">lesbisch</div>
+  <div class="a pw-chip" id="chip3" data-gruppe="chips">bi</div>
+  <svg class="a" id="haken" viewBox="0 0 1800 1200" style="width:1800px;height:1200px" data-frei>
+    <path id="hakenP" pathLength="1" d="M160 640L620 1060L1640 140" stroke="var(--b500)" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none" opacity=".92"/></svg>
+  <div class="a pw-kal" id="kal17" data-gruppe="ring"><div class="kopf"></div><div class="blattk" id="kal17a">&nbsp;</div><div class="blattk" id="kal17b">2017</div><div class="pw-pin" id="kal17pin" style="top:10px"></div></div>
+  <svg class="a ringe" id="ringL" viewBox="0 0 300 220" data-gruppe="ring"><defs><linearGradient id="rgL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--b300)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient></defs>
+    <circle cx="110" cy="110" r="78" stroke="url(#rgL)" stroke-width="26" fill="none"/><path d="M58 74a70 70 0 0 1 34-24" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none" opacity=".7"/></svg>
+  <svg class="a ringe" id="ringR" viewBox="0 0 300 220" data-gruppe="ring"><circle cx="190" cy="110" r="78" stroke="url(#rgL)" stroke-width="26" fill="none"/><path d="M138 74a70 70 0 0 1 34-24" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" fill="none" opacity=".7"/></svg>
+  <svg class="a ringe" id="ringV" viewBox="0 0 300 220" data-gruppe="ring"><path d="M188 42a78 78 0 0 1 0 136" stroke="url(#rgL)" stroke-width="26" fill="none"/></svg>
+
+  <!-- Szene 3: an der Wand rechts -->
+  <div class="a dienst" id="dienst" data-gruppe="dienst"><h4>Dienstplan</h4></div>
+  <div class="a pw-text" id="t3" data-gruppe="t3" style="width:1150px"><div class="pw-pin" id="t3pin"></div><div class="eyebrow" id="t3e">Im Betrieb</div><div id="t3t"><div class="titel">Niemand darf benachteiligt werden</div><div class="unter">egal, wen du liebst</div></div></div>
+  <div class="a paragraf" id="paragraf" data-gruppe="agg"></div>
+  <div class="a pw-chip voll" id="chipAGG" data-gruppe="agg">Gleichbehandlungsgesetz</div>
+  <div class="a welle" id="welleP" style="width:520px;height:520px" data-frei></div>
+  <div class="a blase-off" id="bl1" data-gruppe="blasen"><div class="zipfel"></div><svg viewBox="0 0 320 120"><path d="M10 60c25-50 50-50 75 0s50 50 75 0 50-50 75 0 35 45 75 0" stroke="var(--n400)" stroke-width="16" stroke-linecap="round" fill="none"/></svg><div class="strich" id="bl1s"></div></div>
+  <div class="a blase-off" id="bl2" data-gruppe="blasen"><div class="zipfel"></div><svg viewBox="0 0 320 120"><path d="M20 40l40 40 40-40 40 40 40-40 40 40 40-40 40 40" stroke="var(--n400)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div class="strich" id="bl2s"></div></div>
+  <div class="a tagebuch" id="tagebuch" data-gruppe="buch"><div class="ruecken"></div><div class="seiten"><i style="top:90px"></i><i style="top:150px"></i><i style="top:210px;right:120px"></i><i style="top:300px"></i><i style="top:360px;right:160px"></i></div>
+    <div class="deckel" id="tbDeckel"><div id="tbHerz"></div></div><div class="riemen" id="tbRiemen"></div><div class="schloss" id="tbSchloss"></div></div>
+  <div class="a" id="tbHerzFlug" style="width:170px" data-frei></div>
+
+  <!-- Szene 4: Straße aus Postkarten mit Girlande -->
+  <svg class="a" id="girlande" viewBox="0 0 1200 260" style="width:1200px;height:260px" data-frei></svg>
+  <div class="a" id="konfetti" style="width:1200px;height:700px" data-frei></div>
+
+  <!-- Szene 5 -->
+  <div class="a pw-text" id="t5" data-gruppe="t5"><div class="pw-pin" id="t5pin"></div><div id="t5t"><div class="titel" style="font-size:80px;line-height:92px;white-space:nowrap">Was würdest du tun?</div></div></div>
+  <div class="a blase-off" id="bl3" data-gruppe="bl3"><div class="zipfel"></div><svg viewBox="0 0 320 120"><path id="bl3w" d="M10 60c25-50 50-50 75 0s50 50 75 0 50-50 75 0 35 45 75 0" stroke="var(--n400)" stroke-width="16" stroke-linecap="round" fill="none"/></svg></div>
+  <svg class="a" id="ring5" viewBox="0 0 520 520" style="width:520px;height:520px" data-frei>
+    <circle cx="260" cy="260" r="236" stroke="var(--b100)" stroke-width="22" fill="none"/>
+    <circle id="ring5P" pathLength="1" cx="260" cy="260" r="236" stroke="var(--b500)" stroke-width="22" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none" transform="rotate(-90 260 260)"/></svg>
+  <div class="a" id="gp1" style="width:60px;height:60px;border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(58,37,153,.2)" data-frei></div>
+  <div class="a" id="gp2" style="width:90px;height:90px;border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(58,37,153,.2)" data-frei></div>
+  <div class="a" id="gp3" style="width:130px;height:130px;border-radius:999px;background:var(--surface);box-shadow:0 8px 18px rgba(58,37,153,.2)" data-frei></div>
+
+  <!-- Szene 6 -->
+  <div class="a pw-text" id="t6" data-gruppe="hilfe"><div class="pw-pin" id="t6pin"></div><div id="t6t"><div class="titel">Hilfe:</div></div></div>
+  <div class="a hilfe" id="hi1" data-gruppe="hilfe"><div class="pw-pin"></div>Ausbilder/in</div>
+  <div class="a hilfe" id="hi2" data-gruppe="hilfe"><div class="pw-pin"></div>Betriebsrat</div>
+  <div class="a hilfe" id="hi3" data-gruppe="hilfe"><div class="pw-pin"></div>Kammer</div>
+  <svg class="a" id="respekt" viewBox="0 0 1300 560" style="width:1300px;height:560px" data-frei>
+    <ellipse id="respektP" pathLength="1" cx="650" cy="280" rx="610" ry="240" stroke="var(--b400)" stroke-width="16" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none" stroke-linecap="round"/></svg>
+  <svg class="a" id="band" viewBox="-100 -100 3600 2100" style="width:3600px;height:2100px" data-frei></svg>
+
+  <!-- Figuren (vorne) -->
+  <div class="a portrait" id="ana" style="width:330px;height:330px" data-p="ana"></div>
+  <div class="a portrait" id="sabine" style="width:330px;height:330px" data-p="sabine"></div>
+  <div class="a" id="anaTasse" style="width:170px"></div>
+  <div class="a ruf" id="frage1">?</div>
+</div></div></div>
+
+<div class="deckblatt" id="abspann"><div class="pw-pin"></div>
+  <div class="gross a" id="asTitel" style="position:relative">Gleiche Rechte – egal, wen du liebst.</div>
+  <div class="band a" id="asBand" style="position:relative"><i style="background:var(--rb1)"></i><i style="background:var(--rb2)"></i><i style="background:var(--rb3)"></i><i style="background:var(--rb4)"></i><i style="background:var(--b200)"></i></div>
+  <div class="klein a" id="asUnter" style="position:relative">Schwul, lesbisch oder bi zu sein ist normal und erlaubt. Respekt ist Pflicht – und wenn du Hilfe brauchst, gibt es sie.</div>
+</div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SS = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById('t-' + id).innerHTML;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+/* ---------- Raum: Wand, Pinnwand, Regal (Hintergrund, nicht animiert) ---------- */
+{
+  const R = (x, y, w, h, f, extra = '') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" ${extra}/>`;
+  let s = `<svg viewBox="-3000 -1600 12000 5200"><defs>
+    <pattern id="kork" width="46" height="46" patternUnits="userSpaceOnUse"><circle cx="10" cy="12" r="4" fill="var(--b100)"/><circle cx="33" cy="30" r="3" fill="var(--b100)"/><circle cx="24" cy="5" r="2" fill="var(--b200)" opacity=".5"/></pattern>
+    <linearGradient id="wandV" x2="0" y2="1"><stop offset="0" stop-color="var(--surface)"/><stop offset="1" stop-color="var(--b50)"/></linearGradient></defs>`;
+  s += R(-3000, -1600, 12000, 5200, 'url(#wandV)');
+  // Sockelleiste und Boden
+  s += R(-3000, 2280, 12000, 30, 'var(--b200)') + R(-3000, 2310, 12000, 1300, 'var(--b100)');
+  // Pinnwand: Rahmen, Kork (hell), Schatten
+  s += R(-30, -10, 3460, 1950, 'var(--b700)', 'rx="36" opacity=".12"');
+  s += R(-40, -40, 3480, 1980, 'var(--b300)', 'rx="36"');
+  s += R(0, 0, 3400, 1900, 'var(--b50)', 'rx="14"') + R(0, 0, 3400, 1900, 'url(#kork)', 'rx="14"');
+  s += R(0, 0, 3400, 14, 'var(--b100)', 'rx="7"');
+  // Regal links mit Kaffeemaschine-Ecke
+  s += R(-520, 1180, 380, 26, 'var(--b300)', 'rx="10"');
+  s += R(-520, 1700, 380, 26, 'var(--b300)', 'rx="10"');
+  // Fenster rechts hinter dem Dienstplan
+  s += R(5980, 200, 700, 520, 'var(--b100)', 'rx="30" stroke="var(--b300)" stroke-width="24"') + R(6320, 200, 20, 520, 'var(--b300)') + R(5980, 450, 700, 20, 'var(--b300)');
+  s += '</svg>';
+  el('raum').innerHTML = s;
+}
+const DEKO = [['tasse', -420, 1105, 170], ['tasse2', -250, 1105, 170], ['buch', -330, 1610, 200], ['uhr', 5100, 1900, 0]];
+el('deko').innerHTML = DEKO.filter(d => d[3]).map(([n, x, y, w]) => `<div class="deko" style="left:${x - w / 2}px;top:${y - w / 2}px;width:${w}px">${tpl(n)}</div>`).join('');
+
+/* ---------- Karten an der Pinnwand ---------- */
+// Vorderseite: Bild + Name; Rückseite: ein Paar Gegenstände mit kleinem Herz (gleichberechtigt nebeneinander)
+const KARTEN = {
+  kon: { x: 450, y: 400, r: -2, bild: `<svg viewBox="0 0 160 160"><path d="M62 112V44l58-12v66" stroke="var(--b600)" stroke-width="9" fill="none" stroke-linejoin="round"/><ellipse cx="50" cy="114" rx="18" ry="14" fill="var(--b500)"/><ellipse cx="108" cy="100" rx="18" ry="14" fill="var(--b500)"/><path d="M62 54l58-12" stroke="var(--b600)" stroke-width="14"/></svg>`, name: 'Konzert', paar: ['tasse', 'tasse'] },
+  rad: { x: 1110, y: 400, r: 1.5, bild: tpl('fahrrad'), name: 'Radtour', paar: ['fahrrad', 'fahrrad'] },
+  ku: { x: 450, y: 1000, r: 1, bild: tpl('kuchen'), name: 'Rezept', paar: ['tasse', 'tasse2'] },
+  see: { x: 1110, y: 1000, r: 0, name: 'See', paar: ['schluessel', 'schluessel'] },
+  fb: { x: 1770, y: 1000, r: -1.5, bild: tpl('fussball'), name: '3 : 1', paar: ['turnschuhe', 'halbschuhe'] },
+  ha: { x: 2430, y: 1000, r: 0 },
+  alt: { x: 3060, y: 1000, r: 2 },
+  kino: { x: 1770, y: 1580, r: -1.5, bild: tpl('kino'), name: 'Kino' },
+  frage: { x: 1110, y: 1580, r: 1.5, name: 'An welchem See?' },
+  glaube: { x: 450, y: 1580, r: -1, name: 'Glauben' },
+  cs1: { x: 2350, y: 1600, r: -2, w: 250, h: 210 }, cs2: { x: 2620, y: 1600, r: 1.5, w: 250, h: 210 },
+  cs3: { x: 2890, y: 1600, r: -1, w: 250, h: 210 }, cs4: { x: 3160, y: 1600, r: 2, w: 250, h: 210 },
+};
+{
+  let h = '';
+  for (const [k, c] of Object.entries(KARTEN)) {
+    const gr = c.w ? `style="width:${c.w}px;height:${c.h}px"` : '';
+    h += `<div class="a pw-karte" id="k-${k}" ${gr} data-gruppe="k-${k}"${c.paar ? ' data-dreht' : ''}><div class="glanz" id="k-${k}-glanz"></div>` +
+      `<div class="seite vorne" id="k-${k}-v"></div>` + (c.paar ? `<div class="seite hinten" id="k-${k}-h"></div>` : '') + `<div class="pw-pin" id="k-${k}-pin"></div></div>`;
+  }
+  el('karten').innerHTML = h;
+  for (const [k, c] of Object.entries(KARTEN)) {
+    const v = el(`k-${k}-v`);
+    if (c.bild) v.innerHTML = `<div class="bild"><div>${c.bild}</div></div><div class="name">${c.name}</div>`;
+    if (c.paar) el(`k-${k}-h`).innerHTML = `<div class="paar"><div>${tpl(c.paar[0])}</div><div class="mitte">${tpl('herz')}</div><div>${tpl(c.paar[1])}</div></div>`;
+  }
+  // Glauben: Kerze und Buch nebeneinander (neutral)
+  el('k-glaube-v').innerHTML = `<div class="bild"><div style="width:400px;display:flex;justify-content:center;gap:10px"><div style="width:190px">${tpl('kerze')}</div><div style="width:190px">${tpl('buch')}</div></div></div><div class="name">Glauben</div>`;
+  // Annas Karte: Frage
+  el('k-frage-v').innerHTML = `<div class="bild"><div style="width:170px;height:170px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 120px/170px Inter;text-align:center">?</div></div><div class="name" style="font-size:44px">An welchem See?</div>`;
+  // Stadtkarten (Christopher Street Day)
+  for (const k of ['cs1', 'cs2', 'cs3', 'cs4']) el(`k-${k}-v`).innerHTML = `<div style="position:absolute;inset:0;background:linear-gradient(var(--surface),var(--b50));display:flex;align-items:flex-end;justify-content:center"><div style="width:210px;margin-bottom:-6px">${tpl('haeuser')}</div></div>`;
+}
+// Innenwelten (Postkarte „See“, alte Karte): 1920×1320 gestaltet, auf Kartengröße verkleinert
+const INNEN_S = 480 / 1920;
+const innen = (k, html) => { el(`k-${k}-v`).insertAdjacentHTML('afterbegin', `<div style="position:absolute;left:0;top:0;width:1920px;height:1320px;transform:scale(${INNEN_S});transform-origin:0 0;overflow:hidden" id="in-${k}">${html}</div>`); };
+// See: Himmel, Ufer, Wasser mit Wellen, Steg, zwei Tassen, zwei Paar Schuhe
+innen('see', `<svg style="position:absolute;left:0;top:0;width:1920px;height:1320px" viewBox="0 0 1920 1320">
+  <defs><linearGradient id="seeH" x2="0" y2="1"><stop offset="0" stop-color="var(--b50)"/><stop offset="1" stop-color="var(--surface)"/></linearGradient>
+  <linearGradient id="seeW" x2="0" y2="1"><stop offset="0" stop-color="var(--b200)"/><stop offset="1" stop-color="var(--b300)"/></linearGradient></defs>
+  <rect width="1920" height="1320" fill="url(#seeH)"/>
+  <path d="M0 600C200 470 420 520 600 560S1000 430 1260 500 1700 470 1920 540V700H0Z" fill="var(--b100)"/>
+  <rect y="640" width="1920" height="680" fill="url(#seeW)"/>
+  <g id="seeWellen" stroke="var(--b50)" stroke-width="10" stroke-linecap="round" fill="none" opacity=".8">
+    <path d="M140 720h120M520 760h90M900 700h140M1350 740h110M1650 710h90"/><path d="M300 830h90M760 860h130M1180 820h90M1560 850h120"/></g>
+  <rect x="180" y="980" width="1560" height="70" rx="12" fill="var(--b500)"/>
+  <rect x="180" y="960" width="1560" height="40" rx="12" fill="var(--b400)"/>
+  <g fill="var(--b600)"><rect x="260" y="1040" width="40" height="300"/><rect x="760" y="1040" width="40" height="300"/><rect x="1240" y="1040" width="40" height="300"/><rect x="1640" y="1040" width="40" height="300"/></g>
+  <g stroke="var(--b300)" stroke-width="5">${Array.from({ length: 13 }, (_, i) => `<path d="M${300 + i * 110} 964v32"/>`).join('')}</g>
+</svg>
+<div class="a" id="seeGl1" style="width:70px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
+<div class="a" id="seeGl2" style="width:50px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
+<div class="a" id="seeGl3" style="width:80px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
+<div class="a" id="seeT1" style="width:300px" data-gruppe="see">${tpl('tasse')}</div>
+<div class="a" id="seeT2" style="width:300px" data-gruppe="see">${tpl('tasse2')}</div>
+<div class="a" id="seeS1" style="width:360px" data-gruppe="see">${tpl('turnschuhe')}</div>
+<div class="a" id="seeS2" style="width:360px" data-gruppe="see">${tpl('halbschuhe')}</div>
+<div class="a" id="seeHerz" style="width:260px" data-gruppe="see">${tpl('herz')}</div>`);
+// Alte Karte: Zeitreise (grau-hell), Gesetzesblatt, Gitter, Kalender 1994, Text im Bild
+innen('alt', `<div style="position:absolute;inset:0;background:linear-gradient(160deg,var(--s2),var(--n200))"></div>
+<div class="a" id="altUhr" style="width:520px" data-gruppe="alt0">${tpl('uhr')}</div>
+<div class="a altblatt" id="altblatt" data-gruppe="alt"><div class="para">§</div><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i></div>
+<div class="a altblatt haelfte" id="altL" data-gruppe="alt" style="clip-path:polygon(0 0,52% 0,46% 22%,55% 40%,45% 62%,53% 80%,47% 100%,0 100%)"></div>
+<div class="a altblatt haelfte" id="altR" data-gruppe="alt" style="clip-path:polygon(52% 0,100% 0,100% 100%,47% 100%,53% 80%,45% 62%,55% 40%,46% 22%)"></div>
+<div class="a" id="altSchloss" style="width:330px" data-gruppe="alt">${tpl('schloss')}</div>
+<div class="a pw-kal" id="kal94" style="width:420px;height:460px" data-gruppe="alt"><div class="kopf" style="height:110px"></div><div class="blattk" id="kal94a" style="top:110px;font:800 150px/350px Inter">&nbsp;</div><div class="blattk" id="kal94b" style="top:110px;font:800 150px/350px Inter">1994</div></div>
+<div class="a gitter" id="gitter" data-frei>${Array.from({ length: 13 }, (_, i) => `<div style="left:${60 + i * 148}px"></div>`).join('')}<div class="quer" style="top:240px"></div><div class="quer" style="top:1040px"></div></div>
+<div class="a pw-text" id="t4" data-gruppe="t4" style="padding:50px 80px 60px;width:1100px"><div class="pw-pin" id="t4pin"></div><div class="eyebrow" id="t4e" style="font-size:64px;line-height:76px">1994</div><div id="t4t"><div class="titel" style="font-size:120px;line-height:136px">Das Verbot ist ganz weg</div></div></div>`);
+// Händchen: Straße von oben, zwei Spuren laufen nebeneinander
+el('k-ha-v').innerHTML = `<svg style="position:absolute;left:0;top:0;width:480px;height:330px" viewBox="0 0 480 330">
+  <rect width="480" height="330" fill="var(--b50)"/><rect y="95" width="480" height="140" fill="var(--b100)"/>
+  <path d="M0 95h480M0 235h480" stroke="var(--b200)" stroke-width="6"/>
+  <g fill="var(--b200)"><circle cx="60" cy="50" r="26"/><circle cx="200" cy="44" r="22"/><circle cx="340" cy="52" r="26"/><circle cx="110" cy="284" r="24"/><circle cx="270" cy="290" r="26"/><circle cx="420" cy="282" r="22"/></g>
+  <clipPath id="haClip"><rect id="haClipR" x="0" y="0" width="0" height="330"/></clipPath>
+  <g clip-path="url(#haClip)" fill="none" stroke-linecap="round" stroke-width="14"><path d="M24 148C120 140 200 150 300 146S400 140 420 146" stroke="var(--b500)" stroke-dasharray="1 26"/>
+  <path d="M24 184C120 178 200 188 300 182S400 176 420 182" stroke="var(--b400)" stroke-dasharray="1 26"/></g>
+</svg><div class="a" id="haHerz" style="width:120px" data-gruppe="k-ha">${tpl('herz')}</div>`;
+el('k-alt-v').insertAdjacentHTML('beforeend', '');
+// Dienstplan: alle Namen gleich groß
+el('dienst').insertAdjacentHTML('beforeend', ['Ana', 'Sabine', 'Jonas', 'Mai', 'Kwame', 'Priya'].map((n, i) =>
+  `<div class="zeile"><div class="hl" id="dz${i}"></div><b>${n}</b><i><em id="db${i}"></em></i></div>`).join(''));
+el('paragraf').innerHTML = tpl('paragraf');
+el('tbHerz').innerHTML = tpl('herz'); el('tbSchloss').innerHTML = tpl('schloss'); el('tbHerzFlug').innerHTML = tpl('herz');
+el('anaTasse').innerHTML = tpl('tasse');
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3, r0 = 0) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: r0 + (i % 2 ? w : -w) }, 'sinus'); tw(id, t + n * .1, .25, { r: r0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const sprung = (id, t, x, y, h = 80, d = .4) => {
+  tw(id, t, .1, { sy: .95, sx: 1.03 }, 'sinus');
+  tw(id, t + .07, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .1, .16, { sy: 1.03, sx: .98 }, 'sinus');
+  tw(id, t + .07 + d, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .19 + d, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t + .07 + d, 'plopp');
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); p.style.opacity = t > t0 ? 1 : 0; }));
+const rel = (id, basis = {}) => akteur(id, basis, true);
+// Karte anpinnen: Karte kommt mit leichtem Bogen, die Nadel schlägt ein, die Karte pendelt aus
+const anpinnen = (id, t, von = { dx: 0, dy: -260 }, pinId = id + '-pin') => {
+  const a = AKTEURE.get(el(id)), x = a.basis.x, y = a.basis.y, r = a.basis.r;
+  a.basis = { ...a.basis, x: x + von.dx, y: y + von.dy, o: 0, s: 1.08, r: r + (von.dx > 0 ? 6 : -6) };
+  tw(id, t, .15, { o: 1 }); tw(id, t, .55, { x, y, s: 1 }, 'out', { bogen: von.bogen || 0 }); tw(id, t, .55, { r: r - 1 }, 'out');
+  rel(pinId, { y: -90, s: 1.8, o: 0 });
+  tw(pinId, t + .45, .06, { o: 1 }); tw(pinId, t + .45, .2, { y: 0, s: 1 }, 'in'); cue(t + .65, 'klick');
+  landen(id, t + .65, .4);
+  [2.4, -1.6, 1, -.4, 0].forEach((w, i) => tw(id, t + .65 + i * .14, .14, { r: r + w }, 'sinus'));
+};
+const abpinnen = (id, t, pinId = id + '-pin') => {
+  tw(pinId, t, .2, { y: -70, s: 1.5, o: 0 }, 'in'); cue(t, 'klick');
+  tw(id, t + .15, .25, { r: wertBei(id, 'r', t) + 7 }, 'out');
+  tw(id, t + .2, .7, { y: wertBei(id, 'y', t) + 700, o: 0 }, 'in');
+};
+// Karte umdrehen (um die senkrechte Achse durch die Nadel)
+const drehen = (k, t, zurueck = false) => {
+  const id = 'k-' + k;
+  tw(id, t, .34, { sx: 0 }, 'sinus'); tw(id, t, .34, { s: 1.06 }, 'sinus');
+  set(id + (zurueck ? '-h' : '-v'), t + .34, { o: 0 }); set(id + (zurueck ? '-v' : '-h'), t + .34, { o: 1 });
+  tw(id, t + .34, .36, { sx: 1 }, 'sinus'); tw(id, t + .34, .5, { s: 1 }, 'sanft'); cue(t, 'whoosh'); cue(t + .55, 'plopp');
+};
+const glanz = (k, t, d = 1.2) => { tw(`k-${k}-glanz`, t, .25, { o: 1 }, 'out'); tw(`k-${k}-glanz`, t + d, .6, { o: 0 }, 'inout'); };
+
+/* ---------- Figuren: Mund exakt in den eigenen Sätzen, blinzeln, nicken, froh ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  const f = p.dataset.p;
+  p.innerHTML = `<div class="figur"><div class="ebene">${tpl(f)}</div><div class="ebene augen">${tpl('augen')}</div>` +
+    `<div class="ebene zu">${tpl('zu')}</div><div class="ebene auf">${tpl('auf')}</div><div class="ebene froh">${tpl('froh')}</div></div>`;
+  p.dataset.sprecher = f === 'ana' ? 'Ana' : 'Sabine';
+});
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, KOPF = {}, ZU = {};
+const froh = (id, a, b = 999) => (FROH[id] ??= []).push([a, b]);
+const augenZu = (id, a, b) => (ZU[id] ??= []).push([a, b]);
+const kopf = (id, t, r, d = .4) => (KOPF[id] ??= []).push([t, r, d]);
+const kopfWert = (id, t) => { let v = 0; for (const [t0, r, d] of KOPF[id] || []) { if (t < t0) break; v += (r - v) * E.sinus(clamp((t - t0) / d)); } return v; };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  PORTRAITS.forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1, zu = (ZU[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 || zu ? .12 : 1})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${(nick + kopfWert(p.id, t)).toFixed(2)}deg) translateY(${aktiv ? 0 : nick}px)`;
+  });
+});
+
+/* ---------- Kamera: Fokus fx/fy, Zoom z (logarithmisch), Akzente, Grau für die Zeitreise ---------- */
+const FAHRTEN = [], AKZENTE = [];
+const CAM0 = { fx: 1110, fy: 1060, z: .62 };
+const fahrt = (t0, d, fx, fy, z, snd = 'whoosh') => { FAHRTEN.push({ t0, d, fx, fy, z }); FAHRTEN.sort((a, b) => a.t0 - b.t0); if (snd) cue(t0, snd); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+function cam(t) {
+  let c = { ...CAM0 };
+  for (const f of FAHRTEN) {
+    if (t < f.t0) break;
+    const u = E.inout(clamp((t - f.t0) / f.d));
+    const z = Math.exp(lerp(Math.log(c.z), Math.log(f.z), u));
+    const w = Math.abs(f.z - c.z) < 1e-6 ? u : (1 / z - 1 / c.z) / (1 / f.z - 1 / c.z);
+    c = { fx: lerp(c.fx, f.fx, w), fy: lerp(c.fy, f.fy, w), z };
+  }
+  let z = c.z;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .008 * (1 - Math.cos(t * 2 * Math.PI / 12));
+  return { fx: c.fx, fy: c.fy, z };
+}
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-2%" y="-2%" width="104%" height="104%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const GRAU = [];
+const grauWert = t => { let v = 0; for (const [a, g, d] of GRAU) if (t >= a) v = lerp(v, g, E.inout(clamp((t - a) / (d || .8)))); return v; };
+HOOKS.push(t => {
+  const k = cam(t), v = cam(t - 1 / 30);
+  $('#kamera').style.transform = `translate(${(960 - k.fx * k.z).toFixed(2)}px,${(540 - k.fy * k.z).toFixed(2)}px) scale(${k.z.toFixed(5)})`;
+  const sx = Math.abs((k.fx - v.fx) * k.z), sy = Math.abs((k.fy - v.fy) * k.z), sz = Math.abs(Math.log(k.z / v.z)) * 900;
+  const bx = Math.min(18, (sx + sz * .5) * .1), by = Math.min(18, (sy + sz * .5) * .1);
+  el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('rahmen').style.filter = bx > .3 || by > .3 ? 'url(#wischer)' : '';
+  const g = grauWert(t);
+  el('welt').style.filter = g > .01 ? `grayscale(${g.toFixed(3)}) brightness(${(1 + .05 * g).toFixed(3)})` : '';
+});
+
+/* ---------- Text im Bild: Karte wird angepinnt, Wörter steigen aus der Maske ---------- */
+const textKarte = (nr, x, y, t0, zeiten, r = -1) => {
+  akteur('t' + nr, { x, y, r });
+  anpinnen('t' + nr, t0, { dx: 0, dy: -300 }, 't' + nr + 'pin');
+  if (el('t' + nr + 'e')) { rel('t' + nr + 'e', { o: 0, y: 20 }); tw('t' + nr + 'e', t0 + .5, .4, { o: 1, y: 0 }, 'sanft'); }
+  if (el('t' + nr + 't')) titelEin('t' + nr + 't', t0 + .6, zeiten);
+};
+
+/* ---------- Grundzustand: Karten an der Wand ---------- */
+for (const [k, c] of Object.entries(KARTEN)) {
+  akteur('k-' + k, { x: c.x, y: c.y, r: c.r });
+  if (c.paar) rel(`k-${k}-h`, { o: 0 });
+  if (c.paar || k === 'see') rel(`k-${k}-v`, {});
+  rel(`k-${k}-glanz`, { o: 0 });
+}
+// erst später angepinnt: unsichtbar bis zum Auftritt
+['see', 'ha', 'kino', 'frage', 'glaube', 'cs1', 'cs2', 'cs3', 'cs4'].forEach(k => { AKTEURE.get(el('k-' + k)).basis.o = 0; });
+// Innenwelt See
+akteur('seeT1', { x: 640, y: 830 }); akteur('seeT2', { x: 900, y: 830 });
+akteur('seeS1', { x: 1230, y: 850 }); akteur('seeS2', { x: 1530, y: 850 });
+akteur('seeHerz', { x: 770, y: 560, s: 0 });
+[['seeGl1', 420, 900], ['seeGl2', 1100, 760], ['seeGl3', 1500, 1150]].forEach(([id, x, y], i) => {
+  akteur(id, { x, y, o: 0 });
+  HOOKS.push(t => { if (t > W('See', 3) - .3 && t < SS(6)) el(id).style.opacity = (.5 + .5 * Math.sin(t * 5 + i * 2.1)).toFixed(3); });
+});
+HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * Math.sin(t * 1.3)).toFixed(1)} 0)`); });
+
+/* ===================== 1 · Situation (ohne Titel, Bild mittig) ===================== */
+{
+  // Montagmorgen: Ana hüpft mit ihrer Tasse herein
+  const t0 = A(0) + .1;
+  akteur('ana', { x: -700, y: 1640, o: 1 });
+  sprung('ana', t0, -180, 1650, 120, .45);
+  sprung('ana', t0 + .62, 330, 1640, 110, .45);
+  pop('anaTasse', W('Pause', 1) - .1, { x: 560, y: 1760, r: -3 });
+  wackeln('anaTasse', W('Pause', 1) + .4, 2, 3, -3);
+  huepfen('ana', W('Pause', 1) + .1, 22);
+  // Sabine kommt dazu und pinnt die Postkarte „See“ an
+  pop('sabine', W('Sabine', 2) - .15, { x: 1900, y: 1640 }, 'pop', 'sanft');
+  kopf('ana', W('Sabine', 2) + .1, 6); kopf('ana', W('erzählt', 2), 0);
+  froh('sabine', W('Wochenende', 2) - .3, SS(3));
+  anpinnen('k-see', W('Wochenende', 2) - .2, { dx: 560, dy: 380, bogen: 160 });
+  akzent(W('Wochenende', 2) + .5, .03);
+  // in die Postkarte hinein: Steg, Wasser, zwei Tassen, zwei Paar Schuhe
+  const tE = SS(3) - .25;
+  fahrt(tE, 1.3, 1110, 1000, 4.25);
+  // Herz auf „Frau“, Wasser glitzert auf „See“
+  pop('seeHerz', W('Frau', 3), { x: 770, y: 560 }, 'ding');
+  tw(['seeT1', 'seeT2'], W('Frau', 3) + .1, .25, { y: 810 }, 'sinus'); tw(['seeT1', 'seeT2'], W('Frau', 3) + .35, .35, { y: 830 }, 'sanft');
+  tw('seeT1', W('Frau', 3) + .1, .5, { x: 660 }, 'sanft'); tw('seeT2', W('Frau', 3) + .1, .5, { x: 880 }, 'sanft');
+  [['seeS1', 0], ['seeS2', .12]].forEach(([id, d]) => huepfen(id, W('See', 3) + d, 16));
+  cue(W('See', 3), 'scan');
+  // „wunderschön“: das Herz schlägt, Schuhe wippen
+  for (let i = 0; i < 2; i++) bump('seeHerz', W('wunderschön', 4) + i * .45, 1.12);
+  // zurück: Ana staunt
+  fahrt(SS(5) - .45, 1.2, 1110, 1060, .62);
+  pop('frage1', W('Frau', 5) - .1, { x: 560, y: 1380 }, 'pop');
+  wackeln('frage1', W('Frau', 5) + .4, 4, 8);
+  kopf('ana', W('hat', 5), -7); kopf('ana', W('überrascht', 6), 4); kopf('ana', W('sagen', 6), 0);
+  augenZu('ana', W('überrascht', 6) + .05, W('überrascht', 6) + .2);
+  augenZu('ana', W('überrascht', 6) + .35, W('überrascht', 6) + .5);
+  wackeln('anaTasse', W('überrascht', 6), 4, 4, -3);
+  tw('frage1', W('wusste', 6), .3, { y: 1340 }, 'sinus'); tw('frage1', W('wusste', 6) + .3, .4, { y: 1380 }, 'sinus');
+  kopf('sabine', W('wusste', 6), 4); kopf('sabine', W('sagen', 6), 0);
+}
+
+/* ===================== 2 · So ist es in Deutschland (Überraschung: die Karten drehen sich um) ===================== */
+{
+  // Figuren gehen, Kamera auf die ganze Wand
+  aus(['frage1', 'anaTasse'], SS(7) - .2, .3);
+  tw('ana', SS(7) - .1, .35, { o: 0, s: .8 }, 'in'); tw('sabine', SS(7), .35, { o: 0, s: .8 }, 'in');
+  fahrt(SS(7) - .2, 1.4, 1700, 950, .5);
+  textKarte(2, 2850, 430, W('Deutschland', 7) - .1, { unter: W('zweitausendsiebzehn', 11) });
+  akzent(W('normal', 7), .025);
+  // Die Karten drehen sich um: jede zeigt ein Paar
+  drehen('kon', W('Männer', 8) - .15);
+  drehen('rad', W('Männer', 8) + .75);
+  drehen('ku', W('Frauen', 8) - .15);
+  drehen('fb', W('Frauen', 8) + .75);
+  drehen('see', W('beide', 8) - .2);
+  akzent(W('beide', 8) + .2, .03);
+  // schwul · lesbisch · bi
+  pop('streifen', SS(9) - .1, { x: 900, y: 1600 }, 'whoosh', 'sanft');
+  pop('chip1', W('schwul', 9) - .1, { x: 470, y: 1600, r: -2 });
+  pop('chip2', W('lesbisch', 9) - .1, { x: 900, y: 1600, r: 1 });
+  pop('chip3', W('bi', 9) - .1, { x: 1300, y: 1600, r: -1 });
+  // erlaubt, nichts falsch: ein Haken zieht über die Wand
+  ['kon', 'rad', 'ku', 'fb', 'see'].forEach((k, i) => glanz(k, W('erlaubt', 10) - .1 + i * .08, 1.6));
+  akteur('haken', { x: 1300, y: 950, o: 1 });
+  strich('hakenP', W('nichts', 10) - .1, .7); cue(W('nichts', 10) - .1, 'kritzeln');
+  tw('haken', WE('falsch', 10) + .5, .4, { o: 0 }, 'inout'); cue(WE('falsch', 10), 'erfolg');
+  // Ehe für alle: Kalender und zwei Ringe
+  fahrt(SS(11) - .3, 1.2, 2350, 560, .8);
+  akteur('kal17', { x: 1620, y: 420, r: -2 });
+  anpinnen('kal17', SS(11) - .15, { dx: -200, dy: -200 }, 'kal17pin');
+  rel('kal17a', {}); rel('kal17b', { sy: 0 });
+  tw('kal17a', W('zweitausendsiebzehn', 11) - .1, .2, { sy: 0 }, 'in'); tw('kal17b', W('zweitausendsiebzehn', 11) + .1, .3, { sy: 1 }, 'sanft'); cue(W('zweitausendsiebzehn', 11) + .1, 'plopp');
+  akteur('ringL', { x: 1250, y: -250, o: 0, r: -40 }); akteur('ringR', { x: 2500, y: -250, o: 0, r: 40 }); akteur('ringV', { x: 2500, y: -250, o: 0, r: 40 });
+  const tR = W('heiraten', 11) - .55;
+  tw('ringL', tR, .1, { o: 1 }); tw('ringL', tR, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
+  tw(['ringR', 'ringV'], tR + .08, .1, { o: 1 }); tw(['ringR', 'ringV'], tR + .08, .6, { x: 1980, y: 420, r: 0 }, 'out', { bogen: 120 });
+  cue(tR + .6, 'ding'); bump('ringL', tR + .68, 1.12); bump('ringR', tR + .68, 1.12); bump('ringV', tR + .68, 1.12);
+  akzent(W('heiraten', 11) + .1, .03);
+  // offen zeigen: die Straßenkarte, zwei Spuren laufen nebeneinander
+  fahrt(SS(12) - .2, 1.2, 2430, 1000, 1.45);
+  anpinnen('k-ha', W('Liebe', 12) - .3, { dx: 300, dy: -200 });
+  { const t1 = W('Händchen', 12) - .45, t2 = WE('halten', 12) + .1, r = el('haClipR');
+    HOOKS.push(t => r.setAttribute('width', (500 * E.inout(clamp((t - t1) / (t2 - t1)))).toFixed(1))); cue(t1, 'tipp'); cue(t1 + .5, 'tipp'); cue(t1 + 1, 'tipp'); }
+  akteur('haHerz', { x: 420, y: 165, s: 0 }, false);
+  tw('haHerz', WE('halten', 12) + .1, .5, { s: 1 }, 'back'); cue(WE('halten', 12) + .1, 'ding');
+}
+
+/* ---------- Grundzustand der späteren Akteure ---------- */
+akteur('t3', { x: 5150, y: 560, o: 0 }); akteur('t5', { x: 1110, y: 1300, o: 0 }); akteur('t6', { x: 2380, y: 300, o: 0 });
+akteur('dienst', { x: 4100, y: 1000 });
+for (let i = 0; i < 6; i++) { rel('dz' + i, { o: 0 }); rel('db' + i, { sx: .2 + .13 * ((i * 7) % 5) }); }
+akteur('paragraf', { x: 5000, y: 1150, s: 0 }); akteur('chipAGG', { x: 5000, y: 1420, s: 0 });
+akteur('bl1', { x: 7400, y: 1060, o: 0 }); akteur('bl2', { x: 7400, y: 1430, o: 0 }); rel('bl1s', { sx: 0 }); rel('bl2s', { sx: 0 });
+akteur('tagebuch', { x: 6500, y: 1150, s: 0 }); rel('tbDeckel', {}); rel('tbRiemen', { r: -75 }); rel('tbSchloss', { x: -150, y: 190, r: -20 });
+akteur('tbHerzFlug', { x: 6500, y: 1150, s: 0 });
+akteur('girlande', { x: 2755, y: 1500, o: 1 }); akteur('konfetti', { x: 2755, y: 1450, o: 1 });
+akteur('bl3', { x: 2900, y: 1330, o: 0 });
+akteur('ring5', { x: 700, y: 1600, o: 0 }); ['gp1', 'gp2', 'gp3'].forEach(id => akteur(id, { x: 700, y: 1500, s: 0 }));
+['hi1', 'hi2', 'hi3'].forEach((id, i) => akteur(id, { x: 2980, y: 300 + i * 175, o: 0 }));
+akteur('respekt', { x: 1110, y: 2110, o: 0 }); akteur('band', { x: 1700, y: 950, o: 1 });
+['streifen', 'chip1', 'chip2', 'chip3', 'haken', 'kal17', 'ringL', 'ringR', 'ringV'].forEach(id => { if (!AKTEURE.has(el(id))) akteur(id, { o: 0 }); });
+rel('abspann', { y: -1250 });
+// Innenwelt alte Karte
+akteur('altUhr', { x: 960, y: 640 });
+akteur('altblatt', { x: 760, y: 680, o: 0 }); el('altL').innerHTML = el('altR').innerHTML = el('altblatt').innerHTML;
+akteur('altL', { x: 760, y: 680, o: 0 }); akteur('altR', { x: 760, y: 680, o: 0 });
+akteur('altSchloss', { x: 760, y: 980, s: 0 });
+akteur('kal94', { x: 1450, y: 560, o: 0 }); rel('kal94a', {}); rel('kal94b', { sy: 0 });
+akteur('gitter', { x: 960, y: -700 });
+akteur('t4', { x: 760, y: 680, o: 0 });
+
+/* ===================== 3 · Im Betrieb: an der Wand neben der Pinnwand ===================== */
+{
+  // Kamerafahrt an der Pinnwand entlang zum Dienstplan
+  fahrt(SS(13) - .45, 1.6, 4750, 1000, .85);
+  aus(['streifen', 'chip1', 'chip2', 'chip3'], SS(13) + 1.2, .2);
+  textKarte(3, 5150, 560, W('Niemand', 13) - .2, { unter: W('liebt', 13) - .3 });
+  // alle Namen gleich: eine Welle läuft durch die Zeilen, alle Balken werden gleich lang
+  for (let i = 0; i < 6; i++) {
+    const t = W('benachteiligt', 13) - .3 + i * .12;
+    tw('dz' + i, t, .25, { o: 1 }, 'out'); tw('dz' + i, t + .9, .5, { o: 0 }, 'inout');
+    tw('db' + i, t + .1, .6, { sx: 1 }, 'inout');
+  }
+  cue(W('benachteiligt', 13) - .2, 'scan');
+  // Gleichbehandlungsgesetz: Schild mit Paragraf schlägt auf
+  pop('paragraf', W('Gleichbehandlungsgesetz', 14) - .25, { x: 5000, y: 1150, r: 0 }, 'plopp');
+  wackeln('paragraf', W('Gleichbehandlungsgesetz', 14) + .25, 4, 4);
+  welle('welleP', W('Gleichbehandlungsgesetz', 14) + .2, 5000, 1150);
+  pop('chipAGG', W('Gleichbehandlungsgesetz', 14) + .2, { x: 5000, y: 1420 }, 'pop', 'sanft');
+  akzent(W('Gleichbehandlungsgesetz', 14) + .2, .035);
+  // dumme Sprüche: graue Blasen aus dem Off, durchgestrichen
+  fahrt(SS(15) - .3, 1.1, 5480, 1050, .85);
+  tw('bl1', W('Sprüche', 15) - .4, .15, { o: 1 }); tw('bl1', W('Sprüche', 15) - .4, .55, { x: 5850 }, 'sanft'); cue(W('Sprüche', 15) - .4, 'whoosh');
+  tw('bl2', W('Beleidigungen', 15) - .2, .15, { o: 1 }); tw('bl2', W('Beleidigungen', 15) - .2, .55, { x: 5800 }, 'sanft'); cue(W('Beleidigungen', 15) - .2, 'whoosh');
+  tw('bl1s', W('nicht', 15) - .1, .35, { sx: 1 }, 'out'); cue(W('nicht', 15) - .1, 'kritzeln');
+  tw('bl2s', W('Ordnung', 15), .35, { sx: 1 }, 'out');
+  tw(['bl1', 'bl2'], WE('Ordnung', 15) + .2, .4, { s: .9, o: .6 }, 'inout');
+  wackeln('bl2', W('Witz', 15) - .1, 3, 3);
+  tw('bl1', W('Witz', 15) + .1, .25, { sy: .85 }, 'sinus'); tw('bl1', W('Witz', 15) + .35, .3, { sy: 1 }, 'sanft');
+  // Privatsache: Tagebuch schließt sich mit Schloss – und öffnet sich wieder
+  fahrt(SS(16) - .3, 1.0, 5950, 1100, .85);
+  pop('tagebuch', SS(16) - .2, { x: 6500, y: 1150 }, 'pop', 'sanft');
+  tw('tbRiemen', W('Privatsache', 16) - .3, .45, { r: 0 }, 'back');
+  tw('tbSchloss', W('Privatsache', 16) - .3, .45, { x: 0, y: 0, r: 0 }, 'back'); cue(W('Privatsache', 16) + .15, 'klick');
+  bump('tagebuch', W('Privatsache', 16) + .15, 1.05);
+  wackeln('tbSchloss', W('Niemand', 17), 3, 5);
+  // „Aber alle dürfen es“: das Schloss springt auf, der Deckel klappt auf, ein Herz steigt auf
+  tw('tbSchloss', W('Aber', 18) - .1, .4, { x: 30, y: 230, r: 25 }, 'out'); tw('tbRiemen', W('Aber', 18) - .1, .45, { r: -70 }, 'out'); cue(W('Aber', 18) - .1, 'klick');
+  tw('tbDeckel', W('alle', 18), .5, { sx: -.15 }, 'inout'); cue(W('alle', 18), 'whoosh');
+  set('tbHerzFlug', W('dürfen', 18), { s: .2, x: 6500, y: 1150 }); tw('tbHerzFlug', W('dürfen', 18), .5, { s: 1 }, 'back');
+  tw('tbHerzFlug', W('dürfen', 18) + .2, 1.2, { y: 820 }, 'out'); cue(W('dürfen', 18), 'ding');
+}
+
+/* ===================== 4 · Warum? Zeitreise in die alte Karte ===================== */
+{
+  // zurück an der Wand entlang zur alten Karte; Ana fragt
+  fahrt(SS(19) - .5, 1.5, 2850, 1220, .85);
+  aus(['tagebuch', 'tbHerzFlug'], SS(19) + 1, .2);
+  set('ana', SS(19) - .5, { x: 2620, y: 1500, o: 0, s: .5, r: 0, sx: 1, sy: 1 });
+  tw('ana', W('Warum', 19) - .3, .2, { o: 1 }); tw('ana', W('Warum', 19) - .3, .5, { s: 1 }, 'sanft'); cue(W('Warum', 19) - .3, 'pop');
+  kopf('ana', W('wichtig', 19) - .2, 8); kopf('ana', SE(19) + .3, 0);
+  // hinein in die alte Karte: alles wird grau-hell
+  const tD = SS(20) - .3;
+  tw('k-alt', tD, 1.2, { r: 0 }, 'inout');
+  fahrt(tD, 1.3, 3060, 1000, 4.25);
+  tw('ana', tD + .1, .3, { o: 0, s: .8 }, 'in');
+  GRAU.push([tD + .2, .95]);
+  tw('altUhr', W('Liebe', 20) - .3, .4, { o: 0, s: .8 }, 'in');
+  set('altblatt', W('Liebe', 20) - .5, { o: 1, y: -700, r: -3 }); tw('altblatt', W('Liebe', 20) - .5, .8, { y: 680, r: 0 }, 'out'); cue(W('Liebe', 20) - .5, 'whoosh');
+  pop('kal94', W('Deutschland', 20) - .4, { x: 1450, y: 560 }, 'pop', 'sanft');
+  // verboten: ein Schloss schlägt auf das Blatt
+  set('altSchloss', W('verboten', 20) - .3, { s: 1.6, y: 700, o: 0 });
+  tw('altSchloss', W('verboten', 20) - .3, .1, { o: 1 }); tw('altSchloss', W('verboten', 20) - .3, .3, { s: 1, y: 980 }, 'in');
+  landen('altSchloss', W('verboten', 20), 1); wackeln('altblatt', W('verboten', 20), 3, 2); cue(W('verboten', 20), 'plopp');
+  akzent(W('verboten', 20), .03);
+  // Gefängnis: ein Gitter schiebt sich davor
+  tw('gitter', W('Gefängnis', 21) - .55, .6, { y: 660 }, 'bounce'); cue(W('Gefängnis', 21) - .1, 'plopp');
+  // 1994: Kalender schlägt um, das Blatt zerreißt, das Gitter geht hoch
+  const tJ = W('neunzehnhundertvierundneunzig', 22);
+  tw('kal94a', tJ - .1, .2, { sy: 0 }, 'in'); tw('kal94b', tJ + .1, .35, { sy: 1 }, 'sanft'); cue(tJ + .1, 'plopp'); bump('kal94', tJ + .3, 1.08);
+  const tA = W('abgeschafft', 22) - .2;
+  tw('gitter', tA - .6, .7, { y: -700 }, 'inout'); cue(tA - .6, 'whoosh');
+  set('altblatt', tA, { o: 0 }); set(['altL', 'altR'], tA, { o: 1 }); cue(tA, 'kritzeln');
+  tw('altL', tA, .9, { x: 560, y: 1700, r: -22 }, 'in'); tw('altR', tA, .9, { x: 980, y: 1750, r: 18 }, 'in');
+  tw('altSchloss', tA, .7, { y: 1700, r: 30 }, 'in');
+  GRAU.push([tA + .1, 0, 1.2]);
+  textKarte(4, 760, 680, tA + .5, null, -1);
+  set('t4', tA + .4, {});
+  // Christopher Street Day: heraus aus der Karte, eine Straße aus Postkarten, Regenbogen als Girlande
+  fahrt(SS(23) - .2, 1.5, 2750, 1380, .95);
+  tw('k-alt', SS(23) + .6, .6, { r: 2 }, 'inout');
+  ['cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => anpinnen('k-' + k, W('Städte', 23) - .5 + i * .18, { dx: 0, dy: -240 }));
+  akzent(W('Sommer', 23), .02);
+}
+
+/* Girlande über der Straße (Weltkoordinaten der Nadeln, als schmales Regenbogen-Band) */
+const RB = ['--rb1', '--rb2', '--rb3', '--rb4', '--rb5'];
+const bandPfad = (pts, sag) => { let d = `M${pts[0][0]} ${pts[0][1]}`; for (let i = 1; i < pts.length; i++) { const [a, b] = [pts[i - 1], pts[i]]; d += `Q${(a[0] + b[0]) / 2} ${(a[1] + b[1]) / 2 + sag} ${b[0]} ${b[1]}`; } return d; };
+{
+  const ox = 2755 - 600, oy = 1500 - 130;
+  const pins = ['cs1', 'cs2', 'cs3', 'cs4'].map(k => [KARTEN[k].x - ox, KARTEN[k].y - 105 + 12 - oy]);
+  pins.unshift([pins[0][0] - 140, pins[0][1] - 50]); pins.push([pins.at(-1)[0] + 140, pins.at(-1)[1] - 50]);
+  const d = bandPfad(pins, 70);
+  el('girlande').innerHTML = RB.map((c, i) => `<path class="gl" pathLength="1" d="${d}" transform="translate(0 ${i * 9 - 18})" stroke="var(${c})" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>`).join('');
+  const t0 = W('Christopher', 23) - .2;
+  el('girlande').querySelectorAll('.gl').forEach((p, i) => strich(p, t0 + i * .05, 1.1));
+  cue(t0, 'scan');
+  // Schwingen der Girlande
+  HOOKS.push(t => { const u = t - t0 - 1.1; el('girlande').style.transform += u > 0 ? ` translateY(${(6 * Math.sin(u * 3) * Math.exp(-u / 3)).toFixed(2)}px)` : ''; });
+  // Konfetti-Linien fallen
+  const K = [];
+  for (let i = 0; i < 18; i++) {
+    const x = 60 + (i * 211) % 1080, c = i % 6 < 5 ? RB[i % 5] : '--b300';
+    K.push(`<div id="kf${i}" class="a" style="width:10px;height:44px;border-radius:5px;background:var(${c})"></div>`);
+  }
+  el('konfetti').innerHTML = K.join('');
+  for (let i = 0; i < 18; i++) {
+    const t = W('Street', 23) + (i % 6) * .18 + Math.floor(i / 6) * .35, x = 60 + (i * 211) % 1080;
+    rel('kf' + i, { x, y: -80, o: 0, r: (i * 37) % 60 - 30 });
+    tw('kf' + i, t, .15, { o: 1 }); tw('kf' + i, t, 1.8, { y: 560 + (i * 53) % 120, r: (i * 37) % 60 + 120 }, 'lin');
+    tw('kf' + i, t + 1.4, .4, { o: 0 }, 'inout');
+  }
+  ['cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => { bump('k-' + k, W('Vielfalt', 23) - .1 + i * .1, 1.07); glanz(k, W('Vielfalt', 23) + i * .1, 1.2); });
+  cue(W('Vielfalt', 23), 'erfolg');
+}
+
+/* ===================== 5 · Was würdest du tun? ===================== */
+{
+  fahrt(SS(24) - .3, 1.4, 1500, 1350, .8);
+  set('ana', SS(24) - .3, { x: 700, y: 1600, o: 0, s: .5 });
+  tw('ana', W('Kollege', 24) - .3, .2, { o: 1 }); tw('ana', W('Kollege', 24) - .3, .5, { s: 1 }, 'sanft'); cue(W('Kollege', 24) - .3, 'pop');
+  anpinnen('k-kino', W('Freund', 24) - .35, { dx: 200, dy: -260, bogen: 60 });
+  glanz('kino', W('Freund', 24) + .4, 1.0);
+  froh('ana', W('Freund', 24), SS(25) + .4);
+  // aus dem Off: eine graue Blase, Lachwellen
+  tw('bl3', W('lacht', 25) - .35, .15, { o: 1 }); tw('bl3', W('lacht', 25) - .35, .55, { x: 2380 }, 'sanft'); cue(W('lacht', 25) - .35, 'whoosh');
+  HOOKS.push(t => { const a = W('lacht', 25) - .2; el('bl3w').setAttribute('transform', t > a ? `translate(0 ${(8 * Math.sin(t * 16) * (t < SS(27) ? 1 : 0)).toFixed(1)})` : ''); });
+  bump('bl3', W('Spruch', 25) - .1, 1.12);
+  wackeln('k-kino', W('Spruch', 25) + .1, 4, 3, -1.5);
+  kopf('ana', W('Spruch', 25), -6);
+  // Was würdest du tun? Kamera zu Ana, Denkpause mit Ring und Gedankenpunkten
+  fahrt(SS(26) - .2, 1.0, 1180, 1450, 1.1);
+  textKarte(5, 1110, 1300, W('Was', 26) - .3);
+  kopf('ana', W('tun', 26), 6);
+  const tP = SE(26) + .1, tE = SS(27) - .2;
+  set('ring5', tP - .3, { o: 1 }); strich('ring5P', tP, tE - tP - .1, 'lin'); cue(tP, 'tipp');
+  for (let k = 1; k < 4; k++) cue(tP + k, 'tipp');
+  [['gp1', 590, 1400], ['gp2', 520, 1320], ['gp3', 430, 1215]].forEach(([id, x, y], i) => {
+    set(id, tP + .2 + i * .45, { x, y: y + 40 }); tw(id, tP + .2 + i * .45, .5, { s: 1, y }, 'back'); cue(tP + .2 + i * .45, 'pop');
+  });
+  schweben(['gp1', 'gp2', 'gp3'], 6);
+  kopf('ana', tP + .4, -7, .7); kopf('ana', tP + 1.4, 7, .7); kopf('ana', tP + 2.4, -4, .7);
+  for (let i = 0; i < 3; i++) { tw('k-kino', tP + .3 + i * 1.1, .5, { r: -.5 }, 'sinus'); tw('k-kino', tP + .8 + i * 1.1, .5, { r: -2.5 }, 'sinus'); }
+}
+
+/* ===================== 6 · Tipp und Schluss ===================== */
+{
+  const t0 = SS(27) - .35;
+  tw('bl3', t0, .35, { s: 0 }, 'in'); cue(t0, 'pop');
+  abpinnen('t5', t0 + .1, 't5pin');
+  aus(['ring5', 'gp1', 'gp2', 'gp3'], t0, .3);
+  fahrt(t0, 1.3, 1110, 1520, .7);
+  sprung('ana', t0 + .2, 830, 2110, 140, .5);
+  set('sabine', W('Sabine', 27) - .3, { x: 1390, y: 2110, s: .5, o: 0 });
+  tw('sabine', W('Sabine', 27) - .25, .2, { o: 1 }); tw('sabine', W('Sabine', 27) - .25, .5, { s: 1 }, 'sanft'); cue(W('Sabine', 27) - .25, 'pop');
+  anpinnen('k-frage', W('gefragt', 27) - .35, { dx: -280, dy: 400, bogen: 120 });
+  drehen('see', W('See', 27) - .3, true); glanz('see', W('See', 27) + .3, 1.2);
+  froh('sabine', W('waren', 27) - .2); kopf('sabine', W('waren', 27), 5); kopf('sabine', W('waren', 27) + .5, 0);
+  // fragen – freundlich – Respekt
+  bump('k-frage', W('fragen', 28), 1.08);
+  froh('ana', W('freundlich', 28) - .1, SS(29));
+  set('respekt', W('Respekt', 28) - .5, { o: 1 }); strich('respektP', W('Respekt', 28) - .5, .9); cue(W('Respekt', 28) - .45, 'scan');
+  huepfen('ana', W('Respekt', 28) + .2, 18); huepfen('sabine', W('Respekt', 28) + .32, 18);
+  // jeder Mensch darf lieben: Blick auf die ganze Wand, alle Paare leuchten nacheinander
+  fahrt(SS(29) - .2, 1.4, 1700, 1050, .47);
+  tw('respekt', SS(29), .3, { o: 0 });
+  ['kon', 'rad', 'ku', 'fb', 'kino', 'ha', 'cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => glanz(k, W('lieben', 29) - .2 + i * .1, .9));
+  // Glauben: eine Karte mit Kerze und Buch hängt gleichberechtigt daneben
+  anpinnen('k-glaube', W('Glauben', 30) - .45, { dx: -300, dy: -200, bogen: 60 }); akzent(W('Glauben', 30) + .2, .03);
+  glanz('glaube', W('respektieren', 30) + .3, 1.2); glanz('frage', W('respektieren', 30) + .4, 1.2);
+  // Hilfe: Die Karte „In Deutschland“ wird abgenommen, Hilfe-Karten werden angepinnt
+  aus(['ana', 'sabine'], SS(31), .3);
+  fahrt(SS(31) - .2, 1.3, 2700, 560, .85);
+  abpinnen('t2', W('Hilfe', 31) - .5, 't2pin');
+  textKarte(6, 2380, 300, W('Hilfe', 31) - .1);
+  [['hi1', 'Ausbilderin'], ['hi2', 'Betriebsrat'], ['hi3', 'Kammer']].forEach(([id, w], i) => {
+    anpinnen(id, W(w, 31) - .45, { dx: 300, dy: -60 }, el(id).querySelector('.pw-pin'));
+  });
+  // Gleiche Rechte: zurück auf die ganze Wand, das Regenbogen-Band verbindet alle Karten
+  fahrt(SS(32) - .3, 1.5, 1700, 960, .5);
+  const P = k => [KARTEN[k].x, KARTEN[k].y - 165 + 12];
+  const reihe1 = [P('kon'), P('rad'), [1620, 420 - 135 + 22], [2380, 300 - 140], [3277, 248]];
+  const reihe2 = ['alt', 'ha', 'fb', 'see', 'ku'].map(P);
+  const reihe3 = ['glaube', 'frage', 'kino'].map(P).concat(['cs1', 'cs2', 'cs3', 'cs4'].map(k => [KARTEN[k].x, KARTEN[k].y - 105 + 12]));
+  const pfad = bandPfad(reihe1, 90) + ` Q3420 ${(248 + 847) / 2} ${reihe2[0][0]} ${reihe2[0][1]}` + bandPfad(reihe2, 90).replace(/^M[^Q]+/, '') +
+    ` Q-60 ${(847 + 1427) / 2} ${reihe3[0][0]} ${reihe3[0][1]}` + bandPfad(reihe3, 90).replace(/^M[^Q]+/, '');
+  el('band').innerHTML = RB.map((c, i) => `<path class="bd" pathLength="1" d="${pfad}" transform="translate(0 ${i * 9 - 18})" stroke="var(${c})" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>`).join('');
+  const tB = W('gleichen', 32) - .6;
+  el('band').querySelectorAll('.bd').forEach((p, i) => strich(p, tB + i * .05, 2.6));
+  cue(tB, 'scan'); cue(tB + 1.3, 'scan');
+  const ALLE = ['kon', 'rad', 'ku', 'see', 'fb', 'ha', 'alt', 'glaube', 'frage', 'kino', 'cs1', 'cs2', 'cs3', 'cs4'];
+  ALLE.forEach((k, i) => bump('k-' + k, W('Egal', 33) - .2 + i * .06, 1.05));
+  ALLE.forEach(k => glanz(k, W('lieben', 33) - .1, 3));
+  cue(W('lieben', 33), 'erfolg');
+}
+
+/* ---------- Abspann: ein großes Blatt wird angepinnt ---------- */
+const AB = ENDE_SPRACHE + 1.0;
+tw('abspann', AB, .8, { y: 0 }, 'out'); cue(AB, 'whoosh');
+[2.5, -1.8, 1, -.4, 0].forEach((w, i) => tw('abspann', AB + .55 + i * .16, .16, { r: w }, 'sinus'));
+cue(AB + .75, 'klick');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .7, .7, { o: 1, y: 0 }, 'weich');
+akteur('asBand', { sx: 0 }, true); tw('asBand', AB + 1.0, .8, { sx: 1 }, 'inout');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + 1.2, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2.0);
+</script>
+</body></html>
