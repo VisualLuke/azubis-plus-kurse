@@ -502,7 +502,8 @@ const schritt = L => {
 const maiEl = el('mai');
 HOOKS.push(t => {
   const L = L_bei(t), [px, py] = PP(L), g = p => wertBei('mai', p, t);
-  const x = px + g('x'), y = py - 30 + g('y') - schritt(L), s = g('s');
+  const v = Math.abs(L - L_bei(t - 1 / 30)), hb = clamp(1 - v / 40) ** 2;          // schnell = gleiten, langsam = hüpfen
+  const x = px + g('x'), y = py - 30 + g('y') - hb * schritt(L), s = g('s');
   maiEl.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-100%) rotate(${g('r').toFixed(2)}deg) scale(${(s * g('sx')).toFixed(4)},${(s * g('sy')).toFixed(4)})`;
 });
 // Mai verlässt den Weg zu einem Weltpunkt (Spitze des Pins)
@@ -563,7 +564,7 @@ const stempeln = (k, t, [sx, sy]) => {
 };
 
 /* ================= 1 · Neue Wohnung, viele Aufgaben (Haus in der Bildmitte, ohne Titel) ================= */
-cam(0, 0, FR.A);
+cam(0, 0, [860, 520]);
 {
   const t1 = W('Mai', 1);
   wachsen('haus1', t1 - .55, { x: 640, y: 450 });
@@ -785,7 +786,7 @@ cam(0, 0, FR.A);
 
 /* ================= Reise C → D (nach unten), 5 · Schritt drei: Krankenkasse ================= */
 {
-  const tG = SE(15) + .2, dG = 1.4;
+  const tG = SE(15) + .2, dG = 1.6;
   schildWeg('schildC', tG);
   weg(['env4', 'geh4', 'passAuf4', 'liste4', 'frage4', 'betr4', 'ok4'], tG - .1);
   geh(tG, dG, LS[6]); cam(tG, dG, FR.D); reise(tG, dG);
@@ -797,9 +798,9 @@ cam(0, 0, FR.A);
   const KK = ['kh5a', 'kg5', 'vk5', 'kh5b'];
   KK.forEach((id, i) => pop(id, W('Krankenkasse', 16) + .1 + i * .07, { x: D(570, 0)[0], y: D(0, 470 - 2 * i)[1] }, i ? null : 'pop', 'sanft'));
   const tF = W('suchst', 17) - .15, FX = [360, 500, 640, 780], FR5 = [-3, -1, 1, 3];
-  KK.forEach((id, i) => tw(id, tF + i * .05, .6, { x: D(FX[i], 0)[0], y: D(0, 470)[1], r: FR5[i] }, 'sanft'));
+  KK.forEach((id, i) => tw(id, tF + i * .05, .65, { x: D(FX[i], 0)[0], y: D(0, 470)[1], r: FR5[i] }, 'inout'));
   cue(tF, 'whoosh');
-  KK.forEach((id, i) => { const t0 = W('selbst', 17) + i * .13; tw(id, t0, .22, { y: D(0, 460)[1] }, 'sinus'); tw(id, t0 + .22, .35, { y: D(0, 470)[1] }, 'sinus'); cue(t0, 'tipp'); });
+  KK.forEach((id, i) => { const t0 = Math.max(W('selbst', 17), tF + .85) + i * .13; tw(id, t0, .22, { y: D(0, 460)[1] }, 'sinus'); tw(id, t0 + .22, .35, { y: D(0, 470)[1] }, 'sinus'); cue(t0, 'tipp'); });
   const tAk = W('Ah-Oh-Kah', 17) - .25;
   tw(['kh5a', 'kg5', 'kh5b'], tAk, .4, { o: 0, s: .8 }, 'sinus');
   tw('vk5', tAk, .65, { x: D(570, 0)[0], y: D(0, 445)[1], r: 0, s: 1.25 }, 'sanft'); cue(tAk, 'whoosh');
@@ -901,7 +902,7 @@ cam(0, 0, FR.A);
 
 /* ================= Reise E → Tag 14 → gestrichelt zum Briefkasten, 7 · Steuer-ID ================= */
 {
-  const tG = SE(24) + .5, dG = 2.6;
+  const tG = SE(24) + .45, dG = 2.85;
   schildWeg('schildE', tG);
   weg(['visa6', 'uhr6', 'kal6', 'btn6', 'ok6', 'lbl6'], tG - .1);
   geh(tG, dG, LM); cam(tG, dG, FR.G); reise(tG, dG, .16);
@@ -971,7 +972,7 @@ cam(0, 0, FR.A);
   schild('schildH', H(1470, 0)[0], H(0, 190)[1], W('Handy', 30) - .3, W('Pri-Peid-Karte', 31) - .1);
   tw('sy6', W('Handy', 30) - .6, .25, { s: 0 }, 'in');
   wachsen('shop8', W('Handy', 30) - .35, { x: 1450, y: 980 });
-  const HP = H(640, 690);
+  const HP = H(640, 715);
   pop('handy8', W('Handy', 30) + .15, { x: HP[0], y: HP[1] }, 'pop', 'sanft');
   wackeln('handy8', W('Handy', 30) + .6, 3, 2);
   // Prepaid-Karte kommt aus dem Laden und gleitet ins Fach
@@ -984,7 +985,7 @@ cam(0, 0, FR.A);
   // beim Kauf ausweisen: Pass vor das Prüfgerät
   const SC = H(1380, 700);
   pop('scan8', W('Beim', 32) - .1, { x: SC[0], y: SC[1] }, 'pop', 'sanft');
-  const PA = H(1060, 470);
+  const PA = H(1110, 320);
   pop('pass8', W('Kauf', 32) - .05, { x: PA[0], y: PA[1] }, 'pop', 'sanft');
   const tA = W('ausweisen', 32) - .15;
   flug('pass8', tA, .6, SC[0], SC[1] - 22, 40, { s: .85 }); cue(tA, 'whoosh');
