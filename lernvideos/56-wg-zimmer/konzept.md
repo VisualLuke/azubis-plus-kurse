@@ -85,7 +85,7 @@ Erzähler: Der Vermieter meldet sich nie wieder. Es war Betrug.
 Erzähler: Beim nächsten Zimmer geht Yusuf hin und lernt die Weh-Geh kennen. Er bekommt einen schriftlichen Vertrag. Und er bekommt die Wohnungsgeberbestätigung. Die braucht er, um sich beim Bürgeramt anzumelden. Seinen Ausweis zeigt er nur, er gibt keine Kopie an Fremde.
 
 ### Szene 7
-Erzähler: So erkennst du Betrug: sehr billig, Vermieter im Ausland, Geld vorab, Schlüssel per Post. Eine echte Kaution zahlst du erst ab dem Start der Miete, auf Wunsch in drei Raten. Und sie ist höchstens drei Kaltmieten.
+Erzähler: So erkennst du Betrug: sehr billig, Vermieter im Ausland, Geld vorab, Schlüssel per Post. Eine echte Kaution musst du erst zum Start der Miete zahlen, auf Wunsch in drei Raten. Und sie ist höchstens drei Kaltmieten.
 
 ### Szene 8
 Erzähler: Die beste Wahl ist Zeh. Und wenn du schon Geld überwiesen hast: Mach Fotos von allen Nachrichten, ruf sofort deine Bank an und geh zur Polizei.
