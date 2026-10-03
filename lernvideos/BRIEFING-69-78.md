@@ -24,6 +24,9 @@ auf der letzten Lektion. Bestehende Lektionen bleiben, wo sie sind.
 5. **Anders ist nicht falsch** (ca. 15–25 s): ein praktischer Tipp für den Alltag (was du sagen oder tun kannst) und der
    feste Schluss-Gedanke „Anders ist nicht falsch.“ (kann variiert werden, Sinn bleibt: kein Besser/Schlechter).
    Wo es passt: „Du darfst auch fragen.“ – Fragen ist in Deutschland normal.
+   **Wichtig (Nutzer 03.10.2026):** „Anders ist nicht falsch“ gilt nur für Gewohnheiten (Begrüßung, Termine, Essen …),
+   **nie für Rechte und Gesetze.** Gleiche Rechte gelten für alle – im Betrieb und auch zu Hause. Bei Rechte-Themen (74)
+   und Regeln (76) endet das Video deshalb mit einem klaren Satz zu den Rechten bzw. Regeln, nicht mit „Anders ist nicht falsch“.
 
 Haltung: auf Augenhöhe, freundlich, neugierig. Die erklärende Stimme ist oft eine Figur, die **selbst nicht aus Deutschland
 kommt** und es schon erlebt hat (z. B. Priya oder Kwame als „Buddy“), oder ein neutraler Erzähler – nie von oben herab.

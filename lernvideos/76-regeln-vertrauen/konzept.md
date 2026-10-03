@@ -25,7 +25,7 @@ der anderen Seite fährt los.
 | 3 | Für alle gleich. Puzzle-Rahmen groß im Bild; auf „für alle“ läuft eine Reihe gleich großer, leerer Namensschilder unter dem Rahmen durch, jedes bekommt denselben Haken; auf „Bußgeld“ flattert ein Zettel mit Paragraf herein und schlägt auf; auf „direkt darauf an“ ploppt eine Sprechblase „Da ist Rot!“ von der Seite (ohne Person); auf „nicht böse gemeint“ wird ihr Rand rund und weich, ein kleines Herz steigt auf | Regeln gelten für alle |
 | 4 | Warum? (Überraschung) Die letzten Teile („Vorbild“, „mitmachen“) fliegen ein; auf „Vertrauen“ rastet das letzte Teil, im Puzzle erscheint das Wort „Vertrauen“, die Laternen der Straße gehen nacheinander an; auf „verlasse mich auf dich“ wandern zwei Pfeile zwischen Anas Porträt und dem Fahrradlicht hin und her; auf „Kinder“ klappt an der Ampel ein Schild „Nur bei Grün – den Kindern ein Vorbild“ herunter (Text auf dem Schild, ohne Kinderfigur) | Wenn alle mitmachen, funktioniert es für alle |
 | 5 | Und bei dir? Die Bühne teilt sich: links „In Deutschland“ mit dem fertigen Puzzle klein, rechts ein leerer, gestrichelter Puzzle-Rahmen mit großem Fragezeichen und Chip „Bei dir?“; Ana in der Mitte, auf „Und wie ist das bei dir?“ legt sie den Kopf schief; in der Denkpause (3 s) füllt sich ein Gedankenbläschen nacheinander mit neutralen Symbolen: Ampel, Uhr, Schlüssel, Münze, Haus – sie schweben ohne Ordnung | Links: „In Deutschland“ · rechts: „Bei dir?“ |
-| 6 | Anders ist nicht falsch. Tipp-Layout (Text links, helle Nacht-Bühne rechts): auf „ruhig bleiben“ baut sich eine Sprechblase „Danke, das wusste ich nicht.“ über Ana und tippt sich; auf „frag nach“ ploppt ein Fragezeichen, das sich in eine Glühbirne verwandelt und aufleuchtet; auf „Anders ist nicht falsch“ springt die Fußgängerampel auf Grün, das Fahrradlicht fährt los, Ana geht über die Kreuzung, weiße Titelplatte steigt auf | Hinweis bekommen? Ruhig bleiben. Nicht verstanden? Fragen. |
+| 6 | Regeln gelten für alle. Tipp-Layout (Text links, helle Nacht-Bühne rechts): auf „ruhig bleiben“ baut sich eine Sprechblase „Danke, das wusste ich nicht.“ über Ana und tippt sich; auf „frag nach“ ploppt ein Fragezeichen, das sich in eine Glühbirne verwandelt und aufleuchtet; auf „Anders ist nicht falsch“ springt die Fußgängerampel auf Grün, das Fahrradlicht fährt los, Ana geht über die Kreuzung, weiße Titelplatte steigt auf | Hinweis bekommen? Ruhig bleiben. Nicht verstanden? Fragen. |
 
 Abspann: „Regeln sind ein Versprechen an alle.“ und die Kernbotschaft.
 
@@ -73,7 +73,7 @@ Erzähler: Welche Regeln sind dir wichtig? Und welche nimmst du eher locker? Vie
 
 ### Szene 6
 Ana: Mein Tipp: Wenn dich jemand auf eine Regel hinweist, bleib ruhig. Du kannst einfach sagen: „Danke, das wusste ich nicht.“ Und wenn du eine Regel nicht verstehst, frag nach. Das ist hier ganz normal.
-Erzähler: Anders ist nicht falsch. Regeln helfen, dass wir uns aufeinander verlassen können.
+Erzähler: Gewohnheiten sind überall verschieden. Aber die Regeln hier gelten für alle. Sie helfen, dass wir uns aufeinander verlassen können.
 
 ## Schreibweise im Untertitel
 
@@ -114,4 +114,6 @@ Suchmaschinen-Auszüge der jeweiligen Seite.
 | Viele wollen ein Vorbild für Kinder sein; an manchen Ampeln steht „Nur bei Grün, den Kindern ein Vorbild“ | 5, 6 |
 | Wenn du eine Regel nicht verstehst, frag nach; das ist hier normal | Tipp/Format-Grundsatz („Du darfst auch fragen“, Briefing) |
 | Situation in Szene 1 | erfundene Beispielsituation, keine Sachaussage |
-| „Anders ist nicht falsch“ | Format-Grundsatz (Briefing), keine Sachaussage |
+| „Gewohnheiten sind verschieden, Regeln gelten für alle“ | bpb einfach POLITIK (Regeln für alle), Format-Grundsatz |
+
+Nutzer 03.10.2026: „Anders ist nicht falsch“ nur für Gewohnheiten, nie für Rechte und Regeln – Schluss entsprechend geändert.
