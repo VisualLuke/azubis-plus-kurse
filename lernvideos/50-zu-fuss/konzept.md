@@ -41,6 +41,8 @@ Abspann: „Schauen und gesehen werden.“ und die Kernbotschaft.
 ## Hinweise zum Briefing
 
 - Kein Kurstitel im Video; die erste Bühne steht mittig.
+- Szene 6 nach Faktencheck (lernvideos/faktencheck-46-65.md): „…, mach es so: Handy weg und Kopfhörer raus.“ statt „…, gilt: …“ –
+  für Fußgänger ist das eine Empfehlung, keine Regel.
 - Bußgeld bei Rot nur allgemein („kann ein Bußgeld geben“), ohne Betrag – der Betrag ist klein und nicht nötig.
 - „Blickkontakt“: im Bild nur eine Blicklinie zur Windschutzscheibe, kein sichtbarer Fahrer.
 - „Vorbild für Kinder“: im Bild ein Schulranzen, kein Kind.

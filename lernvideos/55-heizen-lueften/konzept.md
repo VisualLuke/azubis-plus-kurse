@@ -30,9 +30,26 @@ erste Bühne in der Bildmitte. Text im Bild links (Wörter steigen aus einer Mas
 rechts; jede Animation hängt an einem Wort aus `sprache.json`. Kamera-Akzente auf „gekippt“, „Schrank“, „Schimmel“,
 „ganz auf“, „sechzehn“, „sofort“. Abspann: „Frische Luft – aber richtig.“ und die Kernbotschaft.
 
-Kursspezifische Teile (neu, Stil C): `waeschestaender`, `kleiderschrank`, `thermometer`, `thermostat`, `sanduhr`,
-`feuchte-barometer`, `schimmelfleck` (abstrakte Flecken, kein Ekel-Detail), `massband`, `dusche-dampf`, `topf`; vorhanden:
-`fenster`, `heizung`, `hemd`, `bett`, `handy`, `mond`, `schneeflocke`, `muenze`, `brief`, `schraubenschluessel`.
+Kursspezifische Teile (neu, Stil C, in `teile/`): `kleiderschrank`, `waeschestaender`, `handtuch`, `dusche`,
+`schimmelfleck` (abstrakte Flecken, kein Ekel-Detail); übernommen: `heizung`, `bett`, `hemd`, `kalender`, `mond`, `sonne`,
+`sanduhr`, `topf`, `schraubenschluessel`, `figur-schal`; aus `teile/`: `handy`, `muenze`, `brief`, Figuren. Thermostat,
+Thermometer und Feuchte-Anzeige sind animierte Inline-Grafiken in der Vorlage.
+
+## Umsetzung im Film (Stand Produktion 03.10.2026)
+
+Leitidee **Wärmebild** statt Tagesleiste und Text-links-Layout: Priyas Zimmer ist eine einzige Bühne für den ganzen Film
+(Tür, Fenster mit zwei Flügeln, Heizkörper mit Thermostat, Thermometer, Feuchte-Anzeige, Bett, Schrank an der Außenwand).
+Ein Schalter „Wärmebild“ oben rechts legt eine Thermo-Ebene über das Zimmer (warm = Warning/Error, kalt = Info): das
+Kippfenster als dünner kalter Faden, der nur die Wand am Fenster kühlt; feuchte Luft als Tröpfchen, die aus der Wäsche
+steigen und an der kalten Wand hinter dem Schrank kleben; Stoßlüften als kräftiger Luftstrom, der die Tröpfchen hinausweht.
+Übergänge sind Kamerafahrten und Zooms innerhalb des Zimmers; Text im Bild steht auf einer Karte oben links.
+Beim Zurückspulen läuft die ganze Welt (Welt-Zeit) sichtbar rückwärts – Tröpfchen fliegen zurück in die Wäsche, der Schrank
+rutscht zurück, Kalenderblätter, Mond, Kippflügel –, dann wischt ein Lichtband den hellen Tag ins Zimmer. Überraschung in
+Szene 9: die Kamera fährt aus dem Zimmer heraus – es ist ein Fenster in einem Haus im Schnee; im Wärmebild bläst ein
+dauernd gekipptes Fenster die Wärme hinaus, daneben die Abrechnung (roter Balken „gekippt“, grüner Balken „zu“). Schluss:
+grüne Marken direkt an Fenster, Heizkörper, Schrank und Priya statt einer Kachelreihe. Abstand zum Schrank als Draufsicht
+in einer Lupe („ein paar cm“). Die Nachricht an Herrn Schmitt zeigt nur Zeilen, das Wort „Schimmel“ und das Foto (kein
+gesprochener Text im Bild).
 
 ## Abweichungen vom Briefing
 
