@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Einzelhandel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:0 0}
+/* Bühnen: Ladenwand, davor das durchgehende Kassenband */
+.buehne.kz63{width:1840px;height:980px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne.kz63::before{content:'';position:absolute;left:0;right:0;top:640px;height:200px;background:linear-gradient(var(--b100),var(--b200));opacity:.55}
+.vorn{z-index:6}
+.oben{z-index:8}
+.band63{z-index:5;height:268px}
+.band63 i{position:absolute;left:0;right:0;display:block}
+.band63 .schiene{top:0;height:12px;background:linear-gradient(var(--n200),var(--n300))}
+.band63 .gurt{top:12px;height:50px;background-color:var(--b700);background-image:repeating-linear-gradient(90deg,transparent 0 50px,var(--b600) 50px 58px)}
+.band63 .lippe{top:62px;height:14px;background:linear-gradient(var(--surface),var(--n200))}
+.band63 .front{top:76px;bottom:0;background:linear-gradient(var(--b500),var(--b600))}
+.band63 .front::before{content:'';position:absolute;left:0;right:0;top:18px;height:8px;background:var(--b400);opacity:.6}
+
+/* Artikel-Farben: der = b500 · die = success · das = warning */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface)}
+.neutral{--f:var(--b200);--ft:var(--b600);--fa:var(--b700)}
+
+/* Wortkarte als Preisschild im Ständer */
+.vk63{width:620px;height:300px;border-radius:30px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.12),inset 0 0 0 5px var(--n200);
+  padding:40px 44px 30px;display:flex;flex-direction:column;transform-origin:50% 100%;overflow:hidden}
+.vk63 .band{position:absolute;left:0;right:0;top:0;height:16px;background:var(--f)}
+.vk63 .kopf{display:flex;align-items:center;justify-content:space-between;height:48px;flex:none}
+.vk63 .art{display:inline-block;padding:4px 22px;border-radius:999px;background:var(--f);color:var(--fa);font:800 32px/40px Inter;white-space:nowrap}
+.vk63 .punkte{display:flex;gap:8px;align-items:center}
+.vk63 .punkte i{display:block;width:12px;height:12px;border-radius:99px;background:var(--n200)}
+.vk63 .punkte i.fertig{background:var(--b200)}
+.vk63 .punkte i.jetzt{width:36px;background:var(--f);transform-origin:left center}
+.vk63 .wort{margin-top:20px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.vk63.ohne .wort{margin:auto 0}
+.vk63 .pl{margin-top:auto;display:flex;align-items:baseline;gap:16px;font:600 44px/52px Inter;color:var(--n700);white-space:nowrap}
+.vk63 .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.vk63 .pl em{font-style:normal;color:var(--success-text);font-weight:800}
+.staender63{width:170px;height:362px}
+.staender63 i{position:absolute;display:block}
+.staender63 .stab{left:78px;width:14px;top:20px;bottom:16px;background:linear-gradient(90deg,var(--n300),var(--surface),var(--n300))}
+.staender63 .klemme{left:43px;top:0;width:84px;height:34px;border-radius:9px;background:linear-gradient(var(--b600),var(--b700))}
+.staender63 .fuss{left:10px;bottom:0;width:150px;height:22px;border-radius:11px;background:linear-gradient(var(--b600),var(--b700))}
+
+/* Bondrucker und Kassenbon */
+.drucker63{width:380px;height:110px;border-radius:22px 22px 10px 10px;background:linear-gradient(var(--b500),var(--b700));box-shadow:0 10px 26px rgba(22,19,37,.16)}
+.drucker63 .schlitz{position:absolute;left:12px;right:12px;top:6px;height:10px;border-radius:5px;background:var(--ink)}
+.drucker63 .led{position:absolute;right:30px;top:52px;width:18px;height:18px;border-radius:99px;background:var(--b300)}
+.drucker63 .led.an{background:var(--success);box-shadow:0 0 0 6px color-mix(in srgb,var(--success) 30%,transparent)}
+.drucker63 .tasten{position:absolute;left:30px;top:54px;width:150px;height:14px;border-radius:7px;background:var(--b400)}
+.bon63{width:340px;overflow:hidden;
+  clip-path:polygon(0 8px,10px 0,20px 8px,30px 0,40px 8px,50px 0,60px 8px,70px 0,80px 8px,90px 0,100px 8px,110px 0,120px 8px,130px 0,140px 8px,150px 0,160px 8px,170px 0,180px 8px,190px 0,200px 8px,210px 0,220px 8px,230px 0,240px 8px,250px 0,260px 8px,270px 0,280px 8px,290px 0,300px 8px,310px 0,320px 8px,330px 0,340px 8px,340px 100%,0 100%)}
+.bon63.ab{clip-path:polygon(0 8px,10px 0,20px 8px,30px 0,40px 8px,50px 0,60px 8px,70px 0,80px 8px,90px 0,100px 8px,110px 0,120px 8px,130px 0,140px 8px,150px 0,160px 8px,170px 0,180px 8px,190px 0,200px 8px,210px 0,220px 8px,230px 0,240px 8px,250px 0,260px 8px,270px 0,280px 8px,290px 0,300px 8px,310px 0,320px 8px,330px 0,340px 8px,
+  340px calc(100% - 8px),330px 100%,320px calc(100% - 8px),310px 100%,300px calc(100% - 8px),290px 100%,280px calc(100% - 8px),270px 100%,260px calc(100% - 8px),250px 100%,240px calc(100% - 8px),230px 100%,220px calc(100% - 8px),210px 100%,200px calc(100% - 8px),190px 100%,180px calc(100% - 8px),170px 100%,160px calc(100% - 8px),150px 100%,140px calc(100% - 8px),130px 100%,120px calc(100% - 8px),110px 100%,100px calc(100% - 8px),90px 100%,80px calc(100% - 8px),70px 100%,60px calc(100% - 8px),50px 100%,40px calc(100% - 8px),30px 100%,20px calc(100% - 8px),10px 100%,0 calc(100% - 8px))}
+.pap63{position:absolute;left:0;top:0;width:340px;background:linear-gradient(90deg,var(--n200),var(--surface) 7%,var(--surface) 93%,var(--n200));padding:0 26px}
+.pap63 .kopf63{height:136px;position:relative}
+.pap63 .pk63{position:absolute;left:50%;top:24px;margin-left:-50px;border-color:var(--b100)}
+.pap63 .strich63{height:16px;border-top:3px dashed var(--n300);margin-top:6px}
+.pap63 .bz{height:38px;font:600 28px/38px Inter;color:var(--ink);white-space:nowrap}
+.pap63 .sw{display:inline-block;white-space:pre}
+.pap63 .sw u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.pap63 .sw.lw u{color:var(--ft);font-weight:800}
+.pap63 .code63{height:34px;margin:2px 30px 0;background:repeating-linear-gradient(90deg,var(--ink) 0 3px,transparent 3px 7px,var(--ink) 7px 12px,transparent 12px 15px,var(--ink) 15px 16px,transparent 16px 21px)}
+.pap63 .bp{height:40px;display:flex;align-items:center;justify-content:space-between;font:700 27px/34px Inter;color:var(--ink);padding:0 6px;border-radius:8px}
+.pap63 .bp i{display:block;height:12px;border-radius:6px;background:var(--n300)}
+.pap63 .bp.summe{font-weight:800}
+.pap63 .bp.summe i{background:var(--ink)}
+.pap63 .bp.ok{background:var(--success-bg);color:var(--success-text)}
+.pap63 .bp.ok i{background:var(--success)}
+.pap63 .bp.blick{background:var(--b50)}
+.bonleer{width:340px;height:230px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.10);padding:34px 30px}
+.bonleer i{display:block;height:12px;border-radius:6px;background:var(--n200);margin-bottom:22px}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.portrait .hand{transform-origin:80% 92%;opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface);
+  font:800 36px/1 Inter;color:var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)}
+.etikett{padding:10px 24px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 28px/34px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.09)}
+.etikett b{font-weight:800;color:var(--ink)}
+.tipp u{display:inline-block;text-decoration:none;white-space:pre}
+.nschild{display:flex;align-items:stretch;border-radius:18px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.15);overflow:hidden;white-space:nowrap}
+.nschild .band{width:18px;background:var(--success);flex:none}
+.nschild .tx{padding:12px 28px 14px 20px}
+.nschild b{display:block;font:800 40px/46px Inter;color:var(--ink)}
+.nschild span{display:block;font:700 26px/32px Inter;color:var(--success-text);min-height:32px}
+/* Hängeetikett (Legende, Mini-Preisschilder) */
+.etik63{padding:8px 24px 8px 40px;border-radius:12px 999px 999px 12px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;white-space:nowrap;transform-origin:50% -18px;
+  box-shadow:0 6px 16px rgba(22,19,37,.14)}
+.etik63::before{content:'';position:absolute;left:14px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:99px;background:var(--surface);opacity:.85}
+.etik63::after{content:'';position:absolute;left:50%;top:-18px;width:3px;height:18px;margin-left:-1.5px;background:var(--b700)}
+.mini63{padding:4px 14px 4px 26px;border-radius:8px 999px 999px 8px;background:var(--warning);color:var(--surface);font:800 24px/30px Inter;transform-origin:50% -16px;box-shadow:0 4px 10px rgba(22,19,37,.14)}
+.mini63::before{content:'';position:absolute;left:9px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:99px;background:var(--surface)}
+.mini63::after{content:'';position:absolute;left:50%;top:-16px;width:3px;height:16px;margin-left:-1.5px;background:var(--b700)}
+/* Markise (Laden ohne Namen) */
+.markise63 svg{display:block}
+/* Regal */
+.regal63 i{position:absolute;display:block}
+.regal63 .post{top:0;bottom:0;width:16px;border-radius:6px;background:linear-gradient(90deg,var(--b600),var(--b700))}
+.regal63 .rueck{left:12px;right:12px;top:6px;bottom:0;background:var(--surface);opacity:.6;border-radius:6px}
+.regal63 .brett{left:0;right:0;height:16px;border-radius:6px;background:linear-gradient(var(--b400),var(--b500));box-shadow:0 4px 8px rgba(22,19,37,.10)}
+.regal63 .brett.licht{background:linear-gradient(var(--success),var(--success-text));box-shadow:0 0 0 7px color-mix(in srgb,var(--success) 25%,transparent)}
+.ware63{border-radius:8px;box-shadow:inset 0 -6px 0 rgba(22,19,37,.12)}
+.ware63::after{content:'';position:absolute;left:18%;right:18%;top:38%;height:22%;border-radius:4px;background:var(--surface);opacity:.85}
+.ware63.f1{background:var(--b400)} .ware63.f2{background:var(--success)} .ware63.f3{background:var(--warning)} .ware63.f4{background:var(--info)} .ware63.f5{background:var(--error)}
+/* Kasse: Schublade, Geldschale, Schild */
+.lade63{width:230px;height:46px;border-radius:8px;background:linear-gradient(var(--b500),var(--b700));box-shadow:0 6px 14px rgba(22,19,37,.14)}
+.lade63::after{content:'';position:absolute;left:50%;top:18px;width:46px;height:9px;margin-left:-23px;border-radius:5px;background:var(--b300)}
+.schale63{width:300px;height:56px;border-radius:0 0 150px 150px / 0 0 56px 56px;background:linear-gradient(var(--b200),var(--b300));box-shadow:0 8px 18px rgba(22,19,37,.12)}
+.schale63::before{content:'';position:absolute;left:-10px;right:-10px;top:-8px;height:16px;border-radius:8px;background:var(--b300)}
+.kschild{padding:10px 26px;border-radius:16px;background:var(--surface);color:var(--b600);font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 8px 20px rgba(22,19,37,.12);transform-origin:50% -40px}
+.kschild::before,.kschild::after{content:'';position:absolute;top:-40px;width:4px;height:40px;background:var(--n300)}
+.kschild::before{left:30px} .kschild::after{right:30px}
+.kschild.an{background:var(--warning);color:var(--surface);box-shadow:0 0 0 10px color-mix(in srgb,var(--warning) 30%,transparent),0 8px 20px rgba(22,19,37,.12)}
+/* Straße, Rollbahn */
+.strasse63{height:16px;border-radius:8px;background:var(--n300)}
+.strasse63::after{content:'';position:absolute;left:20px;right:20px;top:6px;height:4px;background:repeating-linear-gradient(90deg,var(--surface) 0 26px,transparent 26px 46px)}
+.rollbahn63{width:320px;height:44px}
+.rollbahn63 .holm{position:absolute;left:0;right:0;top:0;height:12px;border-radius:6px;background:var(--n300)}
+.rollbahn63 .r{position:absolute;top:2px;width:26px;height:26px;border-radius:99px;background:var(--b600);border:5px solid var(--n200)}
+.rollbahn63 .bein{position:absolute;top:20px;width:12px;height:24px;background:var(--b600);border-radius:4px}
+/* Stadtplan */
+.karte63{width:560px;height:440px;border-radius:26px;background:var(--surface);box-shadow:0 16px 40px rgba(22,19,37,.12);overflow:hidden}
+.karte63 svg{position:absolute;left:0;top:0;width:560px;height:440px}
+.karte63 .falz{position:absolute;top:0;bottom:0;width:3px;background:var(--n200)}
+/* Lieferschein auf dem Klemmbrett */
+.klemm63{width:320px;height:410px;border-radius:24px;background:linear-gradient(135deg,var(--b600),var(--b700));box-shadow:0 14px 34px rgba(22,19,37,.15)}
+.klemm63 .blatt{position:absolute;left:22px;right:22px;top:40px;bottom:22px;border-radius:8px;background:linear-gradient(var(--surface),var(--n200));padding:22px 20px}
+.klemm63 .clip{position:absolute;left:50%;top:-10px;width:120px;height:44px;margin-left:-60px;border-radius:12px;background:var(--n300);box-shadow:inset 0 0 0 9px var(--n200)}
+.klemm63 .kz{height:14px;border-radius:7px;background:var(--b200);width:60%;margin:4px 0 22px}
+.lzeile{display:flex;align-items:center;gap:14px;height:62px;font:800 30px/36px Inter;color:var(--ink);border-radius:10px;padding:0 10px;margin:0 -10px}
+.lzeile .bx{width:34px;height:34px;flex:none;border-radius:8px;border:4px solid var(--n300);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.lzeile .bx svg{width:26px;opacity:0}
+.lzeile b{margin-left:auto;font-weight:800;color:var(--b600)}
+.lzeile.ok{background:var(--success-bg)}
+.lzeile.ok .bx{border-color:var(--success);background:var(--success)}
+.lzeile.ok .bx svg{opacity:1}
+/* Zählwerk, Strichliste, Kalender */
+.zaehl63{width:240px;height:96px;border-radius:20px;background:linear-gradient(var(--b600),var(--b700));display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 24px rgba(22,19,37,.14)}
+.zaehl63 span{width:40px;height:60px;border-radius:8px;background:var(--surface);font:800 42px/60px Inter;color:var(--ink);text-align:center}
+.strichl63{width:240px;height:170px;border-radius:14px;background:var(--warning-bg);box-shadow:0 10px 24px rgba(22,19,37,.12);padding:22px}
+.strichl63 svg{width:196px;height:126px}
+.kal63{width:250px;height:290px}
+.kal63 .blatt63{position:absolute;inset:0;border-radius:20px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.12);overflow:hidden;transform-origin:50% 0}
+.kal63 .kk{position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(var(--b400),var(--b600));color:var(--surface);font:800 32px/64px Inter;text-align:center}
+.kal63 .gitter{position:absolute;left:22px;right:22px;top:88px;display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.kal63 .gitter i{display:block;height:34px;border-radius:7px;background:var(--b100)}
+.kal63 .gitter i.mark{background:var(--success);box-shadow:0 0 0 5px var(--success-bg)}
+.kal63 .ring{position:absolute;left:-14px;right:-14px;top:-14px;height:28px}
+/* Größe am Pulli, Zettel, Abdruck */
+.groesse63{width:62px;height:62px;border-radius:12px;background:var(--surface);border:4px solid var(--b300);font:800 34px/54px Inter;color:var(--b600);text-align:center;box-shadow:0 4px 10px rgba(22,19,37,.12)}
+.zettel63{width:250px;height:150px;border-radius:14px;background:var(--warning-bg);box-shadow:0 12px 28px rgba(22,19,37,.13);padding:28px 24px}
+.zettel63 i{display:block;height:10px;border-radius:5px;background:var(--warning);opacity:.35;margin-bottom:18px}
+.abdruck63{padding:8px 18px;border:5px solid var(--error);border-radius:12px;color:var(--error);font:800 30px/36px Inter;letter-spacing:.02em;white-space:nowrap;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.trenn63{width:6px;height:520px;border-radius:3px;background:repeating-linear-gradient(var(--b200) 0 18px,transparent 18px 32px)}
+.dunkel63{width:1840px;height:980px;border-radius:48px;background:var(--ink);opacity:0;z-index:7;pointer-events:none}
+/* Schluss: Preisschild-Chips */
+.chip63{display:flex;align-items:center;height:54px;padding:0 22px 0 40px;border-radius:12px 999px 999px 12px;background:var(--f);color:var(--fa);font:800 26px/32px Inter;white-space:nowrap;
+  box-shadow:0 8px 20px rgba(22,19,37,.14)}
+.chip63::before{content:'';position:absolute;left:14px;top:50%;width:13px;height:13px;margin-top:-6.5px;border-radius:99px;background:var(--surface);opacity:.85}
+.chip63 b{font-weight:600;opacity:.85;margin-right:8px}
+/* Iris-Blende, Abspann (Kassenbon-Papier) */
+#iris{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));visibility:hidden}
+#abspann63{position:absolute;left:0;top:0;width:1920px;height:1120px;background:linear-gradient(135deg,var(--b500),var(--b700));
+  clip-path:polygon(0 24px,40px 0,80px 24px,120px 0,160px 24px,200px 0,240px 24px,280px 0,320px 24px,360px 0,400px 24px,440px 0,480px 24px,520px 0,560px 24px,600px 0,640px 24px,680px 0,720px 24px,760px 0,800px 24px,840px 0,880px 24px,920px 0,960px 24px,1000px 0,1040px 24px,1080px 0,1120px 24px,1160px 0,1200px 24px,1240px 0,1280px 24px,1320px 0,1360px 24px,1400px 0,1440px 24px,1480px 0,1520px 24px,1560px 0,1600px 24px,1640px 0,1680px 24px,1720px 0,1760px 24px,1800px 0,1840px 24px,1880px 0,1920px 24px,1920px 100%,0 100%)}
+#abspann63 .ende{height:1080px;top:20px}
+#abspann63 .gross{font:800 110px/120px Inter;letter-spacing:-.03em;text-align:center}
+#abspann63 .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAusruf"><svg viewBox="0 0 40 40"><path d="M20 9v14" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/><circle cx="20" cy="31" r="3.6" fill="var(--surface)"/></svg></template>
+<template id="svgKreis"><svg viewBox="0 0 100 100"><path d="M78 50a28 28 0 1 1-8-19.8" stroke="var(--b400)" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M67.2 14.4L70 30.2L54.2 27.4" stroke="var(--b400)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgPfeil"><svg viewBox="0 0 120 60"><path d="M112 30H18" stroke="var(--error)" stroke-width="10" stroke-linecap="round"/><path d="M38 10L14 30l24 20" stroke="var(--error)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<template id="t-korb">{{einkaufskorb}}</template>
+<template id="t-rolle">{{bonrolle}}</template>
+<template id="t-boerse">{{geldboerse}}</template>
+<template id="t-brot">{{brot}}</template>
+<template id="t-dose">{{dose}}</template>
+<template id="t-tasche">{{einkaufstasche}}</template>
+<template id="t-karton">{{karton}}</template>
+<template id="t-klemm">{{klemmbrett}}</template>
+<template id="t-pullifalt">{{pulli-falt}}</template>
+<template id="t-pulli">{{pulli}}</template>
+<template id="t-apfel">{{apfel}}</template>
+<template id="t-milch">{{milch}}</template>
+<template id="t-lampe">{{lampe}}</template>
+<template id="t-licht">{{lampe-licht}}</template>
+<template id="t-kasse">{{kasse}}</template>
+<template id="t-schein">{{schein10}}</template>
+<template id="t-muenze">{{muenze}}</template>
+<template id="t-wagen">{{einkaufswagen}}</template>
+<template id="t-van">{{lieferwagen}}</template>
+<template id="t-rad">{{rad}}</template>
+<template id="t-laden">{{laden}}</template>
+<template id="t-buero">{{buero}}</template>
+<template id="t-lupe">{{lupe}}</template>
+<template id="t-stempel">{{stempel}}</template>
+<template id="t-uhr">{{uhr}}</template>
+<template id="t-stunde">{{uhr-stunde}}</template>
+<template id="t-minute">{{uhr-zeiger}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Priya">{{figur-priya}}</template>
+<template id="f-Filialleiterin">{{figur-chefin}}</template>
+<template id="t-hand">{{winkhand}}</template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne kz63" id="bue0"></div>
+  <div class="a buehne kz63" id="bue1"></div>
+  <div class="a buehne kz63" id="bue2"></div>
+  <div class="a buehne kz63" id="bue3"></div>
+  <div class="a buehne kz63" id="bue4"></div>
+  <div class="a buehne kz63" id="bue5"></div>
+  <div class="a buehne kz63" id="bue6"></div>
+  <div class="a buehne kz63" id="bue7"></div>
+  <div class="a buehne kz63" id="bue8"></div>
+  <div class="a buehne kz63" id="bue9"></div>
+  <div class="a buehne kz63" id="bue10"></div>
+  <div class="a band63" style="left:-2000px;top:812px;width:25120px"><i class="schiene"></i><i class="gurt"></i><i class="lippe"></i><i class="front"></i></div>
+</div></div>
+<div id="iris"></div>
+
+<div id="abspann63"><div class="ende">
+  <div class="gross" id="asTitel">Sicher im Laden.</div>
+  <div class="klein" id="asUnter">An der Kasse, am Regal und mit Kunden: Mit den richtigen Wörtern arbeitest du im Laden sicher und freundlich.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+// Klänge nur mit gültigem Namen und Zeit (sonst bricht das Mischen ab)
+const KLAENGE = new Set(['whoosh', 'pop', 'plopp', 'klick', 'muenze', 'ding', 'erfolg', 'tipp', 'kritzeln', 'scan']);
+const ton = (t, k) => { if (k && KLAENGE.has(k) && Number.isFinite(t) && t >= 0) cue(t, k); };
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); ton(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  ton(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const federn = (id, t) => { tw(id, t, .12, { sy: .96, sx: 1.025 }, 'sinus'); tw(id, t + .12, .4, { sy: 1, sx: 1 }, 'sanft'); };
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '') => { WELT.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const welle = (id, t, x, y, d = .9) => { if (!el(id)) neu(id, '', 'width:160px;height:160px', 'data-frei', 'welle'); akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich'); };
+let WN = 0;
+const wellen = (t, x, y, farbe = null, gr = 160) => { const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle oben'); welle(id, t, x, y); };
+const plakette = (id, farbe, svg, attr = 'data-frei', extra = '') => neu(id, svg ? tpl(svg) : '', '', attr, 'plakette ' + farbe + ' ' + extra);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const summen = (id, t, d = .8, a = 4) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+// Bildteil als Akteur: Breite in px (SVG 160 × 160); Mitte so, dass der Boden des Teils (Zeile g im SVG) auf y liegt
+const bild = (id, t, breite, attr = '', stil = '', klasse = '') => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr, klasse);
+const steht = (breite, boden, g = 146) => boden - breite * (g / 160 - .5);
+// Text, der sich Buchstabe für Buchstabe tippt
+function tippen(id, text, t0, d, klang = true) {
+  const e = el(id), zeichen = [...text];
+  e.classList.add('tipp');
+  e.innerHTML = zeichen.map(c => `<u>${c}</u>`).join('');
+  const us = [...e.querySelectorAll('u')], z = us.map((u, k) => t0 + d * k / Math.max(1, us.length));
+  HOOKS.push(t => us.forEach((u, k) => { const p = clamp((t - z[k]) / .08); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(6 * (1 - p)).toFixed(1)}px)` : ''; }));
+  if (klang) z.filter((_, k) => k % 2 === 0 && zeichen[k] !== ' ').forEach(tz => ton(tz, 'tipp'));
+  return z;
+}
+
+/* ---------- Kassenband: läuft, wenn Ware darauf fährt ---------- */
+const BAND = 812, SLOT = 712;
+const RIDES = [];
+const bandPos = t => RIDES.reduce((s, [t0, d, dx, e]) => s + dx * E[e](clamp((t - t0) / d)), 0);
+const GURTE = [...document.querySelectorAll('.band63 .gurt')];
+HOOKS.push(t => GURTE.forEach(g => { g.style.backgroundPosition = `${bandPos(t).toFixed(1)}px 0`; }));
+// fahren: mehrere Akteure fahren gemeinsam auf dem Band um dx
+function fahren(ids, t, dx, d = .6, e = 'out') {
+  for (const id of [].concat(ids)) tw(id, t, d, { x: wertBei(id, 'x', t) + dx }, e);
+  RIDES.push([t, d, dx, e]);
+}
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Atmer, Akzente, Zoom in einen Punkt ---------- */
+const PANS = [], AKZENTE = [], SCHNITTE = [], ZOOMS = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 11;
+HOOKS.push(t => {
+  let z = 1, ox = 960, oy = 540;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t), ...SCHNITTE.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  for (const [t0, d, zz, px, py] of ZOOMS) { const q = clamp((t - t0) / d); if (t >= t0 && t < t0 + d + .02) { const w = E.in(q); z *= 1 + (zz - 1) * w; ox = lerp(960, px, Math.min(1, w * 3)); oy = lerp(540, py, Math.min(1, w * 3)); } }
+  $('#kamera').style.transform = `translate(${ox}px,${oy}px) scale(${z.toFixed(4)}) translate(${-ox}px,${-oy}px)`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+const lerp = (a, b, p) => a + (b - a) * p;
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Nicken, froh, winken ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [], WINK = [];
+const figurHTML = id => wer => `<div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${tpl('gesicht')}<div class="ebene hand">${kopie('t-hand', id)}</div></div>`;
+function portrait(id, wer, gr, attr = '', klasse = '') {
+  neu(id, figurHTML(id)(wer), `width:${gr}px;height:${gr}px`, attr, 'portrait ' + klasse);
+  el(id).dataset.sprecher = wer;
+  return id;
+}
+const portraitHTML = (id, wer, gr) => `<div class="portrait pk63" id="${id}" data-sprecher="${wer}" style="width:${gr}px;height:${gr}px">${figurHTML(id)(wer)}</div>`;
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+    let hy = 60, hr = 0, ho = 0;
+    for (const [id, t0, d] of WINK) {
+      const q = t - t0; if (id !== p.id || q < 0 || q > d) continue;
+      const ein = E.sanft(clamp(q / .35)), weg = E.in(clamp((q - d + .3) / .3));
+      hy = 60 * (1 - ein) + 60 * weg; ho = 1; hr = 16 * Math.sin((q - .2) * 11) * clamp(q / .3) * (1 - weg);
+    }
+    const h = p.querySelector('.hand');
+    h.style.opacity = ho; h.style.transform = `translateY(${hy.toFixed(1)}%) rotate(${hr.toFixed(2)}deg)`;
+  });
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+const winken = (id, t, d = 1.6) => WINK.push([id, t, d]);
+
+/* ================= Preisschild (Wortkarte im Ständer) fährt mit der Ware auf dem Band herein ================= */
+const GENUS = ['der', 'die', 'das'];
+const KX = 420, KY = 315, FAHRT = 1150;
+function preisschild(i, o) {
+  const X = S(i), id = 'vk' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral', G = `data-gruppe="ps${i}"`;
+  const woerter = o.wort.split(' ');
+  neu(id, `<div class="band"></div>
+    <div class="kopf"><span class="art" id="${id}a">${o.chip}</span><span class="punkte">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(k => `<i class="${k === o.nr ? 'jetzt' : k < o.nr ? 'fertig' : ''}" ${k === o.nr ? `id="${id}d"` : ''}></i>`).join('')}</span></div>
+    <div class="wort" id="${id}wt" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.zeile ? `<div class="pl" id="${id}p" ${o.plgr ? `style="font-size:${o.plgr}px"` : ''}><small>${o.zeile[0]}</small><span>${o.zeile[1]}</span></div>` : ''}`, '', G, `vk63 ${kl}${o.zeile ? '' : ' ohne'}`);
+  neu('st' + i, '<i class="stab"></i><i class="klemme"></i><i class="fuss"></i>', '', G, 'staender63 vorn');
+  const wb = o.wb || 170;
+  bild('pr' + i, o.ware, wb, G, '', 'vorn');
+  const ids = [id, 'st' + i, 'pr' + i];
+  akteur(id, { x: X + KX - FAHRT, y: KY, o: 0 });
+  akteur('st' + i, { x: X + KX - FAHRT, y: BAND - 181, o: 0 });
+  akteur('pr' + i, { x: X + KX + 225 - FAHRT, y: steht(wb, BAND, o.g || 146), o: 0 });
+  akteur(id + 'a', { s: 0 }, true); akteur(id + 'd', { sx: .3 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
+  return {
+    ein: t => { set(ids, t, { o: 1 }); fahren(ids, t, FAHRT, .62, 'out'); pendel(id, t + .55, 4, 4, .3); landen('pr' + i, t + .6); ton(t, 'whoosh'); ton(t + .6, 'plopp'); },
+    chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); ton(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); ton(t0, 'klick'); },
+    zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); ton(t, 'pop'); },
+    weg: t => { },
+  };
+}
+
+/* ================= Bondrucker und Kassenbon: der Beispielsatz druckt sich Zeile für Zeile ================= */
+const BON_B = 340, KOPF_H = 158, LH = 38, FUSS_H = 72;
+function drucker(i, x, t) {
+  const id = 'dr' + i;
+  neu(id, `<div class="schlitz"></div><div class="tasten"></div><div class="led" id="${id}l"></div>`, '', `data-gruppe="dr${i}"`, 'drucker63');
+  akteur(id, { x, y: BAND - 55 + 150 });
+  tw(id, t, .55, { y: BAND - 55 }, 'sanft'); federn(id, t + .5); ton(t, 'whoosh');
+  return id;
+}
+// Papier wächst aus dem Schlitz: schritte [t, höhe, dauer]
+function papier(id, x, html, gruppe) {
+  neu(id, `<div class="pap63">${html}</div>`, '', `data-gruppe="${gruppe}"`, 'bon63');
+  akteur(id, { x: x - BON_B / 2, y: SLOT }, true);
+  const schritte = [], e = el(id);
+  let ab = Infinity;
+  HOOKS.push(t => {
+    let h = 0;
+    for (const [t0, hz, d] of schritte) { if (t < t0) break; h = h + (hz - h) * E.out(clamp((t - t0) / d)); }
+    e.style.height = h.toFixed(1) + 'px';
+    e.style.transform = `translateY(${(-h).toFixed(1)}px) ` + e.style.transform;
+    if (h < 1) e.style.visibility = 'hidden';
+    e.classList.toggle('ab', t >= ab);
+  });
+  return {
+    vor: (t, h, d = .2) => { schritte.push([t, h, d]); schritte.sort((a, b) => a[0] - b[0]); },
+    reissen: t => { ab = t; tw(id, t, .07, { y: SLOT - 14 }, 'out'); tw(id, t + .07, .45, { y: SLOT - 22 }, 'sanft'); ton(t, 'klick'); },
+  };
+}
+const ANZEIGE = { kassenbong: 'Kassenbon', kassenbongs: 'Kassenbons', zwei: '2', drei: '3,20', zwanzig: '' };
+function satzbon(i, x, ns, art, lern, zeilen) {
+  ns = [].concat(ns);
+  const id = 'bo' + i, kl = GENUS.includes(art) ? art : 'neutral';
+  let teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok: tok.replace(/[\p{L}\p{N}]+/u, m => ANZEIGE[m.toLowerCase()] ?? m), lern: _norm(tok), w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  // Zeichen je Wort mit Zeit; reine Satzzeichen hängen am Wort davor
+  const toks = [];
+  for (const p of teile) {
+    const a = A(p.w.start), d = Math.max(.08, p.w.ende - p.w.start);
+    const zeichen = [...p.tok].map((c, k, arr) => [c, a + d * k / arr.length]);
+    if (!/[\p{L}\p{N}]/u.test(p.tok)) { if (toks.length && zeichen.length) toks.at(-1).z.push(...zeichen.map(([c]) => [c, a])); continue; }
+    toks.push({ z: zeichen, lw: lern.includes(p.lern) });
+  }
+  const zl = []; let k = 0;
+  for (const n of zeilen) { zl.push(toks.slice(k, k + n)); k += n; }
+  if (k !== toks.length) throw new Error(`satzbon ${i}: ${toks.length} Wörter, Zeilen zählen ${k}`);
+  const wer = satz(ns[0]).sprecher;
+  const html = `<div class="kopf63">${portraitHTML(id + 'p', wer, 100)}</div><div class="strich63"></div>
+    ${zl.map(z => `<div class="bz">${z.map(tk => `<span class="sw${tk.lw ? ' lw' : ''}">${tk.z.map(([c]) => `<u>${c}</u>`).join('')}</span>`).join('<span class="sw"><u> </u></span>')}</div>`).join('')}
+    <div class="strich63" style="margin-top:12px"></div><div class="code63"></div>`;
+  const p = papier(id, x, html, 'dr' + i);
+  el(id).classList.add(kl);
+  const zeiten = [];
+  const us = [...el(id).querySelectorAll('.bz .sw')];
+  // Zeiten den <u> zuordnen (Leerzeichen-Spans übernehmen die Zeit des nächsten Worts)
+  let j = 0;
+  zl.forEach(z => z.forEach((tk, n) => {
+    if (n > 0) { const lz = us[j++]; zeiten.push([lz.querySelector('u'), tk.z[0][1]]); }
+    const s = us[j++]; s.querySelectorAll('u').forEach((u, c) => zeiten.push([u, tk.z[c][1]]));
+  }));
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const q = clamp((t - tc) / .1); u.style.opacity = q; u.style.transform = q < 1 ? `translateY(${(6 * (1 - q)).toFixed(1)}px)` : ''; } });
+  const t0 = SA(ns[0]) - .55;
+  p.vor(t0, KOPF_H, .45); ton(t0, 'kritzeln');
+  zl.forEach((z, n) => { const tz = z[0].z[0][1] - .08; p.vor(tz, KOPF_H + (n + 1) * LH, .18); ton(tz, 'tipp'); });
+  const tEnde = SE(ns.at(-1));
+  p.vor(tEnde + .1, KOPF_H + zl.length * LH + FUSS_H, .35); ton(tEnde + .1, 'kritzeln');
+  p.reissen(tEnde + .6);
+  const led = el('dr' + i + 'l');
+  if (led) HOOKS.push(t => led.classList.toggle('an', t >= t0 && t < tEnde + .5));
+  return { id, ende: tEnde + .6, portrait: id + 'p' };
+}
+
+/* ---------- Bausteine: Regal, Markise, Uhr ---------- */
+const FARBEN = ['f1', 'f2', 'f3', 'f4', 'f5'];
+// Regal b × h mit n Böden; liefert Weltlage der Bodenoberkanten
+function regal(id, x, y, b, h, n, attr = '') {
+  const abst = (h - 30) / n;
+  const boeden = Array.from({ length: n }, (_, k) => Math.round(24 + abst * (k + 1) - 16));
+  neu(id, `<i class="rueck"></i><i class="post" style="left:0"></i><i class="post" style="right:0"></i>${boeden.map((by, k) => `<i class="brett" id="${id}b${k}" style="top:${by}px"></i>`).join('')}`, `width:${b}px;height:${h}px`, attr, 'regal63');
+  akteur(id, { x, y });
+  boeden.forEach((by, k) => akteur(`${id}b${k}`, {}, true));
+  return boeden.map(by => y - h / 2 + by);
+}
+// Ware im Regal: Packung (CSS) auf Bodenoberkante yb
+let WA = 0;
+function packung(x, yb, b, h, attr = '', f = null) { const id = 'wa' + WA++; neu(id, '', `width:${b}px;height:${h}px`, attr, 'ware63 ' + (f || FARBEN[WA % 5])); akteur(id, { x, y: yb - h / 2 }); return id; }
+const markise = b => { const n = Math.round(b / 82); let s = `<svg viewBox="0 0 ${b} 120" style="width:${b}px;height:120px"><rect width="${b}" height="18" rx="6" fill="var(--b700)"/>`;
+  for (let k = 0; k < n; k++) { const f = k % 2 ? 'var(--surface)' : 'var(--b500)'; s += `<rect x="${k * 82}" y="14" width="82" height="66" fill="${f}"/><path d="M${k * 82} 80a41 30 0 0 0 82 0Z" fill="${f}"/>`; }
+  return s + '</svg>'; };
+function uhr(id, x, y, gr, h0, attr = '') {
+  ['', 's', 'm'].forEach((s, n) => bild(id + s, ['t-uhr', 't-stunde', 't-minute'][n], gr, attr + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  return {
+    ein: t => { pop(id, t, { x, y }, 'pop'); akteur(id + 's', { x, y, s: 0, r: h0 * 30 }); tw(id + 's', t, .5, { s: 1 }, 'back'); akteur(id + 'm', { x, y, s: 0, r: 0 }); tw(id + 'm', t, .5, { s: 1 }, 'back'); },
+    auf: (t, h, d = 1) => { tw(id + 's', t, d, { r: h * 30 }, 'inout'); tw(id + 'm', t, d, { r: 360 * Math.round(h - h0) }, 'inout'); ton(t, 'scan'); },
+  };
+}
+function buehne(i) { akteur('bue' + i, { x: S(i) + 960, y: 540 }); }
+const mitte = i => S(i) + 960;
+
+/* ---------- 0 · Intro: Laden, Priya an der Kasse ---------- */
+buehne(0);
+{
+  const X = S(0);
+  neu('mk0', markise(1640), 'width:1640px;height:120px;transform-origin:50% 0', '', 'markise63');
+  akteur('mk0', { x: X + 960, y: 170, sy: 0 });
+  tw('mk0', .1, .7, { sy: 1 }, 'sanft'); ton(.1, 'whoosh');
+  // zwei Regale gleiten von den Seiten herein
+  const RL = regal('rg0a', X + 300, 545, 300, 420, 3, 'data-gruppe="rg0a"'), RR = regal('rg0b', X + 1620, 545, 300, 420, 3, 'data-gruppe="rg0b"');
+  ein('rg0a', .25, { x: X + 300, y: 545 }, { x: -120 }, 'whoosh'); ein('rg0b', .35, { x: X + 1620, y: 545 }, { x: 120 });
+  [[RL, X + 300, 'rg0a'], [RR, X + 1620, 'rg0b']].forEach(([bo, cx, g], s) => bo.forEach((yb, k) => [-1, 0, 1].forEach(m => {
+    const id = packung(cx + m * 82, yb, 58, 62 + ((k + m + 3) % 3) * 10, `data-gruppe="${g}"`);
+    pop(id, .95 + s * .1 + k * .12 + (m + 1) * .05, { x: cx + m * 82, y: wertBei(id, 'y', 0) }, k === 0 && m === -1 ? 'plopp' : null);
+  })));
+  // Ware fährt auf dem Band herein
+  const WARE0 = [['wk0', 't-karton', 190, 140, 560], ['wm0', 't-milch', 150, 146, 720], ['wb0', 't-brot', 170, 130, 850]];
+  WARE0.forEach(([id, t, b, g, x]) => { bild(id, t, b, '', '', 'vorn'); akteur(id, { x: X + x - 900, y: steht(b, BAND, g) }); });
+  fahren(WARE0.map(w => w[0]), .2, 900, 1.3, 'out'); ton(.2, 'whoosh');
+  WARE0.forEach(([id], n) => landen(id, 1.4 + n * .05)); ton(1.45, 'plopp');
+  // Kasse
+  bild('ka0', 't-kasse', 270, 'data-gruppe="ka0"');
+  ein('ka0', .5, { x: X + 1250, y: steht(270, 790, 144) }, { y: 80 }, 'pop');
+  // Das ist Priya: sie ploppt hinter die Kasse und lächelt
+  const tA = W('Priya', 1);
+  portrait('pr0p', 'Priya', 300);
+  ein('pr0p', tA - .35, { x: X + 960, y: 430 }, { y: 110 }, 'pop');
+  FROH.push(['pr0p', tA + .25, 99]); akzent(tA, .03);
+  neu('ns0', '<div class="band"></div><div class="tx"><b>Priya</b><span id="ns0z"></span></div>', '', '', 'nschild');
+  akteur('ns0', { x: X + 1600, y: 160, o: 0, r: -20, s: .7 });
+  const tN = tA + .15;
+  tw('ns0', tN, .2, { o: 1 }); flug('ns0', tN, .7, X + 1300, 330, 90, { r: -2, s: 1 }); landen('ns0', tN + .7); ton(tN, 'whoosh'); ton(tN + .7, 'klick');
+  tw('ns0', tN + .8, .5, { r: 0 }, 'sanft');
+  bump('pr0p', W('Ausbildung', 2), 1.05); wellen(W('Ausbildung', 2), X + 960, 430, null, 320);
+  tippen('ns0z', 'Verkäuferin', W('Verkäuferin', 2) - .05, .8);
+  bump('ns0', WE('Verkäuferin', 2), 1.06); bump('ka0', WE('Verkäuferin', 2) + .05, 1.06); ton(WE('Verkäuferin', 2) + .05, 'ding');
+  // Farb-Legende der · die · das als Hängeetiketten an der Kassentheke
+  const tL = [W('mit', 3), W('wichtigsten', 3), W('Wörter', 3)];
+  GENUS.forEach((g, k) => {
+    neu('lg0' + k, g, '', '', 'etik63 vorn ' + g);
+    pop('lg0' + k, tL[k], { x: X + 960 + (k - 1) * 190, y: 922 }, 'pop');
+    pendel('lg0' + k, tL[k] + .25, 7, 4, .32);
+  });
+  const tW = W('Laden', 3) - .1;
+  winken('pr0p', tW, 1.8); huepfen('pr0p', tW + .15, 16); bump('mk0', tW, 1.03); ton(tW, 'ding'); akzent(tW + .2, .04);
+}
+
+/* ---------- 1 · die Kasse ---------- */
+const P1 = SE(3) + .3; pan2(P1, 1);
+buehne(1);
+{
+  const X = S(1), G = 'data-gruppe="ka1"';
+  const k = preisschild(1, { art: 'die', chip: 'die', wort: 'Kasse', zeile: ['Plural', 'die Kassen'], nr: 1, gr: 116, ware: 't-korb', g: 144 });
+  k.ein(P1 + .7); k.chip(W('Die', 4)); k.wort(W('Kasse', 4)); k.zeile(W('Die', 5));
+  // zwei weitere Kassen dahinter (für „Kassen“), dann die Hauptkasse mit Schublade
+  const tK = W('Kasse', 4);
+  bild('ka1b', 't-kasse', 240, G); bild('ka1c', 't-kasse', 240, G);
+  akteur('ka1b', { x: X + 930, y: 560, o: 0, s: .8 }); akteur('ka1c', { x: X + 1240, y: 560, o: 0, s: .8 });
+  const tP = W('Kassen', 5) - .1;
+  [['ka1b', -60], ['ka1c', 60]].forEach(([id, dx], n) => { tw(id, tP + n * .12, .4, { o: .55 }); tw(id, tP + n * .12, .6, { s: 1, x: wertBei(id, 'x', 0) + dx * .5 }, 'sanft'); ton(tP + n * .12, 'whoosh'); });
+  neu('la1', '', '', G, 'lade63');
+  akteur('la1', { x: X + 1085, y: 762, o: 0 });
+  bild('ka1', 't-kasse', 330, G);
+  const KY1 = steht(330, 745, 144);
+  ein('ka1', tK - .4, { x: X + 1080, y: KY1 }, { y: 90 }, 'whoosh');
+  tw('la1', tK - .2, .3, { o: 1 });
+  const schublade = (t, d = 1.1) => { tw('la1', t, .25, { x: X + 1185 }, 'back'); tw('la1', t + d, .3, { x: X + 1085 }, 'sanft'); ton(t, 'klick'); ton(t + d + .25, 'klick'); };
+  schublade(tK + .25);
+  for (let n = 0; n < 3; n++) {
+    const id = 'mu1' + n; bild(id, 't-muenze', 56, G + ' data-dreht');
+    akteur(id, { x: X + 1300, y: 420, o: 0, s: .8 });
+    const t = tK + .45 + n * .17;
+    tw(id, t, .1, { o: 1 }); flug(id, t, .45, X + 1220 + n * 22, 752, 80, { s: .9 }); tw(id, t + .45, .15, { o: 0 }); ton(t + .45, 'muenze');
+  }
+  akzent(tK + .2, .03);
+  // Hier bezahlen die Kunden: Einkaufswagen rollt heran, der Schein fliegt in die Kasse
+  bild('ew1', 't-wagen', 230, '', '', 'vorn');
+  const tW = W('bezahlen', 6) - .55;
+  akteur('ew1', { x: X + 1720, y: steht(230, BAND), o: 0 });
+  tw('ew1', tW, .3, { o: 1 }); tw('ew1', tW, .8, { x: X + 1480 }, 'sanft'); federn('ew1', tW + .8); ton(tW, 'whoosh');
+  bild('sc1', 't-schein', 150, 'data-frei');
+  akteur('sc1', { x: X + 1480, y: 640, o: 0, s: .6 });
+  const tB = W('bezahlen', 6);
+  tw('sc1', tB - .1, .15, { o: 1 }); flug('sc1', tB - .1, .6, X + 1090, 560, 150, { s: .8, r: -3 }); tw('sc1', tB + .45, .2, { o: 0, s: .4 });
+  schublade(tB + .45, .8); bump('ka1', tB + .5, 1.05); ton(tB + .5, 'ding'); wellen(tB + .5, X + 1080, 560, 'var(--success)', 260);
+  bump('ew1', W('Kunden', 6), 1.04);
+  // Ich arbeite heute an Kasse zwei: Wagen rollt weiter, Drucker fährt hoch, Schild „Kasse 2“ leuchtet
+  tw('ew1', SA(7) - 1.1, .7, { x: X + 1900, o: 0 }, 'in'); ton(SA(7) - 1.1, 'whoosh');
+  drucker(1, X + 1620, SA(7) - 1.0);
+  satzbon(1, X + 1620, 7, 'die', ['kasse'], [3, 3]);
+  neu('ks1', 'Kasse 2', '', G, 'kschild');
+  pop('ks1', W('Kasse', 7) - .1, { x: X + 1080, y: 330 }, 'pop'); pendel('ks1', W('Kasse', 7) + .3, 5, 4, .3);
+  const tZ = W('zwei', 7);
+  HOOKS.push(t => el('ks1').classList.toggle('an', t >= tZ));
+  bump('ks1', tZ, 1.12); ton(tZ, 'ding'); akzent(tZ, .04); wellen(tZ, X + 1080, 330, 'var(--warning)', 260);
+  tw(['ka1b', 'ka1c'], tZ, .4, { o: .3 });
+}
+
+/* ---------- 2 · der Kassenbon ---------- */
+const P2 = SE(7) + .3; pan2(P2, 2);
+buehne(2);
+{
+  const X = S(2);
+  const k = preisschild(2, { art: 'der', chip: 'der', wort: 'Kassenbon', zeile: ['Plural', 'die Kassenbons'], nr: 2, gr: 92, ware: 't-rolle', g: 140 });
+  k.ein(P2 + .7); k.chip(W('Der', 8)); k.wort(W('Kassenbong', 8)); k.zeile(W('Die', 9));
+  drucker(2, X + 1620, P2 + .9);
+  // weitere Bons (für „Kassenbons“) liegen hinter dem großen
+  const EX = X + 1060, ETOP = 262;
+  ['bn2a', 'bn2b'].forEach((id, n) => {
+    neu(id, '<i style="width:80%"></i><i></i><i style="width:60%"></i><i style="width:85%"></i>', '', 'data-gruppe="bon2"', 'bonleer');
+    akteur(id, { x: EX, y: ETOP + 115 - 18 - n * 18, o: 0, r: 1.5 + n * 1.3 });
+  });
+  // der Bon wächst aus dem Drucker: Milch, Äpfel, Brot, Summe – und reißt mit einem Ruck ab
+  const ZEILEN = [['Milch', 140], ['Äpfel', 120], ['Brot', 100]];
+  const html = `<div style="height:26px"></div>${ZEILEN.map(([w, b], n) => `<div class="bp" id="bp2${n}">${w}<i style="width:${b}px"></i></div>`).join('')}<div class="strich63" style="margin-top:10px"></div><div class="bp summe" id="bp2s">Summe<i style="width:110px"></i></div><div style="height:22px"></div>`;
+  const bt = papier('bt2', X + 1620, html, 'bon2');
+  const tD = W('Kassenbong', 8) - .15;
+  [66, 106, 146, 192, 254].forEach((h, n) => { bt.vor(tD + n * .22, h, .18); ton(tD + n * .22, 'tipp'); });
+  ton(tD, 'kritzeln'); akzent(tD + .4, .03);
+  const tR = tD + 1.35;
+  bt.reissen(tR);
+  // der Bon fliegt zur Mitte, die anderen erscheinen dahinter
+  const tF = tR + .35;
+  flug('bt2', tF, .75, EX - 170, ETOP + 254, 140, { r: -1.5 }); ton(tF, 'whoosh'); landen('bt2', tF + .75);
+  const tP = W('Kassenbongs', 9);
+  ['bn2a', 'bn2b'].forEach((id, n) => { tw(id, tP + n * .14, .25, { o: 1 }); tw(id, tP + n * .14, .6, { x: EX + 40 + n * 44 }, 'sanft'); ton(tP + n * .14, 'pop'); });
+  // Darauf steht, was der Kunde gekauft und bezahlt hat: Lupe über die Zeilen, Summe wird grün
+  bild('lu2', 't-lupe', 130, 'data-frei', '', 'oben');
+  const ZW = n => ETOP + 26 + 20 + n * 40, lupe = (x, y) => ({ x: x + 14 / 160 * 130, y: y + 14 / 160 * 130 });
+  const tG = W('gekauft', 10) - .25;
+  akteur('lu2', { ...lupe(EX + 120, ZW(0) + 120), o: 0, s: .7 });
+  tw('lu2', tG, .3, { o: 1 }); tw('lu2', tG, .45, { ...lupe(EX - 70, ZW(0)), s: 1 }, 'sanft'); ton(tG, 'whoosh');
+  [1, 2].forEach(n => tw('lu2', tG + .2 + n * .3, .28, lupe(EX - 70, ZW(n)), 'inout'));
+  HOOKS.push(t => [0, 1, 2].forEach(n => el('bp2' + n).classList.toggle('blick', t >= tG + .25 + n * .3)));
+  const tBz = W('bezahlt', 10);
+  tw('lu2', tBz - .3, .35, lupe(EX - 70, ETOP + 26 + 120 + 26 + 20), 'inout');
+  HOOKS.push(t => el('bp2s').classList.toggle('ok', t >= tBz));
+  bump('bt2', tBz, 1.04); ton(tBz, 'ding'); akzent(tBz, .04);
+  tw('lu2', tBz + .5, .4, { ...lupe(EX + 160, 600), o: 0, s: .8 }, 'in');
+  // die Tüte des Kunden
+  bild('tu2', 't-tasche', 190, '', '', 'vorn');
+  pop('tu2', W('Kunde', 10), { x: X + 1300, y: steht(190, BAND, 144) }, 'pop');
+  // Möchten Sie den Kassenbon? – der Bon fliegt im Bogen in die Tüte, Haken
+  aus(['bn2a', 'bn2b'], SA(11) - .3);
+  satzbon(2, X + 1620, 11, 'der', ['kassenbong'], [3, 1]);
+  const tT = WE('Kassenbong', 11) + .05;
+  tw('bt2', tT, .7, { x: X + 1300 - 170, y: 700, s: .3, r: 4 }, 'inout', { bogen: 160 }); tw('bt2', tT + .5, .2, { o: 0 }); ton(tT, 'whoosh');
+  bump('tu2', tT + .7, 1.1); ton(tT + .7, 'plopp');
+  plakette('ok2', 'gruen', 'svgHaken');
+  pop('ok2', tT + .85, { x: X + 1300, y: 560 }, 'ding'); akzent(tT + .8, .035);
+}
+
+/* ---------- 3 · das Wechselgeld ---------- */
+const P3 = SE(11) + .3; pan2(P3, 3);
+buehne(3);
+{
+  const X = S(3), G = 'data-gruppe="g3"';
+  const k = preisschild(3, { art: 'das', chip: 'das', wort: 'Wechselgeld', nr: 3, gr: 82, ware: 't-boerse', g: 140, wb: 160 });
+  k.ein(P3 + .7); k.chip(W('Das', 12)); k.wort(W('Wechselgeld', 12));
+  // Kasse mit Schublade (öffnet nach links), Geldschale
+  neu('la3', '', '', G, 'lade63');
+  akteur('la3', { x: X + 1265, y: 762, o: 0 });
+  bild('ka3', 't-kasse', 300, G);
+  ein('ka3', P3 + .9, { x: X + 1270, y: steht(300, 745, 144) }, { y: 80 }, 'whoosh');
+  tw('la3', P3 + 1.1, .3, { o: 1 });
+  neu('sa3', '', '', G, 'schale63');
+  ein('sa3', P3 + 1.05, { x: X + 935, y: 752 }, { y: 60 }, 'pop');
+  // der 10-Euro-Schein landet auf der Schale
+  bild('sc3', 't-schein', 200, G);
+  const tS = W('Wechselgeld', 12) - .1;
+  akteur('sc3', { x: X + 1180, y: 260, o: 0, r: -8 });
+  tw('sc3', tS, .2, { o: 1 }); flug('sc3', tS, .7, X + 935, 712, 90, { r: -2 }); landen('sc3', tS + .7); ton(tS, 'whoosh'); ton(tS + .7, 'plopp');
+  // … das der Kunde zurückbekommt: Schein in die Kasse, Schublade auf, Münzen rollen auf die Schale
+  const tG = W('Geld', 13);
+  tw('la3', tG, .25, { x: X + 1185 }, 'back'); ton(tG, 'klick');
+  flug('sc3', tG + .1, .6, X + 1200, 752, 110, { s: .4, r: 3 }); tw('sc3', tG + .5, .2, { o: 0 }); ton(tG + .1, 'whoosh');
+  const tZ = W('zurückbekommt', 13) - .15;
+  const MU = [0, 1, 2].map(n => { const id = 'mu3' + n; bild(id, 't-muenze', 70, G + ' data-dreht'); akteur(id, { x: X + 1150, y: 752, o: 0, s: .6 }); return id; });
+  MU.forEach((id, n) => {
+    const t = tZ + n * .28, x = X + 905 + n * 32, y = 690 - n * 14;
+    tw(id, t, .12, { o: 1 }); tw(id, t, .5, { x, y, s: 1, r: -360 }, 'out', { bogen: 60 }); landen(id, t + .5); ton(t + .45, 'muenze');
+  });
+  tw('la3', tZ + 1.0, .3, { x: X + 1265 }, 'sanft'); ton(tZ + 1.3, 'klick');
+  // die Rechnung tippt sich
+  neu('re3', '<span id="re3t"></span>', 'font-size:34px', '', 'etikett');
+  pop('re3', tZ - .1, { x: X + 1100, y: 300 }, 'pop');
+  tippen('re3t', '10,00 € − 6,80 € = 3,20 €', tZ + .1, 1.2);
+  akzent(tZ + .3, .03);
+  // Hier ist Ihr Wechselgeld: drei Euro zwanzig – die Schale schiebt sich zum Kunden, die oberste Münze dreht sich, Haken
+  drucker(3, X + 1620, SA(14) - 1.0);
+  satzbon(3, X + 1620, 14, 'das', ['wechselgeld'], [3, 1, 2]);
+  const tW = W('Wechselgeld', 14);
+  ['sa3', ...MU].forEach(id => tw(id, tW - .1, .6, { x: wertBei(id, 'x', tW) - 50 }, 'sanft')); ton(tW - .1, 'whoosh');
+  const tDr = W('drei', 14);
+  tw('mu32', tDr, .7, { sx: -1 }, 'inout'); tw('mu32', tDr + .7, .7, { sx: 1 }, 'inout'); ton(tDr, 'muenze');
+  bump('re3', W('zwanzig', 14), 1.08); ton(W('zwanzig', 14), 'ding'); akzent(W('zwanzig', 14), .04);
+  plakette('ok3', 'gruen', 'svgHaken');
+  pop('ok3', WE('zwanzig', 14) + .05, { x: X + 1340, y: 300 }, 'ding');
+}
+
+/* ---------- 4 · die Ware ---------- */
+const P4 = SE(14) + .3; pan2(P4, 4);
+buehne(4);
+{
+  const X = S(4);
+  const k = preisschild(4, { art: 'die', chip: 'die', wort: 'Ware', zeile: ['Plural', 'die Waren'], nr: 4, gr: 124, ware: 't-brot', g: 130 });
+  k.ein(P4 + .7); k.chip(W('Die', 15)); k.wort(W('Ware', 15)); k.zeile(W('Die', 16));
+  // Ein Karton landet, die Ware hüpft heraus
+  bild('kt4', 't-karton', 250, '', '', 'vorn');
+  const tK = W('Ware', 15) - .35, KX4 = X + 1110;
+  akteur('kt4', { x: KX4, y: 150, o: 0 });
+  tw('kt4', tK, .15, { o: 1 }); tw('kt4', tK, .45, { y: steht(250, BAND, 142) }, 'in'); landen('kt4', tK + .45); ton(tK + .45, 'plopp');
+  const WARE = [['w4a', 't-apfel', 140, 140, 870], ['w4b', 't-milch', 140, 146, 1015], ['w4c', 't-pullifalt', 150, 140, 1165], ['w4d', 't-lampe', 130, 146, 1310]];
+  WARE.forEach(([id, t, b, g, x], n) => {
+    bild(id, t, b, '', '', 'vorn');
+    akteur(id, { x: KX4, y: 690, s: 0 });
+    const t0 = tK + .6 + n * .16;
+    tw(id, t0, .35, { s: .9 }, 'back'); flug(id, t0, .55, x, 420 + (n % 2) * 40, 90); ton(t0, 'pop');
+  });
+  // Die Waren: der Karton verschwindet, alles reiht sich auf dem Band auf
+  const tP = W('Waren', 16) - .2;
+  aus('kt4', tP - .1, .3);
+  WARE.forEach(([id, t, b, g, x], n) => { tw(id, tP + n * .08, .45, { y: steht(b, BAND, g), s: 1 }, 'in'); landen(id, tP + n * .08 + .45); ton(tP + n * .08 + .45, 'klick'); });
+  // … was der Laden verkauft: kleine Preisschilder hängen sich an jedes Teil
+  const tV = W('verkauft', 17) - .15;
+  WARE.forEach(([id, t, b, g, x], n) => { const p = 'pz4' + n; neu(p, '€', '', '', 'mini63'); pop(p, tV + n * .1, { x, y: 628 }, n ? null : 'pop'); pendel(p, tV + n * .1 + .2, 9, 4, .3); ton(tV + n * .1, 'klick'); });
+  akzent(tV + .3, .03);
+  // Heute Nachmittag kommt neue Ware: die Uhr dreht auf den Nachmittag, der Lieferwagen fährt vor
+  const tH = SA(18) - .4;
+  const u = uhr('uh4', X + 940, 270, 170, 9, 'data-gruppe="uh4"');
+  u.ein(tH); u.auf(W('Nachmittag', 18) - .1, 15, 1.1);
+  neu('ws4', '', 'width:440px', 'data-gruppe="van4"', 'strasse63');
+  ein('ws4', tH + .1, { x: X + 1180, y: 500 }, { y: 30 });
+  bild('van4', 't-van', 260, 'data-gruppe="van4"');
+  const VY = 500 - 8 - (142 - 80) * 260 / 160;
+  const RD = [40, 124].map((rx, n) => { const id = 'rd4' + n; bild(id, 't-rad', 260, 'data-gruppe="van4" data-dreht'); return [id, (rx - 80) * 260 / 160, (126 - 80) * 260 / 160]; });
+  const tV2 = W('kommt', 18) - .6;
+  akteur('van4', { x: X + 900, y: VY, o: 0 });
+  RD.forEach(([id, dx, dy]) => akteur(id, { x: X + 900 + dx, y: VY + dy, o: 0 }));
+  tw(['van4', ...RD.map(r => r[0])], tV2, .25, { o: 1 });
+  tw('van4', tV2, 1.0, { x: X + 1160 }, 'out'); RD.forEach(([id, dx]) => { tw(id, tV2, 1.0, { x: X + 1160 + dx, r: 540 }, 'out'); });
+  federn('van4', tV2 + 1.0); ton(tV2, 'whoosh');
+  [0, 1].forEach(n => { const id = 'kv4' + n; bild(id, 't-karton', 110, 'data-gruppe="van4"'); pop(id, W('Ware', 18) - .05 + n * .15, { x: X + 1345, y: 470 - n * 62 }, 'plopp'); });
+  akzent(W('Ware', 18), .035);
+  drucker(4, X + 1620, SA(18) - 1.0);
+  satzbon(4, X + 1620, 18, 'die', ['ware'], [2, 3]);
+}
+
+/* ---------- 5 · das Regal ---------- */
+const P5 = SE(18) + .3; pan2(P5, 5);
+buehne(5);
+{
+  const X = S(5), G = 'data-gruppe="rg5"';
+  const k = preisschild(5, { art: 'das', chip: 'das', wort: 'Regal', zeile: ['Plural', 'die Regale'], nr: 5, gr: 124, ware: 't-dose', g: 140, wb: 150 });
+  k.ein(P5 + .7); k.chip(W('Das', 19)); k.wort(W('Regal', 19)); k.zeile(W('Die', 20));
+  // zwei Regale dahinter (für „Regale“)
+  const tP = W('Regale', 20) - .1;
+  ['rg5b', 'rg5c'].forEach((id, n) => {
+    const bo = regal(id, X + (n ? 1250 : 910), 470, 320, 400, 3, G);
+    akteur(id, { x: X + 1080, y: 470, o: 0, s: .8 });
+    tw(id, tP + n * .12, .4, { o: .5 }); tw(id, tP + n * .12, .6, { x: X + (n ? 1250 : 910) }, 'sanft'); ton(tP + n * .12, 'whoosh');
+  });
+  // das Regal baut sich Boden für Boden auf
+  const RY = 520, bo = regal('rg5', X + 1080, RY, 400, 500, 4, G);
+  const tR = W('Regal', 19) - .4;
+  akteur('rg5', { x: X + 1080, y: RY, o: 0 });
+  tw('rg5', tR, .3, { o: 1 });
+  [0, 1, 2, 3].forEach(n => { akteur('rg5b' + n, { y: -500, o: 0 }, true); tw('rg5b' + n, tR + .1 + n * .12, .3, { o: 1 }); tw('rg5b' + n, tR + .1 + n * .12, .4, { y: 0 }, 'bounce'); ton(tR + .3 + n * .12, 'klick'); });
+  // oben ist noch Ware, unten fast nichts
+  const voll = [[0, [-1, 0, 1]], [1, [-1]]];
+  voll.forEach(([b, ms]) => ms.forEach((m, n) => { const id = packung(X + 1080 + m * 120, bo[b], 84, 80 + (n % 2) * 14, G); pop(id, W('Regal', 19) + .3 + b * .15 + n * .08, { x: X + 1080 + m * 120, y: wertBei(id, 'y', 0) }, n ? null : 'pop'); }));
+  akzent(W('Regal', 19) + .2, .03);
+  // Das Regal ist fast leer: Pfeil auf die Lücken, die Böden blinken
+  drucker(5, X + 1620, SA(21) - 1.0);
+  const bon = satzbon(5, X + 1620, [21, 22], 'das', ['regal'], [3, 2, 4]);
+  neu('pf5', tpl('svgPfeil'), 'width:120px', 'data-frei', 'oben');
+  const tL = W('leer', 21) - .1;
+  akteur('pf5', { x: X + 1355, y: bo[2] - 50, o: 0 });
+  tw('pf5', tL, .25, { o: 1 }); tw('pf5', tL, .4, { x: X + 1335 }, 'sanft');
+  for (let n = 0; n < 3; n++) { tw('pf5', tL + .4 + n * .3, .15, { x: X + 1315 }, 'sinus'); tw('pf5', tL + .55 + n * .3, .15, { x: X + 1335 }, 'sinus'); }
+  ton(tL, 'pop'); akzent(tL, .035);
+  HOOKS.push(t => [2, 3].forEach(b => el('rg5b' + b).style.opacity = t > tL && t < tL + 1.2 && Math.floor((t - tL) * 5) % 2 === 0 ? .45 : ''));
+  // Füll es bitte auf: Dosen und Packungen springen hinein
+  tw('pf5', W('Füll', 22) - .1, .3, { o: 0 });
+  const rein = [[1, 0], [1, 1], [2, -1], [2, 0], [2, 1], [3, -1], [3, 0], [3, 1]];
+  const tF = W('Füll', 22);
+  rein.forEach(([b, m], n) => {
+    const id = packung(X + 1080 + m * 120, bo[b], 84, 80 + (n % 2) * 14, G);
+    const y = wertBei(id, 'y', 0), t = tF + n * .14;
+    akteur(id, { x: X + 1480, y: 660, s: 0 });
+    tw(id, t, .2, { s: 1 }, 'back'); flug(id, t, .42, X + 1080 + m * 120, y, 70); landen(id, t + .42); ton(t + .42, 'plopp');
+  });
+  plakette('ok5', 'gruen', 'svgHaken');
+  const tA = WE('auf', 22) + .05;
+  pop('ok5', tA, { x: X + 1080, y: 228 }, 'ding'); bump('rg5', tA, 1.03); akzent(tA, .04); ton(tA + .1, 'erfolg');
+}
+
+/* ---------- 6 · die Filiale ---------- */
+const P6 = SE(22) + .3; pan2(P6, 6);
+buehne(6);
+let LADEN6 = null;
+{
+  const X = S(6), G = 'data-gruppe="ka6"';
+  const k = preisschild(6, { art: 'die', chip: 'die', wort: 'Filiale', zeile: ['Plural', 'die Filialen'], nr: 6, gr: 116, ware: 't-tasche', g: 144 });
+  k.ein(P6 + .7); k.chip(W('Die', 23)); k.wort(W('Filiale', 23)); k.zeile(W('Die', 24));
+  // Stadtplan faltet sich auf (Straßen, Fluss, ohne Namen)
+  const MX = X + 1090, MY = 425, MB = 560, MH = 440;
+  const LAEDEN = [[110, 110], [440, 90], [120, 340], [450, 330], [300, 70], [290, 380]];
+  const BUERO = [285, 215];
+  const linien = LAEDEN.map(([lx, ly]) => `<path class="zeichnen" pathLength="1" d="M${lx} ${ly}L${BUERO[0]} ${BUERO[1]}" stroke="var(--b400)" stroke-width="5" stroke-dasharray="1 1" stroke-linecap="round" fill="none"/>`).join('');
+  neu('ka6', `<svg viewBox="0 0 560 440"><rect width="560" height="440" fill="var(--b50)"/>
+      <path d="M-20 300C120 250 200 330 330 280S520 230 590 260" stroke="var(--info)" stroke-width="34" fill="none" opacity=".55"/>
+      <g stroke="var(--surface)" stroke-width="22" fill="none"><path d="M0 160H560M0 250H560M200 0V440M380 0V440"/></g>
+      <g stroke="var(--n200)" stroke-width="10" fill="none"><path d="M0 60H560M80 0V440M480 0V440"/></g></svg>
+    <svg viewBox="0 0 560 440" id="ka6l">${linien}</svg><i class="falz" style="left:186px"></i><i class="falz" style="left:372px"></i>`, '', G, 'karte63');
+  const tM = W('Filiale', 23) - .55;
+  akteur('ka6', { x: MX, y: MY, sx: 0, o: 0 });
+  tw('ka6', tM, .15, { o: 1 }); tw('ka6', tM, .75, { sx: 1 }, 'sanft'); ton(tM, 'whoosh');
+  akteur('ka6l', { draw: 0 }, true);
+  const welt = ([lx, ly]) => ({ x: MX - MB / 2 + lx, y: MY - MH / 2 + ly });
+  LAEDEN.forEach((p, n) => bild('ld6' + n, 't-laden', 92, G));
+  pop('ld60', W('Filiale', 23) + .1, welt(LAEDEN[0]), 'plopp'); akzent(W('Filiale', 23) + .1, .03);
+  const tP = W('Filialen', 24);
+  LAEDEN.slice(1).forEach((p, n) => pop('ld6' + (n + 1), tP + n * .12, welt(p), 'pop'));
+  bild('bu6', 't-buero', 110, G);
+  pop('bu6', W('Firma', 25) - .05, welt(BUERO), 'plopp'); akzent(W('Firma', 25), .03);
+  const tV = W('viele', 25) - .05;
+  tw('ka6l', tV, .9, { draw: 1 }, 'inout'); ton(tV, 'scan');
+  LAEDEN.forEach((p, n) => bump('ld6' + n, W('Läden', 25) + n * .06, 1.15));
+  // Ich leite diese Filiale: der erste Laden wird groß, Namensschild „Filialleiterin“
+  drucker(6, X + 1620, SA(26) - 1.0);
+  satzbon(6, X + 1620, [26, 27], 'die', ['filiale'], [3, 3, 2]);
+  const tF = W('Filiale', 26) - .1;
+  LAEDEN.slice(1).forEach((p, n) => tw('ld6' + (n + 1), tF, .4, { o: .45 }));
+  tw('ld60', tF, .5, { s: 1.5 }, 'back'); ton(tF, 'pop'); wellen(tF + .1, welt(LAEDEN[0]).x, welt(LAEDEN[0]).y, 'var(--success)', 220); akzent(tF, .035);
+  neu('ns6', '<div class="band"></div><div class="tx"><b style="font-size:34px;line-height:40px">Filialleiterin</b></div>', '', G, 'nschild');
+  const tN = W('Filialleiterin', 27) - .2;
+  akteur('ns6', { x: X + 1500, y: 150, o: 0, r: -15, s: .7 });
+  tw('ns6', tN, .2, { o: 1 }); flug('ns6', tN, .7, welt(LAEDEN[0]).x + 60, welt(LAEDEN[0]).y + 112, 80, { r: -2, s: 1 }); landen('ns6', tN + .7); ton(tN, 'whoosh'); ton(tN + .7, 'klick');
+  tw('ns6', tN + .8, .4, { r: 0 }, 'sanft');
+  LADEN6 = welt(LAEDEN[0]);
+}
+
+/* ---------- Übergang 6 → 7: Zoom in die Filiale, Irisblende ---------- */
+const P7 = SE(27) + .3;
+{
+  const iris = $('#iris'), px = LADEN6.x - S(6), py = LADEN6.y;
+  ZOOMS.push([P7, .62, 1.6, px, py]);
+  HOOKS.push(t => {
+    const a = clamp((t - P7 - .1) / .5), b = clamp((t - P7 - .66) / .55);
+    if (t < P7 + .1 || b >= 1) { iris.style.visibility = 'hidden'; return; }
+    iris.style.visibility = 'visible';
+    const m = b <= 0 ? `radial-gradient(circle at ${px}px ${py}px, #000 ${(E.in(a) * 2300).toFixed(0)}px, transparent ${(E.in(a) * 2300 + 2).toFixed(0)}px)`
+      : `radial-gradient(circle at 960px 540px, transparent ${(E.out(b) * 1200).toFixed(0)}px, #000 ${(E.out(b) * 1200 + 2).toFixed(0)}px)`;
+    iris.style.webkitMaskImage = m; iris.style.maskImage = m;
+  });
+  tw('welt', P7 + .63, .01, { x: -S(7) }, 'lin');
+  SCHNITTE.push(P7 + .63); ton(P7, 'whoosh'); ton(P7 + .63, 'plopp');
+}
+
+/* ---------- 7 · der Lieferschein ---------- */
+buehne(7);
+{
+  const X = S(7), G = 'data-gruppe="lf7"';
+  const k = preisschild(7, { art: 'der', chip: 'der', wort: 'Lieferschein', zeile: ['Plural', 'die Lieferscheine'], nr: 7, gr: 74, plgr: 40, ware: 't-karton', g: 142 });
+  k.ein(P7 + .7); k.chip(W('Der', 28)); k.wort(W('Lieferschein', 28)); k.zeile(W('Die', 29));
+  // Klemmbrett mit Lieferschein landet
+  const ZL = [['Milch', 4], ['Äpfel', 2], ['Brot', 3]];
+  neu('kb7', `<div class="clip"></div><div class="blatt"><div class="kz"></div>${ZL.map(([w, n], z) => `<div class="lzeile" id="lz7${z}"><span class="bx">${tpl('svgHaken')}</span>${w}<b>${n}</b></div>`).join('')}</div>`, '', G, 'klemm63');
+  const tK = W('Lieferschein', 28) - .4, KBX = X + 970, KBY = 455;
+  akteur('kb7', { x: KBX, y: KBY - 300, o: 0, r: -6 });
+  tw('kb7', tK, .2, { o: 1 }); tw('kb7', tK, .5, { y: KBY, r: -1.5 }, 'in'); landen('kb7', tK + .5); ton(tK + .5, 'plopp');
+  // … was geliefert wird: Kartons fahren auf der Rollbahn herein
+  neu('rb7', `<i class="holm"></i>${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(n => `<i class="r" id="rb7r${n}" style="left:${8 + n * 34}px"></i>`).join('')}<i class="bein" style="left:30px"></i><i class="bein" style="right:30px"></i>`, '', 'data-gruppe="rb7"', 'rollbahn63');
+  ein('rb7', W('Lieferscheine', 29) + .1, { x: X + 1265, y: 704 }, { y: 40 }, 'whoosh');
+  const KA = [['t-milch', 1160], ['t-apfel', 1265], ['t-brot', 1370]].map(([ic, x], n) => {
+    const id = 'kk7' + n; bild(id, 't-karton', 130, 'data-gruppe="rb7"');
+    const y = steht(130, 684, 142);
+    const icon = 'ki7' + n; bild(icon, ic, 54, 'data-gruppe="rb7"');
+    return [id, icon, x, y];
+  });
+  const tG = W('geliefert', 30) - .5;
+  KA.forEach(([id, icon, x, y], n) => {
+    akteur(id, { x: X + 1700, y, o: 0 }); akteur(icon, { x: X + 1700, y: y - 2, o: 0 });
+    const t = tG + n * .22;
+    tw([id, icon], t, .2, { o: 1 }); tw(id, t, .8, { x: X + x }, 'out'); tw(icon, t, .8, { x: X + x - 8 }, 'out'); federn(id, t + .8); ton(t, 'whoosh');
+  });
+  HOOKS.push(t => { const r = 400 * clamp((t - tG) / 1.3) * (1 - .5 * clamp((t - tG) / 1.3)); for (let n = 0; n < 9; n++) el('rb7r' + n).style.transform = `rotate(${r.toFixed(1)}deg)`; });
+  akzent(W('geliefert', 30), .03);
+  // Zähl die Kartons: Zähler springen hoch · vergleich sie mit dem Lieferschein: Zeilen werden grün
+  drucker(7, X + 1620, SA(31) - 1.0);
+  satzbon(7, X + 1620, 31, 'der', ['lieferschein'], [3, 3, 2, 1]);
+  const tZ = W('Kartons', 31) - .15;
+  KA.forEach(([id, icon, x, y], n) => {
+    const zid = 'zz7' + n, ziel = ZL[n][1];
+    neu(zid, '<span id="zz7' + n + 't">1</span>', '', 'data-frei', 'plakette lila oben');
+    const t = tZ + n * .3;
+    pop(zid, t, { x: X + x, y: y - 105 }, 'pop');
+    HOOKS.push(z => { el(zid + 't').textContent = String(Math.max(1, Math.min(ziel, 1 + Math.floor((z - t) / .12)))); });
+    for (let c = 1; c < ziel; c++) ton(t + c * .12, 'klick');
+  });
+  bild('lu7', 't-lupe', 120, 'data-frei', '', 'oben');
+  const ZY = n => KBY - 205 + 40 + 22 + 36 + 31 + n * 62, lupe = (x, y) => ({ x: x + 14 / 160 * 120, y: y + 14 / 160 * 120 });
+  const tV = W('vergleich', 31) - .2;
+  akteur('lu7', { ...lupe(KBX + 200, ZY(0) + 100), o: 0, s: .7 });
+  tw('lu7', tV, .3, { o: 1 }); tw('lu7', tV, .4, { ...lupe(KBX + 40, ZY(0)), s: 1 }, 'sanft'); ton(tV, 'whoosh');
+  [0, 1, 2].forEach(n => {
+    const t = tV + .4 + n * .35;
+    if (n) tw('lu7', t - .3, .28, lupe(KBX + 40, ZY(n)), 'inout');
+    HOOKS.push(z => el('lz7' + n).classList.toggle('ok', z >= t)); ton(t, 'klick');
+  });
+  tw('lu7', tV + 1.5, .4, { ...lupe(KBX + 240, 640), o: 0, s: .8 }, 'in');
+  const tL = W('Lieferschein', 31);
+  bump('kb7', tL + .1, 1.04); ton(tL + .1, 'ding'); akzent(tL, .04); wellen(tL + .1, KBX, KBY, 'var(--success)', 380);
+}
+
+/* ---------- 8 · die Inventur ---------- */
+const P8 = SE(31) + .3; pan2(P8, 8);
+buehne(8);
+{
+  const X = S(8), G = 'data-gruppe="rg8"';
+  const k = preisschild(8, { art: 'die', chip: 'die', wort: 'Inventur', zeile: ['Plural', 'die Inventuren'], nr: 8, gr: 108, ware: 't-klemm', g: 148, wb: 150 });
+  k.ein(P8 + .7); k.chip(W('Die', 32)); k.wort(W('Inventur', 32)); k.zeile(W('Die', 33));
+  // volles Regal
+  const RX = X + 960, bo = regal('rg8', RX, 520, 320, 480, 4, G);
+  ein('rg8', P8 + .9, { x: RX, y: 520 }, { y: 80 }, 'whoosh');
+  bo.forEach((yb, b) => [-1, 0, 1].forEach((m, n) => { const id = packung(RX + m * 92, yb, 66, 70 + ((b + n) % 3) * 10, G); pop(id, P8 + 1.55 + b * .1 + n * .04, { x: RX + m * 92, y: wertBei(id, 'y', 0) }, n ? null : 'klick'); }));
+  // Zählwerk und Strichliste
+  neu('zw8', [0, 1, 2, 3].map(n => `<span id="zw8d${n}">0</span>`).join(''), '', 'data-gruppe="zw8"', 'zaehl63');
+  pop('zw8', W('Inventur', 32) + .1, { x: X + 1300, y: 300 }, 'pop');
+  const STRICHE = 14;
+  neu('sl8', `<svg viewBox="0 0 196 126">${Array.from({ length: STRICHE }, (_, n) => { const g = Math.floor(n / 5), p = n % 5, x0 = 14 + g * 64; return p < 4 ? `<path id="sl8s${n}" d="M${x0 + p * 12} ${n >= 10 ? 74 : 14}v44" stroke="var(--b600)" stroke-width="6" stroke-linecap="round"/>` : `<path id="sl8s${n}" d="M${x0 - 6} ${n >= 10 ? 112 : 52}l50 -32" stroke="var(--b600)" stroke-width="6" stroke-linecap="round"/>`; }).join('')}</svg>`, '', 'data-gruppe="zw8"', 'strichl63');
+  pop('sl8', W('Inventur', 32) + .25, { x: X + 1300, y: 510 }, null);
+  const tZ = W('gezählt', 34) - .3;
+  HOOKS.push(t => {
+    const v = Math.round(248 * E.out(clamp((t - tZ) / 1.6)));
+    String(v).padStart(4, '0').split('').forEach((d, n) => { el('zw8d' + n).textContent = d; });
+    for (let n = 0; n < STRICHE; n++) el('sl8s' + n).style.opacity = t >= tZ + n * .11 ? 1 : 0;
+  });
+  for (let n = 0; n < STRICHE; n += 2) ton(tZ + n * .11, 'kritzeln');
+  bump('zw8', tZ, 1.06); akzent(tZ + .3, .03);
+  // meistens einmal im Jahr: Kalender blättert zwölf Blätter durch, das letzte zeigt den markierten Tag
+  const KX8 = X + 1650, KY8 = 430;
+  const BL = 12;
+  neu('kl8', `${Array.from({ length: BL + 1 }, (_, n) => `<div class="blatt63" id="kl8b${n}"><div class="kk" id="kl8k${n}"></div><div class="gitter">${Array.from({ length: 20 }, (_, c) => `<i class="${n >= BL - 1 && c === 13 ? 'mark' : ''}"></i>`).join('')}</div></div>`).reverse().join('')}`, '', 'data-gruppe="kl8"', 'kal63');
+  pop('kl8', W('einmal', 34) - .45, { x: KX8, y: KY8 }, 'pop');
+  const tJ = W('einmal', 34) - .15;
+  for (let n = 0; n < BL - 1; n++) { akteur('kl8b' + n, {}, true); tw('kl8b' + n, tJ + n * .085, .16, { sy: 0, o: 0 }, 'in'); if (n % 2 === 0) ton(tJ + n * .085, 'klick'); }
+  akteur('kl8b' + (BL - 1), {}, true);
+  bump('kl8', W('Jahr', 34), 1.06); ton(W('Jahr', 34), 'ding'); akzent(W('Jahr', 34), .035);
+  // Am Samstag ist Inventur: das Blatt springt auf „Samstag“, die Böden leuchten nacheinander auf
+  aus(['zw8', 'sl8'], SA(35) - 1.2);
+  drucker(8, X + 1300, SA(35) - 1.0);
+  satzbon(8, X + 1300, [35, 36], 'die', ['inventur'], [3, 2, 3]);
+  const tS = W('Samstag', 35) - .2;
+  tw('kl8b' + (BL - 1), tS, .18, { sy: 0, o: 0 }, 'in'); ton(tS, 'klick');
+  el('kl8k' + BL).textContent = 'Samstag';
+  bump('kl8', tS + .2, 1.08); wellen(tS + .25, KX8, KY8, 'var(--success)', 300); akzent(tS + .2, .035);
+  const tA = W('zählen', 36) - .1;
+  HOOKS.push(t => [0, 1, 2, 3].forEach(b => el('rg8b' + b).classList.toggle('licht', t >= tA + b * .25 && t < tA + 2.2)));
+  [0, 1, 2, 3].forEach(b => ton(tA + b * .25, 'klick'));
+  bump('rg8', WE('alles', 36), 1.03); ton(WE('alles', 36), 'erfolg');
+}
+
+/* ---------- 9 · der Umtausch und die Reklamation ---------- */
+const P9 = SE(36) + .3; pan2(P9, 9);
+buehne(9);
+{
+  const X = S(9);
+  const k = preisschild(9, { art: 'der', chip: 'der', wort: 'Umtausch', zeile: ['und', '<em>die</em> Reklamation'], nr: 9, gr: 104, plgr: 42, ware: 't-pullifalt', g: 140 });
+  k.ein(P9 + .7); k.chip(W('Der', 37)); k.wort(W('Umtausch', 37)); k.zeile(W('Reklamation', 37) - .25);
+  neu('tr9', '', '', 'data-frei', 'trenn63');
+  ein('tr9', W('Umtausch', 37), { x: X + 1190, y: 480 }, { y: 40 });
+  // links: Pullover, Größe M wird zu L
+  const PX = X + 975, PY = 440;
+  bild('pu9', 't-pulli', 260, 'data-gruppe="pu9"');
+  ein('pu9', W('Umtausch', 37) - .3, { x: PX, y: PY }, { y: 80 }, 'whoosh');
+  neu('gr9', '<span id="gr9t">M</span>', '', 'data-gruppe="pu9"', 'groesse63');
+  pop('gr9', W('Umtausch', 37) + .2, { x: PX + 70, y: PY + 85 }, 'pop');
+  neu('kr9', tpl('svgKreis'), 'width:100px', 'data-dreht data-gruppe="pu9"');
+  const tU = W('Umtausch', 38);
+  pop('kr9', tU - .3, { x: PX + 140, y: PY - 110 }, 'pop');
+  tw('kr9', tU, 1.0, { r: 360 }, 'inout'); ton(tU, 'scan');
+  tw('gr9', tU + .4, .15, { sx: 0 }, 'in'); tw('gr9', tU + .55, .25, { sx: 1 }, 'back');
+  HOOKS.push(t => { el('gr9t').textContent = t >= tU + .55 ? 'L' : 'M'; });
+  plakette('ok9', 'gruen', 'svgHaken', 'data-gruppe="pu9"');
+  pop('ok9', W('Fehler', 38), { x: PX - 140, y: PY - 80 }, 'ding');
+  neu('et9', 'Der Laden entscheidet', '', '', 'etikett');
+  pop('et9', W('entscheidet', 39) - .1, { x: PX, y: 668 }, 'pop'); akzent(W('entscheidet', 39), .03);
+  bump('pu9', W('freiwillig', 39), 1.04);
+  // rechts: die Lampe leuchtet, flackert, geht aus – der Laden wird kurz dunkel
+  const LX = X + 1530, LY = 545;
+  bild('lp9', 't-lampe', 280, 'data-gruppe="lp9"'); bild('li9', 't-licht', 280, 'data-gruppe="lp9"');
+  const tLa = W('Reklamation', 37) - .3;
+  ein('lp9', tLa, { x: LX, y: LY }, { y: 80 }, 'whoosh'); ein('li9', tLa, { x: LX, y: LY }, { y: 80 });
+  const tFl = W('Reklamation', 40), tAus = W('Fehler', 40) - .25;
+  const FLACKERN = [[tFl, .1], [tFl + .18, .08], [tFl + .4, .14], [tFl + .62, .06]];
+  HOOKS.push(t => { let o = 1; if (t >= tAus) o = 0; else for (const [a, d] of FLACKERN) if (t >= a && t < a + d) o = .1; el('li9').style.opacity = Math.min(+el('li9').style.opacity || 0, o); });
+  FLACKERN.forEach(([a]) => ton(a, 'klick')); summen('lp9', tFl, 1.0, 3);
+  neu('du9', '', '', '', 'a dunkel63');
+  akteur('du9', { x: X + 960, y: 540, o: 0 });
+  // Achtung: du9 hat Klasse .a, aber keine Prüfung nötig – data-frei, Vollbild
+  el('du9').setAttribute('data-frei', '');
+  set('du9', tAus, { o: .28 }); tw('du9', SA(41) - .5, .5, { o: 0 }); ton(tAus, 'plopp');
+  plakette('wa9', 'rot', 'svgAusruf', 'data-frei', 'oben');
+  pop('wa9', W('Fehler', 40), { x: LX + 120, y: LY - 150 }, 'plopp'); wackeln('wa9', W('Fehler', 40) + .4, 3, 3); akzent(W('Fehler', 40), .045);
+  // Die Lampe geht nicht? Dann ist das eine Reklamation: Stempel schlägt auf den Zettel
+  aus(['pu9', 'gr9', 'kr9', 'ok9', 'et9', 'tr9'], SA(41) - 1.1);
+  drucker(9, X + 1000, SA(41) - .9);
+  satzbon(9, X + 1000, [41, 42], 'die', ['reklamation'], [2, 2, 4, 1]);
+  wackeln('lp9', W('geht', 41), 4, 3);
+  aus('wa9', SA(42) - .2);
+  neu('ze9', '<i></i><i style="width:70%"></i><i style="width:85%"></i>', '', 'data-gruppe="ze9"', 'zettel63');
+  pop('ze9', W('nicht', 41), { x: X + 1330, y: 285, r: -1.5 }, 'pop');
+  bild('sp9', 't-stempel', 170, 'data-frei', '', 'oben');
+  const tSt = W('Reklamation', 42);
+  akteur('sp9', { x: X + 1330, y: -120 });
+  tw('sp9', tSt - .45, .3, { y: 140 }, 'sanft'); tw('sp9', tSt - .1, .1, { y: 200 }, 'in'); tw('sp9', tSt + .25, .4, { y: -160 }, 'in');
+  neu('ab9', 'Reklamation', '', 'data-gruppe="ze9"', 'abdruck63');
+  pop('ab9', tSt, { x: X + 1330, y: 300, r: -3 }, 'plopp'); wackeln('ze9', tSt, 3, 2); akzent(tSt, .05);
+}
+
+/* ---------- 10 · Schlussdialog: Filialleiterin und Priya, die Wörter fahren auf dem Band ---------- */
+const P10 = SE(42) + .35; pan2(P10, 10);
+buehne(10);
+{
+  const X = S(10), MX = X + 960;
+  portrait('fl10', 'Filialleiterin', 270); portrait('pr10', 'Priya', 270);
+  ein('fl10', P10 + .5, { x: X + 300, y: 420 }, { y: 90 }, 'pop');
+  ein('pr10', P10 + .65, { x: X + 1620, y: 420 }, { y: 90 }, 'pop');
+  // Gegenstände fahren auf dem Band in die Mitte und wieder hinaus
+  const fahrt = [];          // aktuelle Gruppe auf dem Band
+  let liegt = [];
+  const bringe = (t, ids) => {
+    ids.forEach(id => { const x = wertBei(id, 'x', 0); akteur(id, { ...AKTEURE.get(el(id)).basis, x: x - 1300, o: 0 }); set(id, t, { o: 1 }); });
+    fahren([...liegt, ...ids], t, 1300, .75, 'inout'); ton(t, 'whoosh');
+    liegt.forEach(id => tw(id, t + .55, .2, { o: 0 }));
+    liegt = ids;
+  };
+  const teil = (id, t, b, x, g = 146, extra = '') => { bild(id, t, b, extra, '', 'vorn'); akteur(id, { x: MX + x, y: steht(b, BAND, g) }); return id; };
+  // a) gleich kommt die Ware – Karton
+  const tWa = W('Ware', 43);
+  bringe(tWa - .7, [teil('o10a', 't-karton', 230, 0, 142)]);
+  // b) Prüf sie mit dem Lieferschein – Klemmbrett
+  const tLi = W('Lieferschein', 44);
+  bringe(tLi - .7, [teil('o10b', 't-klemm', 210, 0, 148)]);
+  // c) Regale auffüllen – Dosen
+  const tRe = W('Regale', 46);
+  bringe(tRe - .7, [teil('o10c1', 't-dose', 150, -80, 140), teil('o10c2', 't-dose', 150, 0, 140), teil('o10c3', 't-dose', 150, 80, 140)]);
+  // d) ab zwölf Uhr an der Kasse – Kasse, Uhr dreht auf 12
+  const tKa = W('Kasse', 47);
+  bringe(W('zwölf', 47) - .7, [teil('o10d', 't-kasse', 250, 0, 144)]);
+  const u = uhr('uh10', MX + 250, 640, 150, 9, 'data-gruppe="uh10"');
+  u.ein(W('zwölf', 47) - .2); u.auf(W('zwölf', 47) + .1, 12, .9);
+  aus(['uh10', 'uh10s', 'uh10m'], SA(48) - .2);
+  // e) Wechselgeld laut vorzählen – Münzen
+  const tWg = W('Wechselgeld', 48);
+  bringe(tWg - .7, [0, 1, 2].map(n => teil('o10e' + n, 't-muenze', 90, (n - 1) * 95, 140, 'data-dreht')));
+  [0, 1, 2].forEach(n => { bump('o10e' + n, W('laut', 48) + n * .2, 1.15); ton(W('laut', 48) + n * .2, 'muenze'); });
+  // f) umtauschen / Umtausch oder Reklamation – Pullover und Lampe
+  const tUm = W('Umtausch', 50), tRk = W('Reklamation', 50);
+  bringe(W('umtauschen', 49) - .7, [teil('o10f1', 't-pullifalt', 170, -110, 140), teil('o10f2', 't-lampe', 170, 110, 146)]);
+  // g) Am Samstag ist Inventur in der ganzen Filiale – Laden
+  const tIn = W('Inventur', 51), tFi = W('Filiale', 51);
+  bringe(W('Samstag', 51) - .7, [teil('o10g', 't-laden', 230, 0, 146)]);
+  // Wort-Chips (Preisschilder): ploppen beim Sprechen auf, blinken, reihen sich oben ein
+  const CHIPS = [['die', 'Ware', tWa], ['der', 'Lieferschein', tLi], ['die', 'Regale', tRe], ['die', 'Kasse', tKa], ['das', 'Wechselgeld', tWg],
+                 ['der', 'Umtausch', tUm], ['die', 'Reklamation', tRk], ['die', 'Inventur', tIn], ['die', 'Filiale', tFi]];
+  const BREITE = { Ware: 160, Lieferschein: 250, Regale: 180, Kasse: 160, Wechselgeld: 250, Umtausch: 220, Reklamation: 250, Inventur: 195, Filiale: 175 };
+  const GAP = 18, REIHEN = [CHIPS.slice(0, 5), CHIPS.slice(5)];
+  REIHEN.forEach((reihe, ri) => {
+    const summe = reihe.reduce((s, c) => s + BREITE[c[1]] + 60, 0) + GAP * (reihe.length - 1);
+    let cx = MX - summe / 2;
+    reihe.forEach(([art, text, t], n) => {
+      const w = BREITE[text] + 60, id = neu(`ch10${ri}${n}`, `<b>${art}</b>${text}`, `width:${w}px`, '', 'chip63 ' + art);
+      const zx = cx + w / 2; cx += w + GAP;
+      akteur(id, { x: MX, y: 470, s: 0 });
+      tw(id, t - .05, .5, { s: 1.25 }, 'back'); ton(t, 'pop');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      const tF = t + .6;
+      flug(id, tF, .6, zx, 170 + ri * 76, 40, { s: 1 }); landen(id, tF + .6); ton(tF, 'whoosh');
+    });
+  });
+  // Nicken der Zuhörerin, Alles klar: Haken, beide lächeln
+  [[44, 'pr10'], [46, 'fl10'], [47, 'pr10'], [49, 'fl10'], [50, 'pr10'], [51, 'pr10']].forEach(([n, id]) => nicken(id, SE(n) - .5, 1));
+  const tK = W('Alles', 52);
+  liegt.forEach(id => tw(id, tK - .3, .3, { o: 0, s: .8 }, 'in'));
+  plakette('ok10', 'gruen', 'svgHaken', 'data-frei', 'oben');
+  el('ok10').style.cssText += ';width:120px;height:120px'; el('ok10').querySelector('svg').style.width = '60px';
+  pop('ok10', tK + .1, { x: MX, y: 560 }, 'ding'); ton(tK + .3, 'erfolg'); akzent(tK + .2, .05);
+  FROH.push(['fl10', SE(51) + .1, 99]); FROH.push(['pr10', SE(52) + .1, 99]);
+  huepfen('pr10', SE(52) + .1, 18); huepfen('fl10', SE(52) + .3, 14);
+  CHIPS.forEach((c, n) => bump(`ch10${n < 5 ? 0 : 1}${n < 5 ? n : n - 5}`, SE(52) + .4 + n * .07, 1.1));
+}
+
+/* ---------- Abspann: Bonpapier schiebt sich von unten ins Bild ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann63').style.transform = `translateY(${(1140 * (1 - p)).toFixed(1)}px)`; });
+ton(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .55, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .9, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

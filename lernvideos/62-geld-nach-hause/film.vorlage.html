@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Geld nach Hause schicken</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+}
+/* Leitidee: Luftpost. Die Welt ist eine Karte mit Raster, die Bühnen sind Luftpost-Umschläge, das Geld reist als Paket
+   auf einer gestrichelten Route von Station zu Station; die Kamera fährt mit (auch nach oben/unten, auf den „Abweg“). */
+#himmel{position:absolute;inset:0;background-image:linear-gradient(var(--b100) 2px,transparent 2px),linear-gradient(90deg,var(--b100) 2px,transparent 2px);
+  background-size:120px 120px;opacity:.55}
+#kamera{position:absolute;inset:0;transform-origin:0 0}
+#blende{position:absolute;inset:0;background:var(--bg);opacity:0}
+.buehne{width:900px;height:720px;border-radius:48px;box-shadow:0 18px 50px rgba(58,37,153,.08)}
+.buehne::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:14px;opacity:.5;
+  background:repeating-linear-gradient(-45deg,var(--b400) 0 26px,transparent 26px 42px,var(--warning) 42px 68px,transparent 68px 84px);
+  -webkit-mask:linear-gradient(var(--ink) 0 0) content-box,linear-gradient(var(--ink) 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.buehne.weit{width:1300px;height:780px}
+.buehne.abweg{background:linear-gradient(var(--b100),var(--b200))}
+.buehne.abweg::before{background:repeating-linear-gradient(-45deg,var(--error) 0 26px,transparent 26px 42px,var(--b700) 42px 68px,transparent 68px 84px);opacity:.45}
+.route{position:absolute;overflow:visible}
+.titel{font-size:58px;line-height:68px}
+.unter{font-size:38px;line-height:50px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait.klein{border-width:5px;box-shadow:0 4px 12px rgba(22,19,37,.14)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.chip{display:flex;align-items:center;gap:12px;padding:12px 22px;border-radius:999px;font:700 26px/32px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.chip svg{width:32px;height:32px;flex:none}
+.chip .ok{width:34px;height:34px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.chip .ok svg{width:20px;height:20px}
+.chip.gut{background:var(--success-bg);color:var(--success-text)}
+.plakette{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:26px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.plakette b{font:800 30px/1 Inter;color:var(--surface)}
+.blase{padding:16px 28px;border-radius:28px;background:var(--surface);color:var(--b600);font:800 34px/40px Inter;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(22,19,37,.14)}
+.blase::after{content:'';position:absolute;left:34px;bottom:-16px;border:12px solid transparent;border-top:18px solid var(--surface);border-bottom:0;transform:skewX(-20deg)}
+.blase.nein{background:var(--error);color:var(--surface)} .blase.nein::after{border-top-color:var(--error)}
+.pfeilsvg{width:1920px;height:1080px}
+
+/* 1 · Weltkugel */
+.pin svg{width:100%}
+
+/* 2 · Monatsgeld */
+.seg{height:84px;background:linear-gradient(var(--b300),var(--b500));box-shadow:0 6px 16px rgba(58,37,153,.16)}
+.seg.l{border-radius:20px 0 0 20px} .seg.r{border-radius:0 20px 20px 0}
+.seg .glanz{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(var(--success),var(--success-text));opacity:0}
+.karte2{width:160px;height:164px;border-radius:28px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.1);overflow:hidden}
+.karte2 .rot{position:absolute;inset:0;border-radius:inherit;background:var(--error-bg);border:5px solid var(--error);opacity:0}
+.karte2 .ic{position:absolute;left:32px;top:8px;width:96px}
+.karte2 .ic2{position:absolute;left:32px;top:8px;width:96px}
+.karte2 b{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:800 22px/26px Inter;color:var(--ink);white-space:nowrap}
+.karte2 .streifen{position:absolute;left:0;right:0;top:0;height:12px;background:linear-gradient(90deg,var(--b300),var(--b500));transform-origin:0 50%}
+.rueck{width:104px;height:104px;border-radius:999px;background:var(--b500);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 22px rgba(90,63,230,.35);border:6px solid var(--surface)}
+.rueck svg{width:54px}
+
+/* 3 · Stationen */
+.tor i{position:absolute;display:block;border-radius:9px;background:linear-gradient(90deg,var(--b500),var(--b700))}
+.tor .l{left:0;top:0;width:22px;height:100%} .tor .r{right:0;top:0;width:22px;height:100%}
+.tor .o{left:-8px;right:-8px;top:0;height:28px;background:repeating-linear-gradient(90deg,var(--b500) 0 24px,var(--surface) 24px 44px);
+  border:4px solid var(--b600);border-radius:10px}
+.kurs{width:210px;height:96px;border-radius:20px;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  box-shadow:0 8px 22px rgba(22,19,37,.22)}
+.kurs small{font:800 14px/16px Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--b200)}
+.kurs .zif{display:flex;gap:5px;align-items:flex-end}
+.kurs .z{width:28px;height:42px;border-radius:6px;background:var(--n700);overflow:hidden;position:relative}
+.kurs .z .band{position:absolute;left:0;top:0;width:100%}
+.kurs .z .band span{display:block;height:42px;font:800 30px/42px Inter;color:var(--warning-bg);text-align:center}
+.kurs .komma{font:800 30px/34px Inter;color:var(--warning-bg)}
+.geist{border:4px dashed var(--b400);border-radius:14px}
+.boden{height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,var(--b300) 0 18px,transparent 18px 32px)}
+
+/* 4 · Vergleich */
+.balken4{width:96px;height:180px;border-radius:16px 16px 6px 6px;background:linear-gradient(var(--b300),var(--b400));transform-origin:50% 100%;
+  box-shadow:0 6px 16px rgba(58,37,153,.14)}
+.balken4 .gruen{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(var(--success),var(--success-text));opacity:0}
+.sockel4{height:10px;border-radius:5px;background:var(--b200)}
+.scheibe{height:12px;border-radius:4px;background:linear-gradient(var(--b400),var(--b600))}
+
+/* 5 · Erlaubnis */
+.karte5{width:250px;height:290px;border-radius:30px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.12)}
+.karte5 .ic{position:absolute;left:55px;top:14px;width:140px}
+.karte5 u{position:absolute;left:44px;height:12px;border-radius:6px;background:var(--n200)}
+.amtschild{position:absolute;left:78px;top:73px;width:84px;height:28px;border-radius:7px;background:var(--b600);color:var(--surface);font:800 18px/28px Inter;text-align:center;
+  box-shadow:0 3px 8px rgba(22,19,37,.25)}
+.liste5{width:560px;height:204px;border-radius:24px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.12);overflow:hidden}
+.liste5 .lkopf{height:48px;background:linear-gradient(90deg,var(--b500),var(--b600));color:var(--surface);font:800 17px/48px Inter;padding-left:22px;letter-spacing:.12em;text-transform:uppercase}
+.liste5 .lfenster{position:absolute;left:0;right:0;top:48px;bottom:0;overflow:hidden}
+.liste5 .lband{position:absolute;left:0;right:0;top:0}
+.liste5 .lz{height:52px;display:flex;align-items:center;gap:14px;padding:0 22px;border-bottom:2px solid var(--b50);position:relative}
+.liste5 .lz i{width:30px;height:30px;border-radius:9px;background:var(--b100);flex:none;position:relative}
+.liste5 .lz u{height:10px;border-radius:5px;background:var(--n200);position:relative}
+.liste5 .lz .lh{position:absolute;inset:3px 8px;border-radius:12px;background:var(--success-bg);opacity:0}
+.liste5 .lz .lok{position:absolute;right:22px;top:9px;width:34px;height:34px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.liste5 .lz .lok svg{width:20px}
+.liste5 .lz i svg{width:30px}
+
+/* 6 · Tür */
+.tuer6{width:230px;height:380px}
+.tuer6 .rahmen{position:absolute;left:0;top:0;width:230px;height:366px;border-radius:24px 24px 6px 6px;background:var(--b700);box-shadow:0 10px 26px rgba(22,19,37,.25)}
+.tuer6 .dunkel{position:absolute;left:18px;top:18px;width:194px;height:348px;border-radius:10px 10px 0 0;background:linear-gradient(var(--ink),var(--n700))}
+.tuer6 .blatt{position:absolute;left:18px;top:18px;width:194px;height:348px;border-radius:10px 10px 0 0;background:linear-gradient(135deg,var(--b400),var(--b600));transform-origin:100% 50%}
+.tuer6 .blatt .fz{position:absolute;left:61px;top:58px;width:72px;height:72px;border-radius:999px;background:var(--surface);color:var(--b700);font:800 46px/72px Inter;text-align:center;
+  box-shadow:0 4px 10px rgba(22,19,37,.2)}
+.tuer6 .blatt .kn{position:absolute;left:22px;top:186px;width:22px;height:22px;border-radius:999px;background:var(--warning)}
+.tuer6 .blatt .fl{position:absolute;left:28px;right:28px;height:84px;border-radius:10px;border:5px solid var(--b300);opacity:.5}
+.tuer6 .schwelle{position:absolute;left:-14px;right:-14px;bottom:0;height:16px;border-radius:6px;background:var(--b300)}
+.verbot{width:290px;padding:18px 22px;border-radius:24px;background:var(--error);color:var(--surface);display:flex;align-items:center;gap:16px;
+  font:800 26px/31px Inter;box-shadow:0 10px 26px rgba(199,62,83,.35);border:5px solid var(--surface)}
+.verbot span{width:58px;height:58px;flex:none;border-radius:999px;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.verbot span svg{width:30px}
+
+/* 7 · Weiterleiten */
+.nachricht{width:410px;height:118px;padding:18px 24px;border-radius:26px 26px 26px 8px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);
+  font:700 27px/38px Inter;color:var(--ink);white-space:pre}
+.nachricht em{font-style:normal;color:var(--error)}
+.konto7{width:150px;height:112px;border-radius:26px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.konto7 .karte{position:absolute;right:16px;bottom:16px;width:58px;height:40px;border-radius:7px;background:linear-gradient(135deg,var(--b400),var(--b600))}
+.konto7 .karte::before{content:'';position:absolute;left:8px;top:9px;width:14px;height:11px;border-radius:3px;background:var(--warning)}
+.konto7 .karte::after{content:'';position:absolute;left:8px;bottom:8px;width:36px;height:5px;border-radius:3px;background:var(--b200)}
+.konto7 .fr{position:absolute;left:16px;top:20px;width:64px;height:64px;border-radius:999px;background:var(--b100);color:var(--b600);font:800 40px/64px Inter;text-align:center}
+.konto7 .portrait{position:absolute;left:10px;top:12px;width:82px;height:82px;border-width:4px;box-shadow:none}
+.kette svg{width:100%}
+.abdruck{padding:10px 26px;border:7px solid var(--error);border-radius:16px;color:var(--error);font:800 46px/56px Inter;letter-spacing:.02em;white-space:nowrap;
+  background:rgba(255,255,255,.88)}
+.kachel7{width:180px;height:204px;border-radius:30px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.12)}
+.kachel7 .ic{position:absolute;left:25px;top:6px;width:130px}
+.kachel7 b{position:absolute;left:0;right:0;bottom:18px;text-align:center;font:800 26px/30px Inter;color:var(--ink)}
+
+/* 8 · Daten & Beleg */
+.formular8{width:340px;height:320px;border-radius:28px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.12)}
+.formular8 .fk{position:absolute;left:0;right:0;top:0;height:16px;border-radius:28px 28px 0 0;background:linear-gradient(90deg,var(--b400),var(--b600))}
+.formular8 small{position:absolute;left:28px;font:700 19px/22px Inter;color:var(--n500)}
+.formular8 .feld{position:absolute;left:24px;width:292px;height:48px;border-radius:14px;border:3px solid var(--b100);background:var(--b50)}
+.formular8 .feld u{position:absolute;left:16px;top:16px;height:10px;border-radius:5px;background:var(--n300)}
+.formular8 .knopf{position:absolute;left:24px;right:24px;bottom:22px;height:50px;border-radius:14px;background:var(--b500);color:var(--surface);font:800 21px/50px Inter;text-align:center}
+.formular8 .ok{position:absolute;width:38px;height:38px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(22,19,37,.2)}
+.formular8 .ok svg{width:22px}
+.ausgabe{width:130px;height:190px;overflow:hidden}
+.beleg{width:100px;height:128px;border-radius:8px 8px 4px 4px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.16);padding:14px 12px;display:flex;flex-direction:column;gap:9px}
+.beleg i{display:block;height:7px;border-radius:4px;background:var(--n200)} .beleg i:first-child{background:var(--b300);width:60%}
+.beleg i.gr{background:var(--success);width:40%;margin-top:auto}
+.ausgabe .beleg{position:absolute;left:15px;top:0}
+.schirm{width:180px;height:324px;border-radius:14px;overflow:hidden;background:var(--bg)}
+.scr{position:absolute;inset:0;padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.scr .ak{font:800 12px/15px Inter;color:var(--b500)}
+.scr h4{font:800 22px/26px Inter;color:var(--ink)}
+.app-zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:600 13px/16px Inter;color:var(--ink);box-shadow:0 2px 6px rgba(22,19,37,.06);white-space:nowrap;position:relative}
+.app-zeile i{width:24px;height:24px;border-radius:7px;background:var(--b100);display:flex;align-items:center;justify-content:center;flex:none}
+.app-zeile i svg{width:14px}
+.app-zeile em{margin-left:auto;font:700 11px/1 Inter;font-style:normal;color:var(--surface);background:var(--b500);border-radius:999px;padding:4px 7px}
+.app-zeile.neu i{background:var(--success)}
+.app-zeile .hl{position:absolute;inset:-2px;border-radius:12px;border:3px solid var(--success);opacity:0}
+.app-toast{margin-top:auto;align-self:center;padding:7px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:700 13px/16px Inter;white-space:nowrap}
+
+/* 9 · Plaketten auf der Route */
+.station{width:84px;height:84px;border-radius:999px;background:var(--surface);border:5px solid var(--b300);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(22,19,37,.14)}
+.station svg{width:46px}
+.station .gr{position:absolute;inset:-5px;border-radius:999px;border:5px solid var(--success);opacity:0}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:polygon(0 0,100% 0,100% 0,50% 0,0 0)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1240px}
+</style></head><body>
+
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--error)" stroke-width="7" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgMuenze"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="var(--warning)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="var(--warning-bg)" stroke-width="2.5" opacity=".7"/></svg></template>
+<template id="svgOrdner"><svg viewBox="0 0 16 16"><path d="M1.5 4a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h5.5A1.5 1.5 0 0 1 14.5 5.5v6.5a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 12Z" fill="var(--b500)"/></svg></template>
+<template id="svgBeleg"><svg viewBox="0 0 16 16"><path d="M4 1.5h8v13l-2-1.3-2 1.3-2-1.3-2 1.3Z" fill="var(--surface)"/><rect x="6" y="5" width="4" height="1.6" rx=".8" fill="var(--success)"/><rect x="6" y="8" width="4" height="1.6" rx=".8" fill="var(--success)"/></svg></template>
+<template id="svgHandyMini"><svg viewBox="0 0 30 30"><rect x="9" y="4" width="12" height="22" rx="3" fill="var(--b500)"/><rect x="11" y="7" width="8" height="15" rx="1.5" fill="var(--b100)"/></svg></template>
+
+<div id="himmel"></div>
+<div id="kamera"><div id="welt">
+  <div id="routen"></div>
+
+  <!-- 1 · Weltkugel: Amir schickt Geld (mittig, ohne Titel) -->
+  <div class="a buehne weit" id="bue1"></div>
+  <div class="a" id="globus1" style="width:500px;height:500px"></div>
+  <svg class="a" id="bogen1" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a pin" id="pin1" style="width:46px"></div>
+  <div class="a welle" id="welleH1" style="border-color:var(--error)" data-frei></div>
+  <div class="a" id="haus1" style="width:170px" data-gruppe="haus1">{{haus~1}}</div>
+  <div class="a" id="herz1" style="width:74px" data-gruppe="haus1">{{herz~1}}</div>
+  <div class="a welle" id="glow1" style="border-color:var(--warning)" data-frei></div>
+  <div class="a portrait" id="am1" data-f="amir" style="width:190px;height:190px"></div>
+  <div class="a" id="handy1" style="width:130px">{{handy~1}}</div>
+  <div class="a" id="m1a" style="width:46px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m1b" style="width:46px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m1c" style="width:46px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="warn1" style="width:96px">{{warndreieck}}</div>
+
+  <!-- 2 · Zuerst die eigenen Kosten -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a portrait" id="am2" data-f="amir" style="width:130px;height:130px"></div>
+  <div class="a seg l" id="seg2a" style="width:230px" data-gruppe="miete"></div>
+  <div class="a seg" id="seg2b" style="width:150px" data-gruppe="essen"></div>
+  <div class="a seg" id="seg2c" style="width:110px" data-gruppe="ticket"></div>
+  <div class="a seg" id="seg2d" style="width:100px" data-gruppe="not"></div>
+  <div class="a seg r" id="seg2e" style="width:90px" data-frei><div class="glanz" id="glanz2"></div></div>
+  <div class="a karte2" id="k2a" data-gruppe="miete"><div class="streifen" id="st2a"></div><div class="ic">{{haus~2}}</div><b>Miete</b></div>
+  <div class="a karte2" id="k2b" data-gruppe="essen"><div class="rot" id="rot2"></div><div class="streifen" id="st2b"></div><div class="ic" id="voll2">{{teller-essen}}</div><div class="ic2" id="leer2">{{teller}}</div><b>Essen</b></div>
+  <div class="a karte2" id="k2c" data-gruppe="ticket"><div class="streifen" id="st2c"></div><div class="ic">{{fahrkarte}}</div><b>Ticket</b></div>
+  <div class="a karte2" id="k2d" data-gruppe="not"><div class="streifen" id="st2d"></div><div class="ic">{{sparglas}}</div><b>Notgroschen</b></div>
+  <div class="a rueck" id="rueck2"><svg viewBox="0 0 54 40"><path d="M27 6v28L5 20Z M51 6v28L29 20Z" fill="var(--surface)"/></svg></div>
+
+  <!-- 3 · Stationen: Gebühr und Wechselkurs -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a boden" id="boden3" style="width:780px" data-frei></div>
+  <div class="a tor" id="tor3a" style="width:210px;height:230px" data-frei><i class="l"></i><i class="r"></i><i class="o"></i></div>
+  <div class="a tor" id="tor3b" style="width:210px;height:230px" data-frei><i class="l"></i><i class="r"></i><i class="o"></i></div>
+  <div class="a chip" id="schild3" style="padding:10px 20px"><span id="m3s" style="width:30px;display:block"></span>Gebühr</div>
+  <div class="a kurs" id="kurs3"><small>Kurs</small><div class="zif"><div class="z"><div class="band"></div></div><span class="komma">,</span><div class="z"><div class="band"></div></div><div class="z"><div class="band"></div></div><div class="z"><div class="band"></div></div></div></div>
+  <svg class="a" id="klinge3" viewBox="0 0 64 150" style="width:64px;height:150px" data-frei>
+    <path d="M6 2H58L32 146Z" fill="none" stroke="var(--b400)" stroke-width="3" stroke-dasharray="7 8" stroke-linejoin="round"/>
+    <path id="klingeVoll3" d="M6 2H58L32 146Z" fill="var(--error)" stroke="var(--error)" stroke-width="3" stroke-linejoin="round"/></svg>
+  <div class="a" id="kasse3" style="width:140px">{{kasse}}</div>
+  <div class="a" id="m3" style="width:52px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a scheibe" id="sch3" style="width:70px" data-frei></div>
+  <div class="a geist" id="geist3" style="width:84px;height:72px" data-frei></div>
+  <div class="a" id="lupe3" style="width:130px" data-frei>{{lupe~3}}</div>
+
+  <!-- 4 · Vergleichen -->
+  <div class="a buehne" id="bue4"></div>
+  <svg class="a" id="bahnen4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a" id="anb4a" style="width:120px">{{schalter}}</div>
+  <div class="a" id="anb4b" style="width:120px">{{laptop}}</div>
+  <div class="a" id="anb4c" style="width:120px">{{handy~4}}</div>
+  <div class="a" id="geb4a" style="width:44px" data-frei>{{muenze}}</div>
+  <div class="a" id="geb4b1" style="width:44px" data-frei>{{muenze}}</div>
+  <div class="a" id="geb4b2" style="width:44px" data-frei>{{muenze}}</div>
+  <div class="a" id="geb4c" style="width:44px" data-frei>{{muenze}}</div>
+  <svg class="a" id="kl4a" viewBox="0 0 90 44" style="width:90px;height:44px" data-frei><path d="M2 4L86 22L2 40Z" fill="var(--error)" fill-opacity=".14" stroke="var(--error)" stroke-width="3" stroke-dasharray="6 6" stroke-linejoin="round"/></svg>
+  <svg class="a" id="kl4c" viewBox="0 0 90 44" style="width:70px;height:34px" data-frei><path d="M2 4L86 22L2 40Z" fill="var(--error)" fill-opacity=".14" stroke="var(--error)" stroke-width="3" stroke-dasharray="6 6" stroke-linejoin="round"/></svg>
+  <div class="a sockel4" id="sockel4" style="width:620px"></div>
+  <div class="a balken4" id="bal4a" data-gruppe="sp4a"><div class="gruen"></div></div>
+  <div class="a balken4" id="bal4b" data-gruppe="sp4b"><div class="gruen" id="gr4b"></div></div>
+  <div class="a balken4" id="bal4c" data-gruppe="sp4c"><div class="gruen"></div></div>
+  <div class="a scheibe" id="sc4a" style="width:52px" data-frei></div>
+  <div class="a scheibe" id="sc4c" style="width:44px" data-frei></div>
+  <div class="a" id="p4a" style="width:100px" data-gruppe="sp4a">{{paket~a}}</div>
+  <div class="a" id="p4b" style="width:100px" data-gruppe="sp4b">{{paket~b}}</div>
+  <div class="a" id="p4c" style="width:100px" data-gruppe="sp4c">{{paket~c}}</div>
+  <svg class="a" id="diff4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a plakette gruen" id="ok4"></div>
+  <div class="a portrait" id="am4" data-f="amir" style="width:110px;height:110px"></div>
+
+  <!-- 5 · Nur mit Erlaubnis -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a karte5" id="karte5" data-gruppe="k5"><div class="ic">{{handy~5}}</div><u style="top:212px;width:162px"></u><u style="top:240px;width:110px"></u></div>
+  <div class="a" id="siegel5" style="width:128px" data-gruppe="k5"></div>
+  <div class="a" id="amt5" style="width:240px">{{behoerde}}<div class="amtschild" id="schild5">BaFin</div></div>
+  <svg class="a" id="pfeil5" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a chip gut" id="chip5"><span class="ok" id="ok5"></span>darf in Deutschland arbeiten</div>
+  <div class="a liste5" id="liste5" data-gruppe="liste5"><div class="lkopf">Datenbank</div><div class="lfenster"><div class="lband" id="lband5"></div></div></div>
+  <div class="a" id="lupe5" style="width:120px" data-frei>{{lupe~5}}</div>
+
+  <!-- 6 · Abweg: Bargeld an Unbekannte -->
+  <div class="a buehne abweg" id="bue6"></div>
+  <div class="a tuer6" id="tuer6" data-gruppe="tuer6"><div class="rahmen"></div><div class="dunkel"></div>
+    <div class="blatt" id="blatt6"><div class="fl" style="top:170px"></div><div class="fl" style="top:266px"></div><div class="fz">?</div><div class="kn"></div></div><div class="schwelle"></div></div>
+  <div class="a chip" id="geb6" style="padding:10px 20px"><span id="m6s" style="width:30px;display:block"></span>Gebühr</div>
+  <div class="a portrait" id="am6" data-f="amir" style="width:180px;height:180px" data-gruppe="am6"></div>
+  <div class="a" id="buendel6" style="width:150px" data-frei>{{geldschein}}</div>
+  <div class="a verbot" id="verbot6" data-gruppe="tuer6"><span></span><div>ohne Erlaubnis<br>verboten</div></div>
+
+  <!-- 7 · Abweg: Geld für Fremde weiterleiten -->
+  <div class="a buehne abweg" id="bue7"></div>
+  <div class="a" id="handy7" style="width:200px">{{handy~7}}</div>
+  <div class="a nachricht" id="msg7"><span id="msgText7"></span></div>
+  <div class="a kette" id="ketA1" style="width:66px" data-frei></div>
+  <div class="a kette" id="ketA2" style="width:66px" data-frei></div>
+  <div class="a kette" id="ketB" style="width:132px" data-frei></div>
+  <div class="a konto7" id="k7a" data-gruppe="k7a"><div class="portrait" data-f="amir" id="am7"></div><div class="karte"></div></div>
+  <div class="a konto7" id="k7b"><div class="fr">?</div><div class="karte"></div></div>
+  <div class="a konto7" id="k7c"><div class="fr">?</div><div class="karte"></div></div>
+  <div class="a" id="s7a" style="width:42px" data-frei>{{muenze}}</div>
+  <div class="a" id="s7b" style="width:42px" data-frei>{{muenze}}</div>
+  <div class="a" id="s7c" style="width:42px" data-frei>{{muenze}}</div>
+  <div class="a" id="s7d" style="width:42px" data-frei>{{muenze}}</div>
+  <div class="a" id="prov7" style="width:46px" data-gruppe="k7a">{{muenze}}</div>
+  <div class="a plakette rot" id="par7" data-gruppe="k7a"><b>§</b></div>
+  <div class="a abdruck" id="abdruck7" data-frei>Geldwäsche</div>
+  <div class="a" id="stempel7" style="width:160px" data-frei>{{stempel-rot}}</div>
+  <div class="a blase nein" id="nein7">Nein!</div>
+  <svg class="a" id="pfeil7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a kachel7" id="bank7"><div class="ic">{{bankhaus}}</div><b>Bank</b></div>
+  <div class="a kachel7" id="pol7"><div class="ic">{{polizei-schild}}</div><b>Polizei</b></div>
+
+  <!-- 8 · Daten prüfen, Belege aufheben -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a formular8" id="form8" data-gruppe="form8"><div class="fk"></div>
+    <small style="top:40px">Name</small><div class="feld" style="top:66px"><u style="width:150px"></u></div>
+    <small style="top:130px">Kontodaten</small><div class="feld" style="top:156px"><u style="width:210px"></u></div>
+    <div class="knopf" id="knopf8">Senden</div>
+    <div class="ok" id="ok8a" style="left:270px;top:71px"></div><div class="ok" id="ok8b" style="left:270px;top:161px"></div></div>
+  <div class="a" id="lupe8" style="width:120px" data-frei>{{lupe~8}}</div>
+  <div class="a ausgabe" id="ausgabe8" data-frei><div class="beleg" id="beleg8"><i></i><i></i><i></i><i style="width:70%"></i><i class="gr"></i></div></div>
+  <div class="a" id="drucker8" style="width:210px">{{drucker}}</div>
+  <div class="a beleg" id="belegF8" data-frei><i></i><i></i><i></i><i style="width:70%"></i><i class="gr"></i></div>
+  <div class="a" id="handy8" style="width:480px" data-gruppe="handy8">{{handy~8}}</div>
+  <div class="a schirm" id="schirm8" data-gruppe="handy8">
+    <div class="scr"><div class="ak">Azubis Plus</div><h4>Dokumente</h4>
+      <div class="app-zeile"><i></i><span>Verträge</span><em>2</em></div>
+      <div class="app-zeile"><i></i><span>Ausweise</span><em>1</em></div>
+      <div class="app-zeile neu" id="row8"><div class="hl" id="hl8"></div><i></i><span>Beleg Geldversand</span></div>
+      <div class="app-toast" id="toast8">✓ Gespeichert</div></div></div>
+  <div class="a portrait" id="am8" data-f="amir" style="width:150px;height:150px"></div>
+  <div class="a plakette gruen" id="ok8c" data-gruppe="handy8"></div>
+
+  <!-- 9 · Zurück auf der Weltkugel: alles zusammen -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a" id="globus9" style="width:380px;height:380px"></div>
+  <svg class="a" id="bogen9" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
+  <div class="a pin" id="pin9" style="width:40px"></div>
+  <div class="a station" id="st9a" data-frei><svg viewBox="0 0 46 46"><rect x="4" y="16" width="20" height="14" rx="4" fill="var(--b500)"/><rect x="26" y="16" width="9" height="14" rx="3" fill="var(--b300)"/><rect x="37" y="16" width="6" height="14" rx="3" fill="var(--success)"/></svg><div class="gr"></div></div>
+  <div class="a station" id="st9b" data-frei><svg viewBox="0 0 46 46"><rect x="6" y="24" width="9" height="16" rx="3" fill="var(--b300)"/><rect x="18.5" y="8" width="9" height="32" rx="3" fill="var(--success)"/><rect x="31" y="17" width="9" height="23" rx="3" fill="var(--b300)"/></svg><div class="gr"></div></div>
+  <div class="a station" id="st9c" data-frei><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="18" fill="var(--success)"/><path d="M14 23.5l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div class="gr"></div></div>
+  <div class="a station" id="st9d" style="border-color:var(--error)" data-frei><svg viewBox="0 0 46 46"><g stroke="var(--error)" stroke-width="5" fill="none" stroke-linecap="round"><path d="M18 14h-6a9 9 0 0 0 0 18h6"/><path d="M28 14h6a9 9 0 0 1 0 18h-6"/></g><path d="M21 8l2 6M25 38l-2-6" stroke="var(--error)" stroke-width="3.5" stroke-linecap="round"/></svg><div class="gr"></div></div>
+  <div class="a welle" id="welleH9" style="border-color:var(--error)" data-frei></div>
+  <div class="a" id="haus9" style="width:150px" data-gruppe="haus9">{{haus~9}}</div>
+  <div class="a" id="herz9" style="width:66px" data-gruppe="haus9">{{herz~9}}</div>
+  <div class="a welle" id="welleA9" data-frei></div>
+  <div class="a portrait" id="am9" data-f="amir" style="width:150px;height:150px"></div>
+
+  <!-- das reisende Geldpaket -->
+  <div class="a" id="reise" style="width:120px" data-frei>{{paket}}</div>
+</div></div>
+<div id="blende"></div>
+
+<div class="block" id="tb2"><div class="titel">Zuerst deine eigenen Kosten</div></div>
+<div class="block" id="tb3"><div class="titel">Kosten =</div><div class="unter">Gebühr + Aufschlag im Wechselkurs</div></div>
+<div class="block" id="tb4"><div class="titel">Vergleichen: Was kommt an?</div></div>
+<div class="block" id="tb5"><div class="titel">Nur Anbieter mit Erlaubnis</div></div>
+<div class="block" id="tb6"><div class="titel">Nie Bargeld an Unbekannte</div></div>
+<div class="block" id="tb7"><div class="titel">Geld für Fremde weiterleiten?</div><div class="unter">Nein!</div></div>
+<div class="block" id="tb8"><div class="titel">Daten prüfen</div><div class="unter">Belege aufheben</div></div>
+<div class="block" id="tb9"><div class="titel">Kosten · Vergleichen · Erlaubnis · Nie für Fremde</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Sicher schicken.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Erst die eigenen Kosten, dann vergleichen, nur mit Erlaubnis – und nie für Fremde.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const lerp = (a, b, p) => a + (b - a) * p;
+
+// Klänge: nur bekannte Namen, nie leer (sonst bricht das Mischen in ton.py ab)
+const KLAENGE = new Set(['whoosh', 'pop', 'plopp', 'klick', 'muenze', 'ding', 'erfolg', 'tipp', 'kritzeln', 'scan']);
+const ton = (t, k) => { if (!k) return; if (!KLAENGE.has(k) || !(t >= 0)) throw new Error(`Klang ${k} @ ${t}`); cue(t, k); };
+
+/* ---------- Welt: Stationen auf einer Route (Bühnenmitte je Szene in Weltkoordinaten) ---------- */
+const C = { 1: [1320, 540], 2: [1320, 2500], 3: [3500, 1800], 4: [5700, 2400], 5: [7900, 1800], 6: [7900, 3400], 7: [10100, 3400], 8: [12300, 2400], 9: [14700, 2400] };
+const K = i => i === 1 ? [-360, 0] : [1320 - C[i][0], 540 - C[i][1]];       // Kamera-Ruhe je Szene
+const P = (i, sx, sy) => [sx - K(i)[0], sy - K(i)[1]];                        // Bildschirm (in Ruhe) → Welt
+const pos = (id, i, sx, sy, b = {}) => { const [x, y] = P(i, sx, sy); return akteur(id, { x, y, ...b }); };
+const zu = (id, t, d, i, sx, sy, extra = {}, e = 'inout', opt = {}) => { const [x, y] = P(i, sx, sy); tw(id, t, d, { x, y, ...extra }, e, opt); };
+
+// Portraits und kleine Grafiken füllen
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['ok4', 'ok5', 'ok8a', 'ok8b', 'ok8c'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+['m3s', 'm6s'].forEach(id => { el(id).innerHTML = tpl('svgMuenze'); });
+el('verbot6').querySelector('span').innerHTML = tpl('svgKreuz');
+document.querySelectorAll('#schirm8 .app-zeile:not(.neu) i').forEach(i => { i.innerHTML = tpl('svgOrdner'); });
+el('row8').querySelector('i').innerHTML = tpl('svgBeleg');
+const PIN = '<svg viewBox="0 0 40 52"><path d="M22 51C10 35 6 28 6 21a16 16 0 0 1 32 0c0 7-4 14-16 30Z" fill="var(--b700)" opacity=".25"/><path d="M20 49C8 33 4 26 4 19a16 16 0 0 1 32 0c0 7-4 14-16 30Z" fill="var(--b500)"/><circle cx="20" cy="19" r="7" fill="var(--surface)"/></svg>';
+el('pin1').innerHTML = PIN; el('pin9').innerHTML = PIN;
+
+// Weltkugel ohne Länder: Breitenkreise fest, Längenkreise drehen sich
+const GLOBEN = [];
+function globus(id, R) {
+  const b = R + 20, lat = [-55, -28, 0, 28, 55].map(g => { const r = g * Math.PI / 180; return `<ellipse cx="0" cy="${(R * Math.sin(r)).toFixed(1)}" rx="${(R * Math.cos(r)).toFixed(1)}" ry="${(R * Math.cos(r) * .16).toFixed(1)}"/>`; }).join('');
+  const mer = Array.from({ length: 6 }, () => `<ellipse class="mer" cx="0" cy="0" rx="10" ry="${R}"/>`).join('');
+  el(id).innerHTML = `<svg viewBox="${-b} ${-b} ${2 * b} ${2 * b}" style="width:100%;height:100%"><defs>
+    <radialGradient id="gl-${id}" cx=".36" cy=".3" r=".85"><stop offset="0" style="stop-color:var(--b50)"/><stop offset="1" style="stop-color:var(--b200)"/></radialGradient>
+    <clipPath id="gc-${id}"><circle r="${R}"/></clipPath></defs>
+    <circle cx="7" cy="9" r="${R}" fill="var(--b700)" opacity=".16"/><circle r="${R}" fill="url(#gl-${id})"/>
+    <g clip-path="url(#gc-${id})" stroke="var(--b300)" stroke-width="${R / 70}" fill="none" opacity=".75">${lat}${mer}</g>
+    <circle r="${R}" fill="none" stroke="var(--b400)" stroke-width="${R / 42}"/>
+    <path d="M${-R * .62} ${-R * .5}a${R * .8} ${R * .8} 0 0 1 ${R * .5} ${-R * .3}" stroke="var(--surface)" stroke-width="${R / 22}" stroke-linecap="round" fill="none" opacity=".7"/></svg>`;
+  GLOBEN.push([...el(id).querySelectorAll('.mer')].map((m, k) => [m, R, k]));
+}
+globus('globus1', 230); globus('globus9', 170);
+HOOKS.push(t => GLOBEN.forEach(l => l.forEach(([m, R, k]) => m.setAttribute('rx', (R * Math.abs(Math.cos(t * .45 + k * Math.PI / 6))).toFixed(1)))));
+
+/* ---------- Helfer: Auftritte, Bewegungen ---------- */
+// kleine Elemente ploppen mit Überschwung; die Zielgröße kommt aus basis.s (vorher unsichtbar)
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { const s1 = basis.s ?? 1; akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: s1 }, e); ton(t, snd); };
+const popS = (id, t, i, sx, sy, b = {}, snd = 'pop', e = 'back') => { const [x, y] = P(i, sx, sy); pop(id, t, { x, y, ...b }, snd, e); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  ton(t, snd);
+};
+const einS = (id, t, i, sx, sy, von, snd, b = {}) => { const [x, y] = P(i, sx, sy); ein(id, t, { x, y, ...b }, von, snd); };
+const aus = (ids, t, d = .35) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .85 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const nicken = (id, t) => { const y = wertBei(id, 'y', t); tw(id, t, .16, { y: y + 9 }, 'sinus'); tw(id, t + .16, .22, { y }, 'sinus'); tw(id, t + .38, .16, { y: y + 7 }, 'sinus'); tw(id, t + .54, .25, { y }, 'sanft'); };
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+// Linien zeichnen: path mit pathLength=1, p von 0 bis 1 in [t0, t0+d]
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Deckkraft innerer Teile (rel. Akteure)
+const innen = (sel, basis = { o: 0 }) => akteur(typeof sel === 'string' ? $(sel) : sel, basis, true);
+
+// Flug auf einer Bézierkurve (Weltkoordinaten), Neigung in Flugrichtung
+const bez = (B, u) => { const m = 1 - u; return [0, 1].map(k => m * m * m * B[0][k] + 3 * m * m * u * B[1][k] + 3 * m * u * u * B[2][k] + u * u * u * B[3][k]); };
+const bezD = (B, u) => { const m = 1 - u; return [0, 1].map(k => 3 * m * m * (B[1][k] - B[0][k]) + 6 * m * u * (B[2][k] - B[1][k]) + 3 * u * u * (B[3][k] - B[2][k])); };
+const BAHNEN = [];
+function bahn(id, t0, d, B, p0 = 0, p1 = 1, e = 'inout', kipp = 0) {
+  const [x, y] = bez(B, p1); tw(id, t0, d, { x, y }, e);
+  BAHNEN.push({ el: el(id), t0, d, B, p0, p1, e, kipp });
+}
+HOOKS.push(t => {
+  for (const b of BAHNEN) {
+    if (t <= b.t0 || t >= b.t0 + b.d) continue;
+    const a = AKTEURE.get(b.el), g = p => wert(a, p, t), v = (t - b.t0) / b.d;
+    const u = b.p0 + (b.p1 - b.p0) * E[b.e](v);
+    const [x, y] = bez(b.B, u), [dx, dy] = bezD(b.B, u);
+    const k = b.kipp * Math.sign(b.p1 - b.p0) * (dy / (Math.hypot(dx, dy) + 1e-6)) * Math.sin(Math.PI * v);
+    b.el.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) translate(-50%,-50%) rotate(${(g('r') + k).toFixed(2)}deg) scale(${g('s') * g('sx')},${g('s') * g('sy')})`;
+  }
+});
+const BS = (i, ...pkte) => pkte.map(([sx, sy]) => P(i, sx, sy));     // Bézierpunkte in Bildschirm-Koordinaten einer Szene
+const pfadD = B => `M${B[0].map(v => v.toFixed(1))} C${B[1].map(v => v.toFixed(1))} ${B[2].map(v => v.toFixed(1))} ${B[3].map(v => v.toFixed(1))}`;
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+const KOPF = [];   // Kopfschütteln / Zucken: [id, t0, dauer, grad, frequenz]
+const kopf = (id, t0, d, g, f) => KOPF.push([el(id), t0, d, g, f]);
+HOOKS.push(t => KOPF.forEach(([e, t0, d, g, f]) => { const v = (t - t0) / d; if (v > 0 && v < 1) e.querySelector('.figur').style.transform += ` rotate(${(g * Math.sin(v * f * 2 * Math.PI) * Math.sin(Math.PI * v)).toFixed(2)}deg)`; }));
+
+/* ---------- Kamera: Fahrt entlang der Route, Zoom-Schnitte, Akzente ---------- */
+const kam = $('#kamera'), blende = $('#blende'), himmel = $('#himmel');
+kamera.basis.x = K(1)[0]; kamera.basis.y = K(1)[1];
+const REISEN = [], AKZENTE = [], SCHNITTE = [];
+const akzent = (t, z = .035, x = null, y = null, d = 1.1) => AKZENTE.push([t, z, x, y, d]);
+let MITTE_AB = 0;   // ab hier steht die Bühne rechts (x 1320), davor mittig (960)
+function zoomBei(t) {
+  let Z = 1, Tx = 0, Ty = 0;
+  const skal = (z, x, y) => { Z *= z; Tx = z * Tx + x * (1 - z); Ty = z * Ty + y * (1 - z); };
+  const mx = t < MITTE_AB ? 960 : 1320;
+  for (const [t0, d] of REISEN) { const u = (t - t0) / d; if (u > 0 && u < 1) skal(1 - .08 * Math.sin(Math.PI * u), 960, 540); }
+  for (const [a, h, x, y, d] of AKZENTE) { const v = (t - a) / d; if (v > 0 && v < 1) skal(1 + h * Math.sin(Math.PI * E.weich(v)), x ?? mx, y ?? 540); }
+  for (const s of SCHNITTE) {
+    const u = (t - (s.tc - s.vor)) / s.vor, w = (t - s.tc) / s.nach;
+    if (u > 0 && u < 1) skal(s.typ === 'rein' ? 1 + 2.6 * E.in(u) : 1 - .5 * E.in(u), s.x, s.y);
+    if (w >= 0 && w < 1) skal(s.typ === 'rein' ? 1 + .65 * (1 - E.out(w)) : 1 + .9 * (1 - E.out(w)), 1320, 540);
+  }
+  skal(1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18)), mx, 540);
+  return [Z, Tx, Ty];
+}
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const blur = $('#wischerBlur'), weltEl = $('#welt');
+const BUEHNEN = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [el('bue' + i), i]);
+HOOKS.push(t => {
+  const [Z, Tx, Ty] = zoomBei(t);
+  kam.style.transform = `translate(${Tx.toFixed(2)}px,${Ty.toFixed(2)}px) scale(${Z.toFixed(5)})`;
+  const wx = wert(kamera, 'x', t), wy = wert(kamera, 'y', t);
+  const vx = Math.abs(wx - wert(kamera, 'x', t - 1 / 30)), vy = Math.abs(wy - wert(kamera, 'y', t - 1 / 30));
+  const vz = Math.abs(Z - zoomBei(t - 1 / 30)[0]) * 50;
+  const sprung = vx > 400 || vy > 400;     // Zoom-Schnitt: die Welt springt hinter der Blende
+  const bx = sprung ? 0 : Math.min(22, vx * .1), by = sprung ? 0 : Math.min(22, vy * .1), bz = Math.min(10, vz);
+  blur.setAttribute('stdDeviation', `${(bx + bz).toFixed(2)} ${(by + bz).toFixed(2)}`);
+  weltEl.style.filter = bx + by + bz > .3 ? 'url(#wischer)' : '';
+  himmel.style.backgroundPosition = `${(wx * .3).toFixed(1)}px ${(wy * .3).toFixed(1)}px`;
+  let b = 0; for (const s of SCHNITTE) b = Math.max(b, clamp(1 - Math.abs(t - s.tc) / .2));
+  blende.style.opacity = b.toFixed(3);
+  // Tiefe: die Bühne bleibt bei der Fahrt etwas zurück
+  for (const [e, i] of BUEHNEN) { const dx = .1 * (wx - K(i)[0]), dy = .1 * (wy - K(i)[1]); if (Math.abs(dx) + Math.abs(dy) < 400) e.style.transform += ` translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`; }
+});
+// Fahrt von Szene i nach j (Kamera), optional mit Routen-Strich
+function fahrt(j, t0, d, route = null) {
+  tw('welt', t0, d, { x: K(j)[0], y: K(j)[1] }, 'inout'); ton(t0, 'whoosh'); REISEN.push([t0, d]);
+  if (route) strich(route, t0, d, 'inout');
+}
+function schnitt(typ, tc, j, x = 960, y = 540) {
+  SCHNITTE.push({ typ, tc, x, y, vor: typ === 'rein' ? .5 : .45, nach: typ === 'rein' ? .7 : .8 });
+  set('welt', tc, { x: K(j)[0], y: K(j)[1] }); ton(tc - .4, 'whoosh');
+}
+// Routen: gestrichelte Wege zwischen den Stationen (hinter den Bühnen)
+function route(B, farbe = 'var(--b300)', fort = 'var(--b500)') {
+  const xs = B.map(p => p[0]), ys = B.map(p => p[1]);
+  const x0 = Math.min(...xs) - 30, y0 = Math.min(...ys) - 30, w = Math.max(...xs) - x0 + 30, h = Math.max(...ys) - y0 + 30, d = pfadD(B);
+  el('routen').insertAdjacentHTML('beforeend', `<svg class="route" style="left:${x0}px;top:${y0}px;width:${w}px;height:${h}px" viewBox="${x0} ${y0} ${w} ${h}">
+    <path d="${d}" stroke="${farbe}" stroke-width="7" stroke-dasharray="2 18" stroke-linecap="round" fill="none"/>
+    <path d="${d}" pathLength="1" stroke="${fort}" stroke-width="7" stroke-linecap="round" fill="none" style="stroke-dasharray:1 1;stroke-dashoffset:1;opacity:.55"/></svg>`);
+  return el('routen').lastElementChild.lastElementChild;
+}
+// gestrichelter Bogen, der sich zeichnet (Maske)
+function bogenSvg(id, B, i) {
+  const off = K(i), d = pfadD(B.map(([x, y]) => [x + off[0], y + off[1]]));
+  el(id).innerHTML = `<defs><mask id="mk-${id}" maskUnits="userSpaceOnUse"><path id="mp-${id}" d="${d}" pathLength="1" stroke="var(--surface)" stroke-width="16" fill="none"/></mask></defs>
+    <path d="${d}" stroke="var(--b400)" stroke-width="6" stroke-dasharray="3 15" stroke-linecap="round" fill="none" mask="url(#mk-${id})"/>`;
+  pos(id, i, 960, 540);
+  return 'mp-' + id;
+}
+
+BUEHNEN.forEach(([e, i]) => pos(e, i, i === 1 ? 960 : 1320, 540));
+
+/* ================= 1 · Weltkugel: Amir schickt Geld nach Hause (mittig, ohne Titel) ================= */
+const B1 = BS(1, [880, 446], [930, 236], [1330, 226], [1420, 478]);
+{
+  pop('globus1', .15, { x: P(1, 960, 560)[0], y: 560 }, 'whoosh', 'sanft');
+  einS('am1', W('Amir', 1) - .3, 1, 500, 700, { y: 90 }, 'pop');
+  froh('am1', W('Amir', 1));
+  huepfen('am1', W('möchte', 1), 14);
+  // Familie: Haus weit rechts, Herz darauf
+  einS('haus1', W('Familie', 1) - .15, 1, 1440, 620, { x: 70 }, 'whoosh');
+  popS('herz1', W('Familie', 1) + .25, 1, 1440, 488, {}, 'plopp');
+  // Ort auf der Kugel: die Nadel fällt ein
+  const tN = W('Monat', 1) - .15;
+  pos('pin1', 1, 880, 360, { o: 0 }); tw('pin1', tN, .12, { o: 1 }); zu('pin1', tN, .35, 1, 880, 420, {}, 'in'); landen('pin1', tN + .35, .8); ton(tN + .35, 'plopp');
+  // Handy leuchtet
+  popS('handy1', W('Geld', 1) - .3, 1, 668, 742, {}, 'pop');
+  const [hx, hy] = P(1, 668, 736);
+  wellen('glow1', [W('Geld', 1), W('Geld', 1) + .6, SE(3) - .2], hx, hy, 1.0, 124); ton(W('Geld', 1), 'ding');
+  // schicken: der Bogen zeichnet sich, das Paket fliegt los
+  const tS = W('schicken', 1) - .1;
+  strich(bogenSvg('bogen1', B1, 1), tS, 1.0); ton(tS, 'scan');
+  pop('reise', tS, { x: B1[0][0], y: B1[0][1], s: .8 }, 'pop');
+  bahn('reise', tS + .2, W('Vorsicht', 3) - tS - .2, B1, 0, .52, 'out', 10);
+  // gute Sache: das Herz am Haus schlägt
+  bump('herz1', W('gute', 2), 1.3); wellen('welleH1', [W('gute', 2), W('Sache', 2)], ...P(1, 1440, 488), 1.0, 110); ton(W('gute', 2), 'ding');
+  froh('am1', W('gute', 2)); huepfen('am1', W('Sache', 2) - .1, 14);
+  bump('haus1', W('Sache', 2), 1.05);
+  // Vorsicht: das Paket stockt; verlieren: Münzen fallen heraus
+  wackeln('reise', W('Vorsicht', 3) + .05, 4, 5); mund('am1', W('Vorsicht', 3), 'zu');
+  const pv = bez(B1, .52);
+  ['m1a', 'm1b', 'm1c'].forEach((id, k) => {
+    const t0 = W('verlieren', 3) - .1 + k * .2, zx = pv[0] + [-70, 20, 95][k], zy = P(1, 0, 852)[1];
+    akteur(id, { x: pv[0], y: pv[1] + 10, o: 0, s: .6 });
+    tw(id, t0, .1, { o: 1, s: 1 }); tw(id, t0, .9, { x: zx, y: zy, r: [-200, 160, 260][k] }, 'in', { bogen: 60 });
+    tw(id, t0 + .9, .2, { o: 0 }); ton(t0 + .05, 'muenze');
+    tw('reise', t0, .15, { s: .8 - .05 * (k + 1) }, 'sinus');
+  });
+  // Ärger: Warndreieck mit Wackler, Amir zuckt
+  const tA = W('Ärger', 3) - .1;
+  pop('warn1', tA, { x: pv[0] + 110, y: pv[1] + 40 }, 'klick'); wackeln('warn1', tA + .4, 4, 6);
+  mund('am1', tA, 'auf'); kopf('am1', tA, .6, 7, 3); akzent(tA + .1, .05);
+  // Das Handy leuchtet – die Kamera fährt hinein
+  const tc = SE(3) + .62;
+  bump('handy1', SE(3) - .2, 1.12); ton(SE(3) - .2, 'ding');
+  tw('reise', tc - .5, .3, { s: 0 }, 'in');
+  schnitt('rein', tc, 2, 668, 728);
+  MITTE_AB = tc;
+}
+
+/* ================= 2 · Zuerst die eigenen Kosten ================= */
+const tc1 = SCHNITTE[0].tc;
+{
+  titelEin('tb2', W('Plane', 4) + .05);
+  popS('am2', tc1 + .1, 2, 1000, 300, {}, null, 'sanft'); froh('am2', tc1 + .2);
+  // Monatsgeld als Balken: füllt sich von links
+  const SEG = [['seg2a', 1075], ['seg2b', 1265], ['seg2c', 1395], ['seg2d', 1500], ['seg2e', 1595]];
+  SEG.forEach(([id, x], k) => { pos(id, 2, x, 470, { sx: 0 }); el(id).style.transformOrigin = '0 50%'; tw(id, W('Plane', 4) + .1 + k * .1, .4, { sx: 1 }, 'out'); });
+  ton(W('Plane', 4) + .1, 'scan');
+  // Kosten: das Messer teilt den Balken in Stücke
+  SEG.forEach(([id, x], k) => zu(id, W('Kosten', 4), .4, 2, x + (k - 2) * 9, 470, {}, 'sanft'));
+  ton(W('Kosten', 4), 'klick'); akzent(W('Kosten', 4), .025);
+  // Miete, Essen, Ticket, Notgroschen: Karte ploppt, ein Stück fliegt hinein
+  const KART = [['k2a', 'seg2a', 'st2a', 1040, 'Miete'], ['k2b', 'seg2b', 'st2b', 1216, 'Essen'], ['k2c', 'seg2c', 'st2c', 1392, 'Ticket'], ['k2d', 'seg2d', 'st2d', 1568, 'Notgroschen']];
+  KART.forEach(([k, seg, st, x, w]) => {
+    const t0 = W(w, 4) - .15;
+    einS(k, t0, 2, x, 704, { y: 60 }, 'pop');
+    innen('#' + st, { sx: 0 });
+    const w = el(seg).offsetWidth;
+    tw(seg, t0 + .3, .55, { x: P(2, x + w * .375, 704)[0], y: P(2, x, 704)[1], s: .25, o: 0 }, 'inout', { bogen: 60 });
+    tw('#' + st, t0 + .78, .3, { sx: 1 }, 'out'); bump(k, t0 + .8, 1.06); ton(t0 + .8, 'plopp');
+  });
+  innen('#leer2'); innen('#rot2'); innen('#voll2', { o: 1 });
+  // Schick nur, was übrig bleibt: der Rest leuchtet und springt ins Paket
+  innen('#glanz2');
+  tw('#glanz2', W('Geld', 5) - .1, .35, { o: 1 }); bump('seg2e', W('Geld', 5), 1.1); ton(W('Geld', 5), 'ding');
+  const [px, py] = P(2, 1640, 300);
+  set('reise', tc1, { x: px, y: py, s: 0, r: 0 });
+  tw('reise', W('übrig', 5) - .35, .5, { s: .8 }, 'back'); ton(W('übrig', 5) - .35, 'pop');
+  const tR = W('übrig', 5) + .05;
+  tw('seg2e', tR, .55, { x: px + 90 * .35, y: py, s: .3 }, 'inout', { bogen: 90 }); tw('seg2e', tR + .45, .12, { o: 0 });
+  bump('reise', tR + .55, 1.14); ton(tR + .55, 'plopp');
+  froh('am2', W('bleibt', 5)); huepfen('am2', W('bleibt', 5), 12);
+  // Sonst: Gegenprobe – das Paket nimmt zu viel, der Teller wird leer
+  const tG = W('Sonst', 6) - .05, [ex, ey] = P(2, 1216 + 150 * .35, 704);
+  set('seg2b', tG, { x: ex, y: ey, s: .3, o: 1 });
+  tw('seg2b', tG, .55, { x: px + 150 * .35, y: py, s: .3 }, 'inout', { bogen: 120 }); tw('seg2b', tG + .45, .12, { o: 0 });
+  tw('#st2b', tG, .25, { sx: 0 }, 'in'); ton(tG, 'whoosh');
+  tw('reise', tG + .55, .3, { s: .95 }, 'back'); ton(tG + .55, 'plopp');
+  const tF = W('fehlt', 6);
+  tw('#voll2', tF, .2, { o: 0 }); tw('#leer2', tF, .2, { o: 1 });
+  [0, .36, .72].forEach(d => { tw('#rot2', tF + d, .14, { o: 1 }); tw('#rot2', tF + d + .2, .14, { o: .35 }); });
+  tw('#rot2', tF + .9, .2, { o: 1 });
+  wackeln('k2b', tF, 4, 3); ton(tF, 'klick'); mund('am2', tF, 'auf'); kopf('am2', tF, .7, 5, 2.5);
+  // Zurückspulen: alles läuft rückwärts an seinen Platz
+  const tZ = W('Monatsende', 6) + .45;
+  popS('rueck2', tZ - .2, 2, 1320, 300, {}, 'klick');
+  tw('rueck2', tZ, .7, { r: -360 }, 'inout'); tw('rueck2', tZ + .75, .25, { s: 0 }, 'in');
+  set('seg2b', tZ, { o: 1 }); tw('seg2b', tZ, .5, { x: ex, y: ey }, 'inout', { bogen: -120 }); tw('seg2b', tZ + .42, .1, { o: 0 });
+  tw('reise', tZ, .4, { s: .8 }, 'sinus'); ton(tZ, 'scan');
+  tw('#rot2', tZ + .45, .2, { o: 0 }); tw('#leer2', tZ + .45, .2, { o: 0 }); tw('#voll2', tZ + .45, .2, { o: 1 }); tw('#st2b', tZ + .45, .3, { sx: 1 }, 'out');
+  bump('k2b', tZ + .5, 1.06); ton(tZ + .5, 'plopp'); froh('am2', tZ + .5); huepfen('am2', tZ + .55, 12);
+}
+
+/* ================= Route 2 → 3 → 4 → 5 (Paket reist), dann der Abweg ================= */
+const R23 = [P(2, 1640, 300), P(2, 2300, 260), P(3, 300, 547), P(3, 980, 547)];
+const R34 = [P(3, 1640, 547), P(3, 2250, 547), P(4, 300, 470), P(4, 985, 470)];
+const R45 = [P(4, 1360, 618), P(4, 2100, 900), P(5, 400, 520), P(5, 1150, 470)];
+const R56 = [P(5, 1320, 900), P(5, 1560, 1300), P(6, 1080, -220), P(6, 1320, 180)];
+const R67 = [P(6, 1770, 540), P(6, 2150, 700), P(7, 480, 380), P(7, 870, 540)];
+const R78 = [P(7, 1770, 540), P(7, 2200, 540), P(8, 420, 540), P(8, 870, 540)];
+const fort23 = route(R23), fort34 = route(R34), fort45 = route(R45);
+const fort56 = route(R56, 'var(--error)', 'var(--error)'), fort67 = route(R67, 'var(--error)', 'var(--error)'), fort78 = route(R78);
+const T23 = W('Monatsende', 6) + 1.5;
+fahrt(3, T23, 1.3, fort23); bahn('reise', T23, 1.3, R23, 0, 1, 'inout', 14); tw('reise', T23, 1.3, { s: .9 }, 'inout');
+textAus('tb2', T23);
+
+/* ================= 3 · Stationen: Gebühr und Wechselkurs ================= */
+{
+  const tAn = T23 + .5;
+  einS('boden3', tAn, 3, 1320, 590, { y: 20 });
+  einS('tor3a', tAn + .1, 3, 1130, 470, { y: 60 }, 'pop'); einS('tor3b', tAn + .25, 3, 1430, 470, { y: 60 }, 'pop');
+  popS('schild3', tAn + .5, 3, 1130, 318, {}, null, 'sanft'); popS('kurs3', tAn + .6, 3, 1430, 300, {}, 'pop', 'sanft');
+  popS('kasse3', tAn + .7, 3, 1130, 728, {}, null, 'sanft');
+  pos('klinge3', 3, 1430, 452, { o: 0 }); tw('klinge3', tAn + .8, .5, { o: .4 });
+  innen('#klingeVoll3');
+  titelEin('tb3', null, [W('kostet', 7) - .1, W('kostet', 7) - .02, W('Gebühr', 8) - .1, W('Aufschlag', 9) - .25, W('Aufschlag', 9) - .15, W('im', 9) - .1, W('Wechselkurs', 9) - .1]);
+  // Kursanzeige: Ziffernbänder
+  const BAENDER = [...el('kurs3').querySelectorAll('.band')], ZIEL = [1, 0, 8, 4], START = [1, 1, 2, 5];
+  BAENDER.forEach(b => { b.innerHTML = Array.from({ length: 30 }, (_, k) => `<span>${k % 10}</span>`).join(''); });
+  const tK = W('Wechselkurs', 9) - .2;
+  HOOKS.push(t => BAENDER.forEach((b, k) => {
+    const v = E.inout(clamp((t - tK - k * .12) / 1.3)), n = START[k] + v * (20 + ZIEL[k] - START[k] + (k ? 10 : 0));
+    b.style.transform = `translateY(${(-n * 42).toFixed(1)}px)`;
+  }));
+  // Paket rollt zum ersten Tor
+  const F = 590, yP = s => F - 42.75 * s;     // Paket steht auf dem Boden
+  zu('reise', W('kostet', 7) - .2, .8, 3, 1040, yP(.9), {}, 'inout');
+  zu('reise', W('zuerst', 8) - .2, .7, 3, 1130, yP(.9), {}, 'inout'); ton(W('zuerst', 8) - .2, 'whoosh');
+  // Gebühr: eine Münze springt in die Kasse
+  const tG = W('Gebühr', 8) - .05, [gx, gy] = P(3, 1130, yP(.9));
+  akteur('m3', { x: gx, y: gy, o: 0, s: .5 });
+  tw('m3', tG, .1, { o: 1, s: 1 }); tw('m3', tG, .75, { x: gx, y: P(3, 0, 708)[1], r: 360 }, 'in', { bogen: 160 }); tw('m3', tG + .7, .1, { o: 0 });
+  ton(tG, 'muenze'); bump('kasse3', tG + .75, 1.1); ton(tG + .75, 'plopp');
+  tw('reise', tG, .3, { s: .82, y: P(3, 0, yP(.82))[1] }, 'sinus'); bump('schild3', tG, 1.12); akzent(tG + .1, .04, 1130, 450);
+  // Aufschlag im Wechselkurs: weiter zum zweiten Tor, eine dünne Scheibe wird leise abgeschnitten
+  zu('reise', W('Aufschlag', 9) - .4, .8, 3, 1430, yP(.82), {}, 'inout'); ton(W('Aufschlag', 9) - .4, 'whoosh');
+  bump('kurs3', W('Wechselkurs', 9), 1.06); ton(W('Wechselkurs', 9), 'scan'); akzent(W('Wechselkurs', 9), .035, 1430, 400);
+  const tC = W('Wechselkurs', 9) + .55, oben = P(3, 0, yP(.82) - 26)[1];
+  tw('klinge3', tC - .15, .15, { y: P(3, 0, 470)[1] }, 'in'); tw('klinge3', tC + .05, .35, { y: P(3, 0, 452)[1] }, 'sanft');
+  pos('sch3', 3, 1430, 0, { o: 0 }); set('sch3', tC, { y: oben, o: .55 });
+  tw('sch3', tC + .05, .9, { x: P(3, 1500, 0)[0], y: P(3, 0, 760)[1], r: 40 }, 'in', { bogen: 40 }); tw('sch3', tC + .7, .25, { o: 0 });
+  tw('reise', tC, .25, { s: .72, y: P(3, 0, yP(.72))[1] }, 'sinus'); ton(tC, 'klick');
+  // nicht sofort: die Lupe macht den Keil sichtbar – Kamera auf den Keil
+  const tL = W('nicht', 10) - .3;
+  pos('lupe3', 3, 1640, 780, { o: 0, s: .7 });
+  tw('lupe3', tL, .3, { o: 1, s: 1 }, 'sanft'); zu('lupe3', tL, .75, 3, 1468, 470, {}, 'inout'); ton(tL, 'whoosh');
+  const tV = W('sofort', 10) + .05;
+  tw('klinge3', tV, .3, { o: 1 }); tw('#klingeVoll3', tV, .35, { o: 1 }); wackeln('klinge3', tV + .1, 3, 3); ton(tV, 'ding');
+  akzent(tV, .1, 1430, 452, 2.4);
+  tw('lupe3', W('aber', 10), .35, { o: 0, s: .7 }, 'in');
+  // kleiner: das Paket rollt weiter, der Umriss zeigt, wie groß es war
+  zu('reise', W('macht', 10) - .3, .8, 3, 1640, yP(.72), {}, 'inout');
+  const tK2 = W('kleiner', 10) - .05;
+  pos('geist3', 3, 1640, F - 36, { o: 0, s: 1.15 });
+  tw('geist3', tK2, .4, { o: 1, s: 1 }, 'back'); ton(tK2, 'pop'); bump('reise', tK2 + .3, .92);
+}
+
+/* ================= 4 · Vergleichen: Was kommt an? ================= */
+const T34 = SE(10) + .15;
+fahrt(4, T34, 1.3, fort34); bahn('reise', T34, 1.3, R34, 0, 1, 'inout', 12); tw('reise', T34, 1.3, { s: .8 }, 'inout');
+tw('geist3', T34, .2, { o: 0 });
+textAus('tb3', T34);
+const SP = [1140, 1360, 1580], BASIS = 830, HOCH = [70, 180, 120], PS = [.55, .9, .72];
+const yAuf = (k, h) => BASIS - h - 35.6 * PS[k];
+{
+  titelEin('tb4', T34 + 1.0);
+  einS('sockel4', T34 + .6, 4, 1360, BASIS + 5, { y: 20 });
+  ['anb4a', 'anb4b', 'anb4c'].forEach((id, k) => popS(id, W('mehrere', 11) - .1 + k * .18, 4, SP[k], 286, {}, k ? 'pop' : 'whoosh', 'sanft'));
+  popS('am4', W('Vergleich', 11), 4, 985, 760, {}, 'pop', 'sanft'); froh('am4', W('Vergleich', 11) + .2);
+  // Spuren
+  el('bahnen4').innerHTML = SP.map(x => `<path class="spur" d="M${x} 370V${BASIS - 8}" pathLength="1" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none"/>`).join('');
+  pos('bahnen4', 4, 960, 540);
+  [...el('bahnen4').querySelectorAll('.spur')].forEach((p, k) => strich(p, W('Anbieter', 11) + k * .12, .7));
+  ton(W('Anbieter', 11), 'scan');
+  // dasselbe Paket für jeden Anbieter
+  const [rx, ry] = P(4, 985, 470);
+  ['p4a', 'p4b', 'p4c'].forEach((id, k) => {
+    const t0 = W('Anbieter', 11) + .05 + k * .14;
+    akteur(id, { x: rx, y: ry, s: .2, o: 0 });
+    tw(id, t0, .1, { o: 1 }); tw(id, t0, .7, { x: P(4, SP[k], 386)[0], y: P(4, 0, 386)[1], s: 1 }, 'inout', { bogen: 130 }); landen(id, t0 + .7, .7);
+    ton(t0 + .7, 'plopp');
+  });
+  tw('reise', W('Anbieter', 11) + .05, .35, { s: .3, o: 0 }, 'in');
+  // nicht nur die Gebühr: Gebühren-Münzen an jeder Spur (gestrichelte Keile bleiben fast unsichtbar)
+  const GEB = [['geb4a', 0, 0], ['geb4b1', 1, -15], ['geb4b2', 1, 17], ['geb4c', 2, 0]];
+  GEB.forEach(([id, k, dx], n) => popS(id, W('Gebühr', 12) - .15 + n * .1, 4, SP[k] + 62 + dx, 470 - (dx > 0 ? 8 : 0), {}, n ? null : 'muenze'));
+  pos('kl4a', 4, SP[0] - 58, 572, { o: 0 }); pos('kl4c', 4, SP[2] - 52, 572, { o: 0 });
+  tw(['kl4a', 'kl4c'], W('Gebühr', 12) + .4, .5, { o: .55 });
+  // Wie viel kommt am Ende an? Die drei Pakete fahren los, verlieren unterwegs verschieden viel
+  const SCH = { 0: ['sc4a', .62], 2: ['sc4c', .8] };
+  ['p4a', 'p4b', 'p4c'].forEach((id, k) => {
+    const t0 = W('wie', 13) - .15 + k * .2, d = 2.0, unten = BASIS - 35.6 * PS[k];
+    zu(id, t0, d, 4, SP[k], unten, {}, 'inout');
+    const tGe = t0 + d * .32, sGe = k === 1 ? .9 : (k === 0 ? .92 : .86);
+    tw(id, tGe, .2, { s: sGe }, 'sinus'); bump(GEB.find(g => g[1] === k)[0], tGe, 1.25); ton(tGe, 'muenze');
+    if (k === 1) bump('geb4b2', tGe + .08, 1.25);
+    if (SCH[k]) {
+      const [sc, f] = SCH[k], tS = t0 + d * .55;
+      tw(id, tS, .2, { s: PS[k] }, 'sinus'); ton(tS, 'klick');
+      bump(k ? 'kl4c' : 'kl4a', tS, 1.15);
+      pos(sc, 4, SP[k] + 4, 560, { o: 0 }); set(sc, tS, { o: .8 });
+      tw(sc, tS + .05, .8, { x: P(4, SP[k] + (k ? -50 : 50), 0)[0], y: P(4, 0, 700)[1], r: k ? -35 : 35 }, 'in', { bogen: 30 }); tw(sc, tS + .6, .25, { o: 0 });
+    } else tw(id, t0 + d * .55, .2, { s: PS[k] }, 'sinus');
+  });
+  // ankommt: die Balken wachsen, das größte Paket gewinnt
+  const tB = W('Familie', 13) + .1;
+  ['bal4a', 'bal4b', 'bal4c'].forEach((id, k) => {
+    pos(id, 4, SP[k], BASIS - 90, { sy: 0 });
+    const t0 = tB + k * .15, f = HOCH[k] / 180;
+    set(id, t0, { sy: .001 }); tw(id, t0, .8, { sy: f }, 'sanft');
+    zu(['p4a', 'p4b', 'p4c'][k], t0, .8, 4, SP[k], yAuf(k, HOCH[k]), {}, 'sanft');
+  });
+  ton(tB, 'scan');
+  innen('#gr4b');
+  const tW = W('ankommt', 13);
+  tw('#gr4b', tW, .35, { o: 1 }); bump('bal4b', tW, 1.04); bump('p4b', tW, 1.12); ton(tW, 'erfolg');
+  popS('ok4', tW + .1, 4, SP[1], yAuf(1, HOCH[1]) - 64, {}, null);
+  froh('am4', tW); nicken('am4', tW + .1); akzent(tW, .03);
+  // unterschiedlich: der Abstand wird sichtbar
+  const yb = BASIS - HOCH[1], ya = BASIS - HOCH[0];
+  el('diff4').innerHTML = `<defs><marker id="sp4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--error)"/></marker></defs>
+    <path id="dl4" d="M${SP[1] - 50} ${yb}H${SP[0] - 60}" pathLength="1" stroke="var(--error)" stroke-width="4" stroke-dasharray=".03 .025" fill="none"/>
+    <path id="dp4" d="M${SP[0] - 64} ${yb + 14}V${ya - 6}" pathLength="1" stroke="var(--error)" stroke-width="6" stroke-linecap="round" fill="none" marker-start="url(#sp4)" marker-end="url(#sp4)"/>`;
+  pos('diff4', 4, 960, 540, { o: 0 });
+  const tU = W('unterschiedlich', 14) - .1;
+  tw('diff4', tU, .3, { o: 1 }); ton(tU, 'scan');
+  innen('#dl4', { o: 0 }); tw('#dl4', tU, .4, { o: 1 });
+  strich('dp4', tU + .3, .45);
+  bump('bal4a', tU + .6, 1.05); bump('bal4c', tU + .75, 1.05);
+}
+
+/* ================= 5 · Nur Anbieter mit Erlaubnis ================= */
+const T45 = SE(14) + .15;
+{
+  // das Gewinner-Paket reist weiter
+  const [bx, by] = P(4, SP[1], yAuf(1, HOCH[1]));
+  set('reise', T45, { x: bx, y: by, s: .75, o: 1, r: 0 }); set('p4b', T45, { o: 0 });
+  fahrt(5, T45, 1.3, fort45); bahn('reise', T45, 1.3, R45, 0, 1, 'inout', 12); tw('reise', T45, 1.3, { s: .8 }, 'inout');
+  tw('ok4', T45, .2, { o: 0 });
+  textAus('tb4', T45);
+  titelEin('tb5', W('Nutze', 15) + .3);
+  einS('karte5', T45 + .6, 5, 1060, 400, { y: 70 }, 'pop');
+  // das Paket gibt sich beim Anbieter ab
+  const tD = T45 + 1.35;
+  zu('reise', tD, .45, 5, 1080, 420, { s: 0 }, 'in'); bump('karte5', tD + .4, 1.05); ton(tD + .4, 'plopp');
+  // Erlaubnis: das Siegel schlägt auf
+  const N = 18, ST = Array.from({ length: N * 2 }, (_, k) => { const r = k % 2 ? 52 : 60, a = k * Math.PI / N; return `${(64 + r * Math.sin(a)).toFixed(1)},${(62 - r * Math.cos(a)).toFixed(1)}`; }).join(' ');
+  el('siegel5').innerHTML = `<svg viewBox="0 0 128 128"><polygon points="${ST}" transform="translate(3 4)" fill="var(--b700)" opacity=".2"/><polygon points="${ST}" fill="var(--success)"/>
+    <circle cx="64" cy="62" r="40" fill="none" stroke="var(--surface)" stroke-width="3" opacity=".6"/>
+    <path d="M44 56l13 13 27-28" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="12" y="84" width="104" height="30" rx="9" fill="var(--success-text)"/><text x="64" y="106" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="19" fill="var(--surface)">Erlaubnis</text></svg>`;
+  const tE = W('Erlaubnis', 15) - .2;
+  pos('siegel5', 5, 1160, 316, { o: 0, s: 2.2, r: -3 });
+  tw('siegel5', tE, .12, { o: 1 }); tw('siegel5', tE, .3, { s: 1 }, 'in'); landen('siegel5', tE + .3, 1); wackeln('siegel5', tE + .35, 3, 3);
+  bump('karte5', tE + .3, 1.04); ton(tE + .3, 'plopp'); ton(tE + .35, 'erfolg'); akzent(tE + .3, .045, 1100, 400);
+  // Behörde: das Gebäude steigt auf, kontrolliert, das Schild BaFin
+  einS('amt5', W('Deutschland', 16) - .2, 5, 1545, 392, { y: 90 }, 'whoosh');
+  innen('#schild5', { s: 0 });
+  el('pfeil5').innerHTML = `<defs><marker id="sp5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path id="pf5" d="M1418 330C1356 286 1290 280 1236 300" pathLength="1" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#sp5)"/>`;
+  pos('pfeil5', 5, 960, 540, { o: 0 });
+  const tKo = W('kontrolliert', 16) - .1;
+  tw('pfeil5', tKo, .1, { o: 1 }); strich('pf5', tKo, .6); ton(tKo, 'scan'); bump('siegel5', tKo + .6, 1.1); ton(tKo + .6, 'klick');
+  const tB = W('Bafin', 16) - .1;
+  tw('#schild5', tB, .5, { s: 1 }, 'back'); bump('amt5', tB, 1.05); ton(tB, 'ding'); akzent(tB, .045, 1545, 380);
+  // Datenbank: die Liste kommt aus der Behörde, Zeilen laufen, die Lupe findet den Anbieter
+  const ZEILEN = 9, TREFFER = 6;
+  el('lband5').innerHTML = Array.from({ length: ZEILEN }, (_, k) => k === TREFFER
+    ? `<div class="lz" id="lz5"><div class="lh" id="lh5"></div><i>${tpl('svgHandyMini')}</i><u style="width:190px"></u><u style="width:90px;background:var(--b200)"></u><div class="lok" id="lok5">${tpl('svgHaken')}</div></div>`
+    : `<div class="lz"><i></i><u style="width:${[170, 130, 210, 150, 190, 120, 0, 160, 140][k]}px"></u><u style="width:${[80, 110, 60, 100, 70, 90, 0, 80, 100][k]}px"></u></div>`).join('');
+  const tDB = W('Datenbank', 17) - .2, [ax, ay] = P(5, 1545, 420);
+  akteur('liste5', { x: ax, y: ay, s: .15, o: 0 });
+  tw('liste5', tDB, .12, { o: 1 }); zu('liste5', tDB, .75, 5, 1320, 752, { s: 1 }, 'sanft', { bogen: -40 }); ton(tDB, 'whoosh');
+  innen('#lband5', { y: 0 });
+  innen('#lh5'); innen('#lok5', { s: 0 });
+  const tScroll = W('Internet', 17) - .1, tStop = W('Anbieter', 17) - .05;
+  tw('#lband5', tScroll, tStop - tScroll, { y: -(TREFFER * 52 - 52) }, 'inout');
+  for (let t = tScroll; t < tStop - .1; t += .26) ton(t, 'tipp');
+  pos('lupe5', 5, 1700, 840, { o: 0, s: .7 });
+  tw('lupe5', W('siehst', 17) - .25, .3, { o: 1, s: 1 }, 'sanft');
+  zu('lupe5', W('siehst', 17) - .25, .7, 5, 1290, 790, {}, 'inout');
+  zu('lupe5', W('du', 17), .6, 5, 1170, 790, {}, 'inout'); zu('lupe5', W('ob', 17) + .1, .6, 5, 1250, 790, {}, 'inout');
+  tw('#lh5', tStop, .3, { o: 1 }); tw('#lok5', tStop + .1, .45, { s: 1 }, 'back'); ton(tStop + .1, 'ding');
+  bump('liste5', tStop + .1, 1.03);
+  tw('lupe5', W('Deutschland', 17) - .1, .3, { o: 0, s: .7 }, 'in');
+  popS('chip5', W('arbeiten', 17) - .15, 5, 1320, 600, {}, 'erfolg', 'back');
+  bump('siegel5', W('darf', 17), 1.1);
+}
+
+/* ================= 6 · Abweg: Bargeld an Unbekannte ================= */
+const T56 = SE(17) + .12;
+{
+  fahrt(6, T56, 1.3, fort56);
+  textAus('tb5', T56);
+  titelEin('tb6', W('Gib', 18) + .25);
+  popS('am6', T56 + .9, 6, 1030, 560, {}, 'pop', 'sanft'); froh('am6', T56 + 1.0);
+  einS('buendel6', W('Geld', 18) - .2, 6, 1132, 690, { y: 40 }, 'pop');
+  // die Tür taucht auf und öffnet sich einen Spalt
+  einS('tuer6', W('Unbekannte', 18) - .2, 6, 1560, 512, { x: 80 }, 'whoosh');
+  innen('#blatt6', { sx: 1 });
+  tw('#blatt6', W('Unbekannte', 18) + .45, .7, { sx: .6 }, 'inout'); ton(W('Unbekannte', 18) + .45, 'klick');
+  mund('am6', W('Unbekannte', 18) + .3, 'zu');
+  popS('geb6', W('Gebühr', 18) - .1, 6, 1560, 278, {}, 'muenze', 'back');
+  tw('#blatt6', W('weiterschicken', 18), .6, { sx: .32 }, 'inout'); ton(W('weiterschicken', 18), 'klick');
+  // das Bündel will zur Tür fliegen …
+  const [bx, by] = P(6, 1132, 690), B6 = [[bx, by], P(6, 1220, 420), P(6, 1360, 400), P(6, 1424, 520)];
+  tw('buendel6', W('Erlaubnis', 19) - .2, .3, { y: by - 30 }, 'sinus');
+  bahn('buendel6', W('Erlaubnis', 19) + .1, W('verboten', 19) - W('Erlaubnis', 19) - .2, [[bx, by - 30], ...B6.slice(1)], 0, .9, 'inout', 8);
+  ton(W('Erlaubnis', 19) + .1, 'whoosh');
+  // … verboten: das Schild schlägt davor, das Bündel prallt zurück, die Tür knallt zu
+  const tV = W('verboten', 19) - .1;
+  akteur('verbot6', { x: P(6, 1560, 0)[0], y: P(6, 0, 70)[1], o: 0, r: -3 });
+  tw('verbot6', tV, .1, { o: 1 }); tw('verbot6', tV, .28, { y: P(6, 0, 512)[1] }, 'in'); landen('verbot6', tV + .28, 1); wackeln('verbot6', tV + .3, 4, 3);
+  ton(tV + .28, 'plopp'); akzent(tV + .28, .05, 1560, 512);
+  const pb = bez(B6, .9);
+  tw('buendel6', tV + .3, .8, { x: bx, y: by, r: 0 }, 'inout', { bogen: 120 }); landen('buendel6', tV + 1.1, .7); ton(tV + 1.1, 'plopp');
+  tw('#blatt6', tV + .45, .16, { sx: 1.04 }, 'in'); tw('#blatt6', tV + .61, .3, { sx: 1 }, 'sanft'); ton(tV + .55, 'plopp');
+  for (let i = 0; i < 5; i++) tw('tuer6', tV + .6 + i * .07, .07, { x: P(6, 1560 + (i % 2 ? -7 : 7), 0)[0] }, 'sinus');
+  tw('tuer6', tV + .95, .2, { x: P(6, 1560, 0)[0] }, 'sinus');
+  mund('am6', tV + .3, 'auf'); kopf('am6', tV + .3, .5, 6, 2); froh('am6', tV + 1.2); huepfen('am6', tV + 1.2, 12);
+  tw('geb6', tV + .6, .3, { o: 0, s: .7 }, 'in');
+}
+
+/* ================= 7 · Abweg: Geld für Fremde weiterleiten ================= */
+const T67 = W('verboten', 19) + 1.45;
+{
+  fahrt(7, T67, 1.25, fort67);
+  textAus('tb6', T67);
+  titelEin('tb7', W('Vorsicht', 20) + .7, { unter: W('nein', 24) - .15 });
+  // Kettenglieder
+  const glied = (xs, farbe) => xs.map(x => `<ellipse cx="${x}" cy="22" rx="20" ry="12" stroke="${farbe}" stroke-width="7" fill="none"/>`).join('');
+  const ketteSvg = (w, xs) => `<svg viewBox="0 0 ${w} 44"><g class="kv">${glied(xs, 'var(--b400)')}</g><g class="kr" style="opacity:0">${glied(xs, 'var(--error)')}</g></svg>`;
+  el('ketA1').innerHTML = ketteSvg(66, [22, 46]); el('ketA2').innerHTML = ketteSvg(66, [20, 44]); el('ketB').innerHTML = ketteSvg(132, [22, 48, 76, 102]);
+  // Angebot: das Handy, die Nachricht tippt sich
+  const tH = T67 + .75;
+  einS('handy7', tH, 7, 990, 360, { y: 70 }, 'pop');
+  popS('msg7', W('Angeboten', 20) - .2, 7, 1320, 330, {}, 'pop', 'sanft');
+  const TXT = 'Job: Geld weiterleiten –\nhohe Provision!', t0 = W('Angeboten', 20) + .2, t1 = W('Wir', 20) - .1;
+  for (let t = t0; t < t1; t += .14) ton(t, 'tipp');
+  HOOKS.push(t => {
+    const n = Math.floor(TXT.length * clamp((t - t0) / (t1 - t0))), s = TXT.slice(0, n), k = TXT.indexOf('hohe');
+    el('msgText7').innerHTML = n > k ? s.slice(0, k) + '<em>' + s.slice(k) + '</em>' : s;
+  });
+  // Konten und Kette
+  const KX = [1040, 1320, 1600], KY = 650;
+  ['k7a', 'k7b', 'k7c'].forEach((id, k) => popS(id, W('Konto', 20) - .3 + (k ? .9 + k * .15 : 0), 7, KX[k], KY, {}, k ? 'pop' : 'plopp', 'sanft'));
+  froh('am7', W('Konto', 20));
+  popS('ketA1', W('weiter', 21) - .45, 7, 1149, KY, {}, null, 'sanft'); popS('ketA2', W('weiter', 21) - .4, 7, 1205, KY, {}, null, 'sanft');
+  popS('ketB', W('weiter', 21) - .3, 7, 1460, KY, {}, 'klick', 'sanft');
+  // Münzstrom: ins Konto und sofort weiter
+  const [qx, qy] = P(7, 1180, 400), [ax, ay] = P(7, KX[0], KY), [bx, by] = P(7, KX[1], KY), [cx, cy] = P(7, KX[2], KY);
+  ['s7a', 's7b', 's7c', 's7d'].forEach((id, k) => {
+    const tA = W('überweisen', 20) + k * .14, tB = W('weiter', 21) - .1 + k * .14;
+    akteur(id, { x: qx, y: qy, o: 0, s: .6 });
+    tw(id, tA, .1, { o: 1, s: 1 }); tw(id, tA, .6, { x: ax, y: ay - 10 }, 'inout', { bogen: 60 }); tw(id, tA + .5, .1, { o: 0 });
+    ton(tA + .55, 'muenze');
+    set(id, tB, { o: 1 }); tw(id, tB, .55, { x: bx, y: by - 10 }, 'inout', { bogen: 90 }); tw(id, tB + .55, .55, { x: cx, y: cy - 10 }, 'inout', { bogen: 90 });
+    tw(id, tB + 1.0, .12, { o: 0 }); ton(tB + .5, 'klick');
+  });
+  bump('k7a', W('Konto', 20) + .2, 1.06); bump('k7b', W('weiter', 21) + .5, 1.06); bump('k7c', W('weiter', 21) + 1.05, 1.06);
+  // Provision: eine kleine Münze bleibt bei Amir
+  popS('prov7', W('Provision', 21), 7, KX[0] + 62, KY - 52, {}, 'muenze');
+  // Geldwäsche: die Kette wird rot, der Stempel schlägt auf
+  const tGw = W('Geldwäsche', 22) - .2;
+  [...document.querySelectorAll('#ketA1 .kr,#ketA2 .kr,#ketB .kr')].forEach(g => { innen(g); tw(g, tGw, .3, { o: 1 }); });
+  akteur('stempel7', { x: bx, y: by - 300, o: 0 });
+  tw('stempel7', tGw - .1, .15, { o: 1 }); tw('stempel7', tGw - .1, .3, { y: by - 82 }, 'in'); tw('stempel7', tGw + .32, .4, { y: by - 330 }, 'inout'); tw('stempel7', tGw + .55, .2, { o: 0 });
+  pos('abdruck7', 7, KX[1], KY - 8, { s: 0, r: -3 }); set('abdruck7', tGw + .2, { s: 1.15 }); tw('abdruck7', tGw + .2, .3, { s: 1 }, 'sanft');
+  ton(tGw + .2, 'plopp'); akzent(tGw + .2, .05, 1320, 640);
+  // strafbar: Paragraf; auch ohne böse Absicht: Amir erschrickt
+  popS('par7', W('strafbar', 23) - .1, 7, KX[0] - 62, KY - 52, {}, 'klick'); wackeln('par7', W('strafbar', 23) + .35, 4, 6);
+  mund('am7', W('strafbar', 23), 'auf'); kopf('k7a', W('Absicht', 23) - .3, .6, 4, 2);
+  // Sag nein: Kopfschütteln, die Kette reißt
+  const tN = W('nein', 24) - .3;
+  mund('am7', tN, 'zu'); kopf('am7', tN, .9, 10, 3);
+  popS('nein7', W('nein', 24) - .1, 7, KX[0] + 18, KY - 135, {}, 'pop');
+  const tR = W('nein', 24) + .25;
+  tw('ketA1', tR, .7, { x: P(7, 1110, 0)[0], y: P(7, 0, KY + 140)[1], r: -40, o: 0 }, 'in'); tw('ketA2', tR, .7, { x: P(7, 1250, 0)[0], y: P(7, 0, KY + 140)[1], r: 50, o: 0 }, 'in');
+  ton(tR, 'klick'); akzent(tR, .03, 1180, 650);
+  aus(['k7b', 'k7c', 'ketB', 'abdruck7', 'msg7', 'handy7'], tR + .15, .4);
+  tw('prov7', tR + .1, .3, { o: 0, s: .4 }, 'in');
+  // sprich mit deiner Bank oder der Polizei
+  popS('bank7', W('sprich', 24) - .05, 7, 1360, 600, {}, 'pop', 'sanft'); popS('pol7', W('Fragen', 24) - .05, 7, 1600, 600, {}, 'pop', 'sanft');
+  el('pfeil7').innerHTML = `<defs><marker id="sp7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path id="pf7a" d="M1132 640H1252" pathLength="1" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#sp7)"/>
+    <path id="pf7b" d="M1110 584C1180 440 1420 430 1500 488" pathLength="1" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#sp7)"/>`;
+  pos('pfeil7', 7, 960, 540, { o: 0 }); tw('pfeil7', W('mit', 24) - .2, .1, { o: 1 });
+  strich('pf7a', W('Bank', 24) - .35, .4); strich('pf7b', W('Polizei', 24) - .4, .5);
+  bump('bank7', W('Bank', 24), 1.08); ton(W('Bank', 24), 'ding'); bump('pol7', W('Polizei', 24), 1.08); ton(W('Polizei', 24), 'ding');
+  froh('am7', W('Bank', 24)); tw('nein7', W('Bank', 24), .3, { o: 0, s: .7 }, 'in');
+  tw('par7', W('Bank', 24) + .1, .3, { o: 0, s: .5 }, 'in');
+}
+
+/* ================= 8 · Daten prüfen, Belege aufheben ================= */
+const T78 = SE(24) + .22;
+{
+  fahrt(8, T78, 1.2, fort78);
+  textAus('tb7', T78);
+  titelEin('tb8', W('Prüf', 25) + .55, { unter: W('Beleg', 26) - .15 });
+  einS('form8', T78 + .75, 8, 1100, 425, { y: 70 }, 'pop');
+  innen('#ok8a', { s: 0 }); innen('#ok8b', { s: 0 });
+  // Lupe prüft Zeile für Zeile
+  pos('lupe8', 8, 1380, 600, { o: 0, s: .7 });
+  tw('lupe8', W('Namen', 25) - .55, .3, { o: 1, s: 1 }, 'sanft');
+  zu('lupe8', W('Namen', 25) - .55, .5, 8, 1056, 360, {}, 'inout'); zu('lupe8', W('Namen', 25) - .05, .5, 8, 1140, 360, {}, 'inout'); ton(W('Namen', 25) - .5, 'scan');
+  tw('#ok8a', W('Namen', 25) + .3, .45, { s: 1 }, 'back'); ton(W('Namen', 25) + .3, 'ding');
+  zu('lupe8', W('Kontodaten', 25) - .3, .45, 8, 1056, 450, {}, 'inout'); zu('lupe8', W('Kontodaten', 25) + .15, .5, 8, 1160, 450, {}, 'inout');
+  tw('#ok8b', W('genau', 25) - .05, .45, { s: 1 }, 'back'); ton(W('genau', 25) - .05, 'ding');
+  tw('lupe8', W('genau', 25) + .4, .3, { o: 0, s: .7 }, 'in');
+  bump('form8', W('genau', 25) + .2, 1.03);
+  // Beleg: der Drucker druckt, das Papier fährt heraus
+  einS('drucker8', W('heb', 26) - .2, 8, 1100, 774, { y: 60 }, 'pop');
+  pos('ausgabe8', 8, 1100, 645);
+  innen('#beleg8', { y: 196 });
+  const tP = W('jeden', 26) - .05;
+  tw('#beleg8', tP, 1.0, { y: 56 }, 'out');
+  for (let t = tP; t < tP + .9; t += .15) ton(t, 'tipp');
+  bump('drucker8', tP, 1.04);
+  // auf Papier … oder im Handy
+  einS('handy8', W('Papier', 26) - .2, 8, 1550, 540, { y: 90 }, 'whoosh'); einS('schirm8', W('Papier', 26) - .2, 8, 1550, 540, { y: 90 });
+  innen('#row8', { o: 0, x: -30 }); innen('#toast8', { o: 0, y: 10 }); innen('#hl8');
+  const tF = W('Handy', 26) - .35, [fx, fy] = P(8, 1100, 645 - 95 + 56 + 64);
+  set('#beleg8', tF, { o: 0 });
+  akteur('belegF8', { x: fx, y: fy, o: 0 }); set('belegF8', tF, { o: 1 });
+  zu('belegF8', tF, .7, 8, 1550, 560, { s: .35 }, 'inout', { bogen: 120 }); tw('belegF8', tF + .6, .12, { o: 0 }); ton(tF, 'whoosh');
+  tw('#row8', tF + .65, .4, { o: 1, x: 0 }, 'back'); tw('#toast8', tF + .8, .4, { o: 1, y: 0 }, 'back'); ton(tF + .7, 'erfolg');
+  bump('handy8', tF + .7, 1.03); bump('schirm8', tF + .7, 1.03);
+  // So kannst du später zeigen: Amir zeigt den Beleg im Handy
+  const tZ = W('So', 27) - .1;
+  aus(['form8', 'drucker8', 'ausgabe8'], tZ, .35);
+  popS('am8', tZ + .3, 8, 1170, 560, {}, 'pop', 'sanft'); froh('am8', tZ + .4);
+  const tZe = W('zeigen', 27) - .1;
+  tw('#hl8', tZe, .3, { o: 1 }); bump('handy8', tZe, 1.06); bump('schirm8', tZe, 1.06); ton(tZe, 'ding');
+  popS('ok8c', tZe + .15, 8, 1652, 486, {}, null); huepfen('am8', tZe + .1, 14); akzent(tZe, .03, 1550, 520);
+}
+
+/* ================= 9 · Zurück auf der Weltkugel: alles zusammen ================= */
+const tc2 = SE(27) + .4;
+schnitt('raus', tc2, 9);
+const B9 = BS(9, [1222, 548], [1250, 300], [1590, 300], [1624, 588]);
+{
+  titelEin('tb9', null, [W('Kosten', 28) - .15, W('dann', 28) - .1, W('vergleichen', 28) - .1, W('Anbieter', 28) - .1, W('Erlaubnis', 28) - .1, W('nie', 29) - .2, W('nie', 29) - .1, W('für', 29) - .1, W('Fremde', 29) - .1]);
+  pos('globus9', 9, 1320, 640);
+  pos('pin9', 9, 1222, 527); pos('haus9', 9, 1640, 640); pos('herz9', 9, 1640, 523, { s: 0 });
+  popS('am9', tc2 + .05, 9, 1000, 760, {}, null, 'sanft');
+  const ziel = bogenSvg('bogen9', B9, 9);
+  strich(ziel, W('Also', 28) - .2, 1.1); ton(W('Also', 28) - .2, 'scan');
+  // vier Stationen auf der Route
+  const STU = [.17, .39, .61, .83];
+  [['st9a', W('Kosten', 28)], ['st9b', W('vergleichen', 28)], ['st9c', W('Erlaubnis', 28)], ['st9d', W('Fremde', 29)]].forEach(([id, t], k) => {
+    const [x, y] = bez(B9, STU[k]);
+    pop(id, t - .15, { x, y }, k === 3 ? 'klick' : 'pop'); innen(el(id).querySelector('.gr'));
+  });
+  wackeln('st9d', W('Fremde', 29) + .3, 4, 5);
+  // So kommt mehr bei deiner Familie an: das Paket fliegt die ganze Route, ohne zu verlieren
+  set('reise', tc2, { x: B9[0][0], y: B9[0][1], s: 0, o: 1, r: 0 });
+  const tS = W('So', 30) - .2, tAn = W('an', 30) + .05;
+  tw('reise', tS, .4, { s: .62 }, 'back'); ton(tS, 'pop');
+  bahn('reise', tS + .3, tAn - tS - .3, B9, 0, .985, 'inout', 10); ton(tS + .3, 'whoosh');
+  STU.forEach((u, k) => {
+    // Zeitpunkt, an dem das Paket die Station passiert (inout-Kurve numerisch umkehren)
+    let lo = 0, hi = 1; for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (.985 * E.inout(m) < u) lo = m; else hi = m; }
+    const tp = tS + .3 + lo * (tAn - tS - .3);
+    const id = ['st9a', 'st9b', 'st9c', 'st9d'][k];
+    bump(id, tp, 1.18); tw(el(id).querySelector('.gr'), tp, .2, { o: 1 }); ton(tp, 'ding');
+  });
+  tw('reise', tAn, .35, { s: 0 }, 'in'); bump('haus9', tAn + .2, 1.08); ton(tAn + .2, 'plopp');
+  tw('herz9', tAn + .25, .5, { s: 1 }, 'back'); ton(tAn + .3, 'erfolg');
+  const HZ = [tAn + .9, tAn + 1.8, tAn + 2.7];
+  HZ.forEach(t => bump('herz9', t, 1.16));
+  wellen('welleH9', [tAn + .3, ...HZ], ...P(9, 1640, 523), 1.0, 104);
+  froh('am9', tAn); huepfen('am9', tAn + .2, 14);
+  // sichere Seite
+  const tSi = W('sicheren', 30) - .1;
+  welle('welleA9', tSi, ...P(9, 1000, 760), 1.1, 170); huepfen('am9', tSi, 16); akzent(tSi, .04);
+  froh('am9', W('Also', 28));
+}
+
+/* ---------- Abspann: die Klappe eines Luftpost-Umschlags schließt sich ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - AB) / .8)), h = p * 100, m = p * 200;
+  $('#abspann').style.clipPath = `polygon(0 0,100% 0,100% ${h.toFixed(2)}%,50% ${m.toFixed(2)}%,0 ${h.toFixed(2)}%)`;
+});
+ton(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .55, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .9, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

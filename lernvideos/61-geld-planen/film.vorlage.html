@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Dein Geld im Monat planen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+/* Leitidee: das Monatsgeld fließt wie Wasser durch Röhren in Gläser; die Kamera folgt dem Geld durch die Etagen. */
+#kamera{position:absolute;inset:0;transform-origin:600px 540px}
+.buehne{width:1000px;height:860px;border-radius:44px;background:linear-gradient(var(--b50),var(--b100))}
+.buehne::after{content:'';position:absolute;left:44px;right:44px;bottom:70px;height:4px;border-radius:2px;background:var(--b200);opacity:.6}
+.block{left:1190px;width:640px}
+.titel{font-size:64px;line-height:74px}
+.unter{font-size:38px;line-height:50px}
+.rohre{position:absolute;left:0;top:-1080px;width:3840px;height:6480px;overflow:visible;pointer-events:none}
+.rohre .aussen{stroke:var(--surface);stroke-width:36;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.rohre .innen{stroke:var(--b200);stroke-width:24;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.rohre .strom{stroke:var(--warning);stroke-width:14;stroke-linecap:round;stroke-linejoin:round;fill:none}
+
+/* Gläser mit Geld-Füllung */
+.glas{border-radius:16px 16px 34px 34px;background:rgba(255,255,255,.45);border:6px solid var(--surface);
+  box-shadow:inset 0 0 0 3px var(--b200),0 14px 30px rgba(58,37,153,.16)}
+.glas .innen{position:absolute;inset:3px;overflow:hidden;border-radius:10px 10px 28px 28px}
+.glas .fuell{position:absolute;left:0;top:0;width:100%;height:100%;background-color:var(--warning);
+  background-image:radial-gradient(circle,rgba(252,241,221,.55) 0 7px,transparent 8px),radial-gradient(circle,rgba(252,241,221,.3) 0 6px,transparent 7px);
+  background-size:34px 26px,34px 26px;background-position:4px 8px,21px 21px;box-shadow:inset 0 7px 0 rgba(252,241,221,.7)}
+.glas.rot .fuell{background-color:var(--error);background-image:radial-gradient(circle,rgba(252,231,234,.45) 0 7px,transparent 8px);box-shadow:inset 0 7px 0 rgba(252,231,234,.6)}
+.glas .glanz{position:absolute;left:14%;top:10%;width:9%;height:62%;border-radius:999px;background:rgba(255,255,255,.55)}
+.glas .marke{position:absolute;left:8%;right:8%;border-top:4px dashed var(--b500);opacity:0}
+.glas .band{position:absolute;left:-6px;right:-6px;top:38%;padding:8px 0;background:var(--surface);color:var(--b600);font:800 26px/30px Inter;text-align:center;box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.hahn{width:46px;height:30px;border-radius:0 0 12px 12px;background:linear-gradient(var(--b500),var(--b700))}
+
+/* kleine Bausteine */
+.etikett{padding:9px 18px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 22px/26px Inter;white-space:nowrap;box-shadow:0 4px 14px rgba(22,19,37,.1)}
+.etikett.brand{background:var(--b500);color:var(--surface)}
+.etikett.rot{background:var(--error);color:var(--surface)}
+.etikett.gruen{background:var(--success);color:var(--surface)}
+.etikett.gruen i{display:inline-block;width:22px;height:22px;margin:0 0 -4px 6px}
+.etikett.gross{font-size:26px;line-height:30px;padding:11px 22px}
+.icon{display:block}
+.plakette{width:58px;height:58px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:28px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error);color:var(--surface);font:800 30px/1 Inter}
+.plakette.gross{width:96px;height:96px;border-width:6px} .plakette.gross svg{width:48px}
+.frage{width:76px;height:76px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 46px/76px Inter;text-align:center;box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.klammer{border:4px dashed var(--b300);border-radius:30px;background:rgba(255,255,255,.35)}
+
+/* Monatsrad */
+.rad .ring{position:absolute;left:0;top:0;width:100%;height:100%}
+.rad .nabe{position:absolute;left:22%;top:22%;width:56%;height:56%;border-radius:999px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.14);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rad .nabe b{font:800 40px/44px Inter;color:var(--ink)}
+.rad .nabe small{font:700 15px/18px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase}
+.rad .zeiger{position:absolute;left:50%;top:-16px;width:0;height:0;margin-left:-14px;border:14px solid transparent;border-top:24px solid var(--b700);border-bottom:0}
+
+/* Karte in Szene 1 (Frage → Plan) */
+.karte61{width:480px;height:170px;border-radius:30px;background:var(--surface);box-shadow:0 14px 34px rgba(58,37,153,.18);padding:22px 30px}
+.karte61 .titel{font:800 46px/56px Inter;letter-spacing:-.01em;color:var(--ink)}
+.plan61{width:480px;height:170px;border-radius:30px;background:var(--b500);box-shadow:0 14px 34px rgba(58,37,153,.25)}
+.plan61 svg{position:absolute;left:0;top:0;width:480px;height:170px}
+
+/* Gehaltszettel */
+.zettel61{width:480px;height:640px;border-radius:22px;background:var(--surface);box-shadow:0 16px 40px rgba(58,37,153,.18)}
+.zettel61 small{position:absolute;left:40px;top:34px;font:800 17px/20px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase}
+.zettel61 .lab{position:absolute;left:40px;font:800 30px/36px Inter;color:var(--ink)}
+.zettel61 .lab.klein{font:700 24px/30px Inter;color:var(--error)}
+.balken{position:absolute;left:40px;height:36px;border-radius:10px;background:var(--warning);transform-origin:0 50%;
+  background-image:radial-gradient(circle,rgba(252,241,221,.55) 0 6px,transparent 7px);background-size:26px 36px;background-position:6px 0}
+.balken.rot{background-color:var(--error)}
+.zettel61 .linie{position:absolute;left:40px;right:40px;top:348px;height:4px;border-radius:2px;background:var(--n200)}
+.leucht{border-radius:16px;background:var(--success-bg)}
+.walze{width:520px;height:30px;border-radius:15px;background:linear-gradient(var(--b300),var(--b600));box-shadow:0 6px 14px rgba(22,19,37,.18)}
+.kachel{width:250px;height:210px;border-radius:26px;background:var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.16);display:flex;flex-direction:column;align-items:center;padding-top:16px}
+.kachel .icon{width:112px}
+.kachel b{font:800 21px/26px Inter;color:var(--ink);margin-top:6px}
+.trichter{width:220px;height:150px}
+
+/* Kalenderblatt (Dauerauftrag, Notgroschen) */
+.kal{width:132px;height:142px;border-radius:18px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.14);overflow:visible}
+.kal .kopf{position:absolute;left:0;right:0;top:0;height:40px;border-radius:18px 18px 0 0;background:var(--b500)}
+.kal .kopf::before,.kal .kopf::after{content:'';position:absolute;top:-10px;width:12px;height:24px;border-radius:6px;background:var(--b700)}
+.kal .kopf::before{left:30px} .kal .kopf::after{right:30px}
+.kal .blatt{position:absolute;left:0;right:0;top:40px;bottom:0;border-radius:0 0 18px 18px;background:var(--surface);transform-origin:50% 0;
+  display:flex;align-items:center;justify-content:center;font:800 52px/1 Inter;color:var(--ink)}
+.kal .kreis{position:absolute;right:-22px;top:-22px;width:52px;height:52px;border-radius:999px;background:var(--success);border:4px solid var(--surface);
+  box-shadow:0 4px 10px rgba(22,19,37,.18);display:flex;align-items:center;justify-content:center}
+.kal .kreis svg{width:30px}
+.ventil{width:44px;height:44px;border-radius:999px;background:var(--b700);border:5px solid var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.2)}
+.ventil::before,.ventil::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:6px;margin:-3px 0 0 -13px;border-radius:3px;background:var(--b100)}
+.ventil::after{transform:rotate(90deg)}
+
+/* Notizzettel Beispiel */
+.notiz61{width:500px;height:560px;border-radius:20px;background:var(--surface);box-shadow:0 16px 40px rgba(58,37,153,.18);
+  background-image:repeating-linear-gradient(transparent 0 75px,var(--b100) 75px 78px);background-position:0 70px}
+.notiz61 .zeile{position:absolute;left:44px;font:800 42px/50px Inter;color:var(--ink);white-space:pre}
+.notiz61 .zeile.minus{color:var(--n700)}
+.notiz61 .zeile.summe{color:var(--success-text);font-size:52px;line-height:60px}
+.notiz61 .strich{position:absolute;left:40px;width:420px;height:5px;border-radius:3px;background:var(--ink);transform-origin:0 50%}
+.stempel61{padding:8px 20px;border:5px solid var(--b500);border-radius:14px;color:var(--b500);font:800 30px/34px Inter;letter-spacing:.04em;text-transform:uppercase;background:rgba(255,255,255,.85)}
+.stempel61.gruen{border-color:var(--success);color:var(--success-text)}
+.umschlag61{width:150px;height:100px;border-radius:12px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.14);overflow:hidden}
+.umschlag61::before{content:'';position:absolute;left:0;right:0;top:0;height:56px;background:linear-gradient(var(--b100),var(--b200));clip-path:polygon(0 0,100% 0,50% 100%)}
+.umschlag61 b{position:absolute;left:0;right:0;bottom:12px;text-align:center;font:800 24px/28px Inter;color:var(--ink)}
+
+/* Haushaltsheft und Handy */
+.heft61{width:420px;height:470px;border-radius:18px;background:var(--surface);box-shadow:0 16px 40px rgba(58,37,153,.18)}
+.heft61 .kopf{position:absolute;left:0;right:0;top:0;height:46px;border-radius:18px 18px 0 0;background:var(--b500);display:flex;justify-content:space-around;align-items:center;padding:0 22px}
+.heft61 .kopf i{width:14px;height:14px;border-radius:999px;background:var(--b100)}
+.heft61 .zeile{position:absolute;left:28px;right:28px;height:62px;border-bottom:3px solid var(--b100);padding:0 12px;display:flex;align-items:flex-end;padding-bottom:8px;
+  font:700 30px/36px Inter;color:var(--ink);border-radius:10px 10px 0 0}
+.heft61 .zeile u{position:absolute;right:12px;bottom:16px;width:70px;height:12px;border-radius:6px;background:var(--n200);text-decoration:none}
+.handy61{width:210px;height:400px;border-radius:36px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 14px 34px rgba(58,37,153,.25)}
+.handy61 .schirm{position:absolute;left:12px;top:14px;right:12px;bottom:14px;border-radius:26px;background:var(--b50);padding:40px 14px 0}
+.handy61 .schirm small{display:block;font:800 15px/18px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.handy61 .eintrag{height:40px;border-radius:12px;background:var(--surface);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;
+  font:700 17px/20px Inter;color:var(--ink);box-shadow:0 2px 6px rgba(22,19,37,.06)}
+.handy61 .eintrag i{width:36px;height:9px;border-radius:5px;background:var(--n200)}
+.handy61 .kerbe{position:absolute;left:50%;top:22px;width:56px;height:8px;margin-left:-28px;border-radius:4px;background:var(--b200)}
+
+/* Dispo-Keller */
+.boden{height:12px;border-radius:6px;background:var(--b600)}
+.klappe{width:110px;height:16px;border-radius:6px;background:var(--b400)}
+.klappe.links{transform-origin:0 50%} .klappe.rechts{transform-origin:100% 50%}
+.minuszone{width:490px;height:470px;border-radius:0 0 30px 30px;background:linear-gradient(var(--error-bg),rgba(252,231,234,.4))}
+.gewicht{width:96px;height:70px;border-radius:14px 14px 24px 24px;background:linear-gradient(var(--n700),var(--ink));color:var(--surface);font:800 38px/70px Inter;text-align:center;
+  box-shadow:0 6px 14px rgba(22,19,37,.25)}
+.gewicht::before{content:'';position:absolute;left:50%;top:-18px;width:30px;height:24px;margin-left:-15px;border:6px solid var(--n700);border-bottom:0;border-radius:15px 15px 0 0}
+.kette{width:6px;border-radius:3px;background:repeating-linear-gradient(var(--n700) 0 10px,transparent 10px 14px);transform-origin:50% 0}
+.rate{width:120px;height:58px;border-radius:12px;background:var(--surface);border-left:12px solid var(--warning);box-shadow:0 4px 12px rgba(22,19,37,.14);
+  font:800 26px/58px Inter;color:var(--ink);text-align:center;padding-right:8px}
+.tuer61{width:170px;height:250px;border-radius:16px 16px 6px 6px;background:var(--b600);box-shadow:0 10px 24px rgba(58,37,153,.22)}
+.tuer61 .licht{position:absolute;left:14px;right:14px;top:52px;bottom:0;border-radius:6px 6px 0 0;background:linear-gradient(var(--success-bg),var(--surface))}
+.tuer61 .blatt{position:absolute;left:14px;right:14px;top:52px;bottom:0;border-radius:6px 6px 0 0;background:linear-gradient(135deg,var(--b300),var(--b400));transform-origin:0 50%}
+.tuer61 .blatt::after{content:'';position:absolute;right:14px;top:50%;width:14px;height:14px;border-radius:999px;background:var(--warning)}
+.tuer61 .schild61{position:absolute;left:10px;right:10px;top:8px;height:36px;border-radius:10px;background:var(--surface);color:var(--b600);font:800 19px/36px Inter;text-align:center}
+
+/* Treppe Szene 9 */
+.stufe{width:210px;border-radius:18px 18px 8px 8px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 10px 24px rgba(58,37,153,.2);
+  color:var(--surface);font:800 25px/30px Inter;text-align:center;padding-top:22px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* Übergänge */
+#goldblende{position:absolute;inset:0;background:var(--warning);opacity:0;pointer-events:none}
+#seite{position:absolute;inset:0;pointer-events:none;background-color:var(--surface);
+  background-image:linear-gradient(90deg,transparent 0 180px,var(--error-bg) 180px 184px,transparent 184px),repeating-linear-gradient(transparent 0 86px,var(--b100) 86px 90px);clip-path:inset(0 0 0 100%)}
+#seitenkante{position:absolute;top:0;bottom:0;width:90px;margin-left:-90px;background:linear-gradient(90deg,transparent,rgba(58,37,153,.22));opacity:0;pointer-events:none}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="f-mai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="t-muenze">{{muenze}}</template>
+<template id="t-haken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="t-kreis"><svg viewBox="0 0 30 30"><path d="M22.5 9.5A9.5 9.5 0 1 0 24.5 17" stroke="var(--surface)" stroke-width="3.6" stroke-linecap="round" fill="none"/><path d="M18 8.6l6.2-.9-.9 6.2Z" fill="var(--surface)"/></svg></template>
+<template id="t-rad"><svg class="ring" viewBox="0 0 200 200"><g fill="none" stroke-width="30">
+  <path d="M100 15A85 85 0 0 1 185 100" stroke="var(--b200)"/><path d="M185 100A85 85 0 0 1 100 185" stroke="var(--b300)"/>
+  <path d="M100 185A85 85 0 0 1 15 100" stroke="var(--b200)"/><path d="M15 100A85 85 0 0 1 100 15" stroke="var(--b300)"/></g>
+  <g stroke="var(--surface)" stroke-width="4"><path d="M100 0V30M200 100H170M100 200V170M0 100H30"/></g>
+  <g font-family="Inter" font-weight="800" font-size="19" fill="var(--b700)" text-anchor="middle"><text x="160" y="47">1</text><text x="160" y="167">2</text><text x="40" y="167">3</text><text x="40" y="47">4</text></g></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- Bühnen (Etagen) -->
+  <div class="a buehne" id="bue1"></div><div class="a buehne" id="bue2"></div><div class="a buehne" id="bue3"></div><div class="a buehne" id="bue4"></div>
+  <div class="a buehne" id="bue5"></div><div class="a buehne" id="bue6"></div><div class="a buehne" id="bue7"></div><div class="a buehne" id="bue8"></div>
+  <!-- Röhren (Weltkoordinaten), ohne id: verbinden die Etagen -->
+  <svg class="rohre" id="rohre" viewBox="0 -1080 3840 6480" preserveAspectRatio="none"><defs id="masken"></defs></svg>
+
+  <!-- ===== Etage 1: Szene 1 und 3 ===== -->
+  <div class="a rad" id="rad1" style="width:220px;height:220px"></div>
+  <div class="a portrait" id="mai1" data-f="mai" style="width:180px;height:180px"></div>
+  <div class="a frage" id="q1">?</div>
+  <div class="a hahn" id="hahn1" data-gruppe="tank"></div>
+  <div class="a glas" id="g1" data-gruppe="tank" style="width:320px;height:400px"></div>
+  <div class="a karte61" id="frage1" data-gruppe="karte1"><div id="tb1"><div class="titel">Wo ist das Geld geblieben?</div></div></div>
+  <div class="a plan61" id="plan1" data-gruppe="karte1"><svg viewBox="0 0 480 170">
+    <rect x="58" y="34" width="70" height="96" rx="12" fill="var(--b100)"/><rect x="58" y="76" width="70" height="54" rx="10" fill="var(--warning)"/>
+    <g stroke="var(--b200)" stroke-width="7" stroke-linecap="round" fill="none">
+      <path class="pz" pathLength="1" d="M136 82H190Q200 82 200 92V108"/><path class="pz" pathLength="1" d="M136 82H284Q294 82 294 92V108"/><path class="pz" pathLength="1" d="M136 82H378Q388 82 388 92V108"/></g>
+    <g fill="var(--b300)"><rect class="mini" x="176" y="108" width="48" height="40" rx="9"/><rect class="mini" x="270" y="108" width="48" height="40" rx="9"/><rect class="mini" x="364" y="108" width="48" height="40" rx="9"/></g>
+    <text x="276" y="56" font-family="Inter" font-weight="800" font-size="30" fill="var(--surface)" text-anchor="middle">Plan</text></svg></div>
+  <!-- Szene 3 -->
+  <div class="a klammer" id="klammer3" data-frei style="width:890px;height:360px"></div>
+  <div class="a etikett brand gross" id="fix3">Fixkosten</div>
+  <div class="a glas" id="j1" style="width:140px;height:170px"></div>
+  <div class="a glas" id="j2" style="width:140px;height:170px"></div>
+  <div class="a glas" id="j3" style="width:140px;height:170px"></div>
+  <div class="a glas" id="j4" style="width:140px;height:170px"></div>
+  <div class="a icon" id="i1" data-gruppe="haus3" style="width:96px">{{haus}}</div>
+  <div class="a icon" id="i2" style="width:96px">{{handy}}</div>
+  <div class="a icon" id="i3" style="width:96px">{{fahrkarte}}</div>
+  <div class="a icon" id="i4" style="width:96px">{{schild-kreuz}}</div>
+  <div class="a etikett" id="l1">Miete</div><div class="a etikett" id="l2">Handy</div><div class="a etikett" id="l3">Ticket</div><div class="a etikett" id="l4">Versicherungen</div>
+  <div class="a plakette gruen" id="ok3" data-gruppe="haus3" style="width:46px;height:46px"></div>
+  <div class="a kal" id="kal3"><div class="kopf"></div><div class="blatt" id="kal3b">1.</div><div class="kreis" id="kal3k"></div></div>
+  <svg class="a" id="verb3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei><path class="zeichnen" pathLength="1" d="M300 380C300 430 262 448 252 488" stroke="var(--success)" stroke-width="5" stroke-dasharray=".04 .03" stroke-linecap="round" fill="none"/></svg>
+  <div class="a ventil" id="ventil3"></div>
+
+  <!-- ===== Etage 2: Szene 2 (Gehaltszettel) ===== -->
+  <div class="a zettel61" id="zettel2" data-gruppe="zettel2"><small>Gehaltsabrechnung</small>
+    <div class="lab" style="top:96px">Brutto</div>
+    <div class="a balken" id="bBrutto" data-gruppe="zettel2" style="width:360px"></div>
+    <div class="a leucht" id="abzugGlow" data-gruppe="zettel2" style="width:100px;height:52px"></div>
+    <div class="a balken rot" id="bAbzugRest" data-gruppe="zettel2" style="width:90px"></div>
+    <div class="a lab klein" id="lAbzug" data-gruppe="zettel2">− Sozialversicherung</div>
+    <div class="linie"></div>
+    <div class="a leucht" id="nettoGlow" data-gruppe="zettel2" style="width:420px;height:118px"></div>
+    <div class="lab" style="top:384px">Netto</div>
+    <div class="a balken" id="bNetto" data-gruppe="zettel2" style="width:270px"></div>
+    <div class="a plakette gruen" id="ok2" data-gruppe="zettel2"></div>
+  </div>
+  <div class="a balken rot" id="stueck2" data-frei style="width:90px;transform-origin:50% 50%"></div>
+  <div class="a walze" id="walze2"></div>
+  <div class="a kachel" id="kachel2"><div class="icon">{{schild-kreuz}}</div><b>Sozialversicherung</b></div>
+  <div class="a etikett" id="c2a">Kranken</div><div class="a etikett" id="c2b">Rente</div>
+  <div class="a trichter" id="trichter2" data-gruppe="trichter"><svg viewBox="0 0 220 150"><path d="M10 14h200l-70 86v40H80v-40Z" fill="var(--b300)"/><path d="M10 14h200l-12 15H22Z" fill="var(--b500)"/></svg></div>
+  <div class="a etikett brand" id="konto2" data-gruppe="trichter">Konto</div>
+
+  <!-- ===== Etage 3: Szene 4 (Wochen) ===== -->
+  <div class="a glas" id="g4" style="width:240px;height:230px"></div>
+  <div class="a icon" id="e4a" style="width:112px">{{einkaufstasche}}</div>
+  <div class="a icon" id="e4b" style="width:112px">{{hemd}}</div>
+  <div class="a icon" id="e4c" style="width:120px">{{ball}}</div>
+  <div class="a etikett" id="el4a">Essen</div><div class="a etikett" id="el4b">Kleidung</div><div class="a etikett" id="el4c">Freizeit</div>
+  <div class="a glas" id="w1" style="width:130px;height:150px"></div>
+  <div class="a glas" id="w2" style="width:130px;height:150px"></div>
+  <div class="a glas" id="w3" style="width:130px;height:150px"></div>
+  <div class="a glas" id="w4" style="width:130px;height:150px"></div>
+  <div class="a etikett" id="wl1">Woche 1</div><div class="a etikett" id="wl2">Woche 2</div><div class="a etikett" id="wl3">Woche 3</div><div class="a etikett" id="wl4">Woche 4</div>
+  <div class="a rad" id="rad4" style="width:200px;height:200px"></div>
+  <div class="a welle" id="welle4" data-frei></div>
+  <div class="a plakette gruen" id="ok4" data-frei></div>
+  <div class="a portrait" id="mai4" data-f="mai" style="width:110px;height:110px;border-width:5px"></div>
+
+  <!-- ===== Etage 4: Szene 5 (Notgroschen) ===== -->
+  <div class="a kal" id="kal5"><div class="kopf"></div><div class="blatt" id="kal5b">1.</div></div>
+  <div class="a welle" id="welle5" data-frei></div>
+  <div class="a glas" id="gN" data-etikett="Notgroschen" style="width:260px;height:320px"></div>
+  <div class="a portrait" id="mai5" data-f="mai" style="width:160px;height:160px"></div>
+  <div class="a icon" id="handy5" data-gruppe="handy5" style="width:170px">{{handy}}</div>
+  <svg class="a" id="riss5" data-gruppe="handy5" viewBox="0 0 100 160" style="width:56px;height:90px"><path class="zeichnen" pathLength="1" d="M30 10L52 52L38 70L64 104L50 124L70 150M52 52L74 60M64 104L40 112" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <div class="a plakette gruen" id="ok5" data-gruppe="handy5" style="width:48px;height:48px"></div>
+  <div class="a icon" id="rechnung5" data-gruppe="rechnung5" style="width:170px">{{rechnung}}</div>
+  <div class="a plakette rot" id="ausruf5" data-gruppe="rechnung5">!</div>
+  <div class="a stempel61 gruen" id="bezahlt5" data-gruppe="rechnung5">bezahlt</div>
+
+  <!-- ===== Etage 5: Szene 6 (Beispiel) ===== -->
+  <div class="a notiz61" id="notiz6" data-gruppe="notiz6">
+    <div class="zeile" id="z6a" style="top:84px"></div>
+    <div class="zeile minus" id="z6b" style="top:162px"></div>
+    <div class="zeile minus" id="z6c" style="top:240px"></div>
+    <div class="a strich" id="strich6" data-gruppe="notiz6" style="left:40px;top:322px"></div>
+    <div class="zeile summe" id="z6d" style="top:352px"></div>
+    <div class="a" id="stift6" style="width:64px" data-frei>{{stift}}</div>
+  </div>
+  <div class="a stempel61" id="beispiel6" data-gruppe="notiz6">Beispiel</div>
+  <div class="a glas" id="g6" style="width:150px;height:300px"></div>
+  <div class="a umschlag61" id="u6a"><b>ca. 70 €</b></div><div class="a umschlag61" id="u6b"><b>ca. 70 €</b></div>
+  <div class="a umschlag61" id="u6c"><b>ca. 70 €</b></div><div class="a umschlag61" id="u6d"><b>ca. 70 €</b></div>
+  <div class="a portrait" id="mai6" data-f="mai" style="width:124px;height:124px;border-width:5px"></div>
+
+  <!-- ===== Etage 6: Szene 7 (Ausgaben aufschreiben) ===== -->
+  <div class="a heft61" id="heft7" data-gruppe="heft7"><div class="kopf"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="zeile" style="top:62px"><span></span><u></u></div><div class="zeile" style="top:130px"><span></span><u></u></div>
+    <div class="zeile" style="top:198px"><span></span><u></u></div><div class="zeile" style="top:266px"><span></span><u></u></div>
+    <div class="zeile" style="top:334px"><span></span><u></u></div>
+    <div class="a" id="stift7" style="width:64px" data-frei>{{stift}}</div>
+  </div>
+  <div class="a handy61" id="handy7" data-gruppe="handy7"><div class="schirm"><small>Ausgaben</small>
+    <div class="eintrag">Brot<i></i></div><div class="eintrag">Kaffee<i></i></div><div class="eintrag">Shampoo<i></i></div><div class="eintrag">Kaffee<i></i></div><div class="eintrag">Kaffee<i></i></div></div><div class="kerbe"></div></div>
+  <div class="a icon" id="b7a" data-gruppe="turm7" style="width:96px">{{becher}}</div>
+  <div class="a icon" id="b7b" data-gruppe="turm7" style="width:96px">{{becher}}</div>
+  <div class="a icon" id="b7c" data-gruppe="turm7" style="width:96px">{{becher}}</div>
+  <div class="a icon" id="stapel7" data-gruppe="turm7" style="width:150px">{{muenzstapel}}</div>
+  <div class="a welle" id="welle7" data-frei></div>
+  <div class="a icon" id="lupe7" data-frei style="width:150px">{{lupe}}</div>
+  <div class="a portrait" id="mai7" data-f="mai" style="width:150px;height:150px"></div>
+
+  <!-- ===== Etage 7: Szene 8 (Dispo, Raten, Beratung) ===== -->
+  <div class="a minuszone" id="zone8" data-frei></div>
+  <div class="a etikett rot gross" id="minus8">Minus</div>
+  <div class="a kette" id="kette8a" data-frei style="height:56px"></div><div class="a kette" id="kette8b" data-frei style="height:56px"></div>
+  <div class="a gewicht" id="gew8a" data-gruppe="last8">%</div><div class="a gewicht" id="gew8b" data-gruppe="last8">%</div>
+  <div class="a glas" id="g8" data-gruppe="last8" style="width:170px;height:200px"></div>
+  <div class="a boden" id="boden8a" data-gruppe="boden8" style="width:114px"></div><div class="a boden" id="boden8b" data-gruppe="boden8" style="width:166px"></div>
+  <div class="a klappe links" id="klappe8a" data-gruppe="boden8"></div><div class="a klappe rechts" id="klappe8b" data-gruppe="boden8"></div>
+  <div class="a etikett" id="null8">0 €</div>
+  <div class="a etikett rot" id="dispo8">Dispo</div>
+  <div class="a etikett brand" id="konto8">Konto</div>
+  <div class="a rate" id="r8a" data-gruppe="turm8">1/6</div><div class="a rate" id="r8b" data-gruppe="turm8">2/6</div><div class="a rate" id="r8c" data-gruppe="turm8">3/6</div>
+  <div class="a rate" id="r8d" data-gruppe="turm8">4/6</div><div class="a rate" id="r8e" data-gruppe="turm8">5/6</div>
+  <div class="a etikett rot" id="schulden8">Schulden</div>
+  <div class="a icon" id="wagen8" style="width:190px">{{einkaufswagen}}</div>
+  <div class="a etikett" id="spaeter8">später zahlen</div>
+  <div class="a tuer61" id="tuer8"><div class="licht"></div><div class="blatt" id="tuer8b"></div><div class="schild61">Beratung</div></div>
+  <div class="a etikett" id="stadt8">Stadt</div><div class="a etikett" id="verband8">Sozialverbände</div>
+  <div class="a etikett gruen gross" id="frei8">oft kostenlos<i id="frei8h"></i></div>
+  <svg class="a" id="pfeil8" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze8" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M935 734C922 704 922 680 933 650" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#spitze8)"/></svg>
+  <div class="a portrait" id="mai8" data-f="mai" style="width:120px;height:120px;border-width:5px"></div>
+
+  <!-- ===== Etage 8: Szene 9 (Treppe) ===== -->
+  <div class="a stufe" id="s9a" data-gruppe="s9a" style="height:120px">Netto</div>
+  <div class="a stufe" id="s9b" data-gruppe="s9b" style="height:210px">Fixkosten</div>
+  <div class="a stufe" id="s9c" data-gruppe="s9c" style="height:300px">Notgroschen</div>
+  <div class="a stufe" id="s9d" data-gruppe="s9d" style="height:390px">Woche</div>
+  <div class="a glas" id="h1" data-gruppe="s9a" style="width:120px;height:160px"></div>
+  <div class="a glas" id="h2" data-gruppe="s9b" style="width:120px;height:160px"></div>
+  <div class="a glas" id="h3" data-gruppe="s9c" style="width:120px;height:160px"></div>
+  <div class="a glas" id="m1" data-gruppe="s9d" style="width:40px;height:64px;border-width:4px"></div>
+  <div class="a glas" id="m2" data-gruppe="s9d" style="width:40px;height:64px;border-width:4px"></div>
+  <div class="a glas" id="m3" data-gruppe="s9d" style="width:40px;height:64px;border-width:4px"></div>
+  <div class="a glas" id="m4" data-gruppe="s9d" style="width:40px;height:64px;border-width:4px"></div>
+  <div class="a rad" id="rad9" style="width:160px;height:160px"></div>
+  <div class="a welle" id="welle9" data-frei></div>
+  <div class="a plakette gruen gross" id="ok9"></div>
+  <div class="a portrait" id="mai9" data-f="mai" style="width:150px;height:150px"></div>
+
+  <div id="muenzen"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Plane mit dem Netto</div></div>
+<div class="block" id="tb3"><div class="titel">Zuerst die Fixkosten</div><div class="unter">Miete per Dauerauftrag</div></div>
+<div class="block" id="tb4"><div class="titel">Rest auf die Wochen verteilen</div></div>
+<div class="block" id="tb5"><div class="titel">Notgroschen</div><div class="unter">= Puffer für Unerwartetes</div></div>
+<div class="block" id="tb6"><div class="titel">Beispiel</div><div class="unter">ca. 70 € pro Woche</div></div>
+<div class="block" id="tb7"><div class="titel">Ausgaben aufschreiben</div></div>
+<div class="block" id="tb8"><div class="titel">Dispo und Raten: Vorsicht!</div><div class="unter">Hilfe: Schuldnerberatung</div></div>
+<div class="block" id="tb9"><div class="titel">Netto</div><div class="titel">Fixkosten</div><div class="titel">Notgroschen</div><div class="titel">Woche</div></div>
+
+<div id="goldblende"></div>
+<div id="seite"></div><div id="seitenkante"></div>
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Erst planen, dann ausgeben.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Zuerst die Fixkosten, dann der Notgroschen –<br>den Rest auf die Wochen verteilen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+// Klänge nur mit Namen und gültiger Zeit (leere Cues brechen das Mischen ab)
+const klang = (t, k) => { if (k && Number.isFinite(t) && t >= 0) cue(t, k); };
+
+/* ---------- Etagen: Szenen liegen untereinander, die Kamera folgt dem Geld ---------- */
+const FL = { 1: [0, 0], 2: [0, -1080], 3: [0, 1080], 4: [0, 2160], 5: [0, 3240], 6: [0, 4320], 7: [1920, 4320], 8: [1920, 3240] };
+const X = (n, x) => FL[n][0] + x, Y = (n, y) => FL[n][1] + y;
+const P = (n, x, y, extra = {}) => ({ x: X(n, x), y: Y(n, y), ...extra });
+const KAM = n => ({ x: -FL[n][0], y: -FL[n][1] });
+for (let n = 1; n <= 8; n++) akteur('bue' + n, P(n, 600, 540));
+kamera.basis.x = 360;   // ohne Kurstitel: erste Bühne in der Bildmitte
+
+// Inhalte aus Vorlagen
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['ok2', 'ok3', 'ok4', 'ok5', 'ok9', 'frei8h'].forEach(id => { el(id).innerHTML = tpl('t-haken'); });
+el('kal3k').innerHTML = tpl('t-kreis');
+['rad1', 'rad4', 'rad9'].forEach(id => { el(id).innerHTML = tpl('t-rad') + '<div class="nabe"><b></b><small></small></div><i class="zeiger"></i>'; });
+
+/* ---------- Helfer (Technik wie Kurs 1/32) ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); klang(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  klang(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const wellen = (id, zeiten, x, y, d, g, farbe) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; if (farbe) el(id).style.borderColor = farbe;
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([pfad, t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+
+/* ---------- Figuren ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const STAUNEN = [];   // [portrait, t0, t1] – Augen groß
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1;
+  let g = 1; for (const [q, a, b] of STAUNEN) if (q === p) g += .28 * clamp((t - a) / .15) * (1 - clamp((t - b) / .25));
+  p.querySelector('.augen').style.transform = `scale(${g.toFixed(3)},${(g * (z < .035 ? .12 : 1)).toFixed(3)})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Gläser: Füllstand als Akteur (die Füllung fährt, nichts wird gestaucht) ---------- */
+const GL = {};
+document.querySelectorAll('.glas').forEach(g => {
+  const b = parseFloat(g.style.borderWidth) || 6, H = parseFloat(g.style.height), Hi = H - 2 * b - 6;
+  g.innerHTML = '<div class="innen"><div class="fuell"></div><div class="marke"></div></div><i class="glanz"></i>' + (g.dataset.etikett ? `<span class="band">${g.dataset.etikett}</span>` : '');
+  const f = g.querySelector('.fuell');
+  GL[g.id] = { H, Hi, b, f, m: g.querySelector('.marke'), band: g.querySelector('.band') };
+  akteur(f, { y: Hi }, true);
+});
+const pegel = (id, t, level, d = .6, e = 'inout') => tw(GL[id].f, t, d, { y: GL[id].Hi * (1 - level) }, e);
+const pegelSofort = (id, t, level) => set(GL[id].f, t, { y: GL[id].Hi * (1 - level) });
+// Oberfläche eines Glases in Weltkoordinaten (für landende Münzen)
+const oberflaeche = (id, t, level) => {
+  const g = GL[id], s = wertBei(id, 's', t), y = wertBei(id, 'y', t);
+  return y + s * (-g.H / 2 + g.b + 3 + g.Hi * (1 - level));
+};
+
+/* ---------- Münzen ---------- */
+let MZ = 0;
+const muenze = (t0, x, y, opt = {}) => {
+  const id = 'mz' + (++MZ);
+  el('muenzen').insertAdjacentHTML('beforeend', `<div class="a" id="${id}" data-frei data-dreht style="width:${opt.g || 60}px">${tpl('t-muenze')}</div>`);
+  akteur(id, { x, y, o: 0, r: opt.r || 0, s: opt.s ?? 1 });
+  set(id, t0, { o: 1 });
+  return id;
+};
+// fällt senkrecht (Schwerkraft) bis y1 und verschwindet
+const muenzFall = (t0, x, y0, y1, d = .45, opt = {}) => {
+  const id = muenze(t0, x, y0, opt);
+  tw(id, t0, d, { y: y1, r: (opt.r || 0) + (opt.dreh ?? 160) }, 'in'); tw(id, t0 + d - .04, .1, { o: 0, s: .7 }, 'lin');
+  return id;
+};
+// springt im Bogen von a nach b und verschwindet (oder bleibt)
+const muenzSprung = (t0, x0, y0, x1, y1, opt = {}) => {
+  const d = opt.d || .6, id = muenze(t0, x0, y0, opt);
+  tw(id, t0, .12, { s: (opt.s ?? 1) * 1.1 }, 'out');
+  flug(id, t0, d, x1, y1, opt.h ?? 140, { r: (opt.r || 0) + (opt.dreh ?? 300), s: opt.s1 ?? .8 });
+  if (!opt.bleibt) tw(id, t0 + d - .06, .12, { o: 0 }, 'lin');
+  return id;
+};
+
+/* ---------- Röhren: Rohr zeichnet sich, Geld fließt als Münzband ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const ROHRE = el('rohre');
+let RID = 0;
+const rohr = d => {
+  const mk = (cls, extra = {}) => { const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); p.setAttribute('class', cls); p.setAttribute('pathLength', 1);
+    for (const [k, v] of Object.entries(extra)) p.setAttribute(k, v); ROHRE.appendChild(p); return p; };
+  const aussen = mk('aussen'), innen = mk('innen');
+  const mid = 'mk' + (++RID), mask = document.createElementNS(NS, 'mask');
+  mask.setAttribute('id', mid); mask.setAttribute('maskUnits', 'userSpaceOnUse');
+  mask.setAttribute('x', -400); mask.setAttribute('y', -1600); mask.setAttribute('width', 4800); mask.setAttribute('height', 7600);
+  const mp = document.createElementNS(NS, 'path'); mp.setAttribute('d', d); mp.setAttribute('pathLength', 1);
+  mp.setAttribute('stroke', 'white'); mp.setAttribute('stroke-width', 30); mp.setAttribute('fill', 'none'); mp.setAttribute('stroke-linecap', 'round');
+  mask.appendChild(mp); el('masken').appendChild(mask);
+  const strom = mk('strom', { mask: `url(#${mid})` });
+  const laenge = strom.getTotalLength ? strom.getTotalLength() : 500;
+  const r = { aussen, innen, strom, mp, laenge, fl: [] };
+  ROHR_LISTE.push(r);
+  return r;
+};
+const ROHR_LISTE = [];
+const rohrZeichnen = (r, t0, d = .5) => { strich(r.aussen, t0, d); strich(r.innen, t0, d); };
+const rohrAus = (r, t0, d = .3) => { [r.aussen, r.innen].forEach(p => { akteur(p, {}, true); tw(p, t0, d, { o: 0 }); }); };
+// Fluss von t0 bis t1: Front läuft vor, Ende läuft nach (je df Sekunden)
+const fluss = (r, t0, t1, df = .35) => r.fl.push([t0, t1, df]);
+HOOKS.push(t => ROHR_LISTE.forEach(r => {
+  const a = r.fl.find(([t0, t1, df]) => t >= t0 && t <= t1 + df);
+  if (!a) { r.mp.style.strokeDasharray = '1 1'; r.mp.style.strokeDashoffset = 1; r.strom.style.opacity = 0; return; }
+  const [t0, t1, df] = a;
+  const o = 1 - E.inout(clamp((t - t0) / df)) - E.inout(clamp((t - t1) / df));
+  r.mp.style.strokeDasharray = '1 1'; r.mp.style.strokeDashoffset = o; r.strom.style.opacity = 1;
+  // Münzband: Lücken wandern mit ~420 px/s durch das Rohr
+  const per = 26 / r.laenge;
+  r.strom.style.strokeDasharray = `${(per * .72).toFixed(5)} ${(per * .28).toFixed(5)}`;
+  r.strom.style.strokeDashoffset = (-(t - t0) * 420 / r.laenge).toFixed(5);
+}));
+
+/* ---------- Monatsrad: Ring dreht, Nabe zeigt Tag oder Woche ---------- */
+const RAEDER = [];
+const RAD0 = {};
+const radInit = (id, art) => {
+  const r0 = art === 'tag' ? 0 : -45; RAD0[id] = r0;
+  const ring = el(id).querySelector('.ring'); akteur(ring, { r: r0 }, true);
+  el(id).querySelector('small').textContent = art === 'tag' ? 'Tag' : 'Woche';
+  RAEDER.push([id, ring, art, r0]);
+};
+HOOKS.push(t => RAEDER.forEach(([id, ring, art, r0]) => {
+  const r = -(wert(AKTEURE.get(ring), 'r', t) - r0);   // Ring dreht gegen den Uhrzeigersinn, der Zeiger steht oben
+  const b = el(id).querySelector('b');
+  b.textContent = art === 'tag' ? Math.min(30, 1 + Math.round(clamp(r / 360) * 29)) + '.' : Math.min(4, 1 + Math.floor(clamp(r / 360) * 4 + 1e-6)) + '';
+}));
+const radDrehen = (id, t0, d, grad, e = 'inout') => tw(el(id).querySelector('.ring'), t0, d, { r: (RAD0[id] || 0) - grad }, e);
+
+/* ---------- Kalenderblatt umblättern ---------- */
+const blaettern = (blattId, t, d = .32) => {
+  if (!AKTEURE.get(el(blattId))) akteur(blattId, {}, true);
+  tw(blattId, t, d * .45, { sy: 0 }, 'in'); tw(blattId, t + d * .45, d * .55, { sy: 1 }, 'out'); klang(t, 'klick');
+};
+
+/* ---------- Kamera: Fahrten, Zoom-Atmer, Akzente, Unschärfe in Fahrtrichtung, Wackler ---------- */
+const FAHRTEN = [], AKZENTE = [], WACKLER = [], ZOOMS = [];
+const fahrt = (t0, n, d = 1.0, e = 'inout') => { const k = KAM(n); tw('welt', t0, d, k, e); FAHRTEN.push([t0, d]); klang(t0, 'whoosh'); };
+const kameraSprung = (t, n) => set('welt', t, KAM(n));
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+const wackler = (t, a = 14, d = .5) => WACKLER.push([t, a, d]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+HOOKS.push(t => {
+  let z = 1;
+  for (const [a, d] of FAHRTEN) z -= .07 * Math.sin(Math.PI * clamp((t - a) / d));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
+  const wx = wert(kamera, 'x', t), wy = wert(kamera, 'y', t);
+  let ox = 600 + Math.max(0, Math.min(360, wx)), oy = 540;
+  for (const z0 of ZOOMS) { const f = z0(t); if (f) { z *= f.z; ox = f.ox; oy = f.oy; } }
+  let dx = 0, dy = 0;
+  for (const [a, amp, d] of WACKLER) { const p = (t - a) / d; if (p > 0 && p < 1) { const k = amp * (1 - p) ** 2; dx += k * Math.sin(p * 47); dy += k * Math.cos(p * 39); } }
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
+  $('#kamera').style.transform = `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${z.toFixed(4)})`;
+  // Bewegungsunschärfe in Fahrtrichtung
+  const vx = Math.abs(wx - wert(kamera, 'x', t - 1 / 30)), vy = Math.abs(wy - wert(kamera, 'y', t - 1 / 30));
+  const bx = Math.min(22, vx * .1), by = Math.min(22, vy * .1);
+  el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('welt').style.filter = bx > .3 || by > .3 ? 'url(#wischer)' : '';
+});
+
+/* ================= 1 · Monatsanfang: Münzregen ins Glas, Monatsende: fast leer (mittig, ohne Titel) ================= */
+{
+  akteur('g1', P(1, 720, 556)); akteur('hahn1', P(1, 720, 768));
+  ein('g1', .15, P(1, 720, 556), { y: 80 }, 'whoosh'); ein('hahn1', .25, P(1, 720, 768), { y: 80 });
+  pegelSofort('g1', 0, 0);
+  radInit('rad1', 'tag');
+  pop('rad1', W('Monatsanfang', 1) - .2, P(1, 300, 330), 'pop', 'sanft');
+  bump('rad1', W('Monatsanfang', 1) + .45, 1.08); klang(W('Monatsanfang', 1) + .45, 'ding');
+  pop('mai1', .55, P(1, 300, 700), 'pop', 'sanft'); froh('mai1', .6);
+  // Münzregen: Münzen fallen von oben ins Glas, der Füllstand steigt mit jeder Münze
+  const tR = W('kommt', 1) - .15, N = 14;
+  for (let k = 0; k < N; k++) {
+    const t0 = tR + k * .085, lv = (k + 1) * .06, x = 720 + [-70, 40, -20, 80, -95, 15, 60, -50, 95, -10, 30, -80, 70, 0][k];
+    muenzFall(t0, x, -120, oberflaeche('g1', t0 + .5, lv - .03), .5, { r: k * 37 % 90 - 45, g: 58 });
+    pegel('g1', t0 + .46, lv, .25, 'out');
+    if (k % 3 === 0) klang(t0 + .46, 'muenze');
+  }
+  const tVoll = tR + N * .085 + .5;
+  bump('g1', tVoll, 1.04); froh('mai1', W('Geld', 1)); huepfen('mai1', W('Geld', 1) + .05, 16); klang(tVoll, 'ding');
+  // Monatsende: das Rad dreht bis zum 30., unten läuft das Geld heraus
+  radDrehen('rad1', W('Monatsende', 2) - .15, WE('leer', 2) - W('Monatsende', 2) + .2, 360, 'inout');
+  const tL0 = W('Monatsende', 2) + .25, tL1 = W('leer', 2) + .1;
+  pegel('g1', tL0, .1, tL1 - tL0, 'inout');
+  bump('hahn1', tL0 - .1, 1.15); klang(tL0 - .1, 'klick');
+  const nL = 12;
+  for (let k = 0; k < nL; k++) {
+    const t0 = tL0 + k * (tL1 - tL0 - .3) / nL, li = k % 2 ? 1 : -1, w = 120 + (k * 53) % 170;
+    const id = muenzSprung(t0, 720, 780, 720 + li * w, 822, { h: 70 + (k * 29) % 60, d: .55, g: 50, dreh: li * 380, s1: .9, bleibt: true });
+    tw(id, t0 + .55, .45, { x: 720 + li * (w + 70), r: li * 520 }, 'out'); tw(id, t0 + .7, .3, { o: 0 }, 'lin');
+    if (k % 2 === 0) klang(t0 + .5, 'muenze');
+  }
+  mund('mai1', W('fast', 2), 'auf');
+  wackeln('g1', W('leer', 2), 4, 3); klang(W('leer', 2), 'plopp');
+  // Wo ist das Geld geblieben?
+  pop('frage1', W('Wo', 3) - .3, P(1, 740, 252), 'pop', 'sanft');
+  titelEin('tb1', W('Wo', 3) - .05);
+  pop('q1', W('geblieben', 3), P(1, 300, 556)); wackeln('q1', W('geblieben', 3) + .45, 4, 7);
+  // Mit einem Plan: die Karte dreht sich um – dahinter der Plan
+  const tP = W('Plan', 4) - .3;
+  tw('frage1', tP, .2, { sx: 0 }, 'in'); set('frage1', tP + .2, { o: 0 }); klang(tP, 'whoosh');
+  akteur('plan1', { ...P(1, 740, 252), sx: 0 }); tw('plan1', tP + .2, .35, { sx: 1 }, 'sanft');
+  akzent(W('Plan', 4), .03);
+  tw('q1', W('Plan', 4), .3, { s: 0 }, 'sinus');
+  const PZ = [...el('plan1').querySelectorAll('.pz')];
+  PZ.forEach((p, i) => strich(p, W('behältst', 4) - .2 + i * .12, .45));
+  const MINI = [...el('plan1').querySelectorAll('.mini')];
+  MINI.forEach((m, i) => { akteur(m, { o: .35 }, true); tw(m, W('Überblick', 4) - .25 + i * .15, .3, { o: 1 }); });
+  MINI.forEach(m => { m.style.transformBox = 'fill-box'; m.style.transformOrigin = '50% 100%'; });
+  MINI.forEach((m, i) => { tw(m, W('Überblick', 4) - .25 + i * .15, .12, { sy: 1.2 }, 'sinus'); tw(m, W('Überblick', 4) - .13 + i * .15, .3, { sy: 1 }, 'sanft'); });
+  MINI.forEach(m => m.setAttribute('fill', 'var(--warning)'));
+  froh('mai1', W('Überblick', 4)); huepfen('mai1', W('Überblick', 4), 16); klang(W('Überblick', 4), 'erfolg');
+}
+
+/* ================= 2 · Gehaltszettel: Brutto, Netto, Sozialversicherung (Etage über dem Glas) ================= */
+const T12 = SE(4) + .08;
+fahrt(T12, 2, 1.05);
+{
+  // Etage 1 räumen, solange die Kamera oben ist; das Glas wartet an seinem Platz für Szene 3
+  const tR = T12 + 1.1;
+  ['rad1', 'mai1', 'plan1', 'hahn1'].forEach(id => set(id, tR, { o: 0 }));
+  set('g1', tR, { ...P(1, 600, 300), s: .62 }); pegelSofort('g1', tR, .04);
+
+  const Z = { x: X(2, 400), y: Y(2, 520) };   // Mitte des Zettels
+  akteur('zettel2', Z);
+  const tU = W('Plane', 5) - .35, dU = .7;
+  akteur('walze2', { x: Z.x, y: Z.y - 320, o: 0 });
+  tw('walze2', tU - .15, .15, { o: 1 }); tw('walze2', tU, dU, { y: Z.y + 320 }, 'out'); tw('walze2', tU + dU, .25, { o: 0 }); klang(tU, 'whoosh');
+  HOOKS.push(t => { const p = E.out(clamp((t - tU) / dU)); el('zettel2').style.clipPath = `inset(0 -40px ${((1 - p) * 100).toFixed(2)}% -40px)`; });
+  // Balken (Koordinaten im Zettel)
+  akteur('bBrutto', { x: 40, y: 146, sx: 0 }, true); tw('bBrutto', tU + .5, .55, { sx: 1 }, 'out');
+  akteur('bNetto', { x: 40, y: 436, sx: 0 }, true); tw('bNetto', tU + .75, .45, { sx: 1 }, 'out');
+  akteur('nettoGlow', { x: 30, y: 376, o: 0 }, true);
+  akteur('abzugGlow', { x: 302, y: 138, o: 0 }, true);
+  akteur('bAbzugRest', { x: 310, y: 266, sx: 0 }, true);
+  akteur('lAbzug', { x: 40, y: 220, o: 0 }, true);
+  akteur('ok2', { x: 382, y: 432, s: 0 }, true);
+  titelEin('tb2', Math.max(W('Plane', 5) - .05, T12 + .9));
+  // Netto leuchtet
+  tw('nettoGlow', W('Netto', 5) - .1, .3, { o: 1 }); bump('bNetto', W('Netto', 5), 1.06); akzent(W('Netto', 5)); klang(W('Netto', 5), 'ding');
+  // … das wirklich auf deinem Konto ankommt: Münzen springen in den Trichter
+  ein('trichter2', W('Konto', 6) - .35, P(2, 880, 770), { y: 60 }, 'whoosh');
+  pop('konto2', W('Konto', 6) - .1, P(2, 880, 735), 'pop');
+  bump('bNetto', W('wirklich', 6), 1.05);
+  const tA = W('ankommt', 6) - .1;
+  for (let k = 0; k < 6; k++) muenzSprung(tA + k * .09, X(2, 220 + k * 40), Y(2, 640), X(2, 880 + (k % 3 - 1) * 26), Y(2, 790), { h: 150, d: .6, g: 50, s1: .7 });
+  klang(tA + .55, 'muenze'); klang(tA + .8, 'muenze'); bump('trichter2', tA + .65, 1.06); bump('konto2', tA + .7, 1.1);
+  // Sozialversicherung: das Stück vom Brutto ist schon abgezogen
+  tw('abzugGlow', W('Beiträge', 7) - .1, .3, { o: 1 });
+  const tS = W('Sozialversicherung', 7) - .15;
+  pop('kachel2', tS - .1, P(2, 880, 340), 'pop', 'sanft');
+  akteur('stueck2', { x: Z.x - 240 + 355, y: Z.y - 320 + 164, o: 0 });
+  set('stueck2', tS + .25, { o: 1 }); tw('abzugGlow', tS + .25, .2, { o: 0 });
+  wackeln('stueck2', tS + .3, 3, 4);
+  flug('stueck2', tS + .65, .75, X(2, 880), Y(2, 330), 150, { s: .3, r: 0 }); tw('stueck2', tS + 1.3, .15, { o: 0 }); klang(tS + .65, 'whoosh');
+  HOOKS.push(t => { el('bBrutto').style.clipPath = t >= tS + .25 ? 'inset(0 25% 0 0 round 10px)' : ''; });
+  bump('kachel2', tS + 1.4, 1.08); klang(tS + 1.4, 'plopp');
+  pop('c2a', W('Kranken', 7) - .05, P(2, 820, 500)); pop('c2b', W('Rentenversicherung', 7) + .1, P(2, 950, 500));
+  // abgezogen: die Zeile steht auf dem Zettel, Netto bekommt den Haken
+  const tAb = W('abgezogen', 7) - .1;
+  tw('lAbzug', tAb, .35, { o: 1 }); tw('bAbzugRest', tAb + .1, .4, { sx: 1 }, 'out'); klang(tAb, 'tipp');
+  tw('ok2', tAb + .5, .5, { s: 1 }, 'back'); klang(tAb + .5, 'erfolg'); bump('bNetto', tAb + .5, 1.06);
+  textAus('tb2', SE(7) + .05);
+}
+
+/* ================= 3 · Fixkosten zuerst, Miete per Dauerauftrag (zurück zum Glas) ================= */
+const T23 = SE(7) + .1;
+fahrt(T23, 1, 1.05);
+const JX = [250, 483, 717, 950];
+const rohrA = rohr('M880 -225V40Q880 70 850 70H630Q600 70 600 100V170');
+const MAN = JX.map(x => rohr(`M600 430V476Q600 496 ${x < 600 ? 580 : 620} 496H${x < 600 ? x + 20 : x - 20}Q${x} 496 ${x} 516V560`));
+const rohrB = rohr('M600 496V1250');
+{
+  // Das Netto fällt durch das Rohr hinunter ins Glas
+  rohrZeichnen(rohrA, T23 - .25, .4);
+  fluss(rohrA, T23, T23 + 1.25, .4);
+  pegel('g1', T23 + .85, .92, .8, 'inout'); klang(T23 + .9, 'muenze'); klang(T23 + 1.2, 'muenze');
+  titelEin('tb3', W('Zuerst', 8) - .05, { unter: W('Dauerauftrag', 10) - .1 });
+  const tF = W('Fixkosten', 8) - .2;
+  akteur('klammer3', { ...P(1, 600, 715), o: 0, s: .96 }); tw('klammer3', tF, .45, { o: 1, s: 1 }, 'sanft');
+  pop('fix3', tF + .1, P(1, 834, 538), 'pop');
+  akzent(W('Fixkosten', 8));
+  MAN.forEach((r, i) => rohrZeichnen(r, tF + .1 + i * .06, .45));
+  ['j1', 'j2', 'j3', 'j4'].forEach((id, i) => { pop(id, tF + .25 + i * .08, P(1, JX[i], 645), i ? null : 'pop', 'sanft'); pegelSofort(id, 0, 0); });
+  ['i1', 'i2', 'i3', 'i4'].forEach((id, i) => pop(id, tF + .4 + i * .08, P(1, JX[i], 772), null));
+  ['l1', 'l2', 'l3', 'l4'].forEach((id, i) => pop(id, tF + .5 + i * .08, P(1, JX[i], 846), null));
+  // gleich jeden Monat: gestrichelte Marke auf gleicher Höhe in allen Gläsern
+  ['j1', 'j2', 'j3', 'j4'].forEach((id, i) => {
+    const m = GL[id].m; m.style.top = (GL[id].Hi * .2) + 'px'; akteur(m, { o: 0 }, true);
+    tw(m, W('gleich', 9) - .1 + i * .07, .25, { o: .9 }); tw(m, W('Miete', 9) + i * .3, .3, { o: 0 });
+  });
+  klang(W('gleich', 9), 'scan');
+  // Miete, Handy, Ticket, Versicherungen: je ein Strom ins Glas, das große Glas wird leerer
+  ['Miete', 'Handy', 'Ticket', 'Versicherungen'].forEach((w, i) => {
+    const t = W(w, 9) - .15, id = 'j' + (i + 1);
+    fluss(MAN[i], t, t + .55, .3);
+    pegel(id, t + .3, .8, .55, 'out');
+    pegel('g1', t + .1, .92 - (i + 1) * .12, .6, 'inout');
+    bump('i' + (i + 1), t + .75, 1.14); bump('l' + (i + 1), t + .8, 1.08);
+    klang(t + .3, 'muenze');
+  });
+  // Dauerauftrag: Kalender mit Kreispfeil steuert das Ventil der Miete
+  bump('j1', W('Miete', 10), 1.06); bump('i1', W('Miete', 10), 1.12);
+  const tD = W('Dauerauftrag', 10) - .2;
+  pop('kal3', tD, P(1, 300, 300), 'pop', 'sanft');
+  akteur('kal3k', { s: 0 }, true); tw('kal3k', tD + .3, .45, { s: 1 }, 'back'); klang(tD + .3, 'ding');
+  akteur('verb3', { ...P(1, 960, 540), o: 0, draw: 0 }); tw('verb3', tD + .45, .1, { o: 1 }); tw('verb3', tD + .45, .5, { draw: 1 }, 'inout');
+  pop('ventil3', tD + .85, P(1, 250, 512), 'plopp');
+  // jeden Monat pünktlich: das Blatt blättert, das Ventil dreht, die Miete fließt ins Haus – immer schneller
+  akteur('kal3b', {}, true);
+  const PUL = [W('jeden', 11) - .15, W('pünktlich', 11) - .2, W('bezahlt', 11) + .1];
+  akteur('ok3', { ...P(1, 290, 742), s: 0 });
+  PUL.forEach((p, k) => {
+    const d = [.9, .7, .55][k];
+    blaettern('kal3b', p, .3); bump('kal3', p, 1.05);
+    tw('ventil3', p + .1, d * .6, { r: (k + 1) * 180 }, 'inout');
+    muenzSprung(p + .15, X(1, 250), Y(1, 600), X(1, 250), Y(1, 760), { h: 40, d: .4, g: 42, s1: .6 });
+    pegel('j1', p + .15, .3, .3, 'in');
+    fluss(MAN[0], p + .3, p + .3 + d * .5, .25); pegel('j1', p + .5, .8, d * .5, 'out');
+    bump('i1', p + .55, 1.12);
+    if (k === 0) { tw('ok3', p + .6, .45, { s: 1 }, 'back'); klang(p + .6, 'ding'); } else { bump('ok3', p + .6, 1.2); klang(p + .6, 'ding'); }
+  });
+  textAus('tb3', SE(11) + .15);
+}
+
+/* ================= 4 · Den Rest auf die Wochen verteilen (Etage darunter) ================= */
+const T34 = SE(11) + .25;
+const WX = [250, 483, 717, 950];
+const VERT = WX.map(x => rohr(`M600 ${1080 + 422}V${1080 + 476}Q600 ${1080 + 496} ${x < 600 ? 580 : 620} ${1080 + 496}H${x < 600 ? x + 20 : x - 20}Q${x} ${1080 + 496} ${x} ${1080 + 516}V${1080 + 560}`));
+{
+  rohrZeichnen(rohrB, T34 - .3, .35);
+  fluss(rohrB, T34 - .05, T34 + 1.35, .4);
+  pegel('g1', T34, 0, .9, 'inout');
+  fahrt(T34 + .1, 3, 1.05);
+  akteur('g4', P(3, 600, 304)); pegelSofort('g4', 0, 0);
+  pegel('g4', T34 + 1.0, .9, .7, 'out'); klang(T34 + 1.05, 'muenze');
+  titelEin('tb4', W('übrig', 12) - .1);
+  pop('mai4', W('Was', 12) - .2, P(3, 600, 862), 'pop', 'sanft');
+  // Essen, Kleidung, Freizeit kommen aus dem Glas
+  [['e4a', 'el4a', 'Essen', 210], ['e4b', 'el4b', 'Kleidung', 330], ['e4c', 'el4c', 'Freizeit', 450]].forEach(([ic, lb, w, y], i) => {
+    const t = W(w, 12) - .2;
+    akteur(ic, { ...P(3, 600, 300), s: .3, o: 0 }); set(ic, t, { o: 1 });
+    flug(ic, t, .6, X(3, 820), Y(3, y), 90, { s: 1 }); landen(ic, t + .6, .7); klang(t, 'pop');
+    pop(lb, t + .45, P(3, 952, y), null);
+  });
+  // Teil diesen Rest auf die Wochen auf
+  const tT = W('Teil', 13) - .2;
+  ['w1', 'w2', 'w3', 'w4'].forEach((id, i) => { pop(id, tT + i * .08, P(3, WX[i], 642), i ? null : 'pop', 'sanft'); pegelSofort(id, 0, 0); });
+  ['wl1', 'wl2', 'wl3', 'wl4'].forEach((id, i) => pop(id, tT + .2 + i * .08, P(3, WX[i], 760), null));
+  VERT.forEach((r, i) => rohrZeichnen(r, tT + .15 + i * .05, .45));
+  bump('g4', W('Rest', 13), 1.06);
+  const tV = W('Wochen', 13) - .2;
+  VERT.forEach((r, i) => fluss(r, tV, tV + .65, .3));
+  pegel('g4', tV, 0, .9, 'inout');
+  ['w1', 'w2', 'w3', 'w4'].forEach((id, i) => pegel(id, tV + .35, .78, .6, 'out'));
+  klang(tV + .35, 'muenze'); klang(tV + .6, 'muenze');
+  radInit('rad4', 'woche');
+  pop('rad4', W('Wochen', 13) + .1, P(3, 300, 304), 'pop', 'sanft');
+  // Der Monat läuft: Woche für Woche wird ein Glas leerer – in Woche 4 ist noch Geld da
+  const WT = [W('So', 14) - .1, W('Ende', 14) - .05, W('Monat', 14), W('Geld', 14) + .05];
+  const ZIEL = [['e4a', 210], ['e4b', 330], ['e4c', 450], ['e4a', 210]];
+  WT.forEach((t, k) => {
+    if (k) radDrehen('rad4', t - .2, .3, k * 90, 'inout');
+    klang(t - .2, 'klick'); bump('w' + (k + 1), t - .05, 1.06); bump('wl' + (k + 1), t - .05, 1.1);
+    pegel('w' + (k + 1), t, k === 3 ? .4 : .06, .45, 'inout');
+    for (let j = 0; j < (k === 3 ? 1 : 2); j++) {
+      const [ic, y] = ZIEL[(k + j) % 3];
+      muenzSprung(t + j * .1, X(3, WX[k]), Y(3, 590), X(3, 820), Y(3, y), { h: 110, d: .5, g: 40, s1: .6 });
+      bump(ic, t + j * .1 + .5, 1.1);
+    }
+  });
+  const tDa = W('da', 14);
+  wellen('welle4', [tDa - .1], X(3, 950), Y(3, 642), 1.0, 190, 'var(--success)');
+  pop('ok4', tDa - .05, P(3, 1004, 580), 'erfolg');
+  froh('mai4', tDa - .1); huepfen('mai4', tDa, 14);
+  textAus('tb4', SE(14) + .15);
+}
+
+/* ================= Übergang 4 → 5: Zoom in das Glas „Woche 4“ – heraus aus dem Notgroschen ================= */
+const TZ = SE(14) + .25;
+{
+  const tIn = .55, tOut = .7;
+  ZOOMS.push(t => {
+    const a = (t - TZ) / tIn, b = (t - TZ - tIn) / tOut;
+    if (a > 0 && a < 1) return { z: 1 + 7 * E.in(a), ox: 950, oy: 642 };
+    if (b >= 0 && b < 1) return { z: 1 + 7 * (1 - E.out(b)), ox: 520, oy: 600 };
+    return null;
+  });
+  HOOKS.push(t => { const o = clamp((t - TZ - tIn + .2) / .2) * (1 - clamp((t - TZ - tIn - .05) / .3)); el('goldblende').style.opacity = o.toFixed(3); });
+  kameraSprung(TZ + tIn, 4); klang(TZ, 'whoosh'); klang(TZ + tIn, 'whoosh');
+}
+
+/* ================= 5 · Notgroschen: jeden Monat etwas zur Seite ================= */
+{
+  akteur('gN', P(4, 520, 560)); pegelSofort('gN', 0, .1);
+  const rN = rohr(`M520 ${2160 + 150}V${2160 + 390}`);
+  rohrZeichnen(rN, TZ + .4, .05);
+  pop('kal5', TZ + 1.05, P(4, 280, 300), 'pop', 'sanft');
+  pop('mai5', TZ + 1.2, P(4, 250, 650), null, 'sanft');
+  akteur('kal5b', {}, true);
+  const MT = [W('jeden', 15) - .1, W('Monat', 15) + .3, W('Seite', 15), W('wenig', 15) - .05];
+  MT.forEach((t, k) => {
+    blaettern('kal5b', t - .15, .3);
+    muenzFall(t, X(4, 520), Y(4, 120), oberflaeche('gN', 0, .1 + k * .07), .55, { g: 54, dreh: 200 });
+    pegel('gN', t + .5, .17 + k * .07, .3, 'out'); klang(t + .5, 'muenze');
+  });
+  // Das ist dein Notgroschen
+  const tN = W('Notgroschen', 16) - .1;
+  akteur(GL.gN.band, { sx: 0 }, true); tw(GL.gN.band, tN, .45, { sx: 1 }, 'sanft'); klang(tN, 'ding');
+  wellen('welle5', [tN + .1, tN + .7], X(4, 520), Y(4, 560), 1.1, 330);
+  bump('gN', tN + .1, 1.05); akzent(W('Notgroschen', 16));
+  froh('mai5', tN + .2);
+  titelEin('tb5', W('Das', 16) - .05, { unter: W('hilft', 17) - .1 });
+  // Handy kaputt, Rechnung kommt – der Notgroschen hilft
+  ein('handy5', W('Handy', 17) - .3, P(4, 860, 330), { y: 60 }, 'pop');
+  akteur('riss5', { ...P(4, 860, 330), o: 0, draw: 0 });
+  const tK = W('kaputtgeht', 17) + .05;
+  set('riss5', tK, { o: 1 }); tw('riss5', tK, .25, { draw: 1 }, 'out'); klang(tK, 'klick'); wackeln('handy5', tK, 5, 5); wackler(tK, 8, .4);
+  mund('mai5', tK, 'auf');
+  const tRe = W('unerwartete', 17) - .15;
+  akteur('rechnung5', { ...P(4, 1000, 120), o: 0, r: 14 });
+  set('rechnung5', tRe, { o: 1 });
+  tw('rechnung5', tRe, .9, { x: X(4, 860), y: Y(4, 650) }, 'out');
+  [-10, 8, -4, 2, 0].forEach((r, i) => tw('rechnung5', tRe + i * .18, .18, { r }, 'sinus')); klang(tRe, 'whoosh');
+  pop('ausruf5', W('Rechnung', 17) + .1, P(4, 930, 580), 'klick');
+  const tH = W('kommt', 17) - .05;
+  [[860, 330], [860, 330], [860, 640], [860, 640]].forEach(([x, y], k) => muenzSprung(tH + k * .1, X(4, 520), Y(4, 470), X(4, x), Y(4, y), { h: 150, d: .55, g: 46, s1: .6 }));
+  pegel('gN', tH, .2, .5, 'inout'); klang(tH + .5, 'muenze');
+  tw('riss5', tH + .6, .3, { o: 0 }); bump('handy5', tH + .6, 1.08);
+  pop('ok5', tH + .7, P(4, 925, 255), 'ding');
+  tw('ausruf5', tH + .7, .2, { s: 0 }, 'sinus');
+  akteur('bezahlt5', { ...P(4, 860, 660), o: 0, s: 1.7, r: -3 });
+  tw('bezahlt5', tH + .85, .12, { o: 1 }); tw('bezahlt5', tH + .85, .22, { s: 1 }, 'in'); klang(tH + 1.07, 'plopp'); wackeln('bezahlt5', tH + 1.07, 3, 2);
+  wackler(tH + 1.07, 5, .3);
+  froh('mai5', tH + .9); huepfen('mai5', tH + 1.0, 12);
+  textAus('tb5', SE(17) + .1);
+}
+
+/* ================= Übergang 5 → 6: Seite umblättern ================= */
+const TB = SE(17) + .25;
+{
+  const d1 = .45, d2 = .5;
+  HOOKS.push(t => {
+    const p1 = E.inout(clamp((t - TB) / d1)), p2 = E.inout(clamp((t - TB - d1 - .05) / d2));
+    const L = 1920 * (1 - p1), R = 1920 * (1 - p2);
+    el('seite').style.clipPath = `inset(0 ${(1920 - R).toFixed(1)}px 0 ${L.toFixed(1)}px)`;
+    const k = el('seitenkante');
+    const aktiv = t > TB && p2 < 1;
+    k.style.opacity = aktiv ? 1 : 0;
+    k.style.left = (p1 < 1 ? L : R + 90) + 'px';
+    k.style.transform = p1 < 1 ? '' : 'scaleX(-1)';
+  });
+  kameraSprung(TB + d1 + .02, 5); klang(TB, 'whoosh'); klang(TB + d1 + .05, 'whoosh');
+}
+
+/* ================= 6 · Ein Beispiel: 800 € − 450 € − 50 € = 300 € ================= */
+{
+  akteur('notiz6', P(5, 455, 450));
+  akteur('beispiel6', { ...P(5, 590, 230), o: 0, s: 1.8, r: 3 });
+  const tB = W('Beispiel', 18) - .15;
+  tw('beispiel6', tB, .1, { o: 1 }); tw('beispiel6', tB, .22, { s: 1 }, 'in'); klang(tB + .22, 'plopp'); wackeln('beispiel6', tB + .22, 3, 2);
+  titelEin('tb6', W('Beispiel', 18) - .1, { unter: W('etwa', 21) - .1 });
+  pop('mai6', W('Mai', 18) - .15, P(5, 930, 690), 'pop', 'sanft'); froh('mai6', W('Mai', 18));
+  akteur('g6', P(5, 920, 400)); pegelSofort('g6', 0, 0);
+  pop('g6', W('Mai', 18) - .05, P(5, 920, 400), null, 'sanft');
+  // Schreiben: Text tippt sich, der Stift läuft mit
+  const ZL = [['z6a', '800 € netto', W('achthundert', 18) - .05, WE('netto', 18) - W('achthundert', 18)],
+    ['z6b', '− 450 € Fixkosten', W('Fixkosten', 19) - .2, WE('Euro', 19) - W('Fixkosten', 19)],
+    ['z6c', '− 50 € Notgroschen', W('Fünfzig', 20) - .05, WE('Notgroschen', 20) - W('Fünfzig', 20)],
+    ['z6d', '= 300 €', W('dreihundert', 21) - .05, .6]];
+  schreiber('notiz6', 'stift6', ZL);
+  // Glas: 800 € kommen, 450 € und 50 € gehen
+  for (let k = 0; k < 5; k++) muenzFall(W('netto', 18) - .45 + k * .08, X(5, 920 + (k % 2 ? 30 : -30)), Y(5, 120), Y(5, 300), .4, { g: 46 });
+  pegel('g6', W('netto', 18) - .05, 1, .5, 'out'); klang(W('netto', 18), 'muenze');
+  const tF = W('vierhundertfünfzig', 19) + .1;
+  pegel('g6', tF, .44, .7, 'inout');
+  for (let k = 0; k < 4; k++) muenzSprung(tF + k * .1, X(5, 920), Y(5, 290), X(5, 680), Y(5, 190 + 22), { h: 90, d: .5, g: 40, s1: .5 });
+  klang(tF + .45, 'muenze');
+  const tG = W('Fünfzig', 20) + .2;
+  pegel('g6', tG, .375, .4, 'inout'); muenzSprung(tG, X(5, 920), Y(5, 380), X(5, 680), Y(5, 290), { h: 80, d: .5, g: 40, s1: .5 }); klang(tG + .45, 'muenze');
+  akteur('strich6', { x: 40, y: 324, sx: 0 }, true); tw('strich6', W('Dann', 21) - .05, .45, { sx: 1 }, 'inout'); klang(W('Dann', 21), 'kritzeln');
+  bump('notiz6', W('dreihundert', 21) + .5, 1.03); klang(W('dreihundert', 21) + .5, 'ding'); akzent(W('dreihundert', 21) + .3, .03);
+  // etwa 70 € pro Woche: das Glas teilt sich auf vier Umschläge
+  const UX = [290, 470, 650, 830];
+  ['u6a', 'u6b', 'u6c', 'u6d'].forEach((id, i) => ein(id, W('etwa', 21) - .2 + i * .07, P(5, UX[i], 832), { y: 60 }, i ? null : 'whoosh'));
+  ['u6a', 'u6b', 'u6c', 'u6d'].forEach((id, i) => { const b = el(id).querySelector('b'); akteur(b, { o: 0 }, true); tw(b, W('siebzig', 21) + .1 + i * .06, .3, { o: 1 }); });
+  pegel('g6', W('siebzig', 21) - .1, .03, .6, 'inout');
+  UX.forEach((x, i) => muenzSprung(W('siebzig', 21) - .1 + i * .08, X(5, 920), Y(5, 520), X(5, x), Y(5, 820), { h: 120, d: .55, g: 40, s1: .5 }));
+  klang(W('siebzig', 21) + .4, 'muenze');
+  ['u6a', 'u6b', 'u6c', 'u6d'].forEach((id, i) => huepfen(id, W('Woche', 21) + i * .07, 12));
+  froh('mai6', W('Woche', 21)); huepfen('mai6', W('Woche', 21) + .1, 12);
+  textAus('tb6', SE(21) + .1);
+}
+
+/* Schreiber: tippt Zeilen in einen Zettel, die Stiftspitze läuft gleichmäßig mit (wie Kurs 32) */
+function schreiber(zettelId, stiftId, zeilen) {
+  const Z = zeilen.map(([id, txt, t0, d]) => [el(id), txt, t0, d]);
+  akteur(stiftId, { o: 0 }, true);
+  const t0 = Z[0][2], t1 = Z[Z.length - 1][2] + Z[Z.length - 1][3];
+  tw(stiftId, t0 - .35, .25, { o: 1 }); tw(stiftId, t1 + .25, .3, { o: 0 });
+  Z.forEach(([, txt, ts, d]) => { for (let k = 0; k < Math.max(2, Math.round(d / .14)); k++) klang(ts + k * .14, 'tipp'); });
+  const SP = { x: 24 - 32, y: -26 - 32 }, B = [];
+  HOOKS.push(t => {
+    if (!B.fertig) { Z.forEach(([e, txt], i) => { e.textContent = txt; B[i] = e.offsetWidth; }); B.fertig = document.fonts.status === 'loaded'; }
+    Z.forEach(([e, txt, ts, d]) => { e.textContent = txt.slice(0, Math.floor(clamp((t - ts) / d) * txt.length)); });
+    let i = Z.findIndex(([, , ts, d], k) => t < ts + d || k === Z.length - 1);
+    const [e, , ts, d] = Z[i];
+    let x = e.offsetLeft + B[i] * clamp((t - ts) / d), y = e.offsetTop + e.offsetHeight - 10;
+    if (t < ts && i > 0) {   // zwischen zwei Zeilen gleitet der Stift weich weiter
+      const [e0, , ts0, d0] = Z[i - 1], p = E.sinus(clamp((t - ts0 - d0) / Math.max(.05, ts - ts0 - d0)));
+      x = lerp(e0.offsetLeft + B[i - 1], e.offsetLeft, p); y = lerp(e0.offsetTop + e0.offsetHeight - 10, y, p);
+    }
+    el(stiftId).style.transform = `translate(${(x + SP.x).toFixed(1)}px,${(y + SP.y).toFixed(1)}px)`;
+  });
+}
+
+/* ================= 7 · Ausgaben aufschreiben ================= */
+const T67 = SE(21) + .25;
+fahrt(T67, 6, 1.0);
+{
+  titelEin('tb7', W('Schreib', 22) - .05);
+  ein('heft7', W('Schreib', 22) - .35, P(6, 390, 430), { y: 80 }, 'whoosh');
+  pop('mai7', W('Monat', 22) - .3, P(6, 250, 800), 'pop', 'sanft');
+  const ZE = [...el('heft7').querySelectorAll('.zeile span')];
+  ZE.forEach((z, i) => { z.id = 'h7z' + i; });
+  const WOERTER = ['Brot', 'Kaffee', 'Shampoo', 'Kaffee', 'Kaffee'];
+  const ts = W('Monat', 22) - .1, te = W('Heft', 22) - .1, sch = (te - ts) / WOERTER.length;
+  schreiber('heft7', 'stift7', WOERTER.map((w, i) => ['h7z' + i, w, ts + i * sch, sch * .7]));
+  ZE.forEach((z, i) => { const u = z.nextElementSibling; akteur(u, { sx: 0 }, true); u.style.transformOrigin = '100% 50%'; tw(u, ts + i * sch + sch * .7, .2, { sx: 1 }, 'out'); });
+  bump('heft7', W('Heft', 22), 1.04); klang(W('Heft', 22), 'plopp');
+  ein('handy7', W('App', 22) - .3, P(6, 830, 410), { x: 90 }, 'whoosh');
+  [...el('handy7').querySelectorAll('.eintrag')].forEach((e, i) => { akteur(e, { o: 0, x: 20 }, true); tw(e, W('App', 22) + .1 + i * .1, .3, { o: 1, x: 0 }, 'out'); klang(W('App', 22) + .1 + i * .1, 'tipp'); });
+  // Auch den Kaffee unterwegs: die drei Kaffee-Zeilen leuchten, Becher stapeln sich zum Turm
+  const tK = W('Kaffee', 23) - .1;
+  [1, 3, 4].forEach((i, k) => {
+    const z = ZE[i].parentElement; HOOKS.push(t => { z.style.background = t >= tK + k * .18 && t < SE(24) ? 'var(--warning-bg)' : ''; });
+  });
+  const BE = [['b7a', 860], ['b7b', 784], ['b7c', 708]];
+  BE.forEach(([id, y], k) => {
+    const t = tK + k * .2, zy = 430 - 235 + 62 + [1, 3, 4][k] * 68 + 40;
+    akteur(id, { ...P(6, 520, zy), s: .4, o: 0 }); set(id, t, { o: 1 });
+    flug(id, t, .55, X(6, 975), Y(6, y), 120, { s: 1 }); landen(id, t + .55, .8); klang(t + .55, 'plopp');
+  });
+  wackeln('b7c', W('unterwegs', 23) + .1, 3, 3);
+  // Dann siehst du genau: die Lupe fährt über den Turm, er wird zur Summe
+  akteur('lupe7', { ...P(6, 1180, 600), o: 0, s: .8 });
+  tw('lupe7', W('siehst', 24) - .3, .3, { o: 1 }); tw('lupe7', W('siehst', 24) - .3, .6, { x: X(6, 960), y: Y(6, 820), s: 1 }, 'sanft');
+  tw('lupe7', W('genau', 24) - .2, .4, { y: Y(6, 700) }, 'inout');
+  tw('lupe7', W('wo', 24), .35, { o: 0, s: .8, x: X(6, 1120) }, 'in');
+  const tG = W('genau', 24) + .1;
+  ['b7a', 'b7b', 'b7c'].forEach((id, k) => { tw(id, tG + k * .05, .25, { s: 0 }, 'in'); });
+  pop('stapel7', tG + .2, P(6, 975, 800), 'ding');
+  wellen('welle7', [tG + .25], X(6, 975), Y(6, 800), 1.0, 200, 'var(--warning)');
+  akzent(tG, .03);
+  STAUNEN.push([el('mai7'), W('genau', 24), W('bleibt', 24) + .4]); mund('mai7', W('genau', 24), 'auf');
+  froh('mai7', W('bleibt', 24) + .2); bump('stapel7', W('bleibt', 24), 1.08);
+  textAus('tb7', SE(24) + .1);
+}
+
+/* ================= 8 · Dispo (Falltür ins Minus), Raten, Schuldnerberatung ================= */
+const T78 = SE(24) + .25;
+fahrt(T78, 7, 1.0);
+{
+  // Boden mit Falltür, Glas „Konto“ fast leer
+  akteur('boden8a', P(7, 207, 420)); akteur('boden8b', P(7, 563, 420));
+  akteur('klappe8a', { x: X(7, 260), y: Y(7, 414) }, true); akteur('klappe8b', { x: X(7, 370), y: Y(7, 414) }, true);
+  akteur('g8', P(7, 370, 312)); pegelSofort('g8', 0, .1);
+  akteur('null8', P(7, 215, 380)); akteur('konto8', P(7, 540, 300));
+  titelEin('tb8', W('Vorsicht', 25) - .05, { unter: W('Schuldnerberatung', 28) - .1 });
+  // Dispo: die Klappe färbt sich rot
+  const tD = W('Dispo', 25) - .1;
+  HOOKS.push(t => { const r = t >= tD; ['klappe8a', 'klappe8b'].forEach(id => { el(id).style.background = r ? 'var(--error)' : ''; }); });
+  pop('dispo8', tD, P(7, 370, 465), 'klick'); wackeln('dispo8', tD + .4, 3, 3);
+  wackeln('g8', tD + .2, 3, 2);
+  // Minus: die Falltür geht auf, das Glas fällt in den roten Keller (Überraschung)
+  const tM = W('Minus', 25) - .1;
+  tw('klappe8a', tM, .35, { r: 80 }, 'in'); tw('klappe8b', tM, .35, { r: -80 }, 'in'); klang(tM, 'klick');
+  tw('dispo8', tM, .2, { o: 0 }, 'in');
+  akteur('zone8', { ...P(7, 395, 663), o: 0 }); tw('zone8', tM + .05, .35, { o: 1 });
+  tw('g8', tM + .12, .45, { y: Y(7, 640) }, 'in'); landen('g8', tM + .57, 1); klang(tM + .57, 'plopp'); wackler(tM + .57, 16, .55);
+  HOOKS.push(t => { el('g8').classList.toggle('rot', t >= tM + .57); });
+  pegel('g8', tM + .57, .32, .5, 'out');
+  tw('konto8', tM + .12, .45, { y: Y(7, 560) }, 'in');
+  pop('minus8', tM + .7, P(7, 540, 640), 'pop');
+  akzent(tM + .6, .04);
+  // hohe Zinsen: Gewichte mit Prozent hängen sich an und ziehen tiefer
+  const tZ = W('hohe', 26) - .2;
+  [['gew8a', 'kette8a', 318], ['gew8b', 'kette8b', 422]].forEach(([g, k, x], i) => {
+    const t = tZ + i * .2;
+    akteur(g, { ...P(7, 1150, 860), o: 0 }); set(g, t, { o: 1 }); flug(g, t, .6, X(7, x), Y(7, 850), 160); landen(g, t + .6, .8); klang(t + .6, 'plopp');
+    akteur(k, { x: X(7, x) - 3, y: Y(7, 742), o: 0, sy: 0 }, true); tw(k, t + .6, .1, { o: 1 }); tw(k, t + .6, .25, { sy: 1 }, 'out');
+  });
+  const tT = W('Zinsen', 26) + .1;
+  tw(['g8'], tT, .5, { y: Y(7, 668) }, 'inout'); tw(['gew8a', 'gew8b'], tT, .5, { y: Y(7, 878) }, 'inout');
+  tw(['kette8a', 'kette8b'], tT, .5, { y: Y(7, 770) }, 'inout');
+  pegel('g8', tT, .5, .5, 'inout'); klang(tT, 'whoosh');
+  // Ratenkäufe, „Jetzt kaufen, später zahlen“: Ratenzettel stapeln sich zum wackligen Turm
+  const tW = W('Ratenkäufe', 27) - .3;
+  akteur('wagen8', { ...P(7, 1260, 790) });
+  tw('wagen8', tW, .8, { x: X(7, 900) }, 'out'); [4, -3, 2, 0].forEach((r, i) => tw('wagen8', tW + .6 + i * .12, .12, { r }, 'sinus')); klang(tW, 'whoosh');
+  const RT = [['r8a', W('Jetzt', 27) - .1], ['r8b', W('kaufen', 27)], ['r8c', W('später', 27)], ['r8d', W('zahlen', 27)], ['r8e', W('schnell', 27)]];
+  RT.forEach(([id, t], i) => {
+    const y = 640 - i * 62;
+    akteur(id, { ...P(7, 880, 760), o: 0, s: .5 }); set(id, t, { o: 1 });
+    flug(id, t, .5, X(7, 720), Y(7, y), 110, { s: 1, r: i % 2 ? 2 : -2 }); landen(id, t + .5, .6); klang(t + .5, 'plopp');
+  });
+  pop('spaeter8', W('später', 27) - .05, P(7, 905, 650), null);
+  const tS = W('Schulden', 27) - .1;
+  RT.forEach(([id], i) => wackeln(id, tS + i * .03, 5, 3 + i));
+  pop('schulden8', tS, P(7, 720, 290), 'klick'); wackler(tS, 6, .35);
+  // Wenn das Geld nicht reicht: Wagen fährt weg, die Tür zur Beratung kommt, Mai geht hin
+  tw('wagen8', W('Wenn', 28), .6, { x: X(7, 1280), o: 0 }, 'in');
+  tw('spaeter8', W('Wenn', 28), .3, { o: 0, s: .8 }, 'in');
+  ein('tuer8', W('Schuldnerberatung', 28) - .45, P(7, 935, 500), { y: 70 }, 'whoosh');
+  pop('mai8', W('hilft', 28) - .1, P(7, 935, 800), 'pop', 'sanft');
+  akteur('pfeil8', { ...P(7, 960, 540), o: 0, draw: 0 }); tw('pfeil8', W('Schuldnerberatung', 28) + .2, .1, { o: 1 }); tw('pfeil8', W('Schuldnerberatung', 28) + .2, .5, { draw: 1 }, 'inout');
+  // Viele Beratungsstellen …: die Tür geht auf, Stadt und Sozialverbände, oft kostenlos
+  const tO = W('Viele', 29) - .1;
+  akteur('tuer8b', {}, true); tw('tuer8b', tO, .5, { sx: .2 }, 'inout'); klang(tO, 'klick');
+  tw('schulden8', tO, .3, { o: 0, s: .8 }, 'in');
+  pop('stadt8', W('Stadt', 29) - .1, P(7, 935, 300));
+  pop('verband8', W('Sozialverbänden', 29) - .1, P(7, 935, 236));
+  tw('pfeil8', tO, .3, { o: 0 });
+  // der Turm wird kleiner: die Zettel wandern zur Beratung, die Gewichte fallen ab
+  const tK = W('sind', 29) - .2;
+  [...RT].reverse().forEach(([id], i) => { flug(id, tK + i * .1, .5, X(7, 935), Y(7, 540), 80, { s: .4 }); tw(id, tK + i * .1 + .4, .12, { o: 0 }); });
+  [['gew8a', 'kette8a'], ['gew8b', 'kette8b']].forEach(([g, k], i) => { tw(g, tK + .2 + i * .1, .45, { y: Y(7, 1000), o: 0 }, 'in'); tw(k, tK + .2, .2, { o: 0 }); });
+  tw('g8', tK + .3, .6, { y: Y(7, 600) }, 'sanft');
+  pop('frei8', W('kostenlos', 29) - .1, P(7, 720, 560), 'erfolg');
+  froh('mai8', W('kostenlos', 29)); huepfen('mai8', W('kostenlos', 29) + .1, 12); akzent(W('kostenlos', 29), .03);
+  textAus('tb8', SE(29) + .1);
+}
+
+/* ================= 9 · Treppe: Netto · Fixkosten · Notgroschen · Woche ================= */
+const T89 = SE(29) + .3;
+fahrt(T89, 8, 1.05);
+{
+  const SX = [255, 475, 695, 915], ST = [780, 690, 600, 510], SH = [120, 210, 300, 390];
+  const tbz = [W('Netto', 30) - .1, W('Fixkosten', 30) - .1, W('Notgroschen', 30) - .1, W('Woche', 31) - .1];
+  titelEin('tb9', 0, tbz);
+  pop('mai9', W('Also', 30) - .1, P(8, 280, 330), 'pop', 'sanft'); froh('mai9', W('Also', 30));
+  const stufe = (k, t) => { ein('s9' + 'abcd'[k], t, P(8, SX[k], ST[k] + SH[k] / 2), { y: 140 }, 'whoosh'); };
+  const glasAuf = (id, t, x, y) => { pop(id, t, P(8, x, y), null, 'sanft'); pegelSofort(id, 0, 0); };
+  // Netto
+  const t1 = W('Netto', 30) - .25;
+  stufe(0, t1); glasAuf('h1', t1 + .2, SX[0], ST[0] - 80);
+  for (let k = 0; k < 5; k++) muenzFall(t1 + .45 + k * .07, X(8, SX[0] + (k % 2 ? 22 : -22)), Y(8, 150), Y(8, ST[0] - 120), .45, { g: 44 });
+  pegel('h1', t1 + .8, .9, .4, 'out'); klang(t1 + .85, 'muenze'); huepfen('mai9', t1 + .3, 12);
+  // Fixkosten
+  const t2 = W('Fixkosten', 30) - .25;
+  stufe(1, t2); glasAuf('h2', t2 + .2, SX[1], ST[1] - 80);
+  for (let k = 0; k < 3; k++) muenzSprung(t2 + .35 + k * .08, X(8, SX[0]), Y(8, ST[0] - 150), X(8, SX[1]), Y(8, ST[1] - 120), { h: 120, d: .5, g: 40, s1: .6 });
+  pegel('h1', t2 + .4, .6, .4); pegel('h2', t2 + .8, .75, .4, 'out'); klang(t2 + .85, 'muenze'); huepfen('mai9', t2 + .3, 12);
+  // Notgroschen
+  const t3 = W('Notgroschen', 30) - .25;
+  stufe(2, t3); glasAuf('h3', t3 + .2, SX[2], ST[2] - 80);
+  for (let k = 0; k < 2; k++) muenzSprung(t3 + .35 + k * .08, X(8, SX[0]), Y(8, ST[0] - 150), X(8, SX[2]), Y(8, ST[2] - 120), { h: 160, d: .55, g: 40, s1: .6 });
+  pegel('h1', t3 + .4, .42, .4); pegel('h3', t3 + .8, .45, .4, 'out'); klang(t3 + .85, 'muenze'); huepfen('mai9', t3 + .3, 12);
+  // Rest → Woche
+  const t4 = W('Rest', 31) - .25;
+  stufe(3, t4);
+  const MX = [846, 892, 938, 984];
+  ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => glasAuf(id, t4 + .25 + i * .06, MX[i], ST[3] - 32));
+  const tWo = W('Woche', 31) - .3;
+  MX.forEach((x, i) => muenzSprung(tWo + i * .08, X(8, SX[0]), Y(8, ST[0] - 150), X(8, x), Y(8, ST[3] - 70), { h: 200, d: .6, g: 30, s1: .6 }));
+  pegel('h1', tWo + .1, .06, .5); ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => pegel(id, tWo + .55 + i * .08, .8, .3, 'out')); klang(tWo + .6, 'muenze');
+  huepfen('mai9', tWo + .4, 12);
+  // So hast du dein Geld im Griff: das Rad läuft durch den Monat, am Ende ist noch Geld da
+  radInit('rad9', 'woche');
+  pop('rad9', W('So', 32) - .2, P(8, 900, 290), 'pop', 'sanft');
+  const tM = W('hast', 32) - .1, dM = W('Griff', 32) - tM - .1;
+  [1, 2, 3].forEach(k => radDrehen('rad9', tM + (k - 1) * dM / 3, dM / 3 * .8, k * 90, 'inout'));
+  ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => { pegel(id, tM + i * dM / 4, i === 3 ? .45 : .05, dM / 4 * .9, 'inout'); klang(tM + i * dM / 4, 'klick'); });
+  const tG = W('Griff', 32);
+  pop('ok9', tG - .05, P(8, 640, 300), 'erfolg');
+  wellen('welle9', [tG, tG + .6], X(8, 640), Y(8, 300), 1.1, 150, 'var(--success)');
+  froh('mai9', tG - .1); huepfen('mai9', tG, 16); akzent(tG, .04);
+  ['s9a', 's9b', 's9c', 's9d'].forEach((id, i) => bump(id, tG + .15 + i * .07, 1.04));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.3;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 31% 50%)`; });
+klang(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+// Sicherheitsnetz für die Tonspur: keine leeren oder ungültigen Cues
+for (let i = CUES.length - 1; i >= 0; i--) if (!CUES[i][1] || !Number.isFinite(CUES[i][0])) CUES.splice(i, 1);
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
