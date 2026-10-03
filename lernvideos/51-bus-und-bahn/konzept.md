@@ -65,7 +65,7 @@ Erzähler: Eins …
 ### Szene 4
 Erzähler: Option Ah: Ohne gültiges Ticket fahren kann teuer werden. Bei einer Kontrolle zahlst du ein erhöhtes Beförderungsentgelt, oft sechzig Euro.
 (Pause 0.4)
-Erzähler: Option Beh: Das klappt auch nicht. Du brauchst das Ticket schon beim Einsteigen. Wenn die Kontrolle kommt, ist es zu spät.
+Erzähler: Option Beh: Das klappt auch nicht. Du brauchst das Ticket, bevor du fährst. Gibt es in der Bahn einen Automaten, kaufst du es sofort nach dem Einsteigen. Wenn die Kontrolle kommt, ist es zu spät.
 
 ### Szene 5
 Erzähler: Und Option Zeh: Kwame kauft das Ticket in der App.
@@ -111,8 +111,8 @@ Stand: 03.10.2026
 
 | Aussage (Sprechertext / Text im Bild) | Beleg |
 | --- | --- |
-| Ohne gültiges Ticket fahren kann teuer werden; erhöhtes Beförderungsentgelt, oft 60 € / „ohne Ticket – oft 60 €“ | § 9 BefBedV: bis zu 60 € im Nahverkehr (Bus, Straßenbahn, U-Bahn) [1]; Bahn: doppelter Fahrpreis, mindestens 60 €; seit 2015 unverändert, keine Erhöhung beschlossen (Correctiv, 24.09.2026) [2] |
-| Du brauchst das Ticket schon beim Einsteigen; bei der Kontrolle ist es zu spät. | BefBedV/Tarifbestimmungen: Fahrgast muss beim Betreten des Fahrzeugs mit gültigem Fahrausweis versehen sein; Kauf im Fahrzeug nur, wo dort verkauft wird, und dann sofort und unaufgefordert [1][3] |
+| Ohne gültiges Ticket fahren kann teuer werden; erhöhtes Beförderungsentgelt, oft 60 € / „ohne Ticket – oft 60 €“ | § 9 BefBedV: bis zu 60 € oder das Doppelte des Fahrpreises, wenn das mehr ist; 7 €, wenn du ein vergessenes persönliches Abo innerhalb einer Woche zeigst [1]; Bahn: doppelter Fahrpreis, mindestens 60 €; seit 2015 unverändert, keine Erhöhung beschlossen (Correctiv, 24.09.2026) [2] |
+| Du brauchst das Ticket, bevor du fährst; gibt es in der Bahn einen Automaten, kaufst du es sofort nach dem Einsteigen; bei der Kontrolle ist es zu spät. | § 6 BefBedV: ohne gültigen Fahrausweis beim Betreten des Fahrzeugs „unverzüglich und unaufgefordert“ den Fahrausweis lösen – Kauf im Fahrzeug nur, wo dort verkauft wird [1][3]; Formulierung nach Faktencheck 46–65 (03.10.2026) |
 | Ticket in der App kaufen | Handy-Tickets sind in Verbünden und beim Deutschlandticket üblich [3][5]; keine App genannt |
 | Erst aussteigen lassen; leise telefonieren | Öffi-Knigge eines Verkehrsbetriebs [9]; § 4 BefBedV: Rücksicht auf andere Personen [1] |
 | Platz für ältere Menschen anbieten | § 4 BefBedV: Sitzplätze für Schwerbehinderte, Ältere, Gebrechliche, werdende Mütter und Fahrgäste mit kleinen Kindern freigeben [1] |

@@ -61,7 +61,7 @@ Erzähler: Stopp! Das geht besser. Zurückspulen!
 Erzähler: Priya bucht ihren Termin sofort auf der Website ihrer Ausländerbehörde. Denn Termine gibt es oft erst nach vielen Wochen.
 
 ### Szene 6
-Erzähler: Den Brief der Behörde öffnet sie gleich. Darin steht, was sie mitbringen muss. Meistens sind das dein Pass, ein biometrisches Foto, die Meldebescheinigung, dein Ausbildungsvertrag und ein Nachweis deiner Krankenversicherung. Aber es gilt immer die Liste deiner Behörde.
+Erzähler: Den Brief der Behörde öffnet sie gleich. Darin steht, was sie mitbringen muss. Meistens sind das dein Pass, ein biometrisches Foto, die Meldebescheinigung und dein Ausbildungsvertrag. Dazu kommen ein Formular, das dein Betrieb ausfüllt, und ein Nachweis deiner Krankenversicherung. Aber es gilt immer die Liste deiner Behörde.
 
 ### Szene 7
 Erzähler: Beim Termin gibt Priya zwei Fingerabdrücke ab und zahlt eine Gebühr. Dann wird ihre Karte bestellt, der elektronische Aufenthaltstitel.
@@ -87,6 +87,7 @@ Erzähler: Also: früh buchen, die Liste abarbeiten und Briefe sofort öffnen.
 5. Stadt Mannheim: Ausgabe von Aufenthaltstiteln (eAT) – PIN-Brief der Bundesdruckerei kommt per Post; zur Abholung PIN-Brief und Pass mitbringen – https://www.mannheim.de/de/service-bieten/buergerdienste/zuwanderung-und-einbuergerung/ausgabe-von-aufenthaltstiteln-eat
 6. Kreis Offenbach: Merkblatt zur eAT-Aushändigung – https://www.kreis-offenbach.de/Service/%C3%84mter/Ausl%C3%A4nderbeh%C3%B6rde/Aktuelles-aus-der-Ausl%C3%A4nderbeh%C3%B6rde/Merkblatt-zur-eAT-Aush%C3%A4ndigung.php?object=tx,4013.1287.1&NavID=4013.43&La=1
 7. Landratsamt Altötting: Alles Wissenswerte zum elektronischen Aufenthaltstitel (zwei Termine: Antrag mit Fingerabdrücken, später Abholung; vier bis sechs Wochen Herstellung) – https://www.lra-aoe.de/media/1439/alles_wissenswerte-eat.pdf
+8. Stadt Marl, Merkblatt Aufenthaltserlaubnis für eine Berufsausbildung (Aus- oder Weiterbildungsvertrag und Erklärung zum Beschäftigungsverhältnis) – https://marl.de/fileadmin/user_upload/Virtuelles_Rathaus/Amt_33/2025_09_22a_Merkblatt_-_Aufenthaltserlaubnis_fuer_eine_Berufsausbildung_.pdf
 
 ## Faktencheck
 
@@ -98,6 +99,7 @@ Erzähler: Also: früh buchen, die Liste abarbeiten und Briefe sofort öffnen.
 | Termin auf der Website der Behörde buchen | [2] |
 | Behörde schickt eine Liste / Brief nennt die Unterlagen | Geschichte; allgemein: „es gilt die Liste deiner Behörde“ [2], [3] |
 | Meistens: Pass, biometrisches Foto, Meldebescheinigung, Ausbildungsvertrag, Nachweis der Krankenversicherung | [2], [3] |
+| Dazu: ein Formular, das der Betrieb ausfüllt (Erklärung zum Beschäftigungsverhältnis), und der Nachweis der Krankenversicherung (Faktencheck 46–65, Abschnitt 48) | [2], [8] |
 | Es gilt immer die Liste deiner Behörde („2. Liste deiner Behörde abarbeiten“) | [2], [3] (Listen der Behörden unterscheiden sich) |
 | Beim Termin zwei Fingerabdrücke | [4], [7] |
 | Gebühr | [2] (Stand 03.10.2026; Höhe bewusst nicht genannt) |

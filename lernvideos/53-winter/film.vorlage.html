@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Sicher im Winter</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+.buehne{width:900px;height:680px;border-radius:44px;overflow:hidden}
+.titel{font-size:58px;line-height:68px}
+.unter{font-size:38px;line-height:50px}
+
+/* Bühne: Nacht, Schneeboden, Flocken */
+.nacht{position:absolute;left:0;top:0;right:0;bottom:130px;background:linear-gradient(var(--b700),var(--b600) 80%,var(--b500));opacity:0}
+.boden{position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(var(--surface),var(--b50));border-top:5px solid var(--b100)}
+.boden .nachtB{position:absolute;inset:0;background:var(--b600);opacity:0}
+.flocken{position:absolute;inset:0}
+.flocke{position:absolute;left:0;top:0;border-radius:999px;background:var(--surface);box-shadow:0 0 0 2px rgba(201,186,250,.55);opacity:0}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:0 6px 16px rgba(22,19,37,.08)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)}
+.frage{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.warm{border-color:var(--warning)}
+.welle.gruen{border-color:var(--success)}
+.ring{border-radius:999px;border:6px solid var(--success);box-shadow:0 0 22px rgba(31,169,113,.35)}
+.glut{border-radius:999px;background:radial-gradient(closest-side,var(--warning-bg),rgba(252,241,221,.55) 45%,rgba(252,241,221,0))}
+.pfuetze{border-radius:50%;background:radial-gradient(closest-side,rgba(252,241,221,.95),rgba(252,241,221,0))}
+.atem{width:46px;height:30px;border-radius:999px;background:var(--surface);opacity:0;box-shadow:0 0 0 3px rgba(231,224,253,.6)}
+.abdruck{padding:8px 20px;border-radius:12px;border:6px solid var(--error);color:var(--error);font:800 40px/46px Inter;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.85)}
+.tinte{width:200px;height:200px;border-radius:999px;border:4px solid var(--error);opacity:0}
+
+/* Eis */
+.eis{border-radius:50%;background:linear-gradient(90deg,var(--info-bg),var(--surface) 45%,var(--info-bg));box-shadow:inset 0 -4px 0 rgba(59,130,246,.18),0 2px 0 rgba(201,186,250,.6);overflow:hidden}
+.eis i{position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,rgba(255,255,255,0),var(--surface),rgba(255,255,255,0));transform:skewX(-20deg)}
+
+/* 2 · Nacht und Licht */
+.stange{height:14px;border-radius:7px;background:linear-gradient(var(--n200),var(--n300));box-shadow:0 4px 10px rgba(22,19,37,.15)}
+.kegel{width:620px;height:300px;transform-origin:0 50%}
+.streifen-glanz{filter:drop-shadow(0 0 6px var(--surface)) drop-shadow(0 0 14px var(--warning-bg))}
+
+/* 3 · Fußspuren */
+.spur{width:46px;height:78px}
+
+/* 4 · Gehweg, Dokumente */
+.decke{height:40px;border-radius:20px;background:var(--surface);box-shadow:0 3px 0 var(--b100),0 6px 14px rgba(22,19,37,.06)}
+.splitt{height:24px}
+.splitt i{position:absolute;width:9px;height:9px;border-radius:3px;background:var(--n300)}
+.splitt i:nth-child(3n){background:var(--b300);width:7px;height:7px}
+.dok{width:230px;padding:18px 18px 20px;border-radius:16px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:10px;transform-origin:50% 0}
+.dok b{font:800 22px/26px Inter;color:var(--b600);white-space:nowrap}
+.dok .linie{height:9px;border-radius:5px;background:var(--n200)}
+.dok .fund{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:9px;font:800 19px/22px Inter;color:var(--ink);white-space:nowrap;border:3px solid transparent;margin:0 -8px}
+
+/* 6 · Anzeige */
+.anzeige{width:380px;padding:16px 22px;border-radius:20px;background:var(--ink);box-shadow:0 10px 26px rgba(22,19,37,.25);display:flex;flex-direction:column;gap:10px}
+.anzeige .zeile{display:flex;align-items:center;justify-content:space-between;gap:16px;font:700 28px/34px Inter;color:var(--surface);white-space:nowrap}
+.anzeige .zeile span{padding:2px 12px;border-radius:8px;background:var(--warning);color:var(--ink);font:800 22px/30px Inter;opacity:0}
+.dachschnee{width:200px;height:22px;border-radius:12px 12px 6px 6px;background:var(--surface);box-shadow:0 2px 0 var(--b100)}
+
+/* 7 · Kalender */
+.tage{display:flex;gap:16px}
+.tag{width:110px;height:110px;border-radius:22px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  font:600 20px/24px Inter;color:var(--b400)}
+.tag b{font:800 40px/44px Inter;color:var(--b600)}
+.tag.krank{background:var(--b500);color:var(--b100)} .tag.krank b{color:var(--surface)}
+.tag.vier{background:var(--warning-bg);color:var(--warning-text);box-shadow:0 0 0 5px var(--warning),0 6px 18px rgba(22,19,37,.1)} .tag.vier b{color:var(--warning-text)}
+.geist{opacity:.6;outline:4px dashed var(--b400);outline-offset:6px;border-radius:10px}
+
+/* 8 · Kacheln */
+.kachel{width:170px;height:186px;border-radius:26px;background:var(--surface);border:2px solid var(--border);box-shadow:0 6px 18px rgba(22,19,37,.08);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.kachel .bild{width:112px;height:112px}
+.kachel b{font:700 23px/28px Inter;color:var(--ink);white-space:nowrap}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene schal">{{figur-schal}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div><div class="ebene muetze">{{muetze}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgSpur"><svg viewBox="0 0 46 78"><path d="M23 4c11 0 17 9 17 22 0 10-4 16-6 22h-22c-2-6-6-12-6-22 0-13 6-22 17-22Z" fill="var(--b200)"/><rect x="11" y="54" width="24" height="20" rx="10" fill="var(--b200)"/><g fill="var(--b100)"><path d="M14 18l4-4 4 4-4 4Z"/><path d="M24 18l4-4 4 4-4 4Z"/><path d="M14 30l4-4 4 4-4 4Z"/><path d="M24 30l4-4 4 4-4 4Z"/><path d="M19 42l4-4 4 4-4 4Z"/><path d="M15 64l4-4 4 4-4 4Z"/><path d="M23 64l4-4 4 4-4 4Z"/></g></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Winter: dunkel, kalt, glatt (Bühne mittig, ohne Titel) -->
+  <div class="a buehne" id="bue0"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a" id="sonne1" style="width:150px">{{sonne}}</div>
+  <div class="a" id="mond1" style="width:130px">{{mond}}</div>
+  <div class="a" id="haus1a" style="width:220px" data-frei>{{haus-schnee}}</div>
+  <div class="a" id="licht1a" style="width:220px" data-frei>{{haus-licht}}</div>
+  <div class="a" id="haus1b" style="width:160px" data-frei>{{haus-schnee~b}}</div>
+  <div class="a" id="licht1b" style="width:160px" data-frei>{{haus-licht~b}}</div>
+  <div class="a glut" id="glut1" style="width:230px;height:230px" data-frei></div>
+  <div class="a pfuetze" id="pool1" style="width:300px;height:60px" data-frei></div>
+  <div class="a" id="lat1" style="width:260px" data-frei>{{laterne}}</div>
+  <div class="a" id="latan1" style="width:260px" data-frei>{{laterne-an}}</div>
+  <div class="a" id="thermo1" style="width:170px" data-gruppe="th1">{{thermometer}}</div>
+  <div class="a" id="saeule1" style="width:170px;transform-origin:50% 78.75%" data-gruppe="th1">{{thermo-saeule}}</div>
+  <div class="a" id="flocke1" style="width:80px">{{schneeflocke}}</div>
+  <div class="a eis" id="eis1" style="width:300px;height:40px" data-frei><i id="glanz1"></i></div>
+  <div class="a" id="rad1" style="width:210px">{{fahrrad}}</div>
+  <div class="a" id="halt1" style="width:200px">{{haltestelle}}</div>
+  <div class="a" id="bus1" style="width:220px">{{bus}}</div>
+  <div class="a atem" id="atem1a"></div><div class="a atem" id="atem1b"></div>
+  <div class="a welle gruen" id="welle1" data-frei></div>
+  <div class="a portrait" id="am1" data-f="amir" style="width:230px;height:230px"></div>
+  <div class="a plakette gruen" id="ok1" data-frei></div>
+
+  <!-- 2 · Dunkel: hell und Reflektoren, Licht am Rad -->
+  <div class="a buehne" id="bue1"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a" id="mond2" style="width:110px">{{mond~2}}</div>
+  <div class="a stange" id="stange2" style="width:560px" data-gruppe="stange2"></div>
+  <div class="a" id="dunkel2" style="width:260px" data-gruppe="stange2">{{jacke-dunkel}}</div>
+  <div class="a" id="hell2" style="width:260px" data-gruppe="stange2">{{jacke-hell}}</div>
+  <div class="a" id="streifen2" style="width:260px" data-gruppe="stange2">{{jacke-streifen}}</div>
+  <div class="a" id="sack2" style="width:200px" data-gruppe="stange2">{{rucksack}}</div>
+  <div class="a" id="refl2" style="width:90px" data-gruppe="stange2">{{reflektor}}</div>
+  <div class="a" id="auto2" style="width:240px">{{auto}}</div>
+  <svg class="a kegel" id="kegel2" viewBox="0 0 620 300" data-frei><defs><linearGradient id="kg2" x2="1"><stop offset="0" stop-color="var(--warning-bg)" stop-opacity=".95"/><stop offset="1" stop-color="var(--warning-bg)" stop-opacity="0"/></linearGradient></defs><path d="M0 138L620 0V300L0 162Z" fill="url(#kg2)"/></svg>
+  <div class="a" id="rad2" style="width:380px" data-gruppe="rad2">{{fahrrad~2}}</div>
+  <div class="a" id="radlicht2" style="width:380px" data-gruppe="rad2">{{fahrrad-licht}}</div>
+  <svg class="a kegel" id="kegelRad2" viewBox="0 0 620 300" style="width:300px;height:150px" data-frei><defs><linearGradient id="kg2b" x2="1"><stop offset="0" stop-color="var(--surface)" stop-opacity=".95"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></linearGradient></defs><path d="M0 130L620 0V300L0 170Z" fill="url(#kg2b)"/></svg>
+  <div class="a" id="rueck2" style="width:60px;height:60px;border-radius:999px;background:radial-gradient(closest-side,rgba(226,85,106,.85),rgba(226,85,106,0))" data-frei></div>
+  <div class="a tinte" id="tinte2" data-frei></div>
+  <div class="a abdruck" id="pflicht2" data-frei>Pflicht</div>
+  <div class="a" id="stempel2" style="width:170px" data-frei>{{stempel}}</div>
+
+  <!-- 3 · Glatt: Schuhe mit Profil, kleine Schritte, Hände frei -->
+  <div class="a buehne" id="bue2"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a eis" id="eis3" style="width:620px;height:52px" data-frei><i id="glanz3"></i></div>
+  <div class="a spur" id="sp3a" data-frei></div><div class="a spur" id="sp3b" data-frei></div><div class="a spur" id="sp3c" data-frei></div>
+  <div class="a spur" id="sp3d" data-frei></div><div class="a spur" id="sp3e" data-frei></div>
+  <div class="a" id="sneaker3" style="width:220px">{{sneaker}}</div>
+  <div class="a" id="stiefel3" style="width:190px">{{titelbild-winterstiefel}}</div>
+  <div class="a ring" id="ring3" style="width:120px;height:120px" data-frei></div>
+  <div class="a" id="handL3" style="width:150px">{{hand}}</div>
+  <div class="a" id="handR3" style="width:150px">{{hand~r}}</div>
+  <div class="a portrait" id="am3" data-f="amir" style="width:230px;height:230px"></div>
+
+  <!-- 4 · Wer räumt? -->
+  <div class="a buehne" id="bue3"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a" id="rathaus4" style="width:200px">{{rathaus}}</div>
+  <div class="a" id="haus4" style="width:250px">{{haus-schnee~4}}</div>
+  <div class="a welle gruen" id="welle4" data-frei></div>
+  <div class="a" id="schl4" style="width:120px" data-frei>{{schluessel}}</div>
+  <div class="a decke" id="decke4" style="width:700px" data-frei></div>
+  <div class="a splitt" id="splitt4" style="width:640px" data-frei></div>
+  <div class="a" id="schieber4" style="width:160px" data-frei>{{titelbild-schneeschieber}}</div>
+  <div class="a" id="brief4" style="width:110px" data-frei>{{brief}}</div>
+  <div class="a frage" id="frage4">?</div>
+  <div class="a dok" id="dokA4"><b>Mietvertrag</b><div class="linie"></div><div class="linie" style="width:80%"></div><div class="linie"></div><div class="linie" style="width:65%"></div><div class="linie" style="width:85%"></div></div>
+  <div class="a dok" id="dokB4"><b>Hausordnung</b><div class="linie"></div><div class="linie" style="width:75%"></div><div class="fund" id="fund4">Winterdienst</div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div></div>
+  <div class="a" id="lupe4" style="width:150px" data-frei>{{lupe}}</div>
+  <div class="a frage" id="frageV4" data-frei>?</div>
+  <div class="a plakette gruen" id="ok4" data-frei></div>
+
+  <!-- 5 · Zwiebellook -->
+  <div class="a buehne" id="bue4"><div class="nacht"></div><div class="flocken"></div></div>
+  <div class="a stange" id="stange5" style="width:730px" data-gruppe="st5"></div>
+  <div class="a" id="dicke5" style="width:280px" data-gruppe="st5">{{daunenjacke}}</div>
+  <div class="a" id="hemd5" style="width:280px" data-gruppe="st5">{{hemd}}</div>
+  <div class="a" id="pulli5" style="width:280px" data-gruppe="st5">{{pulli}}</div>
+  <div class="a" id="offen5" style="width:280px" data-gruppe="st5">{{jacke-offen}}</div>
+  <svg class="a" id="luft5" viewBox="0 0 220 160" style="width:220px;height:160px" data-frei>
+    <g stroke="var(--warning)" stroke-width="7" stroke-linecap="round" fill="none"><path pathLength="1" d="M40 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M110 150c-14-18 14-30 0-48s14-30 0-48"/><path pathLength="1" d="M180 150c-14-18 14-30 0-48s14-30 0-48"/></g></svg>
+  <div class="a glut" id="glut5" style="width:420px;height:420px" data-frei></div>
+  <div class="a" id="muetze5" style="width:130px">{{muetze-ding}}</div>
+  <div class="a" id="schal5" style="width:130px">{{schal-ding}}</div>
+  <div class="a" id="hand5" style="width:130px">{{faeustlinge}}</div>
+  <div class="a" id="thermo5" style="width:180px" data-gruppe="th5">{{thermometer~5}}</div>
+  <div class="a" id="saeule5" style="width:180px;transform-origin:50% 78.75%" data-gruppe="th5">{{thermo-saeule~5}}</div>
+
+  <!-- 6 · Verspätung: früher los -->
+  <div class="a buehne" id="bue5"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a anzeige" id="anz6"><div class="zeile">Bus<span id="vB6">Verspätung</span></div><div class="zeile">Bahn<span id="vZ6">Verspätung</span></div></div>
+  <div class="a" id="halt6" style="width:200px">{{haltestelle~6}}</div>
+  <div class="a spur" id="sp6a" data-frei></div><div class="a spur" id="sp6b" data-frei></div><div class="a spur" id="sp6c" data-frei></div><div class="a spur" id="sp6d" data-frei></div>
+  <div class="a" id="bus6" style="width:260px" data-gruppe="bus6">{{bus~6}}</div>
+  <div class="a dachschnee" id="dach6" data-gruppe="bus6"></div>
+  <div class="a" id="betrieb6" style="width:220px">{{betrieb}}</div>
+  <div class="a" id="wecker6" style="width:170px" data-gruppe="w6">{{wecker-blatt}}</div>
+  <svg class="a" id="puffer6" viewBox="0 0 160 160" style="width:170px;height:170px" data-gruppe="w6"><path pathLength="1" d="M80 62A26 26 0 0 0 54 88" stroke="var(--success)" stroke-width="10" stroke-linecap="round" fill="none" opacity=".85"/></svg>
+  <svg class="a" id="zeigerM6" viewBox="0 0 160 160" style="width:170px;height:170px;transform-origin:50% 55%" data-gruppe="w6"><path d="M80 88V62" stroke="var(--b700)" stroke-width="4.5" stroke-linecap="round"/></svg>
+  <svg class="a" id="zeigerH6" viewBox="0 0 160 160" style="width:170px;height:170px;transform-origin:50% 55%" data-gruppe="w6"><path d="M80 88V72" stroke="var(--ink)" stroke-width="5.5" stroke-linecap="round"/><circle cx="80" cy="88" r="4.5" fill="var(--b700)"/></svg>
+  <div class="a welle" id="welle6" data-frei></div>
+  <div class="a portrait" id="am6" data-f="amir" style="width:150px;height:150px"></div>
+  <div class="a plakette gruen" id="ok6" data-frei></div>
+
+  <!-- 7 · Erkältet: vor Arbeitsbeginn melden -->
+  <div class="a buehne" id="bue6"><div class="nacht"></div><div class="flocken"></div></div>
+  <div class="a" id="thermo7" style="width:200px" data-gruppe="th7">{{thermometer~7}}</div>
+  <div class="a" id="saeule7" style="width:200px;transform-origin:50% 78.75%" data-gruppe="th7">{{thermo-saeule~7}}</div>
+  <div class="a" id="tuch7" style="width:200px;transform-origin:50% 40%" data-gruppe="box7">{{taschentuch}}</div>
+  <div class="a" id="box7" style="width:200px" data-gruppe="box7">{{taschentuchbox}}</div>
+  <div class="a welle" id="nies7" data-frei></div>
+  <div class="a portrait" id="am7" data-f="amir" style="width:240px;height:240px"></div>
+  <div class="a" id="handy7" style="width:130px">{{handy}}</div>
+  <svg class="a" id="anruf7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei><path pathLength="1" d="" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-dasharray=".02 .03" fill="none"/></svg>
+  <div class="a" id="betrieb7" style="width:220px">{{betrieb~7}}</div>
+  <div class="a welle" id="ring7" data-frei></div>
+  <div class="a" id="uhr7" style="width:130px" data-gruppe="uhr7">{{uhr}}</div>
+  <svg class="a" id="uhrM7" viewBox="0 0 160 160" style="width:130px;height:130px;transform-origin:50% 47.5%" data-gruppe="uhr7"><path d="M80 76V44" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/></svg>
+  <svg class="a" id="uhrH7" viewBox="0 0 160 160" style="width:130px;height:130px;transform-origin:50% 47.5%" data-gruppe="uhr7"><path d="M80 76V56" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><circle cx="80" cy="76" r="5" fill="var(--b700)"/></svg>
+  <div class="a plakette gruen" id="ok7" data-frei></div>
+  <div class="a" id="praxis7" style="width:200px">{{praxis}}</div>
+  <div class="a tage" id="tage7"><div class="tag" id="t1"><b>1</b>Tag</div><div class="tag" id="t2"><b>2</b>Tag</div><div class="tag" id="t3"><b>3</b>Tag</div><div class="tag" id="t4"><b>4</b>Tag</div><div class="tag" id="t5"><b>5</b>Tag</div></div>
+  <div class="a" id="ks7" style="width:150px">{{krankschreibung}}</div>
+  <div class="a geist" id="ksG7" style="width:150px" data-frei>{{krankschreibung~g}}</div>
+
+  <!-- 8 · Zusammenfassung -->
+  <div class="a buehne" id="bue7"><div class="nacht"></div><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
+  <div class="a" id="sonne8" style="width:130px">{{sonne~8}}</div>
+  <div class="a kachel" id="k8a"><div class="bild">{{reflektor~8}}</div><b>Sichtbar</b></div>
+  <div class="a kachel" id="k8b"><div class="bild">{{titelbild-winterstiefel~8}}</div><b>Rutschfest</b></div>
+  <div class="a kachel" id="k8c"><div class="bild">{{pulli~8}}</div><b>Warm</b></div>
+  <div class="a kachel" id="k8d"><div class="bild">{{wecker-blatt~8}}</div><b>Früh los</b></div>
+  <div class="a plakette gruen" id="ok8a" data-frei></div><div class="a plakette gruen" id="ok8b" data-frei></div>
+  <div class="a plakette gruen" id="ok8c" data-frei></div><div class="a plakette gruen" id="ok8d" data-frei></div>
+  <div class="a welle gruen" id="welle8" data-frei></div>
+  <div class="a portrait" id="am8" data-f="amir" style="width:130px;height:130px"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Hell + Reflektoren</div><div class="unter">am Rad: Licht an</div></div>
+<div class="block" id="tb3"><div class="titel">Feste Schuhe mit Profil</div><div class="unter">kleine Schritte</div></div>
+<div class="block" id="tb4"><div class="titel">Wer räumt?</div><div class="unter">Mietvertrag &amp; Hausordnung</div></div>
+<div class="block" id="tb5"><div class="titel">Zwiebellook:</div><div class="unter">mehrere dünne Schichten</div></div>
+<div class="block" id="tb6"><div class="titel">Im Winter: früher losfahren</div></div>
+<div class="block" id="tb7"><div class="titel">Krank?</div><div class="unter">Vor Arbeitsbeginn melden</div></div>
+<div class="block" id="tb8"><div class="titel">Sichtbar · Rutschfest · Warm · Früh los</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Gut durch den Winter.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Mehr Zeit und mehr Vorsicht – dann kommst du sicher an.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const MX = 1320, MY = 540, BODEN = 750, N = 8;
+// Mitte y eines Teils, das mit seiner Unterkante (SVG-y `unten`) auf dem Boden steht
+const steh = (w, unten = 146) => BODEN - (unten - 80) * w / 160;
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.plakette.gruen').forEach(p => { p.innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.spur').forEach(p => { p.innerHTML = tpl('svgSpur'); });
+
+for (let i = 0; i < N; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte, der Schwenk startet von hier
+
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const weg = (ids, t, d = .3) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .6 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([pfad, t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Zusatz-Transform je Element (aus HOOKS), wird an die Tween-Transform angehängt
+const zusatz = (id, f) => HOOKS.push(t => { const s = f(t); if (s) el(id).style.transform += ' ' + s; });
+// Atemwölkchen: steigen vom Mund schräg nach oben, werden größer und lösen sich auf
+const atem = (id, t, x, y, dx = -70) => {
+  akteur(id, { x, y, o: 0, s: .4 });
+  set(id, t, { o: .95, s: .4, x, y }); tw(id, t, 1.1, { x: x + dx, y: y - 60, s: 1.35 }, 'out'); tw(id, t + .3, .8, { o: 0 }, 'in');
+};
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk, Atmer, Akzente, Rütteln ---------- */
+const PANS = [], AKZENTE = [], RUETTELN = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+const ruetteln = (t, a = 10) => RUETTELN.push([t, a]);
+bewegungsunschaerfe(.1);
+const RUHE = i => i === 0 ? -360 : -S(i);
+HOOKS.push(t => {
+  let z = 1, dx = 0, dy = 0;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  for (const [a, h] of RUETTELN) { const d = (t - a) / .5; if (d > 0 && d < 1) { const k = h * (1 - d) ** 2; dx += k * Math.sin(d * 38); dy += k * .6 * Math.sin(d * 29 + 1); } }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  const wx = wert(kamera, 'x', t);
+  const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${z})`;
+  for (let i = 0; i < N; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE(i))).toFixed(1)}px)`;
+});
+
+/* ---------- Bühnen-Licht und Schneefall ---------- */
+// NACHT[i](t) → 0…1 (Dunkelheit), SCHNEE[i](t) → 0…1 (Stärke)
+const NACHT = Array(N).fill(() => 0), SCHNEE = Array(N).fill(() => 1);
+const FLOCKEN = [];
+document.querySelectorAll('.buehne').forEach((b, i) => {
+  const box = b.querySelector('.flocken');
+  for (let k = 0; k < 24; k++) {
+    const f = document.createElement('div'); f.className = 'flocke';
+    const g = 8 + ((k * 7) % 9); f.style.width = f.style.height = g + 'px';
+    box.appendChild(f);
+    FLOCKEN.push({ f, i, x0: 30 + ((k * 137 + i * 61) % 840), y0: (k * 211 + i * 97) % 720, v: 38 + ((k * 53) % 40), ph: k * 1.7 + i, a: 10 + (k % 5) * 4, g });
+  }
+});
+HOOKS.push(t => {
+  document.querySelectorAll('.buehne').forEach((b, i) => {
+    const n = clamp(NACHT[i](t));
+    b.querySelector('.nacht').style.opacity = n.toFixed(3);
+    const nb = b.querySelector('.nachtB'); if (nb) nb.style.opacity = (n * .5).toFixed(3);
+  });
+  for (const F of FLOCKEN) {
+    const s = clamp(SCHNEE[F.i](t));
+    const y = ((F.y0 + t * F.v) % 720) - 20, x = F.x0 + F.a * Math.sin(t * .9 + F.ph);
+    F.f.style.opacity = (s * .95).toFixed(3);
+    F.f.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+  }
+});
+const rampe = (t0, d, von = 0, bis = 1) => t => lerp(von, bis, E.inout(clamp((t - t0) / d)));
+
+/* ================= 1 · Winter: dunkel, kalt, glatt (mittig, ohne Titel) ================= */
+const X0 = S(0);
+{
+  // Straße mit Häusern, Laterne, Sonne, Thermometer
+  ein('haus1a', .1, { x: X0 + 1040, y: steh(220) }, { y: 80 }, 'whoosh');
+  ein('haus1b', .25, { x: X0 + 1210, y: steh(160) }, { y: 80 });
+  ein('lat1', .4, { x: X0 + 1360, y: steh(260, 148) }, { y: 80 });
+  pop('sonne1', .5, { x: X0 + 1640, y: 330 }, 'pop', 'sanft');
+  ein('thermo1', .65, { x: X0 + 1110, y: 380 }, { y: -60 }); ein('saeule1', .65, { x: X0 + 1110, y: 380 }, { y: -60 });
+  set('saeule1', 0, { sy: .78 });
+  ein('eis1', .8, { x: X0 + 1330, y: 806 }, { y: 20 });
+  akteur('licht1a', { x: X0 + 1040, y: steh(220), o: 0 }); akteur('licht1b', { x: X0 + 1210, y: steh(160), o: 0 });
+  akteur('latan1', { x: X0 + 1360, y: steh(260, 148), o: 0 });
+  schweben('sonne1', 3);
+  // früh dunkel: Sonne sinkt im Zeitraffer, der Himmel wird Nacht, Laterne und Fenster gehen an
+  const tD = W('früh', 1) - .2;
+  tw('sonne1', tD, 1.1, { y: 600, s: .8 }, 'inout'); tw('sonne1', tD + .6, .5, { o: 0 }, 'in'); cue(tD, 'whoosh');
+  NACHT[0] = rampe(tD + .1, 1.1, 0, .82);
+  pop('mond1', W('dunkel', 1) + .35, { x: X0 + 1640, y: 320 }, null, 'sanft'); schweben('mond1', 3);
+  const tL = W('dunkel', 1) + .4;
+  set('latan1', tL, { o: 1 }); cue(tL, 'klick');
+  akteur('glut1', { x: X0 + 1360, y: steh(260, 148) - 94, o: 0, s: .6 }); tw('glut1', tL, .5, { o: 1, s: 1 }, 'weich');
+  akteur('pool1', { x: X0 + 1360, y: 792, o: 0, sx: .5 }); tw('pool1', tL + .1, .6, { o: 1, sx: 1 }, 'weich');
+  tw('licht1a', tL + .25, .3, { o: 1 }, 'out'); tw('licht1b', tL + .4, .3, { o: 1 }, 'out'); cue(tL + .25, 'klick');
+  zusatz('glut1', t => t > tL + .5 ? `scale(${1 + .04 * Math.sin(t * 2.3)})` : '');
+  // kalt: Thermometer fällt, zittert, Schneeflocke
+  tw('saeule1', W('kalt', 1) - .15, .9, { sy: .14 }, 'inout'); cue(W('kalt', 1) - .15, 'scan');
+  wackeln('thermo1', W('kalt', 1) + .2, 5, 3); wackeln('saeule1', W('kalt', 1) + .2, 5, 3);
+  pop('flocke1', W('kalt', 1) + .25, { x: X0 + 1210, y: 330 }); schweben('flocke1', 4);
+  zusatz('flocke1', t => t > W('kalt', 1) + .25 ? `rotate(${((t - W('kalt', 1)) * 40).toFixed(1)}deg)` : '');
+  // glatt: Eis glänzt, Schnee fängt an
+  bump('eis1', W('glatt', 1) - .05, 1.06); cue(W('glatt', 1), 'ding');
+  HOOKS.push(t => { const d = (t - W('glatt', 1) + .1) / .8; $('#glanz1').style.left = d > 0 && d < 1 ? -80 + E.inout(d) * 400 + 'px' : '-80px'; });
+  SCHNEE[0] = rampe(W('glatt', 1) - .2, 1.6);
+  // Amir hüpft herein, zittert, Atemwölkchen
+  const AX = X0 + 1520, AY = 520, tA = W('Amir', 2) - .45;
+  akteur('am1', { x: AX + 260, y: AY + 60, o: 0, s: .9 });
+  tw('am1', tA, .15, { o: 1 }); flug('am1', tA, .55, AX + 120, AY, 90, { s: 1 }); landen('am1', tA + .55, .7);
+  flug('am1', tA + .62, .45, AX, AY, 50); landen('am1', tA + 1.07, .5); cue(tA, 'whoosh'); cue(tA + .55, 'plopp'); cue(tA + 1.07, 'plopp');
+  zusatz('am1', t => { const d = t - (tA + 1.3); return d > 0 && d < 1.4 ? `rotate(${(2.4 * Math.sin(d * 42) * (1 - d / 1.4)).toFixed(2)}deg)` : ''; });
+  mund('am1', tA + 1.3, 'auf'); mund('am1', tA + 2.6, 'zu');
+  const MUND = [AX - 10, AY + 32];
+  [tA + 1.5, tA + 2.7, W('So', 3) + .6].forEach((t, k) => atem(k % 2 ? 'atem1b' : 'atem1a', t, MUND[0], MUND[1], -80));
+  // Rad oder Bus
+  ein('rad1', W('Rad', 2) - .15, { x: X0 + 1080, y: 762 }, { x: -90 }, 'whoosh');
+  zusatz('rad1', t => { const d = t - W('Rad', 2) + .15; return d > 0 && d < .6 ? `translateY(${(-6 * Math.sin(d * 18) * (1 - d / .6)).toFixed(1)}px)` : ''; });
+  pop('halt1', W('Bus', 2) - .3, { x: X0 + 1688, y: steh(200) }, 'pop', 'sanft');
+  akteur('bus1', { x: X0 + 1790, y: 755, o: 0 });
+  tw('bus1', W('Bus', 2) - .1, .2, { o: 1 }); tw('bus1', W('Bus', 2) - .1, .9, { x: X0 + 1555 }, 'out'); cue(W('Bus', 2) - .1, 'whoosh');
+  tw('bus1', W('Bus', 2) + .8, .08, { r: 1.5 }, 'sinus'); tw('bus1', W('Bus', 2) + .88, .4, { r: 0 }, 'sanft');
+  // So kommt er sicher durch den Winter
+  froh('am1', W('So', 3)); huepfen('am1', W('sicher', 3) - .1, 18);
+  welle('welle1', W('sicher', 3), AX, AY, 1.1, 250); cue(W('sicher', 3), 'erfolg'); akzent(W('sicher', 3), .04);
+  pop('ok1', W('sicher', 3) + .1, { x: AX + 92, y: AY - 92 }, null);
+  huepfen('rad1', W('Winter', 3) - .1, 10); huepfen('bus1', W('Winter', 3), 8);
+}
+
+/* ================= 2 · Dunkel: hell und Reflektoren, Licht am Rad ================= */
+const X1 = S(1);
+pan2(SE(3) + .3, 1);
+{
+  NACHT[1] = () => .86;
+  titelEin('tb2', W('Trag', 5) - .2, { unter: W('Fahrrad', 6) - .2 });
+  pop('mond2', SE(3) + .6, { x: X1 + 1650, y: 290 }, null, 'sanft'); schweben('mond2', 3);
+  // Auto fährt ein, Scheinwerferkegel tastet die Straße ab
+  const CX = X1 + 1010, CY = 762, K = 1.5, HX = CX + 56 * K, HY = CY + 9 * K;
+  akteur('auto2', { x: CX - 260, y: CY, o: 0 });
+  tw('auto2', W('Morgens', 4) - .3, .3, { o: 1 }); tw('auto2', W('Morgens', 4) - .3, 1.1, { x: CX }, 'out'); cue(W('Morgens', 4) - .3, 'whoosh');
+  tw('auto2', W('Morgens', 4) + .8, .08, { r: -1.2 }, 'sinus'); tw('auto2', W('Morgens', 4) + .88, .4, { r: 0 }, 'sanft');
+  akteur('kegel2', { x: HX + 310 - 260, y: HY, o: 0, r: -4 });
+  tw('kegel2', W('Morgens', 4) - .3, 1.1, { x: HX + 310 }, 'out'); tw('kegel2', W('Morgens', 4) - .1, .5, { o: .9 });
+  // tastend: Kegel schwenkt langsam auf und ab, später auf die Jacken
+  const kr = [[W('abends', 4), -14], [W('dunkel', 4) + .2, -6], [W('Trag', 5), -12], [W('Reflektoren', 5) - .4, -34], [W('Beispiel', 5), -26],
+    [W('Jacke', 5) - .3, -34], [W('Rucksack', 5) - .5, -40], [W('Fahrrad', 6) - .4, -12]];
+  kr.forEach(([t, r]) => tw('kegel2', t, .7, { r }, 'inout'));
+  // Kleiderstange: dunkle Jacke kaum sichtbar
+  const SY = 372;
+  ein('stange2', W('dunkel', 4) - .5, { x: X1 + 1380, y: SY }, { y: -40 });
+  const JY = SY + 65 * 1.625;
+  ein('dunkel2', W('dunkel', 4) - .2, { x: X1 + 1200, y: JY }, { y: -50 }, 'whoosh');
+  tw('dunkel2', W('dunkel', 4) + .5, .8, { o: .3 }, 'inout');
+  wackeln('dunkel2', W('dunkel', 4) + .5, 3, 2);
+  // helle Kleidung: helle Jacke kommt dazu, Reflektorstreifen blitzen im Licht
+  ein('hell2', W('helle', 5) - .25, { x: X1 + 1430, y: JY }, { y: -50 }, 'whoosh');
+  ein('streifen2', W('helle', 5) - .25, { x: X1 + 1430, y: JY }, { y: -50 });
+  const BLITZ = [W('Reflektoren', 5) + .05, W('Jacke', 5) + .05];
+  akteur('streifen2', { x: X1 + 1430, y: JY, o: 0 });
+  tw('streifen2', W('helle', 5) - .25, .01, {}, 'lin');
+  BLITZ.forEach(t => { tw('streifen2', t, .12, { o: 1 }, 'out'); tw('streifen2', t + .9, .5, { o: .55 }, 'inout'); cue(t, 'ding'); });
+  el('streifen2').classList.add('streifen-glanz');
+  akzent(W('Reflektoren', 5), .04);
+  bump('hell2', W('Jacke', 5), 1.05); bump('streifen2', W('Jacke', 5), 1.05);
+  // Rucksack: Reflektor klickt an
+  ein('sack2', W('Beispiel', 5) - .1, { x: X1 + 1648, y: SY + 56 * 1.25 }, { y: -50 }, 'whoosh');
+  akteur('refl2', { x: X1 + 1648, y: 220, o: 0, r: -3, s: .7 });
+  tw('refl2', W('Rucksack', 5) - .45, .1, { o: 1 }); tw('refl2', W('Rucksack', 5) - .45, .45, { y: SY + 92, s: 1 }, 'in');
+  landen('refl2', W('Rucksack', 5), .9); tw('refl2', W('Rucksack', 5), .3, { r: 0 }, 'sanft'); cue(W('Rucksack', 5), 'klick');
+  bump('sack2', W('Rucksack', 5), 1.05);
+  zusatz('refl2', t => { const d = t - W('Rucksack', 5) - .25; return d > 0 && d < .9 ? `scale(${1 + .12 * Math.sin(Math.PI * d / .9)})` : ''; });
+  HOOKS.push(t => { const d = t - W('Rucksack', 5) - .25; el('refl2').style.filter = d > 0 ? `drop-shadow(0 0 ${(4 + 14 * Math.max(0, Math.sin(Math.PI * clamp(d / .9)))).toFixed(1)}px var(--warning-bg))` : ''; });
+  // Fahrrad: Licht an (vorne weißer Kegel, hinten rot), Auto fährt weg
+  const RX = X1 + 1330, RY = 720, RK = 380 / 160;
+  ein('rad2', W('Fahrrad', 6) - .35, { x: RX, y: RY }, { x: -120 }, 'whoosh');
+  akteur('radlicht2', { x: RX, y: RY, o: 0 });
+  tw('auto2', W('Fahrrad', 6) - .4, .8, { x: CX - 200, o: 0 }, 'in'); tw('kegel2', W('Fahrrad', 6) - .4, .5, { o: 0 }, 'in');
+  const tLi = W('Licht', 6) - .05;
+  set('radlicht2', tLi, { o: 1 }); cue(tLi, 'klick'); akzent(tLi, .035);
+  const VX = RX + (122.7 - 80) * RK, VY = RY + (66 + 3.3 - 80) * RK;      // Vorderlicht
+  const HXr = RX + (28 - 80) * RK, HYr = RY + (70.3 - 80) * RK;          // Rücklicht
+  akteur('kegelRad2', { x: VX + 150 + 4, y: VY + 6, o: 0, sx: .3, r: 6 });
+  tw('kegelRad2', tLi, .45, { o: 1, sx: 1 }, 'weich');
+  akteur('rueck2', { x: HXr, y: HYr, o: 0, s: .5 }); tw('rueck2', tLi + .15, .4, { o: 1, s: 1 }, 'weich');
+  zusatz('rueck2', t => t > tLi + .55 ? `scale(${1 + .15 * Math.sin(t * 5)})` : '');
+  // Das ist Pflicht: Stempel schlägt auf
+  const PX = X1 + 1590, PY = 600, tP = W('Pflicht', 7);
+  akteur('stempel2', { x: PX, y: PY - 210, o: 0 });
+  tw('stempel2', tP - .5, .2, { o: 1 }); tw('stempel2', tP - .5, .3, { y: PY - 180 }, 'sinus');
+  tw('stempel2', tP - .18, .16, { y: PY - 80 }, 'in'); tw('stempel2', tP - .02, .5, { y: PY - 200, o: 0 }, 'weich');
+  cue(tP - .02, 'plopp'); akzent(tP, .045);
+  akteur('pflicht2', { x: PX, y: PY, o: 0, r: -3, s: 1.4 }); tw('pflicht2', tP - .02, .16, { o: 1, s: 1 }, 'out');
+  welle('tinte2', tP, PX, PY, .7, 200);
+  wackeln('rad2', tP, 3, 2); wackeln('radlicht2', tP, 3, 2);
+  textAus('tb2', SE(7) + .2);
+}
+
+/* ================= 3 · Glatt: Schuhe mit Profil, kleine Schritte, Hände frei ================= */
+const X2 = S(2);
+pan2(SE(7) + .3, 2);
+{
+  titelEin('tb3', W('Trag', 9) - .2, { unter: W('kleine', 10) - .15 });
+  ein('eis3', SE(7) + .6, { x: X2 + 1320, y: 806 }, { y: 20 });
+  // glatte Sohle rutscht weg
+  const SX = X2 + 1080, SYn = steh(220, 124);
+  akteur('sneaker3', { x: SX - 200, y: SYn, o: 0 });
+  tw('sneaker3', W('Schnee', 8) - .3, .2, { o: 1 }); tw('sneaker3', W('Schnee', 8) - .3, .6, { x: SX }, 'weich'); cue(W('Schnee', 8) - .3, 'whoosh');
+  const tR = W('glatt', 8) - .25;
+  tw('sneaker3', tR, .7, { x: SX + 380, r: -16 }, 'in'); tw('sneaker3', tR + .45, .3, { y: SYn - 70 }, 'out'); cue(tR, 'whoosh');
+  tw('sneaker3', tR + .7, .5, { x: SX + 560, y: SYn - 10, r: -36, o: 0 }, 'out');
+  ruetteln(tR + .5, 12); cue(tR + .55, 'plopp');
+  HOOKS.push(t => { const d = (t - tR) / .8; $('#glanz3').style.left = d > 0 && d < 1 ? -80 + E.inout(d) * 720 + 'px' : '-80px'; });
+  // Stiefel mit Profil stampft auf
+  const BX = X2 + 1030, BY = steh(190, 146) - 4;
+  akteur('stiefel3', { x: BX, y: BY - 300, o: 0 });
+  const tS = W('Schuhe', 9) - .35;
+  tw('stiefel3', tS, .1, { o: 1 }); tw('stiefel3', tS, .35, { y: BY }, 'in'); landen('stiefel3', tS + .35, 1); cue(tS + .35, 'plopp');
+  ruetteln(tS + .35, 5);
+  bump('stiefel3', W('Profil', 9), 1.06);
+  // kleine Schritte: Stiefel macht kurze Schritte, Spuren bleiben
+  const SP = [['sp3a', 1000], ['sp3b', 1110], ['sp3c', 1220], ['sp3d', 1330], ['sp3e', 1440]];
+  const tK = W('kleine', 10) - .2, dS = (W('ganzen', 10) - tK) / 4;
+  akteur('sp3a', { x: X2 + 1000, y: 800, o: 0, r: 90 }); tw('sp3a', W('Profil', 9) - .1, .3, { o: 1 }, 'out');
+  set('sp3a', 0, { x: X2 + BX - X2 - 30, y: 806 });
+  for (let k = 1; k < SP.length; k++) {
+    const [id, x] = SP[k], t0 = tK + (k - 1) * dS;
+    flug('stiefel3', t0, dS * .7, X2 + x + 30, BY, 40); landen('stiefel3', t0 + dS * .7, .6); cue(t0 + dS * .7, 'tipp');
+    akteur(id, { x: X2 + x - 6, y: 806, o: 0, r: 90 }); tw(id, t0 + dS * .7 + .05, .25, { o: 1 }, 'out');
+  }
+  // ganzer Fuß: Ring um die letzte Spur
+  akteur('ring3', { x: X2 + 1434, y: 806, o: 0, s: .6 }); tw('ring3', W('Fuß', 10), .4, { o: 1, s: 1 }, 'back'); cue(W('Fuß', 10), 'ding');
+  bump('stiefel3', W('Fuß', 10) - .05, 1.08);
+  tw(['stiefel3'], W('Und', 11) - .2, .5, { x: X2 + 1560, y: BY }, 'inout', { bogen: 40 });
+  aus('ring3', W('Und', 11), .3);
+  // Hände aus den Taschen: Amir, Hände kommen heraus
+  const AX = X2 + 1320, AY = 450;
+  ein('am3', W('nimm', 11) - .45, { x: AX, y: AY }, { y: 80 }, 'pop');
+  const HL = [AX - 205, AY + 115], HR = [AX + 205, AY + 115];
+  akteur('handL3', { x: AX - 70, y: AY + 160, o: 0, s: .5, r: -10 });
+  akteur('handR3', { x: AX + 70, y: AY + 160, o: 0, s: .5, sx: -1, r: 10 });
+  const tH = W('Hände', 11) - .1;
+  tw(['handL3', 'handR3'], tH, .15, { o: 1 });
+  tw('handL3', tH, .6, { x: HL[0], y: HL[1], s: 1, r: -14 }, 'sanft'); tw('handR3', tH, .6, { x: HR[0], y: HR[1], s: 1, r: 14 }, 'sanft'); cue(tH, 'whoosh');
+  froh('am3', W('Taschen', 11));
+  // abfangen: Amir schwankt, Hände balancieren, er fängt sich und lächelt
+  const tB = W('abfangen', 12) - .7;
+  mund('am3', tB, 'auf');
+  zusatz('am3', t => { const d = t - tB; return d > 0 && d < 1.8 ? `rotate(${(9 * Math.sin(d * 7) * (1 - d / 1.8)).toFixed(2)}deg)` : ''; });
+  zusatz('handL3', t => { const d = t - tB; return d > 0 && d < 1.8 ? `translateY(${(-26 * Math.sin(d * 7) * (1 - d / 1.8)).toFixed(1)}px)` : ''; });
+  zusatz('handR3', t => { const d = t - tB; return d > 0 && d < 1.8 ? `translateY(${(26 * Math.sin(d * 7) * (1 - d / 1.8)).toFixed(1)}px)` : ''; });
+  cue(tB, 'whoosh'); froh('am3', tB + 1.4); huepfen('am3', tB + 1.5, 12);
+  textAus('tb3', SE(12) + .2);
+}
+
+/* ================= 4 · Wer räumt und streut? ================= */
+const X3 = S(3);
+pan2(SE(12) + .3, 3);
+{
+  titelEin('tb4', W('Wer', 13) - .1, { unter: W('Mietvertrag', 16) - .2 });
+  const HX = X3 + 1560, HY = steh(250);
+  ein('haus4', SE(12) + .7, { x: HX, y: HY }, { y: 80 }, 'whoosh');
+  ein('decke4', SE(12) + .8, { x: X3 + 1310, y: 800 }, { y: 20 });
+  schweben('haus4', 0);
+  // Wer? Fragezeichen über dem Gehweg
+  pop('frage4', W('Wer', 13), { x: X3 + 1180, y: 640 }); wackeln('frage4', W('Gehweg', 13), 4, 6);
+  // räumt: Schieber schiebt eine Bahn frei
+  const tR = W('räumt', 13) - .2, tRe = W('Gehweg', 13) + .2;
+  akteur('schieber4', { x: X3 + 920, y: 735, o: 0, r: 3 });
+  tw('schieber4', tR, .2, { o: 1 }); tw('schieber4', tR, tRe - tR, { x: X3 + 1420 }, 'inout'); cue(tR, 'kritzeln');
+  HOOKS.push(t => { const p = clamp((wertBei('schieber4', 'x', t) - (X3 + 960)) / 700); el('decke4').style.clipPath = `inset(0 0 0 ${(p * 100).toFixed(1)}%)`; });
+  zusatz('schieber4', t => t > tR && t < tRe ? `translateY(${(2.5 * Math.sin(t * 30)).toFixed(1)}px)` : '');
+  aus('frage4', W('Haus', 13), .3);
+  // streut: Splitt rieselt (kein Salz)
+  const SPL = el('splitt4');
+  for (let k = 0; k < 46; k++) { const i = document.createElement('i'); i.style.left = (k * 13.7 % 630) + 'px'; i.style.top = (6 + (k * 7) % 12) + 'px'; SPL.appendChild(i); }
+  const KOE = [...SPL.children];
+  akteur('splitt4', { x: X3 + 1180, y: 800 });
+  KOE.forEach((k, i) => { akteur(k, { y: -90 - (i % 5) * 18, o: 0 }, true); const t0 = W('streut', 13) - .1 + (i % 12) * .05; tw(k, t0, .05, { o: 1 }); tw(k, t0, .45, { y: 0 }, 'in'); });
+  cue(W('streut', 13), 'scan');
+  tw('schieber4', W('Gemeinde', 14) - .6, .4, { o: 0, s: .8 }, 'in');
+  // Gemeinde: Rathaus schickt einen Brief zum Haus
+  ein('rathaus4', W('regelt', 14) - .4, { x: X3 + 1040, y: 470 }, { y: 70 }, 'whoosh');
+  akteur('brief4', { x: X3 + 1040, y: 480, o: 0, s: .4 });
+  const tB = W('Gemeinde', 14) + .05;
+  tw('brief4', tB, .1, { o: 1 }); flug('brief4', tB, .9, HX - 10, HY - 40, 150, { s: 1 }); cue(tB, 'whoosh');
+  bump('haus4', tB + .9, 1.06); cue(tB + .9, 'plopp');
+  tw('brief4', tB + 1.1, .6, { x: HX - 70, y: HY + 70, s: .8 }, 'inout');
+  // Pflicht an die Eigentümer: Haus leuchtet, Schlüssel
+  bump('brief4', W('Pflicht', 15), 1.15);
+  welle('welle4', W('Eigentümer', 15), HX, HY, 1.1, 280); cue(W('Eigentümer', 15), 'erfolg');
+  pop('schl4', W('Eigentümer', 15) + .1, { x: HX + 70, y: HY - 130, r: -3 }); wackeln('schl4', W('weiter', 15), 3, 3);
+  akzent(W('Eigentümer', 15), .035);
+  // Mietvertrag und Hausordnung blättern auf
+  aus(['rathaus4', 'brief4'], W('Manchmal', 16) - .2, .3);
+  akteur('dokA4', { x: X3 + 1060, y: 470, sy: 0, o: 0 }); tw('dokA4', W('Mietvertrag', 16) - .15, .1, { o: 1 }); tw('dokA4', W('Mietvertrag', 16) - .15, .5, { sy: 1 }, 'back'); cue(W('Mietvertrag', 16) - .15, 'klick');
+  akteur('dokB4', { x: X3 + 1310, y: 470, sy: 0, o: 0 }); tw('dokB4', W('Hausordnung', 16) - .15, .1, { o: 1 }); tw('dokB4', W('Hausordnung', 16) - .15, .5, { sy: 1 }, 'back'); cue(W('Hausordnung', 16) - .15, 'klick');
+  // Lupe sucht und findet „Winterdienst“
+  akteur('lupe4', { x: X3 + 1100, y: 620, o: 0, s: .6 });
+  const tL = W('dass', 16) - .3;
+  tw('lupe4', tL, .3, { o: 1, s: 1 }, 'sanft');
+  tw('lupe4', tL, .6, { x: X3 + 1080, y: 480 }, 'inout', { bogen: 20 });
+  tw('lupe4', tL + .7, .7, { x: X3 + 1330, y: 500 }, 'inout', { bogen: 30 });
+  bump('lupe4', W('dran', 16) - .05, 1.1); cue(W('dran', 16), 'ding');
+  HOOKS.push(t => { const an = t >= W('dran', 16) - .05; const f = el('fund4'); f.style.background = an ? 'var(--success-bg)' : 'transparent'; f.style.borderColor = an ? 'var(--success)' : 'transparent'; f.style.color = an ? 'var(--success-text)' : 'var(--n300)'; });
+  bump('dokB4', W('dran', 16), 1.04);
+  // Lies nach und frag deinen Vermieter: Fragezeichen fliegt zum Haus, Haken kommt zurück
+  bump('lupe4', W('Lies', 17), 1.1);
+  tw('lupe4', W('frag', 17) - .2, .3, { o: 0, s: .7 }, 'in');
+  akteur('frageV4', { x: X3 + 1310, y: 300, o: 0, s: .5 });
+  const tF = W('frag', 17);
+  tw('frageV4', tF, .2, { o: 1, s: 1 }, 'back'); cue(tF, 'pop');
+  flug('frageV4', W('Vermieter', 17) - .45, .7, HX, HY - 150, 80, { s: .6 }); tw('frageV4', W('Vermieter', 17) + .15, .15, { o: 0 });
+  bump('haus4', W('Vermieter', 17) + .25, 1.06); cue(W('Vermieter', 17) + .25, 'plopp');
+  akteur('ok4', { x: HX, y: HY - 150, o: 0, s: .4 });
+  const tO = W('Vermieter', 17) + .35;
+  tw('ok4', tO, .15, { o: 1 }); flug('ok4', tO, .7, X3 + 1450, 300, 70, { s: 1 }); cue(tO + .7, 'erfolg');
+  textAus('tb4', SE(17) + .2);
+}
+
+/* ================= 5 · Zwiebellook ================= */
+const X4 = S(4);
+pan2(SE(17) + .3, 4);
+{
+  SCHNEE[4] = () => .55;
+  titelEin('tb5', W('Zwiebellook', 18) - .25, { unter: W('mehrere', 19) - .2 });
+  const SY = 300, JY = SY + 65 * 1.75;
+  ein('stange5', SE(17) + .7, { x: X4 + 1320, y: SY }, { y: -40 });
+  ein('dicke5', W('Zieh', 18) - .1, { x: X4 + 1080, y: JY + 2 }, { y: -50 }, 'whoosh');
+  // dünne Schichten fliegen nacheinander auf den zweiten Bügel
+  const LX = X4 + 1340;
+  [['hemd5', 'mehrere'], ['pulli5', 'dünne'], ['offen5', 'Schichten']].forEach(([id, w], k) => {
+    const t0 = W(w, 19) - .45;
+    akteur(id, { x: LX + 260, y: JY - 260, o: 0, r: 6, s: .7 });
+    tw(id, t0, .15, { o: 1 }); flug(id, t0, .55, LX, JY, 60, { s: 1, r: 0 }); landen(id, t0 + .55, .6); cue(t0, 'whoosh'); cue(t0 + .55, 'plopp');
+  });
+  // statt einer dicken Jacke: die dicke Jacke tritt zurück
+  wackeln('dicke5', W('dicken', 19), 3, 3);
+  tw('dicke5', W('Jacke', 19), .6, { o: .45, s: .92 }, 'inout');
+  // Die Luft dazwischen hält warm: warme Wellen steigen zwischen den Schichten auf
+  akteur('luft5', { x: LX, y: JY + 20, o: 0 });
+  const tLu = W('Luft', 20) - .1;
+  tw('luft5', tLu, .2, { o: 1 }); el('luft5').querySelectorAll('path').forEach((p, i) => strich(p, tLu + i * .12, .7));
+  tw('luft5', tLu, 1.6, { y: JY - 40 }, 'out'); tw('luft5', W('warm', 20) + .4, .5, { o: 0 }, 'in');
+  cue(tLu, 'scan');
+  akteur('glut5', { x: LX, y: JY, o: 0, s: .7 }); tw('glut5', W('warm', 20) - .1, .6, { o: .8, s: 1 }, 'weich'); tw('glut5', W('warm', 20) + 1.4, .6, { o: 0 }, 'inout');
+  akzent(W('warm', 20), .03);
+  // Mütze, Schal und Handschuhe ploppen auf
+  pop('muetze5', W('hält', 20), { x: X4 + 1000, y: 690 }); pop('schal5', W('hält', 20) + .15, { x: X4 + 1160, y: 690 }, null); pop('hand5', W('hält', 20) + .3, { x: X4 + 1320, y: 690 });
+  schweben(['muetze5', 'schal5', 'hand5'], 3);
+  // drinnen: Thermometer steigt, eine Schicht fliegt ab an den freien Platz
+  ein('thermo5', W('drinnen', 21) - .3, { x: X4 + 1600, y: 680 }, { y: 60 }, 'pop'); ein('saeule5', W('drinnen', 21) - .3, { x: X4 + 1600, y: 680 }, { y: 60 });
+  set('saeule5', 0, { sy: .2 }); tw('saeule5', W('drinnen', 21) + .1, 1.0, { sy: .75 }, 'inout'); cue(W('drinnen', 21) + .1, 'scan');
+  const tA = W('Schicht', 21) - .1;
+  flug('offen5', tA, .65, X4 + 1590, JY, 70); landen('offen5', tA + .65, .6); cue(tA, 'whoosh'); cue(tA + .65, 'plopp');
+  zusatz('offen5', t => { const d = t - tA; return d > 0 && d < .65 ? `rotate(${(4 * Math.sin(Math.PI * d / .65)).toFixed(2)}deg)` : ''; });
+  huepfen('pulli5', W('aus', 21), 8);
+  textAus('tb5', SE(21) + .2);
+}
+
+/* ================= 6 · Verspätung: früher losfahren ================= */
+const X5 = S(5);
+pan2(SE(21) + .3, 5);
+{
+  NACHT[5] = rampe(SE(21), .1, .25, .25);
+  titelEin('tb6', W('Fahr', 24) - .25);
+  ein('halt6', SE(21) + .65, { x: X5 + 980, y: steh(200) }, { y: 70 });
+  ein('anz6', SE(21) + .8, { x: X5 + 1180, y: 335 }, { y: -60 }, 'whoosh');
+  // Verspätung blinkt
+  const tV = W('Verspätung', 22) - .1;
+  HOOKS.push(t => { const d = t - tV; ['vB6', 'vZ6'].forEach((id, i) => { const dd = d - i * .15; el(id).style.opacity = dd < 0 ? 0 : dd < 2.4 ? (Math.floor(dd * 3) % 2 ? .35 : 1) : 1; }); });
+  cue(tV, 'ding');
+  // Bus rollt langsam ein, Schnee rutscht vom Dach
+  const BX = X5 + 1200, BY = steh(260, 131) - 2, tB = W('Bus', 22) - .3;
+  akteur('bus6', { x: BX + 420, y: BY, o: 0 });
+  akteur('dach6', { x: BX + 420 - 15, y: BY - 70, o: 0 });
+  tw(['bus6', 'dach6'], tB, .3, { o: 1 }); tw('bus6', tB, 2.2, { x: BX }, 'out'); tw('dach6', tB, 2.2, { x: BX - 15 }, 'out'); cue(tB, 'whoosh');
+  tw('bus6', tB + 2.2, .1, { r: 1.5 }, 'sinus'); tw('bus6', tB + 2.3, .45, { r: 0 }, 'sanft');
+  tw('dach6', tB + 2.15, .55, { x: BX - 150, y: BY - 50, r: -8 }, 'in'); tw('dach6', tB + 2.55, .45, { y: BY + 70, o: 0, r: -20 }, 'in'); cue(tB + 2.2, 'whoosh');
+  // zu Fuß: Fußspuren, langsam
+  const tF = W('Auch', 23);
+  [['sp6a', 1440], ['sp6b', 1540], ['sp6c', 1640], ['sp6d', 1740]].slice(0, 3).forEach(([id, x], k) => {
+    akteur(id, { x: X5 + x, y: 806, o: 0, r: 90 }); tw(id, tF + k * .45, .3, { o: 1 }, 'out'); cue(tF + k * .45, 'tipp');
+  });
+  // früher: Wecker klingelt, Zeiger springt eine Viertelstunde zurück
+  const WX = X5 + 1580, WY = 345;
+  ['wecker6', 'zeigerM6', 'zeigerH6', 'puffer6'].forEach(id => ein(id, W('länger', 23) - .1, { x: WX, y: WY }, { y: -60 }));
+  set('zeigerM6', 0, { r: 0 }); set('zeigerH6', 0, { r: 210 });
+  HOOKS.push(t => { const d = t - W('länger', 23); el('zeigerM6').style.transform += d > 0 && d < 1.6 ? ` rotate(${(d * 60).toFixed(1)}deg)` : ''; });
+  set('zeigerM6', W('länger', 23) + 1.6, { r: 96 });
+  const tW = W('früher', 24) - .15;
+  for (let i = 0; i < 8; i++) tw('wecker6', tW + i * .06, .06, { r: i % 2 ? 6 : -6 }, 'sinus');
+  tw('wecker6', tW + .48, .2, { r: 0 }, 'sinus'); cue(tW, 'ding'); cue(tW + .25, 'ding');
+  wellen('welle6', [tW, tW + .3], WX, WY, .8, 180);
+  tw('zeigerM6', W('los', 24) - .15, .5, { r: 6 }, 'back'); cue(W('los', 24) - .15, 'klick');
+  tw('zeigerH6', W('los', 24) - .15, .5, { r: 202 }, 'back');
+  akteur('puffer6', { x: WX, y: WY, o: 0 }); tw('puffer6', W('los', 24) - .1, .2, { o: 1 });
+  strich(el('puffer6').querySelector('path'), W('los', 24) - .1, .5);
+  akzent(W('früher', 24), .04);
+  // Amir läuft los und kommt pünktlich am Betrieb an
+  ein('betrieb6', W('Denn', 25) - .5, { x: X5 + 1590, y: steh(220, 138) }, { x: 80 }, 'whoosh');
+  const tLauf = W('los', 24) + .1;
+  akteur('am6', { x: X5 + 1040, y: 540, o: 0, s: .5 });
+  tw('am6', tLauf, .25, { o: 1, s: 1 }, 'back'); cue(tLauf, 'pop');
+  for (let i = 0; i < 4; i++) tw('am6', tLauf + .3 + i * .28, .28, { x: X5 + 1040 + (i + 1) * 92, y: 560 }, 'sinus', { bogen: 26 });
+  froh('am6', W('pünktlich', 25));
+  pop('ok6', W('pünktlich', 25), { x: X5 + 1470, y: 470 }, 'erfolg');
+  // trotzdem: Uhr pocht
+  bump('wecker6', W('trotzdem', 25), 1.12); bump('zeigerM6', W('trotzdem', 25), 1.12); bump('zeigerH6', W('trotzdem', 25), 1.12); bump('puffer6', W('trotzdem', 25), 1.12);
+  cue(W('trotzdem', 25), 'plopp');
+  textAus('tb6', SE(25) + .2);
+}
+
+/* ================= 7 · Erkältet: vor Arbeitsbeginn melden ================= */
+const X6 = S(6);
+pan2(SE(25) + .3, 6);
+{
+  SCHNEE[6] = () => .45;
+  titelEin('tb7', W('erkältet', 26) - .3, { unter: W('Arbeitsbeginn', 27) - .3 });
+  const AX = X6 + 1110, AY = 470;
+  ein('am7', SE(25) + .7, { x: AX, y: AY }, { y: 80 }, 'pop');
+  // erkältet: Fieber steigt, Taschentuch schießt heraus, Amir wird blass, Niesen
+  ein('thermo7', W('wenn', 26) - .2, { x: X6 + 1360, y: 470 }, { y: 60 }); ein('saeule7', W('wenn', 26) - .2, { x: X6 + 1360, y: 470 }, { y: 60 });
+  set('saeule7', 0, { sy: .25 }); tw('saeule7', W('erkältet', 26) - .1, 1.0, { sy: 1 }, 'inout'); cue(W('erkältet', 26) - .1, 'scan');
+  wackeln('thermo7', W('hast', 26), 4, 3); wackeln('saeule7', W('hast', 26), 4, 3);
+  ein('box7', W('wenn', 26), { x: X6 + 1580, y: 520 }, { y: 60 }, 'whoosh');
+  akteur('tuch7', { x: X6 + 1580, y: 560, o: 0, s: .6 });
+  const tT = W('erkältet', 26) + .1;
+  tw('tuch7', tT, .1, { o: 1 }); tw('tuch7', tT, .45, { y: 500, s: 1.1 }, 'back'); tw('tuch7', tT + .45, .3, { r: 3 }, 'sinus'); tw('tuch7', tT + .75, .3, { r: 0 }, 'sinus'); cue(tT, 'pop');
+  HOOKS.push(t => { const g = E.inout(clamp((t - W('erkältet', 26)) / .8)) * (1 - E.inout(clamp((t - W('krank', 27)) / .8)));
+    el('am7').style.filter = g > .01 ? `saturate(${(1 - .65 * g).toFixed(3)}) brightness(${(1 + .12 * g).toFixed(3)})` : ''; });
+  const tN = WE('hast', 26) - .1;
+  mund('am7', tN - .3, 'auf'); tw('am7', tN - .3, .3, { y: AY - 10 }, 'sinus'); tw('am7', tN, .15, { y: AY + 8, sx: 1.05, sy: .94 }, 'in'); tw('am7', tN + .15, .4, { y: AY, sx: 1, sy: 1 }, 'sanft');
+  wellen('nies7', [tN, tN + .2], AX, AY + 30, .8, 260); cue(tN, 'whoosh'); ruetteln(tN, 5);
+  mund('am7', tN + .5, 'zu');
+  // vor Arbeitsbeginn im Betrieb melden: Handy ruft den Betrieb an, Uhr steht vor Arbeitsbeginn
+  aus(['thermo7', 'saeule7', 'box7', 'tuch7'], W('Dann', 27) - .2, .3);
+  tw('am7', W('Dann', 27), .6, { x: X6 + 1040, y: 400, s: .78 }, 'inout');
+  ein('handy7', W('melde', 27) - .1, { x: X6 + 1190, y: 520 }, { y: 60 }, 'pop');
+  ein('betrieb7', W('melde', 27) + .1, { x: X6 + 1580, y: 520 }, { x: 80 }, 'whoosh');
+  const UX = X6 + 1580, UY = 300;
+  ['uhr7', 'uhrM7', 'uhrH7'].forEach(id => ein(id, W('Arbeitsbeginn', 27) - .2, { x: UX, y: UY }, { y: -50 }));
+  set('uhrM7', 0, { r: 0 }); set('uhrH7', 0, { r: 200 });
+  tw('uhrM7', W('Arbeitsbeginn', 27) + .1, 1.0, { r: 270 }, 'inout'); tw('uhrH7', W('Arbeitsbeginn', 27) + .1, 1.0, { r: 222 }, 'inout'); cue(W('Arbeitsbeginn', 27) + .1, 'scan');
+  // Anruf: gestrichelter Bogen vom Handy zum Betrieb, Betrieb klingelt
+  const pfad = el('anruf7').querySelector('path');
+  pfad.setAttribute('d', `M${1190 + 50} 470C${1300} 380 ${1440} 390 ${1500} 450`);
+  akteur('anruf7', { x: X6 + 960, y: 540, o: 0 });
+  tw('anruf7', W('Betrieb', 27) - .4, .1, { o: 1 });
+  HOOKS.push(t => { const p = E.inout(clamp((t - W('Betrieb', 27) + .4) / .5)); pfad.style.strokeDasharray = '.025 .02'; pfad.style.strokeDashoffset = -t * .2; pfad.style.opacity = p; pfad.style.clipPath = ''; });
+  wellen('ring7', [W('Betrieb', 27), W('Betrieb', 27) + .35], X6 + 1580, 520, .8, 220); cue(W('Betrieb', 27), 'ding');
+  wackeln('handy7', W('Betrieb', 27) - .2, 5, 4);
+  pop('ok7', W('krank', 27), { x: X6 + 1670, y: 420 }, 'erfolg');
+  // Krankschreibung: Kalender läuft, Tag 4, Arztpraxis
+  aus(['betrieb7', 'uhr7', 'uhrM7', 'uhrH7', 'ok7', 'anruf7', 'handy7'], W('Dauert', 28) - .3, .3);
+  ein('praxis7', W('Dauert', 28) - .1, { x: X6 + 1580, y: 420 }, { x: 80 }, 'whoosh');
+  ein('tage7', W('Dauert', 28) - .1, { x: X6 + 1320, y: 710 }, { y: 70 });
+  const TAG = ['t1', 't2', 't3', 't4', 't5'];
+  const tTag = [W('Dauert', 28) + .2, W('länger', 28), W('als', 28), W('drei', 28) + .1];
+  HOOKS.push(t => TAG.forEach((id, i) => {
+    const e = el(id), an = i < 3 && t >= tTag[i], vier = i === 3 && t >= W('Tage', 28);
+    e.className = 'tag' + (an ? ' krank' : '') + (vier ? ' vier' : '');
+    const d = t - (i < 3 ? tTag[i] : W('Tage', 28));
+    e.style.transform = (i < 4 && d > 0 && d < .4) ? `scale(${1 + .12 * Math.sin(Math.PI * d / .4)})` : '';
+  }));
+  tTag.slice(0, 3).forEach(t => cue(t, 'klick')); cue(W('Tage', 28), 'ding'); akzent(W('Tage', 28), .03);
+  const K4 = X6 + 1320 + (110 + 16) * 1, K1 = X6 + 1320 - (110 + 16) * 2;
+  akteur('ks7', { x: X6 + 1580, y: 420, o: 0, s: .4 });
+  const tK = W('Krankschreibung', 28) - .2;
+  tw('ks7', tK, .1, { o: 1 }); flug('ks7', tK, .8, K4, 548, 130, { s: .82 }); landen('ks7', tK + .8, .6); cue(tK, 'whoosh'); cue(tK + .8, 'plopp');
+  bump('praxis7', tK, 1.06);
+  // früher: Krankschreibung schiebt sich (gestrichelt) auf Tag 1 vor
+  akteur('ksG7', { x: K4, y: 548, o: 0, s: .82 });
+  const tG = W('früher', 29) - .45;
+  tw('ksG7', tG, .2, { o: 1 }); tw('ksG7', tG, .9, { x: K1 }, 'inout'); cue(tG, 'whoosh');
+  bump('t1', W('früher', 29) + .5, 1.1);
+  textAus('tb7', SE(29) + .2);
+}
+
+/* ================= 8 · Sichtbar · Rutschfest · Warm · Früh los ================= */
+const X7 = S(7);
+pan2(SE(29) + .3, 7);
+{
+  NACHT[7] = rampe(W('Dann', 31) - .2, 1.6, .55, 0);
+  titelEin('tb8', 0, [W('sichtbar', 30) - .15, null, W('rutschfeste', 30) - .15, null, W('warme', 30) - .15, null, W('früher', 30) - .15, W('losfahren', 30) - .1]);
+  const KX = [1028, 1236, 1444, 1652], KY = 640, KW = ['sichtbar', 'rutschfeste', 'warme', 'früher'], KID = ['k8a', 'k8b', 'k8c', 'k8d'], OK = ['ok8a', 'ok8b', 'ok8c', 'ok8d'];
+  KID.forEach((id, i) => pop(id, W('Also', 30) - .2 + i * .12, { x: X7 + KX[i], y: KY }, i % 2 ? null : 'pop', 'sanft'));
+  // Amir springt von Kachel zu Kachel
+  const AY = 455;
+  akteur('am8', { x: X7 + KX[0] - 40, y: AY + 40, o: 0, s: .5 });
+  tw('am8', W('Also', 30) + .3, .3, { o: 1, s: 1, x: X7 + KX[0], y: AY }, 'back'); cue(W('Also', 30) + .3, 'pop');
+  KW.forEach((w, i) => {
+    const t0 = W(w, 30) - .45;
+    if (i) { flug('am8', t0, .42, X7 + KX[i], AY, 70); landen('am8', t0 + .42, .7); cue(t0 + .42, 'plopp'); }
+    bump(KID[i], t0 + .45, 1.08);
+    pop(OK[i], t0 + .5, { x: X7 + KX[i] + 66, y: KY - 74 }, 'ding');
+  });
+  froh('am8', W('sichtbar', 30));
+  // Sonne geht auf
+  akteur('sonne8', { x: X7 + 1640, y: 470, o: 0, s: .7 });
+  tw('sonne8', W('Dann', 31) - .2, 1.4, { y: 310, o: 1, s: 1 }, 'inout'); cue(W('Dann', 31), 'whoosh');
+  zusatz('sonne8', t => t > W('Dann', 31) ? `rotate(${((t - W('Dann', 31)) * 18).toFixed(1)}deg)` : '');
+  huepfen('am8', W('gut', 31) - .1, 22); welle('welle8', W('gut', 31), X7 + KX[3], AY, 1.1, 180); cue(W('gut', 31), 'erfolg'); akzent(W('gut', 31), .04);
+  KID.forEach((id, i) => huepfen(id, W('Winter', 31) + i * .07, 10));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.2;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
