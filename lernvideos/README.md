@@ -88,4 +88,4 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 65 | [Wortschatz Sanitär, Heizung, Klima](65-vokabeln-shk/) | Fachvokabeln | Erzählerin, Kwame, Geselle | 2:38 | fertig |
 | 66 | [Nützliche Apps für den Start](66-nuetzliche-apps/) | Erklärvideo | Erzählerin (Ana als Figur) | 1:53 | fertig |
 | 67 | [Wortschatz Naturwerkstein](67-vokabeln-naturstein/) | Fachvokabeln | Erzähler, Kwame, Sabine | 2:47 | fertig |
-| 68 | [Wortschatz Straßenbau](68-vokabeln-strassenbau/) | Fachvokabeln | Erzählerin, Amir, Geselle | – | in Arbeit |
+| 68 | [Wortschatz Straßenbau](68-vokabeln-strassenbau/) | Fachvokabeln | Erzählerin, Amir, Geselle | 2:45 | fertig |
