@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Regeln und Vertrauen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:0 0}
+#vorne{position:absolute;inset:0;pointer-events:none}
+
+/* ---------- Bühne: die Nacht-Kreuzung als Modell ---------- */
+.buehne.nacht{width:1760px;height:940px;border-radius:48px;overflow:hidden;background:var(--b700);box-shadow:0 24px 60px rgba(22,19,37,.22)}
+.nacht .strasse{position:absolute;left:0;top:0;width:1760px;height:940px}
+.nacht .hell{position:absolute;inset:0;background:linear-gradient(var(--b300),var(--b100) 55%,var(--b200));mix-blend-mode:soft-light}
+.nacht .mondlicht{position:absolute;inset:0;background:radial-gradient(circle at 52% 24%,var(--b400),transparent 42%);opacity:.5}
+.ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.schein{border-radius:999px;background:radial-gradient(closest-side,var(--warning-bg),rgba(252,241,221,.35) 45%,transparent)}
+.pfuetze{border-radius:999px;background:radial-gradient(closest-side,var(--b100),rgba(231,224,253,.25) 55%,transparent)}
+.kegel{background:radial-gradient(closest-side,rgba(252,241,221,.75),transparent);border-radius:50% 50% 50% 50%/30% 30% 70% 70%}
+.mast{width:8px;border-radius:4px;background:linear-gradient(90deg,var(--n300),var(--n200))}
+
+/* Schilder, Zettel, Blasen */
+.mondschild{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 10px;border-radius:14px;background:var(--b50);box-shadow:0 6px 16px rgba(22,19,37,.25);
+  font:800 24px/28px Inter;color:var(--b700);white-space:nowrap;transform-origin:50% 0}
+.mondschild svg{width:34px;height:34px}
+.mondschild::before{content:'';position:absolute;left:50%;top:-14px;width:2px;height:14px;background:var(--n300)}
+.kinderschild{width:176px;padding:6px 8px;border-radius:8px;background:var(--surface);border:3px solid var(--b500);text-align:center;
+  font:800 13px/16px Inter;color:var(--b700);transform-origin:50% 0;box-shadow:0 4px 10px rgba(22,19,37,.25)}
+.kinderschild b{display:block;font-weight:800;color:var(--b500)}
+.frage{width:72px;height:72px;border-radius:999px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.25);
+  display:flex;align-items:center;justify-content:center;font:800 46px/1 Inter;color:var(--b500)}
+.blase{padding:14px 26px;border-radius:24px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.22);font:700 28px/36px Inter;color:var(--ink);white-space:nowrap}
+.blase::after{content:'';position:absolute;left:38px;bottom:-11px;width:24px;height:24px;background:inherit;transform:rotate(45deg);border-radius:0 0 6px 0}
+.blase.r::after{left:auto;right:38px}
+.blase .rest{visibility:hidden}
+.rotblase{padding:14px 26px;border-radius:6px;background:var(--error-bg);border:4px solid var(--error);font:800 32px/38px Inter;color:var(--error-text);white-space:nowrap}
+.rotblase::after{content:'';position:absolute;right:-22px;top:20px;border:12px solid transparent;border-left:16px solid var(--error)}
+.zettel76{width:190px;height:236px;padding:20px 20px;border-radius:12px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.28);
+  display:flex;flex-direction:column;gap:12px}
+.zettel76 .para{font:800 64px/64px Inter;color:var(--b500)}
+.zettel76 b{font:800 26px/30px Inter;color:var(--ink)}
+.zettel76 i{height:10px;border-radius:5px;background:var(--n200)}
+.namens{width:132px;height:88px;border-radius:14px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.25);overflow:hidden}
+.namens .band{height:24px;background:var(--b100)}
+.namens .kopf{position:absolute;left:14px;top:36px;width:36px;height:36px;border-radius:999px;background:var(--b200)}
+.namens i{position:absolute;left:60px;height:9px;border-radius:5px;background:var(--n200)}
+.plakette{width:46px;height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--success);
+  border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.25)}
+.plakette svg{width:22px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* Puzzle */
+.rahmen svg,.stueck svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.stueck .ic{position:absolute;left:37px;top:37px;width:76px;height:76px}
+.mini{position:absolute;left:12px;top:22px;width:52px;height:34px;border-radius:7px;background:var(--surface);border:3px solid var(--b200)}
+.mini u{position:absolute;right:-9px;top:-9px;width:20px;height:20px;border-radius:999px;background:var(--success);border:2px solid var(--surface)}
+.wort .titel{font:800 56px/62px Inter;letter-spacing:-.02em;color:var(--b600);white-space:nowrap}
+
+/* Text im Bild: Tafeln */
+.tafel{padding:24px 38px 30px;border-radius:30px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.22);transform-origin:0 0}
+.tafel .titel{font:800 54px/64px Inter;letter-spacing:-.02em;color:var(--ink);max-width:820px}
+.tafel .titel .w:last-child .wi{color:var(--b500)}
+
+/* Szene 5: geteilte Bühne */
+.seite76{width:581px;height:310px;border-radius:30px;border:5px dashed var(--b300);background:var(--b50)}
+.seite76 svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.riesenfrage{font:800 170px/1 Inter;color:var(--b500)}
+.seitenchip{display:flex;align-items:center;gap:14px;padding:12px 28px 12px 22px;border-radius:999px;background:var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12);font:700 30px/36px Inter;color:var(--ink);white-space:nowrap}
+.seitenchip i{width:18px;height:18px;border-radius:999px;background:var(--b500)}
+.seitenchip.leer i{background:var(--surface);border:4px dashed var(--b300)}
+.gedanke{width:330px;height:230px}
+.gedanke svg.wolke{position:absolute;left:0;top:0;width:100%;height:100%}
+.gedanke .sym{position:absolute;width:78px;height:78px}
+
+/* Szene 6: Tipp-Seite */
+.seite{width:820px;height:960px;border-radius:44px;background:var(--surface);box-shadow:0 24px 60px rgba(22,19,37,.18)}
+.tipp{position:absolute;left:96px;top:0;width:660px;height:960px;display:flex;flex-direction:column;justify-content:center}
+.tipp .unter{font:600 40px/50px Inter;color:var(--b600);margin-top:0}
+.tipp .titel{font:800 82px/92px Inter;letter-spacing:-.03em;color:var(--ink);margin-bottom:56px}
+.tipp .titel:last-child{margin-bottom:0}
+.kachel76{width:110px;height:110px;background:var(--b100);border:5px solid var(--b300);display:flex;align-items:center;justify-content:center}
+.kachel76 .ic{width:76px;height:76px}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:6px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.22)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 62%;opacity:0}
+.portrait .froh{opacity:0}
+</style></head><body>
+
+<template id="f-ana">{{figur-ana}}</template>
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="t-ampel">{{ampel}}</template>
+<template id="t-rot">{{ampel-rot}}</template>
+<template id="t-gruen">{{ampel-gruen}}</template>
+<template id="t-lat">{{laterne}}</template>
+<template id="t-latan">{{laterne-an}}</template>
+<template id="t-rad">{{fahrrad}}</template>
+<template id="t-tonne">{{tonne}}</template>
+<template id="t-deckel">{{tonne-deckel}}</template>
+<template id="t-stand">{{stand}}</template>
+<template id="t-kiste">{{kiste-aepfel}}</template>
+<template id="t-eier">{{eier}}</template>
+<template id="t-kasse">{{kasse}}</template>
+<template id="t-muenze">{{muenze}}</template>
+<template id="t-mond">{{mond}}</template>
+<template id="t-wolke">{{wolke}}</template>
+<template id="t-blatt">{{blatt}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-birne">{{gluehbirne}}</template>
+<template id="t-haus">{{haus}}</template>
+<template id="t-uhr">{{uhr}}</template>
+<template id="t-schluessel">{{schluessel}}</template>
+<template id="t-tasse">{{tasse}}</template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne nacht" id="bue0"><svg class="strasse" id="strasse" viewBox="80 70 1760 940"></svg><div class="mondlicht" id="mondlicht"></div><div class="hell" id="hell0"></div></div>
+</div></div>
+<div id="vorne"></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Regeln sind ein Versprechen an alle.</div>
+  <div class="klein" id="asUnter">Viele halten sich hier an Regeln, weil das Zusammenleben auf Vertrauen beruht. Hinweis bekommen? Ruhig bleiben. Nicht verstanden? Frag nach.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WI = (n, i) => A(satz(n).woerter[i].start);          // i-tes Wort im Satz n (eindeutig)
+const SA = n => A(satz(n).start), SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt'), VORNE = document.getElementById('vorne');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '', wo = WELT) => { wo.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const bild = (id, t, breite, attr = '', wo = WELT) => neu(id, kopie(t, id), `width:${breite}px`, attr, '', wo);
+let WN = 0;
+const welle = (t, x, y, farbe = null, gr = 160, d = .9, wo = WELT) => {
+  const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle', wo);
+  akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich');
+};
+const tippen = (id, text, t1, t2, n = 7) => {
+  el(id).innerHTML = `<span class="tp"></span><span class="rest">${text}</span>`;
+  const [a, b] = el(id).children;
+  HOOKS.push(t => { const k = Math.round(text.length * clamp((t - t1) / (t2 - t1))); a.textContent = text.slice(0, k); b.textContent = text.slice(k); });
+  for (let i = 0; i < n; i++) cue(t1 + i * (t2 - t1) / n, 'tipp');
+};
+// Teil mit stehender Unterkante: x = Mitte, yb = Standlinie (Welt), unten = Standlinie im 160er-Teil
+const steht = (yb, breite, unten = 150) => yb - (unten - 80) / 160 * breite;
+
+/* ---------- Kamera: frei über dem Modell (Fokuspunkt + Zoom), Akzente, Unschärfe ---------- */
+neu('cam', '', 'display:none'); akteur('cam', { x: 900, y: 560, s: 1.22 });
+const fahrt = (t, d, x, y, s, e = 'inout') => tw('cam', t, d, { x, y, s }, e);
+const AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wisch" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischB" stdDeviation="0 0"/></filter></svg>');
+const camBei = t => { const a = AKTEURE.get(el('cam')); return [wert(a, 'x', t), wert(a, 'y', t), wert(a, 's', t)]; };
+HOOKS.push(t => {
+  const [fx, fy, s] = camBei(t);
+  let z = 1;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .012 * Math.sin(t * .35);
+  $('#kamera').style.transform = `translate(960px,540px) scale(${(s * z).toFixed(5)}) translate(${-fx}px,${-fy}px)`;
+  const [gx, gy, gs] = camBei(t - 1 / 30);
+  const vx = Math.abs(fx * s - gx * gs), vy = Math.abs(fy * s - gy * gs), vs = Math.abs(s - gs) * 900;
+  const bx = Math.min(8, (vx + vs) * .025), by = Math.min(8, (vy + vs) * .025);
+  $('#wischB').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  WELT.style.filter = bx + by > .6 ? 'url(#wisch)' : '';
+});
+
+/* ---------- Figur Ana (nur Porträt): Mund im eigenen Satz, blinzeln, nicken, Kopf schief, froh ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [], NEIG = [];
+function portrait(id, gr, attr = '', wo = WELT) {
+  neu(id, `<div class="figur"><div class="ebene">${kopie('f-ana', id)}</div>${tpl('gesicht')}</div>`, `width:${gr}px;height:${gr}px`, attr, 'portrait', wo);
+  return id;
+}
+const froh = (id, t, bis = 999) => FROH.push([id, t, bis]);
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+const neigen = (id, t, bis, w = -9) => NEIG.push([id, t, bis, w]);
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  const spricht = SAETZE.some(s => s.w === 'Ana' && t >= s.a && t <= s.b);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const f = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.4 * Math.sin(t * 3.1) * pegel : 1.2 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) { const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue; y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q); }
+    for (const [id, a, b, w] of NEIG) if (id === p.id) r += w * E.inout(clamp((t - a) / .5)) * (1 - E.inout(clamp((t - b) / .5)));
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+  });
+});
+
+/* ================= Die Straße (Welt-Koordinaten = Bild bei Zoom 1) ================= */
+akteur('bue0', { x: 960, y: 540 });
+const H = 500, VPX = 1250, hw = y => 260 * (y - H) / 510;
+{
+  const F = 'fill', s = [];
+  s.push(`<defs><linearGradient id="himmel" x2="0" y2="1"><stop offset="0" stop-color="var(--b700)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient>
+    <linearGradient id="nah" x2="0" y2="1"><stop offset="0" stop-color="var(--b500)"/><stop offset="1" stop-color="var(--b600)"/></linearGradient></defs>`);
+  s.push(`<rect x="80" y="70" width="1760" height="580" fill="url(#himmel)"/>`);
+  // Häuserschlucht der Straße nach hinten
+  s.push(`<path d="M1150 450L1222 486V560L1150 640Z" fill="var(--b700)"/><path d="M1350 450L1278 486V560L1350 640Z" fill="var(--b700)"/>`);
+  s.push(`<path d="M1222 560H1278L${VPX + hw(640) + 30} 640H${VPX - hw(640) - 30}Z" fill="var(--b500)"/>`);
+  s.push(`<path d="M${VPX - 20} 560H${VPX + 20}L${VPX + hw(1010)} 1010H${VPX - hw(1010)}Z" fill="var(--b700)"/>`);
+  // Häuser
+  const HAUS = [[80, 380, 430, 0], [400, 760, 470, 380], [780, 1150, 450, 0], [1350, 1600, 440, 0], [1620, 1860, 470, 400]];
+  HAUS.forEach(([a, b, top, giebel], k) => {
+    if (giebel) s.push(`<path d="M${a - 14} ${top}L${(a + b) / 2} ${giebel}L${b + 14} ${top}Z" fill="var(--b500)"/><path d="M${a - 14} ${top}L${(a + b) / 2} ${giebel}L${b + 14} ${top}h-14L${(a + b) / 2} ${giebel + 14}L${a} ${top}Z" fill="var(--b400)" opacity=".6"/>`);
+    else s.push(`<rect x="${a - 8}" y="${top - 14}" width="${b - a + 16}" height="16" rx="4" fill="var(--b500)"/>`);
+    s.push(`<rect x="${a}" y="${top}" width="${b - a}" height="${640 - top}" fill="var(--b600)"/><rect x="${a}" y="${top}" width="10" height="${640 - top}" fill="var(--b500)" opacity=".7"/>`);
+    const n = Math.max(2, Math.round((b - a) / 110));
+    for (let r = 0; r < 2; r++) for (let c = 0; c < n; c++) {
+      const x = a + (b - a) * (c + .5) / n - 22, y = top + 26 + r * 76;
+      s.push(`<rect x="${x}" y="${y}" width="44" height="54" rx="6" fill="var(--b700)"/><rect class="fen" data-k="${k}${r}${c}" x="${x}" y="${y}" width="44" height="54" rx="6" fill="var(--warning-bg)" opacity="0"/>`);
+    }
+  });
+  // Gehwege, Fahrbahn
+  s.push(`<rect x="80" y="640" width="1760" height="60" fill="var(--b500)"/><rect x="80" y="640" width="1760" height="4" fill="var(--b400)"/>`);
+  s.push(`<rect x="80" y="700" width="1760" height="150" fill="var(--b700)"/>`);
+  s.push(`<rect x="80" y="850" width="1760" height="160" fill="url(#nah)"/>`);
+  s.push(`<path d="M${VPX - hw(640)} 640H${VPX + hw(640)}L${VPX + hw(1010)} 1010H${VPX - hw(1010)}Z" fill="var(--b700)"/>`);
+  s.push(`<rect x="80" y="696" width="${VPX - hw(700) - 80}" height="6" fill="var(--b300)"/><rect x="${VPX + hw(700)}" y="696" width="${1840 - VPX - hw(700)}" height="6" fill="var(--b300)"/>`);
+  s.push(`<rect x="80" y="848" width="${VPX - hw(850) - 80}" height="6" fill="var(--b300)"/><rect x="${VPX + hw(850)}" y="848" width="${1840 - VPX - hw(850)}" height="6" fill="var(--b300)"/>`);
+  s.push(`<path d="M${VPX - hw(640)} 640L${VPX - hw(700)} 700M${VPX + hw(640)} 640L${VPX + hw(700)} 700M${VPX - hw(850)} 850L${VPX - hw(1010)} 1010M${VPX + hw(850)} 850L${VPX + hw(1010)} 1010" stroke="var(--b300)" stroke-width="5"/>`);
+  // Mittellinien
+  for (let x = 120; x < 1800; x += 120) if (Math.abs(x + 30 - VPX) > hw(775) + 40 && (x + 60 < 405 || x > 605)) s.push(`<rect x="${x}" y="772" width="60" height="7" rx="3" fill="var(--b400)" opacity=".8"/>`);
+  for (const [a, b] of [[575, 600], [640, 668], [880, 930], [960, 1010]]) s.push(`<path d="M${VPX - 3 * (b - H) / 510 * 2} ${b}H${VPX + 3 * (b - H) / 510 * 2}L${VPX + 3 * (a - H) / 510 * 2} ${a}H${VPX - 3 * (a - H) / 510 * 2}Z" fill="var(--b400)" opacity=".8"/>`);
+  // Fußgängerfurt
+  for (const fx of [420, 590]) for (let y = 708; y < 846; y += 24) s.push(`<rect x="${fx - 6}" y="${y}" width="12" height="14" rx="2" fill="var(--b300)"/>`);
+  el('strasse').innerHTML = s.join('');
+}
+const FENSTER = [...document.querySelectorAll('#strasse .fen')];
+const fen = k => FENSTER.find(f => f.dataset.k === k);
+
+/* ---------- Gegenstände der Straße ---------- */
+neu('mond', kopie('t-mond', 'mond'), 'width:150px'); akteur('mond', { x: 1000, y: 290, o: 0 });
+neu('wolke', kopie('t-wolke', 'wolke'), 'width:230px', 'data-frei');
+// Laternen (dunkel; Schein und Lichtpfütze gehen in Szene 4 an)
+const LAT = [[260, 690, 220], [800, 690, 220], [1440, 690, 220], [1740, 690, 210], [1180, 640, 120], [1320, 640, 120], [1212, 588, 72], [1288, 588, 72]];
+LAT.forEach(([x, yb, w], k) => {
+  const id = 'lat' + k, y = steht(yb, w, 153);
+  neu('pf' + k, '', `width:${w * 1.5}px;height:${w * .32}px`, 'data-frei', 'pfuetze'); akteur('pf' + k, { x, y: yb + 2, o: 0 });
+  neu('ke' + k, '', `width:${w * .7}px;height:${w * .95}px`, 'data-frei', 'kegel'); akteur('ke' + k, { x, y: yb - w * .5, o: 0 });
+  neu(id, `<div class="ebene">${kopie('t-lat', id)}</div><div class="ebene" id="${id}an">${kopie('t-latan', id + 'an')}</div>`, `width:${w}px;height:${w}px`, `data-gruppe="lat${k}"`);
+  akteur(id, { x, y }); akteur(id + 'an', { o: 0 }, true);
+  neu('sch' + k, '', `width:${w * 1.2}px;height:${w * 1.2}px`, 'data-frei', 'schein'); akteur('sch' + k, { x, y: y - w * .31, o: 0, s: .6 });
+});
+// Straßenuhr
+neu('uhrmast', '', 'height:122px', 'data-gruppe="uhr"', 'mast'); akteur('uhrmast', { x: 1100, y: 690 - 61 });
+neu('uhr1', '', 'width:104px;height:104px', 'data-gruppe="uhr"'); akteur('uhr1', { x: 1100, y: 560 });
+// Fahrrad mit Licht
+neu('radschein', '', 'width:150px;height:90px', 'data-frei', 'schein'); akteur('radschein', { x: 562, y: 652, o: .0, sy: .55 });
+bild('rad', 't-rad', 170); akteur('rad', { x: 440, y: steht(690, 170, 140) });
+// Fußgängerampel mit Schild „Nur bei Grün“
+neu('ampel', `<div class="ebene">${kopie('t-ampel', 'ampel')}</div><div class="ebene" id="rotan">${kopie('t-rot', 'rot')}</div><div class="ebene" id="gruenan">${kopie('t-gruen', 'gruen')}</div>`, 'width:170px;height:170px', 'data-gruppe="ampel"');
+akteur('ampel', { x: 630, y: steht(690, 170, 153) }); akteur('rotan', {}, true); akteur('gruenan', { o: 0 }, true);
+const ROT = [629, steht(690, 170, 153) - 85 + 36 * 170 / 160], GRUEN = [629, steht(690, 170, 153) - 85 + 78 * 170 / 160];
+neu('rotschein', '', 'width:120px;height:120px', 'data-frei', 'schein'); akteur('rotschein', { x: ROT[0], y: ROT[1], o: 0 });
+neu('kinder', '<b>Nur bei Grün –</b>den Kindern ein Vorbild', '', 'data-gruppe="ampel"', 'kinderschild');
+// Mülltonnen
+[1520, 1590, 1660].forEach((x, k) => {
+  neu('to' + k, `<div class="ebene">${kopie('t-tonne', 'to' + k)}</div><div class="ebene" id="de${k}" style="transform-origin:22% 25%">${kopie('t-deckel', 'de' + k)}</div>`, 'width:90px;height:90px', 'data-gruppe="tonnen"');
+  akteur('to' + k, { x, y: steht(690, 90, 152) }); akteur('de' + k, {}, true);
+});
+// Ana
+portrait('ana', 130);
+// Hofladen-Stand
+const ST = { x: 860, yb: 960, w: 260 };
+neu('stand', kopie('t-stand', 'stand'), 'width:260px', 'data-gruppe="stand"');
+const THEKE = steht(ST.yb, ST.w, 152) - 130 + 102 * ST.w / 160;
+bild('kiste', 't-kiste', 84, 'data-gruppe="stand"'); bild('eier', 't-eier', 82, 'data-gruppe="stand"'); bild('kasse', 't-kasse', 74, 'data-gruppe="stand"');
+bild('muenze', 't-muenze', 36, 'data-dreht data-frei');
+// Fragezeichen über Ana, Blatt
+neu('frage1', '?', '', '', 'frage');
+bild('blatt', 't-blatt', 60, 'data-frei');
+// Pfeil-Spur über die Furt (bei Rot, ohne Person)
+neu('spur', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><defs><marker id="spsp" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b200)"/></marker></defs>
+  <path class="zeichnen" pathLength="1" d="M505 690C500 740 512 800 505 858" stroke="var(--b200)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#spsp)"/></svg>`, 'width:1920px;height:1080px', 'data-frei');
+// Mond-Schild „22–6 Uhr“
+neu('mondschild', `${kopie('t-mond', 'ms')}22–6 Uhr`, '', '', 'mondschild');
+
+/* ---------- Abdunkeln (Szene 3), Namensschilder, Bußgeld, Sprechblase ---------- */
+neu('dimm', '', 'width:1760px;height:940px;border-radius:48px;background:var(--b700)', 'data-frei'); akteur('dimm', { x: 960, y: 540, o: 0 });
+const TAGS = [490, 660, 830, 1000, 1170, 1340];
+TAGS.forEach((x, k) => neu('tag' + k, `<div class="band"></div><div class="kopf"></div><i style="top:40px;width:56px"></i><i style="top:58px;width:40px"></i>`, '', '', 'namens'));
+TAGS.forEach((x, k) => neu('ok' + k, tpl('svgHaken'), '', 'data-frei', 'plakette'));
+neu('zettel', `<div class="para">§</div><b>Bußgeld</b><i></i><i style="width:70%"></i><i style="width:85%"></i>`, '', '', 'zettel76');
+neu('rotblase', 'Da ist Rot!', '', '', 'rotblase');
+bild('herz', 't-herz', 84, 'data-frei');
+
+/* ---------- Puzzle ---------- */
+const C = 100;
+function kante(x1, y1, x2, y2, g) {
+  if (!g) return `L${x2} ${y2}`;
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), s = ((-dy / L) * g[0] + (dx / L) * g[1]) > 0 ? 1 : -1;
+  const nx = -dy * s, ny = dx * s;
+  const P = (a, b) => `${(x1 + dx * a + nx * b).toFixed(1)} ${(y1 + dy * a + ny * b).toFixed(1)}`;
+  return `L${P(.36, 0)}C${P(.42, 0)} ${P(.41, .1)} ${P(.37, .17)}C${P(.31, .3)} ${P(.4, .34)} ${P(.5, .34)}C${P(.6, .34)} ${P(.69, .3)} ${P(.63, .17)}C${P(.59, .1)} ${P(.58, 0)} ${P(.64, 0)}L${x2} ${y2}`;
+}
+const gV = (c, r) => (r + c) % 2 ? [1, 0] : [-1, 0];          // Kante rechts von Spalte c
+const gH = c => c % 2 ? [0, 1] : [0, -1];                       // Kante unter Zeile 0
+function stueckPfad(c, r) {
+  const x0 = c * C, y0 = r * C, x1 = x0 + C, y1 = y0 + C;
+  return `M${x0} ${y0}` + kante(x0, y0, x1, y0, r === 1 ? gH(c) : null) + kante(x1, y0, x1, y1, c < 2 ? gV(c, r) : null)
+    + kante(x1, y1, x0, y1, r === 0 ? gH(c) : null) + kante(x0, y1, x0, y0, c > 0 ? gV(c - 1, r) : null) + 'Z';
+}
+const SLOTS = [[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1]];
+neu('rahmen', `<svg viewBox="-40 -40 380 280"><rect x="-26" y="-26" width="352" height="252" rx="26" fill="var(--b600)" stroke="var(--b400)" stroke-width="4"/>
+  ${SLOTS.map(([c, r]) => `<path d="${stueckPfad(c, r)}" fill="var(--b700)" stroke="var(--b300)" stroke-width="3" stroke-dasharray="9 8" stroke-linejoin="round"/>`).join('')}</svg>`,
+  'width:380px;height:280px', 'data-gruppe="puzzle"', 'rahmen');
+const ICON = [
+  `<div class="ebene">${kopie('t-ampel', 'p0a')}</div><div class="ebene">${kopie('t-rot', 'p0r')}</div>`,
+  `<div class="ebene" style="left:16%;top:12%;width:68%;height:76%;border-radius:8px;background:var(--b700)"></div><div class="ebene" style="left:22%;top:20%;width:56%;height:56%">${kopie('t-mond', 'p1')}</div>`,
+  `<div class="ebene">${kopie('t-tonne', 'p2')}</div><div class="ebene">${kopie('t-deckel', 'p2d')}</div>`,
+  `<div class="ebene">${kopie('t-kasse', 'p3')}</div>`,
+  `<div class="mini" style="left:0;top:10px"></div><div class="mini" style="left:24px;top:38px"><u></u></div>`,
+  `<div class="ebene">${kopie('t-herz', 'p5')}</div>`];
+SLOTS.forEach(([c, r], k) => neu('st' + k, `<svg viewBox="${c * C - 25} ${r * C - 25} 150 150"><path d="${stueckPfad(c, r)}" fill="var(--surface)" stroke="var(--b200)" stroke-width="3" stroke-linejoin="round"/></svg><div class="ic" id="ic${k}">${ICON[k]}</div>`,
+  'width:150px;height:150px', 'data-gruppe="puzzle"', 'stueck'));
+neu('wort', '<div id="wortT"><div class="titel">Vertrauen</div></div>', '', 'data-gruppe="puzzle"', 'wort');
+akteur('wort', { x: 1500, y: 285, s: 1.2 });
+// Rahmen-Zustand → Platz eines Stücks
+const PLATZ = [];
+const slotXY = (k, t) => { const [c, r] = SLOTS[k], x = wertBei('rahmen', 'x', t), y = wertBei('rahmen', 'y', t), s = wertBei('rahmen', 's', t); return [x + (c * C + 50 - 150) * s, y + (r * C + 50 - 100) * s, s]; };
+function rahmenZu(t, d, x, y, s, e = 'inout') {
+  tw('rahmen', t, d, { x, y, s }, e);
+  PLATZ.forEach((tp, k) => { if (tp != null && tp <= t) { const [c, r] = SLOTS[k]; tw('st' + k, t, d, { x: x + (c * C + 50 - 150) * s, y: y + (r * C + 50 - 100) * s, s }, e); } });
+  tw('wort', t, d, { x, y, s }, e);
+}
+// Stück bricht aus einem Gegenstand und fliegt in seinen Platz
+function stueck(k, t0, x, y, tFlug, d = 1.0) {
+  akteur('st' + k, { x, y, s: 0 });
+  tw('st' + k, t0, .45, { s: .85 }, 'back'); cue(t0, 'plopp');
+  welle(t0, x, y, 'var(--b200)', 130, .8);
+  const [zx, zy, zs] = slotXY(k, tFlug + d);
+  flug('st' + k, tFlug, d, zx, zy, 170, { s: zs }); cue(tFlug, 'whoosh');
+  tw('st' + k, tFlug + d - .02, .08, { sy: .9, sx: 1.06 }, 'sinus'); tw('st' + k, tFlug + d + .06, .35, { sy: 1, sx: 1 }, 'sanft');
+  cue(tFlug + d, 'klick'); bump('rahmen', tFlug + d, 1.03);
+  PLATZ[k] = tFlug + d;
+}
+
+/* ---------- Text im Bild: Tafeln oben links (vor der Kamera) ---------- */
+function tafel(id, text, t, zeiten, aust) {
+  neu(id, `<div id="${id}T"><div class="titel">${text}</div></div>`, '', '', 'tafel', VORNE);
+  akteur(id, { x: 150, y: 110, o: 0, s: .92 }, true);
+  tw(id, t - .15, .4, { o: 1 }, 'out'); tw(id, t - .15, .6, { s: 1 }, 'sanft'); cue(t - .15, 'whoosh');
+  titelEin(id + 'T', t, zeiten);
+  if (aust) { tw(id, aust, .4, { o: 0, y: 70 }, 'in'); }
+}
+
+/* ================= 1 · Nachts um zwei an der Kreuzung ================= */
+{
+  // Uhr springt auf 2:00
+  const tZw = W('zwei', 1);
+  el('uhr1').innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b400)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/><g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="uhrH" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/><path id="uhrM" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/><circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = 119 + E.back(clamp((t - tZw + .05) / .35));
+    $('#uhrH').setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`); $('#uhrM').setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  });
+  bump('uhr1', tZw + .05, 1.15); cue(tZw + .05, 'ding'); akzent(tZw, .03);
+  // Mond schiebt sich hinter der Wolke hervor
+  tw('mond', A(-.4), .8, { o: 1 });
+  akteur('wolke', { x: 1010, y: 300 });
+  tw('wolke', W('nachts', 1) - .2, 2.6, { x: 1250, y: 330, o: 0 }, 'inout');
+  schweben('mond', 3);
+  // Ana kommt von der Spätschicht (von links, hüpft, stoppt mit Squash)
+  akteur('ana', { x: 40, y: 885, o: 0 });
+  const tK = W('komme', 2);
+  tw('ana', tK - .2, .2, { o: 1 });
+  [0, 1, 2].forEach(i => tw('ana', tK - .2 + i * .38, .38, { x: 40 + (i + 1) * 157 }, i === 2 ? 'out' : 'lin', { bogen: 16 }));
+  landen('ana', tK + .96); cue(tK + .96, 'plopp');
+  froh('ana', W('Hause', 2), W('Hause', 2) + 1.2);
+  // Ampel rot, Fahrradlicht
+  HOOKS.push(t => { const p = .8 + .2 * Math.sin(t * 2.4); el('rotan').style.opacity = wertBei('rotan', 'o', t) * p; });
+  akteur('rotschein', { x: ROT[0], y: ROT[1], o: 0 }); tw('rotschein', A(0), 1, { o: .55 });
+  tw('radschein', A(.2), 1, { o: .85 });
+  HOOKS.push(t => { el('radschein').style.opacity = (+el('radschein').style.opacity * (.85 + .15 * Math.sin(t * 3.3))).toFixed(3); });
+  // Kamera: Start bei der Kreuzung, auf „Straße“ fährt sie die leere Straße entlang, dann in die Tiefe
+  const tSt = W('Straße', 3), tKe = W('kein', 3), tWe = W('weit', 3), tAb = W('Aber', 4);
+  fahrt(tSt - .3, 1.0, 640, 700, 1.75);
+  fahrt(tSt + .75, tKe - tSt - .55, 1180, 700, 1.75, 'sinus');
+  fahrt(tKe + .25, 1.1, 1250, 610, 2.3);
+  cue(tSt - .3, 'whoosh'); cue(tKe + .25, 'whoosh');
+  // nichts kommt – nur ein Blatt weht über die Straße
+  akteur('blatt', { x: 1120, y: 600, o: 0, r: -30, s: .7 });
+  tw('blatt', tKe, .2, { o: 1 }); tw('blatt', tKe, 2.2, { x: 1400, y: 690, r: 200 }, 'sinus', { bogen: 40 }); tw('blatt', tKe + 2.0, .3, { o: 0 });
+  // an der roten Ampel: eine Frau mit ihrem Fahrrad (nur das Rad ist zu sehen)
+  fahrt(tAb - .25, 1.1, 720, 640, 1.5); cue(tAb - .25, 'whoosh');
+  const tRo = W('roten', 4), tFa = W('Fahrrad', 4);
+  bump('ampel', tRo, 1.06); tw('rotschein', tRo, .3, { o: .9, s: 1.25 }, 'sinus'); tw('rotschein', tRo + .3, .6, { o: .55, s: 1 }, 'sanft'); akzent(tRo, .03);
+  bump('rad', tFa, 1.06); tw('radschein', tFa, .3, { s: 1.35 }, 'sinus'); tw('radschein', tFa + .3, .5, { s: 1 }, 'sanft'); cue(tFa, 'klick');
+  // Ich habe mich gefragt: Warum wartet sie?
+  const tGe = W('gefragt', 5), tWa = W('Warum', 5);
+  fahrt(SA(5) - .25, 1.0, 780, 620, 1.4);
+  pop('frage1', tGe, { x: 615, y: 790 }); wackeln('frage1', tWa, 4, 8); bump('frage1', W('sie', 5), 1.15);
+  neigen('ana', tGe, SE(5) + .5, -7);
+  aus('frage1', SE(5) + .45, .3);
+}
+
+/* ================= 2 · So ist es oft in Deutschland: die Regeln werden zu Puzzleteilen ================= */
+{
+  const t0 = SA(6) - .35;
+  fahrt(t0, 1.2, 960, 540, 1); cue(t0, 'whoosh');
+  // der Rahmen senkt sich über der Kreuzung ab
+  const tRe = W('Regeln', 6);
+  akteur('rahmen', { x: 1500, y: -200, o: 0, s: 1.2 });
+  tw('rahmen', tRe - .7, .2, { o: 1 }); tw('rahmen', tRe - .7, .8, { y: 285 }, 'sanft'); cue(tRe - .7, 'whoosh');
+  landen('rahmen', tRe + .05);
+  tafel('tb2', 'Viele halten sich an Regeln – auch wenn niemand zuschaut', W('halten', 6), [W('halten', 6) - .1, W('halten', 6), W('Regeln', 6) - .25, W('Regeln', 6) - .12, W('Regeln', 6), W('auch', 6) - .1, W('auch', 6), W('wenn', 6), W('niemand', 6), W('zuschaut', 6)], SE(11) + .4);
+  // niemand schaut zu: das Licht im Fenster gegenüber geht schon aus
+  // Ampel → Stück 1
+  const tAm = W('Ampel', 7), tWar = W('warten', 7), tKo = W('kommt', 7);
+  bump('ampel', tAm, 1.08); akzent(tAm, .025);
+  tw('rotschein', tWar, .3, { o: 1, s: 1.3 }, 'sinus'); tw('rotschein', tWar + .3, .6, { o: .55, s: 1 }, 'sanft');
+  stueck(0, tWar + .3, 630, 590, tKo - .2, 1.0);
+  // nicht alle: ein Pfeil huscht bei Rot über die Furt und ist weg
+  const tNi = W('nicht', 8), tVi = W('viele', 8);
+  akteur('spur', { x: 960, y: 540, o: 0, draw: 0 });
+  set('spur', tNi - .05, { o: 1 }); tw('spur', tNi - .05, .45, { draw: 1 }, 'in'); cue(tNi - .05, 'whoosh');
+  tw('spur', tNi + .5, .45, { o: 0 }, 'in');
+  bump('ampel', tVi, 1.06); bump('rad', tVi + .1, 1.06);
+  // Nachts im Haus ruhig: ein Fenster wird dunkel, das Mond-Schild klappt auf, das Fenster wird zum Stück
+  const tNa = W('Nachts', 9), tRu = W('ruhig', 9);
+  HOOKS.push(t => {
+    fen('101').setAttribute('opacity', t < tNa ? .95 : .95 * (1 - E.inout(clamp((t - tNa) / .5))));
+    fen('211').setAttribute('opacity', t < tNa + .25 ? .9 : .9 * (1 - E.inout(clamp((t - tNa - .25) / .5))));
+  });
+  cue(tNa, 'klick');
+  akteur('mondschild', { x: 465, y: 522, o: 0, sy: 0 });
+  set('mondschild', tNa + .2, { o: 1 }); tw('mondschild', tNa + .2, .5, { sy: 1 }, 'back'); cue(tNa + .2, 'pop');
+  wackeln('mondschild', tNa + .7, 3, 3);
+  stueck(1, tRu - .1, 580, 525, tRu + .55, 1.0);
+  // viele trennen ihren Müll: drei Tonnen hüpfen, Deckel klappen
+  const tTr = W('trennen', 9), tMu = W('Müll', 9);
+  [0, 1, 2].forEach(k => { huepfen('to' + k, tTr - .1 + k * .17, 16); tw('de' + k, tTr - .02 + k * .17, .14, { r: -38 }, 'out'); tw('de' + k, tTr + .16 + k * .17, .3, { r: 0 }, 'bounce'); cue(tTr + .2 + k * .17, 'klick'); });
+  stueck(2, tMu + .1, 1590, 600, tMu + .65, 1.0);
+  // Hofladen-Stand rollt herein; Kasse des Vertrauens
+  const tHo = W('Hofläden', 10), tKa = W('Kasse', 10), tVe = W('Vertrauens', 10);
+  const SX = ST.x, SY = steht(ST.yb, ST.w, 152);
+  const DING = [['kiste', SX - 70, 84], ['eier', SX + 2, 82], ['kasse', SX + 70, 74]];
+  akteur('stand', { x: SX + 700, y: SY, o: 0 });
+  DING.forEach(([id, dx, w]) => akteur(id, { x: dx + 700, y: steht(THEKE, w, 146), o: 0 }));
+  ['stand', ...DING.map(d => d[0])].forEach(id => { tw(id, tHo - .5, .2, { o: 1 }); tw(id, tHo - .5, 1.2, { x: wertBei(id, 'x', 0) - 700 }, 'weich'); });
+  cue(tHo - .5, 'whoosh');
+  fahrt(tHo - .6, 1.2, 900, 660, 1.55);
+  ['stand', ...DING.map(d => d[0])].forEach((id, k) => { tw(id, tHo + .55, .1, { r: -2 }, 'sinus'); tw(id, tHo + .65, .4, { r: 0 }, 'sanft'); });
+  cue(tHo + .6, 'plopp'); akzent(tHo + .4, .025);
+  bump('kasse', tKa, 1.15); welle(tVe + .1, SX + 70, steht(THEKE, 74, 146) + 4, 'var(--b200)', 120, 1.0); cue(tKa, 'pop');
+  // Äpfel oder Eier, Geld selbst hinein
+  const tAe = W('Äpfel', 11), tEi = W('Eier', 11), tGe = W('Geld', 11), tHi = W('hinein', 11);
+  huepfen('kiste', tAe, 14); huepfen('eier', tEi, 14); cue(tAe, 'pop'); cue(tEi, 'pop');
+  const KY = steht(THEKE, 74, 146);
+  akteur('muenze', { x: SX + 70, y: KY - 150, o: 0 });
+  tw('muenze', tGe - .3, .15, { o: 1 }); tw('muenze', tGe - .3, .5, { y: KY - 80 }, 'out');
+  tw('muenze', tGe + .45, .3, { y: KY - 26, s: .8 }, 'in'); tw('muenze', tGe + .72, .06, { o: 0 });
+  HOOKS.push(t => { const p = t - tGe + .3; if (p > 0 && p < 1.1) el('muenze').style.transform += ` scaleX(${Math.cos(p * Math.PI * 3).toFixed(3)})`; });
+  bump('kasse', tGe + .76, 1.12); cue(tGe + .74, 'muenze');
+  fahrt(tHi - .2, 1.0, 960, 540, 1);
+  stueck(3, tHi - .1, SX + 70, KY - 6, tHi + .45, 1.0);
+}
+
+/* ================= 3 · Regeln gelten für alle ================= */
+{
+  const t0 = SA(12) - .2;
+  tw('dimm', t0, .8, { o: .62 }, 'inout');
+  rahmenZu(t0, 1.0, 1200, 400, 1.7);
+  cue(t0, 'whoosh');
+  tafel('tb3', 'Regeln gelten für alle', W('Regeln', 12), [W('Regeln', 12), W('gelten', 12), W('für', 12), W('alle', 12)], SE(15) + .3);
+  // eine Reihe gleicher Namensschilder, jedes bekommt denselben Haken
+  const tFu = W('für', 12);
+  TAGS.forEach((x, k) => {
+    akteur('tag' + k, { x: x + 900, y: 730, o: 0 });
+    tw('tag' + k, tFu - .9 + k * .06, .2, { o: 1 }); tw('tag' + k, tFu - .9 + k * .06, 1.1, { x }, 'weich');
+    tw('tag' + k, tFu + .2 + k * .06, .1, { r: -2 }, 'sinus'); tw('tag' + k, tFu + .3 + k * .06, .35, { r: 0 }, 'sanft');
+    pop('ok' + k, W('alle', 12) + k * .13, { x: x + 54, y: 694 }, k % 2 ? null : 'ding');
+  });
+  cue(tFu - .9, 'whoosh');
+  // bei Rot: das Ampel-Stück blinkt; Bußgeld: ein Zettel flattert herein und schlägt auf
+  const tRo = W('Rot', 13), tBu = W('Bußgeld', 13);
+  bump('st0', tRo, 1.12); welle(tRo, wertBei('st0', 'x', tRo), wertBei('st0', 'y', tRo), 'var(--error)', 180, .9);
+  akteur('zettel', { x: 240, y: 150, o: 0, r: -3, s: .8 });
+  tw('zettel', tBu - .9, .2, { o: 1 });
+  tw('zettel', tBu - .9, .9, { x: 560, y: 470, s: 1 }, 'inout', { bogen: -60 });
+  [0, 1, 2].forEach(i => tw('zettel', tBu - .9 + i * .3, .3, { r: i % 2 ? -3 : 3 }, 'sinus'));
+  tw('zettel', tBu, .1, { r: 0, sy: .9, sx: 1.05 }, 'sinus'); tw('zettel', tBu + .1, .4, { sy: 1, sx: 1 }, 'sanft');
+  cue(tBu, 'plopp'); akzent(tBu, .04); wackeln('zettel', tBu + .15, 3, 2);
+  // manchmal spricht dich jemand direkt darauf an
+  const tDi = W('direkt', 14);
+  akteur('rotblase', { x: 1890, y: 360, o: 0 });
+  tw('rotblase', tDi - .35, .15, { o: 1 }); tw('rotblase', tDi - .35, .5, { x: 1650 }, 'back'); cue(tDi - .35, 'pop');
+  wackeln('rotblase', W('an', 14) + .05, 3, 3);
+  // meistens nicht böse gemeint: die Blase wird rund und weich, ein Herz steigt auf
+  const tBo = W('böse', 15), tGm = W('gemeint', 15);
+  HOOKS.push(t => {
+    const p = E.inout(clamp((t - tBo + .2) / .7)), b = el('rotblase');
+    b.style.borderRadius = (6 + 34 * p).toFixed(1) + 'px';
+    b.style.borderColor = p > .5 ? 'var(--b200)' : 'var(--error)';
+    b.style.background = p > .5 ? 'var(--surface)' : 'var(--error-bg)';
+    b.style.color = p > .5 ? 'var(--b600)' : 'var(--error-text)';
+  });
+  bump('rotblase', tBo + .2, 1.08); cue(tBo + .2, 'pop');
+  akteur('herz', { x: 1650, y: 360, o: 0, s: .3 });
+  tw('herz', tGm, .2, { o: 1 }); tw('herz', tGm, .9, { y: 230, s: 1 }, 'sanft'); cue(tGm, 'ding');
+  schweben('herz', 4);
+}
+
+/* ================= 4 · Warum? Vertrauen – die Laternen gehen an ================= */
+{
+  // Warum ist das so? Die Schilder schieben sich zum fünften Stück zusammen
+  const tWa = W('Warum', 16), tVe = W('Vertrauen', 17);
+  const [x4, y4, s4] = slotXY(4, tWa + 1);
+  TAGS.forEach((x, k) => { flug('tag' + k, tWa - .1 + k * .05, .7, x4, y4, 60, { s: .4 }); tw('tag' + k, tWa + .45 + k * .05, .15, { o: 0 }); aus('ok' + k, tWa - .15, .25); });
+  cue(tWa - .1, 'whoosh');
+  akteur('st4', { x: x4, y: y4, s: 0 }); tw('st4', tWa + .6, .45, { s: s4 }, 'back'); cue(tWa + .7, 'klick'); PLATZ[4] = tWa + .6;
+  bump('rahmen', tWa + .7, 1.03);
+  aus(['zettel', 'rotblase'], tWa, .4);
+  // Es geht um Vertrauen: das Herz rastet als letztes Stück ein
+  const [x5, y5, s5] = slotXY(5, tVe);
+  akteur('st5', { x: x5, y: y5, s: 0 });
+  flug('herz', tVe - .85, .8, x5, y5, 90, { s: .9 }); cue(tVe - .85, 'whoosh');
+  set('herz', tVe - .05, { o: 0 }); tw('st5', tVe - .08, .35, { s: s5 }, 'back'); PLATZ[5] = tVe - .08;
+  cue(tVe, 'erfolg'); akzent(tVe, .05);
+  welle(tVe + .05, 1200, 400, 'var(--surface)', 420, 1.2);
+  // im Puzzle steht „Vertrauen“
+  for (let k = 0; k < 6; k++) { akteur('ic' + k, {}, true); tw('ic' + k, tVe + .1, .35, { o: 0, s: .6 }, 'in'); }
+  titelEin('wortT', tVe + .25, null);
+  // Wenn alle mitmachen …: das Puzzle zieht zurück in den Himmel, die Laternen gehen nacheinander an
+  const tWe = W('Wenn', 18), tAl = WI(18, 1), tFu = W('funktioniert', 18);
+  tw('dimm', tWe - .3, 1.0, { o: 0 }, 'inout');
+  rahmenZu(tWe - .3, 1.1, 1500, 285, 1.2);
+  tafel('tb4', 'Wenn alle mitmachen, funktioniert es für alle', tAl - .2, [tAl - .3, tAl - .2, W('mitmachen', 18), tFu, tFu + .3, W('für', 18), WI(18, 6)], SE(21) + .35);
+  const ORDNUNG = [0, 1, 2, 3, 4, 5, 6, 7];
+  ORDNUNG.forEach((k, i) => {
+    const t = tAl + i * .26;
+    tw('lat' + k + 'an', t, .12, { o: 1 }); tw('sch' + k, t, .5, { o: .85, s: 1 }, 'back'); tw('pf' + k, t + .05, .6, { o: 1 }, 'out'); tw('ke' + k, t + .05, .6, { o: .55 }, 'out');
+    cue(t, i % 2 ? 'klick' : 'ding');
+  });
+  const tLicht = tAl + 8 * .26;
+  akteur('hell0', { o: 0 }, true); tw('hell0', tAl, 2.4, { o: .85 }, 'inout');
+  HOOKS.push(t => FENSTER.forEach((f, i) => {
+    if (['101', '211'].includes(f.dataset.k)) return;
+    const an = (i * 7) % 3 !== 0, p = an ? E.out(clamp((t - tAl - (i % 9) * .25) / .4)) : 0;
+    f.setAttribute('opacity', (.9 * p).toFixed(3));
+  }));
+  akzent(tLicht - .6, .03);
+  // Ich verlasse mich auf dich – und du dich auf mich: Pfeile zwischen Ana und dem Fahrradlicht
+  neu('bezug', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><defs><marker id="bzsp" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--surface)"/></marker></defs>
+    <path id="bz1" class="zeichnen" pathLength="1" d="M440 820C380 760 420 700 520 668" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/>
+    <path id="bz2" class="zeichnen" pathLength="1" d="M600 680C660 740 640 800 590 838" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/></svg>`, 'width:1920px;height:1080px', 'data-frei');
+  akteur('bezug', { x: 960, y: 540, o: 0 });
+  akteur('bz1', { draw: 0 }, true); akteur('bz2', { draw: 0 }, true);
+  const tIc = WI(19, 0), tDi = WI(19, 4), tDu = WI(19, 6), tMi = WI(19, 10);
+  fahrt(tIc - .3, 1.0, 850, 570, 1.25); cue(tIc - .3, 'whoosh');
+  set('bezug', tIc, { o: 1 });
+  tw('bz1', W('verlasse', 19), tDi - W('verlasse', 19) + .2, { draw: 1 }, 'inout'); cue(W('verlasse', 19), 'scan');
+  tw('radschein', tDi + .1, .3, { s: 1.4 }, 'sinus'); tw('radschein', tDi + .4, .5, { s: 1 }, 'sanft'); bump('rad', tDi + .1, 1.06);
+  tw('bz2', tDu, tMi - tDu + .2, { draw: 1 }, 'inout'); cue(tDu, 'scan');
+  bump('ana', tMi + .1, 1.08); froh('ana', tMi, SE(21)); nicken('ana', tMi + .1, 1);
+  tw('bezug', W('Viele', 20) - .2, .4, { o: 0 });
+  // Vorbild für Kinder: Kamera an die Ampel, das Schild klappt herunter
+  const tVo = W('Vorbild', 20), tDa = W('Darum', 21), tSt = W('steht', 21), tGr = W('Grün', 21);
+  fahrt(W('Viele', 20) - .1, 1.4, 640, 600, 2.05); cue(W('Viele', 20) - .1, 'whoosh');
+  bump('ampel', tVo, 1.05);
+  akteur('kinder', { x: 630, y: 668, o: 0, sy: 0 }, false);
+  el('kinder').style.transformOrigin = '50% 0';
+  set('kinder', tSt - .1, { o: 1 }); tw('kinder', tSt - .1, .55, { sy: 1 }, 'back'); cue(tSt - .1, 'klick');
+  tw('kinder', tSt + .45, .15, { r: 2 }, 'sinus'); tw('kinder', tSt + .6, .5, { r: 0 }, 'sanft');
+  akzent(W('Nur', 21), .035);
+  // bei „Grün“ blitzt das grüne Männchen einmal kurz auf
+  tw('gruenan', tGr, .15, { o: .9 }); tw('gruenan', tGr + .5, .4, { o: 0 });
+  tw('rotan', tGr, .15, { o: .35 }); tw('rotan', tGr + .5, .4, { o: 1 });
+}
+
+/* ================= 5 · Und bei dir? Die Bühne teilt sich ================= */
+{
+  const t0 = SA(22) - .55, S5 = .33;
+  // das Modell wird klein (links: „In Deutschland“), das Puzzle bleibt groß darin
+  fahrt(t0, 1.3, 960 + (960 - 470) / S5, 540 - (590 - 540) / S5, S5); cue(t0, 'whoosh');
+  rahmenZu(t0, 1.3, 960, 330, 1.9);
+  tw('ana', t0, .4, { o: 0 });
+  // rechts: leere, gestrichelte Seite mit großem Fragezeichen
+  const KREISE = [[60, 50], [170, 40], [270, 60], [60, 160], [160, 150], [265, 155]];
+  neu('seiteR', `<svg viewBox="0 0 581 310"><g transform="translate(140 55)" id="puzR">${SLOTS.map(([c, r], k) => `<path id="pr${k}" d="${stueckPfad(c, r)}" fill="var(--b100)" stroke="var(--b300)" stroke-width="4" stroke-dasharray="10 9" stroke-linejoin="round"/>`).join('')}</g>
+    <g transform="translate(140 55)" id="kreisR" opacity="0">${KREISE.map(([x, y], k) => `<circle cx="${x}" cy="${y}" r="${38 + (k % 3) * 6}" fill="var(--b100)" stroke="var(--b300)" stroke-width="4" stroke-dasharray="10 9"/>`).join('')}</g></svg>
+    <div class="ebene" style="display:flex;align-items:center;justify-content:center"><div class="riesenfrage" id="riesenfrage">?</div></div>`, '', '', 'seite76', VORNE);
+  akteur('seiteR', { x: 1450 + 900, y: 590 }); tw('seiteR', t0 + .35, 1.0, { x: 1450 }, 'sanft'); cue(t0 + .35, 'whoosh');
+  akteur('riesenfrage', { s: 0 }, true); tw('riesenfrage', W('Regeln', 22), .5, { s: 1 }, 'back'); cue(W('Regeln', 22), 'pop');
+  neu('chipL', '<i></i>In Deutschland', '', '', 'seitenchip', VORNE); neu('chipR', '<i></i>Bei dir?', '', '', 'seitenchip leer', VORNE);
+  pop('chipL', t0 + .9, { x: 470, y: 375 }); pop('chipR', t0 + 1.2, { x: 1450, y: 375 });
+  // wichtig – locker – ähnlich – ganz anders
+  const tWi = W('wichtig', 22), tLo = W('locker', 23), tAe = W('ähnlich', 24), tAn = W('anders', 24), tGa = W('ganz', 24);
+  HOOKS.push(t => {
+    const p0 = E.out(clamp((t - tWi) / .4));
+    el('pr0').setAttribute('fill', p0 > .5 ? 'var(--b200)' : 'var(--b100)');
+    el('pr0').setAttribute('transform', `translate(0 ${(-8 * Math.sin(Math.PI * clamp((t - tWi) / .5))).toFixed(1)})`);
+    const q = t - tLo + .1, lose = q > 0 ? Math.sin(q * 6) * 8 * Math.max(0, 1 - q / 2.2) : 0;
+    el('pr4').setAttribute('transform', `rotate(${lose.toFixed(2)} 150 150) translate(0 ${(Math.abs(lose) * .6).toFixed(1)})`);
+    const a = Math.sin(Math.PI * clamp((t - tAe) / .8));
+    el('puzR').setAttribute('opacity', (1 - E.inout(clamp((t - tGa) / .5))).toFixed(3));
+    el('kreisR').setAttribute('opacity', E.inout(clamp((t - tGa - .15) / .5)).toFixed(3));
+    for (let k = 0; k < 6; k++) el('pr' + k).setAttribute('stroke', a > .3 ? 'var(--b500)' : 'var(--b300)');
+  });
+  cue(tWi, 'ding'); cue(tLo, 'klick'); cue(tAe, 'scan'); cue(tGa, 'whoosh');
+  bump('rahmen', tAe, 1.04);
+  // Ana in der Mitte grübelt, Gedankenblase füllt sich in der Denkpause
+  portrait('ana5', 190, '', VORNE);
+  pop('ana5', t0 + 1.0, { x: 960, y: 830 });
+  const tUn = W('Und', 25), tDir = WE('dir', 25), tEnd = SA(26);
+  neigen('ana5', tUn, tEnd - .4, -10);
+  neu('gedanke', `<svg class="wolke" viewBox="0 0 330 230"><g fill="var(--surface)"><circle cx="110" cy="95" r="70"/><circle cx="200" cy="85" r="78"/><circle cx="255" cy="125" r="58"/><circle cx="80" cy="140" r="52"/><circle cx="165" cy="150" r="64"/></g>
+    <circle cx="150" cy="222" r="12" fill="var(--surface)"/></svg>`, '', '', 'gedanke', VORNE);
+  pop('gedanke', tUn - .1, { x: 960, y: 540 }, 'pop', 'sanft');
+  const SYM = [['t-ampel', 70, 40], ['t-uhr', 160, 30], ['t-schluessel', 240, 70], ['t-muenze', 105, 115], ['t-haus', 195, 120]];
+  SYM.forEach(([tp, x, y], k) => {
+    const id = 'sym' + k;
+    el('gedanke').insertAdjacentHTML('beforeend', `<div class="sym a" id="${id}" style="left:0;top:0">${kopie(tp, id)}</div>`);
+    akteur(id, { x: x - 39, y: y - 39 + 5, s: 0, r: [-3, 2, -2, 3, -1][k] }, true);
+    const t = tDir + .25 + k * .62;
+    tw(id, t, .45, { s: 1 }, 'back'); cue(t, k % 2 ? 'klick' : 'pop');
+  });
+  HOOKS.push(t => SYM.forEach((_, k) => {
+    const d = t - tDir - .25 - k * .62;
+    if (d > 0) el('sym' + k).style.transform += ` translate(${(5 * Math.sin(t * 1.3 + k * 1.7)).toFixed(2)}px,${(6 * Math.sin(t * 1.7 + k * 2.3)).toFixed(2)}px)`;
+  }));
+  // das Fragezeichen pulsiert in der Pause (feste Frequenz)
+  HOOKS.push(t => { const d = t - tDir; if (d > 0 && d < tEnd - tDir) el('riesenfrage').style.transform += ` scale(${(1 + .07 * Math.sin(d * 4.2) * Math.min(1, d * 2)).toFixed(4)})`; });
+  bump('riesenfrage', tDir - .2, 1.15); cue(tDir - .2, 'pop');
+}
+
+/* ================= 6 · Tipp: ruhig bleiben, nachfragen – Regeln gelten für alle ================= */
+{
+  const t0 = SA(26) - .55;
+  // Abbau der geteilten Bühne, die Tipp-Seite blättert von links herein
+  ['seiteR', 'chipL', 'chipR', 'gedanke', 'ana5'].forEach((id, k) => aus(id, t0 + k * .05, .35));
+  fahrt(t0 + .1, 1.3, 345, 540, 1.15); cue(t0 + .1, 'whoosh');
+  rahmenZu(t0 + .1, 1.3, 1500, 285, 1.2);
+  set('ana', t0 + .5, { o: 1, s: 0 }); tw('ana', t0 + .5, .5, { s: 1 }, 'back');
+  neu('seite', `<div class="tipp" id="tippT"><div class="unter">Hinweis bekommen?</div><div class="titel">Ruhig bleiben.</div><div class="unter">Nicht verstanden?</div><div class="titel">Fragen.</div></div>`, '', '', 'seite', VORNE);
+  akteur('seite', { x: -900, y: 60, r: -3 }, true);
+  tw('seite', t0 + .3, 1.0, { x: 50, r: 0 }, 'sanft'); cue(t0 + .3, 'whoosh');
+  const tHi = W('hinweist', 26), tRu = W('ruhig', 26), tVs = W('verstehst', 28), tFr = W('frag', 28);
+  titelEin('tippT', tHi - .2, [tHi - .2, tHi, tRu - .1, tRu, tVs - .2, tVs, tFr]);
+  nicken('ana', tRu, 1.1); froh('ana', SE(26), SA(27));
+  // „Danke, das wusste ich nicht.“ – die Blase tippt sich
+  neu('danke', '', '', '', 'blase');
+  const tSa = W('sagen', 27), tDa = W('Danke', 27), tNi = WE('nicht', 27);
+  pop('danke', tSa - .1, { x: 610, y: 760 });
+  el('danke').style.transformOrigin = '30% 100%';
+  tippen('danke', 'Danke, das wusste ich nicht.', tDa, tNi, 8);
+  aus('danke', SA(28) + .1, .35);
+  // frag nach: ein Fragezeichen wird zur Glühbirne und leuchtet
+  neu('frage6', '?', '', '', 'frage');
+  pop('frage6', tVs - .1, { x: 450, y: 765 }); wackeln('frage6', tVs + .4, 3, 8);
+  tw('frage6', tFr - .1, .25, { s: 0, r: 90 }, 'in');
+  bild('birne', 't-birne', 110, 'data-frei');
+  neu('birnschein', '', 'width:220px;height:220px', 'data-frei', 'schein');
+  akteur('birnschein', { x: 450, y: 745, o: 0, s: .4 });
+  pop('birne', tFr + .15, { x: 450, y: 755 }, 'pop');
+  tw('birnschein', W('nach', 28) + .1, .5, { o: .9, s: 1 }, 'back'); cue(W('nach', 28) + .1, 'ding'); akzent(W('nach', 28), .03);
+  froh('ana', W('nach', 28), SA(30)); nicken('ana', W('normal', 29), 1.1);
+  bump('birne', W('normal', 29), 1.1);
+  aus(['birne', 'birnschein'], SE(29) + .2, .35);
+  // Gewohnheiten sind überall verschieden: die Seite blättert weg, Kacheln in verschiedenen Formen
+  const tGw = W('Gewohnheiten', 30), tVr = W('verschieden', 30);
+  tw('seite', tGw - .5, .9, { x: -900, r: -3 }, 'inout'); cue(tGw - .5, 'whoosh');
+  fahrt(tGw - .5, 1.2, 960, 560, 1);
+  const KA = [['ka0', 't-tasse', 470], ['ka1', 't-uhr', 640], ['ka2', 't-haus', 810]];
+  const FORM = [['50%', '18px', '50% 50% 18px 18px'], ['18px', '50%', '50% 18px'], ['50% 50% 18px 18px', '18px 50%', '50%']];
+  KA.forEach(([id, tp, x], k) => {
+    neu(id, `<div class="ic">${kopie(tp, id)}</div>`, '', 'data-frei', 'kachel76');
+    pop(id, tGw + k * .18, { x, y: 250 }, k ? null : 'pop');
+    tw(id, tVr - .05 + k * .1, .5, { r: [12, -10, 8][k] }, 'back');
+    tw(id, tVr + .55 + k * .1, .5, { r: 0 }, 'sanft');
+    cue(tVr + k * .1, 'klick');
+    aus(id, SA(31) - .05 + k * .06, .3);
+  });
+  HOOKS.push(t => KA.forEach(([id], k) => { el(id).style.borderRadius = FORM[k][t < tVr + k * .1 ? 0 : t < tVr + .5 + k * .1 ? 1 : 2]; }));
+  // Aber die Regeln hier gelten für alle: Grün – Ana geht über die Kreuzung, das Fahrrad fährt los
+  const tRe = W('Regeln', 31), tGe = W('gelten', 31), tAl = W('alle', 31);
+  tafel('tb6', 'Regeln gelten für alle.', tRe, [tRe, tGe, W('für', 31), tAl], null);
+  tw('rotan', tRe - .1, .2, { o: 0 }); tw('gruenan', tRe - .05, .25, { o: 1 }); cue(tRe - .05, 'ding');
+  tw('rotschein', tRe - .1, .3, { o: 0 });
+  neu('gruenschein', '', 'width:120px;height:120px', 'data-frei', 'schein'); akteur('gruenschein', { x: GRUEN[0], y: GRUEN[1], o: 0 });
+  tw('gruenschein', tRe, .4, { o: .8 }); bump('ampel', tRe, 1.06); akzent(tRe, .03);
+  const tHe = W('helfen', 32);
+  tw('rad', tGe - .2, 2.2, { x: 1010 }, 'in'); tw('rad', tGe + 1.4, .6, { o: 0 }); cue(tGe - .2, 'whoosh');
+  tw('radschein', tGe - .2, 2.2, { x: 1132 }, 'in'); tw('radschein', tGe + 1.4, .6, { o: 0 });
+  HOOKS.push(t => { const d = t - tGe + .2; if (d > 0 && d < 2.2) el('rad').style.transform += ` translateY(${(-2 * Math.abs(Math.sin(d * 9))).toFixed(2)}px)`; });
+  [0, 1, 2, 3].forEach(i => tw('ana', tGe + i * .35, .35, { x: 505, y: 880 - (i + 1) * 55, s: 1 - (i + 1) * .065 }, 'lin', { bogen: 12 }));
+  landen('ana', tGe + 1.4); froh('ana', tGe, 999); cue(tGe + 1.4, 'plopp');
+  // Sie helfen, dass wir uns aufeinander verlassen können: die Laternen leuchten auf, das Puzzle strahlt
+  const tAu = W('aufeinander', 32), tVl = W('verlassen', 32);
+  [0, 1, 2, 3, 4, 5, 6, 7].forEach(k => bump('sch' + k, tAu + k * .07, 1.25));
+  bump('rahmen', tVl, 1.05); welle(tVl, 1500, 285, 'var(--surface)', 420, 1.3); cue(tVl, 'erfolg');
+  huepfen('ana', tVl + .1, 12);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann').style.clipPath = `circle(${(p * 130).toFixed(2)}% at ${(GRUEN[0] / 19.2).toFixed(1)}% ${((GRUEN[1] - 20) / 10.8).toFixed(1)}%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 4.4, AB + 2.4);
+</script>
+</body></html>

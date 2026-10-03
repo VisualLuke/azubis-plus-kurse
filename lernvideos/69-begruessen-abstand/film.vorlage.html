@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Begrüßen und Abstand</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --surface2:var(--077b8197-bd4b-4580-a609-33092c57cbb5,#F2F0F7);
+}
+/* Leitidee: das Begrüßungs-Brettspiel. Draufsicht auf ein Spielbrett; die Kamera fährt über das Brett und kippt in Szene 4. */
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+#welt{will-change:transform}
+.f{position:absolute;left:0;top:0}
+#brett{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}
+#flaeche{left:-760px;top:-1760px;width:3440px;height:4400px;border-radius:90px;background-color:var(--b50);
+  background-image:linear-gradient(var(--b100) 3px,transparent 3px),linear-gradient(90deg,var(--b100) 3px,transparent 3px);
+  background-size:120px 120px;background-position:-1px -1px}
+.buehne.feld{border-radius:46px;background-color:var(--surface);
+  background-image:linear-gradient(var(--b50) 4px,transparent 4px),linear-gradient(90deg,var(--b50) 4px,transparent 4px);
+  background-size:120px 120px;background-position:-2px -2px;box-shadow:0 0 0 12px var(--b100),0 22px 50px rgba(58,37,153,.10)}
+.buehne.feld::after{content:'';position:absolute;inset:24px;border-radius:28px;border:3px dashed var(--b200)}
+.buehne.unterlage{border-radius:46px;background:var(--b100);box-shadow:none}
+.haelfte{border-radius:46px;background-color:var(--surface);
+  background-image:linear-gradient(var(--b50) 4px,transparent 4px),linear-gradient(90deg,var(--b50) 4px,transparent 4px);
+  background-size:120px 120px;background-position:-2px -2px;box-shadow:0 0 0 12px var(--b100),0 22px 50px rgba(58,37,153,.10)}
+.haelfte.l{border-radius:46px 0 0 46px}
+.haelfte.r{border-radius:0 46px 46px 0;background-position:-14px -2px}
+.haelfte.r.leer{background-color:var(--bg)}
+#naht{width:8px;height:880px;border-radius:4px;background:repeating-linear-gradient(var(--b300) 0 22px,transparent 22px 40px);transform-origin:50% 0}
+.wegpunkt{width:44px;height:44px;border-radius:50%;background:var(--b100);border:6px solid var(--b200)}
+.startfeld{width:132px;height:132px;border-radius:26px;background:var(--b100);border:5px solid var(--b300)}
+.startfeld i{position:absolute;inset:14px;border-radius:16px;border:3px dashed var(--b300)}
+
+/* Abstands-Kreise: liegen auf dem Brett, gehören zu einer Spielfigur */
+.kreis{width:300px;height:300px;border-radius:50%;background:color-mix(in srgb,var(--b200) 34%,transparent);border:5px dashed var(--b400)}
+.kreis.voll{background:color-mix(in srgb,var(--b200) 44%,transparent);border-style:solid;border-color:var(--b300)}
+.leuchten{width:300px;height:300px;border-radius:50%;border:8px solid var(--b400);opacity:0}
+
+/* Spielfiguren-Pins: oben das Porträt im Kreis, darunter der Fuß; Spitze = Standpunkt auf dem Brett */
+.pin{width:160px;height:190px;transform-origin:50% 100%}
+.pin .fuss{position:absolute;left:50%;bottom:0;width:62px;margin-left:-31px;height:44px;background:linear-gradient(90deg,var(--b600),var(--b500) 45%,var(--b700));
+  clip-path:polygon(0 0,100% 0,56% 100%,44% 100%)}
+.pin .portrait{position:absolute;left:0;top:0;width:160px;height:160px}
+.pin.klein{width:120px}.pin.klein .portrait{width:120px;height:120px}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12);transition:none}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait.leer{background:linear-gradient(160deg,var(--b100),var(--b200));border-width:6px}
+.portrait.leer i{position:absolute;left:50%;top:50%;width:46%;height:46%;margin:-23% 0 0 -23%;border-radius:50%;background:var(--b300);opacity:.55}
+.arme{position:absolute;left:-120px;top:-10px;width:400px;height:220px;pointer-events:none}
+
+/* Aufsteller: Werkbank, Sofa, Thermometer */
+.steher{transform-origin:50% 100%}
+.thermo{width:150px;height:150px}
+.thermo .balken{position:absolute;left:66px;top:28px;width:18px;height:94px;border-radius:9px;overflow:hidden}
+.thermo .balken i{position:absolute;left:0;right:0;bottom:0;height:100%;border-radius:9px;background:linear-gradient(var(--b300),var(--b500));transform-origin:50% 100%}
+.thermo .kugel{position:absolute;left:58px;top:107px;width:32px;height:32px;border-radius:50%;background:var(--b500)}
+
+/* Hand-Plaketten, Nick-Bogen, Fragezeichen */
+.plakette{z-index:4500;width:112px;height:112px;border-radius:50%;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.16);
+  display:flex;align-items:center;justify-content:center}
+.plakette .hd{width:118px;height:118px;margin-top:-14px}
+.plakette.links .hd{transform:scaleX(-1)}
+.plakette .oel{position:absolute;border-radius:50%;background:var(--n400);opacity:0}
+.nick{z-index:4500;width:70px;height:130px}
+.nick .hk{position:absolute;left:44px;top:96px;width:58px;height:58px;border-radius:50%;background:var(--success);box-shadow:0 6px 16px rgba(22,19,37,.16);display:flex;align-items:center;justify-content:center}
+.nick .ring{position:absolute;left:-30px;top:-10px;width:130px;height:150px;border-radius:50%;border:6px solid var(--success)}
+.frage{z-index:4600;width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.blick{z-index:4400;width:216px;height:0;border-top:8px dotted var(--b400);transform-origin:0 50%}
+.uhrring{z-index:4600;width:170px;height:170px}
+
+/* Spielkarten mit Text im Bild: liegen verdeckt, klappen auf */
+.karte{z-index:5000;padding:24px 34px 26px 26px;border-radius:28px;background:var(--surface);box-shadow:0 16px 36px rgba(22,19,37,.14);
+  display:flex;gap:22px;align-items:center}
+.karte .zeichen{width:64px;height:64px;flex:none;border-radius:18px;background:var(--b500);position:relative;align-self:flex-start;margin-top:4px}
+.karte .zeichen b{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--surface)}
+.karte .zeilen{display:flex;flex-direction:column;gap:12px}
+.karte .zl{display:flex;align-items:center;gap:16px}
+.karte .ic{width:54px;height:54px;flex:none;border-radius:16px;background:var(--b100);display:flex;align-items:center;justify-content:center}
+.karte .ic svg{width:40px;height:40px}
+.karte .titel{font:700 44px/54px Inter;letter-spacing:-.01em;white-space:nowrap;color:var(--ink)}
+.karte .unter{font:600 32px/40px Inter;color:var(--n700);margin:0;white-space:nowrap}
+.karte .ruecken{position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,var(--b500),var(--b700));overflow:hidden}
+.karte .ruecken::before,.karte .ruecken::after{content:'';position:absolute;border-radius:50%;border:6px dashed var(--b400)}
+.karte .ruecken::before{width:180px;height:180px;left:-40px;top:-50px}
+.karte .ruecken::after{width:220px;height:220px;right:-60px;bottom:-90px}
+
+.etikett{z-index:5000;display:flex;align-items:center;gap:14px;padding:14px 28px 14px 18px;border-radius:999px;background:var(--surface);
+  box-shadow:0 8px 22px rgba(22,19,37,.10);font:700 36px/44px Inter;color:var(--ink);white-space:nowrap}
+.etikett i{width:24px;height:24px;border-radius:50%;background:var(--b500);flex:none}
+.etikett.offen{background:var(--b500);color:var(--surface)}
+.etikett.offen i{background:var(--surface)}
+
+/* Würfel (Überraschung): Draufsicht, rollt Feld für Feld */
+.wuerfel{z-index:4700;width:180px;height:180px;border-radius:38px;background:var(--surface);border:5px solid var(--b200);
+  box-shadow:0 16px 0 var(--b300),0 30px 40px rgba(22,19,37,.16)}
+.wuerfel .seite{position:absolute;inset:18px;opacity:0}
+.wuerfel .seite svg{width:100%;height:100%}
+.grossfrage{z-index:4700;width:230px;height:230px;border-radius:50px;background:var(--surface);border:6px dashed var(--b300);
+  display:flex;align-items:center;justify-content:center;font:800 150px/1 Inter;color:var(--b500)}
+
+/* Gedankenblase */
+.gedanke{z-index:4800;width:340px;height:170px}
+.gedanke .wolke{position:absolute;inset:0;border-radius:80px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.13)}
+.gedanke .tropfen{position:absolute;border-radius:50%;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.12)}
+.gedanke .sym{position:absolute;top:43px;width:76px;height:76px;border-radius:50%;background:var(--b50)}
+.gedanke .sym svg{position:absolute;inset:8px;width:60px;height:60px}
+.sprechblase{z-index:4800;width:190px;height:120px}
+.sprechblase svg{width:190px;height:120px}
+
+/* Meterstab: Glieder klappen nacheinander auf */
+.glied{width:71px;height:24px;border-radius:5px;background:var(--surface);border:3px solid var(--b400);transform-origin:9px 50%;
+  background-image:repeating-linear-gradient(90deg,transparent 0 7px,var(--b300) 7px 9px);background-size:100% 9px;background-repeat:no-repeat}
+.glied .glied{position:absolute;left:52px;top:-3px}
+.glied .gelenk{position:absolute;left:3px;top:6px;width:6px;height:6px;border-radius:50%;background:var(--b600)}
+
+/* Welle durch die Fläche, Schlussplatte, Abspann */
+.wellenring{width:400px;height:400px;border-radius:50%;border:14px solid var(--b300);opacity:0}
+.platte{z-index:6000;padding:30px 60px 34px;border-radius:34px;background:var(--surface);box-shadow:0 22px 50px rgba(58,37,153,.18);text-align:center}
+.platte .titel{font:800 72px/84px Inter;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
+.platte .titel .w:last-child .wi{color:var(--b500)}
+#schleier{left:-700px;top:500px;width:3320px;height:2600px;background:var(--b50);opacity:0;z-index:5900}
+#abspannUnter{position:absolute;left:0;right:0;top:660px;text-align:center;font:500 40px/54px Inter;color:var(--n700);z-index:6100;opacity:0}
+</style></head><body>
+
+<!-- Symbole (Würfelseiten, Gedankenblase, Karten-Icons) -->
+<template id="sHand"><svg viewBox="0 0 100 100"><rect x="4" y="40" width="24" height="28" rx="7" fill="var(--b700)"/><rect x="24" y="38" width="32" height="32" rx="12" fill="var(--b500)"/>
+  <rect x="44" y="41" width="48" height="10" rx="5" fill="var(--b500)"/><rect x="44" y="51" width="44" height="9.5" rx="4.75" fill="var(--b500)"/><rect x="44" y="60" width="38" height="9" rx="4.5" fill="var(--b500)"/>
+  <path d="M34 42c4-9 11-13 20-13a5 5 0 0 1 1 10c-6 1-10 3-13 8Z" fill="var(--b500)"/><path d="M60 51h26M60 60.5h22" stroke="var(--surface)" stroke-width="1.6" stroke-linecap="round"/></svg></template>
+<template id="sNick"><svg viewBox="0 0 100 100"><circle cx="50" cy="34" r="18" fill="var(--b500)"/>
+  <path d="M20 60q30 26 60 0" stroke="var(--b500)" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M10 54l15 3-9 12Z M90 54l-15 3 9 12Z" fill="var(--b500)"/></svg></template>
+<template id="sHerz"><svg viewBox="0 0 100 100"><path d="M50 86C18 66 8 46 16 32c8-14 26-12 34 1 8-13 26-15 34-1 8 14-2 34-34 54Z" fill="var(--b500)"/></svg></template>
+<template id="sWelle"><svg viewBox="0 0 100 100"><g transform="rotate(-3 44 56)"><rect x="24" y="44" width="38" height="40" rx="15" fill="var(--b500)"/>
+  <rect x="25" y="20" width="8" height="34" rx="4" fill="var(--b500)"/><rect x="34.5" y="14" width="8" height="38" rx="4" fill="var(--b500)"/><rect x="44" y="16" width="8" height="36" rx="4" fill="var(--b500)"/><rect x="53.5" y="22" width="8" height="32" rx="4" fill="var(--b500)"/>
+  <path d="M26 66c-8-4-12-10-10-15 2-4 6-4 9-1l6 7Z" fill="var(--b500)"/></g>
+  <path d="M72 26q9 12 0 26M82 18q14 20 0 42" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="sArme"><svg viewBox="0 0 100 100"><circle cx="50" cy="30" r="15" fill="var(--b500)"/><path d="M50 50v28" stroke="var(--b500)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M14 30q6 34 36 34q30 0 36-34" stroke="var(--b500)" stroke-width="9" stroke-linecap="round" fill="none"/></svg></template>
+<template id="sFrage"><svg viewBox="0 0 100 100"><text x="50" y="80" text-anchor="middle" font-family="Inter" font-weight="800" font-size="84" fill="var(--b500)">?</text></svg></template>
+<template id="sAuge"><svg viewBox="0 0 40 40"><path d="M3 20q17-16 34 0q-17 16-34 0Z" fill="var(--surface)" stroke="var(--b500)" stroke-width="3"/><circle cx="20" cy="20" r="6.5" fill="var(--b500)"/></svg></template>
+<template id="sMeter"><svg viewBox="0 0 40 40"><rect x="3" y="14" width="34" height="12" rx="3" fill="var(--surface)" stroke="var(--b500)" stroke-width="3"/><path d="M11 14v6M19 14v8M27 14v6" stroke="var(--b500)" stroke-width="2.4"/></svg></template>
+<template id="sNickKlein"><svg viewBox="0 0 40 40"><circle cx="20" cy="13" r="7" fill="var(--b500)"/><path d="M8 24q12 11 24 0" stroke="var(--b500)" stroke-width="3.6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="sHandKlein"><svg viewBox="0 0 40 40"><rect x="2" y="15" width="10" height="11" rx="3" fill="var(--b700)"/><rect x="10" y="14" width="13" height="13" rx="5" fill="var(--b500)"/><rect x="18" y="15" width="19" height="4" rx="2" fill="var(--b500)"/><rect x="18" y="19.5" width="17" height="4" rx="2" fill="var(--b500)"/><rect x="18" y="23.5" width="15" height="3.6" rx="1.8" fill="var(--b500)"/><path d="M14 15.5c1.6-3.6 4.4-5.2 8-5.2a2 2 0 0 1 .4 4c-2.4.4-4 1.2-5.2 3.2Z" fill="var(--b500)"/></svg></template>
+<template id="sTritt"><svg viewBox="0 0 40 40"><circle cx="12" cy="20" r="7" fill="var(--b300)"/><circle cx="28" cy="20" r="7" fill="var(--b500)"/><path d="M14 31h14l-4-3M28 31l-4 3" stroke="var(--b500)" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="sKreis"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="var(--b100)" stroke="var(--b500)" stroke-width="3" stroke-dasharray="5 4"/><circle cx="20" cy="20" r="5" fill="var(--b500)"/></svg></template>
+
+<template id="tKwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="tSabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="tGeselle"><div class="figur"><div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="tHand">{{hand}}</template>
+
+<div id="kamera"><div id="welt">
+  <div class="f" id="cam" style="display:none"></div><div class="f" id="kipp" style="display:none"></div>
+
+  <!-- ===== Boden: Brett, Felder, Weg, Kreise (kippt in Szene 4) ===== -->
+  <div id="brett">
+    <div class="f" id="flaeche"></div>
+    <div class="f" id="weg"></div>
+    <!-- Feld „Werkstatt“ -->
+    <div class="a buehne feld" id="feldW" style="left:70px;top:60px;width:1780px;height:960px"></div>
+    <!-- Feld „Zuhause“ (über der Werkstatt) -->
+    <div class="a buehne feld" id="feldZ" style="left:310px;top:-1020px;width:1300px;height:760px"></div>
+    <!-- Würfelfeld (unter der Werkstatt) – teilt sich in Szene 5 -->
+    <div class="a buehne unterlage" id="feldD" style="left:70px;top:1260px;width:1780px;height:920px"></div>
+    <div class="f haelfte l" id="halbL" style="width:890px;height:920px"></div>
+    <div class="f haelfte r" id="halbR" style="width:890px;height:920px"></div>
+    <div class="f haelfte r leer" id="halbRLeer" style="width:890px;height:920px;opacity:0"></div>
+    <div class="f" id="naht"></div>
+    <div class="f startfeld" id="start1"><i></i></div>
+    <div class="f" id="meter"></div>
+    <div class="f wellenring" id="welle6"></div>
+    <div id="kreise"></div>
+  </div>
+
+  <!-- ===== Aufsteller und Figuren ===== -->
+  <div class="a steher" id="bank" style="width:280px;height:280px">{{werkbank}}</div>
+  <div class="a steher" id="sofa" style="width:250px;height:250px">{{sofa}}</div>
+  <div class="a steher thermo" id="thermo">{{thermometer}}<div class="balken"><i id="thermoI"></i></div><div class="kugel"></div></div>
+  <div id="pins"></div>
+
+  <!-- ===== Handlungen ===== -->
+  <div class="a plakette" id="hdSab" data-frei><div class="hd links"></div></div>
+  <div class="a plakette" id="hdKw" data-frei><div class="hd"></div></div>
+  <div class="a plakette" id="hdGes" data-frei><div class="hd links"></div>
+    <i class="oel" style="left:30px;top:44px;width:18px;height:14px"></i><i class="oel" style="left:58px;top:60px;width:14px;height:12px"></i><i class="oel" style="left:46px;top:30px;width:11px;height:9px"></i></div>
+  <svg class="a uhrring" id="uhrring" viewBox="0 0 170 170" data-frei><circle class="zeichnen" pathLength="1" cx="85" cy="85" r="76" fill="none" stroke="var(--b500)" stroke-width="8" stroke-linecap="round" transform="rotate(-90 85 85)"/></svg>
+  <div class="a blick" id="blick" data-frei></div>
+  <div class="a nick" id="nickGes" data-frei><svg viewBox="0 0 70 130"><path class="zeichnen" pathLength="1" d="M44 22Q14 65 44 108" stroke="var(--b500)" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <path d="M30 14l24 2-12 20Z" fill="var(--b500)" class="spitze"/><path d="M30 116l24-2-12-20Z" fill="var(--b500)" class="spitze"/></svg>
+    <div class="ring" id="nickRing"></div><div class="hk" id="nickHk"><svg viewBox="0 0 40 40" style="width:40px"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+  <div class="a nick" id="nickKw" data-frei><svg viewBox="0 0 70 130"><path class="zeichnen" pathLength="1" d="M26 22Q56 65 26 108" stroke="var(--b500)" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <path d="M40 14l-24 2 12 20Z" fill="var(--b500)" class="spitze"/><path d="M40 116l-24-2 12-20Z" fill="var(--b500)" class="spitze"/></svg></div>
+  <div class="a frage" id="frage1" data-frei>?</div>
+  <div class="a" id="herzZ" style="width:130px;z-index:4600" data-frei>{{herz}}</div>
+
+  <div class="a karte" id="karte2"><div class="zeichen"></div><div class="zeilen" id="karte2t">
+    <div class="unter">Bei der Arbeit oft:</div>
+    <div class="zl"><div class="ic" data-sym="sHandKlein"></div><div class="titel">kurz die Hand geben</div></div>
+    <div class="zl"><div class="ic" data-sym="sAuge"></div><div class="titel">Blickkontakt</div></div></div><div class="ruecken"></div></div>
+  <div class="a karte" id="karte3"><div class="zeichen"></div><div class="zeilen" id="karte3t">
+    <div class="zl"><div class="ic" data-sym="sMeter"></div><div class="titel">Etwa eine Armlänge Abstand</div></div>
+    <div class="zl"><div class="ic" data-sym="sNickKlein"></div><div class="titel">Nicken ist auch in Ordnung</div></div></div><div class="ruecken"></div></div>
+  <div class="a karte" id="karte4"><div class="zeichen"></div><div class="zeilen" id="karte4t">
+    <div class="zl"><div class="ic" data-sym="sKreis"></div><div class="titel">Abstand = Respekt, nicht Kälte</div></div></div><div class="ruecken"></div></div>
+  <div class="a karte" id="karte6"><div class="zeichen"></div><div class="zeilen" id="karte6t">
+    <div class="zl"><div class="ic" data-sym="sTritt"></div><div class="titel">Lass die andere Person anfangen</div></div></div><div class="ruecken"></div></div>
+
+  <div class="a wuerfel" id="wuerfel" data-dreht></div>
+  <div class="a grossfrage" id="gfrage">?</div>
+  <div class="a etikett" id="etDe"><i></i>In Deutschland</div>
+  <div class="a etikett offen" id="etDu"><i></i>Bei dir?</div>
+  <div class="a gedanke" id="gedanke" data-frei><div class="tropfen" style="left:-6px;top:150px;width:34px;height:34px"></div><div class="tropfen" style="left:-36px;top:190px;width:20px;height:20px"></div><div class="wolke"></div></div>
+  <div class="a sprechblase" id="blase6" data-frei><svg viewBox="0 0 190 120"><path d="M30 8h130a22 22 0 0 1 22 22v44a22 22 0 0 1-22 22H62l-30 20 6-20h-8A22 22 0 0 1 8 74V30A22 22 0 0 1 30 8Z" fill="var(--surface)" stroke="var(--b200)" stroke-width="4"/>
+    <text x="62" y="76" text-anchor="middle" font-family="Inter" font-weight="800" font-size="56" fill="var(--b500)">?</text>
+    <path d="M128 84C104 70 98 58 104 48c6-10 18-9 24 0 6-9 18-10 24 0 6 10 0 22-24 36Z" fill="var(--b400)"/></svg></div>
+
+  <div class="f" id="schleier"></div>
+  <div class="a platte" id="platte"><div id="platteT"><div class="titel">Anders ist nicht falsch.</div></div></div>
+</div></div>
+<div id="abspannUnter">Hand, Nicken oder Umarmung – jede Begrüßung zeigt Respekt.</div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const lerp = (a, b, p) => a + (b - a) * p;
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const rel = (id, basis = {}) => akteur(id, basis, true);
+// Hüpfen von Feld zu Feld (Spielfigur): Bogen, Strecken im Flug, Stauchen beim Landen
+const hopp = (id, t, x, y, d = .38, h = 34) => {
+  tw(id, t, .07, { sy: .9, sx: 1.06 }, 'sinus');
+  tw(id, t + .05, d, { x, y }, 'inout', { bogen: h }); tw(id, t + .07, d * .45, { sy: 1.07, sx: .95 }, 'sinus');
+  landen(id, t + .05 + d); cue(t + .05 + d, 'klick');
+};
+const hopps = (id, t, punkte, dt = .42, d = .36, h = 30) => punkte.forEach(([x, y], i) => hopp(id, t + i * dt, x, y, d, h));
+const wippen = (id, t, h = 14) => { const y = wertBei(id, 'y', t); tw(id, t, .1, { sy: .92, sx: 1.05 }, 'sinus'); tw(id, t + .1, .34, { y }, 'sinus', { bogen: h }); landen(id, t + .44, .6); };
+
+/* ---------- Kamera: fährt über das Brett (x, y), zoomt (s); Akzente auf Schlüsselwörtern ---------- */
+const KAM = $('#kamera'), WELT = $('#welt'), BRETT = $('#brett');
+rel('cam', { x: 960, y: 540, s: 1 });
+const FAHRTEN = [], AKZENTE = [];
+const fahrt = (t0, d, x, y, s = null, dip = .07) => { tw('cam', t0, d, s == null ? { x, y } : { x, y, s }, 'inout'); FAHRTEN.push([t0, d, dip]); cue(t0, 'whoosh'); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const BLUR = $('#wischerBlur');
+HOOKS.push(t => {
+  const cx = wertBei('cam', 'x', t), cy = wertBei('cam', 'y', t);
+  let z = wertBei('cam', 's', t);
+  for (const [a, d, h] of FAHRTEN) z -= h * Math.sin(Math.PI * clamp((t - a) / d));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  WELT.style.transform = `translate(${(960 - cx).toFixed(2)}px,${(540 - cy).toFixed(2)}px)`;
+  KAM.style.transform = `scale(${z.toFixed(4)})`;
+  const vx = Math.abs(cx - wertBei('cam', 'x', t - 1 / 30)), vy = Math.abs(cy - wertBei('cam', 'y', t - 1 / 30));
+  const bx = Math.min(16, vx * .09), by = Math.min(16, vy * .09);
+  BLUR.setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  WELT.style.filter = bx + by > .4 ? 'url(#wischer)' : '';
+});
+
+/* ---------- Kippen: das Brett neigt sich (Perspektive), Aufsteller bleiben stehen ---------- */
+const PERSP = 1500;
+rel('kipp', { r: 0, x: 960, y: 640 });
+let KA = 0, KO = { x: 960, y: 640 }, KQ = 0;
+const proj = (x, y) => {
+  if (KA < 1e-4) return [x, y, 1];
+  const dx = x - KO.x, dy = y - KO.y, w = 1 - dy * Math.sin(KA) / PERSP;
+  return [KO.x + dx / w, KO.y + dy * Math.cos(KA) / w, 1 / w];
+};
+const STEHER = [];   // [element, Fußlänge?]
+const steher = (id, x, y, basis = {}) => { const e = el(id); rel(e, { x, y, ...basis }); STEHER.push(e); };
+
+/* ---------- Spielweg zwischen den Feldern: Punkte leuchten auf, wenn die Kamera vorbeifährt ---------- */
+const WEG = [-174, -100, -26, 1104, 1176];
+$('#weg').innerHTML = WEG.map((y, i) => `<div class="f wegpunkt" id="wp${i}" style="left:938px;top:${y - 22}px"></div>`).join('');
+HOOKS.push(t => WEG.forEach((y, i) => {
+  const cy = wertBei('cam', 'y', t), v = Math.abs(cy - wertBei('cam', 'y', t - .1));
+  const n = v > 2 ? Math.max(0, 1 - Math.abs(cy - y) / 420) : 0;
+  const p = $('#wp' + i); p.style.background = n > .05 ? `color-mix(in srgb,var(--b400) ${(100 * n).toFixed(0)}%,var(--b100))` : '';
+  p.style.transform = `scale(${(1 + .25 * n).toFixed(3)})`;
+}));
+
+/* ---------- Spielfiguren ---------- */
+const PINS = {}, KREISE = {};
+function pin(id, { figur = null, klein = false, sprecher = null, r = 150, x, y, basis = {} }) {
+  const d = klein ? 120 : 160;
+  $('#pins').insertAdjacentHTML('beforeend', `<div class="a pin${klein ? ' klein' : ''}" id="${id}"><div class="fuss"></div>
+    <div class="portrait${figur ? '' : ' leer'}"${sprecher ? ` data-sprecher="${sprecher}"` : ''}>${figur ? tpl(figur) : '<i></i>'}</div></div>`);
+  $('#kreise').insertAdjacentHTML('beforeend', `<div class="a kreis" id="k_${id}" data-frei></div><div class="a leuchten" id="l_${id}" data-frei></div>`);
+  const k = el('k_' + id); k.style.width = k.style.height = 2 * r + 'px';
+  const l = el('l_' + id); l.style.width = l.style.height = 2 * r + 'px';
+  steher(id, x, y, basis);
+  akteur(k, { x: 0, y: 0, s: 0 }); akteur(l, { x: 0, y: 0, o: 0 });
+  PINS[id] = { d, el: el(id) }; KREISE[k.id] = id; KREISE[l.id] = id;
+  const p = el(id).querySelector('.portrait');
+  for (const c of ['froh', 'auf']) { const f = p.querySelector('.' + c); if (f) f.style.opacity = 0; }
+}
+pin('kw', { figur: 'tKwame', sprecher: 'Kwame', x: 640, y: 760, basis: { o: 0, hoch: 0 } });
+pin('sab', { figur: 'tSabine', x: 1340, y: 800, basis: { s: 0 } });
+pin('ges', { figur: 'tGeselle', r: 130, x: 1660, y: 520 });
+pin('n1', { klein: true, r: 125, x: 760, y: -520 });
+pin('n2', { klein: true, r: 125, x: 1160, y: -520 });
+pin('n3', { klein: true, r: 95, x: 1420, y: -560, basis: { s: 0 } });
+pin('n4', { klein: true, r: 110, x: 180, y: 1000, basis: { o: 0 } });
+// Kwames Arme: zwei Bögen wachsen aus dem Pin
+el('kw').insertAdjacentHTML('beforeend', `<svg class="arme" id="arme" viewBox="0 0 400 220">
+  <path class="zeichnen" pathLength="1" d="M150 160Q70 170 46 70" stroke="var(--b500)" stroke-width="20" stroke-linecap="round" fill="none"/>
+  <path class="zeichnen" pathLength="1" d="M250 160Q330 170 354 70" stroke="var(--b500)" stroke-width="20" stroke-linecap="round" fill="none"/>
+  <circle id="armHandL" cx="46" cy="64" r="17" fill="var(--b100)" stroke="var(--b500)" stroke-width="5"/>
+  <circle id="armHandR" cx="354" cy="64" r="17" fill="var(--b100)" stroke="var(--b500)" stroke-width="5"/></svg>`);
+['hdSab', 'hdKw', 'hdGes'].forEach(id => el(id).querySelector('.hd').innerHTML = tpl('tHand'));
+document.querySelectorAll('.karte .ic').forEach(i => i.innerHTML = tpl(i.dataset.sym));
+document.querySelectorAll('.karte .zeichen').forEach(z => z.innerHTML = [[16, 16], [36, 16], [16, 36], [36, 36], [26, 26]].map(([x, y]) => `<b style="left:${x}px;top:${y}px"></b>`).join(''));
+
+// Kreise folgen ihrer Figur (auf dem Boden); Aufsteller werden projiziert und nach Tiefe sortiert
+const FUSS = (q) => 44 + 74 * q;
+HOOKS.push(t => {
+  KA = wertBei('kipp', 'r', t) * Math.PI / 180; KQ = KA / (52 * Math.PI / 180);
+  KO = { x: wertBei('kipp', 'x', t), y: wertBei('kipp', 'y', t) };
+  BRETT.style.transformOrigin = `${KO.x}px ${KO.y}px`;
+  BRETT.style.transform = KA > 1e-4 ? `perspective(${PERSP}px) rotateX(${KA.toFixed(5)}rad)` : '';
+  for (const k of document.querySelectorAll('#kreise > div')) {
+    const p = AKTEURE.get(el(KREISE[k.id]));
+    k.style.transform = `translate(${wert(p, 'x', t).toFixed(2)}px,${wert(p, 'y', t).toFixed(2)}px) ` + k.style.transform;
+  }
+  for (const e of STEHER) {
+    const a = AKTEURE.get(e), x = wert(a, 'x', t), y = wert(a, 'y', t);
+    if (e.classList.contains('pin')) {
+      const f = FUSS(KQ), d = PINS[e.id].d;
+      e.style.height = d - 12 + f + 'px'; e.querySelector('.fuss').style.height = f + 'px';
+    }
+    e.style.left = -e.offsetWidth / 2 + 'px'; e.style.top = -e.offsetHeight + 'px';
+    const [px, py0, s] = proj(x, y), py = py0 - (a.basis.hoch !== undefined ? wert(a, 'hoch', t) : 0) * s;
+    e.style.transform = `translate(${(px - x).toFixed(2)}px,${(py - y).toFixed(2)}px) ` + e.style.transform + (s !== 1 ? ` scale(${s.toFixed(4)})` : '');
+    e.style.zIndex = 1000 + Math.round(py / 2);
+  }
+});
+
+/* ---------- Porträts: Mund nur in Kwames eigenen Sätzen, blinzeln, nicken, schauen ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, NICK = {}, SCHAU = {}, BLINZ = {}, BLASS = {};
+const froh = (id, a, b = 1e9) => (FROH[id] ??= []).push([a, b]);
+const nickt = (id, ...ts) => (NICK[id] ??= []).push(...ts);
+const schaut = (id, a, b, w = 1) => (SCHAU[id] ??= []).push([a, b, w]);
+const blinzelt = (id, ...ts) => (BLINZ[id] ??= []).push(...ts);
+const rampe = (t, a, b, d = .4) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  Object.keys(PINS).forEach((id, i) => {
+    const p = el(id).querySelector('.portrait'), fig = p.querySelector('.figur');
+    if (!fig) return;
+    const aktiv = wer && p.dataset.sprecher === wer;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1, zu = (BLINZ[id] || []).some(b => t >= b && t < b + .14);
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 || zu ? .12 : 1})`;
+    const ruhe = 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const n = (NICK[id] || []).reduce((m, a) => m + Math.sin(Math.PI * clamp((t - a) / .34)), 0);
+    const sw = (SCHAU[id] || []).reduce((m, [a, b, w]) => Math.max(m, w * rampe(t, a, b)), 0);
+    const spr = aktiv ? 1.6 * Math.sin(t * 3.1) * pegel : 0;
+    fig.style.transform = `translate(${(18 * sw).toFixed(2)}px,${(9 * n + ruhe).toFixed(2)}px) rotate(${(spr + ruhe + 9 * sw).toFixed(2)}deg)`;
+    p.style.borderColor = aktiv ? 'var(--b300)' : '';
+  });
+});
+
+/* ================= 1 · Kwames erster Tag: Sabine streckt die Hand aus, der Geselle nickt ================= */
+// Erste Bühne mittig, ohne Titel. Die Kamera schwebt beim Start leicht heran.
+set('cam', 0, { s: .94 }); tw('cam', 0, 2.2, { s: 1 }, 'weich');
+steher('bank', 1420, 470); steher('sofa', 960, -760); steher('thermo', 330, 760, { o: 0, hoch: 0 });
+// Werkbank und Geselle stehen schon; Kwame springt aufs Startfeld
+rel('start1', { x: 574, y: 694, s: .9, o: .6 });
+tw('start1', W('Kwames', 1) - .2, .5, { s: 1, o: 1 }, 'back');
+set('kw', 0, { hoch: 420 });
+tw('kw', W('Kwames', 1) - .35, .12, { o: 1 }); tw('kw', W('Kwames', 1) - .35, .42, { hoch: 0 }, 'in');
+landen('kw', W('Kwames', 1) + .07, 1.4); cue(W('Kwames', 1) + .07, 'plopp');
+tw('k_kw', W('Kwames', 1) + .1, .55, { s: 1 }, 'back'); cue(W('Kwames', 1) + .12, 'pop');
+tw('k_ges', 0, .01, { s: 1 });
+// Sabine kommt: erscheint und gleitet über drei Felder heran
+tw('sab', W('Ausbilderin', 2) - .1, .5, { s: 1 }, 'back'); cue(W('Ausbilderin', 2) - .1, 'pop');
+tw('k_sab', W('Ausbilderin', 2) + .1, .5, { s: 1 }, 'back');
+hopps('sab', W('Sabine', 2) + .2, [[1240, 788], [1130, 774], [1020, 760]], .44);
+// Kwame freut sich und breitet die Arme aus – sein Kreis wird groß und schiebt sich in Sabines Kreis
+froh('kw', W('freut', 3), W('entgegen', 4) + .3);
+wippen('kw', W('freut', 3), 18);
+rel('arme', { draw: 0 });
+tw('arme', W('breitet', 3), .55, { draw: 1 }, 'out'); cue(W('breitet', 3), 'whoosh');
+rel('armHandL', { o: 0 }); rel('armHandR', { o: 0 });
+tw(['armHandL', 'armHandR'], W('breitet', 3) + .4, .15, { o: 1 });
+const tGross = W('Arme', 3);
+tw('k_kw', tGross, .7, { s: 1.75 }, 'sanft'); akzent(tGross + .2, .03);
+// Seifenblasen: beide Kreise wabbeln, Sabine wird ein Stück zurückgeschoben
+const wabbeln = (id, t, n = 5, a = .07) => { for (let i = 0; i < n; i++) { const k = a * (1 - i / n); tw(id, t + i * .13, .13, i % 2 ? { sx: 1 + k, sy: 1 - k } : { sx: 1 - k, sy: 1 + k }, 'sinus'); } tw(id, t + n * .13, .3, { sx: 1, sy: 1 }, 'sanft'); };
+wabbeln('k_kw', tGross + .45); wabbeln('k_sab', tGross + .45); cue(tGross + .45, 'plopp');
+tw('sab', tGross + .45, .5, { x: 1052 }, 'weich');
+// Aber Sabine streckt nur die Hand entgegen
+akteur('hdSab', { x: 1000, y: 650, s: 0 });
+tw('hdSab', W('streckt', 4), .5, { s: 1 }, 'back'); tw('hdSab', W('streckt', 4) + .1, .7, { x: 912 }, 'sanft'); cue(W('streckt', 4), 'whoosh');
+bump('hdSab', W('Hand', 4), 1.12);
+// Kwames Arme ziehen sich verlegen zurück, sein Kreis schrumpft, ein Fragezeichen ploppt
+tw(['armHandL', 'armHandR'], W('entgegen', 4) + .2, .12, { o: 0 });
+tw('arme', W('entgegen', 4) + .2, .5, { draw: 0 }, 'in');
+tw('k_kw', W('entgegen', 4) + .3, .6, { s: 1 }, 'sanft');
+tw('sab', W('entgegen', 4) + .4, .5, { x: 1020 }, 'weich');
+pop('frage1', W('entgegen', 4) + .55, { x: 640, y: 480 });
+wackeln('frage1', W('entgegen', 4) + 1.05, 4, 6);
+// Der Geselle an der Werkbank nickt nur kurz zu
+bump('ges', W('Geselle', 5), 1.06); wackeln('bank', W('Werkbank', 5), 3, 2);
+tw('hdSab', W('Geselle', 5) - .2, .4, { x: 1000, s: 0 }, 'in');
+akteur('nickGes', { x: 1538, y: 408, o: 0, draw: 0 });
+tw('nickGes', W('nickt', 5) - .1, .15, { o: 1 }); tw('nickGes', W('nickt', 5) - .1, .4, { draw: 1 }, 'out');
+nickt('ges', W('nickt', 5), W('kurz', 5));
+for (const t of [W('nickt', 5), W('kurz', 5)]) { tw('nickGes', t, .17, { y: 420 }, 'sinus'); tw('nickGes', t + .17, .3, { y: 408 }, 'sanft'); cue(t, 'klick'); }
+tw('nickGes', W('zu', 5) + .3, .35, { o: 0 });
+// Kwame: „Jetzt bin ich unsicher …“ – sein Kreis wird kleiner und blasser
+tw('k_kw', W('unsicher', 6), .8, { s: .8, o: .5 }, 'sanft');
+wackeln('frage1', W('Mag', 7), 4, 7); bump('frage1', W('nicht', 7), 1.15);
+
+/* ================= 2 · So ist es oft: Hand geben, Blickkontakt, Umarmung unter Freunden ================= */
+// Kamera zoomt auf beide Figuren
+fahrt(SE(7) + .35, 1.2, 830, 660, 1.2, .03);
+aus('frage1', W('Doch', 8) - .1, .3);
+tw('k_kw', W('Doch', 8), .7, { s: 1, o: 1 }, 'sanft'); froh('kw', W('mag', 8)); froh('sab', W('Doch', 8));
+// Spielkarte klappt auf
+function karte(id, t0, x, y, zeiten) {
+  akteur(id, { x, y, s: 0, r: -3 });
+  const r = el(id).querySelector('.ruecken'); HOOKS.push(t => { r.style.opacity = t < t0 + .63 ? 1 : 0; });
+  tw(id, t0, .45, { s: .82 }, 'back'); tw(id, t0, .5, { r: 0 }, 'sanft'); cue(t0, 'pop');
+  tw(id, t0 + .45, .18, { sx: 0 }, 'in');
+  tw(id, t0 + .63, .3, { sx: 1, s: 1 }, 'out'); cue(t0 + .5, 'klick');
+  titelEin(id + 't', t0 + .8, zeiten);
+}
+karte('karte2', W('Bei', 9) - .9, 830, 380, [W('Bei', 9), null, null, null, W('Hand', 9) - .45, null, null, null, W('Augen', 10) - .1]);
+// Hand: Plaketten treffen sich in der Mitte, kurz und fest
+akteur('hdKw', { x: 700, y: 650, s: 0 });
+set('hdSab', W('Hand', 9) - .6, { x: 940, y: 650 });
+tw(['hdKw', 'hdSab'], W('Hand', 9) - .6, .45, { s: 1 }, 'back');
+tw('hdKw', W('Hand', 9) - .3, .5, { x: 776 }, 'inout'); tw('hdSab', W('Hand', 9) - .3, .5, { x: 884 }, 'inout'); cue(W('Hand', 9) + .15, 'plopp');
+const schuett = (t) => { tw(['hdKw', 'hdSab'], t, .11, { y: 668 }, 'sinus'); tw(['hdKw', 'hdSab'], t + .11, .11, { y: 638 }, 'sinus'); tw(['hdKw', 'hdSab'], t + .22, .25, { y: 650 }, 'sanft'); };
+schuett(W('kurz', 9) - .05); schuett(W('fest', 9) - .05);
+bump('hdKw', W('fest', 9) + .1, 1.08); bump('hdSab', W('fest', 9) + .1, 1.08); akzent(W('fest', 9), .03);
+akteur('uhrring', { x: 830, y: 650, o: 0, draw: 1 });
+tw('uhrring', W('kurz', 9) - .1, .15, { o: 1 }); tw('uhrring', W('kurz', 9) - .1, 1.0, { draw: 0 }, 'lin'); tw('uhrring', W('kurz', 9) + .85, .1, { o: 0 });
+cue(W('kurz', 9), 'scan');
+// Blickkontakt: gepunktete Linie von Auge zu Auge, beide blinzeln
+tw(['hdKw', 'hdSab'], W('Dabei', 10) - .1, .4, { s: 0 }, 'in');
+akteur('blick', { x: 830, y: 646, o: 0, sx: 0 });
+tw('blick', W('schaut', 10), .1, { o: 1 }); tw('blick', W('schaut', 10), .7, { sx: 1 }, 'inout'); cue(W('schaut', 10), 'scan');
+blinzelt('kw', W('Augen', 10) + .1); blinzelt('sab', W('Augen', 10) + .1);
+tw('blick', W('höflich', 11), .3, { sy: 1.6 }, 'sinus'); tw('blick', W('höflich', 11) + .3, .4, { sy: 1 }, 'sanft');
+tw('blick', W('ehrlich', 11) + .5, .3, { o: 0 });
+// Abschied: Kamera zurück, noch einmal Hand, Sabine geht zur Werkbank
+fahrt(W('Viele', 12) - .45, 1.0, 960, 540, 1, .03);
+aus('karte2', W('Viele', 12) - .5, .35);
+set('hdKw', W('Abschied', 12) - .5, { x: 700, y: 650 }); set('hdSab', W('Abschied', 12) - .5, { x: 940, y: 650 });
+tw(['hdKw', 'hdSab'], W('Abschied', 12) - .5, .4, { s: 1 }, 'back');
+tw('hdKw', W('Abschied', 12) - .25, .45, { x: 776 }, 'inout'); tw('hdSab', W('Abschied', 12) - .25, .45, { x: 884 }, 'inout');
+schuett(W('Hand', 12) - .1); cue(W('Hand', 12) - .1, 'plopp');
+tw(['hdKw', 'hdSab'], W('Hand', 12) + .4, .3, { s: 0 }, 'in');
+// Umarmungen: Kamerafahrt den Spielweg hinauf zum Feld „Zuhause“
+const tZu = W('Umarmungen', 13) - .55;
+fahrt(tZu, 1.4, 960, -640, 1, .1);
+rel('n1', { x: 760, y: -520 }); rel('n2', { x: 1160, y: -520 });
+tw(['k_n1', 'k_n2'], 0, .01, { s: 1 });
+// unter Freunden: die beiden rücken zusammen, ihre Kreise verschmelzen
+hopp('n1', W('Freunden', 13) - .45, 890, -520, .4, 26); hopp('n2', W('Freunden', 13) - .45, 1030, -520, .4, 26);
+tw(['k_n1', 'k_n2'], W('Freunden', 13) - .4, .5, { s: 1.12 }, 'sanft');
+wabbeln('k_n1', W('Freunden', 13) + .1, 4, .06); wabbeln('k_n2', W('Freunden', 13) + .1, 4, .06);
+// Familie: ein kleiner Pin kommt dazu, der gemeinsame Kreis wächst, ein Herz steigt auf
+hopps('n3', W('Familie', 13) - .5, [[1240, -470], [1080, -430], [960, -420]], .3, .28, 22);
+tw('n3', W('Familie', 13) - .62, .4, { s: 1 }, 'back');
+tw('k_n3', W('Familie', 13) - .4, .5, { s: 1 }, 'back');
+akteur('herzZ', { x: 960, y: -560, s: 0, o: 1 });
+tw('herzZ', W('Familie', 13) + .2, .5, { s: 1 }, 'back'); tw('herzZ', W('Familie', 13) + .2, 1.2, { y: -760 }, 'out'); cue(W('Familie', 13) + .2, 'ding');
+
+/* ================= 3 · Abstand: etwa eine Armlänge; Nicken ist auch in Ordnung ================= */
+fahrt(SE(13) + .3, 1.4, 960, 540, 1, .1);
+tw('herzZ', SE(13) + .5, .3, { o: 0 });
+// Meterstab klappt zwischen Kwame und Sabine auf, Glied für Glied
+const GLIEDER = 6;
+$('#meter').innerHTML = Array.from({ length: GLIEDER }).reduceRight((innen, _, i) => `<div class="glied" id="gl${i}"><i class="gelenk"></i>${innen}</div>`, '');
+rel('meter', { x: 640 - 9, y: 800, o: 0 });
+const tMe = W('Armlänge', 14) - .9;
+tw('meter', tMe - .2, .3, { o: 1 }); cue(tMe, 'klick');
+for (let i = 0; i < GLIEDER; i++) {
+  rel('gl' + i, { r: i === 0 ? -90 : 178 });
+  tw('gl' + i, tMe + i * .16, .32, { r: 0 }, i === GLIEDER - 1 ? 'back' : 'out');
+  if (i) cue(tMe + i * .16 + .28, 'klick');
+}
+document.querySelectorAll('.glied').forEach((g, i) => { if (i) { g.style.left = '62px'; } });
+// Die Kreise wachsen genau bis zur Mitte: eine Armlänge
+tw(['k_kw', 'k_sab'], W('Armlänge', 14) + .1, .6, { s: 1.27 }, 'sanft'); akzent(W('Armlänge', 14) + .2, .035);
+karte('karte3', W('Beim', 14) - .3, 410, 210, [W('eine', 14) - .2, null, null, null, W('Nicken', 17) - .15]);
+tw('meter', W('nicht', 15) - .1, .4, { o: 0 }); tw(['k_kw', 'k_sab'], W('nicht', 15), .6, { s: 1 }, 'sanft');
+// Nicht alle geben gern die Hand: Geselle mit öligen Händen
+akteur('hdGes', { x: 1600, y: 410, s: 0 });
+tw('hdGes', W('alle', 15) - .1, .5, { s: 1 }, 'back'); tw('hdGes', W('alle', 15), .5, { x: 1500 }, 'sanft'); cue(W('alle', 15) - .1, 'pop');
+document.querySelectorAll('#hdGes .oel').forEach((o, i) => { rel(o, { o: 0, s: .3 }); tw(o, W('Hand', 15) + i * .12, .3, { o: .85, s: 1 }, 'back'); cue(W('Hand', 15) + i * .12, 'klick'); });
+wackeln('hdGes', W('Beispiel', 15), 3, 4);
+tw('hdGes', W('Gründen', 15) - .1, .4, { s: 0, x: 1600 }, 'in');
+// Nicken: Bogen schwingt zweimal; „in Ordnung“: grüner Haken-Ring
+set('nickGes', W('Gründen', 15) + .19, { y: 408, draw: 0, s: 1 });
+tw('nickGes', W('Gründen', 15) + .2, .15, { o: 1 }); tw('nickGes', W('Gründen', 15) + .2, .4, { draw: 1 }, 'out');
+const tNi = [W('Gründen', 15) + .45, W('Gründen', 15) + .95];
+nickt('ges', ...tNi);
+for (const t of tNi) { tw('nickGes', t, .17, { y: 420 }, 'sinus'); tw('nickGes', t + .17, .3, { y: 408 }, 'sanft'); cue(t, 'klick'); }
+rel('nickRing', { s: .6, o: 0 }); rel('nickHk', { s: 0 });
+tw('nickRing', W('Ordnung', 16) - .1, .5, { s: 1, o: 1 }, 'back'); tw('nickHk', W('Ordnung', 16), .45, { s: 1 }, 'back'); cue(W('Ordnung', 16), 'erfolg');
+akzent(W('Ordnung', 16), .03);
+froh('ges', W('Ordnung', 16));
+// Kwame nickt zurück
+nickt('kw', W('Nicken', 17) + .1, W('reicht', 17) + .1); froh('kw', W('freundliches', 17));
+nickt('ges', W('Nicken', 17) + .3);
+
+/* ================= 4 · Warum? Die Kamera kippt: Abstand ist Respekt, nicht Kälte ================= */
+const tK = SE(17) + .25, aKipp = 52;
+aus(['karte3', 'nickGes'], SE(17) + .1, .35);
+tw('kipp', tK, 1.7, { r: aKipp }, 'inout'); cue(tK, 'whoosh');
+fahrt(tK, 1.7, 960, 300, .92, .02);
+// Kälte? Thermometer fällt ins Bild, der Balken steigt auf eine warme mittlere Höhe
+akteur('thermoI', { sy: .08 }, true);
+set('thermo', W('Kälte', 19) - .45, { o: 1, hoch: 700 });
+tw('thermo', W('Kälte', 19) - .45, .42, { hoch: 0 }, 'in'); landen('thermo', W('Kälte', 19) - .03, 1.3); cue(W('Kälte', 19) - .03, 'plopp');
+tw('thermoI', W('Kälte', 19) + .3, 1.1, { sy: .58 }, 'sanft'); cue(W('Kälte', 19) + .3, 'scan');
+karte('karte4', W('Abstand', 20) - .9, 960, 120, [W('Abstand', 20), W('Abstand', 20) + .3, W('Respekt', 20) - .1, W('Respekt', 20) + .25, W('Respekt', 20) + .4]);
+// eigener Raum: jeder Kreis leuchtet auf wie ein kleiner Teppich
+const tRaum = W('eigenen', 20);
+['kw', 'sab', 'ges'].forEach((id, i) => {
+  const t = tRaum + i * .18;
+  set('l_' + id, t, { o: .9, s: 1 }); tw('l_' + id, t, .9, { o: 0, s: 1.35 }, 'weich');
+  bump('k_' + id, t, 1.08); cue(t, 'ding');
+});
+// zu nah: jemand rückt in Kwames Kreis – beide Kreise wabbeln, Kwame weicht zurück
+const tNah = W('nah', 21);
+tw('n4', tNah - 1.0, .3, { o: 1 }); tw('k_n4', tNah - 1.0, .4, { s: 1 }, 'back');
+hopps('n4', tNah - .9, [[330, 930], [470, 860]], .38, .34, 24);
+wabbeln('k_kw', tNah - .05, 6, .09); wabbeln('k_n4', tNah - .05, 6, .09); cue(tNah - .05, 'plopp');
+tw('kw', tNah, .5, { x: 700, r: 5 }, 'sanft');
+tw('k_kw', tNah, .5, { sx: .9 }, 'sanft');
+tw('kw', W('unangenehm', 21) + .6, .5, { x: 640, r: 0 }, 'sanft'); tw('k_kw', W('unangenehm', 21) + .6, .5, { sx: 1 }, 'sanft');
+hopp('n4', W('unangenehm', 21) + .5, 300, 940, .4, 24);
+tw('n4', SE(21) + .3, .3, { o: 0 });
+// je besser man sich kennt: die beiden vom Feld „Zuhause“ rücken Schritt für Schritt näher
+set('n1', SE(17), { x: 700, y: -440 }); set('n2', SE(17), { x: 1220, y: -440 });
+set(['k_n1', 'k_n2'], SE(17), { s: 1 }); set(['n3', 'k_n3'], SE(17), { s: 0 }); set('herzZ', SE(17), { o: 0 });
+[['besser', 790, 1130, .86], ['kennt', 870, 1050, .7], ['näher', 920, 1000, .55]].forEach(([w, x1, x2, s]) => {
+  const t = W(w, 22) - .1;
+  hopp('n1', t, x1, -440, .34, 22); hopp('n2', t, x2, -440, .34, 22);
+  tw(['k_n1', 'k_n2'], t + .1, .4, { s }, 'sanft');
+});
+
+/* ================= 5 · Und bei dir? Der Würfel rollt, das Brett teilt sich ================= */
+const tZur = SE(22) + .15;
+tw('kipp', tZur, 1.3, { r: 0 }, 'inout');
+aus(['karte4', 'thermo'], tZur, .35);
+fahrt(tZur + .6, 1.5, 960, 1720, 1, .1);
+// Kwame hüpft mit der Kamera den Spielweg hinunter, Sabine gleitet mit
+hopps('kw', tZur + .6, [[760, 940], [900, 1120], [960, 1300], [960, 1500], [960, 1700], [960, 1900]], .26, .3, 30);
+tw('sab', tZur + .6, 1.6, { x: 520, y: 1900 }, 'inout', { bogen: 30 });
+aus(['ges', 'k_ges'], tZur + 1.9, .01);
+// das Würfelfeld
+rel('halbL', { x: 70, y: 1260 }); rel('halbR', { x: 960, y: 1260 }); rel('halbRLeer', { x: 960, y: 1260 });
+rel('naht', { x: 956, y: 1280, sy: 0, o: 0 });
+// Der Würfel rollt über die Felder, jede Seite zeigt eine andere Begrüßung, zuletzt das Fragezeichen
+const SEITEN = ['sHand', 'sNick', 'sHerz', 'sWelle', 'sArme', 'sFrage'];
+el('wuerfel').innerHTML = SEITEN.map((s, i) => `<div class="seite" id="ws${i}">${tpl(s)}</div>`).join('');
+const tW0 = W('vielen', 23) - .35, ROLL = .44;
+akteur('wuerfel', { x: 320, y: 1560, o: 0, s: .7 });
+tw('wuerfel', tW0 - .35, .3, { o: 1, s: 1 }, 'back'); cue(tW0 - .35, 'pop');
+const ROLLEN = SEITEN.map((_, i) => tW0 + i * ROLL);
+ROLLEN.forEach((t, i) => {
+  const x = 320 + (i + 1) * 200;
+  tw('wuerfel', t, ROLL, { x }, 'inout', { bogen: 26 });
+  tw('wuerfel', t, ROLL / 2, { sx: .22, r: i % 2 ? 3 : -3 }, 'in'); tw('wuerfel', t + ROLL / 2, ROLL / 2, { sx: 1, r: 0 }, 'out');
+  cue(t + ROLL, 'klick');
+});
+HOOKS.push(t => {
+  let k = -1; ROLLEN.forEach((r, i) => { if (t >= r + ROLL / 2) k = i; });
+  SEITEN.forEach((_, i) => { $('#ws' + i).style.opacity = i === k ? 1 : 0; });
+});
+const tLand = ROLLEN[5] + ROLL;
+landen('wuerfel', tLand, 1.3); wackeln('wuerfel', tLand + .1, 3, 4); akzent(tLand, .03);
+// Das Brett teilt sich entlang der Feldlinie
+const tSp = W('Vielleicht', 24) - .15;
+tw('naht', tSp, .5, { sy: 1, o: 1 }, 'inout'); cue(tSp, 'kritzeln');
+tw('halbL', tSp + .45, .7, { x: 40 }, 'sanft'); tw(['halbR', 'halbRLeer'], tSp + .45, .7, { x: 990 }, 'sanft'); cue(tSp + .45, 'whoosh');
+tw('halbRLeer', tSp + .45, .8, { o: 1 }, 'inout');
+tw('naht', tSp + .45, .3, { o: 0 });
+akzent(tSp + .5, .04);
+pop('etDe', tSp + .7, { x: 500, y: 1410 });
+// links: In Deutschland – Hand und Abstand
+set('hdSab', tSp + .9, { x: 600, y: 1790 });
+tw('hdSab', tSp + .9, .45, { s: 1 }, 'back'); tw('hdSab', tSp + 1.0, .6, { x: 660 }, 'sanft');
+tw('k_sab', tSp + .9, .5, { s: 1.05 }, 'sanft');
+// rechts: aus dem Würfel wird das große Fragezeichen, „Bei dir?“
+tw('wuerfel', tSp + .5, .5, { o: 0, s: 1.3 }, 'in');
+pop('gfrage', tSp + .6, { x: 1450, y: 1690 }, 'pop', 'sanft');
+pop('etDu', W('dir', 24) - .05, { x: 1450, y: 1900 });
+// Und wie ist das bei dir? Kwame steht auf der Linie und schaut nach rechts
+schaut('kw', W('wie', 25), W('Heute', 26) - .2);
+bump('gfrage', W('dir', 25), 1.14); akzent(W('dir', 25), .03);
+// Denkpause: das Fragezeichen pulsiert (feste Frequenz), die Gedankenblase füllt sich mit Begrüßungen
+const tDenk = SE(25) + .15, tDenkEnde = W('Heute', 26) - .1;
+HOOKS.push(t => {
+  const a = rampe(t, tDenk, tDenkEnde, .4);
+  if (a > 0) el('gfrage').style.transform += ` scale(${(1 + .07 * a * (.5 + .5 * Math.sin((t - tDenk) * 2 * Math.PI * 1.1))).toFixed(4)})`;
+});
+akteur('gedanke', { x: 1130, y: 1490, s: 0 });
+tw('gedanke', tDenk, .55, { s: 1 }, 'back'); cue(tDenk, 'pop');
+['sHand', 'sNick', 'sHerz', 'sWelle'].forEach((s, i) => {
+  el('gedanke').insertAdjacentHTML('beforeend', `<div class="sym" id="gs${i}" style="left:${18 + i * 78}px">${tpl(s)}</div>`);
+  const t = tDenk + .55 + i * .62;
+  rel('gs' + i, { s: 0 }); tw('gs' + i, t, .45, { s: 1 }, 'back'); cue(t, 'pop');
+});
+schweben('gedanke', 4);
+
+/* ================= 6 · Kwames Tipp: die andere Person anfangen lassen – anders ist nicht falsch ================= */
+const tZu6 = W('Heute', 26) - .1;
+aus('gedanke', tZu6, .35);
+tw('halbL', tZu6, .7, { x: 70 }, 'inout'); tw(['halbR', 'halbRLeer'], tZu6, .7, { x: 960 }, 'inout'); tw('halbRLeer', tZu6, .7, { o: 0 }, 'inout');
+cue(tZu6, 'whoosh'); cue(tZu6 + .7, 'plopp');
+aus(['etDe', 'etDu', 'gfrage', 'hdSab'], tZu6, .35);
+hopp('kw', tZu6 + .5, 1100, 1900, .4, 28);
+tw('k_sab', tZu6, .5, { s: 1 }, 'sanft');
+karte('karte6', W('Ich', 26) - .5, 960, 1420, [W('lasse', 26) - .05, null, null, W('Person', 26) - .05, W('machen', 26) - .2]);
+// der erste Schritt: Sabine kommt einen Schritt näher, Kwame wartet und wippt
+hopp('sab', W('ersten', 26) - .15, 720, 1900, .4, 30);
+wippen('kw', W('machen', 26) + .1, 12);
+// Hand anbieten oder nicken
+set('hdKw', W('biete', 27) - .2, { x: 1040, y: 1790 });
+tw('hdKw', W('biete', 27) - .2, .45, { s: 1 }, 'back'); tw('hdKw', W('biete', 27) - .1, .6, { x: 960 }, 'sanft'); cue(W('biete', 27) - .2, 'whoosh');
+bump('hdKw', W('Hand', 27), 1.1);
+tw('hdKw', W('oder', 27) - .1, .35, { s: 0 }, 'in');
+akteur('nickKw', { x: 1222, y: 1788, o: 0, draw: 0 });
+tw('nickKw', W('nicke', 27) - .15, .12, { o: 1 }); tw('nickKw', W('nicke', 27) - .15, .4, { draw: 1 }, 'out');
+nickt('kw', W('nicke', 27) + .05, W('freundlich', 27) + .1);
+for (const t of [W('nicke', 27) + .05, W('freundlich', 27) + .1]) { tw('nickKw', t, .17, { y: 1800 }, 'sinus'); tw('nickKw', t + .17, .3, { y: 1788 }, 'sanft'); cue(t, 'klick'); }
+froh('sab', W('nicke', 27)); nickt('sab', W('freundlich', 27) + .3);
+tw('nickKw', W('Und', 28) - .1, .3, { o: 0 });
+// einfach fragen: Sprechblase mit Fragezeichen und Herz
+pop('blase6', W('fragen', 28) - .1, { x: 1290, y: 1610 });
+wackeln('blase6', W('fragen', 28) + .45, 3, 3);
+froh('kw', W('fragen', 28) + .2);
+// Ob Hand, Nicken oder Umarmung: alle kommen dazu, jeder mit seinem eigenen Kreis
+const t29 = SA(29) - .55;
+aus(['karte6', 'blase6'], t29, .35);
+set('ges', t29, { x: 1600, y: 1180, o: 1, s: 1 }); set('k_ges', t29, { o: 1, s: 1 });
+hopps('ges', t29, [[1600, 1380], [1600, 1580], [1590, 1660]], .3, .28, 30);
+set('n1', t29, { x: 900, y: 1150 }); set('n2', t29, { x: 1020, y: 1150 }); set(['k_n1', 'k_n2'], t29, { s: .55 });
+hopps('n1', t29 + .1, [[700, 1330], [500, 1520], [360, 1640]], .3, .28, 26);
+hopps('n2', t29 + .18, [[820, 1330], [620, 1520], [500, 1640]], .3, .28, 26);
+tw(['k_n1', 'k_n2'], t29 + .6, .6, { s: 1 }, 'sanft');
+fahrt(t29 + .2, 1.2, 960, 1700, .97, .02);
+// Hand: Sabine und Kwame – kurzer Händedruck
+set('hdSab', W('Hand', 29) - .5, { x: 800, y: 1790 }); set('hdKw', W('Hand', 29) - .5, { x: 1020, y: 1790 });
+tw(['hdSab', 'hdKw'], W('Hand', 29) - .5, .4, { s: 1, o: 1 }, 'back');
+tw('hdSab', W('Hand', 29) - .3, .45, { x: 858 }, 'inout'); tw('hdKw', W('Hand', 29) - .3, .45, { x: 962 }, 'inout');
+const schuett2 = (t) => { tw(['hdKw', 'hdSab'], t, .11, { y: 1808 }, 'sinus'); tw(['hdKw', 'hdSab'], t + .11, .11, { y: 1778 }, 'sinus'); tw(['hdKw', 'hdSab'], t + .22, .25, { y: 1790 }, 'sanft'); };
+schuett2(W('Hand', 29) + .2); cue(W('Hand', 29) + .2, 'plopp');
+// Nicken: der Geselle nickt
+set('nickGes', W('Nicken', 29) - .2, { x: 1468, y: 1548, s: 1, draw: 0 });
+set('nickRing', W('Nicken', 29) - .2, { o: 0 }); set('nickHk', W('Nicken', 29) - .2, { s: 0 });
+tw('nickGes', W('Nicken', 29) - .2, .12, { o: 1 }); tw('nickGes', W('Nicken', 29) - .2, .4, { draw: 1 }, 'out');
+nickt('ges', W('Nicken', 29) + .05, W('Nicken', 29) + .5);
+for (const t of [W('Nicken', 29) + .05, W('Nicken', 29) + .5]) { tw('nickGes', t, .17, { y: 1560 }, 'sinus'); tw('nickGes', t + .17, .3, { y: 1548 }, 'sanft'); cue(t, 'klick'); }
+// Umarmung: die beiden links verschmelzen zu einem Kreis
+hopp('n1', W('Umarmung', 29) - .2, 380, 1640, .3, 20); hopp('n2', W('Umarmung', 29) - .2, 480, 1640, .3, 20);
+tw(['k_n1', 'k_n2'], W('Umarmung', 29) - .1, .5, { s: 1.1 }, 'sanft');
+wabbeln('k_n1', W('Umarmung', 29) + .3, 4, .06); wabbeln('k_n2', W('Umarmung', 29) + .3, 4, .06); cue(W('Umarmung', 29) + .2, 'ding');
+froh('sab', W('Umarmung', 29)); froh('kw', W('Umarmung', 29)); froh('ges', W('Umarmung', 29));
+// Jede Begrüßung zeigt Respekt: alle Kreise leuchten, eine Welle läuft durch die Fläche
+tw(['hdSab', 'hdKw', 'nickGes'], W('Jede', 29) - .1, .35, { s: 0, o: 0 }, 'in');
+const tRe = W('Respekt', 29) - .1;
+akteur('welle6', { x: 960, y: 1760, s: .1, o: 0 });
+set('welle6', W('Jede', 29), { o: .7 }); tw('welle6', W('Jede', 29), 2.2, { s: 6, o: 0 }, 'weich'); cue(W('Jede', 29), 'scan');
+[['n1', 0], ['n2', .05], ['sab', .25], ['kw', .45], ['ges', .7]].forEach(([id, d]) => {
+  const t = W('Jede', 29) + .2 + d;
+  set('l_' + id, t, { o: .9, s: 1 }); tw('l_' + id, t, .9, { o: 0, s: 1.3 }, 'weich'); bump('k_' + id, t, 1.07);
+});
+['n1', 'n2', 'sab', 'kw', 'ges'].forEach((id, i) => wippen(id, tRe + i * .1, 12));
+cue(tRe, 'erfolg');
+// Anders ist nicht falsch: die weiße Platte steigt auf
+akteur('platte', { x: 960, y: 1440, o: 0, s: .9 });
+tw('platte', W('Anders', 30) - .45, .6, { o: 1, y: 1400, s: 1 }, 'sanft'); cue(W('Anders', 30) - .45, 'whoosh');
+titelEin('platteT', W('Anders', 30) - .1, [W('Anders', 30) - .1, W('ist', 30) - .05, W('nicht', 30) - .05, W('falsch', 30) - .05]);
+akzent(W('falsch', 30), .03);
+
+/* ---------- Abspann: ruhig – das Brett tritt zurück, die Platte bleibt ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+fahrt(AB - .2, 1.6, 960, 1600, .9, .0);
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - AB) / 1.2));
+  $('#schleier').style.opacity = (.82 * p).toFixed(3);
+  const q = E.weich(clamp((t - AB - .7) / .9));
+  $('#abspannUnter').style.opacity = q.toFixed(3);
+  $('#abspannUnter').style.transform = `translateY(${(30 * (1 - q)).toFixed(1)}px)`;
+});
+tw('platte', AB, 1.4, { y: 1540, s: 1.15 }, 'inout');
+cue(AB + .7, 'ding');
+
+start(AB + 4.4, AB + 2.4);
+</script>
+</body></html>
