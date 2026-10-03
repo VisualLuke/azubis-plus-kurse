@@ -23,10 +23,15 @@ PSA, Schilder, Wege frei, Melden). Bühne ist eine Kfz-Werkstatt (Hebebühne, We
 | 7 | Werkstatt: auf „Kabel“ liegt eine Leitung mit aufgeplatzter Isolierung am Boden (kleine Blitz-Zacken), auf „Öl“ breitet sich eine Pfütze aus, ein Rutsch-Pfeil wischt darüber; Amir zeigt hin (Porträt neigt sich), Warnschild ploppt, Sprechblase fliegt zu Sabine, sie nickt; ein Absperrkegel stellt sich hin, die Pfütze wird mit Bindemittel abgestreut und verschwindet; fünftes Ring-Segment wird grün | Mängel sofort melden |
 | 8 | Fragezeichen über Amir wird zur Sprechblase und fliegt zu Sabine, ein Haken kommt zurück; auf „Unfall“ kippt kurz ein grauer Warn-Schatten ins Bild und wird von der grünen Sprechblase weggeschoben; dann Abschluss: fünf Kacheln (Klemmbrett, Handschuh, vier Farbpunkte, Tür mit Pfeil, Warnschild) mit Haken auf ihren Wörtern, der Ring um Amir schließt sich, grüne Welle, Amir lächelt | Im Zweifel: fragen |
 
-Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; jede Animation hängt an einem Wort aus
-`sprache.json`. Szene 1 steht ohne Titel in der Bildmitte, dann Schwenk zur Werkstatt-Bühne mit Bewegungsunschärfe;
-Kamera-Akzente auf „Unterweisung“, „kostenlos“, „sofort“, „Rot“, „frei“, „melde“. Abspann: „Sicher arbeiten.“ und die
-Kernbotschaft.
+Umsetzung (Leitidee „Rundgang“): oben ein breites Werkstatt-Fenster, darunter eine Leiste mit Amirs Schutz-Ring (links)
+und dem Text im Bild (Wörter steigen aus einer Maske). Szene 1 steht ohne Titel in der Bildmitte: Amir hüpft vor das
+geschlossene Rolltor, das Tor fährt hoch. Szenenwechsel als Ego-Kamerafahrt: der alte Raum gleitet an der Kamera vorbei,
+Regalsäulen ziehen am Gangrand vorüber, der Mittelstreifen fließt; zum Schluss fährt die Kamera rückwärts. Szene 3/4 als
+Ausrüstungs-Menü (vier Plätze um Amirs Porträt, Kopfzeile tippt „Persönliche Schutzausrüstung“, auf „Peh-Ess-Ah“ bleibt
+„PSA“); Szene 5 Wendetafeln, die beim Umklappen die Bühne kurz in ihrer Farbe tönen; Szene 6 grüne Fluchtweg-Linie auf
+dem Boden bis zur Tür. Jede Animation hängt an einem Wort aus `sprache.json`; Kamera-Akzente auf „Unterweisung“,
+„kostenlos“, „sofort“, „Rot“, „frei“, „sofort“ (Szene 7). Abspann: Das Rolltor fährt herunter, darauf „Sicher arbeiten.“
+und die Kernbotschaft.
 
 Kursspezifische Teile (neu, Stil C): `spind`, `sicherheitsschuhe`, `schutzbrille`, `gehoerschutz`, `zeichen-verbot`,
 `zeichen-warnung`, `zeichen-gebot`, `zeichen-rettung`, `notausgang-tuer`, `hubwagen`, `kabel-kaputt`, `oelpfuetze`,

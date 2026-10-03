@@ -32,6 +32,16 @@ Titelplatte; Tipps im bekannten Layout (Text im Bild links, helle Bühne 900 × 
 beiden Seiten – es geht um Sprache und Arbeitsort, nicht um Herkunft. Keine Flaggen, keine Länder, keine Sprachen namentlich,
 keine Wertung.
 
+### Umsetzung (eigene Bühnenwelt)
+
+Statt der geteilten Bühne mit Linie und Knauf (23/24/36) spielt das Video in einem **Theater**: Vorhang auf zu Beginn,
+Soffitte und Schals vorne, alles Weitere hängt an Seilen aus dem Schnürboden (Seiten-Schilder, Tafeln mit dem Text im Bild,
+die Waage, die Situationen als Kulissen). Die gerade nicht erzählte Seite liegt hinter einem halbdurchsichtigen
+**Gaze-Vorhang** (statt „matt“), der von oben herunterfährt. Szene 3/4: drei Kulissen fahren herunter, ein Stempel setzt die
+„Sie“-Plaketten; in Szene 4 drehen sich die Kulissen wie Drehkulissen um. Übergang zu den Tipps: Vorhang zu, das große
+Theater fliegt nach oben, ein kleines Theater (Tipp-Bühne rechts) kommt herunter; zurück zu Szene 7 umgekehrt. Schluss wie
+ein Schlussapplaus: Ana, Sabine, die Ring-Blase und die Waage verbeugen sich; der Abspann ist der fallende Vorhang.
+
 ## Abweichungen vom Briefing
 
 - Kein Kurstitel im Video; die erste Bühne steht mittig, Szene 1 hat nur die Seiten-Chips.

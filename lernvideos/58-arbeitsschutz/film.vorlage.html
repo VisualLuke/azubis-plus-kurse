@@ -180,8 +180,8 @@
       <div class="a" id="geld3" data-gruppe="geld" style="width:220px">{{portemonnaie-vorne}}</div>
       <div class="a plakette gruen" id="okGeld" data-gruppe="geld"></div>
       <div class="a" id="hand4" style="width:330px">{{handschuh}}</div>
-      <div class="a loch" id="loch4" data-frei></div>
       <div class="a" id="lupe4" style="width:170px" data-frei>{{lupe}}</div>
+      <div class="a loch" id="loch4" data-frei></div>
       <div class="a portrait" id="sab4" data-f="sabine" style="width:210px;height:210px"></div>
       <div class="a" id="handNeu" style="width:330px">{{handschuh~neu}}</div>
       <div class="a plakette gruen" id="okHand" data-frei></div>
@@ -772,7 +772,7 @@ HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c;
 {
   const t0 = SE(24) + .45; fahrt(t0, 'r7', 'r8', true);
   textAus('tb7', t0);
-  aufBuehne(t0 + .15, 880, 380);
+  aufBuehne(t0 + .15, 880, 360);
   stelle('sab8', 1480, 300);
   titelEin('tb8', W('frag', 25) - .2);
   pop('q8', W('unsicher', 25) - .1, { x: 880, y: 138 }); wackeln('q8', W('bist', 25), 3, 6);
@@ -786,7 +786,7 @@ HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c;
   const tH = W('mehr', 25);
   tw('blase8', tH, .25, { o: 0, s: .7 }, 'in');
   akteur('antwort8', { x: FX + 1300, y: FY + 175, s: .3, o: 0 });
-  tw('antwort8', tH, .1, { o: 1 }); tw('antwort8', tH, .3, { s: 1 }, 'back'); flug('antwort8', tH + .2, .7, FX + 880, FY + 140, 110); cue(tH, 'ding');
+  tw('antwort8', tH, .1, { o: 1 }); tw('antwort8', tH, .3, { s: 1 }, 'back'); flug('antwort8', tH + .2, .7, FX + 880, FY + 112, 110); cue(tH, 'ding');
   landen('antwort8', tH + .9, .6); froh('amirP', tH + .9); huepfen('amir', tH + .95, 12);
   // Unfall: ein grauer Warn-Schatten kippt herein – die grüne Blase schiebt ihn weg
   const tU = W('Unfall', 26) - .3;
@@ -799,15 +799,15 @@ HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c;
   // Also: die fünf Abzeichen legen sich um den Ring, der Ring schließt sich
   const WOERTER = ['Unterweisung', 'Schutzausrüstung', 'Schilder', 'Wege', 'Mängel'];
   WOERTER.forEach((w, k) => {
-    const a = (-54 + 72 * k) * Math.PI / 180, x = 880 + 240 * Math.cos(a), y = 380 + 240 * Math.sin(a);
+    const a = (-54 + 72 * k) * Math.PI / 180, x = 880 + 250 * Math.cos(a), y = 360 + 250 * Math.sin(a);
     const t = W(w, 27) - .1;
-    akteur('a8_' + k, { x: 880 + 175 * Math.cos(a), y: 380 + 175 * Math.sin(a), s: 0 });
+    akteur('a8_' + k, { x: 880 + 175 * Math.cos(a), y: 360 + 175 * Math.sin(a), s: 0 });
     tw('a8_' + k, t, .55, { x, y, s: 1 }, 'back'); cue(t, 'pop');
     GLUEHEN.push([k, t + .1]);
     bump('amir', t + .1, 1.025);
   });
   const tE = W('melden', 27) + .1;
-  welle('welle8', tE, FX + 880, FY + 380, 1.1, 380); cue(tE, 'erfolg'); akzent(tE, .045);
+  welle('welle8', tE, FX + 880, FY + 360, 1.1, 380); cue(tE, 'erfolg'); akzent(tE, .045);
   froh('amirP', tE); huepfen('amir', tE + .1, 14); froh('sab8', tE);
   [0, 1, 2, 3, 4].forEach(k => bump('a8_' + k, tE + .15 + k * .06, 1.1));
 }
