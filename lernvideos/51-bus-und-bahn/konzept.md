@@ -10,22 +10,24 @@
 
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
-| 1 | Helle Bühne in der Bildmitte: Haltestelle mit Wartehäuschen, Fahrplan, Ticketautomat; die Uhr am Mast springt auf „kurz vor sieben“; Kwame (Porträt) läuft herein; auf „zwei Minuten“ blinkt die Anzeige „2 min“, die Schienen summen (Vibrations-Linien); auf „kein Ticket“ öffnet Kwame die Ticket-App – das Ticket-Fach ist leer; auf „kaputt“ flackert das Display des Automaten und zeigt „Außer Betrieb“, Kwame zuckt, Schweißtropfen | Bahn kommt – kein Ticket |
-| 2 | Dunkle Quiz-Bühne: drei Optionskarten A/B/C fliegen auf ihrem Buchstaben herein, jedes Symbol spielt: A offene Bahntür, ein durchgestrichenes Ticket hüpft hinein; B Bahn fährt, eine Lupe „Kontrolle“ nähert sich, ein Ticket wird hektisch herausgezogen; C Handy, ein Ticket mit Code tippt sich, daneben eine Uhr mit „nächste Bahn“ | A · B · C |
-| 3 | Denkpause: Countdown-Ring läuft leer (erst „?“), ein Lichtrahmen wandert über A → B → C, 3 – 2 – 1 ploppen auf den gesprochenen Zahlen | 3 – 2 – 1 |
-| 4 | Karte A nach vorn, rote Marke ✕, wird zur Kachel; helle Bühne: Innenraum der Bahn, die Lupe „Kontrolle“ wandert durch den Wagen und bleibt bei Kwame stehen; auf „Beförderungsentgelt“ rollt ein langer Zettel aus, auf „sechzig Euro“ purzeln Münzen aus dem Portemonnaie, Kamera-Akzent. Karte B als zweite Kachel, rote Marke ✕: Zeitstrahl „Einsteigen → Kontrolle“, eine Ticket-Marke soll bei „Einsteigen“ sitzen; auf „zu spät“ landet sie erst bei „Kontrolle“ und färbt sich rot | A & B: ohne Ticket – oft 60 € |
-| 5 | Karte C nach vorn, grüne Marke ✓; Kwame tippt auf dem Handy, das Ticket mit Code baut sich auf, grüner Haken, Kwame lächelt (Mund nur in seinem Satz); die Bahn fährt ein (bremst, Türen gleiten auf); auf „aussteigen“ zeigen Pfeile aus der Tür nach außen, erst dann springt Kwame hinein; drinnen leuchtet ein Sitz mit Gehstock-Symbol, Kwame rutscht vom Sitz, ein Herz ploppt; auf „leise“ sinkt ein Lautstärke-Balken am Handy | C: Ticket vor der Fahrt |
-| 6 | Deutschlandkarte: eine Ticket-Karte mit Monats-Kalender landet in der Mitte; auf „ganz Deutschland“ laufen Linien von Bus, Straßenbahn und Regionalzug über die Karte (Fernzug bleibt grau); auf „Jobticket“ schiebt das Betriebs-Gebäude einen Münzanteil zum Ticket; auf „entwerten“ fährt ein Papierticket in den Entwerter, der Stempel klackt, ein Datum erscheint | Monatsabo · Jobticket · Papier: entwerten |
-| 7 | Dunkle Bühne: alle drei Karten, A und B verblassen, C wächst und leuchtet grün, grüne Welle; dann hell: Handy mit Abfahrts-Anzeige, „+5 min“ blinkt gelb; auf „früher“ springt Kwames Wecker eine Bahn zurück, Kwame kommt am Betrieb an, die Uhr dort zeigt Puffer, grüner Haken | Ticket vorher · eine Bahn früher |
+| 1 | Station „Haltestelle“ (Bühne in der Bildmitte, oben das Haltestellen-Schild mit H auf der Linie): Wartehäuschen mit Fahrplan und Anzeige, Mast mit H und Uhr, Ticketautomat; die Uhr springt auf „kurz vor sieben“; Kwame (Porträt) hüpft herein, H-Schild wackelt, eine Fahrplanzeile leuchtet; auf „Straßenbahn“ fährt das Bahn-Symbol in die Anzeige, auf „zwei Minuten“ blinkt „2 min“, die Schienen summen; auf „kein Ticket“ Handy mit leerem Ticket-Fach und rotem ✕; auf „Automat“ flackert das Display, auf „kaputt“ „Außer Betrieb“ mit rotem „!“, Kwame zuckt, Schweißtropfen | Bahn kommt – kein Ticket |
+| 2 | Die Kamera fährt mit einer Zug-Marke die Linie entlang zur **Weiche**: Kwame als „Du bist hier“-Porträt mit Fragezeichen; drei farbige Linien zweigen ab (A blau, B orange, C violett), an jeder landet ein Linien-Schild mit Buchstabe und spielendem Symbol: A offene Bahntür, durchgestrichenes Ticket hüpft hinein, Tür zu, Fahrtlinien; B Bahn fährt, Lupe kommt, Ticket wird hektisch gezogen; C Handy, Code tippt sich, Haken, Uhr läuft weiter, „nächste Bahn“ | A · B · C |
+| 3 | Denkpause: Die **Echtzeit-Anzeige** an der Weiche zählt herunter (? → 3 → 2 → 1, Ziffer klappt herein, die Lichter gehen aus), ein Lichtrahmen wandert über die Schilder A → B → C | 3 – 2 – 1 |
+| 4 | Kamera zum Schild A, rote Marke ✕, die Zug-Marke fährt Linie A bis zur Endstation **„Kontrolle“**: Wagen innen, Kwame sitzt; „teuer“: Portemonnaie zittert; Lupe „Kontrolle“ wandert durch den Wagen und bleibt bei Kwame stehen; „Beförderungsentgelt“: Zettel rollt aus, „sechzig Euro“: 60 € erscheint, Münzen purzeln, Kamera-Akzent. Zurück zur Weiche (Zoom-Bogen), Schild B ✕, Linie B bis Endstation **„Zu spät“**: Zeitstrahl Einsteigen → Kontrolle, der Platz fürs Ticket liegt vorn und blinkt („bevor du fährst“); „Automaten“: Automat im Wagen, „sofort nach dem Einsteigen“: grünes Ticket springt an den Anfang; „Kontrolle kommt“: die Fahrt läuft, das Ticket landet erst bei der Kontrolle, rot, ✕ am Anfang | ohne Ticket – oft 60 € · Ticket, bevor du fährst |
+| 5 | Zurück zur Weiche, Schild C grünes ✓, Linie C zur Station **„Geschafft“**: Kwame am Bahnsteig, Handy-Ticket mit Code baut sich auf, Haken, Kwame hüpft und lächelt (Mund nur in seinem Satz); die Bahn fährt ein und bremst; „lässt“: Türen gleiten auf, „aussteigen“: Pfeile aus der Tür, erst dann springt Kwame hinein; „Drinnen“: Kamera taucht in die Bahn, Sitz mit Gehstock-Zeichen leuchtet, Kwame steht auf, Herz; „leise“: Schallbögen werden klein, Lautstärke-Balken sinkt | C: Ticket vor der Fahrt |
+| 6 | Linie C fährt weiter zur Station **„Tickets“**: Woche Mo–Fr, eine Bahn hüpft von Tag zu Tag; Deutschlandkarte, Monatskarte landet in der Mitte, alle Tage werden gültig; „Bus“, „Bahn“, „Nahverkehr“, „ganz Deutschland“: Linien laufen über die Karte, Legende Bus/Straßenbahn/Regionalzug, Fernzug bleibt grau; „Betrieb“, „Jobticket“: Betrieb, Fragezeichen, Job-Plakette; „zahlt … Teil“: Münze rollt zur Karte, ein Viertel wird grün; „entwerten, also stempeln“: Papierticket fährt in den Entwerter, klack, Datum | Monatsabo · Jobticket · Papier: entwerten |
+| 7 | Überraschung: Die Kamera zoomt ganz heraus – das ganze Liniennetz mit allen Stationen; „beste“: A und B werden grau, auf „Zeh“ wird Linie C grün, eine grüne Welle läuft sie entlang; dann Flug ans Ende der grünen Linie, Station **„Betrieb“**: Handy-Ticket mit Haken; „morgens“: Wecker klingelt; „Verspätung“: Abfahrten, „+5 min“ blinkt gelb; „früher“: Wecker springt eine Bahn zurück, die frühere Bahn wird grün markiert; Kwame kommt am Betrieb an, grüner Puffer auf der Uhr, Haken | Ticket vorher · eine Bahn früher |
 
 Abspann: „Ticket zuerst.“ und die Kernbotschaft.
 
-## Layout „Was würdest du tun?“
+## Layout: Liniennetz statt Kartenreihe
 
-Wie `../39-kunde-beschwert-sich/konzept.md`: helle Situations-Bühne (900 × 720), dunkel-violette Quiz-Bühne 1680 × 880 mit
-drei weißen Optionskarten (Buchstabe + spielendes Symbol), Countdown-Ring unter den Karten; beim Durchspielen kommt die Karte
-nach vorn, die Marke schlägt auf (rot ✕ / grün ✓), die Karte wird zur Kachel links oben, die Bühne wird hell und klein,
-darunter steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der Bildmitte (`kamera.basis.x = -360`).
+Eigene Bildwelt, bewusst anders als die anderen „Was würdest du tun?“-Videos: Die ganze Welt ist ein **Liniennetzplan**
+(Punktraster, Linien mit 45°-Knicken und weißem Rand). Jede Szene ist eine **Station** auf dem Netz: Bühne im Querformat
+(1120 × 620), darüber das Haltestellen-Schild mit „H“ auf der Linie, darunter die Tafel mit dem Text im Bild. Zwischen den
+Stationen fährt die Kamera mit einer Zug-Marke die Linie entlang (die Linie zeichnet sich hinter der Marke), mit Zoom-Bogen
+und Bewegungsunschärfe. Die Optionen sind drei abzweigende Linien mit Linien-Schildern; statt Countdown-Ring zählt eine
+Echtzeit-Anzeige herunter. Kein Kurstitel; die erste Station steht in der Bildmitte.
 
 ## Hinweise zum Briefing
 
@@ -39,7 +41,12 @@ darunter steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der B
 - Bewusst weggelassen: Strafbarkeit des Fahrens ohne Ticket (§ 265a StGB – zu schwer für B1 und politisch umstritten), Handy-Ticket bei
   leerem Akku, Fahrgastrechte bei Verspätung.
 - Aussprache: Die Buchstaben der Optionen stehen deutsch ausgeschrieben („Ah“, „Beh“, „Zeh“), „Option C“ heißt gesprochen
-  „Und Option Zeh:“ (kein Ein-Wort-Satz). Im Bild und im Untertitel bleiben A, B, C.
+  „Und Option Zeh:“ (kein Ein-Wort-Satz). Im Bild und im Untertitel bleiben A, B, C. Nach der Aufnahme geprüft: „Jobticket“
+  beginnt hörbar mit „Dsch“ (Reibegeräusch am Wortanfang wie bei „Zeh“, anders als das „j“ in „ja“), „Deutschlandticket“,
+  „Beförderungsentgelt“ (1,5 s), „sechzig“ und „Zeh“ haben normale Längen – keine Lautschrift nötig.
+- Faktencheck 46–65 (03.10.2026) übernommen: Option B heißt jetzt „Du brauchst das Ticket, bevor du fährst. Gibt es in der Bahn
+  einen Automaten, kaufst du es sofort nach dem Einsteigen.“ (statt „schon beim Einsteigen“, § 6 BefBedV); nur diese zwei
+  Sätze wurden neu vertont.
 
 ## Sprechertext
 

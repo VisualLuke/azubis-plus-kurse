@@ -60,7 +60,7 @@
   font:800 26px/32px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.16)}
 .chip5 .icon{position:relative;width:76px;height:48px}
 .chip5 .icon svg{position:absolute;inset:0}
-.chip5 .seite2{position:absolute;left:104px;top:50%;margin-top:-17px;width:34px;height:34px;border-radius:999px;background:var(--success);
+.chip5 .seite2{position:absolute;left:calc(50% + 22px);top:50%;margin-top:-19px;width:38px;height:38px;border-radius:999px;background:var(--success);
   display:flex;align-items:center;justify-content:center}
 .chip5 .seite2 svg{width:20px}
 .masz{padding:8px 18px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 26px/30px Inter;white-space:nowrap;
@@ -127,7 +127,7 @@
     <div class="bg" id="baeume" style="left:300px;top:0;width:15900px;height:1080px"></div>
   </div>
   <div class="bg leuchten" id="glow2" style="left:1920px;top:906px;width:1920px;height:174px;background:var(--success-bg);box-shadow:inset 0 6px 0 var(--success)"></div>
-  <div class="bg leuchten" id="radglow2" style="left:1920px;top:852px;width:1920px;height:48px;background:var(--info-bg);box-shadow:inset 0 0 0 4px var(--info)"></div>
+  <div class="bg leuchten" id="radglow2" style="left:1920px;top:852px;width:1920px;height:48px;background:var(--info-bg);box-shadow:inset 0 3px 0 var(--info),inset 0 -3px 0 var(--info)"></div>
   <svg class="bg" id="symbol2" viewBox="0 0 100 70" style="left:3170px;top:850px;width:120px;transform:scaleY(.6);transform-origin:50% 0">
     <g stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
     <circle pathLength="1" cx="24" cy="48" r="14"/><circle pathLength="1" cx="76" cy="48" r="14"/>
@@ -482,7 +482,7 @@ akteur('bue5', { x: F(5) + 2880, y: 540 });
   // Ana hüpft vom Bildrand auf den Gehweg
   const tA = W('Ana', 1) - .12;
   akteur('ana', { x: 560, y: 1200 });
-  flug('ana', tA, .75, 760, YN, 200); landen('ana', tA + .75, 1.1); cue(tA + .75, 'plopp'); cue(tA, 'whoosh');
+  tw('ana', tA, .75, { x: 760, y: YN }, 'sinus', { bogen: 200 }); landen('ana', tA + .75, 1.1); cue(tA + .75, 'plopp'); cue(tA, 'whoosh');
   froh('ana', tA + .75);
   blick('ana', W('Stadt', 1) - .2, -1); blick('ana', W('Stadt', 1) + .3, 1); blick('ana', W('Stadt', 1) + .8, 0);
   // Zur Arbeit: Ana denkt an den Betrieb – dann geht sie zu Fuß los
@@ -693,13 +693,13 @@ const I6 = SE(19) + .2, I6z = SE(21) + .15;
 {
   akteur('nah6', { x: F(4) + 960, y: 540, o: 0 });
   sichtbar('nah6', I6, 1); sichtbar('nah6', I6z + .7, 0);
-  sichtbar('ana', I6 + .9, 0); sichtbar('ana', I6z, 1);
+  sichtbar('ana', I6 + .9, 0); sichtbar('ana', I6z + .6, 1);
   const iris = t => { const a = E.inout(clamp((t - I6) / .8)), z = E.inout(clamp((t - I6z) / .65)); return (a - z) * 1300; };
   HOOKS.push(t => { el('nah6').style.clipPath = `circle(${Math.max(0, iris(t)).toFixed(1)}px at 860px 578px)`; });
   cue(I6, 'whoosh'); cue(I6z, 'whoosh');
   const t0 = I6 + .3;
   titelEin('tb6', W('Wenn', 20) - .1, [W('Wenn', 20) - .1, W('Wenn', 20), W('Handy', 20) - .15, W('weg', 20) - .1]);
-  akteur('ana6', { x: 860, y: 578, s: SF * 140 / 300 }); tw('ana6', I6, .9, { s: 1 }, 'inout'); tw('ana6', I6z - .05, .65, { s: SF * 140 / 300 }, 'inout'); froh('ana6', t0 + .1);
+  akteur('ana6', { x: 860, y: 578, s: SF * 140 / 300 }); tw('ana6', I6, .9, { s: 1 }, 'inout'); tw('ana6', I6z - .05, .65, { s: SF * 140 / 300 }, 'inout'); sichtbar('ana6', I6z + .6, 0); froh('ana6', t0 + .1);
   akteur('wolke6', { x: 860, y: 578, o: 0, s: .8 }); tw('wolke6', t0 + .15, .6, { o: 1, s: 1 }, 'sanft');
   [['note6a', 660, 392], ['note6b', 1070, 380], ['note6c', 648, 772]].forEach(([id, x, y], i) => { pop(id, t0 + .3 + i * .15, { x, y }, i ? null : 'pop'); schweben(id, 6); });
   HOOKS.push(t => ['note6a', 'note6b', 'note6c'].forEach((id, i) => { el(id).style.transform += ` rotate(${(7 * Math.sin(t * 3.1 + i * 2)).toFixed(2)}deg)`; }));

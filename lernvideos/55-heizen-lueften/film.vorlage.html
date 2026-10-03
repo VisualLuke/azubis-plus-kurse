@@ -86,7 +86,7 @@
 .lupe .w::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--b600)}
 .lupe .sk{position:absolute;left:66px;width:198px;height:118px;top:82px;border-radius:12px;background:linear-gradient(135deg,var(--b400),var(--b600))}
 .lupe .sk::after{content:"";position:absolute;left:96px;top:10px;bottom:10px;width:6px;border-radius:3px;background:var(--b200)}
-.lupe .mb{position:absolute;left:276px;top:70px;width:24px;height:60px;transform-origin:50% 0}
+.lupe .mb{position:absolute;left:30px;top:70px;width:24px;height:60px;transform-origin:50% 0}
 .lupe .zug{position:absolute;left:32px;top:80px;width:260px;height:40px}
 .lupe .cm{position:absolute;left:0;right:0;top:252px;text-align:center;font:800 30px/36px Inter;color:var(--b700);white-space:nowrap}
 /* Handy und Nachricht an den Vermieter */
@@ -212,13 +212,13 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
   <div class="a" id="hemd" style="width:150px" data-gruppe="waesche">{{hemd}}</div>
   <div class="a" id="tuch" style="width:140px" data-gruppe="waesche">{{handtuch}}</div>
   <div class="a" id="schrank" style="width:450px" data-gruppe="zimmer">{{kleiderschrank}}</div>
-  <div class="a" id="muenze1" style="width:90px" data-frei>{{muenze}}</div>
+  <div class="a" id="muenze1" style="width:90px" data-frei data-dreht>{{muenze}}</div>
   <div class="a geruch" id="geruch" data-frei><svg viewBox="0 0 150 130"><g stroke="var(--b400)" stroke-width="7" fill="none" stroke-linecap="round">
     <path id="gr1" d="M30 120q-14-18 0-36t0-36 0-36"/><path id="gr2" d="M75 120q-14-18 0-36t0-36 0-36"/><path id="gr3" d="M120 120q-14-18 0-36t0-36 0-36"/></g></svg></div>
   <div class="a schadenbrief" id="brief3" data-frei>{{brief}}<div class="q">?</div></div>
-  <div class="a" id="mz3a" style="width:70px" data-frei>{{muenze~a}}</div>
-  <div class="a" id="mz3b" style="width:70px" data-frei>{{muenze~b}}</div>
-  <div class="a" id="mz3c" style="width:70px" data-frei>{{muenze~c}}</div>
+  <div class="a" id="mz3a" style="width:70px" data-frei data-dreht>{{muenze~a}}</div>
+  <div class="a" id="mz3b" style="width:70px" data-frei data-dreht>{{muenze~b}}</div>
+  <div class="a" id="mz3c" style="width:70px" data-frei data-dreht>{{muenze~c}}</div>
 
   <!-- richtiger Tag -->
 
@@ -260,7 +260,7 @@ svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
   <div class="a gauge" id="gauge"></div>
   <div class="a hygro" id="hygro"></div>
   <div class="a chip" id="kippNein" data-frei><span class="ic"></span><span id="kippStrich" style="position:absolute;left:14px;top:30px;width:52px;height:6px;border-radius:3px;background:var(--error);transform:rotate(-40deg)"></span>Kipp</div>
-  <div class="a" id="sanduhr" style="width:120px">{{sanduhr}}</div>
+  <div class="a" id="sanduhr" style="width:120px" data-dreht>{{sanduhr}}</div>
   <div class="a" id="dusche" style="width:120px" data-frei>{{dusche}}</div>
   <div class="a" id="topf" style="width:120px" data-frei>{{topf}}</div>
   <div class="a chip gruen" id="c20" data-frei><span class="ic"></span>20 °C</div>
@@ -594,7 +594,7 @@ akteur('#priya .schal', { o: 1 }, true);
   ein('kal', T0 + .45, { ...P(1200, 125) }, { y: -40 });
   ein('bett', T0 + .3, { ...P(1030, 520) }, { y: 60 });
   ein('schrank', T0 + .2, { ...P(1390, 420) }, { y: 60 }, 'whoosh');
-  akteur('schimmel', { ...P(1390, 430), s: 0 }); akteur('schimmelA', { ...P(1250, 300), s: 0 }); akteur('schimmelB', { ...P(1530, 560), s: 0 });
+  akteur('schimmel', { ...P(1390, 430), s: 0 }); akteur('schimmelA', { ...P(1250, 300), s: 0 }); akteur('schimmelB', { ...P(1500, 600), s: 0 });
 }
 
 /* ================= 1 · Fenster auf Kipp, Heizung aus ================= */
@@ -622,7 +622,7 @@ akteur('#priya .schal', { o: 1 }, true);
   atmen('priya', W('Luft', 4)); FROH.push(['priya', W('Luft', 4), SE(4) + .2]);
   const tT = W('teuer', 5);
   akteur('muenze1', { ...P(470, 470), s: 0 }); tw('muenze1', tT - .2, .3, { s: 1 }, 'back'); flug('muenze1', tT - .2, .55, LX + 620, LY + 360, 90, { r: 360 }); cue(tT - .2, 'muenze');
-  tw('priya', tT + .1, .4, { x: LX + 900 }, 'sanft'); tw('priya', tT + .5, .5, { x: LX + 1010 }, 'sanft');
+  tw('priya', tT, .5, { x: LX + 960 }, 'inout'); tw('priya', tT + .5, .6, { x: LX + 1010 }, 'inout');
   flug('muenze1', tT + .4, .6, LX + 260, LY + 260, 80, { r: 0, s: .4, o: 0 }); cue(tT + .4, 'whoosh');
   FROH.push(['priya', tT + .5, SE(5) + .6]);
   titelAus('tb1', SE(5) + .25);
@@ -636,9 +636,9 @@ akteur('#priya .schal', { o: 1 }, true);
   const tW = W('Wäsche', 6);
   akteur('staender', { ...P(730, 538), sx: 0, o: 0 }); tw('staender', tW - .35, .1, { o: 1 }); tw('staender', tW - .35, .55, { sx: 1 }, 'back'); cue(tW - .35, 'klick');
   akteur('hemd', { ...P(700, 534), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
-  tw('hemd', tW, .15, { o: 1 }); flug('hemd', tW, .6, LX + 700, LY + 534, 140, { s: 1 }); cue(tW, 'whoosh'); landen('hemd', tW + .6);
+  tw('hemd', tW, .15, { o: 1 }); flug('hemd', tW, .7, LX + 700, LY + 534, 90, { s: 1 }); cue(tW, 'whoosh'); landen('hemd', tW + .7);
   akteur('tuch', { ...P(818, 528), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
-  tw('tuch', tW + .35, .15, { o: 1 }); flug('tuch', tW + .35, .6, LX + 818, LY + 528, 140, { s: 1 }); cue(tW + .35, 'whoosh'); landen('tuch', tW + .95);
+  tw('tuch', tW + .35, .15, { o: 1 }); flug('tuch', tW + .35, .7, LX + 818, LY + 528, 90, { s: 1 }); cue(tW + .35, 'whoosh'); landen('tuch', tW + 1.05);
   titel('tb2', tW, [tW, tW + .08, W('Zimmer', 6), W('Zimmer', 6) + .08, W('Schrank', 7), W('Schrank', 7) + .08, W('Schrank', 7) + .16, W('Außenwand', 7) - .05], { 2: 'rot', 7: 'rot' });
   // Schrank an der kalten Außenwand: Akzent, Wärmebild zeigt die kalte Ecke hinter dem Schrank
   const tS = W('Schrank', 7);
@@ -674,7 +674,7 @@ akteur('#priya .schal', { o: 1 }, true);
   const tWa = W('Wand', 9);
   kam(tWa - .5, 1, 1180, 470, 1.25);
   tw('priya', tWa - .6, .7, { x: LX + 1130, y: LY + 300 }, 'sanft');
-  tw('schrank', tWa - .2, .7, { x: LX + 1100 }, 'sanft'); cue(tWa - .2, 'whoosh');
+  tw('schrank', tWa - .2, .8, { x: LX + 1100 }, 'inout'); cue(tWa - .2, 'whoosh');
   tw('schimmel', W('dunkel', 9) - .2, 1.1, { s: 1 }, 'sanft'); cue(W('dunkel', 9), 'plopp');
   const tSc = W('Schimmel', 10);
   bump('schimmel', tSc, 1.1); akzent(tSc, .05);
@@ -683,10 +683,10 @@ akteur('#priya .schal', { o: 1 }, true);
   akteur('geruch', { ...P(1390, 260), o: 0, s: .8 }); tw('geruch', tR - .1, .3, { o: 1, s: 1 }, 'out');
   HOOKS.push(t => { const tz = ZT(t); [1, 2, 3].forEach(k => el('gr' + k).setAttribute('transform', `translate(0 ${(-((tz * 30 + k * 12) % 36)).toFixed(1)})`)); });
   tw('geruch', W('Ach', 11) + .2, .3, { o: 0 }, 'in');
-  FLACH.push(['priya', tR, SE(11) + .2]); wackeln('priya', tR + .2, 4, 5); BLICK.push(['priya', tR, SE(10), 5, 2]);
+  FLACH.push(['priya', tR, SE(11) + .2]); wackeln('priya', tR + .2, 4, 3); BLICK.push(['priya', tR, SE(10), 5, 2]);
   // „Ach, das sieht doch keiner“: Schrank zurück vor den Fleck
   const tSi = W('sieht', 11);
-  tw('schrank', tSi - .2, .6, { x: LX + 1390 }, 'sanft'); cue(tSi - .2, 'whoosh'); landen('schrank', tSi + .4, .6);
+  tw('schrank', tSi - .2, .7, { x: LX + 1390 }, 'inout'); cue(tSi - .2, 'whoosh'); landen('schrank', tSi + .5, .5);
   tw('priya', tSi - .2, .6, { x: LX + 1010, y: LY + 300 }, 'sanft');
   titel('tb3', tSc, [tSc, W('und', 10) + .2, W('und', 10) + .28, SE(11) - .4, SE(11) - .32], { 0: 'rot' });
   // Der Fleck wird größer: Flecken kriechen am Schrankrand hervor
@@ -696,9 +696,9 @@ akteur('#priya .schal', { o: 1 }, true);
   // Schaden: Brief mit Fragezeichen fliegt herein, Münzen fallen heraus
   const tSd = W('Schaden', 13);
   kam(W('meldet', 13) - .2, 1, 960, 540, 1);
-  ein('brief3', W('Schimmel', 13), { ...P(640, 690) }, { x: -300, y: -40, r: -8 }, 'whoosh'); wackeln('brief3', W('meldet', 13), 3, 4);
+  akteur('brief3', { ...P(340, 630), o: 0, r: -8 }); tw('brief3', W('Schimmel', 13), .4, { o: 1 }, 'out'); tw('brief3', W('Schimmel', 13), .8, { ...P(640, 665), r: 0 }, 'inout'); cue(W('Schimmel', 13), 'whoosh'); bump('brief3', W('meldet', 13), 1.06);
   [['mz3a', 0], ['mz3b', .3], ['mz3c', .6]].forEach(([id, d], k) => {
-    akteur(id, { ...P(640, 700), o: 0, s: .5 });
+    akteur(id, { ...P(640, 680), o: 0, s: .5 });
     const t0 = tSd - .5 + d; set(id, t0, { o: 1 }); flug(id, t0, .7, LX + 790 + k * 90, LY + 720, 90, { s: 1, r: 200 }); cue(t0 + .6, 'muenze');
   });
   akzent(tSd, .04);
@@ -828,8 +828,8 @@ zuruecksetzen();
   tw('priya', tSc - .5, .9, { x: LX + 1180, y: LY + 300, s: 1 }, 'inout');
   kam(tSc - .4, 1, 1200, 480, 1.2);
   const tSb = W('schiebt', 26);
-  tw('priya', tSb, .2, { sx: 1.12, sy: .9 }, 'sinus'); tw('priya', tSb + .2, .3, { sx: 1, sy: 1 }, 'sanft');
-  tw('schrank', tSb + .05, .5, { s: 1.04, y: LY + 432 }, 'sanft'); cue(tSb, 'whoosh'); landen('schrank', tSb + .55, .5);
+  tw('priya', tSb, .35, { sx: 1.08, sy: .93 }, 'sinus'); tw('priya', tSb + .35, .4, { sx: 1, sy: 1 }, 'sinus');
+  tw('schrank', tSb + .05, .7, { s: 1.04, y: LY + 432 }, 'inout'); cue(tSb, 'whoosh');
   pop('lupe', W('Zentimeter', 26) - .3, { ...P(860, 290) }, 'pop');
   akteur('lupeSk', { y: 0 }, true); tw('lupeSk', W('Zentimeter', 26), .6, { y: 30 }, 'sanft');
   akteur('lupeMb', { sy: 0 }, true); tw('lupeMb', W('Zentimeter', 26) + .1, .5, { sy: 1 }, 'back'); cue(W('Zentimeter', 26) + .2, 'klick');
@@ -843,13 +843,13 @@ zuruecksetzen();
   // Wäsche im Trockenraum: Ständer mit Wäsche ploppt, klappt zusammen und hüpft durch die Tür
   const tWs = W('Wäsche', 27), tTr = W('Trockenraum', 27);
   kam(tWs - .3, 1, 760, 520, 1.1);
-  tw('priya', tWs - .3, .7, { x: LX + 1010, y: LY + 300 }, 'sanft');
+  tw('priya', tWs - .3, .8, { x: LX + 1010, y: LY + 300 }, 'inout');
   wiederPop('staender', tWs - .15, P(730, 538), 'pop'); wiederPop('hemd', tWs - .05, P(700, 534)); wiederPop('tuch', tWs + .05, P(818, 528));
   el('trocken').querySelector('.ic').innerHTML = tpl('svgWaesche'); el('trocken').querySelector('.ic2').innerHTML = tpl('svgRunter');
   pop('trocken', tTr - .2, { ...P(250, 150) }, 'ding');
   zw('tuer', tTr, .4, 1, 'sanft'); cue(tTr, 'klick');
   ['hemd', 'tuch'].forEach((id, k) => { flug(id, tTr + .1 + k * .1, .7, LX + 140, LY + 470, 160, { s: .3, o: 0 }); });
-  tw('staender', tTr + .25, .2, { sx: .12 }, 'in'); flug('staender', tTr + .45, .7, LX + 140, LY + 500, 140, { s: .4 }); tw('staender', tTr + 1, .2, { o: 0 }); cue(tTr + .45, 'whoosh');
+  tw('staender', tTr + .1, .4, { sx: .12 }, 'inout'); flug('staender', tTr + .45, .7, LX + 140, LY + 500, 140, { s: .4 }); tw('staender', tTr + 1, .2, { o: 0 }); cue(tTr + .45, 'whoosh');
   zw('tuer', W('gibt', 27), .4, 0, 'inout'); cue(W('gibt', 27) + .4, 'klick');
   aus('trocken', SE(27) + .1);
   // Sonst lüftet sie öfter: das Fenster geht noch einmal kurz auf, die Anzeige bleibt grün
@@ -927,6 +927,7 @@ const T9 = SA(33) - .2;
   });
   // Übrigens: Kamera fährt aus dem Zimmer heraus – es ist ein Fenster in einem Haus im Schnee
   kam(T9, 1.8, 960, 380, .22, 'inout'); cue(T9, 'whoosh');
+  tw(['schmitt', 'ok8', 'schluessel', 'fleck8'], T9, .35, { o: 0, s: .6 }, 'in');
   zw('schnee', T9, .1, 1);
   // Nebenkosten: Umschlag fliegt herein und öffnet sich zur Abrechnung
   const tNk = W('Nebenkosten', 33);

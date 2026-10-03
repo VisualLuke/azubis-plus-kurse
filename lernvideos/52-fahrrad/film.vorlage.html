@@ -533,6 +533,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   });
   // Los geht's: die Dinge fliegen weg, Yusuf fährt los
   DINGE.forEach(([id], i) => tw(id, tWeg + i * .06, .45, { o: 0, s: .6, y: wertBei(id, 'y', tWeg) - 80 }, 'in'));
+  aus(['ab0a', 'ab0b'], tWeg + .1, .4);
 }
 
 /* ---------- 1 · Helm – Mythos ---------- */
@@ -581,7 +582,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   froh('py', W('Kopf', 7) - .1);
   // gute Idee: Haken
   const tG = W('gute', 8) - .1;
-  pop('ok1', tG, { x: X + 780, y: 600 }, 'erfolg'); bump('helmY', tG + .1, 1.08);
+  pop('ok1', tG, { x: X + 700, y: 440 }, 'erfolg'); bump('helmY', tG + .1, 1.08);
   tw('kopfY', SE(8) - .1, .5, { s: 1 }, 'sanft');
 }
 
@@ -695,7 +696,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
 {
   const tAb = SE(18) + .6, tAn = A(satz(19).start) - .15;
   reise(tAb, tAn - tAb, CAM[4]); bremsen(Y, tAn - .1);
-  NACHT.push([tAb, 0, tAn - tAb]); tw('mond', tAb, .8, { y: 380, o: 0 }, 'in');
+  NACHT.push([tAb, 0, tAn - tAb]); tw('mond', tAb, .45, { y: 300, o: 0 }, 'in');
   licht(Y, 'v', tAb + .6, false); licht(Y, 'h', tAb + .6, false);
   const { X, tF } = station(4, { c: [19, 20], v: 21, u: 'mythos', titel: 'MYTHOS – Straße oder Radweg' });
   neu(`<div class="a glanz" id="gl4f" style="width:1900px;height:140px" data-frei></div>
@@ -726,7 +727,7 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   HOOKS.push(t => { const p = t > tP && t < tP + 1.1 ? Math.max(0, Math.sin((t - tP) * 2 * Math.PI * 2.5)) : 0;
     SPUREN.forEach(s => s.setAttribute('opacity', (1 - .55 * p).toFixed(2))); });
   tw('gl4g', tP, .25, { o: .3 }); tw('gl4g', tP + .8, .4, { o: 0 });
-  pop('x4', tP + .05, { x: X + 860, y: 640 }, 'plopp'); wackeln('x4', tP + .5, 3, 4); akzent(tP + .05, .045);
+  pop('x4', tP + .05, { x: X + 560, y: 560 }, 'plopp'); wackeln('x4', tP + .5, 3, 4); akzent(tP + .05, .045);
   spur(WE('Gehweg', 22) + .15, 'rad', 560, .55);
   aus('x4', WE('Gehweg', 22) + .2, .3);
   // Auf dem Gehweg nur mit Schild: „Radverkehr frei“ klappt herunter – im Schritttempo auf den Gehweg
@@ -901,8 +902,8 @@ const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { 
   HOOKS.push(t => PL.forEach((p, i) => { p.style.opacity = t > z1 + .1 + i * .1 ? 1 : 0; }));
   akteur('stift7', { x: X + 920, y: 470, o: 0, s: .8 });
   tw('stift7', z1 - .2, .2, { o: 1 }); tw('stift7', z1 - .2, .4, { x: X + 620, y: 350, s: 1 }, 'inout', { bogen: 30 });
-  tw('stift7', z1 + .2, .6, { x: X + 860 }, 'inout'); cue(z1 + .2, 'kritzeln');
-  tw('stift7', z1 + .85, .4, { x: X + 940, y: 450, o: 0, s: .8 }, 'in');
+  tw('stift7', z1 + .2, .6, { x: X + 860 }, 'sinus'); cue(z1 + .2, 'kritzeln');
+  tw('stift7', z1 + .8, .5, { x: X + 960, y: 470, o: 0, s: .8 }, 'sinus');
   pop('ok7b', z1 + .9, { x: X + 1010, y: 380 }, 'erfolg'); bump('zettel7', z1 + .9, 1.05);
 }
 

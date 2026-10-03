@@ -692,7 +692,7 @@ const tafel = (k, zeiten) => titelEin('tb' + k, zeiten[0], zeiten);
 }
 
 /* ---------- Weiche: Was würdest du tun? Drei Linien zweigen ab, Anzeige zählt herunter ---------- */
-const WM = { x: 2580, y: 540, z: .92 };
+const WM = { x: 2680, y: 540, z: .92 };
 const SCH = { A: [2920, 230], B: [2920, 540], C: [2920, 850] };
 const P1 = SE(5) + .15;
 textAus('tbH', P1 - .2);
@@ -792,7 +792,7 @@ function markeAuf(L, t) {
   HOOKS.push(t => { const d = clamp((t - tNa) / 1.1); el('sCzg').style.transform = `rotate(${(E.inout(d) * 120).toFixed(1)}deg)`; });
   // Denkpause: die Echtzeit-Anzeige zählt herunter (? → 3 → 2 → 1), die Lichter gehen aus, Lichtrahmen wandert A → B → C
   const c0 = SE(11) + .3, c1 = WE('Eins', 14) + .25;
-  kamZu(SE(11) + .1, 1, 2640, 560, .9);
+  kamZu(SE(11) + .1, 1, 2720, 560, .9);
   const ZIF = [[W('Drei', 12), '3'], [W('Zwei', 13), '2'], [W('Eins', 14), '1']];
   ZIF.forEach(([t]) => { cue(t, 'klick'); bump('dfiW', t, 1.06); });
   HOOKS.push(t => {
@@ -883,7 +883,7 @@ const P2 = WE('Eins', 14) + .3;
   const slot = Q(80 - 380 + 113, -125 - 115 + 41);
   akteur('tkB', { ...Q(430, 90), s: 0 });
   tw('tkB', tSo - .1, .35, { s: .9 }, 'back'); cue(tSo, 'pop');
-  flug('tkB', tSo + .3, .75, slot.x, slot.y, 160, { s: 1 }); cue(tSo + .3, 'whoosh');
+  flug('tkB', tEi - .85, .85, slot.x, slot.y, 120, { s: 1 }); cue(tEi - .85, 'whoosh');
   landen('tkB', tEi); cue(tEi, 'ding'); bump('zsBh1', tEi, 1.15);
   pop('okB', tEi + .15, { x: slot.x + 46, y: slot.y - 30 }, 'erfolg');
   aus(['autB', 'okB', 'tkB'], SA(20) - .2, .3);
@@ -935,13 +935,13 @@ const P2 = WE('Eins', 14) + .3;
   akteur('pfeilC', { ...PF, o: 0, s: .7 });
   tw('pfeilC', tAs - .15, .4, { o: 1, s: 1 }, 'back'); cue(tAs, 'pop');
   HOOKS.push(t => { const d = t - tAs; if (d > 0 && d < 1.6) { const k = (d * 2.2) % 1; el('pfeilCa').style.transform = `translate(${(-6 * k).toFixed(1)}px,${(6 * k).toFixed(1)}px)`; el('pfeilCb').style.transform = `translateY(${(7 * k).toFixed(1)}px)`; } });
-  tw('pfeilC', SE(24) + .1, .3, { o: 0 });
+  tw('pfeilC', tAs + .65, .3, { o: 0 });
   wackeln('kwC', W('zuerst', 24), 2, 2); nicken('kwC', W('anderen', 24), 8);
-  const tSp = SE(24) + .2, TU = Q(-170 - 310 + 475, -40 - 150 + 150);
-  flug('kwC', tSp, .55, TU.x, TU.y, 90, { s: .55 }); cue(tSp, 'whoosh'); landen('kwC', tSp + .55);
+  const tSp = tAs + .45, TU = Q(-170 - 310 + 475, -40 - 150 + 150);
+  flug('kwC', tSp, .65, TU.x, TU.y, 80, { s: .55 }); cue(tSp, 'whoosh'); landen('kwC', tSp + .65);
   // „Drinnen …“: Kamera taucht in die Bahn – Innenraum, Sitz mit Gehstock-Zeichen leuchtet, Kwame steht auf, Herz
   const tDr = W('Drinnen', 25), tAe = W('älteren', 25), tPl = W('Platz', 25), tAn = W('an', 25);
-  tw(['tramC', 'kwC'], tDr - .2, .55, { s: 1.6, o: 0 }, 'in');
+  tw(['tramC', 'kwC'], tSp + .75, .5, { s: 1.6, o: 0 }, 'in');
   akteur('innenC', { ...Q(0, 0), o: 0, s: 1.15 });
   tw('innenC', tDr - .1, .5, { o: 1, s: 1 }, 'sanft'); cue(tDr - .1, 'whoosh'); akzent(tDr, .04);
   ein('sitzC1', tDr + .1, Q(-230, 135), { y: 50 });
@@ -1111,7 +1111,7 @@ const P2 = WE('Eins', 14) + .3;
 
 /* ---------- Abspann ---------- */
 const AB = ENDE_SPRACHE + 1.9;
-HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; $('#abspann').style.visibility = p > .001 ? 'visible' : 'hidden'; });
 cue(AB, 'whoosh');
 akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
 akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');

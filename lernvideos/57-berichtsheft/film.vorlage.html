@@ -446,7 +446,7 @@ const stiftRuhe = (t, d = .6) => stiftHin(t, RUHE[0], RUHE[1], d);
 const zeilen = (t0, Z, amp = 5) => {           // Z: [[x0, x1, y, dauer], …] → [[start, ende], …]
   let t = t0; const out = [];
   Z.forEach(([x0, x1, y, d], i) => {
-    if (i) { tw('stift', t, .28, { x: x0 + SPX, y: y + SPY }, 'sinus'); t += .28; }
+    if (i) { tw('stift', t, .36, { x: x0 + SPX, y: y + SPY }, 'sinus'); t += .36; }
     tw('stift', t, d, { x: x1 + SPX }, 'sinus');
     const n = Math.max(2, Math.round(d / .1));
     for (let k = 1; k <= n; k++) tw('stift', t + d * (k - 1) / n, d / n, { y: y + (k === n ? 0 : (k % 2 ? -amp : amp)) + SPY }, 'sinus');
@@ -572,13 +572,13 @@ kopf(2, [W('Ohne', 7) - .1, W('Berichtsheft', 7) - .1, W('nicht', 7) - .1, W('Ab
 bump('tuer', W('Abschlussprüfung', 7) + .1, 1.04);
 // Bei der Anmeldung: Anmeldeblatt kommt von Sabine und legt sich auf das Heft
 aus('nein2', W('Bei', 8) - .1, .3);
-akteur('anm2', { x: 250, y: 400, s: 0, r: -3 });
+akteur('anm2', { x: 250, y: 520, s: 0, r: -3 });
 tw('anm2', W('Anmeldung', 8) - .3, .4, { s: 1 }, 'back'); cue(W('Anmeldung', 8) - .3, 'pop');
 flug('anm2', W('Anmeldung', 8) + .1, .55, 735, 520, 60, { r: 3 }); cue(W('Anmeldung', 8) + .1, 'whoosh');
 // … zur Prüfung: das Heft wird zur Eintrittskarte
 const HC = [360 + .8 * 270, 400 + .8 * 305];           // Mitte des Umschlags
 { const t = W('Prüfung', 8) - .15;
-  tw('anm2', t + .05, .3, { x: HC[0], y: HC[1], s: .3, o: 0 }, 'inout');
+  tw('anm2', t + .05, .45, { x: HC[0], y: HC[1], s: .3, o: 0 }, 'inout');
   tw('heft', t, .25, { sx: 0, x: HC[0] }, 'in'); cue(t, 'muenze');
   akteur('ticket2', { x: HC[0], y: HC[1], sx: 0, r: -2 });
   tw('ticket2', t + .25, .35, { sx: 1 }, 'out');
@@ -619,7 +619,7 @@ akteur('kritzel3', { x: 270, y: 210 });
 akteur('ok3a', { x: 270, y: 390, s: 0 });
 { const t0 = W('Papier', 10) - .45, [x0, y0] = welt('l', 56, 140, t0);
   stiftHin(t0 - .65, x0, y0);
-  const L = zeilen(t0, [[x0, x0 + 400, y0, .42], [x0, x0 + 360, y0 + 68, .34], [x0, x0 + 190, y0 + 136, .2]], 6);
+  const L = zeilen(t0, [[x0, x0 + 400, y0, .42], [x0, x0 + 360, y0 + 68, .34], [x0, x0 + 190, y0 + 136, .3]], 6);
   document.querySelectorAll('#kritzel3 path').forEach((p, i) => PFADE.push([p, ...L[i]]));
   const te = L[2][1];
   tw('ok3a', te + .05, .45, { s: 1 }, 'back'); cue(te + .05, 'ding');
@@ -645,7 +645,7 @@ for (let i = 0; i < 5; i++) { tw('hk3_' + i, W('jeden', 11) + i * .09, .35, { s:
 ein('vertrag3', W('Was', 12) - .1, { x: 250, y: 700, r: -2 }, { x: -200, y: 0, r: -8 }, 'whoosh');
 { const t = W('steht', 12) - .1;
   set('lupe', t, { x: 120, y: 900, o: 0, s: 1 });
-  tw('lupe', t, .2, { o: 1 }); tw('lupe', t, .5, { x: 230, y: 690 }, 'inout'); tw('lupe', t + .5, .7, { x: 290, y: 705 }, 'sinus');
+  tw('lupe', t, .2, { o: 1 }); tw('lupe', t, .6, { x: 230, y: 690 }, 'sinus'); tw('lupe', t + .6, .7, { x: 290, y: 705 }, 'sinus');
   cue(t, 'scan');
   bump('vertrag3', W('Ausbildungsvertrag', 12) + .1, 1.06); akzent(W('Ausbildungsvertrag', 12) + .1, .03); }
 kopfAus(3, SE(12) + .2);
@@ -722,7 +722,7 @@ zeichne('uhr5', W('Arbeitszeit', 19) - .1, 1.1, 'inout');
 akteur('kritzel5', { x: 270, y: 280 });
 { const t0 = W('schreiben', 19) - .2, [x, y] = welt('r', 66, 214, t0);
   stiftHin(t0 - .65, x, y);
-  const L = zeilen(t0, [[x, x + 340, y, .36], [x, x + 300, y + 64, .3], [x, x + 130, y + 128, .18]], 6);
+  const L = zeilen(t0, [[x, x + 340, y, .36], [x, x + 300, y + 64, .3], [x, x + 130, y + 128, .26]], 6);
   document.querySelectorAll('#kritzel5 path').forEach((p, i) => PFADE.push([p, ...L[i]]));
   stiftRuhe(L[2][1] + .1); }
 // Heft oder Programm bekommst du kostenlos vom Betrieb
@@ -734,7 +734,7 @@ pop('betrieb5', W('Und', 20) - .05, { x: 245, y: 640 });
 { const t = W('Programm', 20) - .15;
   akteur('laptop5', { x: 245, y: 640, s: 0 });
   tw('laptop5', t, .25, { s: .7 }, 'back');
-  flug('laptop5', t + .3, 1, 1760, 640, 260, { s: 1 }); }
+  flug('laptop5', t + .3, 1.2, 1760, 640, 260, { s: 1 }); }
 pop('gratis5', W('kostenlos', 20) - .05, { x: 1685, y: 760 }, 'erfolg');
 bump('betrieb5', W('Betrieb', 20), 1.08);
 huepfen('miniheft5', W('Betrieb', 20) + .1, 12); huepfen('laptop5', W('Betrieb', 20) + .18, 12);
@@ -824,19 +824,19 @@ akteur('ok7', { x: 470, y: 470, s: 0 });
   set('dk3', te + .1, { o: 1 }); tw('dk3', te + .16, .5, { x: 12, y: 18 }, 'back'); set('dk4', te + .2, { o: 1 }); tw('dk4', te + .24, .5, { x: 16, y: 24 }, 'back');
   cue(te, 'pop'); bump('heft', te + .5, 1.03); }
 // … wie viel du schon gelernt hast: Tür erscheint, das Heft fliegt hinein, Licht wird grün
-{ const t = W('siehst', 28) - .1, TX7 = 1530;
+{ const t = W('viel', 28) - .15, TX7 = 1250;
+  tw('heft', W('siehst', 28) - .2, .8, { x: 600, y: 420, s: .8 }, 'inout'); cue(W('siehst', 28) - .2, 'whoosh');
   set('tblatt', t - .1, { sx: 1 }); set('tuer', t - .1, { x: TX7 + 160, y: TY, o: 0, s: 1, sx: 1, sy: 1 });
   tw('tuer', t, .5, { o: 1 }, 'out'); tw('tuer', t, .55, { x: TX7 }, 'weich'); cue(t, 'whoosh');
   HOOKS.push(tt => { if (tt >= t - .1 && tt < W('gelernt', 28) + .2) el('licht').classList.remove('gruen'); });
   const tg = W('gelernt', 28) - .1;
   tw('tblatt', tg, .5, { sx: .25 }, 'out'); cue(tg, 'klick');
-  HOOKS.push(tt => { if (tt >= W('gelernt', 28) + .2) el('licht').classList.add('gruen'); });
-  // Heft fliegt im Bogen zur Tür und wird klein
-  tw('heft', tg + .2, .9, { x: TX7 - 80, y: TY - 70, s: .3 }, 'inout', { bogen: 120 }); cue(tg + .2, 'whoosh');
-  tw('heft', tg + 1.0, .25, { o: 0, s: .15 }, 'in');
-  cue(tg + 1.1, 'erfolg'); akzent(tg + 1.1, .04); bump('tuer', tg + 1.15, 1.05);
-  set('ok2', tg + 1.1, { x: TX7, y: TY - 300, s: 0, o: 1, r: 0 }); tw('ok2', tg + 1.15, .5, { s: 1.5 }, 'back');
-  }
+  HOOKS.push(tt => { if (tt >= W('gelernt', 28) + .1) el('licht').classList.add('gruen'); });
+  // das dicke Heft hüpft vor der offenen Tür – es ist die Eintrittskarte
+  huepfen('heft', tg + .3, 22); cue(tg + .3, 'pop');
+  cue(tg + .6, 'erfolg'); akzent(tg + .6, .04); bump('tuer', tg + .65, 1.05);
+  set('ok2', tg + .55, { x: TX7, y: TY + 40, s: 0, o: 1, r: 0 }); tw('ok2', tg + .6, .5, { s: 1.4 }, 'back');
+  huepfen('heft', WE('hast', 28) + .3, 16); }
 
 /* ---------- Abspann ---------- */
 const AB = ENDE_SPRACHE + 2.2;

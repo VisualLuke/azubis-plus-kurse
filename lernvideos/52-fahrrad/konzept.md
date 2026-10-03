@@ -4,26 +4,33 @@
 - **Zielgruppe:** Azubis im 1. Lehrjahr, auch international; einfaches Deutsch (B1)
 - **Format:** Mythos oder Wahrheit, eine Off-Stimme (Erzähler); Yusuf als Figur (Porträt im Kreis, fährt als Marker auf dem
   Rad mit), in Szene 7 zusätzlich Kwame als zweiter Radfahrer (ohne Stimme). Autos ohne sichtbare Fahrer, keine weiteren Menschen.
+- **Faktencheck 03.10.2026 eingearbeitet:** Szene 3 „… wenn sie ein Prüfzeichen haben“, Szene 5 „Du fährst auf der Straße oder auf dem Radweg, nicht auf dem Gehweg.“ (statt „Als Erwachsener …“)
 - **Länge:** geplant ca. 1:30–2:00
 - **Kernbotschaft:** Auf dem Rad gelten klare Regeln. Wer sie kennt, fährt sicher und spart sich Ärger.
 - **Aufnahme:** `sprache.mp3` + `sprache.json`, erzeugt mit `node werkzeug/stimme.mjs lernvideos/52-fahrrad` (ElevenLabs, Eleven v4)
 
+**Leitidee: eine Radtour als durchgehende Fahrt.** Yusuf fährt eine Strecke (Straße – Radweg – Gehweg im Querschnitt,
+Bäume, Laternen, Hügel mit Tiefe). Jede Behauptung steht auf einem Schild am Wegrand; davor ist eine Schranke zu, deren Anzeige
+den Countdown „? – 3 – 2 – 1“ zeigt. Das Urteil kommt als Stempel auf das Schild, die Anzeige wird rot ✕ / grün ✓, das Schild
+dreht sich um (Rückseite = Text im Bild), die Schranke geht auf. Zwischen den Stationen fährt die Kamera mit (Bewegungsunschärfe,
+Speichen verschwimmen, Hügel ziehen langsamer vorbei). Helm und Akku-Lampe bleiben nach ihrer Station am Rad.
+
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
-| 1 | Dunkle Quiz-Bühne in der Bildmitte: ein Fahrrad rollt auf einem Bogen herein und bremst (Federn), auf „Rad“ klingelt die Klingel (Wellen); Helm, Lampe, Handy und Schloss ploppen nacheinander um das Rad auf und kreisen kurz; Yusuf (Porträt) hüpft auf den Sattel; bei der Frage hüpfen die vier Gegenstände nacheinander, darunter schlagen die Abdrücke „Mythos“ und „Stimmt“ auf | – (Titel entfällt) |
-| 2 | Behauptung, Countdown, roter Stempel; ein Gesetzbuch klappt auf, die Seite „Helm“ bleibt leer (Lupe sucht, nichts); auf „schützt“ fliegt der Helm trotzdem auf Yusufs Porträt, eine Stoß-Linie prallt am Helm ab, Schutzring pulsiert, Yusuf lächelt | MYTHOS – keine Pflicht, aber klug |
-| 3 | Behauptung, Countdown, grüner Stempel; die Bühne wird Nacht, der Mond geht auf; auf „vorne weiß“ geht der Scheinwerfer an (weißer Lichtkegel tastet die Straße ab), auf „hinten rot“ glimmt das Rücklicht; die Pedale drehen, die gelben Pedal-Reflektoren blitzen; auf „Akku“ steckt eine Akku-Lampe ein, Ladebalken füllt sich; auf „Bußgeld“ fällt ein Strafzettel und wackelt | STIMMT – vorne weiß, hinten rot |
-| 4 | Behauptung, Countdown, grüner Stempel; das Rad fährt, das Handy in der Hand vibriert (Wellen), eine rote Linie zieht sich zwischen Handy und Lenker, das Rad schlingert; auf „halt an“ bremst das Rad, der Ständer klappt aus (Klack), erst jetzt leuchtet das Handy grün, Haken | STIMMT – erst anhalten |
-| 5 | Behauptung, Countdown, roter Stempel; Querschnitt Gehweg – Radweg – Fahrbahn; das Rad rollt auf den Gehweg, Fußspuren auf dem Gehweg pochen, rotes ✕, das Rad rollt zurück; auf „Straße“ und „Radweg“ leuchten Fahrbahn und Radweg grün; auf „Schild“ klappt über dem Gehweg nur das Zusatzschild „Radverkehr frei“ (Fahrrad + „frei“) herunter, das Rad fährt dort im Schritttempo | MYTHOS – Straße oder Radweg |
-| 6 | Behauptung, Countdown, roter Stempel; ein blaues rundes Schild mit Fahrrad (Radweg-Pflicht) wächst aus dem Boden, ein Pfeil zwingt das Rad auf den Radweg, Chip „Pflicht“; dann kippt das Schild weg, an seiner Stelle zwei Pfeile (Radweg / Straße), beide werden grün, das Rad wählt die Straße | MYTHOS – nur mit blauem Schild |
-| 7 | Behauptung, Countdown, grüner Stempel; Yusuf und Kwame (Porträts) fahren nebeneinander auf zwei Rädern, die Klingeln klingeln im Takt; auf „behindert“ kommt von hinten ein Auto und bremst, Warn-Dreieck „!“; auf „hintereinander“ sortieren sich die Räder in eine Reihe, das Auto überholt mit Abstand, Haken | STIMMT – wenn niemand behindert wird |
-| 8 | Helle Bühne: Fahrradständer; auf „Rahmen“ legt sich ein Bügelschloss um Rahmen und Ständer und schnappt zu (Klick, Kamera-Akzent), der Schlüssel dreht sich; ein loses Rad daneben (nur Vorderrad abgeschlossen) wird angehoben und schwebt weg – rotes ✕; auf „Rahmennummer“ tippt sich auf einem Notizzettel „Rahmennummer: …“ (Platzhalter), Haken | Tipp: Rahmen anschließen |
-| 9 | Die sechs Behauptungen als kleine Karten mit ihrem Stempel reihen sich auf, der Zähler läuft mit | 3 × Mythos · 3 × Stimmt |
+| 1 | Start in der Bildmitte: Yusufs Rad rollt herein und bremst, Yusuf (Porträt) hüpft auf den Sattel, auf „Rad“ klingelt die Klingel; Helm, Lampe, Schloss und Handy ploppen auf und kreisen, hüpfen bei der Frage nacheinander; auf „Teste dein Wissen“ schlagen „Mythos“ und „Stimmt“ auf; Yusuf fährt los | – (Titel entfällt) |
+| 2 | Station 1, roter Stempel; ein Gesetzbuch klappt auf, die Seite „Helm“ ist leer (Lupe sucht, rotes ✕); auf „Aber ein Helm“ wird Yusufs Kopf groß, der Helm fliegt auf den Kopf, ein Stoß prallt ab, Schutzring pulsiert, Yusuf lächelt, Haken | MYTHOS – keine Pflicht, aber klug |
+| 3 | Station 2, grüner Stempel; auf „Dämmerung“/„Dunkelheit“ wird es Nacht, die Laternen flackern an, der Mond geht auf; „vorne weiß“: Scheinwerfer mit Lichtkegel, „hinten rot“: Rücklicht glimmt; die Pedale drehen, Reflektoren blitzen; „Akku“: eine Akku-Lampe klickt an den Lenker, der Ladebalken füllt sich, Chip „Prüfzeichen“ (Wellenlinie + K), Haken; „Ohne Licht“: alles aus, ein Strafzettel fällt und wackelt; dann Licht wieder an | STIMMT – vorne weiß, hinten rot |
+| 4 | Station 3 (Nacht), grüner Stempel; die Schranke geht auf, Yusuf fährt langsam weiter, das Handy in der Hand vibriert, rote Linie Handy–Lenker, rotes ✕, das Rad schlingert; Chat- und Anruf-Symbol auf dem Bildschirm; „halt an“: bremsen, Ständer klappt aus, erst jetzt wird das Handy grün | STIMMT – erst anhalten |
+| 5 | Neuer Morgen; Station 4, roter Stempel; „Straße“ und „Radweg“ leuchten grün, Yusuf wechselt die Spur; „nicht auf dem Gehweg“: er rollt auf den Gehweg, Fußspuren pochen, Gehweg rot, rotes ✕, zurück; „Schild“: Zusatzschild „Radverkehr frei“ (Fahrrad + „frei“) klappt herunter, der Gehweg dort wird grün, Yusuf fährt im Schritttempo | MYTHOS – Straße oder Radweg |
+| 6 | Station 5, roter Stempel; ein blaues rundes Schild mit Fahrrad wächst aus dem Boden, ein Pfeil hält Yusuf auf dem Radweg, Chip „Pflicht“; „Sonst“: das Schild kippt weg, zwei Pfeile (Radweg / Straße) werden grün, Yusuf nimmt die Straße | MYTHOS – nur mit blauem Schild |
+| 7 | Station 6, Kwame (Porträt) kommt auf der äußeren Spur dazu; grüner Stempel; beide fahren weiter, die Klingeln klingeln im Takt; „behindert“: von hinten kommt ein Auto und bremst, Warn-Dreieck; „hintereinander“: Kwame reiht sich hinter Yusuf ein, das Auto überholt mit Abstand, Haken | STIMMT – wenn niemand behindert wird |
+| 8 | Ziel: der Betrieb. Tipp-Schild (violett); Yusuf steigt ab und schiebt das Rad an einen Fahrradständer; „Rahmen“: ein Bügelschloss legt sich um Rahmen und Ständer, Schlüssel dreht; das Rad daneben (nur Vorderrad abgeschlossen) schwebt davon, nur das Vorderrad bleibt – rotes ✕; „Rahmennummer“: auf einem Zettel tippt sich „Rahmennummer:“ (Platzhalter), Stift, Haken | Tipp: Rahmen anschließen |
+| 9 | Wischblende zur Streckenkarte: gepunktete Route mit sechs Halten (Helm, Licht, Handy, Gehweg, Radweg, Zu zweit), Yusuf fährt sie ab, an jedem Halt schlägt der Stempel auf, die Zähler laufen mit | 3 × Mythos · 3 × Stimmt |
 
 Abspann: „Klare Regeln, sichere Fahrt.“ und die Kernbotschaft.
 
-Layout „Mythos oder Wahrheit“ wie in Lernvideo 12 (`../12-mythos-geld/konzept.md`) und 37: Quiz-Bühne, Behauptungskarte,
-Countdown-Ring 3-2-1 mit den Pillen „Mythos?“ / „Stimmt?“, Stempel mit Tinte und Kamera-Akzent, dann helle Erklär-Bühne rechts.
+Abweichung vom Format-Layout (Wunsch des Nutzers, Abwechslung): keine Quiz-Bühne mit Behauptungskarte wie in 12/37, sondern
+Stationsschilder an einer durchgehenden Strecke. Technik (Countdown, Stempel mit Tinte, Kamera-Akzente, Masken-Text) bleibt.
 Jede Animation hängt an einem Wort aus `sprache.json`.
 
 ## Hinweise zum Briefing
