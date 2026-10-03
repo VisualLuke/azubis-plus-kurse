@@ -42,6 +42,13 @@ Abspann: „Gleiche Rechte – egal, wen du liebst.“ und die Kernbotschaft.
   kamen sogar ins Gefängnis. Erst 1994 wurde dieses Gesetz ganz abgeschafft.“ – in der Recherche belegen.
 - Christopher Street Day: in vielen Städten im Sommer – belegen (z. B. bpb). Regenbogen nur als schmales Band (CI).
 - Schreibweise für die Stimme: „zweitausendsiebzehn“, „neunzehnhundertvierundneunzig“ (siehe unten).
+- **Bild bei der Umsetzung:** „Text im Bild“ hängt jeweils als eigene Karte an der Pinnwand bzw. Wand (wird angepinnt,
+  zum Schluss wieder abgenommen) statt als Einblendung; „Hilfe“ als drei angepinnte Kontaktkarten. Szene 2: Kamera
+  bleibt für die Umdreh-Überraschung nah an den fünf Wochenend-Karten, „Händchen“ als zwei Spuren nebeneinander auf einer
+  Straßen-Karte. Szene 3: an der Wand neben der Pinnwand (Dienstplan, Paragraf-Schild, zwei graue Blasen aus dem Off,
+  Tagebuch). Szene 4: die alte Karte zeigt eine Uhr; in der Karte Gesetzesblatt mit „§“, Schloss, Gitter, Kalender
+  „1994“; die Karte „1994 – Das Verbot ist ganz weg“ wird nach dem Zerreißen an die Wand gepinnt. Szene 5: die Karte
+  „Kino“ mit zwei Tickets steht für den Freund des Kollegen. Abspann: ein großes Blatt wird angepinnt.
 - **Nach dem Faktencheck geändert (03.10.2026):**
   - Szene 2: „Viele zeigen ihre Liebe offen, zum Beispiel halten sie auf der Straße Händchen.“ →
     „Sie dürfen ihre Liebe offen zeigen, zum Beispiel auf der Straße Händchen halten.“ – wie viele es tun, lässt sich
