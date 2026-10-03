@@ -503,7 +503,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   // Dämmerung → Abend: der Himmel wird dunkel, der Mond steigt, Fenster gehen an
   const tAb = W('Abend', 1);
   HOOKS.push(t => { el('daemmer').style.opacity = (1 - E.inout(clamp((t - (tAb - .7)) / 1.6))).toFixed(3); });
-  ein('mond', tAb - .3, { x: 520, y: 350 }, { y: 90 });
+  ein('mond', tAb - .3, { x: 400, y: 330 }, { y: 90 });
   [3, 6, 1, 5, 4, 7].forEach((k, i) => { const t = tAb + .15 + i * .14; HOOKS.push(z => { el('ff' + k).style.opacity = E.out(clamp((z - t) / .3)).toFixed(3); }); });
   // Mai kommt nach Hause: auf dem Gehweg von rechts, die Haustür (Fassade) öffnet sich, Mai geht hinein
   const tMa = W('Mai', 2), tHa = W('Hause', 2);
@@ -731,7 +731,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   t += 1.15;
   tw('haustuerb', t + .1, .3, { sx: 1 }, 'inout'); cue(t + .35, 'plopp');
   WEG_O.C.push([t - .3, 0, .4]);
-  kam(tZe + .2, t - tZe, 2150, 760, 1.12);
+  kam(tZe + .2, t - tZe, 2150, 800, 1.12);
   // „ruft die eins-eins-zwei an“: großes Handy, die Ziffern tippen sich, die Verbindung steht (grüne Wellen)
   WELT.insertAdjacentHTML('beforeend', `<div class="a tel gross" id="tel"><div class="schirm"><div class="guthaben" id="telG">Guthaben <b>0,00 €</b></div><div class="nr" id="teln"></div>
       <div class="zeit" id="telz"></div><div class="knopf gruen" id="telk" style="left:50px">${tpl('svgHoerer')}</div></div></div>
@@ -828,7 +828,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   tw('telG', W('ohne', 30) - .1, .35, { o: 1 }); bump('telG', tGu, 1.15); cue(tGu, 'klick');
   wellen(['tw1', 'tw2'], [tGu + .4], 2400, 760, 1.3, 1.6);
   aus(['f0', 'f1', 'f2', 'f3', 'kosten', 'tel', 'mai'], P7 + .6, .35);
-  aus(['hA', 'hB', 'hC'], P6 + .1, .35); tw('pin', P7, .01, { o: 0 });
+  aus(['hA', 'hB', 'hC'], P6 + .1, .35); tw('pin', P6 + .2, .3, { o: 0 });
 }
 
 /* =========================== Szene 7 · Drei Nummern an der Straße: 112, 110, 116 117 =========================== */
@@ -869,7 +869,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   akteur('l1', { x: 4300, y: 1215 }); binde('l1b', [tFw, tFw + .08, tRd], P8 + 3);
   // „Die eins-eins-null ist für die Polizei“
   const P72 = SE(31) + .1, t110 = W('eins-eins-null', 32), tPo = W('Polizei', 32);
-  kam(P72, 1.0, 4900, 820, 1.12); cue(P72, 'whoosh');
+  kam(P72, 1.0, 4840, 820, 1.12); cue(P72, 'whoosh');
   tw('s110', t110 - .3, .5, { s: 1 }, 'back'); cue(t110 - .3, 'pop');
   tippen('s110t', [[t110, '1'], [t110 + .28, '11'], [t110 + .56, '110']]); [0, .28, .56].forEach(d => cue(t110 + d, 'tipp'));
   pop('muetze', tPo - .1, { x: 5000, y: 930 }, 'pop'); bump('s110', tPo, 1.1);
@@ -932,7 +932,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   // „Brennt es bei dir, gilt: raus, Tür zu, eins-eins-zwei“ – in Mais Wohnung
   const tBr = W('Brennt', 37), tRa = W('raus', 37), tTu = W('Tür', 37), tZu = WN(37, 7), t112 = W('eins-eins-zwei', 37);
   const tIn = SE(36) + .1;
-  kam(tIn, 1.0, 1440, 520, 1.6); cue(tIn, 'whoosh');
+  kam(tIn, 1.0, 1380, 520, 1.6); cue(tIn, 'whoosh');
   RAUCH[0].dichte.push([tIn, 0, .5]);
   RAUCH[1].dichte.push([tIn, 0, .5]); GLUT[0][1].push([tIn, 0, .5]);
   tw('tuerMb', tIn + .1, .25, { sx: .12 }, 'inout');
@@ -956,7 +956,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   // „Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt.“ – Melder über dem Bett, Mai schläft und wacht auf
   const tRm = W('Rauchmelder', 38), tPf = W('Pflicht', 38), tWk = W('wecken', 39), tBn = W('brennt', 39);
   aus(['tel8'], tRm - .5, .3); tw('mai', tRm - .5, .35, { o: 0 }, 'in');
-  kam(tRm - .5, 1.0, 1600, 505, 2.0);
+  kam(tRm - .5, 1.0, 1580, 505, 2.0);
   blinken('ledM', tRm, ENDE_SPRACHE + 2, .8);
   bump('melderM', tRm + .1, 1.15); cue(tRm + .1, 'tipp');
   WELT.insertAdjacentHTML('beforeend', `<div class="a plakette gruen" id="pflicht" data-frei>${tpl('svgHaken')}</div>
