@@ -294,7 +294,7 @@ const huepfen = (id, t, h = 18) => {
   tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
 };
 const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
-const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'sinus', { bogen: h });
 const federn = (id, t) => { tw(id, t, .12, { sy: .96, sx: 1.025 }, 'sinus'); tw(id, t + .12, .4, { sy: 1, sx: 1 }, 'sanft'); };
 const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
 const tpl = id => document.getElementById(id).innerHTML;
@@ -438,8 +438,8 @@ function karton(i, o) {
     ein: (t, d = .75) => { tw([id, id + 'k'], t, .3, { o: 1 }); tw(id, t, d, { x }, 'sanft'); cue(t, 'whoosh'); tw(id, t + d - .15, .12, { sx: 1.03, sy: .97 }, 'sinus'); tw(id, t + d - .03, .35, { sx: 1, sy: 1 }, 'sanft'); },
     // Laser fährt über den Karton; am Strichcode piept es, der Artikel-Aufkleber klebt sich auf
     scan: t => {
-      const t0 = t - .5;
-      tw(id + 'l', t0, .08, { o: 1 }); tw([id + 'k', id + 'l'], t0, .45, { x: X + 790 }, 'inout'); tw(id + 'l', t0 + .45, .15, { o: 0 });
+      const t0 = t - .6;
+      tw(id + 'l', t0, .08, { o: 1 }); tw([id + 'k', id + 'l'], t0, .55, { x: X + 790 }, 'sinus'); tw(id + 'l', t0 + .55, .15, { o: 0 });
       tw(id + 'k', t0 + .7, .6, { x: X + 160 }, 'inout');
       cue(t0, 'scan'); cue(t - .07, 'ding');
       HOOKS.push(z => el(id + 'c').classList.toggle('ok', z >= t - .07));
@@ -473,7 +473,7 @@ function schild(i, ns, art, lern) {
   akteur(id, { x, y: y - 60, o: 0, r: 7 }, true);
   akteur(id + 'p', { s: 0 }, true);
   return {
-    ein: t => { tw(id, t, .3, { o: 1 }); tw(id, t, .55, { y }, 'sanft'); pendel(id, t + .1, 6, 4, .32); tw(id + 'p', t + .2, .5, { s: 1 }, 'back'); cue(t, 'whoosh'); cue(t + .45, 'klick'); },
+    ein: t => { tw(id, t, .3, { o: 1 }); tw(id, t, .55, { y }, 'sanft'); pendel(id, t + .1, 5, 4, .36); tw(id + 'p', t + .2, .5, { s: 1 }, 'back'); cue(t, 'whoosh'); cue(t + .45, 'klick'); },
     aus: t => { tw(id, t, .35, { o: 0, y: y - 40 }, 'in'); },
   };
 }
@@ -510,6 +510,11 @@ const ladung = (id, b, attr = 'data-gruppe="rg6"') => neu(id, `<div class="pal" 
 // Lagertür (Rahmen, Blatt)
 const tuer = (id, b, h, attr = '') => neu(id, `<div class="blatt" id="${id}b"><div class="griff"></div></div>`, `width:${b}px;height:${h}px`, attr, 'htuer');
 const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); tw(id + 'b', t + d, .4, { sx: 1 }, 'sanft'); cue(t, 'klick'); };
+
+// unsichtbare Bühne für die Übersicht (Hallenansicht): Elemente vor dem Regal werden gegen den Bildrand der Übersicht geprüft
+{ const o0 = W0(0, 0), o1 = W0(1920, 1080);
+  WELT.insertAdjacentHTML('beforeend', `<div class="a buehne" id="bueHalle" style="width:${o1.x - o0.x}px;height:${o1.y - o0.y}px;background:none;border-radius:0;pointer-events:none"></div>`);
+  akteur('bueHalle', { x: (o0.x + o1.x) / 2, y: (o0.y + o1.y) / 2 }); }
 
 /* ================= 1 · Intro: Halle in der Übersicht – Rolltor auf, Regal wächst, Lampen, Yusuf ================= */
 {
@@ -872,8 +877,8 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akteur('lu7', { ...lu(ET[10]), x: lu(ET[10]).x - 120, o: 0 });
   const tL = W('findest', 32) - .2;
   tw('lu7', tL, .25, { o: 1 }); tw('lu7', tL, .4, lu(ET[10]), 'sanft'); cue(tL, 'whoosh');
-  [11, 13, 12].forEach((n, j) => { const t = tL + .45 + j * .38; tw('lu7', t, .34, lu(ET[n]), 'inout'); cue(t + .3, 'klick'); });
-  const tSt = tL + .45 + 3 * .38;
+  [11, 13, 12].forEach((n, j) => { const t = tL + .42 + j * .44; tw('lu7', t, .42, lu(ET[n]), 'sinus'); cue(t + .38, 'klick'); });
+  const tSt = tL + .42 + 3 * .44;
   bump('et712', tSt, 1.15); akzent(W('schnell', 32), .035);
   // Lagerplatz zwölf ist noch frei: Fach 12 leuchtet grün, ein Karton springt hinein
   const tZ = W('zwölf', 33) - .1;
@@ -919,7 +924,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
     const id = 'sa8' + SN++, dx = z.x - NASE.x, dy = z.y - NASE.y, len = Math.hypot(dx, dy);
     neu(id, '', 'width:100px', 'data-frei', 'strahl');
     akteur(id, { x: NASE.x, y: NASE.y - 4, r: Math.atan2(dy, dx) * 180 / Math.PI, sx: 0, o: 1 }, true);
-    tw(id, t, .22, { sx: len / 100 }, 'out'); tw(id, t + d, .25, { o: 0 }); cue(t, 'scan'); cue(t + .25, 'ding');
+    tw(id, t, .3, { sx: len / 100 }, 'sinus'); tw(id, t + d, .25, { o: 0 }); cue(t, 'scan'); cue(t + .25, 'ding');
     bump('sc8', t - .05, 1.04);
     return t + .25;
   };
@@ -975,23 +980,23 @@ function wagen(id, gr, attr = '') {
   const PICK = [[1430, B1, 'a'], [1600, B2, 'b'], [1740, B1, 'c']];
   PICK.forEach(([x, b, f], n) => {
     neu('wa9' + n, '', 'width:60px;height:60px', 'data-gruppe="rz9"', 'ware ' + f); pop('wa9' + n, P + .95 + n * .1, { x: X + x, y: Y + b - 30 }, null);
-    neu('li9' + n, '', '', 'data-gruppe="rz9"', 'licht'); akteur('li9' + n, { x: X + x, y: Y + b + 9 });
+    neu('li9' + n, '', '', 'data-gruppe="rz9"', 'licht'); akteur('li9' + n, { x: X + x, y: Y + b + 9, o: 0 }); tw('li9' + n, P + 1.0, .3, { o: 1 });
   });
   // Kommissionierwagen rollt herein und fährt die Fächer ab
-  const wg = wagen('rw9', 290, 'data-gruppe="rw9"'), WO = wg.oben(Y + GY);
+  const wg = wagen('rw9', 290, 'data-gruppe="rz9"'), WO = wg.oben(Y + GY);
   wg.setzen(X + 1050 - 160, Y + GY, { o: 0 });
   const tW = W('Kommissionierung', 39) - .2;
   tw('rw9', tW, .25, { o: 1 }); wg.fahren(tW, X + 1050, .8);
-  const T = [W('suchst', 40) - .4, W('Ware', 40) - .3, W('Auftrag', 40) - .35], OFF = [-70, 0, 70];
+  const T0 = W('suchst', 40) - .55, T = [T0, T0 + .75, T0 + 1.5], OFF = [-70, 0, 70];
   PICK.forEach(([x, b], n) => {
     const t = T[n];
     HOOKS.push(z => el('li9' + n).classList.toggle('an', z >= t && z < t + 1.2)); cue(t, 'klick');
-    wg.fahren(t, X + x, .4);
+    wg.fahren(t, X + x, .5);
     const tj = t + .3;
-    flug('wa9' + n, tj, .38, X + x + OFF[n], WO - 30, 110); landen('wa9' + n, tj + .38); cue(tj + .38, 'plopp');
+    flug('wa9' + n, tj, .45, X + x + OFF[n], WO - 30, 90); landen('wa9' + n, tj + .45); cue(tj + .45, 'plopp');
     wg.mit.push('wa9' + n);
-    HOOKS.push(z => { const s = el('au9s' + n); s.classList.toggle('ok', z >= tj + .4); s.innerHTML = z >= tj + .4 ? tpl('svgHaken') : ''; });
-    cue(tj + .4, 'klick');
+    HOOKS.push(z => { const s = el('au9s' + n); s.classList.toggle('ok', z >= tj + .5); s.innerHTML = z >= tj + .5 ? tpl('svgHaken') : ''; });
+    cue(tj + .5, 'klick');
   });
   bump('au9', W('zusammen', 40) + .1, 1.05); cue(W('zusammen', 40) + .1, 'ding'); akzent(W('zusammen', 40), .035);
   // Hier ist der nächste Auftrag: ein neuer Zettel landet auf dem Stapel, „+1“
@@ -1018,7 +1023,7 @@ function wagen(id, gr, attr = '') {
   tw(['rw10', 'wa100', 'wa101', 'wa102'], P + .55, .25, { o: 1 }); wg.fahren(P + .55, X + 1010, .8);
   // Paket (offen) und Rampe mit Lastwagen
   const PX = X + 1300, PY = Y + GY - 85;
-  neu('pk10', `<div class="kl l" id="pk10l"></div><div class="kl r" id="pk10r"></div><div class="deckel" id="pk10d"></div><div class="band" id="pk10b"></div><div class="adr" id="pk10a"><i style="top:16px;width:70px"></i><i style="top:32px;width:90px"></i><i style="top:48px;width:56px"></i></div>`, '', 'data-gruppe="pk10"', 'paket');
+  neu('pk10', `<div class="kl l" id="pk10l"></div><div class="kl r" id="pk10r"></div><div class="deckel" id="pk10d"></div><div class="band" id="pk10b"></div><div class="adr" id="pk10a"><i style="top:16px;width:70px"></i><i style="top:32px;width:90px"></i><i style="top:48px;width:56px"></i></div>`, '', 'data-gruppe="ra10"', 'paket');
   ein('pk10', P + .75, { x: PX, y: PY }, { y: 80 }, 'plopp');
   akteur('pk10l', { r: -14 }, true); akteur('pk10r', { r: 14 }, true); akteur('pk10d', { sy: 0 }, true); akteur('pk10b', { sy: 0 }, true); akteur('pk10a', { s: 0 }, true);
   bild('lk10', 't-lkw', 300, 'data-gruppe="ra10"');
