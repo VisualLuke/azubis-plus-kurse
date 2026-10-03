@@ -406,7 +406,7 @@ function preisschild(i, o) {
   woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
   if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
   return {
-    ein: t => { set(ids, t, { o: 1 }); fahren(ids, t, FAHRT, .62, 'out'); pendel(id, t + .55, 4, 4, .3); landen('pr' + i, t + .6); ton(t, 'whoosh'); ton(t + .6, 'plopp'); },
+    ein: t => { set(ids, t, { o: 1 }); fahren(ids, t, FAHRT, .62, 'out'); pendel(id, t + .55, 3, 4, .3); landen('pr' + i, t + .6); ton(t, 'whoosh'); ton(t + .6, 'plopp'); },
     chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); ton(t, 'pop'); },
     wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); ton(t0, 'klick'); },
     zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); ton(t, 'pop'); },
@@ -420,7 +420,7 @@ function drucker(i, x, t) {
   const id = 'dr' + i;
   neu(id, `<div class="schlitz"></div><div class="tasten"></div><div class="led" id="${id}l"></div>`, '', `data-gruppe="dr${i}"`, 'drucker63');
   akteur(id, { x, y: BAND - 55 + 150 });
-  tw(id, t, .55, { y: BAND - 55 }, 'sanft'); federn(id, t + .5); ton(t, 'whoosh');
+  tw(id, t, .7, { y: BAND - 55 }, 'inout'); federn(id, t + .7); ton(t, 'whoosh');
   return id;
 }
 // Papier wächst aus dem Schlitz: schritte [t, höhe, dauer]
@@ -528,7 +528,7 @@ buehne(0);
   // Ware fährt auf dem Band herein
   const WARE0 = [['wk0', 't-karton', 190, 140, 560], ['wm0', 't-milch', 150, 146, 720], ['wb0', 't-brot', 170, 130, 850]];
   WARE0.forEach(([id, t, b, g, x]) => { bild(id, t, b, '', '', 'vorn'); akteur(id, { x: X + x - 900, y: steht(b, BAND, g) }); });
-  fahren(WARE0.map(w => w[0]), .2, 900, 1.3, 'out'); ton(.2, 'whoosh');
+  fahren(WARE0.map(w => w[0]), .2, 900, 1.3, 'inout'); ton(.2, 'whoosh');
   WARE0.forEach(([id], n) => landen(id, 1.4 + n * .05)); ton(1.45, 'plopp');
   // Kasse
   bild('ka0', 't-kasse', 270, 'data-gruppe="ka0"');
@@ -563,7 +563,7 @@ buehne(1);
 {
   const X = S(1), G = 'data-gruppe="ka1"';
   const k = preisschild(1, { art: 'die', chip: 'die', wort: 'Kasse', zeile: ['Plural', 'die Kassen'], nr: 1, gr: 116, ware: 't-korb', g: 144 });
-  k.ein(P1 + .7); k.chip(W('Die', 4)); k.wort(W('Kasse', 4)); k.zeile(W('Die', 5));
+  k.ein(P1 + .6); k.chip(W('Die', 4)); k.wort(W('Kasse', 4)); k.zeile(W('Die', 5));
   // zwei weitere Kassen dahinter (für „Kassen“), dann die Hauptkasse mit Schublade
   const tK = W('Kasse', 4);
   bild('ka1b', 't-kasse', 240, G); bild('ka1c', 't-kasse', 240, G);
@@ -576,7 +576,7 @@ buehne(1);
   const KY1 = steht(330, 745, 144);
   ein('ka1', tK - .4, { x: X + 1080, y: KY1 }, { y: 90 }, 'whoosh');
   tw('la1', tK - .2, .3, { o: 1 });
-  const schublade = (t, d = 1.1) => { tw('la1', t, .25, { x: X + 1185 }, 'back'); tw('la1', t + d, .3, { x: X + 1085 }, 'sanft'); ton(t, 'klick'); ton(t + d + .25, 'klick'); };
+  const schublade = (t, d = 1.1) => { tw('la1', t, .4, { x: X + 1185 }, 'inout'); tw('la1', t + d, .4, { x: X + 1085 }, 'inout'); ton(t, 'klick'); ton(t + d + .25, 'klick'); };
   schublade(tK + .25);
   for (let n = 0; n < 3; n++) {
     const id = 'mu1' + n; bild(id, 't-muenze', 56, G + ' data-dreht');
@@ -593,7 +593,7 @@ buehne(1);
   bild('sc1', 't-schein', 150, 'data-frei');
   akteur('sc1', { x: X + 1480, y: 640, o: 0, s: .6 });
   const tB = W('bezahlen', 6);
-  tw('sc1', tB - .1, .15, { o: 1 }); flug('sc1', tB - .1, .6, X + 1090, 560, 150, { s: .8, r: -3 }); tw('sc1', tB + .45, .2, { o: 0, s: .4 });
+  tw('sc1', tB - .25, .15, { o: 1 }); flug('sc1', tB - .25, .8, X + 1090, 560, 150, { s: .8, r: -3 }); tw('sc1', tB + .4, .25, { o: 0 });
   schublade(tB + .45, .8); bump('ka1', tB + .5, 1.05); ton(tB + .5, 'ding'); wellen(tB + .5, X + 1080, 560, 'var(--success)', 260);
   bump('ew1', W('Kunden', 6), 1.04);
   // Ich arbeite heute an Kasse zwei: Wagen rollt weiter, Drucker fährt hoch, Schild „Kasse 2“ leuchtet
@@ -614,18 +614,18 @@ buehne(2);
 {
   const X = S(2);
   const k = preisschild(2, { art: 'der', chip: 'der', wort: 'Kassenbon', zeile: ['Plural', 'die Kassenbons'], nr: 2, gr: 92, ware: 't-rolle', g: 140 });
-  k.ein(P2 + .7); k.chip(W('Der', 8)); k.wort(W('Kassenbong', 8)); k.zeile(W('Die', 9));
+  k.ein(P2 + .6); k.chip(W('Der', 8)); k.wort(W('Kassenbong', 8)); k.zeile(W('Die', 9));
   drucker(2, X + 1620, P2 + .9);
   // weitere Bons (für „Kassenbons“) liegen hinter dem großen
   const EX = X + 1060, ETOP = 262;
   ['bn2a', 'bn2b'].forEach((id, n) => {
-    neu(id, '<i style="width:80%"></i><i></i><i style="width:60%"></i><i style="width:85%"></i>', '', 'data-gruppe="bon2"', 'bonleer');
+    neu(id, '<i style="width:80%"></i><i></i><i style="width:60%"></i><i style="width:85%"></i>', '', 'data-gruppe="dr2"', 'bonleer');
     akteur(id, { x: EX, y: ETOP + 115 - 18 - n * 18, o: 0, r: 1.5 + n * 1.3 });
   });
   // der Bon wächst aus dem Drucker: Milch, Äpfel, Brot, Summe – und reißt mit einem Ruck ab
   const ZEILEN = [['Milch', 140], ['Äpfel', 120], ['Brot', 100]];
   const html = `<div style="height:26px"></div>${ZEILEN.map(([w, b], n) => `<div class="bp" id="bp2${n}">${w}<i style="width:${b}px"></i></div>`).join('')}<div class="strich63" style="margin-top:10px"></div><div class="bp summe" id="bp2s">Summe<i style="width:110px"></i></div><div style="height:22px"></div>`;
-  const bt = papier('bt2', X + 1620, html, 'bon2');
+  const bt = papier('bt2', X + 1620, html, 'dr2');
   const tD = W('Kassenbong', 8) - .15;
   [66, 106, 146, 192, 254].forEach((h, n) => { bt.vor(tD + n * .22, h, .18); ton(tD + n * .22, 'tipp'); });
   ton(tD, 'kritzeln'); akzent(tD + .4, .03);
@@ -668,7 +668,7 @@ buehne(3);
 {
   const X = S(3), G = 'data-gruppe="g3"';
   const k = preisschild(3, { art: 'das', chip: 'das', wort: 'Wechselgeld', nr: 3, gr: 82, ware: 't-boerse', g: 140, wb: 160 });
-  k.ein(P3 + .7); k.chip(W('Das', 12)); k.wort(W('Wechselgeld', 12));
+  k.ein(P3 + .6); k.chip(W('Das', 12)); k.wort(W('Wechselgeld', 12));
   // Kasse mit Schublade (öffnet nach links), Geldschale
   neu('la3', '', '', G, 'lade63');
   akteur('la3', { x: X + 1265, y: 762, o: 0 });
@@ -684,7 +684,7 @@ buehne(3);
   tw('sc3', tS, .2, { o: 1 }); flug('sc3', tS, .7, X + 935, 712, 90, { r: -2 }); landen('sc3', tS + .7); ton(tS, 'whoosh'); ton(tS + .7, 'plopp');
   // … das der Kunde zurückbekommt: Schein in die Kasse, Schublade auf, Münzen rollen auf die Schale
   const tG = W('Geld', 13);
-  tw('la3', tG, .25, { x: X + 1185 }, 'back'); ton(tG, 'klick');
+  tw('la3', tG, .4, { x: X + 1185 }, 'inout'); ton(tG, 'klick');
   flug('sc3', tG + .1, .6, X + 1200, 752, 110, { s: .4, r: 3 }); tw('sc3', tG + .5, .2, { o: 0 }); ton(tG + .1, 'whoosh');
   const tZ = W('zurückbekommt', 13) - .15;
   const MU = [0, 1, 2].map(n => { const id = 'mu3' + n; bild(id, 't-muenze', 70, G + ' data-dreht'); akteur(id, { x: X + 1150, y: 752, o: 0, s: .6 }); return id; });
@@ -692,7 +692,7 @@ buehne(3);
     const t = tZ + n * .28, x = X + 915 + n * 14, y = 694 - n * 18;
     tw(id, t, .12, { o: 1 }); tw(id, t, .5, { x, y, s: 1, r: -360 }, 'out', { bogen: 60 }); landen(id, t + .5); ton(t + .45, 'muenze');
   });
-  tw('la3', tZ + 1.0, .3, { x: X + 1265 }, 'sanft'); ton(tZ + 1.3, 'klick');
+  tw('la3', tZ + 1.0, .4, { x: X + 1265 }, 'inout'); ton(tZ + 1.3, 'klick');
   // die Rechnung tippt sich
   neu('re3', '<span id="re3t"></span>', 'font-size:34px', '', 'etikett');
   pop('re3', tZ - .1, { x: X + 1100, y: 300 }, 'pop');
@@ -716,23 +716,23 @@ buehne(4);
 {
   const X = S(4);
   const k = preisschild(4, { art: 'die', chip: 'die', wort: 'Ware', zeile: ['Plural', 'die Waren'], nr: 4, gr: 124, ware: 't-brot', g: 130 });
-  k.ein(P4 + .7); k.chip(W('Die', 15)); k.wort(W('Ware', 15)); k.zeile(W('Die', 16));
+  k.ein(P4 + .6); k.chip(W('Die', 15)); k.wort(W('Ware', 15)); k.zeile(W('Die', 16));
   // Ein Karton landet, die Ware hüpft heraus
   bild('kt4', 't-karton', 250, '', '', 'vorn');
   const tK = W('Ware', 15) - .35, KX4 = X + 1110;
-  akteur('kt4', { x: KX4, y: 150, o: 0 });
-  tw('kt4', tK, .15, { o: 1 }); tw('kt4', tK, .45, { y: steht(250, BAND, 142) }, 'in'); landen('kt4', tK + .45); ton(tK + .45, 'plopp');
+  akteur('kt4', { x: KX4, y: 330, o: 0 });
+  tw('kt4', tK, .15, { o: 1 }); tw('kt4', tK, .5, { y: steht(250, BAND, 142) }, 'inout'); landen('kt4', tK + .5); ton(tK + .5, 'plopp');
   const WARE = [['w4a', 't-apfel', 140, 140, X + 870], ['w4b', 't-milch', 140, 146, X + 1015], ['w4c', 't-pullifalt', 150, 140, X + 1165], ['w4d', 't-lampe', 130, 146, X + 1310]];
   WARE.forEach(([id, t, b, g, x], n) => {
     bild(id, t, b, '', '', 'vorn');
     akteur(id, { x: KX4, y: 690, s: 0 });
     const t0 = tK + .6 + n * .16;
-    tw(id, t0, .35, { s: .9 }, 'back'); flug(id, t0, .55, x, 420 + (n % 2) * 40, 90); ton(t0, 'pop');
+    tw(id, t0, .35, { s: .9 }, 'back'); flug(id, t0, .75, x, 420 + (n % 2) * 40, 90); ton(t0, 'pop');
   });
   // Die Waren: der Karton verschwindet, alles reiht sich auf dem Band auf
   const tP = W('Waren', 16) - .2;
   aus('kt4', tP - .1, .3);
-  WARE.forEach(([id, t, b, g, x], n) => { tw(id, tP + n * .08, .45, { y: steht(b, BAND, g), s: 1 }, 'in'); landen(id, tP + n * .08 + .45); ton(tP + n * .08 + .45, 'klick'); });
+  WARE.forEach(([id, t, b, g, x], n) => { tw(id, tP + n * .08, .5, { y: steht(b, BAND, g), s: 1 }, 'inout'); landen(id, tP + n * .08 + .45); ton(tP + n * .08 + .45, 'klick'); });
   // … was der Laden verkauft: kleine Preisschilder hängen sich an jedes Teil
   const tV = W('verkauft', 17) - .15;
   WARE.forEach(([id, t, b, g, x], n) => { const p = 'pz4' + n; neu(p, '€', '', 'data-frei', 'mini63 vorn'); pop(p, tV + n * .1, { x: x + b * .18, y: steht(b, BAND, g) + b * .1, r: -3 }, n ? null : 'pop'); bump(id, tV + n * .1, 1.06); ton(tV + n * .1, 'klick'); });
@@ -764,7 +764,7 @@ buehne(5);
 {
   const X = S(5), G = 'data-gruppe="rg5"';
   const k = preisschild(5, { art: 'das', chip: 'das', wort: 'Regal', zeile: ['Plural', 'die Regale'], nr: 5, gr: 124, ware: 't-dose', g: 140, wb: 150 });
-  k.ein(P5 + .7); k.chip(W('Das', 19)); k.wort(W('Regal', 19)); k.zeile(W('Die', 20));
+  k.ein(P5 + .6); k.chip(W('Das', 19)); k.wort(W('Regal', 19)); k.zeile(W('Die', 20));
   // zwei Regale dahinter (für „Regale“)
   const tP = W('Regale', 20) - .1;
   ['rg5b', 'rg5c'].forEach((id, n) => {
@@ -799,8 +799,8 @@ buehne(5);
   rein.forEach(([b, m], n) => {
     const id = packung(X + 1080 + m * 120, bo[b], 84, 80 + (n % 2) * 14, G);
     const y = wertBei(id, 'y', 0), t = tF + n * .14;
-    akteur(id, { x: X + 1480, y: 660, s: 0 });
-    tw(id, t, .2, { s: 1 }, 'back'); flug(id, t, .42, X + 1080 + m * 120, y, 70); landen(id, t + .42); ton(t + .42, 'plopp');
+    akteur(id, { x: X + 1350, y: 240, s: 0 });
+    tw(id, t, .2, { s: 1 }, 'back'); flug(id, t, .58, X + 1080 + m * 120, y, 70); landen(id, t + .58); ton(t + .58, 'plopp');
   });
   plakette('ok5', 'gruen', 'svgHaken');
   const tA = WE('auf', 22) + .05;
@@ -814,7 +814,7 @@ let LADEN6 = null;
 {
   const X = S(6), G = 'data-gruppe="ka6"';
   const k = preisschild(6, { art: 'die', chip: 'die', wort: 'Filiale', zeile: ['Plural', 'die Filialen'], nr: 6, gr: 116, ware: 't-tasche', g: 144 });
-  k.ein(P6 + .7); k.chip(W('Die', 23)); k.wort(W('Filiale', 23)); k.zeile(W('Die', 24));
+  k.ein(P6 + .6); k.chip(W('Die', 23)); k.wort(W('Filiale', 23)); k.zeile(W('Die', 24));
   // Stadtplan faltet sich auf (Straßen, Fluss, ohne Namen)
   const MX = X + 1090, MY = 425, MB = 560, MH = 440;
   const LAEDEN = [[110, 110], [440, 90], [120, 340], [450, 330], [300, 70], [290, 380]];
@@ -875,13 +875,13 @@ buehne(7);
 {
   const X = S(7), G = 'data-gruppe="lf7"';
   const k = preisschild(7, { art: 'der', chip: 'der', wort: 'Lieferschein', zeile: ['Plural', 'die Lieferscheine'], nr: 7, gr: 74, plgr: 40, ware: 't-karton', g: 142 });
-  k.ein(P7 + .7); k.chip(W('Der', 28)); k.wort(W('Lieferschein', 28)); k.zeile(W('Die', 29));
+  k.ein(P7 + .6); k.chip(W('Der', 28)); k.wort(W('Lieferschein', 28)); k.zeile(W('Die', 29));
   // Klemmbrett mit Lieferschein landet
   const ZL = [['Milch', 4], ['Äpfel', 2], ['Brot', 3]];
   neu('kb7', `<div class="clip"></div><div class="blatt"><div class="kz"></div>${ZL.map(([w, n], z) => `<div class="lzeile" id="lz7${z}"><span class="bx">${tpl('svgHaken')}</span>${w}<b>${n}</b></div>`).join('')}</div>`, '', G, 'klemm63');
   const tK = W('Lieferschein', 28) - .4, KBX = X + 945, KBY = 440;
-  akteur('kb7', { x: KBX, y: KBY - 300, o: 0, r: -6 });
-  tw('kb7', tK, .2, { o: 1 }); tw('kb7', tK, .5, { y: KBY, r: -1.5 }, 'in'); landen('kb7', tK + .5); ton(tK + .5, 'plopp');
+  akteur('kb7', { x: KBX, y: KBY - 160, o: 0, r: -3 });
+  tw('kb7', tK, .2, { o: 1 }); tw('kb7', tK, .5, { y: KBY, r: -1.5 }, 'inout'); landen('kb7', tK + .5); ton(tK + .5, 'plopp');
   // … was geliefert wird: Kartons fahren auf der Rollbahn herein
   neu('rb7', `<i class="holm"></i>${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(n => `<i class="r" id="rb7r${n}" style="left:${8 + n * 34}px"></i>`).join('')}<i class="bein" style="left:30px"></i><i class="bein" style="right:30px"></i>`, '', 'data-gruppe="rb7"', 'rollbahn63');
   ein('rb7', W('Lieferscheine', 29) + .1, { x: X + 1265, y: 704 }, { y: 40 }, 'whoosh');
@@ -932,7 +932,7 @@ buehne(8);
 {
   const X = S(8), G = 'data-gruppe="rg8"';
   const k = preisschild(8, { art: 'die', chip: 'die', wort: 'Inventur', zeile: ['Plural', 'die Inventuren'], nr: 8, gr: 108, ware: 't-klemm', g: 148, wb: 150 });
-  k.ein(P8 + .7); k.chip(W('Die', 32)); k.wort(W('Inventur', 32)); k.zeile(W('Die', 33));
+  k.ein(P8 + .6); k.chip(W('Die', 32)); k.wort(W('Inventur', 32)); k.zeile(W('Die', 33));
   // volles Regal
   const RX = X + 960, bo = regal('rg8', RX, 520, 320, 480, 4, G);
   ein('rg8', P8 + .9, { x: RX, y: 520 }, { y: 80 }, 'whoosh');
@@ -962,8 +962,8 @@ buehne(8);
   bump('kl8', W('Jahr', 34), 1.06); ton(W('Jahr', 34), 'ding'); akzent(W('Jahr', 34), .035);
   // Am Samstag ist Inventur: das Blatt springt auf „Samstag“, die Böden leuchten nacheinander auf
   aus(['zw8', 'sl8'], SA(35) - 1.2);
-  drucker(8, X + 1300, SA(35) - 1.0);
-  satzbon(8, X + 1300, [35, 36], 'die', ['inventur'], [3, 2, 3]);
+  drucker(8, X + 1322, SA(35) - 1.0);
+  satzbon(8, X + 1322, [35, 36], 'die', ['inventur'], [3, 2, 3]);
   const tS = W('Samstag', 35) - .2;
   tw('kl8b' + (BL - 1), tS, .18, { sy: 0, o: 0 }, 'in'); ton(tS, 'klick');
   el('kl8k' + BL).textContent = 'Samstag';
@@ -980,14 +980,14 @@ buehne(9);
 {
   const X = S(9);
   const k = preisschild(9, { art: 'der', chip: 'der', wort: 'Umtausch', zeile: ['und', '<em>die</em> Reklamation'], nr: 9, gr: 104, plgr: 42, ware: 't-pullifalt', g: 140 });
-  k.ein(P9 + .7); k.chip(W('Der', 37)); k.wort(W('Umtausch', 37)); k.zeile(W('Reklamation', 37) - .25);
+  k.ein(P9 + .6); k.chip(W('Der', 37)); k.wort(W('Umtausch', 37)); k.zeile(W('Reklamation', 37) - .25);
   neu('tr9', '', '', 'data-frei', 'trenn63');
   ein('tr9', W('Umtausch', 37), { x: X + 1190, y: 480 }, { y: 40 });
   // links: Pullover, Größe M wird zu L
   const PX = X + 975, PY = 440;
   bild('pu9', 't-pulli', 260, 'data-gruppe="pu9"');
   ein('pu9', W('Umtausch', 37) - .3, { x: PX, y: PY }, { y: 80 }, 'whoosh');
-  neu('gr9', '<span id="gr9t">M</span>', '', 'data-gruppe="pu9"', 'groesse63');
+  neu('gr9', '<span id="gr9t">M</span>', '', 'data-gruppe="pu9" data-dreht', 'groesse63');
   pop('gr9', W('Umtausch', 37) + .2, { x: PX + 70, y: PY + 85 }, 'pop');
   neu('kr9', tpl('svgKreis'), 'width:100px', 'data-dreht data-gruppe="pu9"');
   const tU = W('Umtausch', 38);
@@ -1045,36 +1045,36 @@ buehne(10);
   let liegt = [];
   const bringe = (t, ids) => {
     ids.forEach(id => { const x = wertBei(id, 'x', 0); akteur(id, { ...AKTEURE.get(el(id)).basis, x: x - 1300, o: 0 }); set(id, t, { o: 1 }); });
-    fahren([...liegt, ...ids], t, 1300, .75, 'inout'); ton(t, 'whoosh');
-    liegt.forEach(id => tw(id, t + .55, .2, { o: 0 }));
+    fahren([...liegt, ...ids], t, 1300, .95, 'inout'); ton(t, 'whoosh');
+    liegt.forEach(id => tw(id, t + .7, .2, { o: 0 }));
     liegt = ids;
   };
   const teil = (id, t, b, x, g = 146, extra = '') => { bild(id, t, b, extra, '', 'vorn'); akteur(id, { x: MX + x, y: steht(b, BAND, g) }); return id; };
   // a) gleich kommt die Ware – Karton
   const tWa = W('Ware', 43);
-  bringe(tWa - .7, [teil('o10a', 't-karton', 230, 0, 142)]);
+  bringe(tWa - .9, [teil('o10a', 't-karton', 230, 0, 142)]);
   // b) Prüf sie mit dem Lieferschein – Klemmbrett
   const tLi = W('Lieferschein', 44);
-  bringe(tLi - .7, [teil('o10b', 't-klemm', 210, 0, 148)]);
+  bringe(tLi - .9, [teil('o10b', 't-klemm', 210, 0, 148)]);
   // c) Regale auffüllen – Dosen
   const tRe = W('Regale', 46);
-  bringe(tRe - .7, [teil('o10c1', 't-dose', 150, -80, 140), teil('o10c2', 't-dose', 150, 0, 140), teil('o10c3', 't-dose', 150, 80, 140)]);
+  bringe(tRe - .9, [teil('o10c1', 't-dose', 150, -80, 140), teil('o10c2', 't-dose', 150, 0, 140), teil('o10c3', 't-dose', 150, 80, 140)]);
   // d) ab zwölf Uhr an der Kasse – Kasse, Uhr dreht auf 12
   const tKa = W('Kasse', 47);
-  bringe(W('zwölf', 47) - .7, [teil('o10d', 't-kasse', 250, 0, 144)]);
+  bringe(W('zwölf', 47) - .9, [teil('o10d', 't-kasse', 250, 0, 144)]);
   const u = uhr('uh10', MX + 250, 640, 150, 9, 'data-gruppe="uh10"');
   u.ein(W('zwölf', 47) - .2); u.auf(W('zwölf', 47) + .1, 12, .9);
   aus(['uh10', 'uh10s', 'uh10m'], SA(48) - .2);
   // e) Wechselgeld laut vorzählen – Münzen
   const tWg = W('Wechselgeld', 48);
-  bringe(tWg - .7, [0, 1, 2].map(n => teil('o10e' + n, 't-muenze', 90, (n - 1) * 95, 140, 'data-dreht')));
+  bringe(tWg - .9, [0, 1, 2].map(n => teil('o10e' + n, 't-muenze', 90, (n - 1) * 95, 140, 'data-dreht')));
   [0, 1, 2].forEach(n => { bump('o10e' + n, W('laut', 48) + n * .2, 1.15); ton(W('laut', 48) + n * .2, 'muenze'); });
   // f) umtauschen / Umtausch oder Reklamation – Pullover und Lampe
   const tUm = W('Umtausch', 50), tRk = W('Reklamation', 50);
-  bringe(W('umtauschen', 49) - .7, [teil('o10f1', 't-pullifalt', 170, -110, 140), teil('o10f2', 't-lampe', 170, 110, 146)]);
+  bringe(W('umtauschen', 49) - .9, [teil('o10f1', 't-pullifalt', 170, -110, 140), teil('o10f2', 't-lampe', 170, 110, 146)]);
   // g) Am Samstag ist Inventur in der ganzen Filiale – Laden
   const tIn = W('Inventur', 51), tFi = W('Filiale', 51);
-  bringe(W('Samstag', 51) - .7, [teil('o10g', 't-laden', 230, 0, 146)]);
+  bringe(W('Samstag', 51) - .9, [teil('o10g', 't-laden', 230, 0, 146)]);
   // Wort-Chips (Preisschilder): ploppen beim Sprechen auf, blinken, reihen sich oben ein
   const CHIPS = [['die', 'Ware', tWa], ['der', 'Lieferschein', tLi], ['die', 'Regale', tRe], ['die', 'Kasse', tKa], ['das', 'Wechselgeld', tWg],
                  ['der', 'Umtausch', tUm], ['die', 'Reklamation', tRk], ['die', 'Inventur', tIn], ['die', 'Filiale', tFi]];
@@ -1090,7 +1090,7 @@ buehne(10);
       tw(id, t - .05, .5, { s: 1.25 }, 'back'); ton(t, 'pop');
       HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
       const tF = t + .6;
-      flug(id, tF, .6, zx, 170 + ri * 76, 40, { s: 1 }); landen(id, tF + .6); ton(tF, 'whoosh');
+      flug(id, tF, .8, zx, 170 + ri * 76, 40, { s: 1 }); landen(id, tF + .8); ton(tF, 'whoosh');
     });
   });
   // Nicken der Zuhörerin, Alles klar: Haken, beide lächeln
@@ -1107,7 +1107,7 @@ buehne(10);
 
 /* ---------- Abspann: Bonpapier schiebt sich von unten ins Bild ---------- */
 const AB = ENDE_SPRACHE + 2.0;
-HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann63').style.transform = `translateY(${(1140 * (1 - p)).toFixed(1)}px)`; });
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann63').style.transform = `translateY(${(1164 * (1 - p) - 24).toFixed(1)}px)`; });
 ton(AB, 'whoosh');
 akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .55, .7, { o: 1, y: 0 }, 'weich');
 akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .9, .6, { o: 1, y: 0 }, 'weich');

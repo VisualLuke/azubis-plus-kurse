@@ -23,9 +23,17 @@ vier Wochen-Umschläge. In Szene 1 läuft er ohne Plan leer, in Szene 9 hält er
 | 8 | Konto-Anzeige rutscht unter die Null-Linie in einen roten Bereich („Dispo“), Prozent-Gewichte hängen sich daran und ziehen sie tiefer; ein Einkaufswagen schiebt sich herein, aus ihm fallen Ratenzettel „1/6“, „2/6“, „3/6“ und stapeln sich zu einem wackelnden Turm („später zahlen“); auf „Schuldnerberatung“ öffnet sich eine Tür mit Schild „Beratung“, ein Pfeil führt Mai dorthin, der Turm wird kleiner, Chip „oft kostenlos“ mit grünem Haken | Dispo und Raten: Vorsicht! · Hilfe: Schuldnerberatung |
 | 9 | Vier Stufen bauen sich auf ihre Wörter auf („Netto“, „Fixkosten“, „Notgroschen“, „Woche“), Mai hüpft Stufe für Stufe hoch (Squash & Stretch); daneben läuft der Kalender bis zum Monatsende, der Balken bleibt grün, oben ein grüner Haken, Welle | Netto · Fixkosten · Notgroschen · Woche |
 
-Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; jede Animation hängt an einem Wort aus
-`sprache.json`. Szene 1 steht ohne Titel in der Bildmitte, dann Schwenk; Kamera-Akzente auf „Netto“, „Fixkosten“,
-„Notgroschen“, „Dispo“. Abspann: „Erst planen, dann ausgeben.“ und die Kernbotschaft.
+Umsetzung im Film (Leitidee „Geld fließt durch Röhren“): Das Monatsgeld ist eine goldene Füllung in Gläsern, die Kamera
+folgt ihm durch übereinanderliegende Etagen (Bühne links, Text im Bild rechts, Wörter steigen aus einer Maske). Szene 1 mittig
+ohne Titel: Münzregen ins Glas, Monatsrad läuft bis zum 30., das Geld rinnt unten heraus; die Fragekarte dreht sich zum Plan.
+Szene 2 eine Etage höher (Gehaltszettel), dann fällt das Netto durch ein Rohr zurück ins Glas; Szene 3 verteilt es über
+Röhren in vier Fixkosten-Gläser, der Kalender mit Kreispfeil öffnet das Ventil der Miete jeden Monat. Szene 4 eine Etage tiefer:
+der Rest fließt in vier Wochen-Gläser, das Monatsrad leert sie Woche für Woche, in Woche 4 bleibt Geld. Übergang: Zoom in das
+Glas „Woche 4“ hinein und aus dem Notgroschen-Glas heraus (Szene 5). Seite umblättern zu Szene 6 (Notizzettel mit Stempel
+„Beispiel“), Kamerafahrt zu Szene 7 (Heft und Handy, Kaffeebecher-Turm wird zur Münzsäule), Schwenk zu Szene 8: Überraschung –
+die rote Falltür „Dispo“ öffnet sich, das Glas fällt in den Minus-Keller, Prozent-Gewichte ziehen es tiefer, Ratenzettel stapeln
+sich, die Tür „Beratung“ geht auf. Szene 9: Treppe Netto · Fixkosten · Notgroschen · Woche, Münzen springen Stufe für Stufe,
+das Monatsrad läuft durch, am Ende ist noch Geld da. Abspann: „Erst planen, dann ausgeben.“ und die Kernbotschaft.
 
 ## Abweichungen vom Briefing
 

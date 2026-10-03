@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Sanitär, Heizung, Klima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+body{background:linear-gradient(var(--info-bg),var(--bg) 70%)}
+/* Kamera: Ausschnitt 1920 × 1080, die Welt wird verschoben und gezoomt (Ursprung oben links) */
+#kamera{position:absolute;inset:0;overflow:hidden}
+#welt{transform-origin:0 0}
+#welt .a{will-change:auto}
+#hud{position:absolute;inset:0;pointer-events:none}
+.lage{position:absolute;left:0;top:0;width:0;height:0}
+/* ================= Hausquerschnitt ================= */
+.erde65{position:absolute;background:linear-gradient(var(--b200),var(--b300))}
+.erde65::before{content:'';position:absolute;left:0;right:0;top:0;height:22px;background:var(--success);opacity:.8}
+.erde65 i{position:absolute;border-radius:99px;background:var(--b400);opacity:.22}
+.strasse65{position:absolute;background:linear-gradient(var(--n300),var(--n200));border-top:10px solid var(--b300)}
+.strasse65 i{position:absolute;top:44px;height:12px;width:150px;border-radius:6px;background:var(--surface);opacity:.8}
+.wasser65{position:absolute;background:linear-gradient(var(--info),var(--b500));opacity:.0}
+.wasser65 i{position:absolute;height:10px;border-radius:5px;background:var(--surface);opacity:.5}
+.mauer65{position:absolute;background:repeating-linear-gradient(45deg,var(--b300) 0 18px,var(--b400) 18px 22px)}
+.dach65{position:absolute;background:linear-gradient(var(--b500),var(--b600))}
+.dachinnen65{position:absolute;background:linear-gradient(var(--b100),var(--b200))}
+.raum65{position:absolute;overflow:hidden;border-radius:6px;background:linear-gradient(var(--b50),var(--b100))}
+.raum65.keller{background:linear-gradient(var(--n200),var(--b100))}
+.raum65 .leiste{position:absolute;left:0;right:0;bottom:0;height:26px;background:var(--b200)}
+.raum65.keller .leiste{background:var(--n300)}
+.buehne.aussen{background:none;border-radius:0}
+.fliesen{position:absolute;left:0;right:0;height:114px;
+  background:linear-gradient(90deg,var(--surface) 0 6px,transparent 6px) 0 0/120px 100%,linear-gradient(var(--surface) 0 6px,transparent 6px) 0 0/100% 114px,var(--info-bg)}
+.offen65{position:absolute;border-radius:10px;background:linear-gradient(90deg,rgba(22,19,37,.10),transparent 18%,transparent 82%,rgba(22,19,37,.10)),repeating-linear-gradient(var(--b200) 0 58px,var(--b300) 58px 64px),var(--b200);box-shadow:inset 0 0 0 10px var(--b300),inset 0 14px 22px rgba(22,19,37,.12)}
+.fenster65{position:absolute;border-radius:14px;border:16px solid var(--surface);background:linear-gradient(var(--info-bg),var(--b50));box-shadow:0 10px 26px rgba(22,19,37,.10);overflow:hidden}
+.fenster65::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:12px;margin-left:-6px;background:var(--surface)}
+.fenster65 .warm{position:absolute;inset:0;background:linear-gradient(var(--warning-bg),var(--error-bg));opacity:0}
+.theke65{position:absolute;border-radius:10px;background:linear-gradient(var(--b200),var(--b300))}
+/* Rohre (SVG-Ebene) */
+#rohre path,#faeden path{fill:none}
+/* ================= Format „Fachvokabeln“: Wortkarte als Anhänger am Bauteil ================= */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface)}
+.neutral{--f:var(--b200);--ft:var(--b600);--fa:var(--b700)}
+.tag65{width:600px;height:262px;border-radius:30px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.16);
+  padding:26px 34px 24px 116px;display:flex;flex-direction:column;transform-origin:46px 46px}
+.tag65 .streifen{position:absolute;left:0;top:0;bottom:0;width:92px;border-radius:30px 0 0 30px;background:var(--f)}
+.tag65 .oese{position:absolute;left:28px;top:28px;width:36px;height:36px;border-radius:99px;background:var(--b100);border:7px solid var(--n300)}
+.tag65 .kopf{display:flex;align-items:center;justify-content:space-between;height:46px;flex:none}
+.tag65 .art{display:inline-block;padding:3px 22px;border-radius:999px;background:var(--f);color:var(--fa);font:800 30px/40px Inter;white-space:nowrap}
+.tag65 .stuecke{display:flex;gap:6px;align-items:center}
+.tag65 .stuecke i{display:block;width:20px;height:10px;border-radius:3px;background:var(--n200)}
+.tag65 .stuecke i.fertig{background:var(--b200)}
+.tag65 .stuecke i.jetzt{width:34px;background:var(--f);transform-origin:left center}
+.tag65 .wort{margin-top:14px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.tag65.ohne .wort{margin:auto 0}
+.tag65 .pl{margin-top:auto;display:flex;align-items:baseline;gap:16px;font:600 38px/46px Inter;color:var(--n700);white-space:nowrap}
+.tag65 .pl small{font:700 20px/24px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+/* Satzleiste oben (Bildschirm-Ebene): Porträt + Beispielsatz, der sich tippt */
+.zeile65{display:flex;align-items:center;gap:24px;padding:16px 36px 16px 16px;border-radius:999px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.14);
+  font:600 34px/44px Inter;color:var(--ink);white-space:nowrap;max-width:1600px}
+.zeile65 .pp{position:relative;flex:none;width:96px;height:96px}
+.zeile65 .pp .portrait{position:absolute;left:0;top:0}
+.zeile65 .sw{display:inline-block;white-space:nowrap}
+.zeile65 u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.zeile65 .sw.lw u{color:var(--ft);font-weight:800}
+.zeile65 .q{color:var(--b300);font-weight:800}
+.lg{display:inline-block;padding:6px 26px;border-radius:999px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;margin:0 8px;box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.chip{display:flex;align-items:center;justify-content:center;height:58px;padding:0 26px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.16)}
+.chip b{font-weight:600;opacity:.85;margin-right:9px}
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface);
+  font:800 36px/1 Inter;color:var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b400)} .plakette.blau{background:var(--info)}
+.etikett{padding:10px 24px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 26px/32px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.10)}
+.etikett b{font-weight:800;color:var(--ink)}
+.etikett.gas{background:var(--warning);color:var(--ink)}
+.strahl65{width:16px;border-radius:8px;background:linear-gradient(var(--info),var(--info-bg));transform-origin:50% 0}
+.socket65{width:56px;height:56px;border-radius:99px;background:var(--n300);box-shadow:inset 0 0 0 10px var(--n200),0 4px 10px rgba(22,19,37,.2)}
+.tint65{border-radius:20px;mix-blend-mode:multiply}
+/* Schnitt-Lupe (Dichtung) */
+.lupe65{border-radius:999px;background:radial-gradient(var(--surface),var(--info-bg));border:10px solid var(--b300);box-shadow:0 20px 50px rgba(22,19,37,.18);overflow:hidden}
+.teil65{border-radius:16px;background:linear-gradient(90deg,var(--n300),var(--n200) 35%,var(--surface) 50%,var(--n200) 65%,var(--n300))}
+.teil65.ob{border-radius:30px 30px 10px 10px}
+.teil65.un{border-radius:10px 10px 30px 30px}
+.teil65 i{position:absolute;left:50%;width:44px;margin-left:-22px;background:var(--b100);top:0;bottom:0}
+/* Thermostat-Walze */
+.walze65{width:420px;height:170px;border-radius:40px;background:linear-gradient(var(--n200),var(--surface) 40%,var(--surface) 60%,var(--n200));box-shadow:0 14px 36px rgba(22,19,37,.16);overflow:hidden}
+.walze65 .zz{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center}
+.walze65 .zz b{display:block;width:100px;text-align:center;font:800 76px/1 Inter;color:var(--ink)}
+.walze65 .mark{position:absolute;left:50%;top:0;width:0;height:0;margin-left:-16px;border:16px solid transparent;border-top:22px solid var(--b500)}
+.walze65 .sch{position:absolute;inset:0;background:linear-gradient(90deg,var(--n200),transparent 25%,transparent 75%,var(--n200))}
+/* Liste auf dem Klemmbrett */
+.liste65{width:200px}
+.liste65 div{display:flex;align-items:center;gap:12px;height:44px}
+.liste65 .bx{width:30px;height:30px;border-radius:8px;border:4px solid var(--b300);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.liste65 .bx svg{width:24px}
+.liste65 .ln{height:10px;border-radius:5px;background:var(--n200);flex:1}
+.kblatt65{width:150px;height:170px;border-radius:20px;background:var(--surface);box-shadow:0 10px 24px rgba(22,19,37,.12);overflow:hidden;text-align:center}
+.kblatt65::before{content:'';display:block;height:40px;background:var(--b400)}
+.kblatt65 b{display:block;margin-top:24px;font:800 30px/34px Inter;color:var(--ink)}
+.kblatt65 span{display:block;font:700 22px/26px Inter;color:var(--b600)}
+/* Abspann: Wasser steigt */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700))}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHakenL"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgFrage"><svg viewBox="0 0 40 40"><path d="M13 14a7 7 0 1 1 10 6c-2 1-3 3-3 5" stroke="var(--surface)" stroke-width="5.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="33" r="3.4" fill="var(--surface)"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+
+<template id="t-zange">{{rohrzange}}</template>
+<template id="t-backe">{{rohrzange-backe}}</template>
+<template id="t-becken">{{waschbecken}}</template>
+<template id="t-armatur">{{armatur}}</template>
+<template id="t-hebel">{{armatur-hebel}}</template>
+<template id="t-spuele">{{spuele}}</template>
+<template id="t-dusche">{{dusche}}</template>
+<template id="t-dichtung">{{dichtung}}</template>
+<template id="t-dichtungK">{{dichtung-kaputt}}</template>
+<template id="t-ventil">{{ventil}}</template>
+<template id="t-vhebel">{{ventil-hebel}}</template>
+<template id="t-vhebelG">{{ventil-hebel-gas}}</template>
+<template id="t-hk">{{heizkoerper}}</template>
+<template id="t-thermostat">{{thermostat}}</template>
+<template id="t-kessel">{{heizkessel}}</template>
+<template id="t-klappe">{{heizkessel-klappe}}</template>
+<template id="t-flamme">{{flamme}}</template>
+<template id="t-wp">{{waermepumpe}}</template>
+<template id="t-luefter">{{luefter}}</template>
+<template id="t-van">{{transporter}}</template>
+<template id="t-vantuer">{{transporter-tuer}}</template>
+<template id="t-rad">{{rad}}</template>
+<template id="t-mutter">{{mutter}}</template>
+<template id="t-tasche">{{werkzeugtasche}}</template>
+<template id="t-kalender">{{kalender}}</template>
+<template id="t-klemm">{{klemmbrett}}</template>
+<template id="t-flocke">{{schneeflocke}}</template>
+<template id="t-thermo">{{thermometer}}</template>
+<template id="t-saeule">{{thermo-saeule}}</template>
+<template id="t-schluessel">{{schraubenschluessel}}</template>
+<template id="t-tuch">{{handtuch}}</template>
+<template id="t-tropfen">{{tropfen}}</template>
+<template id="t-achtung">{{zeichen-achtung}}</template>
+<template id="t-karton">{{karton}}</template>
+<template id="t-bett">{{bett-einzel}}</template>
+<template id="t-decke">{{decke-einzel}}</template>
+<template id="t-pflanze">{{pflanze}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Kwame">{{figur-kwame}}</template>
+<template id="f-Geselle">{{figur-geselle}}</template>
+
+<div id="kamera"><div id="welt">
+  <div id="aussen"></div>
+  <div id="haus"></div>
+  <svg id="rohre" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="lage" id="teile"></div>
+  <svg id="faeden" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="lage" id="karten"></div>
+</div></div>
+<div id="hud"></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Teile kennen. Sicher arbeiten.</div>
+  <div class="klein" id="asUnter">Rohr, Ventil, Heizkessel: Wer die Teile beim Namen kennt, versteht jeden Auftrag – und arbeitet sicher.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt'), TEILE = document.getElementById('teile'), KARTEN = document.getElementById('karten'), HUD = document.getElementById('hud');
+const NS = 'http://www.w3.org/2000/svg';
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '', lage = TEILE) => { lage.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const bild = (id, t, breite, attr = '', stil = '', lage = TEILE) => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr, '', lage);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 * (wertBei([].concat(ids)[0], 's', t) || 1) }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const federn = (id, t) => { tw(id, t, .12, { sy: .96, sx: 1.025 }, 'sinus'); tw(id, t + .12, .4, { sy: 1, sx: 1 }, 'sanft'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+let WN = 0;
+// Welle (Ring) in Weltkoordinaten; gr in Bildschirm-px, z = Zoom der Szene
+const wellen = (t, x, y, farbe = null, gr = 160, z = 1, lage = TEILE) => {
+  const id = 'wl' + WN++; neu(id, '', `width:${gr / z}px;height:${gr / z}px;border-width:${5 / z}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle', lage);
+  akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, .9, { o: 0, s: 1.6 }, 'weich');
+};
+const plakette = (id, farbe, svg, attr = 'data-frei', lage = TEILE) => neu(id, svg ? tpl(svg) : '', '', attr, 'plakette ' + farbe, lage);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const summen = (id, t, d = .8, a = 4) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const rollen = (id, t, x, d = .7, e = 'sanft') => { tw(id, t, d, { x }, e); };
+function tippen(id, text, t0, d, klang = true) {
+  const e = el(id), zeichen = [...text];
+  e.innerHTML = zeichen.map(c => `<u style="display:inline-block;text-decoration:none;white-space:pre">${c}</u>`).join('');
+  const us = [...e.querySelectorAll('u')], z = us.map((u, k) => t0 + d * k / Math.max(1, us.length));
+  HOOKS.push(t => us.forEach((u, k) => { const p = clamp((t - z[k]) / .08); u.style.opacity = p; }));
+  if (klang) z.filter((_, k) => k % 2 === 0 && zeichen[k] !== ' ').forEach(tz => cue(tz, 'tipp'));
+  return z;
+}
+// Leuchten: Bauteil glüht in einer Farbe (feste Pulsfrequenz, nur die Stärke ändert sich)
+const GLUT = [];
+const leuchten = (id, t0, t1, farbe = 'var(--b400)', st = 1) => GLUT.push({ id, t0, t1, farbe, st });
+HOOKS.push(t => {
+  const an = new Map();
+  for (const g of GLUT) {
+    const k = clamp((t - g.t0) / .3) * clamp((g.t1 - t) / .4);
+    if (k <= 0) continue;
+    const v = k * g.st * (.75 + .25 * Math.sin(t * 6.3));
+    const alt = an.get(g.id); if (!alt || alt.v < v) an.set(g.id, { v, farbe: g.farbe });
+  }
+  for (const g of GLUT) { const e = el(g.id); const x = an.get(g.id); e.style.filter = x ? `drop-shadow(0 0 ${(26 * x.v).toFixed(1)}px ${x.farbe}) drop-shadow(0 0 ${(8 * x.v).toFixed(1)}px ${x.farbe})` : ''; }
+});
+
+/* ================= Kamera: fährt durch das Haus (Position x/y in Weltkoordinaten, Zoom z) ================= */
+const KAM = [];
+let KSTART = { x: 1100, y: 540, z: 1 };
+// kam(t0, d, ziel, { via: [[x,y],…], e, hops }) – fährt über Wegpunkte, Zoom logarithmisch; hops: Zoom zwischendurch kurz zurück
+function kam(t0, d, ziel, o = {}) { KAM.push({ t0, d, ziel, via: o.via || [], e: o.e || 'inout', hop: o.hop || 0 }); }
+function kamWert(t, n) {
+  let v = KSTART;
+  for (let i = 0; i < n; i++) {
+    const k = KAM[i]; if (k.t0 > t) break;
+    const von = k.von ??= kamWert(k.t0, i);
+    const u = E[k.e](clamp((t - k.t0) / k.d));
+    const P = [[von.x, von.y], ...k.via, [k.ziel.x, k.ziel.y]];
+    if (!k.L) { k.seg = []; k.L = 0; for (let j = 1; j < P.length; j++) { const l = Math.hypot(P[j][0] - P[j - 1][0], P[j][1] - P[j - 1][1]); k.seg.push(l); k.L += l; } }
+    let s = u * k.L, j = 0; while (j < k.seg.length - 1 && s > k.seg[j]) { s -= k.seg[j]; j++; }
+    const q = k.seg[j] ? clamp(s / k.seg[j]) : 1;
+    const zl = Math.exp(lerp(Math.log(von.z), Math.log(k.ziel.z), u)) * (1 - k.hop * Math.sin(Math.PI * u));
+    v = { x: lerp(P[j][0], P[j + 1][0], q), y: lerp(P[j][1], P[j + 1][1], q), z: zl };
+  }
+  return v;
+}
+const AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+function kameraBei(t) {
+  const v = kamWert(t, KAM.length);
+  let z = v.z;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...KAM.filter(k => k.t0 + k.d <= t).map(k => k.t0 + k.d));
+  z *= 1 + .025 * E.inout(clamp((t - letzte) / 9));
+  return { x: v.x, y: v.y, z };
+}
+// Bildschirmpunkt (sx, sy) bei Kamera c → Weltpunkt
+const WP = (c, sx, sy) => ({ x: c.x + (sx - 960) / c.z, y: c.y + (sy - 540) / c.z });
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+HOOKS.push(t => {
+  const c = kameraBei(t), c0 = kameraBei(t - 1 / 30);
+  WELT.style.transform = `translate(${(960 - c.z * c.x).toFixed(2)}px,${(540 - c.z * c.y).toFixed(2)}px) scale(${c.z.toFixed(5)})`;
+  const dx = (c.x - c0.x) * c.z, dy = (c.y - c0.y) * c.z, dz = Math.abs(Math.log(c.z / c0.z)) * 900;
+  const bx = Math.min(16, Math.abs(dx) * .09 + dz * .04), by = Math.min(16, Math.abs(dy) * .09 + dz * .04);
+  el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('kamera').style.filter = bx + by > .6 ? 'url(#wischer)' : '';
+});
+
+/* ================= Haus: Räume (Bühnen), Mauern, Dach, Erde, Straße, Garten ================= */
+const XL0 = 0, XL1 = 2200, XR0 = 2260, XR1 = 4460, OG0 = 0, OG1 = 1000, EG0 = 1060, EG1 = 2060, KE0 = 2120, KE1 = 3020, BODEN = 2090;
+const HAUS = el('haus'), AUSSEN = el('aussen');
+const box = (x0, y0, x1, y1) => `left:${x0}px;top:${y0}px;width:${x1 - x0}px;height:${y1 - y0}px`;
+AUSSEN.insertAdjacentHTML('beforeend', `
+  <div class="erde65" style="${box(-3200, BODEN, 7200, 3700)}">${Array.from({ length: 46 }, (_, k) => `<i style="left:${(k * 997) % 10300}px;top:${80 + (k * 389) % 1500}px;width:${26 + (k % 4) * 14}px;height:${14 + (k % 3) * 6}px"></i>`).join('')}</div>
+  <div class="wasser65" id="gw" style="${box(XR1 + 60, 2830, 7200, 2990)}">${Array.from({ length: 12 }, (_, k) => `<i id="gww${k}" style="left:0;top:${30 + (k % 3) * 40}px;width:${90 + (k % 4) * 30}px"></i>`).join('')}</div>
+  <div class="strasse65" style="${box(-3200, BODEN - 10, -60, BODEN + 110)}">${Array.from({ length: 9 }, (_, k) => `<i style="left:${120 + k * 360}px"></i>`).join('')}</div>`);
+HAUS.insertAdjacentHTML('beforeend', `
+  <div class="dach65" style="${box(-300, -900, XR1 + 360, -40)};clip-path:polygon(0 100%,50% 0,100% 100%)"></div>
+  <div class="dachinnen65" style="${box(-120, -770, XR1 + 180, -60)};clip-path:polygon(0 100%,50% 0,100% 100%)"></div>
+  <div class="mauer65" style="${box(-60, -60, XR1 + 60, KE1 + 60)}"></div>`);
+const RAEUME = { bad: [XL0, OG0, XL1, OG1], schlaf: [XR0, OG0, XR1, OG1], kueche: [XL0, EG0, XL1, EG1], wohn: [XR0, EG0, XR1, EG1], kellerL: [XL0, KE0, XL1, KE1], kellerR: [XR0, KE0, XR1, KE1] };
+for (const [n, [x0, y0, x1, y1]] of Object.entries(RAEUME))
+  HAUS.insertAdjacentHTML('beforeend', `<div class="a buehne raum65${n.startsWith('keller') ? ' keller' : ''}" id="r-${n}" style="${box(x0, y0, x1, y1)}"><div class="leiste"></div></div>`);
+// Garten und Straße: Bühnen ohne Fläche (nur für die Kantenprüfung)
+HAUS.insertAdjacentHTML('beforeend', `<div class="a buehne aussen" id="r-garten" style="${box(XR1 + 120, 800, 6900, 3300)}"></div><div class="a buehne aussen" id="r-strasse" style="${box(-3000, 900, -120, 2400)}"></div>`);
+const raum = (n, html) => el('r-' + n).insertAdjacentHTML('afterbegin', html);
+// Bad: Fliesen (Reihen ploppen im Intro), offene Wand
+raum('bad', `${[0, 1, 2, 3, 4].map(k => `<div class="fliesen" id="fl${k}" style="top:${430 + k * 114}px"></div>`).join('')}<div class="offen65" style="${box(700, 120, 1020, 960)}"></div>`);
+raum('kueche', `<div class="fenster65" style="${box(150, 180, 610, 560)}"><div class="warm" id="fwK"></div></div><div class="fliesen" style="top:600px;height:228px;left:1310px;right:410px"></div>`);
+raum('wohn', `<div class="fenster65" style="${box(1240, 120, 1740, 540)}"><div class="warm" id="fwW"></div></div>`);
+raum('schlaf', `<div class="fenster65" style="${box(1240, 120, 1740, 540)}"><div class="warm" id="fwS"></div></div>`);
+
+/* ================= Rohre ================= */
+const ROHRE = {};
+const FARBE = { kalt: 'var(--info)', heiz: 'var(--error)', gas: 'var(--warning)', wp: 'var(--error)', erde: 'var(--info)', luft: 'var(--surface)' };
+const RSVG = el('rohre');
+RSVG.setAttribute('viewBox', '-3200 -1000 10400 4800');
+RSVG.style.cssText = 'position:absolute;left:-3200px;top:-1000px;width:10400px;height:4800px;overflow:visible';
+// Schlüsselwerte: [t, d, ziel, easing] → Wert zur Zeit t
+const kw = (liste, t, basis = 0) => { let v = basis; for (const k of liste) { if (k[0] > t) break; const von = k.von ??= kw(liste.slice(0, liste.indexOf(k)), k[0], basis); v = lerp(von, k[2], E[k[3] || 'inout'](clamp((t - k[0]) / k[1]))); } return v; };
+function rohr(id, pts, art, o = {}) {
+  const d = 'M' + pts.map(p => p.join(' ')).join('L');
+  let L = 0; for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+  const b = o.breite || 30, luft = art === 'luft';
+  const g = document.createElementNS(NS, 'g'); g.id = 'r-' + id;
+  g.innerHTML = luft
+    ? `<path d="${d}" stroke="var(--surface)" stroke-width="10" stroke-linecap="round" stroke-dasharray="40 50" opacity="0" class="rs"/>`
+    : `<path d="${d}" stroke="var(--b700)" stroke-opacity=".18" stroke-width="${b + 10}" stroke-linejoin="round" class="rm"/>
+       <path d="${d}" stroke="var(--n300)" stroke-width="${b}" stroke-linejoin="round" class="rk"/>
+       <path d="${d}" stroke="var(--b50)" stroke-width="${b - 12}" stroke-linejoin="round" class="rc"/>
+       <path d="${d}" stroke="${FARBE[art]}" stroke-width="${b - 12}" stroke-linejoin="round" class="rf"/>
+       <path d="${d}" stroke="var(--surface)" stroke-width="${b * .3}" stroke-linecap="round" stroke-dasharray="${b * .9} ${b * 2.6}" opacity="0" class="rs"/>
+       <path d="${d}" stroke="var(--surface)" stroke-width="${b - 8}" stroke-linecap="round" stroke-dasharray="0 ${L + 999}" opacity=".85" class="rg"/>`;
+  RSVG.appendChild(g);
+  ROHRE[id] = { L, art, zeig: [], fuell: [], fl: [], glanz: [], g, start: o.da ? 1 : 0 };
+  return id;
+}
+const zeige = (id, t, d = .8, p = 1, e = 'inout') => ROHRE[id].zeig.push([t, d, p, e]);
+const fuelle = (id, t, d = .8, p = 1, e = 'inout') => ROHRE[id].fuell.push([t, d, p, e]);
+const fluss = (id, t, v = 120, r = .4) => ROHRE[id].fl.push([t, v, r]);
+const glanz = (id, t, d = .9) => ROHRE[id].glanz.push([t, d]);
+function rohreFertig() {
+  for (const r of Object.values(ROHRE)) {
+    r.zeig.sort((a, b) => a[0] - b[0]); r.fuell.sort((a, b) => a[0] - b[0]); r.fl.sort((a, b) => a[0] - b[0]);
+    let cur = 0; r.pkt = [[0, 0]];
+    for (const [t, v, rr] of r.fl) { r.pkt.push([t, cur], [t + rr, v]); cur = v; }
+    const P = s => s.map(([t, d, p, e]) => [t, d, p, e]);
+    r.zeig = P(r.zeig); r.fuell = P(r.fuell);
+    r.el = { rm: r.g.querySelector('.rm'), rk: r.g.querySelector('.rk'), rc: r.g.querySelector('.rc'), rf: r.g.querySelector('.rf'), rs: r.g.querySelector('.rs'), rg: r.g.querySelector('.rg') };
+  }
+}
+// Weg der Impulse: Integral der Geschwindigkeit (stückweise linear)
+function weg(r, t) {
+  let s = 0; const p = r.pkt;
+  for (let i = 1; i < p.length; i++) {
+    const [t0, v0] = p[i - 1], [t1, v1] = p[i];
+    if (t <= t0) break;
+    const te = Math.min(t, t1), dt = te - t0;
+    if (dt > 0 && t1 > t0) s += dt * (v0 + (v0 + (v1 - v0) * dt / (t1 - t0))) / 2;
+  }
+  const last = p[p.length - 1]; if (t > last[0]) s += (t - last[0]) * last[1];
+  return s;
+}
+const vBei = (r, t) => { const p = r.pkt; let v = 0; for (let i = 1; i < p.length; i++) { if (t < p[i - 1][0]) break; v = t >= p[i][0] ? p[i][1] : lerp(p[i - 1][1], p[i][1], (t - p[i - 1][0]) / Math.max(1e-4, p[i][0] - p[i - 1][0])); } return v; };
+HOOKS.push(t => {
+  for (const r of Object.values(ROHRE)) {
+    const z = kw(r.zeig, t, r.start), f = kw(r.fuell, t, r.start), v = vBei(r, t);
+    const L = r.L;
+    if (r.art === 'luft') {
+      r.el.rs.setAttribute('opacity', (clamp(v / 60) * .8).toFixed(3));
+      r.el.rs.setAttribute('stroke-dashoffset', (-weg(r, t)).toFixed(1));
+      continue;
+    }
+    for (const k of ['rm', 'rk', 'rc']) { r.el[k].setAttribute('stroke-dasharray', `${(L * z).toFixed(1)} ${L + 10}`); }
+    r.el.rf.setAttribute('stroke-dasharray', `${(L * Math.min(f, z)).toFixed(1)} ${L + 10}`);
+    r.el.rs.setAttribute('opacity', (clamp(v / 50) * .8 * (f > .98 ? 1 : 0)).toFixed(3));
+    r.el.rs.setAttribute('stroke-dashoffset', (-weg(r, t)).toFixed(1));
+    let gl = null; for (const [t0, d] of r.glanz) if (t >= t0 && t < t0 + d) gl = (t - t0) / d;
+    if (gl == null) { r.el.rg.setAttribute('stroke-dasharray', `0 ${L + 999}`); r.el.rg.setAttribute('opacity', 0); }
+    else { const len = Math.min(260, L * .4), s = E.inout(gl) * (L + len) - len; r.el.rg.setAttribute('stroke-dasharray', `0 ${Math.max(0, s).toFixed(1)} ${(Math.min(len, len + s)).toFixed(1)} ${L + 999}`); r.el.rg.setAttribute('opacity', (.85 * Math.sin(Math.PI * gl)).toFixed(3)); }
+  }
+});
+
+// Leitungen (Wasser kalt blau, Heizwasser rot, Gas gelb)
+rohr('kaltHaupt', [[-1600, 2700], [860, 2700]], 'kalt');
+rohr('kaltSteig', [[860, 2700], [860, 230]], 'kalt');
+rohr('kaltBad', [[860, 760], [1550, 760], [1550, 690]], 'kalt');
+rohr('kaltKueche', [[860, 1960], [1640, 1960]], 'kalt');
+rohr('kaltKessel', [[860, 2700], [2960, 2700]], 'kalt');
+rohr('dusche1', [[860, 880], [355, 880]], 'kalt');
+rohr('dusche2', [[355, 880], [355, 676]], 'kalt');
+rohr('gas', [[-1600, 2420], [2700, 2420], [2700, 2650], [2960, 2650]], 'gas', { breite: 26 });
+rohr('heizVL', [[3025, 2560], [3025, 2240], [2500, 2240], [2500, 960]], 'heiz');
+rohr('heizWohn', [[2500, 2010], [3574, 2010], [3574, 1990]], 'heiz');
+rohr('heizSchlaf', [[2500, 960], [3574, 960], [3574, 930]], 'heiz');
+rohr('heizKueche', [[2500, 2010], [204, 2010], [204, 1990]], 'heiz');
+rohr('wpLeitung', [[5020, 2060], [5020, 2330], [3025, 2330]], 'wp');
+rohr('erde', [[5320, 2080], [5320, 2360], [6300, 2360], [6300, 2460], [4800, 2460], [4800, 2560], [6300, 2560]], 'erde', { breite: 24 });
+rohr('brunnen', [[5200, 2080], [5200, 2880]], 'erde', { breite: 24 });
+rohr('luft1', [[4500, 1450], [4700, 1600], [5000, 1760], [5098, 1925]], 'luft');
+rohr('luft2', [[5100, 1250], [5060, 1500], [5098, 1925]], 'luft');
+rohr('luft3', [[4420, 1800], [4800, 1820], [5098, 1925]], 'luft');
+const KALT = ['kaltHaupt', 'kaltSteig', 'kaltBad', 'kaltKueche', 'kaltKessel'], HEIZ = ['heizVL', 'heizWohn', 'heizSchlaf', 'heizKueche'];
+
+/* ================= Bauteile im Haus ================= */
+// Dusche, Waschbecken + Armatur (Hebel), Mutter am Abzweig
+bild('dusche', 't-dusche', 360, 'data-gruppe="dusche"'); akteur('dusche', { x: 450, y: 520 });
+bild('becken', 't-becken', 420, 'data-gruppe="becken"'); akteur('becken', { x: 1550, y: 720 });
+const ARM = { x: 1550, y: 591 };
+bild('arm', 't-armatur', 200, 'data-gruppe="becken"'); akteur('arm', { ...ARM });
+bild('armH', 't-hebel', 200, 'data-gruppe="becken" data-dreht', 'transform-origin:48.75% 40%'); akteur('armH', { ...ARM });
+neu('strahl', '', 'height:96px', 'data-gruppe="becken"', 'strahl65'); akteur('strahl', { x: 1550 + (32 - 80) * 1.25, y: 621 + 48, sy: 0 });
+neu('sock', '', '', 'data-gruppe="mutter"', 'socket65'); akteur('sock', { x: 860, y: 600 });
+bild('mutter', 't-mutter', 96, 'data-gruppe="mutter" data-dreht'); akteur('mutter', { x: 860, y: 600, s: 0 });
+// Küche: Spüle, Heizkörper unter dem Fenster
+bild('spuele', 't-spuele', 380, 'data-gruppe="spuele"'); akteur('spuele', { x: 1550, y: 1880 });
+const HK = { kueche: { x: 380, y: 1870 }, wohn: { x: 3750, y: 1870 }, schlaf: { x: 3750, y: 810 } };
+for (const [n, p] of Object.entries(HK)) {
+  bild('hk-' + n, 't-hk', 520, `data-gruppe="hk${n}"`); akteur('hk-' + n, { ...p });
+  bild('th-' + n, 't-thermostat', 200, `data-gruppe="hk${n}"`); akteur('th-' + n, { x: p.x + 304, y: p.y - 78 });
+  neu('kalt-' + n, '', 'width:462px;height:240px;background:var(--info);opacity:0', `data-gruppe="hk${n}"`, 'tint65'); akteur('kalt-' + n, { x: p.x - 11, y: p.y - 11, o: 0 });
+}
+bild('bett', 't-bett', 420, 'data-gruppe="bett"'); akteur('bett', { x: 2850, y: 860 });
+bild('decke', 't-decke', 420, 'data-gruppe="bett"'); akteur('decke', { x: 2850, y: 860 });
+bild('pflanze', 't-pflanze', 260); akteur('pflanze', { x: 2560, y: 1880 });
+// Keller: Kugelhähne (Wasser, Gas), Heizkessel mit Klappe und Flamme
+const V1 = { x: 420, y: 2667 }, VG = { x: 420, y: 2381 };
+bild('v1', 't-ventil', 240, 'data-gruppe="v1"'); akteur('v1', { ...V1 });
+bild('v1h', 't-vhebel', 240, 'data-gruppe="v1" data-dreht', 'transform-origin:50% 35%'); akteur('v1h', { ...V1, r: 0 });
+const KX = { x: 3100, y: 2780 };
+bild('kessel', 't-kessel', 460, 'data-gruppe="kessel"'); akteur('kessel', { ...KX });
+bild('flamme', 't-flamme', 460, 'data-gruppe="kessel"', 'transform-origin:50% 66%'); akteur('flamme', { ...KX, s: 0 });
+bild('klappe', 't-klappe', 460, 'data-gruppe="kessel"', 'transform-origin:35.6% 57.5%'); akteur('klappe', { ...KX });
+// Garten: Wärmepumpe mit Lüfter
+const WPP = { x: 5150, y: 1925 };
+bild('wp', 't-wp', 420, 'data-gruppe="wp"'); akteur('wp', { ...WPP });
+bild('luefter', 't-luefter', 420, 'data-gruppe="wp" data-dreht', 'transform-origin:37.5% 51.25%'); akteur('luefter', { ...WPP });
+const LUEFTER = [];   // [t, umdrehungen pro Sekunde, rampe]
+const drehe = (t, v, r = .6) => LUEFTER.push([t, v, r]);
+
+/* ================= Wortkarte (Anhänger) mit Faden zum Bauteil ================= */
+const GENUS = ['der', 'die', 'das'];
+const FSVG = el('faeden');
+FSVG.setAttribute('viewBox', '-3200 -1000 10400 4800');
+FSVG.style.cssText = 'position:absolute;left:-3200px;top:-1000px;width:10400px;height:4800px;overflow:visible';
+const FAEDEN = [];
+function faden(id, anker, oese, t0, z = 1, farbe = 'var(--b400)') {
+  const p = document.createElementNS(NS, 'path'); p.setAttribute('stroke', farbe); p.setAttribute('stroke-width', (5 / z).toFixed(2)); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('pathLength', '1');
+  const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', (11 / z).toFixed(1)); c.setAttribute('fill', 'var(--surface)'); c.setAttribute('stroke', farbe); c.setAttribute('stroke-width', (5 / z).toFixed(2));
+  FSVG.append(p, c);
+  const f = { p, c, anker, oese, t0, z, aus: Infinity, an: [] };
+  FAEDEN.push(f); return f;
+}
+HOOKS.push(t => {
+  for (const f of FAEDEN) {
+    const a = typeof f.anker === 'function' ? f.anker(t) : f.anker, o = f.oese;
+    const dr = clamp((t - f.t0) / .35), op = clamp((f.aus - t) / .3) * (t >= f.t0 ? 1 : 0);
+    const mx = (a[0] + o[0]) / 2, my = (a[1] + o[1]) / 2 + (30 + .08 * Math.hypot(o[0] - a[0], o[1] - a[1])) / f.z * f.z;
+    f.p.setAttribute('d', `M${a[0].toFixed(1)} ${a[1].toFixed(1)}Q${mx.toFixed(1)} ${my.toFixed(1)} ${o[0].toFixed(1)} ${o[1].toFixed(1)}`);
+    f.p.style.strokeDasharray = '1 1'; f.p.style.strokeDashoffset = 1 - E.out(dr);
+    f.p.style.opacity = op; f.c.style.opacity = op * clamp(dr * 4);
+    f.c.setAttribute('cx', a[0].toFixed(1)); f.c.setAttribute('cy', a[1].toFixed(1));
+  }
+});
+// karte(i, { art, wort, plural, gr, oese: [x, y], z, anker }) – Öse liegt bei (x, y); die Karte hängt nach rechts unten
+function karte(i, o) {
+  const id = 'vk' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral', s = 1 / o.z;
+  const woerter = o.wort.split(' ');
+  neu(id, `<div class="streifen"></div><div class="oese"></div>
+    <div class="kopf"><span class="art" id="${id}a">${o.art}</span><span class="stuecke">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(k => `<i class="${k === i ? 'jetzt' : k < i ? 'fertig' : ''}" ${k === i ? `id="${id}d"` : ''}></i>`).join('')}</span></div>
+    <div class="wort" id="${id}wt" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.plural ? `<div class="pl" id="${id}p"><small>Plural</small><span>${o.plural}</span></div>` : ''}`, '', o.attr || '', `tag65 ${kl}${o.plural ? '' : ' ohne'}`, KARTEN);
+  const x = o.oese[0] + 300 - 46, y = o.oese[1] + 131 - 46;
+  akteur(id, { x, y, s, o: 0, r: -26 });
+  akteur(id + 'a', { s: 0 }, true); akteur(id + 'd', { sx: .3 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.plural) akteur(id + 'p', { o: 0, x: -40 }, true);
+  let f = null;
+  return {
+    id,
+    ein: t => {
+      f = faden(id, o.anker, o.oese, t - .3, o.z);
+      tw(id, t, .2, { o: 1 }); tw(id, t, .32, { r: 9 }, 'sinus'); tw(id, t + .32, .3, { r: -5 }, 'sinus'); tw(id, t + .62, .3, { r: 2.5 }, 'sinus'); tw(id, t + .92, .35, { r: 0 }, 'sanft');
+      cue(t - .25, 'whoosh'); cue(t + .05, 'klick');
+    },
+    chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); cue(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .025); cue(t0, 'klick'); },
+    zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); cue(t, 'pop'); },
+    weg: t => { tw(id, t, .35, { o: 0, s: s * .9 }, 'in'); if (f) f.aus = t + .1; },
+    faden: () => f,
+  };
+}
+const chipHTML = (art, text) => art ? `<b>${art}</b>${text}` : text;
+// Chip in Weltkoordinaten (Größe für Zoom z)
+function chip(id, art, text, x, y, z, attr = '') { neu(id, chipHTML(art, text), '', attr, 'chip ' + (art || 'neutral'), KARTEN); akteur(id, { x, y, s: 0 }); return { ein: t => { tw(id, t, .5, { s: 1 / z }, 'back'); cue(t, 'pop'); } }; }
+
+/* ---------- Satzleiste oben (Bildschirm-Ebene) ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [];
+function portraitHTML(id, wer, gr) {
+  return `<div class="a portrait" id="${id}" data-sprecher="${wer}" style="width:${gr}px;height:${gr}px"><div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${tpl('gesicht')}</div></div>`;
+}
+function portrait(id, wer, gr, attr = '', lage = TEILE) {
+  lage.insertAdjacentHTML('beforeend', portraitHTML(id, wer, gr).replace('class="a portrait"', `class="a portrait" ${attr}`));
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) { const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue; y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q); }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+function satzleiste(i, ns, art, lern) {
+  ns = [].concat(ns);
+  const id = 'sl' + i, kl = GENUS.includes(art) ? art : 'neutral';
+  const teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok, lern: _norm(tok), w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  neu(id, `<div class="pp">${portraitHTML(id + 'p', satz(ns[0]).sprecher, 96)}</div><div class="tx">${teile.map((p, j) => `<span class="sw${lern.includes(p.lern) ? ' lw' : ''}">${j === 0 ? `<span class="q" id="${id}q1">„</span>` : ''}${[...p.tok].map(c => `<u>${c}</u>`).join('')}${j === teile.length - 1 ? `<span class="q" id="${id}q2">“</span>` : ''}</span>`).join(' ')}</div>`,
+    '', '', `zeile65 ${kl}`, HUD);
+  el(id + 'p').classList.remove('a');
+  const zeiten = [];
+  el(id).querySelectorAll('.sw').forEach((sw, j) => {
+    const w = teile[j].w || teile[j - 1]?.w, us = sw.querySelectorAll('u');
+    const a = A(w.start), d = Math.max(.08, w.ende - w.start);
+    us.forEach((u, c) => zeiten.push([u, a + d * c / us.length]));
+  });
+  zeiten.push([el(id + 'q1'), SA(ns[0]) - .15], [el(id + 'q2'), SE(ns.at(-1))]);
+  el(id + 'q1').style.opacity = 0; el(id + 'q2').style.opacity = 0;
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const p = clamp((t - tc) / .1); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(7 * (1 - p)).toFixed(1)}px)` : ''; } });
+  akteur(id, { x: 960, y: -90, o: 0 });
+  return {
+    ein: t => { tw(id, t, .3, { o: 1 }); tw(id, t, .6, { y: 112 }, 'sanft'); cue(t, 'pop'); },
+    weg: t => { tw(id, t, .4, { y: -110 }, 'in'); tw(id, t + .2, .2, { o: 0 }); },
+  };
+}
+
+/* ================= Zeitleiste ================= */
+const Z = { total: { x: 2620, y: 1110, z: .255 } };
+KSTART = { x: 1050, y: 560, z: 1.0 };
+
+/* ---------- 1 · Intro: Kwame im Bad, dann der ganze Hausquerschnitt ---------- */
+{
+  // Fliesen ploppen Reihe für Reihe (von unten), das Waschbecken gleitet hoch, die Dusche ploppt
+  [4, 3, 2, 1, 0].forEach((k, n) => { akteur('fl' + k, { o: 0, y: 40 }, true); tw('fl' + k, .05 + n * .1, .3, { o: 1 }); tw('fl' + k, .05 + n * .1, .45, { y: 0 }, 'sanft'); cue(.05 + n * .1, 'klick'); });
+  ein('becken', .45, { x: 1550, y: 720 }, { y: 90 }, 'whoosh');
+  ein('arm', .6, { ...ARM }, { y: 60 }); ein('armH', .6, { ...ARM }, { y: 60 });
+  pop('dusche', .35, { x: 450, y: 520 }, 'pop');
+  pop('sock', .7, { x: 860, y: 600 }, null);
+  // Das ist Kwame
+  const tK = W('Kwame', 1);
+  portrait('kw1', 'Kwame', 280);
+  pop('kw1', tK - .3, { x: 1200, y: 380 }, 'pop');
+  FROH.push(['kw1', tK + .3, SA(2)]); akzent(tK, .03);
+  bild('ta1', 't-tasche', 200);
+  akteur('ta1', { x: 1250, y: 600, o: 0 });
+  tw('ta1', tK + .1, .15, { o: 1 }); tw('ta1', tK + .1, .45, { y: 880 }, 'in'); landen('ta1', tK + .55); cue(tK + .55, 'plopp');
+  // Ausbildung: nicken, dann fährt die Kamera zurück – der ganze Hausquerschnitt
+  const tA = W('Ausbildung', 2);
+  nicken('kw1', tA, 1.1);
+  kam(tA + .1, 2.3, Z.total, { e: 'inout' }); cue(tA + .1, 'whoosh');
+  // die übrigen Räume füllen sich nacheinander
+  const rein = [['spuele', 'whoosh'], ['hk-kueche', null], ['th-kueche', null], ['bett', null], ['decke', null], ['hk-schlaf', null], ['th-schlaf', null], ['pflanze', null], ['hk-wohn', null], ['th-wohn', null], ['v1', 'pop'], ['v1h', null], ['kessel', 'pop'], ['klappe', null], ['wp', 'pop'], ['luefter', null]];
+  rein.forEach(([id, snd], n) => { const b = AKTEURE.get(el(id)).basis; pop(id, tA + .5 + n * .07, { x: b.x, y: b.y, r: b.r }, snd); });
+  // Sanitär: das Wasser fließt von der Straße bis ins Bad
+  const tS = W('Sanitär', 2) - .1;
+  const kaltZeit = [['kaltHaupt', 0], ['kaltSteig', .35], ['kaltBad', .8], ['kaltKueche', .55], ['kaltKessel', .45]];
+  kaltZeit.forEach(([r, d]) => { zeige(r, tS - .5 + d * .5, .5, 1, 'out'); fuelle(r, tS + d, .5, 1, 'lin'); fluss(r, tS + d + .45, 160); });
+  cue(tS, 'scan'); leuchten('becken', tS + 1.1, tS + 2.0, 'var(--info)'); leuchten('spuele', tS + .9, tS + 1.8, 'var(--info)');
+  // Heizung: Heizwasser vom Kessel zu den Heizkörpern
+  const tH = W('Heizung', 2) - .1;
+  [['heizVL', 0], ['heizWohn', .45], ['heizSchlaf', .7], ['heizKueche', .5]].forEach(([r, d]) => { zeige(r, tH - .5 + d * .5, .5, 1, 'out'); fuelle(r, tH + d, .5, 1, 'lin'); fluss(r, tH + d + .45, 140); });
+  cue(tH, 'scan');
+  ['wohn', 'schlaf', 'kueche'].forEach((n, k) => leuchten('hk-' + n, tH + .8 + k * .1, tH + 1.9, 'var(--error)'));
+  // Klima: die Wärmepumpe im Garten dreht ihren Lüfter, Luft zieht hinein
+  const tKl = W('Klima', 2) - .1;
+  drehe(tKl, 1.6, .5); ['luft1', 'luft2', 'luft3'].forEach(r => fluss(r, tKl, 260, .3));
+  leuchten('wp', tKl, tKl + 1.2, 'var(--info)'); cue(tKl, 'whoosh');
+  // Hier sind seine wichtigsten Wörter: Legende der · die · das, alles kommt zur Ruhe
+  neu('leg', GENUS.map((g, k) => `<span class="lg ${g}" id="lg${k}">${g}</span>`).join(''), 'white-space:nowrap', '', '', HUD);
+  akteur('leg', { x: 960, y: 1000 });
+  const tL = [W('sind', 3), W('wichtigsten', 3), W('Wörter', 3)];
+  GENUS.forEach((g, k) => { akteur('lg' + k, { s: 0 }, true); tw('lg' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
+  tw('leg', SE(3) + .35, .4, { y: 1150, o: 0 }, 'in');
+  [...KALT, ...HEIZ].forEach(r => fluss(r, SE(3), 0, .8));
+  drehe(SE(3), 0, 1); ['luft1', 'luft2', 'luft3'].forEach(r => fluss(r, SE(3), 0, .6));
+  aus(['kw1', 'ta1'], SE(3) - .2, .3);
+}
+
+/* ---------- 2 · das Rohr – die Rohre ---------- */
+const P2 = SE(3) + .25;
+{
+  const C = { x: 1100, y: 560, z: .86 };
+  kam(P2, 1.3, C, { hop: .0 }); cue(P2, 'whoosh');
+  const k = karte(1, { art: 'das', wort: 'Rohr', plural: 'die Rohre', gr: 104, oese: [1100, 250], z: C.z, anker: [868, 330] });
+  k.ein(P2 + 1.0); k.chip(W('Das', 4)); k.wort(W('Rohr', 4)); k.zeile(W('Die', 5));
+  glanz('kaltSteig', W('Rohr', 4) - .2, 1.0); leuchten('sock', W('Rohr', 4), W('Rohr', 4) + .8, 'var(--info)');
+  // die Rohre: Kamera zieht auf, alle Leitungen glänzen nacheinander
+  const tR = W('Rohre', 5) - .25;
+  kam(tR, 1.1, { x: 2230, y: 1440, z: .33 }); cue(tR, 'whoosh');
+  [...KALT, ...HEIZ].forEach((r, n) => glanz(r, tR + .6 + n * .1, 1.0));
+  // Durch Rohre fließt Wasser …
+  const tW = W('Wasser', 6) - .1;
+  KALT.forEach((r, n) => fluss(r, tW + n * .08, 170)); cue(tW, 'scan');
+  const tB = W('Waschbecken', 6);
+  leuchten('becken', tB - .1, tB + 1.1, 'var(--info)', 1.3); leuchten('arm', tB - .1, tB + 1.1, 'var(--info)', 1.3); wellen(tB, 1550, 680, 'var(--info)', 140, .33);
+  const tHz = W('Heizung', 6);
+  HEIZ.forEach((r, n) => fluss(r, tHz - .2 + n * .08, 150));
+  ['wohn', 'schlaf', 'kueche'].forEach(n => leuchten('hk-' + n, tHz, tHz + 1.4, 'var(--error)', 1.2)); cue(tHz, 'ding');
+  [...KALT, ...HEIZ].forEach(r => fluss(r, SE(6) + .3, 0, .6));
+  // Heute verlegen wir die Rohre im Bad: zurück ins Bad, die Leitung zur Dusche entsteht Stück für Stück
+  const sl = satzleiste(2, 7, 'das', ['rohre']);
+  kam(SA(7) - .7, 1.0, C); cue(SA(7) - .7, 'whoosh');
+  sl.ein(SA(7) - .45);
+  const tV = W('verlegen', 7) - .1, tRo = W('Rohre', 7) - .1;
+  zeige('dusche1', tV, .55, 1, 'out'); fuelle('dusche1', tV, .01, 1); cue(tV, 'whoosh'); cue(tV + .55, 'klick');
+  zeige('dusche2', tRo, .45, 1, 'out'); fuelle('dusche2', tRo, .01, 1); cue(tRo + .45, 'klick');
+  neu('bogen2', '', 'width:44px;height:44px;border-radius:99px;background:var(--n300);box-shadow:inset 0 0 0 8px var(--n200)', 'data-frei'); pop('bogen2', tRo + .4, { x: 355, y: 880 }, 'pop');
+  const tBad = W('Bad', 7);
+  plakette('ok2', 'gruen', 'svgHaken');
+  pop('ok2', tBad, { x: 560, y: 760 }, 'ding'); akzent(tBad, .035);
+  ['kaltSteig', 'dusche1', 'dusche2'].forEach(r => fluss(r, tBad - .1, 150));
+  // Wasser kommt aus der Dusche
+  [0, 1, 2, 3].forEach(n => { bild('dt2' + n, 't-tropfen', 46, 'data-frei'); akteur('dt2' + n, { x: 490 + (n % 2) * 26, y: 470, o: 0 }); for (let r = 0; r < 3; r++) { const t0 = tBad + .2 + n * .15 + r * .55; set('dt2' + n, t0, { o: 1, y: 470 }); tw('dt2' + n, t0, .5, { y: 700 }, 'in'); set('dt2' + n, t0 + .5, { o: 0 }); } });
+  sl.weg(SE(7) + .3);
+  ['kaltSteig', 'dusche1', 'dusche2'].forEach(r => fluss(r, SE(7) + .4, 0, .5));
+  aus('ok2', SE(7) + .3);
+  k.weg(SE(7) + .4);
+}
+
+/* ---------- 3 · die Rohrzange – die Rohrzangen ---------- */
+const P3 = SE(7) + .3;
+{
+  const C = { x: 1080, y: 600, z: 1.15 };
+  kam(P3, 1.0, C); cue(P3, 'whoosh');
+  // Rohrzange: Kopf greift die Mutter; Drehpunkt = Mitte des Mauls
+  const ZB = 420, ZS = ZB / 160, M = { x: 860, y: 600 };
+  const ZC = { x: M.x + (80 - 46) * ZS, y: M.y + (80 - 52) * ZS };
+  const ORG = 'transform-origin:28.75% 32.5%';
+  bild('zange', 't-zange', ZB, 'data-gruppe="zange" data-dreht', ORG); bild('backe', 't-backe', ZB, 'data-gruppe="zange" data-dreht', ORG);
+  const tZ = W('Rohrzange', 8) - .45;
+  akteur('zange', { x: ZC.x + 520, y: ZC.y - 360, r: 30, o: 0 }); akteur('backe', { x: ZC.x + 520, y: ZC.y - 360, r: 30, o: 0 });
+  tw(['zange', 'backe'], tZ, .2, { o: 1 });
+  flug('zange', tZ, .8, ZC.x, ZC.y, 160, { r: 0 }); flug('backe', tZ, .8, ZC.x, ZC.y - 24, 160, { r: 0 });
+  cue(tZ, 'whoosh'); cue(tZ + .8, 'klick'); landen('zange', tZ + .8); wackeln(['zange', 'backe'], tZ + .85, 3, 2);
+  pop('mutter', P3 + .9, { x: M.x, y: M.y }, 'pop');
+  const zgEnde = t => { const x = wertBei('zange', 'x', t), y = wertBei('zange', 'y', t), r = wertBei('zange', 'r', t) * Math.PI / 180; const ox = (80 - 46) * ZS, oy = (150 - 52) * ZS; const px = M.x + 0 + (x - ZC.x); const py = M.y + (y - ZC.y); return [px + ox * Math.cos(r) - oy * Math.sin(r), py + ox * Math.sin(r) + oy * Math.cos(r)]; };
+  const k = karte(2, { art: 'die', wort: 'Rohrzange', plural: 'die Rohrzangen', gr: 80, oese: [1170, 370], z: C.z, anker: zgEnde });
+  k.ein(tZ + 1.0); k.chip(W('Die', 8)); k.wort(W('Rohrzange', 8)); k.zeile(W('Die', 9));
+  leuchten('zange', W('Rohrzange', 8), W('Rohrzange', 8) + 1.2, 'var(--success)');
+  // die Rohrzangen: eine kleinere liegt daneben
+  bild('zange2', 't-zange', 250, 'data-gruppe="zange2"'); bild('backe2', 't-backe', 250, 'data-gruppe="zange2"');
+  const tP = W('Rohrzangen', 9) - .15;
+  pop('zange2', tP, { x: 530, y: 690 }, 'pop'); pop('backe2', tP + .05, { x: 530, y: 690 }, null);
+  // Damit hältst …: das Maul öffnet sich und greift
+  const tH = W('hältst', 10) - .2;
+  tw('backe', tH, .25, { y: ZC.y - 30 }, 'out'); tw('backe', tH + .35, .2, { y: ZC.y }, 'in'); cue(tH + .55, 'klick'); bump('mutter', tH + .55, 1.06);
+  // … und drehst du: die Zange dreht zweimal, die Mutter zieht an
+  const tD = W('drehst', 10) - .1;
+  for (let n = 0; n < 2; n++) {
+    tw(['zange', 'backe'], tD + n * .5, .3, { r: -24 }, 'inout'); tw(['zange', 'backe'], tD + n * .5 + .3, .2, { r: 0 }, 'inout');
+    tw('mutter', tD + n * .5, .3, { r: -24 * (n + 1) }, 'inout'); cue(tD + n * .5 + .3, 'klick');
+  }
+  akzent(tD + .2, .03);
+  glanz('kaltSteig', W('Rohre', 10) - .1, .9); glanz('kaltBad', W('Rohre', 10), .9);
+  bump('mutter', W('Muttern', 10), 1.15); leuchten('mutter', W('Muttern', 10), W('Muttern', 10) + 1, 'var(--b400)');
+  // Gib mir mal die Rohrzange: die Zange fliegt zum Gesellen oben in der Satzleiste
+  const sl = satzleiste(3, 11, 'die', ['rohrzange']);
+  sl.ein(SA(11) - .45);
+  const tG = W('Rohrzange', 11) - .1;
+  k.faden().aus = tG;
+  // Lage des Porträts in der Satzleiste (Leiste ist mittig, Porträt links innen)
+  const Zl = WP(C, 960 - el('sl3').offsetWidth / 2 + 16 + 48, 112);
+  tw(['zange', 'backe'], tG, .8, { x: Zl.x + (80 - 46) * ZS * .2, y: Zl.y + 40, s: .2, r: -10 }, 'inout', { bogen: 120 }); cue(tG, 'whoosh');
+  tw(['zange', 'backe'], tG + .65, .2, { o: 0 });
+  nicken('sl3p', tG + .8, 1);
+  sl.weg(SE(11) + .35);
+  k.weg(SE(11) + .4);
+  aus(['zange2', 'backe2'], SE(11) + .4);
+}
+
+/* ---------- 4 · der Wasserhahn – die Wasserhähne · die Armatur ---------- */
+const P4 = SE(11) + .3;
+{
+  const C = { x: 1360, y: 560, z: 1.1 };
+  kam(P4, 1.0, C); cue(P4, 'whoosh');
+  const k = karte(3, { art: 'der', wort: 'Wasserhahn', plural: 'die Wasserhähne', gr: 76, oese: [930, 300], z: C.z, anker: [1490, 600] });
+  k.ein(P4 + .8); k.chip(W('Der', 12)); k.wort(W('Wasserhahn', 12)); k.zeile(W('Die', 13));
+  leuchten('arm', W('Wasserhahn', 12), W('Wasserhahn', 12) + 1.2, 'var(--b400)');
+  // Hebel hoch – Wasser läuft, Hebel runter – Wasser stoppt
+  const strahl = (t0, t1) => { tw('strahl', t0, .25, { sy: 1 }, 'out'); tw('strahl', t1, .2, { sy: 0 }, 'in'); };
+  const tL = W('Wasserhahn', 12) + .25;
+  tw('armH', tL, .3, { r: -24 }, 'sanft'); cue(tL, 'klick'); strahl(tL + .15, tL + 1.25); tw('armH', tL + 1.1, .3, { r: 0 }, 'sanft'); cue(tL + 1.1, 'klick');
+  // die Wasserhähne: Kamera zieht auf – Dusche und Küchenspüle leuchten
+  const tP = W('Wasserhähne', 13) - .35;
+  kam(tP, .9, { x: 1100, y: 1010, z: .5 }); cue(tP, 'whoosh');
+  leuchten('dusche', tP + .6, SA(14) + .3, 'var(--info)', 1.3); leuchten('spuele', tP + .75, SA(14) + .3, 'var(--info)', 1.3); leuchten('arm', tP + .45, SA(14) + .3, 'var(--info)', 1.3);
+  wellen(tP + .6, 450, 470, 'var(--info)', 120, .5); wellen(tP + .75, 1440, 1790, 'var(--info)', 120, .5);
+  // Im Betrieb sagt man oft: die Armatur
+  kam(SA(14) - .1, .9, C); cue(SA(14) - .1, 'whoosh');
+  const tA = W('Armatur', 14);
+  const ch = chip('ch4', 'die', 'Armatur', 1850, 470, C.z); ch.ein(tA - .05);
+  leuchten('arm', tA, tA + 1.0, 'var(--success)'); akzent(tA, .035);
+  // Am Waschbecken montieren wir eine neue Armatur: alte fliegt weg, neue gleitet auf das Becken und glänzt
+  const sl = satzleiste(4, 15, 'die', ['armatur']);
+  sl.ein(SA(15) - .45);
+  leuchten('becken', W('Waschbecken', 15), W('Waschbecken', 15) + .8, 'var(--b400)');
+  const tM = W('montieren', 15) - .1;
+  tw(['arm', 'armH'], tM, .55, { y: ARM.y - 260, x: ARM.x + 200, o: 0, r: 12 }, 'in'); cue(tM, 'whoosh');
+  bild('arm2', 't-armatur', 200, 'data-gruppe="becken"'); bild('arm2H', 't-hebel', 200, 'data-gruppe="becken" data-dreht', 'transform-origin:48.75% 40%');
+  const tN = W('neue', 15) - .2;
+  ['arm2', 'arm2H'].forEach(id => { akteur(id, { ...ARM, y: ARM.y - 220, o: 0 }); tw(id, tN, .2, { o: 1 }); tw(id, tN, .55, { y: ARM.y }, 'in'); });
+  landen('arm2', tN + .55); landen('arm2H', tN + .55); cue(tN + .55, 'klick');
+  const tAr = W('Armatur', 15);
+  leuchten('arm2', tAr, tAr + 1.2, 'var(--surface)', 1.4); wellen(tAr, ARM.x, ARM.y, 'var(--b300)', 200, C.z); cue(tAr, 'ding'); akzent(tAr, .035);
+  plakette('ok4', 'gruen', 'svgHaken'); pop('ok4', tAr + .2, { x: ARM.x + 150, y: ARM.y - 90 }, null);
+  sl.weg(SE(15) + .3);
+  k.weg(SE(15) + .35); aus(['ch4', 'ok4'], SE(15) + .35);
+}
+
+/* ---------- 5 · die Dichtung – die Dichtungen (Zoom in die Armatur, Schnitt-Lupe) ---------- */
+const P5 = SE(15) + .3;
+{
+  const C = { x: 1550, y: 650, z: 3.2 };
+  kam(P5, 1.2, C, { e: 'inout' }); cue(P5, 'whoosh');
+  const L = WP(C, 1200, 600), R = 380 / C.z;
+  neu('lupe', '', `width:${2 * R}px;height:${2 * R}px;border-width:${10 / C.z}px`, 'data-frei', 'lupe65');
+  akteur('lupe', { x: L.x, y: L.y, s: 0 });
+  tw('lupe', P5 + .9, .6, { s: 1 }, 'back'); cue(P5 + .9, 'pop');
+  // zwei Teile (Oberteil, Unterteil) mit Dichtung dazwischen
+  const TB = 300 / C.z, TH = 110 / C.z;
+  neu('ob5', '<i></i>', `width:${TB}px;height:${TH}px`, 'data-gruppe="lupe"', 'teil65 ob'); neu('un5', '<i></i>', `width:${TB}px;height:${TH}px`, 'data-gruppe="lupe"', 'teil65 un');
+  const yO = L.y - 70 / C.z, yU = L.y + 70 / C.z;
+  akteur('ob5', { x: L.x, y: yO, o: 0 }); akteur('un5', { x: L.x, y: yU, o: 0 });
+  tw(['ob5', 'un5'], P5 + 1.2, .3, { o: 1 });
+  const DB = 170 / C.z;
+  bild('di5', 't-dichtung', DB, 'data-gruppe="lupe" data-dreht'); akteur('di5', { x: L.x, y: L.y, sy: .18, o: 0 });
+  tw('di5', P5 + 1.25, .3, { o: 1 });
+  // die Dichtung schwebt heraus und dreht sich
+  const D = WP(C, 520, 760);
+  const tD = W('Dichtung', 16) - .3;
+  tw(['ob5'], tD, .4, { y: yO - 40 / C.z }, 'sanft'); tw(['un5'], tD, .4, { y: yU + 40 / C.z }, 'sanft');
+  flug('di5', tD + .1, .8, D.x, D.y, 60 / C.z, { sy: 1 }); cue(tD + .1, 'whoosh');
+  HOOKS.push(t => { const q = t - tD - .9, q2 = W('zwischen', 18) - .3 - tD - .9; if (q > 0 && q < q2) el('di5').style.transform += ` scaleX(${Math.cos(q * 3.2).toFixed(3)})`; });
+  const k = karte(4, { art: 'die', wort: 'Dichtung', plural: 'die Dichtungen', gr: 88, oese: [WP(C, 150, 250).x, WP(C, 150, 250).y], z: C.z, anker: t => [wertBei('di5', 'x', t), wertBei('di5', 'y', t) - DB * .35] });
+  k.ein(tD + .9); k.chip(W('Die', 16)); k.wort(W('Dichtung', 16)); k.zeile(W('Die', 17));
+  // die Dichtungen: zwei weitere Ringe in anderen Größen
+  const tP = W('Dichtungen', 17) - .1;
+  [[300, 760, 110], [740, 770, 135]].forEach(([sx, sy, b], n) => { const p = WP(C, sx, sy); bild('dx5' + n, 't-dichtung', b / C.z, 'data-gruppe="ringe"'); pop('dx5' + n, tP + n * .12, { x: p.x, y: p.y }, 'pop'); });
+  // Sie sitzt zwischen zwei Teilen. So bleibt alles dicht.
+  const tZ = W('zwischen', 18) - .3;
+  aus(['dx50', 'dx51'], tZ, .3);
+  tw('di5', tZ, .8, { x: L.x, y: L.y, sy: .18 }, 'inout', { bogen: 60 / C.z }); cue(tZ, 'whoosh');
+  const tT = W('Teilen', 18) - .1;
+  tw('ob5', tT, .35, { y: yO }, 'in'); tw('un5', tT, .35, { y: yU }, 'in'); cue(tT + .35, 'klick'); akzent(tT + .35, .03);
+  leuchten('ob5', W('zwei', 18), W('Teilen', 18) + .6, 'var(--b400)'); leuchten('un5', W('zwei', 18), W('Teilen', 18) + .6, 'var(--b400)');
+  const tDi = W('dicht', 19);
+  plakette('ok5', 'gruen', 'svgHaken'); el('ok5').style.cssText += `;width:${84 / C.z}px;height:${84 / C.z}px;border-width:${5 / C.z}px`; el('ok5').querySelector('svg').style.width = (38 / C.z) + 'px';
+  const OK = WP(C, 1480, 330); pop('ok5', tDi - .05, { x: OK.x, y: OK.y }, 'ding'); akzent(tDi, .035);
+  leuchten('di5', tDi, tDi + 1.0, 'var(--success)');
+  // Kwame: Der Wasserhahn tropft. Die Dichtung ist kaputt. – Kamera zieht etwas auf, es tropft im Takt
+  const sl = satzleiste(5, [20, 21], 'die', ['dichtung']);
+  const tK = SA(20) - .6;
+  aus(['lupe', 'ob5', 'un5', 'di5', 'ok5'], tK, .35); k.weg(tK);
+  const C2 = { x: 1430, y: 630, z: 1.7 };
+  kam(tK, .8, C2); cue(tK, 'whoosh');
+  sl.ein(SA(20) - .4);
+  const SP = { x: 1550 + (32 - 80) * 1.25, y: 625 };
+  const tTr = W('tropft', 20) - .25;
+  [0, 1].forEach(n => { bild('tr5' + n, 't-tropfen', 40, 'data-frei'); akteur('tr5' + n, { ...SP, o: 0, s: .4 }); });
+  for (let r = 0; r < 6; r++) { const id = 'tr5' + (r % 2), t0 = tTr + r * .55; set(id, t0, { o: 1, s: .4, y: SP.y }); tw(id, t0, .2, { s: 1 }, 'out'); tw(id, t0 + .2, .3, { y: SP.y + 80 }, 'in'); set(id, t0 + .5, { o: 0 }); cue(t0 + .5, 'plopp'); }
+  leuchten('arm', tTr, tTr + 1.4, 'var(--info)');
+  const tKa = W('Dichtung', 21) - .2;
+  const KD = WP(C2, 620, 520);
+  bild('dk5', 't-dichtungK', 190 / C2.z, 'data-gruppe="dk5"'); pop('dk5', tKa, { x: KD.x, y: KD.y }, 'plopp');
+  plakette('wa5', 'rot', 'svgKreuz', 'data-gruppe="dk5"'); el('wa5').style.cssText += `;width:${76 / C2.z}px;height:${76 / C2.z}px;border-width:${5 / C2.z}px`; el('wa5').querySelector('svg').style.width = (34 / C2.z) + 'px';
+  pop('wa5', W('kaputt', 21) - .05, { x: KD.x + 80 / C2.z, y: KD.y - 80 / C2.z }, 'plopp'); wackeln('wa5', W('kaputt', 21) + .4, 3, 6); wackeln('dk5', W('kaputt', 21) + .1, 3, 3);
+  akzent(W('kaputt', 21), .035);
+  sl.weg(SE(21) + .2);
+}
+
+/* ---------- 6 · das Ventil – die Ventile (Kamera fährt die Steigleitung hinunter in den Keller) ---------- */
+const P6 = SE(21) + .15;
+{
+  const C = { x: 960, y: 2575, z: 1.0 };
+  kam(P6, 1.4, C, { via: [[860, 900], [860, 2300]], hop: .25 }); cue(P6, 'whoosh');
+  aus(['dk5', 'wa5'], P6 + .2, .3);
+  set('v1h', P6 + .2, { r: -90 });
+  const k = karte(5, { art: 'das', wort: 'Ventil', plural: 'die Ventile', gr: 104, oese: [1240, 2300], z: C.z, anker: [V1.x + 70, V1.y - 40] });
+  k.ein(W('Das', 22) - .1); k.chip(W('Das', 22)); k.wort(W('Ventil', 22)); k.zeile(W('Die', 23));
+  leuchten('v1', W('Ventil', 22), W('Ventil', 22) + 1.1, 'var(--warning)'); leuchten('v1h', W('Ventil', 22), W('Ventil', 22) + 1.1, 'var(--warning)');
+  // die Ventile: zwei weitere sitzen auf der Leitung zum Kessel
+  const tP = W('Ventile', 23) - .1;
+  [[1520, 2667], [1880, 2667]].forEach(([x, y], n) => { bild('vx' + n, 't-ventil', 200, `data-gruppe="vx${n}"`); bild('vxh' + n, 't-vhebel', 200, `data-gruppe="vx${n}" data-dreht`, 'transform-origin:50% 35%'); pop('vx' + n, tP + n * .12, { x, y: y + 6 }, 'pop'); pop('vxh' + n, tP + n * .12 + .05, { x, y: y + 6 }, null); });
+  // öffnet: Hebel auf, Wasser fließt – schließt: Hebel zu, das Wasser steht
+  const tO = W('öffnet', 24) - .15;
+  tw('v1h', tO, .4, { r: 0 }, 'sanft'); cue(tO, 'klick'); fluss('kaltHaupt', tO + .2, 170); fluss('kaltSteig', tO + .3, 170); fluss('kaltKessel', tO + .3, 170);
+  const tS = W('schließt', 24) - .15;
+  tw('v1h', tS, .4, { r: -90 }, 'sanft'); cue(tS, 'klick'); ['kaltHaupt', 'kaltSteig', 'kaltKessel'].forEach(r => fluss(r, tS + .2, 0, .5));
+  akzent(tS + .2, .03);
+  // Gas: gelbe Leitung mit eigenem Hahn
+  const tG = W('Gas', 24) - .3;
+  zeige('gas', tG - .2, .7, 1, 'out'); fuelle('gas', tG - .2, .01, 1); cue(tG - .2, 'whoosh');
+  bild('vg', 't-ventil', 240, 'data-gruppe="vg"'); bild('vgh', 't-vhebelG', 240, 'data-gruppe="vg" data-dreht', 'transform-origin:50% 35%');
+  pop('vg', tG + .2, { ...VG }, 'pop'); pop('vgh', tG + .25, { ...VG }, null);
+  leuchten('vg', tG + .3, tG + 1.4, 'var(--warning)'); glanz('gas', tG + .3, 1.0);
+  neu('eg6', 'Gas', '', '', 'etikett gas'); pop('eg6', tG + .35, { x: 200, y: 2310 }, 'pop');
+  // Geselle: Dreh zuerst das Ventil zu, dann kommt kein Wasser mehr
+  const sl = satzleiste(6, 25, 'das', ['ventil']);
+  sl.ein(SA(25) - .45);
+  tw('v1h', SA(25) - .6, .4, { r: 0 }, 'sanft'); ['kaltHaupt', 'kaltSteig', 'kaltKessel'].forEach(r => fluss(r, SA(25) - .4, 170));
+  const tZu = W('zu', 25) - .2;
+  tw('v1h', tZu, .45, { r: -90 }, 'sanft'); cue(tZu, 'klick'); bump('v1', tZu + .3, 1.04);
+  ['kaltSteig', 'kaltKessel'].forEach(r => fluss(r, tZu + .3, 0, .6));
+  const tKe = W('kein', 25);
+  fuelle('kaltSteig', tKe - .1, .9, .0, 'inout');
+  plakette('ok6', 'gruen', 'svgHaken'); pop('ok6', W('mehr', 25), { x: V1.x, y: V1.y - 150 }, 'ding'); akzent(W('mehr', 25), .035);
+  sl.weg(SE(25) + .3);
+  k.weg(SE(25) + .35); aus(['ok6', 'eg6'], SE(25) + .35);
+  fuelle('kaltSteig', SE(25) + 1.5, .6, 1);
+  fluss('kaltHaupt', SE(25) + .4, 0, .5);
+}
+
+/* ---------- 7 · der Heizkörper – die Heizkörper · das Thermostat ---------- */
+const P7 = SE(25) + .3;
+{
+  const C = { x: 3380, y: 1580, z: .95 };
+  kam(P7, 1.6, C, { via: [[2500, 2300], [2500, 1700]], hop: .3 }); cue(P7, 'whoosh');
+  const k = karte(6, { art: 'der', wort: 'Heizkörper', plural: 'die Heizkörper', gr: 80, oese: [2720, 1250], z: C.z, anker: [3530, 1790] });
+  k.ein(W('Der', 26) - .2); k.chip(W('Der', 26)); k.wort(W('Heizkörper', 26)); k.zeile(W('Die', 27));
+  leuchten('hk-wohn', W('Heizkörper', 26), W('Heizkörper', 26) + 1.2, 'var(--b400)');
+  // die Heizkörper: Kamera zieht auf, die Heizkörper in den anderen Räumen leuchten
+  const tP = W('Heizkörper', 27) - .45;
+  kam(tP, .9, { x: 2250, y: 1300, z: .4 }); cue(tP, 'whoosh');
+  ['schlaf', 'kueche', 'wohn'].forEach((n, i) => { leuchten('hk-' + n, tP + .7 + i * .15, SA(28) + .2, 'var(--b400)', 1.4); wellen(tP + .7 + i * .15, HK[n].x, HK[n].y, null, 150, .4); cue(tP + .7 + i * .15, 'pop'); });
+  // Am Heizkörper sitzt das Thermostat: Kamera fährt an den Kopf, die Walze mit den Ziffern dreht sich
+  kam(SA(28) - .15, .9, C); cue(SA(28) - .15, 'whoosh');
+  const CT = { x: 4040, y: 1720, z: 2.1 };
+  const tT = W('Thermostat', 28) - .5;
+  kam(tT, .8, CT); cue(tT, 'whoosh');
+  leuchten('th-wohn', tT + .5, tT + 1.6, 'var(--warning)', 1.3);
+  const ch = chip('ch7', 'das', 'Thermostat', WP(CT, 560, 300).x, WP(CT, 560, 300).y, CT.z); ch.ein(W('Thermostat', 28));
+  const WZ = WP(CT, 1260, 330);
+  neu('walze', `<div class="zz" id="wz">${['', '❄', '1', '2', '3', '4', '5'].map(z => `<b>${z}</b>`).join('')}</div><div class="sch"></div><div class="mark"></div>`, '', 'data-gruppe="walze"', 'walze65');
+  pop('walze', W('Thermostat', 28) + .15, { x: WZ.x, y: WZ.y, s: 1 / CT.z }, 'pop');
+  const WALZE = [[0, 3]];
+  const walze = (t, n) => WALZE.push([t, n]);
+  HOOKS.push(t => { let v = 3; for (let i = 1; i < WALZE.length; i++) { const [t0, n] = WALZE[i]; v = lerp(v, n, E.inout(clamp((t - t0) / .7))); } el('wz').style.transform = `translateX(${(210 - 50 - v * 100 - 100).toFixed(1)}px)`; });
+  walze(W('Thermostat', 28) + .5, 1); walze(W('Thermostat', 28) + 1.3, 3);
+  akzent(W('Thermostat', 28), .03);
+  // Damit stellst du die Temperatur ein: Walze auf 4, Thermometer steigt, Wärmewellen
+  const tS = W('stellst', 29) - .1;
+  walze(tS, 4); cue(tS, 'scan');
+  const TP = WP(CT, 330, 420);
+  neu('th7', `<div style="position:absolute;left:0;top:0;width:${180 / CT.z}px">${kopie('t-thermo', 'th7')}</div><div id="th7s" style="position:absolute;left:0;top:0;width:${180 / CT.z}px;transform-origin:50% 78.75%">${kopie('t-saeule', 'th7s')}</div>`, `width:${180 / CT.z}px;height:${180 / CT.z}px`, 'data-gruppe="th7"');
+  akteur('th7s', { sy: .3 }, true);
+  pop('th7', W('Temperatur', 29) - .25, { x: TP.x, y: TP.y }, 'pop');
+  tw('th7s', W('Temperatur', 29), .9, { sy: .9 }, 'inout'); cue(W('Temperatur', 29), 'scan');
+  for (let n = 0; n < 3; n++) wellen(W('Temperatur', 29) + .3 + n * .3, HK.wohn.x + 140, HK.wohn.y - 60, 'var(--error)', 160, CT.z);
+  leuchten('hk-wohn', W('Temperatur', 29), SE(29) + .3, 'var(--error)', 1.2);
+  // Kwame: Der Heizkörper wird nicht warm. Ist das Thermostat kaputt?
+  const sl = satzleiste(7, [30, 31], 'der', ['heizkörper', 'thermostat']);
+  kam(SA(30) - .6, .9, C); cue(SA(30) - .6, 'whoosh');
+  aus(['walze', 'th7', 'ch7'], SA(30) - .6, .3);
+  sl.ein(SA(30) - .45);
+  const tN = W('nicht', 30);
+  tw('kalt-wohn', tN - .2, .6, { o: .22 }); summen('hk-wohn', tN, .8, 3);
+  bild('fl7', 't-flocke', 120, 'data-gruppe="hkwohn"'); pop('fl7', W('warm', 30) - .1, { x: HK.wohn.x - 140, y: HK.wohn.y - 230 }, 'ding');
+  HOOKS.push(t => { const q = t - W('warm', 30); if (q > 0) el('fl7').style.transform += ` rotate(${(q * 20).toFixed(1)}deg)`; });
+  akzent(W('warm', 30), .035);
+  plakette('fr7', 'lila', 'svgFrage', 'data-gruppe="hkwohn"'); pop('fr7', W('Thermostat', 31), { x: HK.wohn.x + 304, y: HK.wohn.y - 200 }, 'plopp'); wackeln('fr7', W('kaputt', 31), 3, 6);
+  leuchten('th-wohn', W('Thermostat', 31) - .1, SE(31) + .4, 'var(--b400)', 1.3);
+  sl.weg(SE(31) + .25);
+  k.weg(SE(31) + .3); aus(['fl7', 'fr7'], SE(31) + .3); tw('kalt-wohn', SE(31) + .3, .4, { o: 0 });
+}
+
+/* ---------- 8 · der Heizkessel – die Heizkessel (Kamera folgt dem Heizwasser) ---------- */
+const P8 = SE(31) + .3;
+{
+  const C = { x: 3320, y: 2575, z: 1.0 };
+  kam(P8, 1.5, C, { via: [[2500, 1900], [2500, 2350]], hop: .3 }); cue(P8, 'whoosh');
+  const k = karte(7, { art: 'der', wort: 'Heizkessel', plural: 'die Heizkessel', gr: 80, oese: [3480, 2300], z: C.z, anker: [3200, 2620] });
+  k.ein(W('Der', 32) - .2); k.chip(W('Der', 32)); k.wort(W('Heizkessel', 32)); k.zeile(W('Die', 33));
+  // Klappe öffnet sich, die Flamme flackert auf
+  const tK = W('Heizkessel', 32) + .1;
+  tw('klappe', tK, .35, { sx: .05 }, 'out'); cue(tK, 'klick');
+  tw('flamme', tK + .2, .4, { s: 1 }, 'back'); cue(tK + .2, 'plopp');
+  HOOKS.push(t => { if (t > tK + .6) { const f = el('flamme'); f.style.transform += ` scale(${(1 + .06 * Math.sin(t * 17)).toFixed(3)},${(1 + .1 * Math.sin(t * 11.3 + 1)).toFixed(3)})`; } });
+  leuchten('kessel', tK, tK + 1.3, 'var(--warning)');
+  // die Heizkessel: zwei hellere dahinter
+  const tP = W('Heizkessel', 33) - .2;
+  [[2620, 2800], [4020, 2800]].forEach(([x, y], n) => { bild('kx' + n, 't-kessel', 380, `data-gruppe="kx${n}"`, 'opacity:.45'); pop('kx' + n, tP + n * .12, { x, y }, 'pop'); });
+  // Im Heizkessel entsteht die Wärme für die Heizung: Kamera zieht auf, das Heizwasser steigt zu den Heizkörpern
+  const tW = W('Wärme', 34) - .45;
+  kam(tW, 1.0, { x: 3300, y: 1700, z: .4 }); cue(tW, 'whoosh');
+  HEIZ.forEach(r => fuelle(r, tW - .01, .01, 0));
+  [['heizVL', 0], ['heizWohn', .55], ['heizSchlaf', .85], ['heizKueche', .6]].forEach(([r, d]) => { fuelle(r, tW + .5 + d, .6, 1, 'lin'); fluss(r, tW + 1.0 + d, 160); });
+  bump('flamme', tW + .3, 1.3); cue(tW + .5, 'scan');
+  const tH = W('Heizung', 34) - .1;
+  ['wohn', 'schlaf', 'kueche'].forEach((n, i) => { leuchten('hk-' + n, tH + i * .12, SE(34) + .6, 'var(--error)', 1.4); wellen(tH + i * .12, HK[n].x, HK[n].y - 60, 'var(--error)', 160, .4); });
+  ['fwW', 'fwS', 'fwK'].forEach((f, i) => HOOKS.push(t => { el(f).style.opacity = (.85 * clamp((t - tH - i * .12) / .6) * clamp((SE(36) + .3 - t) / .6)).toFixed(3); }));
+  cue(tH, 'ding');
+  // Geselle: Dieser Kessel läuft mit Gas. Da arbeitest du nie allein, nur mit mir.
+  const sl = satzleiste(8, [35, 36], 'der', ['kessel']);
+  kam(SA(35) - .55, .9, C); cue(SA(35) - .55, 'whoosh');
+  aus(['kx0', 'kx1'], SA(35) - .5, .3);
+  sl.ein(SA(35) - .4);
+  bump('kessel', W('Kessel', 35), 1.04);
+  const tG = W('Gas', 35) - .1;
+  neu('eg8', 'Gas', '', 'data-gruppe="kessel"', 'etikett gas'); pop('eg8', tG, { x: KX.x, y: KX.y + 135 }, 'pop');
+  glanz('gas', tG - .2, 1.0); leuchten('kessel', tG, tG + 1.5, 'var(--warning)', 1.2);
+  bild('ac8', 't-achtung', 130, 'data-gruppe="kessel"'); pop('ac8', tG + .15, { x: KX.x + 220, y: KX.y - 200 }, 'plopp'); wackeln('ac8', tG + .6, 3, 4);
+  akzent(tG, .035);
+  // nie allein – nur mit mir: Kwame allein, dann der Geselle daneben, Haken
+  const tAl = W('allein', 36) - .2;
+  portrait('kw8', 'Kwame', 200); portrait('ge8', 'Geselle', 200);
+  pop('kw8', tAl, { x: 2520, y: 2560 }, 'pop');
+  plakette('no8', 'rot', 'svgKreuz'); pop('no8', tAl + .2, { x: 2600, y: 2440 }, 'plopp');
+  const tMi = W('mit', 36) - .15;
+  aus('no8', tMi - .1, .2);
+  tw('kw8', tMi, .4, { x: 2420 }, 'sanft');
+  pop('ge8', tMi + .05, { x: 2650, y: 2560 }, 'pop'); nicken('ge8', W('mir', 36), 1);
+  plakette('ok8', 'gruen', 'svgHaken'); pop('ok8', W('mir', 36) + .2, { x: 2535, y: 2420 }, 'ding'); akzent(W('mir', 36), .04);
+  FROH.push(['kw8', W('mir', 36) + .2, 99]);
+  sl.weg(SE(36) + .3);
+  k.weg(SE(36) + .35); aus(['eg8', 'ac8', 'kw8', 'ge8', 'ok8'], SE(36) + .35);
+  HEIZ.forEach(r => fluss(r, SE(36) + .3, 0, .6));
+}
+
+/* ---------- 9 · die Wärmepumpe – die Wärmepumpen (raus in den Garten, unter die Erde) ---------- */
+const P9 = SE(36) + .3;
+{
+  const C = { x: 5300, y: 1660, z: .86 };
+  kam(P9, 1.4, C, { via: [[4500, 2300], [4800, 1900]], hop: .25 }); cue(P9, 'whoosh');
+  const k = karte(8, { art: 'die', wort: 'Wärmepumpe', plural: 'die Wärmepumpen', gr: 72, oese: [5520, 1340], z: C.z, anker: [5280, 1860] });
+  k.ein(W('Die', 37) - .2); k.chip(W('Die', 37)); k.wort(W('Wärmepumpe', 37)); k.zeile(W('Die', 38));
+  drehe(W('Wärmepumpe', 37), 1.4, .6); leuchten('wp', W('Wärmepumpe', 37), W('Wärmepumpe', 37) + 1.2, 'var(--b400)');
+  // die Wärmepumpen: zwei kleinere, hellere stehen hinten
+  const tP = W('Wärmepumpen', 38) - .2;
+  [[4780, 1980], [5600, 1980]].forEach(([x, y], n) => { bild('wx' + n, 't-wp', 260, `data-gruppe="wx${n}"`, 'opacity:.45'); pop('wx' + n, tP + n * .12, { x, y }, 'pop'); });
+  aus(['wx0', 'wx1'], SA(39) + .2, .3);
+  // Luft: Luftlinien ziehen in den Lüfter
+  const tL = W('Luft', 39) - .2;
+  ['luft1', 'luft2', 'luft3'].forEach(r => fluss(r, tL, 300, .3)); drehe(tL, 2.6, .4); cue(tL, 'whoosh'); akzent(tL + .2, .03);
+  // Erde: Kamera taucht unter die Erde, die Erdleitung legt sich aus
+  const tE = W('Erde', 39) - .35;
+  kam(tE, .9, { x: 5500, y: 2450, z: .6 }); cue(tE, 'whoosh');
+  zeige('erde', tE + .3, .9, 1, 'out'); fuelle('erde', tE + .3, .01, 1); fluss('erde', tE + 1.2, 140);
+  ['luft1', 'luft2', 'luft3'].forEach(r => fluss(r, tE + .5, 0, .6));
+  // Grundwasser: Wasserschicht mit Wellen, Brunnenleitung
+  const tG = W('Grundwasser', 39) - .3;
+  HOOKS.push(t => { el('gw').style.opacity = (.9 * clamp((t - tG) / .5)).toFixed(3); for (let n = 0; n < 12; n++) el('gww' + n).style.transform = `translateX(${((t * (40 + (n % 3) * 14) + n * 233) % 2600).toFixed(1)}px)`; });
+  zeige('brunnen', tG + .1, .6, 1, 'out'); fuelle('brunnen', tG + .1, .01, 1); fluss('brunnen', tG + .7, 140); cue(tG, 'scan');
+  // heizt damit das Haus: Wärme läuft ins Haus, die Fenster werden warm
+  const tH = W('heizt', 39) - .3;
+  kam(tH, .9, { x: 4250, y: 1450, z: .42 }); cue(tH, 'whoosh');
+  zeige('wpLeitung', tH + .2, .7, 1, 'out'); fuelle('wpLeitung', tH + .2, .8, 1, 'lin'); fluss('wpLeitung', tH + .9, 160);
+  ['heizVL', 'heizWohn', 'heizSchlaf'].forEach(r => fluss(r, tH + .9, 150));
+  const tHa = W('Haus', 39);
+  ['fwW', 'fwS'].forEach((f, i) => HOOKS.push(t => { if (t > tHa - .2 && t < SE(40) + 1) el(f).style.opacity = (.85 * clamp((t - tHa - i * .1) / .5) * clamp((SE(40) + .6 - t) / .4)).toFixed(3); }));
+  ['wohn', 'schlaf'].forEach(n => leuchten('hk-' + n, tHa, SE(39) + .8, 'var(--error)', 1.4));
+  cue(tHa, 'ding'); akzent(tHa, .03);
+  // Geselle: Nächste Woche bauen wir eine Wärmepumpe ein – Kalenderblatt, Lieferkarton landet
+  const sl = satzleiste(9, 40, 'die', ['wärmepumpe']);
+  kam(SA(40) - .55, .9, C); cue(SA(40) - .55, 'whoosh');
+  sl.ein(SA(40) - .4);
+  neu('kb9', '<b>nächste</b><span>Woche</span>', '', '', 'kblatt65'); pop('kb9', W('Nächste', 40), { x: 4800, y: 1500 }, 'pop'); wackeln('kb9', W('Woche', 40) + .1, 3, 3);
+  bild('ka9', 't-karton', 280, 'data-gruppe="ka9"');
+  neu('ka9w', kopie('t-wp', 'ka9w'), 'width:70px', 'data-gruppe="ka9"');
+  akteur('ka9', { x: 5700, y: 1400, o: 0 }); akteur('ka9w', { x: 5700 - 6, y: 1400 + 14, o: 0 });
+  const tKa = W('Wärmepumpe', 40) - .45;
+  tw(['ka9', 'ka9w'], tKa, .15, { o: 1 }); tw('ka9', tKa, .5, { y: 1975 }, 'in'); tw('ka9w', tKa, .5, { y: 1975 + 14 }, 'in');
+  landen('ka9', tKa + .5); cue(tKa + .5, 'plopp'); akzent(tKa + .5, .03);
+  plakette('ok9', 'gruen', 'svgHaken'); pop('ok9', W('ein', 40), { x: 5840, y: 1800 }, 'ding');
+  sl.weg(SE(40) + .3);
+  k.weg(SE(40) + .3); aus(['kb9', 'ka9', 'ka9w', 'ok9'], SE(40) + .35);
+  drehe(SE(40) + .3, 0, 1);
+  ['wpLeitung', 'heizVL', 'heizWohn', 'heizSchlaf', 'erde', 'brunnen'].forEach(r => fluss(r, SE(40) + .3, 0, .6));
+}
+
+/* ---------- 10 · der Kundendienst (Kamerafahrt über das ganze Haus auf die Straße) ---------- */
+const P10 = SE(40) + .3;
+const VAN = { x: -1150, y: 1850 }, VB = 640, VS = VB / 160;
+{
+  const C = { x: -1050, y: 1640, z: .86 };
+  kam(P10, 1.9, C, { via: [[2200, 1100]], hop: .55 }); cue(P10, 'whoosh');
+  // Transporter fährt vor, Räder drehen sich
+  bild('van', 't-van', VB, 'data-gruppe="van"'); bild('vant', 't-vantuer', VB, 'data-gruppe="van"');
+  const RAD = [[38, 120], [124, 120]].map(([x, y]) => ({ dx: (x - 80) * VS, dy: (y - 80) * VS }));
+  RAD.forEach((r, n) => bild('rad' + n, 't-rad', 2 * 19 * VS / (124 / 160), 'data-gruppe="van" data-dreht'));
+  const tV = P10 + .9, VX0 = VAN.x - 1500;
+  const vanX = t => wertBei('van', 'x', t);
+  akteur('van', { x: VX0, y: VAN.y }); akteur('vant', { x: VX0, y: VAN.y });
+  RAD.forEach((r, n) => akteur('rad' + n, { x: VX0 + r.dx, y: VAN.y + r.dy }));
+  const fahr = (t0, d, x, e = 'sanft') => { tw(['van', 'vant'], t0, d, { x }, e); RAD.forEach((r, n) => tw('rad' + n, t0, d, { x: x + r.dx }, e)); };
+  fahr(tV, 1.4, VAN.x); cue(tV, 'whoosh');
+  HOOKS.push(t => RAD.forEach((r, n) => { el('rad' + n).style.transform += ` rotate(${((vanX(t) - VX0) / (19 * VS) * 57.3).toFixed(1)}deg)`; }));
+  landen('van', tV + 1.4); cue(tV + 1.4, 'klick');
+  const k = karte(9, { art: 'der', wort: 'Kundendienst', gr: 76, oese: [-1560, 1270], z: C.z, anker: t => [vanX(t) + 10, VAN.y - 200] });
+  k.ein(W('Der', 41) - .1); k.chip(W('Der', 41)); k.wort(W('Kundendienst', 41));
+  leuchten('van', W('Kundendienst', 41), W('Kundendienst', 41) + 1.2, 'var(--b400)');
+  // Ihr fahrt zu den Kunden: die Schiebetür geht auf, die Werkzeugtasche hüpft heraus
+  const tKu = W('Kunden', 42) - .3;
+  tw('vant', tKu, .4, { x: VAN.x - 46 * VS * .9 }, 'sanft'); cue(tKu, 'klick');
+  bild('ta10', 't-tasche', 190);
+  akteur('ta10', { x: VAN.x - 12, y: VAN.y - 40, s: .5, o: 0 });
+  tw('ta10', tKu + .35, .1, { o: 1 }); flug('ta10', tKu + .35, .6, VAN.x + 420, 1990, 160, { s: 1 }); landen('ta10', tKu + .95); cue(tKu + .95, 'plopp');
+  // wartet die Anlagen: Klemmbrett, die Liste hakt sich ab, das Tuch wischt
+  const KB = { x: -480, y: 1640 };
+  bild('kl10', 't-klemm', 260, 'data-gruppe="kl10"');
+  pop('kl10', W('wartet', 42) - .25, { ...KB }, 'pop');
+  neu('li10', [0, 1, 2].map(n => `<div><span class="bx" id="li10b${n}"><span id="li10h${n}">${tpl('svgHakenL')}</span></span><span class="ln"></span></div>`).join(''), '', 'data-gruppe="kl10"', 'liste65');
+  pop('li10', W('wartet', 42) - .15, { x: KB.x - 6, y: KB.y + 14 }, null);
+  [0, 1, 2].forEach(n => { akteur('li10h' + n, { s: 0 }, true); const t0 = W('Anlagen', 42) - .3 + n * .28; tw('li10h' + n, t0, .4, { s: 1 }, 'back'); cue(t0, 'klick'); });
+  bild('tu10', 't-tuch', 120, 'data-frei');
+  akteur('tu10', { x: KB.x + 130, y: KB.y - 60, o: 0, r: -3 });
+  const tWi = W('wartet', 42) + .05;
+  tw('tu10', tWi, .2, { o: 1 });
+  for (let n = 0; n < 4; n++) tw('tu10', tWi + n * .22, .22, { x: KB.x + (n % 2 ? 130 : -20), y: KB.y - 60 + n * 30 }, 'sinus');
+  tw('tu10', tWi + .9, .3, { o: 0 }); cue(tWi, 'kritzeln');
+  // repariert sie: der Schraubenschlüssel dreht
+  bild('sc10', 't-schluessel', 200, 'data-gruppe="sc10" data-dreht');
+  const tR = W('repariert', 42) - .2;
+  pop('sc10', tR, { x: KB.x, y: KB.y + 270 }, 'pop');
+  for (let n = 0; n < 3; n++) { tw('sc10', tR + .4 + n * .3, .15, { r: -25 }, 'sinus'); tw('sc10', tR + .55 + n * .3, .15, { r: 0 }, 'sinus'); cue(tR + .45 + n * .3, 'klick'); }
+  akzent(tR + .2, .03);
+  // Kwame: Heute fahre ich zum ersten Mal mit – Kalenderblatt „heute“, Kwame steigt ein, die Tür schließt, der Transporter fährt los
+  const sl = satzleiste(10, 43, 'der', ['kundendienst']);
+  sl.ein(SA(43) - .45);
+  aus(['kl10', 'li10', 'sc10'], SA(43) - .3, .3);
+  neu('kb10', '<b>heute</b><span>erster Tag</span>', '', '', 'kblatt65');
+  pop('kb10', W('Heute', 43), { x: -480, y: 1600 }, 'pop');
+  portrait('kw10', 'Kwame', 230);
+  const tE = W('ersten', 43) - .2;
+  pop('kw10', tE, { x: -780, y: 1960 - 115 }, 'pop'); FROH.push(['kw10', tE + .4, 99]);
+  const tEin = W('Kundendienst', 43) + .05;
+  flug('ta10', tEin, .5, VAN.x - 12, VAN.y - 30, 120, { s: .5 }); tw('ta10', tEin + .4, .1, { o: 0 }); cue(tEin, 'whoosh');
+  tw('kw10', tEin + .2, .45, { x: VAN.x + 10, y: VAN.y - 40, s: .3, o: 0 }, 'in');
+  tw('vant', tEin + .6, .35, { x: VAN.x }, 'in'); cue(tEin + .95, 'klick');
+  sl.weg(SE(43) + .2);
+  k.weg(SE(43) + .1); aus('kb10', SE(43) + .1);
+  fahr(SE(43) + .3, 1.2, VAN.x - 2200, 'in'); cue(SE(43) + .3, 'whoosh');
+}
+
+/* ---------- 11 · Schlussdialog: das ganze Haus, jedes Wort leuchtet an seinem Bauteil ---------- */
+const P11 = SE(43) + .4;
+{
+  const C = Z.total;
+  kam(P11, 1.5, C); cue(P11, 'whoosh');
+  portrait('ge11', 'Geselle', 230, '', HUD); portrait('kw11', 'Kwame', 230, '', HUD);
+  pop('ge11', P11 + .9, { x: 180, y: 190 }, 'pop'); pop('kw11', P11 + 1.05, { x: 1740, y: 190 }, 'pop');
+  const zc = C.z, chips = [];
+  const wort11 = (id, art, text, sx, sy, t, ziel = null) => { const p = WP(C, sx, sy); chip(id, art, text, p.x, p.y, zc).ein(t - .05); chips.push([id, t]);
+    HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; }); };
+  // zwei Termine im Kundendienst: Plaketten 1 und 2 am Bad und am Wohnzimmer
+  const tKd = W('Kundendienst', 44);
+  wort11('c11kd', 'der', 'Kundendienst', 960, 64, tKd);
+  const tTe = W('zwei', 44);
+  neu('n111', '1', '', 'data-frei', 'plakette lila', KARTEN); neu('n112', '2', '', 'data-frei', 'plakette lila', KARTEN);
+  const p1 = WP(C, 560, 250), p2 = WP(C, 1115, 590);
+  pop('n111', tTe - .05, { x: p1.x, y: p1.y, s: 1 / zc }, 'pop'); pop('n112', tTe + .15, { x: p2.x, y: p2.y, s: 1 / zc }, 'pop');
+  nicken('kw11', W('Termine', 44) + .2, 1);
+  // Ein Wasserhahn tropft: Bad
+  const tWh = W('Wasserhahn', 46);
+  leuchten('arm2', tWh - .1, tWh + 1.6, 'var(--info)', 1.6); wort11('c11wh', 'der', 'Wasserhahn', 560, 335, tWh);
+  // Dreh das Ventil zu: Keller, der Hebel dreht
+  const tVe = W('Ventil', 47);
+  tw('v1h', tVe - .3, .01, { r: 0 }); tw('v1h', tVe, .4, { r: -90 }, 'sanft'); cue(tVe, 'klick');
+  leuchten('v1', tVe - .1, tVe + 1.4, 'var(--warning)', 1.6); wort11('c11ve', 'das', 'Ventil', 250, 895, tVe);
+  // wechsle die Dichtung
+  const tDi = W('Dichtung', 47);
+  wort11('c11di', 'die', 'Dichtung', 560, 420, tDi);
+  // Dann nehme ich die Rohrzange mit: Zange erscheint an Kwames Porträt
+  const tRz = W('Rohrzange', 48);
+  bild('z11', 't-zange', 150, '', '', HUD); pop('z11', tRz - .1, { x: 1740, y: 400 }, 'pop');
+  wort11('c11rz', 'die', 'Rohrzange', 1740, 500, tRz);
+  // Gut, danach ein Heizkörper, der nicht warm wird: Wohnzimmer, kalt
+  const tHk = W('Heizkörper', 49);
+  tw('kalt-wohn', tHk - .1, .5, { o: .25 }); leuchten('hk-wohn', tHk - .1, tHk + 1.6, 'var(--info)', 1.6);
+  wort11('c11hk', 'der', 'Heizkörper', 1115, 670, tHk);
+  // Prüf das Thermostat, den Heizkessel mache ich
+  const tTh = W('Thermostat', 50);
+  leuchten('th-wohn', tTh - .1, tTh + 1.4, 'var(--warning)', 1.8); wort11('c11th', 'das', 'Thermostat', 1340, 600, tTh);
+  const tKe = W('Heizkessel', 50);
+  leuchten('kessel', tKe - .1, tKe + 1.6, 'var(--warning)', 1.6); wort11('c11ke', 'der', 'Heizkessel', 1090, 880, tKe);
+  nicken('ge11', W('mache', 50), 1);
+  // Und wann kommt die Wärmepumpe? – Nächste Woche.
+  const tWp = W('Wärmepumpe', 51);
+  leuchten('wp', tWp - .1, tWp + 1.6, 'var(--b400)', 1.6); drehe(tWp, 1.5, .5); wort11('c11wp', 'die', 'Wärmepumpe', 1520, 610, tWp);
+  neu('kb11', '<b>nächste</b><span>Woche</span>', '', 'data-frei', 'kblatt65', KARTEN);
+  const pk = WP(C, 1600, 400); pop('kb11', W('Nächste', 52), { x: pk.x, y: pk.y, s: 1 / zc }, 'pop');
+  // Da lernst du viel! – Haken, alle Leitungen laufen, beide freuen sich
+  const tDa = W('lernst', 53);
+  plakette('ok11', 'gruen', 'svgHaken', '', HUD); el('ok11').style.cssText += ';width:110px;height:110px'; el('ok11').querySelector('svg').style.width = '54px';
+  pop('ok11', tDa, { x: 960, y: 160 }, 'erfolg'); akzent(tDa, .045);
+  FROH.push(['kw11', tDa, 99], ['ge11', tDa + .1, 99]);
+  [...KALT, ...HEIZ].forEach((r, n) => fluss(r, tDa + n * .05, 150)); drehe(tDa, 1.4, .5);
+  tw('kalt-wohn', tDa, .5, { o: 0 }); ['wohn', 'schlaf', 'kueche'].forEach(n => leuchten('hk-' + n, tDa + .2, ENDE_SPRACHE + 2, 'var(--error)', .9));
+  chips.forEach(([id], n) => bump(id, tDa + .3 + n * .06, 1.12));
+  huepfen('kw11', SE(53) + .1, 16); huepfen('ge11', SE(53) + .25, 12);
+}
+
+/* ---------- Lüfter dreht sich (Umdrehungen integriert) ---------- */
+LUEFTER.sort((a, b) => a[0] - b[0]);
+const LPKT = [[0, 0]]; { let c = 0; for (const [t, v, r] of LUEFTER) { LPKT.push([t, c], [t + r, v]); c = v; } }
+HOOKS.push(t => { const w = weg({ pkt: LPKT }, t) * 360; el('luefter').style.transform += ` rotate(${(w % 360).toFixed(1)}deg)`; });
+
+/* ---------- Abspann: das Wasser steigt ---------- */
+const AB = ENDE_SPRACHE + 1.8;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - AB) / .9)), h = 1200 * p, a = 26 * Math.sin(Math.PI * p);
+  const pts = []; for (let x = 0; x <= 1920; x += 60) pts.push(`${x}px ${(1080 - h + a * Math.sin(x / 140 + t * 5)).toFixed(1)}px`);
+  $('#abspann').style.clipPath = `polygon(0 1080px,${pts.join(',')},1920px 1080px)`;
+});
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .6, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .95, .6, { o: 1, y: 0 }, 'weich');
+
+KAM.sort((a, b) => a.t0 - b.t0);
+rohreFertig();
+start(AB + 4.0, AB + 2.2);
+</script>
+</body></html>

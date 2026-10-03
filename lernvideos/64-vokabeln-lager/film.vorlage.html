@@ -423,17 +423,17 @@ function karton(i, o) {
     ${o.zeile ? `<div class="pl" id="${id}p" ${o.plgr ? `style="font-size:${o.plgr}px"` : ''}><small>${o.zeile[0]}</small><span>${o.zeile[1]}</span></div>` : ''}`, '', '', `kt ${kl}${o.zeile ? '' : ' ohne'}`);
   const x = X + KT_X, y = Y + KT_Y;
   akteur(id, { x: x - 330, y, o: 0 });
-  akteur(id + 'a', { s: 0, r: -8 }, true);
+  akteur(id + 'a', { s: 0, r: -8 }, true); akteur(id + 'c', {}, true);
   woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
   if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
   // Scan-Kopf und Laserlinie
   neu(id + 'k', '<i></i>', '', 'data-frei', 'kopf64'); neu(id + 'l', '', '', 'data-frei', 'laser');
-  akteur(id + 'k', { x: X + 160, y: Y + 477 }); akteur(id + 'l', { x: X + 160, y: Y + 723, o: 0 });
+  akteur(id + 'k', { x: X + 160, y: Y + 477, o: 0 }); akteur(id + 'l', { x: X + 160, y: Y + 723, o: 0 });
   // Rollen der Rollenbahn drehen sich mit dem Karton
   const bue = el('bue' + i);
   HOOKS.push(t => bue.style.setProperty('--rw', ((wertBei(id, 'x', t) - x) / 15 * 57.3).toFixed(1) + 'deg'));
   return {
-    ein: (t, d = .75) => { tw(id, t, .3, { o: 1 }); tw(id, t, d, { x }, 'sanft'); cue(t, 'whoosh'); tw(id, t + d - .15, .12, { sx: 1.03, sy: .97 }, 'sinus'); tw(id, t + d - .03, .35, { sx: 1, sy: 1 }, 'sanft'); },
+    ein: (t, d = .75) => { tw([id, id + 'k'], t, .3, { o: 1 }); tw(id, t, d, { x }, 'sanft'); cue(t, 'whoosh'); tw(id, t + d - .15, .12, { sx: 1.03, sy: .97 }, 'sinus'); tw(id, t + d - .03, .35, { sx: 1, sy: 1 }, 'sanft'); },
     // Laser fährt über den Karton; am Strichcode piept es, der Artikel-Aufkleber klebt sich auf
     scan: t => {
       const t0 = t - .5;
@@ -503,6 +503,8 @@ function stapler(id, gr, attr = '') {
     leuchte: (t0, t1) => HOOKS.push(t => { const e = el(id + 'w'); if (t < t0 || t > t1) return; const q = .55 + .45 * Math.sin((t - t0) * 9); e.style.opacity = (q * e.style.opacity).toFixed(3); }),
   };
 }
+// beladene Palette (Gruppe: Palette + zwei Kartons), 126 px hoch
+const ladung = (id, b, attr = 'data-gruppe="rg6"') => neu(id, `<div class="pal" style="left:0;top:92px;width:${b}px">${palHTML(b)}</div><div class="kiste" style="left:8px;top:22px;width:${b / 2 - 12}px;height:70px"></div><div class="kiste" style="left:${b / 2 + 4}px;top:22px;width:${b / 2 - 12}px;height:70px"></div>`, `width:${b}px;height:126px`, attr, 'grp');
 // Lagertür (Rahmen, Blatt)
 const tuer = (id, b, h, attr = '') => neu(id, `<div class="blatt" id="${id}b"><div class="griff"></div></div>`, `width:${b}px;height:${h}px`, attr, 'htuer');
 const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); tw(id + 'b', t + d, .4, { sx: 1 }, 'sanft'); cue(t, 'klick'); };
@@ -534,8 +536,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // Förderband vor dem Regal; ein Karton fährt bei „Fachkraft für Lagerlogistik“ vorbei
   const bl = W0(330, 0).x, br = W0(1590, 0).x, by = W0(0, 808).y;
   neu('fb0', Array.from({ length: 50 }, (_, k) => `<div class="rolle" style="left:${30 + k * 128}px"></div>`).join('') + '<div class="schiene"></div>', `width:${br - bl}px`, 'data-frei', 'band64');
-  akteur('fb0', { x: bl, y: by - 75 }, true);
-  ein('fb0', .9, { x: bl, y: by - 75 }, { y: 400 });
+  ein('fb0', .9, { x: (bl + br) / 2, y: by }, { y: 400 });
   bild('ka0', 't-karton', 230 / Z0, 'data-frei');
   const tK = W('Fachkraft', 2) - .5, kA = W0(-150, 700), kB = W0(2100, 700);
   akteur('ka0', { x: kA.x, y: kA.y });
@@ -802,7 +803,6 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // sehr hohe Regale für Paletten: Höhenpfeil, Paletten gleiten in die Felder
   neu('ho6', '', `height:${GY - B[3] - 60}px`, 'data-frei', 'hoehe');
   akteur('ho6', { x: X + RR + 60, y: Y + (GY + B[3]) / 2, sy: 0 }); tw('ho6', W('hohe', 27) - .2, .5, { sy: 1 }, 'sanft'); cue(W('hohe', 27) - .2, 'whoosh');
-  const ladung = (id, b) => neu(id, `<div class="pal" style="left:0;top:${92}px;width:${b}px">${palHTML(b)}</div><div class="kiste" style="left:8px;top:22px;width:${b / 2 - 12}px;height:70px"></div><div class="kiste" style="left:${b / 2 + 4}px;top:22px;width:${b / 2 - 12}px;height:70px"></div>`, `width:${b}px;height:126px`, 'data-gruppe="rg6"', 'grp');
   const FE = [[RL + 100, B[0]], [RL + 100, B[1]], [RL + 300, B[1]]];
   FE.forEach(([x, b], n) => {
     const id = 'lp6' + n; ladung(id, 170);
@@ -836,5 +836,299 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akzent(W('Hochregal', 28), .04);
   sl.aus(SE(28) + .5);
 }
+
+/* ================= 7 · der Lagerplatz – die Lagerplätze ================= */
+{
+  const i = 7, X = FX(i), Y = FY(i), P = SE(28) + .15;
+  zuFach(P, i);
+  const k = karton(i, { art: 'der', wort: 'Lagerplatz', zeile: ['Plural', 'die Lagerplätze'], gr: 96 });
+  k.ein(P + .15); k.scan(W('Der', 29)); k.wort(W('Lagerplatz', 29)); k.zeile(W('Die', 30));
+  const sl = schild(i, 33, 'der', ['lagerplatz']); sl.ein(SA(33) - .55);
+  // Regalausschnitt mit vier Fächern (unten 10, 11 – oben 12, 13)
+  const L = 1000, R = 1720, M = 1360, TOP = 240, MID = 570, BOT = 900;
+  neu('rg7', `<i style="left:0;top:0;bottom:0;width:18px"></i><i style="left:${M - L - 9}px;top:0;bottom:0;width:18px"></i><i style="right:0;top:0;bottom:0;width:18px"></i>
+    <b style="top:0"></b><b style="top:${MID - TOP}px"></b><b style="top:${BOT - TOP}px"></b>`, `width:${R - L}px;height:${GY - TOP}px`, 'data-gruppe="rg7"', 'regalzeile');
+  ein('rg7', P + .55, { x: X + (L + R) / 2, y: Y + (TOP + GY) / 2 }, { y: 90 }, 'whoosh');
+  const FA = { 10: [(L + M) / 2, BOT], 11: [(M + R) / 2, BOT], 12: [(L + M) / 2, MID], 13: [(M + R) / 2, MID] };
+  [10, 11, 13].forEach((n, j) => { ladung('ld7' + n, 230, 'data-gruppe="rg7"'); pop('ld7' + n, P + .9 + j * .12, { x: X + FA[n][0], y: Y + FA[n][1] - 63 }, j ? null : 'pop'); });
+  // Rahmen je Fach (gestrichelt), Etikett mit Nummer an der Traverse
+  const fr = n => { const id = 'fr7' + n; neu(id, '', 'width:318px;height:300px', 'data-frei', 'fachrahmen'); akteur(id, { x: X + FA[n][0], y: Y + FA[n][1] - 162, o: 0 }); return id; };
+  [10, 11, 12, 13].forEach(fr);
+  const zeig = (id, t, d) => { tw(id, t, .2, { o: 1 }); tw(id, t + d, .35, { o: 0 }); };
+  zeig('fr710', W('Lagerplatz', 29) - .05, 1.4); cue(W('Lagerplatz', 29), 'klick');
+  [10, 11, 12, 13].forEach((n, j) => { zeig('fr7' + n, W('Lagerplätze', 30) - .1 + j * .12, 1.1); cue(W('Lagerplätze', 30) - .1 + j * .12, 'klick'); });
+  akzent(W('Lagerplätze', 30) + .2, .03);
+  const ET = {};
+  [10, 11, 12, 13].forEach((n, j) => {
+    const id = 'et7' + n; neu(id, `<b>${n}</b>`, '', 'data-gruppe="rg7"', 'etikett');
+    ET[n] = { x: X + FA[n][0], y: Y + FA[n][1] + 9 };
+    pop(id, W('hat', 31) - .15 + j * .14, ET[n], 'pop');
+  });
+  bump('et710', W('Nummer', 31), 1.12); akzent(W('Nummer', 31), .03);
+  // So findest du jede Ware schnell: die Lupe fährt die Etiketten ab und bleibt auf 12 stehen
+  bild('lu7', 't-lupe', 150, 'data-frei');
+  const lu = p => ({ x: p.x + 13, y: p.y + 13 });
+  akteur('lu7', { ...lu(ET[10]), x: lu(ET[10]).x - 120, o: 0 });
+  const tL = W('findest', 32) - .2;
+  tw('lu7', tL, .25, { o: 1 }); tw('lu7', tL, .4, lu(ET[10]), 'sanft'); cue(tL, 'whoosh');
+  [11, 13, 12].forEach((n, j) => { const t = tL + .45 + j * .38; tw('lu7', t, .34, lu(ET[n]), 'inout'); cue(t + .3, 'klick'); });
+  const tSt = tL + .45 + 3 * .38;
+  bump('et712', tSt, 1.15); akzent(W('schnell', 32), .035);
+  // Lagerplatz zwölf ist noch frei: Fach 12 leuchtet grün, ein Karton springt hinein
+  const tZ = W('zwölf', 33) - .1;
+  tw('lu7', tZ, .35, { o: 0, s: .8 }, 'in');
+  bump('et712', tZ, 1.12);
+  HOOKS.push(t => el('fr712').classList.toggle('voll', t >= tZ));
+  tw('fr712', tZ, .25, { o: 1 }); cue(tZ, 'ding'); wellen(tZ + .05, X + FA[12][0], Y + FA[12][1] - 162, 'var(--success)', 300);
+  ladung('ld712', 230, 'data-gruppe="rg7"');
+  const tK = W('frei', 33) + .1;
+  akteur('ld712', { x: X + 1830, y: Y + 420, o: 0, s: .7 });
+  tw('ld712', tK, .15, { o: 1 }); flug('ld712', tK, .7, X + FA[12][0], Y + FA[12][1] - 63, 160, { s: 1 }); landen('ld712', tK + .7); cue(tK, 'whoosh'); cue(tK + .7, 'plopp');
+  tw('fr712', tK + .9, .4, { o: 0 });
+  akzent(W('frei', 33), .04);
+  sl.aus(SE(33) + .5);
+}
+
+/* ================= 8 · der Scanner ================= */
+{
+  const i = 8, X = FX(i), Y = FY(i), P = SE(33) + .15;
+  zuFach(P, i);
+  const k = karton(i, { art: 'der', wort: 'Scanner', zeile: ['Plural', 'die Scanner'], gr: 110 });
+  k.ein(P + .15); k.scan(W('Der', 34)); k.wort(W('Skänner', 34)); k.zeile(W('Die', 35));
+  const sl = schild(i, 38, 'der', ['skänn']); sl.ein(SA(38) - .55);
+  // Handscanner schwebt herein; bei „Die Scanner“ ein zweiter
+  const SX = X + 1580, SY = Y + 420, SB = 280, sk = SB / 160;
+  bild('sc8', 't-scanner', SB, 'data-gruppe="sc8"');
+  ein('sc8', W('Skänner', 34) - .4, { x: SX, y: SY, r: -2 }, { y: 110 }, 'whoosh');
+  bild('sc8b', 't-scanner', 180, 'data-gruppe="sc8b"');
+  ein('sc8b', W('Skänner', 35) - .3, { x: X + 1745, y: Y + 660, r: 2 }, { x: 120 }, 'whoosh');
+  const NASE = { x: SX + (24 - 80) * sk, y: SY + (71 - 80) * sk };
+  // Regal-Traverse mit Lagerplatz-Etikett 12, Karton mit Strichcode, Bildschirm
+  neu('bk8', '<b id="bk8b">12</b>', '', 'data-gruppe="bk8"', 'balken');
+  ein('bk8', W('Skänner', 34) - .1, { x: X + 1110, y: Y + 740 }, { y: 70 });
+  neu('ki8', `<div id="ki8c" style="position:absolute;left:28px;right:28px;top:34px;height:70px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300);padding:8px 12px">${CODE.replace('<svg ', '<svg style="height:54px" ')}</div>`, 'width:220px;height:150px', 'data-gruppe="ki8"', 'kiste');
+  ein('ki8', W('Skänner', 34) + .05, { x: X + 1430, y: Y + GY - 75 }, { y: 70 }, 'plopp');
+  const ZIEL = { code: { x: X + 1430, y: Y + GY - 75 - 6 }, platz: { x: X + 1110 + 135 - 150 + 30, y: Y + 740 } };
+  neu('mo8', `<div class="scr">${[0, 1, 2].map(n => `<div class="z" style="top:${18 + n * 52}px"><i style="width:${[120, 90, 150][n]}px"></i><i style="width:60px;background:var(--b200)"></i></div>`).join('')}<div class="z neu" id="mo8n" style="top:174px"></div></div>`, '', 'data-gruppe="mo8"', 'mon');
+  neu('mf8', '<i></i><s></s>', '', 'data-gruppe="mo8"', 'monfuss');
+  ein('mo8', W('Skänner', 35) + .1, { x: X + 1120, y: Y + 300 }, { y: 80 }, 'whoosh'); ein('mf8', W('Skänner', 35) + .15, { x: X + 1120, y: Y + 455 }, { y: 80 });
+  // Strahl vom Scanner zu einem Ziel
+  let SN = 0;
+  const strahl = (t, z, d = .7) => {
+    const id = 'sa8' + SN++, dx = z.x - NASE.x, dy = z.y - NASE.y, len = Math.hypot(dx, dy);
+    neu(id, '', 'width:100px', 'data-frei', 'strahl');
+    akteur(id, { x: NASE.x, y: NASE.y - 4, r: Math.atan2(dy, dx) * 180 / Math.PI, sx: 0, o: 1 }, true);
+    tw(id, t, .22, { sx: len / 100 }, 'out'); tw(id, t + d, .25, { o: 0 }); cue(t, 'scan'); cue(t + .25, 'ding');
+    bump('sc8', t - .05, 1.04);
+    return t + .25;
+  };
+  // Er liest den Strichcode: Strahl, Piep-Bögen, das Etikett leuchtet
+  const tC = strahl(W('Strichcode', 36) - .1, ZIEL.code);
+  HOOKS.push(t => { const c = el('ki8c'); const an = t >= tC && t < tC + 1.2; c.style.boxShadow = an ? 'inset 0 0 0 4px var(--success)' : ''; c.style.background = an ? 'var(--success-bg)' : 'var(--surface)'; });
+  [0, 1, 2].forEach(n => { neu('bo8' + n, tpl('svgBogen'), `width:${22 + n * 8}px`, 'data-frei'); pop('bo8' + n, tC + n * .1, { x: SX + 150 + n * 26, y: SY - 30 }, null); aus('bo8' + n, tC + .9, .3); });
+  akzent(W('Strichcode', 36), .035);
+  // Dann weiß das System, wo die Ware ist: Datenpunkt fliegt zum Bildschirm, neue Zeile
+  neu('pk8', '', '', 'data-frei', 'punkt64');
+  const tS = W('System', 37) - .25;
+  akteur('pk8', { x: ZIEL.code.x, y: ZIEL.code.y, s: 0 });
+  tw('pk8', tS, .2, { s: 1 }, 'back'); flug('pk8', tS + .1, .7, X + 1120, Y + 330, 160); tw('pk8', tS + .75, .2, { s: 0 }, 'in'); cue(tS, 'pop');
+  akteur('mo8n', { o: 0, x: -20 }, true); tw('mo8n', tS + .8, .3, { o: 1, x: 0 }, 'sanft');
+  tippen('mo8n', 'Fach 12 · 20 Kartons', tS + .85, .9);
+  bump('mo8', W('Ware', 37), 1.04); akzent(W('Ware', 37), .03);
+  // Scann zuerst den Lagerplatz, dann die Ware: zwei Strahlen, zwei Haken
+  const t1 = strahl(W('Lagerplatz', 38) - .15, ZIEL.platz, .8);
+  HOOKS.push(t => el('bk8b').classList.toggle('ok', t >= t1));
+  haken('ok8a', t1 + .05, X + 1110 + 120, Y + 660, 'data-frei', null);
+  const t2 = strahl(W('Ware', 38) - .15, ZIEL.code, .8);
+  haken('ok8b', t2 + .05, X + 1430 + 135, Y + GY - 175, 'data-frei', null);
+  akzent(W('Ware', 38), .035);
+  sl.aus(SE(38) + .5);
+}
+
+/* ================= 9 · die Kommissionierung ================= */
+// Kommissionierwagen: fährt mit seiner Ladung
+function wagen(id, gr, attr = '') {
+  bild(id, 't-rollwagen', gr, attr);
+  const k = gr / 160, mit = [];
+  return { k, mit, oben: gy => gy - (148 - 78) * k, setzen: (x, gy, b = {}) => akteur(id, { x, y: gy - (148 - 80) * k, ...b }),
+    fahren: (t, x, d = .45) => { const dx = x - wertBei(id, 'x', t); rollen(id, t, x, d, 'inout'); mit.forEach(m => tw(m, t, d, { x: wertBei(m, 'x', t) + dx }, 'inout')); cue(t, 'whoosh'); } };
+}
+{
+  const i = 9, X = FX(i), Y = FY(i), P = SE(38) + .15;
+  zuFach(P, i);
+  const k = karton(i, { art: 'die', wort: 'Kommissionierung', gr: 62 });
+  k.ein(P + .15); k.scan(W('Die', 39)); k.wort(W('Kommissionierung', 39));
+  const sl = schild(i, 41, 'die', ['kommissionierung']); sl.ein(SA(41) - .55);
+  // Auftrag mit drei Zeilen
+  const FARBE = ['a', 'b', 'c'];
+  const auftrag = (id, ok = true) => neu(id, [0, 1, 2].map(n => `<div class="zl" style="top:${56 + n * 66}px"><em class="ware ${FARBE[n]}"></em><i style="width:${[70, 56, 64][n]}px"></i>${ok ? `<s id="${id}s${n}"></s>` : '<s></s>'}</div>`).join(''), '', 'data-gruppe="au9"', 'auftrag');
+  auftrag('au9');
+  ein('au9', P + .6, { x: X + 1020, y: Y + 330, r: -1.5 }, { y: 90 }, 'whoosh');
+  // Regal mit Fächern; Licht an den Fächern des Auftrags
+  const L = 1190, R = 1840, B1 = 470, B2 = 700;
+  const fest = [[1265, B1, 'b'], [1600, B1, 'a'], [1265, B2, 'c'], [1430, B2, 'a'], [1760, B2, 'b']];
+  neu('rz9', `<i style="left:0;top:0;bottom:0;width:16px"></i><i style="left:${(R - L) / 2 - 8}px;top:0;bottom:0;width:16px"></i><i style="right:0;top:0;bottom:0;width:16px"></i>
+    <b style="top:${B1 - 300}px"></b><b style="top:${B2 - 300}px"></b>${fest.map(([x, b, f]) => `<div class="ware ${f}" style="position:absolute;left:${x - L - 30}px;top:${b - 300 - 60}px;width:60px;height:60px;opacity:.9"></div>`).join('')}`,
+    `width:${R - L}px;height:${GY - 300}px`, 'data-gruppe="rz9"', 'regalzeile');
+  ein('rz9', P + .7, { x: X + (L + R) / 2, y: Y + (300 + GY) / 2 }, { y: 90 }, 'whoosh');
+  const PICK = [[1430, B1, 'a'], [1600, B2, 'b'], [1760, B1, 'c']];
+  PICK.forEach(([x, b, f], n) => {
+    neu('wa9' + n, '', 'width:60px;height:60px', 'data-gruppe="rz9"', 'ware ' + f); pop('wa9' + n, P + .95 + n * .1, { x: X + x, y: Y + b - 30 }, null);
+    neu('li9' + n, '', '', 'data-gruppe="rz9"', 'licht'); akteur('li9' + n, { x: X + x, y: Y + b + 9 });
+  });
+  // Kommissionierwagen rollt herein und fährt die Fächer ab
+  const wg = wagen('rw9', 240, 'data-gruppe="rw9"'), WO = wg.oben(Y + GY);
+  wg.setzen(X + 1050 - 160, Y + GY, { o: 0 });
+  const tW = W('Kommissionierung', 39) - .2;
+  tw('rw9', tW, .25, { o: 1 }); wg.fahren(tW, X + 1050, .8);
+  const T = [W('suchst', 40) - .4, W('Ware', 40) - .3, W('Auftrag', 40) - .35], OFF = [-58, 0, 58];
+  PICK.forEach(([x, b], n) => {
+    const t = T[n];
+    HOOKS.push(z => el('li9' + n).classList.toggle('an', z >= t && z < t + 1.2)); cue(t, 'klick');
+    wg.fahren(t, X + x, .4);
+    const tj = t + .3;
+    flug('wa9' + n, tj, .38, X + x + OFF[n], WO - 30, 110); landen('wa9' + n, tj + .38); cue(tj + .38, 'plopp');
+    wg.mit.push('wa9' + n);
+    HOOKS.push(z => { const s = el('au9s' + n); s.classList.toggle('ok', z >= tj + .4); s.innerHTML = z >= tj + .4 ? tpl('svgHaken') : ''; });
+    cue(tj + .4, 'klick');
+  });
+  bump('au9', W('zusammen', 40) + .1, 1.05); cue(W('zusammen', 40) + .1, 'ding'); akzent(W('zusammen', 40), .035);
+  // Hier ist der nächste Auftrag: ein neuer Zettel landet auf dem Stapel, „+1“
+  auftrag('au9b', false);
+  const tN = W('nächste', 41) - .35;
+  akteur('au9b', { x: X + 1060, y: Y + 60, o: 0, r: 8 });
+  tw('au9b', tN, .15, { o: 1 }); tw('au9b', tN, .5, { x: X + 1040, y: Y + 312, r: 1.5 }, 'in'); landen('au9b', tN + .5); cue(tN + .5, 'plopp');
+  neu('p19', '+1', '', 'data-gruppe="au9"', 'plakette lila');
+  pop('p19', W('Auftrag', 41) - .05, { x: X + 1150, y: Y + 175 }, 'ding'); akzent(W('Auftrag', 41), .035);
+  sl.aus(SE(41) + .5);
+}
+
+/* ================= 10 · der Versand ================= */
+{
+  const i = 10, X = FX(i), Y = FY(i), P = SE(41) + .15;
+  zuFach(P, i);
+  const k = karton(i, { art: 'der', wort: 'Versand', gr: 108 });
+  k.ein(P + .15); k.scan(W('Der', 42)); k.wort(W('Versand', 42));
+  const sl = schild(i, 44, 'der', ['versand']); sl.ein(SA(44) - .55);
+  // Wagen mit drei Teilen rollt heran
+  const wg = wagen('rw10', 240, 'data-gruppe="rw10"'), WO = wg.oben(Y + GY);
+  wg.setzen(X + 1010 - 180, Y + GY, { o: 0 });
+  ['a', 'b', 'c'].forEach((f, n) => { neu('wa10' + n, '', 'width:60px;height:60px', 'data-gruppe="rw10"', 'ware ' + f); akteur('wa10' + n, { x: X + 1010 - 180 + [-58, 0, 58][n], y: WO - 30, o: 0 }); wg.mit.push('wa10' + n); });
+  tw(['rw10', 'wa100', 'wa101', 'wa102'], P + .55, .25, { o: 1 }); wg.fahren(P + .55, X + 1010, .8);
+  // Paket (offen) und Rampe mit Lastwagen
+  const PX = X + 1300, PY = Y + GY - 85;
+  neu('pk10', `<div class="kl l" id="pk10l"></div><div class="kl r" id="pk10r"></div><div class="deckel" id="pk10d"></div><div class="band" id="pk10b"></div><div class="adr" id="pk10a"><i style="top:16px;width:70px"></i><i style="top:32px;width:90px"></i><i style="top:48px;width:56px"></i></div>`, '', 'data-gruppe="pk10"', 'paket');
+  ein('pk10', P + .75, { x: PX, y: PY }, { y: 80 }, 'plopp');
+  akteur('pk10l', { r: -14 }, true); akteur('pk10r', { r: 14 }, true); akteur('pk10d', { sy: 0 }, true); akteur('pk10b', { sy: 0 }, true); akteur('pk10a', { s: 0 }, true);
+  bild('lk10', 't-lkw', 260, 'data-gruppe="ra10"');
+  const LY = Y + 870 - (148 - 80) * 260 / 160;
+  ein('lk10', P + .85, { x: X + 1700, y: LY }, { y: 60 }, 'whoosh');
+  neu('ra10', '', '', 'data-gruppe="ra10"', 'rampe');
+  ein('ra10', P + .8, { x: X + 1650, y: Y + GY - 45 }, { y: 60 });
+  // Der Versand: die Teile springen in den Karton
+  const tV = W('Versand', 42) - .1;
+  [0, 1, 2].forEach(n => { const id = 'wa10' + n, t = tV + n * .15; flug(id, t, .5, PX - 60 + n * 60, PY - 30, 170); tw(id, t + .35, .15, { o: 0 }); cue(t + .45, 'plopp'); });
+  akzent(W('Versand', 42) + .2, .03);
+  // verpackt: Klappen schließen sich, Klebeband zieht sich darüber – verschickt: Adressaufkleber
+  const tP = W('verpackt', 43) - .25;
+  tw('pk10l', tP, .3, { r: 0, sy: 0 }, 'in'); tw('pk10r', tP + .08, .3, { r: 0, sy: 0 }, 'in'); cue(tP, 'klick'); cue(tP + .1, 'klick');
+  tw('pk10d', tP + .3, .2, { sy: 1 }, 'out'); federn('pk10', tP + .35);
+  tw('pk10b', tP + .5, .4, { sy: 1 }, 'out'); cue(tP + .5, 'kritzeln');
+  tw('pk10a', W('verschickt', 43) - .1, .45, { s: 1 }, 'back'); cue(W('verschickt', 43) - .1, 'plopp');
+  akzent(W('verschickt', 43), .035);
+  tw(['rw10'], W('verschickt', 43) + .1, .35, { o: 0 });
+  // Die Pakete sind fertig: das Paket hüpft auf die Rampe, zwei weitere landen daneben; der Lastwagen fährt los
+  const tR = W('Pakete', 44) - .35;
+  flug('pk10', tR, .55, X + 1580, Y + 870 - 85 * .62, 150, { s: .62 }); landen('pk10', tR + .55); cue(tR + .55, 'plopp');
+  [['pz10', X + 1730, 0], ['py10', X + 1650, 1]].forEach(([id, x, n]) => {
+    kiste(id, 120, 92, 'data-gruppe="ra10"');
+    const t = tR + .2 + n * .15, y = n ? Y + 870 - 105 - 46 - 18 : Y + 870 - 46;
+    akteur(id, { x, y: y - 300, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .38, { y }, 'in'); landen(id, t + .38); cue(t + .38, 'klick');
+  });
+  haken('ok10', W('fertig', 44), X + 1650, Y + 600);
+  const tL = W('Versand', 44) - .2;
+  aus('ok10', tL - .1, .25);
+  ['pk10', 'pz10', 'py10'].forEach((id, n) => { tw(id, tL + n * .08, .45, { x: X + 1700, y: LY - 20, s: .3, o: 0 }, 'in'); });
+  cue(tL, 'whoosh');
+  tw('lk10', tL + .5, 1.4, { y: LY - 70, s: .45, o: 0 }, 'in'); cue(tL + .5, 'whoosh');
+  akzent(W('Versand', 44), .035);
+  sl.aus(SE(44) + .1);
+}
+
+/* ================= 11 · Übersicht: das ganze Regal, Dialog Kollege – Yusuf ================= */
+{
+  const tZ = SE(44) + .15;
+  fahrt(tZ, C0.x, C0.y, Z0, 1.6, false);
+  cue(tZ + 1.5, 'erfolg');
+  tw(['kg0', 'kg1', 'kg2'], tZ + 1.0, .5, { o: 1 });
+  [2, 3, 4, 7, 6, 5, 8, 9, 10].forEach((i, n) => { bump('kt' + i, tZ + 1.3 + n * .07, 1.06); });
+  // Leuchtrahmen je Fach
+  const ART = { 2: 'der', 3: 'der', 4: 'die', 5: 'der', 6: 'das', 7: 'der', 8: 'der', 9: 'die', 10: 'der' };
+  const glut = (i, t) => {
+    const id = 'gl' + i + '_' + WN++;
+    neu(id, '', '', 'data-frei', 'glut ' + ART[i]);
+    akteur(id, { x: FX(i) + FW / 2, y: FY(i) + FH / 2, o: 0 });
+    tw(id, t - .1, .2, { o: 1 }); tw(id, t + 1.1, .5, { o: 0 }); bump('kt' + i, t, 1.06); cue(t, 'pop');
+  };
+  // Porträts links und rechts neben dem Regal
+  const pK = W0(205, 560), pY = W0(1715, 560);
+  portrait('ko11', 'Kollege', 240); portrait('yu11', 'Yusuf', 240); WESTE.yu11 = -1;
+  ein('ko11', SA(45) - .6, { x: pK.x, y: pK.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
+  ein('yu11', SA(45) - .45, { x: pY.x, y: pY.y, s: 1 / Z0 }, { y: 100 / Z0 }, 'pop');
+  nicken('yu11', W('Yusuf', 45) + .1, 1);
+  // Wörter: das Fach leuchtet, der Chip ploppt in seiner Artikelfarbe auf, blinkt, steht unten in der Reihe
+  const CH = [['der', 'Wareneingang', W('Wareneingang', 45), 3], ['der', 'Lieferschein', W('Lieferschein', 46), 3], ['die', 'Paletten', W('Paletten', 48), 4],
+              ['der', 'Gabelstapler', W('Gabelstapler', 49), 5], ['das', 'Hochregal', W('Hochregal', 49), 6], ['die', 'Lagerplätze', W('Lagerplätze', 50), 7],
+              ['die', 'Kommissionierung', W('Kommissionierung', 52), 9], ['der', 'Versand', W('Versand', 53), 10], ['die', 'Sicherheitsschuhe', W('Sicherheitsschuhe', 55), 2]];
+  const breite = t => Math.round(t.length * 15.2 + 132), GAP = 20;
+  [CH.slice(0, 5), CH.slice(5)].forEach((reihe, ri) => {
+    const summe = reihe.reduce((s, c) => s + breite(c[1]), 0) + GAP * (reihe.length - 1);
+    let cx = 960 - summe / 2;
+    reihe.forEach(([art, text, t, i], n) => {
+      const w = breite(text), id = neu(`ch11${ri}${n}`, chipHTML(art, text), `width:${w}px`, '', 'chip ' + art);
+      const p = W0(cx + w / 2, 872 + ri * 76); cx += w + GAP;
+      akteur(id, { x: p.x, y: p.y - 30 / Z0, s: 0, o: 0 });
+      tw(id, t - .05, .2, { o: 1 }); tw(id, t - .05, .5, { s: 1.2 / Z0 }, 'back'); tw(id, t + .55, .5, { s: 1 / Z0, y: p.y }, 'sanft');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const q = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * q).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * q)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      glut(i, t);
+    });
+  });
+  glut(8, W('skännst', 50));
+  // Mach ich. Zwei Paletten, alles in Ordnung.
+  nicken('yu11', W('Mach', 47), 1); FROH.push(['yu11', SE(47), SA(49)]);
+  const pZ = W0(1585, 400);
+  haken('ok11a', W('Ordnung', 48), pZ.x, pZ.y); akteur('ok11a', { x: pZ.x, y: pZ.y, s: 0 }); tw('ok11a', W('Ordnung', 48), .5, { s: 1 / Z0 }, 'back');
+  nicken('ko11', W('Ordnung', 48) + .1, 1);
+  aus('ok11a', SA(49) + .3, .3);
+  // Und was mache ich danach?
+  plakette('fr11', 'lila', 'svgFrage'); akteur('fr11', { x: pZ.x, y: pZ.y, s: 0 });
+  tw('fr11', W('danach', 51) - .1, .5, { s: 1 / Z0 }, 'back'); cue(W('danach', 51) - .1, 'plopp'); wackeln('fr11', W('danach', 51) + .4, 3, 6);
+  aus('fr11', SA(52) + .2, .3); nicken('ko11', SA(52), 1);
+  // bis vierzehn Uhr: Uhr dreht auf 14:00
+  const pU = W0(1715, 255), UB = 130 / Z0;
+  ['uhr11', 'std11', 'min11'].forEach((id, n) => bild(id, ['t-uhr', 't-stunde', 't-minute'][n], UB, 'data-gruppe="uhr11"' + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  const tU = W('vierzehn', 53) - .3;
+  pop('uhr11', tU, { x: pU.x, y: pU.y }, 'pop');
+  akteur('std11', { x: pU.x, y: pU.y, s: 0, r: -60 }); tw('std11', tU, .5, { s: 1 }, 'back'); tw('std11', tU + .3, 1.0, { r: 60 }, 'inout');
+  akteur('min11', { x: pU.x, y: pU.y, s: 0, r: 0 }); tw('min11', tU, .5, { s: 1 }, 'back'); tw('min11', tU + .3, 1.0, { r: 1440 }, 'inout'); cue(tU + .3, 'scan');
+  akzent(W('Uhr', 53), .03); nicken('yu11', W('Uhr', 53) + .2, 1);
+  // Alles klar. Sicherheitsschuhe hab ich an!
+  nicken('ko11', W('klar', 54), 1);
+  const tE = W('Sicherheitsschuhe', 55);
+  haken('ok11b', tE + .1, pZ.x, pZ.y); akteur('ok11b', { x: pZ.x, y: pZ.y, s: 0 }); tw('ok11b', tE + .1, .5, { s: 1 / Z0 }, 'back');
+  FROH.push(['ko11', tE, 99], ['yu11', SE(55), 99]);
+  cue(SE(55) + .1, 'erfolg'); akzent(SE(55), .045);
+  huepfen('yu11', SE(55) + .15, 18 / Z0); huepfen('ko11', SE(55) + .3, 14 / Z0);
+}
+
+/* ---------- Abspann: das Rolltor (in Markenfarben) fährt herunter ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+akteur('abspann', { y: -1100 }, true);
+tw('abspann', AB, .9, { y: 0 }, 'inout'); cue(AB, 'scan'); cue(AB + .85, 'plopp');
+tw('abspann', AB + .9, .1, { sy: .985 }, 'sinus'); tw('abspann', AB + 1.0, .3, { sy: 1 }, 'sanft');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + 1.0, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + 1.35, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 4.4, AB + 2.4);
 </script>
 </body></html>
