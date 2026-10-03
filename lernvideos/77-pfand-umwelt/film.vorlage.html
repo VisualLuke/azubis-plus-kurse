@@ -181,7 +181,7 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
 
   <!-- ============ 2 · Laden: Kühlregal und Kasse ============ -->
   <div class="a teil" id="regal2" style="width:560px" data-gruppe="regal2">{{kuehlregal}}</div>
-  <div class="a teil" id="kasse2" style="width:360px" data-gruppe="kasse2">{{kasse}}</div>
+  <div class="a teil" id="kasse2" style="width:360px" data-gruppe="fl">{{kasse}}</div>
   <div class="a muenze77" id="preis2" style="width:120px" data-gruppe="kasse2"></div>
   <div class="a muenze77" id="pfand2" style="width:88px" data-gruppe="kasse2" data-dreht></div>
   <div class="a chip" id="cpreis2" data-gruppe="kasse2">Preis</div>
@@ -256,7 +256,7 @@ html,body{background:linear-gradient(170deg,var(--b50),var(--b100) 75%,var(--b20
   <svg class="hg" id="koerner5" style="width:10px;height:10px;overflow:visible"></svg>
   <div class="a teil" id="neu5" style="width:180px" data-gruppe="neu5">{{pet-flasche~n5}}</div>
   <div class="a teil" id="glas5" style="width:180px" data-gruppe="glas5"><svg viewBox="0 0 160 160"><svg>{{glasflasche-saft~g5}}</svg><svg>{{glasflasche~g5}}</svg>
-    <g transform="translate(118 44)"><g class="mi"><rect x="-26" y="-17" width="52" height="34" rx="12" fill="var(--b500)" id="zaehl5R"/><text id="zaehl5" y="8" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="22" fill="var(--surface)">3</text></g></g></svg></div>
+    <g transform="translate(118 44)"><g class="mi"><rect x="-26" y="-17" width="52" height="34" rx="12" fill="var(--b500)" id="zaehl5R"/><text id="zaehl5" y="8" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="22" fill="var(--surface)">2</text></g></g></svg></div>
   <div class="a welle" id="welle5" data-frei></div>
   <div class="a wuerfel5" id="wuerfel5" data-gruppe="wuerfel5"></div>
   <div class="a" id="tb5w"><div class="etikett" id="tb5"><div class="titel">Pfand: weniger Müll in der <span class="akz">Natur</span></div><div class="unter">Rohstoffe sparen</div></div></div>
@@ -374,7 +374,7 @@ el('st5').querySelector('.hg').style.left = '0';
 Object.assign(el('panel7').style, { left: REG[7][0] + 1030 + 'px', top: REG[7][1] + 100 + 'px' });
 
 // Hauptschleife (im Uhrzeigersinn: Laden → Pausenraum → Brücke über die Wiese → Rückgabe → Laden)
-const D_RING = 'M-190 1300C-190 1080 30 900 210 900L1900 900C2010 900 2050 790 2110 790C2170 790 2210 900 2320 900L4010 900' +
+const D_RING = 'M-190 1300C-190 1080 30 900 210 900L4010 900' +
   'C4250 900 4410 1060 4410 1300C4410 1540 4250 1730 4010 1730L2560 1730C2250 1730 2110 2300 1800 2300L210 2300' +
   'C30 2300-190 2120-190 1900Z';
 ['ring', 'ringS', 'ringA', 'ringB', 'ringLauf', 'ringPuls'].forEach(id => el(id).setAttribute('d', D_RING));
@@ -397,9 +397,9 @@ const sNah = (id, x, y) => { const Q = pfad(id); let b = 0, bd = Infinity; for (
 // Teile stehen auf der Bahn: Mittelpunkt über der Bahnmitte
 const OFF = b => 8 + 66 * b / 160;
 const aufBahn = (pid, s, dy, kipp) => {
-  const Q = pfad(pid), [x, y] = Q.pt(s), [x2, y2] = Q.pt(s + 3);
+  const Q = pfad(pid), [x, y] = Q.pt(s), [x1, y1] = Q.pt(s - 60), [x2, y2] = Q.pt(s + 60);
   let r = 0;
-  if (kipp) { r = Math.atan2(y2 - y, x2 - x) * 180 / Math.PI; if (r > 90) r -= 180; if (r < -90) r += 180; r = Math.max(-28, Math.min(28, r)); }
+  if (kipp) r = 20 * Math.sin(2 * Math.atan2(y2 - y1, x2 - x1));
   const rr = r * Math.PI / 180;
   return { x: x + dy * Math.sin(rr), y: y - dy * Math.cos(rr), r };
 };
@@ -511,7 +511,7 @@ HOOKS.push(t => {
   $('#kamera').style.transform = `translate(${(960 - x * z).toFixed(2)}px,${(540 - y * z).toFixed(2)}px) scale(${z.toFixed(5)})`;
 });
 // Laufband: Striche wandern mit; beim Zurückspulen läuft das Band schnell rückwärts
-const RUECK = [15.35, 1.6];
+const RUECK = [15.2, 1.9];
 const bandPos = t => 46 * t - 2700 * E.inout(clamp((t - RUECK[0]) / RUECK[1]));
 HOOKS.push(t => {
   el('ringLauf').style.strokeDashoffset = (-bandPos(t)).toFixed(1);
@@ -574,9 +574,9 @@ const FL1W = P(1, FL1.x, FL1.y), FRW = P(1, FREEZE.x, FREEZE.y);
   // Yusuf staunt und fragt
   const tF = W('Pfand', 4);
   staunen('yus1', tF - .2, W('Was', 5) + .4); blick('yus1', tF - .2, .6, .2);
-  pop('frage1', tF + .1, 1, 'pop'); wackeln('frage1', tF + .7, 4, 10);
+  pop('frage1', tF + .1, 1, 'pop'); wackeln('frage1', tF + .7, 4, 4);
   huepfen('fl', W('Flasche', 4) - .05, 26); cue(W('Flasche', 4), 'plopp');
-  wackeln('frage1', W('bedeutet', 5), 4, 10); tw('yus1', W('Was', 5), .35, { r: 6 }, 'sinus'); tw('yus1', W('denn', 5) + .3, .45, { r: 0 }, 'sanft');
+  wackeln('frage1', W('bedeutet', 5), 4, 4); tw('yus1', W('Was', 5), .35, { r: 6 }, 'sinus'); tw('yus1', W('denn', 5) + .3, .45, { r: 0 }, 'sanft');
   bump('fl', W('denn', 5) + .1, 1.06);
   aus('halt1', W('Was', 5) - .2, .3);
 }
@@ -587,7 +587,7 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   const [t0, d] = RUECK;
   kam(t0, d, ...MITTE(2), 1, .22); cue(t0, 'whoosh');
   tw('flCoin', t0 - .1, .3, { s: 0 }, 'in');
-  fahrt('fl', t0, d, 'ring', S_LAND1, S_FL2, { kipp: true });
+  fahrt('fl', t0, d, 'ring', S_LAND1, S_FL2, { kipp: true, e: 'sinus' });
   fuell('clipFlR', t0 + .1, d - .2, 0, 1);
   blick('yus1', t0, 1);
 }
@@ -687,18 +687,17 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   const runde = (t0, dR, dW, dZ, warten, nr) => {
     const basis = sRegal + (nr - 1) * L3, wPos = basis + vor(sRegal, sWasch), fPos = basis + vor(sRegal, sFuell), rPos = basis + L3;
     fuell('clipGlasR', t0, .3, 1, 0);
-    let t = fahrt('glas', t0, dR, 'loop3', basis, wPos, { dy: OFF(220) });
+    let t = fahrt('glas', t0, dR, 'loop3', basis, wPos, { dy: OFF(220), e: 'sinus' });
     WASCH.push([t - .1, warten.w]); t += warten.w;
-    t = fahrt('glas', t, dW, 'loop3', wPos, fPos, { dy: OFF(220) });
+    t = fahrt('glas', t, dW, 'loop3', wPos, fPos, { dy: OFF(220), e: 'sinus' });
     FUELLE.push([t - .05, warten.f]); fuell('clipGlasR', t, warten.f, 0, 1); cue(t, 'scan'); t += warten.f;
     t = fahrt('glas', t, dZ, 'loop3', fPos, rPos, { dy: OFF(220) });
     ZAEHL.push([t, nr]); cue(t, 'ding'); landen('glas', t, .6);
     return t;
   };
-  const tR1 = W('gewaschen', 11) - .55;
-  const e1 = runde(tR1, .65, .5, .35, { w: .55, f: .6 }, 1);
-  const e2 = runde(e1 + .15, .5, .4, .25, { w: .25, f: .3 }, 2);
-  runde(e2 + .12, .5, .4, .25, { w: .25, f: .3 }, 3);
+  const tR1 = SE(10) - .05;
+  const e1 = runde(tR1, 1.0, .8, .4, { w: .45, f: .5 }, 1);
+  runde(e1 + .15, 1.0, .8, .4, { w: .35, f: .4 }, 2);
   set('zaehlG', ZAEHL[0][0], { s: 0 }); tw('zaehlG', ZAEHL[0][0], .4, { s: 1 }, 'back');
   ZAEHL.slice(1).forEach(([t]) => bump('zaehlG', t, 1.25));
   HOOKS.push(t => { let n = 1; for (const [t0, k] of ZAEHL) if (t >= t0) n = k; el('zaehlT').textContent = n; });
@@ -752,8 +751,8 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   const tO = W('steckst', 15) - .1;
   tw('klappe4', tO, .25, { s: 0 }, 'in'); cue(tO, 'klick');
   const tI = tO + .3;
-  flug('fl4', tI, .55, P(4, 1180, 0).x, P(4, 0, 592).y, 130, { r: -90, s: .6 }); cue(tI, 'whoosh');
-  tw('fl4', tI + .55, .3, { s: .15, o: 0 }, 'in');
+  flug('fl4', tI, .65, P(4, 1180, 0).x, P(4, 0, 592).y, 100, { r: -90, s: .6 }); cue(tI, 'whoosh');
+  tw('fl4', tI + .65, .3, { s: .15, o: 0 }, 'in');
   tw('klappe4', tI + .95, .4, { s: 1 }, 'back'); cue(tI + .95, 'klick');
   const tSc = tI + 1.0;
   tw('scan4', tSc, .1, { o: 1 }); tw('scan4', tSc, .55, { y: P(4, 0, 650).y }, 'inout'); tw('scan4', tSc + .55, .15, { o: 0 }); cue(tSc, 'scan');
@@ -766,17 +765,17 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   neu('kasse4', 4, 1610, 732); pop('kasse4', W('Den', 16) - .1, 1, 'pop', 'sanft');
   ['geldH4', 'geldV4'].forEach(id => { neu(id, 4, 220, 600); pop(id, W('Bon', 16), 1, id === 'geldH4' ? 'pop' : null, 'sanft'); });
   const tKa = W('Kasse', 16) - .45;
-  flug('bon4', tKa, .6, P(4, 1610, 0).x, P(4, 0, 512).y, 170, { r: -8 }); cue(tKa, 'whoosh');
+  flug('bon4', tKa - .1, .7, P(4, 1610, 0).x, P(4, 0, 512).y, 110, { r: -8 }); cue(tKa, 'whoosh');
   bump('kasse4', tKa + .6, 1.06); cue(tKa + .6, 'scan');
   tw('bon4', tKa + .75, .25, { s: .3, o: 0 }, 'in');
   const tGe = tKa + .85;
   [['c41', 1560], ['c42', 1615], ['c43', 1670]].forEach(([id, x], i) => {
     neu(id, 4, x, 515); pop(id, tGe + i * .07, 1, i ? null : 'muenze');
     const tf = tGe + .35 + i * .14;
-    flug(id, tf, .62, P(4, 196 + 24 * i, 0).x, P(4, 0, 600).y, 230, { s: .7 }); cue(tf + .6, 'muenze');
-    tw(id, tf + .62, .2, { o: 0 }, 'in');
+    flug(id, tf, .8, P(4, 196 + 24 * i, 0).x, P(4, 0, 600).y, 180, { s: .7 }, 'sinus'); cue(tf + .78, 'muenze');
+    tw(id, tf + .8, .2, { o: 0 }, 'in');
   });
-  bump('geldV4', tGe + 1.0, 1.1); bump('geldH4', tGe + 1.0, 1.1); froh('yus4', tGe + .6, tGe + 2); blick('yus4', tGe + .3, 0, .5);
+  bump('geldV4', tGe + 1.2, 1.1); bump('geldH4', tGe + 1.2, 1.1); froh('yus4', tGe + .6, tGe + 2); blick('yus4', tGe + .3, 0, .5);
   // Einwegflaschen und Dosen nimmt meistens jeder Laden zurück
   const tE = W('Einwegflaschen', 17) - .1;
   aus(['laden4', 'auto4', 'klappe4', 'anz4', 'kasse4'], tE, .4);
@@ -823,8 +822,8 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
     const tA = tN + i * .12, xB = 1000 - i * 130, sB = sNah('ring', P(5, xB, 0).x, P(5, 0, 330).y);
     tw(id, tA, .15, { sy: .9 }, 'sinus');
     const q = aufBahn('ring', sB, OFF(150));
-    flug(id, tA + .15, .65, q.x, q.y, 120); cue(tA + .15, 'whoosh');
-    landen(id, tA + .8, .7);
+    flug(id, tA + .15, .8, q.x, q.y, 90); cue(tA + .15, 'whoosh');
+    landen(id, tA + .95, .7);
     fahrt(id, tN + 1.6, 1.6, 'ring', sB, sB + 1500, { dy: OFF(150), e: 'in' });
     BL.push([x, y + 40, tA + .4]);
   });
@@ -872,7 +871,7 @@ const S_LAND1 = sNah('ring', LAND1.x + REG[1][0], 900), FL2 = 640, S_FL2 = sNah(
   neu('glas5', 5, GX, YB - 300, { o: 0 });
   tw('glas5', tGl, .1, { o: 1 }); tw('glas5', tGl, .4, { y: P(5, 0, YB).y }, 'in'); landen('glas5', tGl + .4, 1); cue(tGl + .4, 'plopp');
   const tZ0 = W('fünfzigmal', 22) - .2, tZ1 = tZ0 + .9;
-  HOOKS.push(t => { const u = E.out(clamp((t - tZ0) / (tZ1 - tZ0))); el('zaehl5').textContent = Math.round(3 + 47 * u); el('zaehl5R').setAttribute('fill', t >= tZ1 ? 'var(--b700)' : 'var(--b500)'); });
+  HOOKS.push(t => { const u = E.out(clamp((t - tZ0) / (tZ1 - tZ0))); el('zaehl5').textContent = Math.round(2 + 48 * u); el('zaehl5R').setAttribute('fill', t >= tZ1 ? 'var(--b700)' : 'var(--b500)'); });
   for (let k = 0; k < 8; k++) cue(tZ0 + k * .1, 'tipp');
   cue(tZ1, 'erfolg'); bump('glas5', tZ1, 1.08);
   welleAn('welle5', tZ1, P(5, GX + 38 * 180 / 160, 0).x, P(5, 0, YB - 36 * 180 / 160).y, 120, .8);
@@ -1007,7 +1006,7 @@ const WISCH = [PAUSE[1] - .55, .95];
   tw('platte7', tAn, .2, { o: 1 }); tw('platte7', tAn, .8, { y: P(7, 0, 600).y }, 'sanft'); cue(tAn, 'whoosh');
   tw('tipps7w', tAn - .1, .4, { o: 0 }); aus(['tf7', 'ok7'], tAn - .1, .35);
   HOOKS.push(t => { if (t > tAn - .2) el('ring7g').setAttribute('opacity', clamp(1 - (t - tAn + .2) / .35).toFixed(3)); });
-  tw('yus7', tAn, .8, { x: P(7, 960, 0).x, y: P(7, 0, 225).y }, 'sanft', { bogen: 60 }); blick('yus7', tAn + .3, 0, .4);
+  tw('yus7', tAn, .9, { x: P(7, 960, 0).x, y: P(7, 0, 225).y }, 'inout', { bogen: 40 }); blick('yus7', tAn + .3, 0, .4);
   titelEin('satz7', tAn + .2, [W('Anders', 33) - .05, W('ist', 33) - .05, W('nicht', 33) - .05, W('falsch', 33) - .05]);
   froh('yus7', W('falsch', 33), 200);
   // zurück in den Laden: die kleine Flasche fährt in den Laden

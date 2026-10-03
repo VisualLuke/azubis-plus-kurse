@@ -52,6 +52,11 @@ Abspann: „Dein Weg – deine Familie – dein Tempo.“ und die Kernbotschaft.
 - **Weggelassen:** EU-Vergleich des Auszugsalters (Briefing: keine Aussagen über bestimmte Länder), Unterschied Frauen/Männer beim
   Auszug.
 - 78 ist die letzte Lektion des Abschnitts; das Abzeichen kommt aus der App, nicht aus dem Video (kein „geschafft“ im Abspann).
+- **Bild-Anpassungen bei der Umsetzung:** Die Rangliste in Szene 5 zeigt drei Balken in der Reihenfolge der Quelle 5
+  (Ehrlichkeit, Selbstständigkeit, Verlässlichkeit; ohne Zahlen) statt „gleich hoch“. Der Zug fährt am Horizont, der Weg führt
+  in die Ferne zur Stadt. In Szene 3 wird der Takt der Zeichen auf „Wie oft man sich meldet“ langsamer (der Sprechertext sagt
+  nicht „nicht jeden Tag“). Szene 7: Der Wochenkalender steht links, bevor der Text erscheint, und wandert dann an Mais Wand;
+  in den drei Türen stehen Jonas (Freunde), der Betrieb (Ausbilderin) und Sprechblasen (Beratungsstelle).
 
 ## Sprechertext
 
