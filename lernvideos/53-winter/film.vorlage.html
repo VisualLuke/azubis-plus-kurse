@@ -29,18 +29,19 @@
 .unter{font-size:38px;line-height:50px}
 
 /* Boden und Flocken */
-.boden{position:absolute;left:0;right:0;top:750px;bottom:-220px;background:linear-gradient(var(--surface),var(--b50) 45%);border-top:5px solid var(--b100)}
+.boden{position:absolute;left:-3px;right:-3px;top:750px;bottom:-220px;background:linear-gradient(var(--surface),var(--b50) 45%);border-top:5px solid var(--b100)}
 .boden .nachtB{position:absolute;inset:0;background:var(--b600);opacity:0}
 .flocken{position:absolute;inset:0}
 .flocke{position:absolute;left:0;top:0;border-radius:999px;background:var(--surface);box-shadow:0 0 0 2px rgba(201,186,250,.5);opacity:0}
 
 /* Text im Bild auf einer Tafel */
 .block{left:110px;width:680px}
-.tafel{padding:42px 48px 48px;border-radius:40px;background:var(--surface);box-shadow:0 24px 60px rgba(22,19,37,.18)}
+.tafel{align-self:flex-start;padding:42px 48px 48px;border-radius:40px;background:var(--surface);box-shadow:0 24px 60px rgba(22,19,37,.18)}
 /* Tageszeit-Uhr */
 #tagesuhr{position:absolute;right:60px;top:52px;width:124px;height:124px;border-radius:999px;background:var(--surface);border:6px solid var(--b200);box-shadow:0 10px 28px rgba(22,19,37,.16)}
 #tagesuhr svg{position:absolute;inset:0;width:100%;height:100%}
-#gestoeber{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,var(--surface),var(--b50));clip-path:circle(0% at 50% 50%)}
+#gestoeber{position:absolute;inset:0;background:radial-gradient(circle,var(--b100) 0 7px,rgba(231,224,253,0) 8px) 0 0/110px 110px,radial-gradient(circle,var(--b200) 0 4px,rgba(201,186,250,0) 5px) 55px 40px/110px 110px,radial-gradient(circle at 50% 50%,var(--surface),var(--b50));clip-path:circle(0% at 50% 50%)}
+#tb8 .titel{font-size:52px;line-height:62px}
 #blitz{position:absolute;inset:0;background:var(--surface);opacity:0;pointer-events:none}
 
 /* Porträts */
@@ -84,7 +85,7 @@
 .spur{width:46px;height:78px}
 
 /* 4 · Gehweg, Dokumente */
-.decke{height:40px;border-radius:20px;background:var(--surface);box-shadow:0 3px 0 var(--b100),0 6px 14px rgba(22,19,37,.06)}
+.decke{height:44px;border-radius:22px 22px 12px 12px;background:linear-gradient(var(--surface),var(--b100));box-shadow:0 4px 0 var(--b200),0 8px 16px rgba(22,19,37,.08)}
 .splitt{height:24px}
 .splitt i{position:absolute;width:9px;height:9px;border-radius:3px;background:var(--n300)}
 .splitt i:nth-child(3n){background:var(--b300);width:7px;height:7px}
@@ -233,7 +234,7 @@
   <div class="a plakette gruen" id="ok6" data-frei></div>
 
   <!-- 7 · Erkältet: vor Arbeitsbeginn melden -->
-  <div class="a buehne" id="bue6"><div class="flocken"></div></div>
+  <div class="a buehne" id="bue6"><div class="boden"><div class="nachtB"></div></div><div class="flocken"></div></div>
   <div class="a" id="thermo7" style="width:200px" data-gruppe="th7">{{thermometer~7}}</div>
   <div class="a" id="saeule7" style="width:200px;transform-origin:50% 78.75%" data-gruppe="th7">{{thermo-saeule~7}}</div>
   <div class="a" id="tuch7" style="width:200px;transform-origin:50% 40%" data-gruppe="box7">{{taschentuch}}</div>
@@ -369,7 +370,7 @@ HOOKS.push(t => PORTRAITS.forEach((p, i) => {
 }));
 
 /* ---------- Kamera: Fahrt entlang der Straße, Atmer, Akzente, Rütteln ---------- */
-const PANS = [], AKZENTE = [], RUETTELN = [];
+const PANS = [], AKZENTE = [], RUETTELN = [], ZOOM = 1.14;
 const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
 const akzent = (t, z = .035) => AKZENTE.push([t, z]);
 const ruetteln = (t, a = 10) => RUETTELN.push([t, a]);
@@ -383,8 +384,8 @@ HOOKS.push(t => {
   z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
   const wx = wert(kamera, 'x', t);
   const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
-  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
-  $('#kamera').style.transform = `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${z})`;
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 470px`;
+  $('#kamera').style.transform = `translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${(z * ZOOM).toFixed(4)})`;
 });
 
 /* ---------- Ein Wintertag: Uhrzeit → Himmel, Sonne, Mond, Sterne, Tageszeit-Uhr ---------- */
@@ -399,7 +400,6 @@ const stunde = t => {
 };
 const nachtVon = hh => hh < 6.8 ? .86 : hh < 8.4 ? lerp(.86, 0, E.inout((hh - 6.8) / 1.6)) : hh < 15.6 ? 0 : hh < 17.2 ? lerp(0, .86, E.inout((hh - 15.6) / 1.6)) : .86;
 const daemmerVon = hh => Math.max(0, 1 - Math.abs(hh - 7.7) / .9, 1 - Math.abs(hh - 16.3) / .9);
-const NACHT_EXTRA = [];        // [t0, d, Stärke] zusätzlich (z. B. nichts)
 const nacht = t => nachtVon(((stunde(t) % 24) + 24) % 24);
 const sonne = $('#sonneH'), mond = $('#mondH'), STERNE = [];
 for (let k = 0; k < 18; k++) { const d = document.createElement('div'); d.className = 'stern'; d.style.left = (900 + (k * 157) % 960) + 'px'; d.style.top = (60 + (k * 89) % 330) + 'px'; $('#sterne').appendChild(d); STERNE.push(d); }
@@ -410,10 +410,10 @@ HOOKS.push(t => {
   document.querySelectorAll('.nachtB').forEach(e => { e.style.opacity = (n * .45).toFixed(3); });
   STERNE.forEach((d, k) => { d.style.opacity = (n * (.45 + .4 * Math.sin(t * 1.3 + k))).toFixed(3); });
   // Sonne zieht einen Bogen von links nach rechts (7.6 bis 16.4 Uhr), unter dem Boden ist sie verdeckt
-  const p = (hh - 7.6) / 8.8, sx = lerp(330, 1640, p), sy = 800 - 600 * Math.sin(Math.PI * clamp(p));
+  const p = (hh - 7.6) / 8.8, sx = lerp(860, 1760, p), sy = 820 - 740 * Math.sin(Math.PI * clamp(p));
   sonne.style.transform = `translate(${(sx - 75).toFixed(1)}px,${(sy - 75).toFixed(1)}px) rotate(${(t * 12).toFixed(1)}deg)`;
   sonne.style.opacity = p > -.05 && p < 1.05 ? 1 : 0;
-  mond.style.transform = `translate(${1560 - 75}px,${(250 - 75 + 40 * (1 - n / .86)).toFixed(1)}px)`;
+  mond.style.transform = `translate(${1700 - 75}px,${(250 - 75 + 40 * (1 - n / .86)).toFixed(1)}px)`;
   mond.style.opacity = clamp((n - .4) / .4).toFixed(3);
   // Tageszeit-Uhr
   $('#uhrH0').style.transform = `rotate(${(h * 30).toFixed(2)}deg)`;
@@ -458,18 +458,14 @@ const X0 = S(0);
   ein('haus1a', .1, { x: X0 + 1040, y: steh(220) }, { y: 80 }, 'whoosh');
   ein('haus1b', .25, { x: X0 + 1210, y: steh(160) }, { y: 80 });
   ein('lat1', .4, { x: X0 + 1360, y: steh(260, 148) }, { y: 80 });
-  pop('sonne1', .5, { x: X0 + 1640, y: 330 }, 'pop', 'sanft');
   ein('thermo1', .65, { x: X0 + 1110, y: 380 }, { y: -60 }); ein('saeule1', .65, { x: X0 + 1110, y: 380 }, { y: -60 });
   set('saeule1', 0, { sy: .78 });
   ein('eis1', .8, { x: X0 + 1330, y: 806 }, { y: 20 });
   akteur('licht1a', { x: X0 + 1040, y: steh(220), o: 0 }); akteur('licht1b', { x: X0 + 1210, y: steh(160), o: 0 });
   akteur('latan1', { x: X0 + 1360, y: steh(260, 148), o: 0 });
-  schweben('sonne1', 3);
   // früh dunkel: Sonne sinkt im Zeitraffer, der Himmel wird Nacht, Laterne und Fenster gehen an
   const tD = W('früh', 1) - .2;
-  tw('sonne1', tD, 1.1, { y: 600, s: .8 }, 'inout'); tw('sonne1', tD + .6, .5, { o: 0 }, 'in'); cue(tD, 'whoosh');
-  NACHT[0] = rampe(tD + .1, 1.1, 0, .82);
-  pop('mond1', W('dunkel', 1) + .35, { x: X0 + 1640, y: 320 }, null, 'sanft'); schweben('mond1', 3);
+  STUNDE.push([0, 12], [tD, 12], [W('dunkel', 1) + .6, 17.4], [SE(3) + .3, 17.6]); cue(tD, 'whoosh');
   const tL = W('dunkel', 1) + .4;
   set('latan1', tL, { o: 1 }); cue(tL, 'klick');
   akteur('glut1', { x: X0 + 1360, y: steh(260, 148) - 94, o: 0, s: .6 }); tw('glut1', tL, .5, { o: 1, s: 1 }, 'weich');
@@ -484,7 +480,7 @@ const X0 = S(0);
   // glatt: Eis glänzt, Schnee fängt an
   bump('eis1', W('glatt', 1) - .05, 1.06); cue(W('glatt', 1), 'ding');
   HOOKS.push(t => { const d = (t - W('glatt', 1) + .1) / .8; $('#glanz1').style.left = d > 0 && d < 1 ? -80 + E.inout(d) * 400 + 'px' : '-80px'; });
-  SCHNEE[0] = rampe(W('glatt', 1) - .2, 1.6);
+  { const t0 = W('glatt', 1) - .2; SCHNEE = t => E.inout(clamp((t - t0) / 1.6)) * (1 - .45 * clamp(1 - Math.abs(t - (SE(22) - 4)) / 7)); }
   // Amir hüpft herein, zittert, Atemwölkchen
   const AX = X0 + 1520, AY = 520, tA = W('Amir', 2) - .45;
   akteur('am1', { x: AX + 260, y: AY + 60, o: 0, s: .9 });
@@ -512,9 +508,8 @@ const X0 = S(0);
 const X1 = S(1);
 pan2(SE(3) + .3, 1);
 {
-  NACHT[1] = () => .86;
+  STUNDE.push([SE(3) + 1.2, 30.4], [SE(7) + .3, 30.95]);
   titelEin('tb2', W('Trag', 5) - .2, { unter: W('Fahrrad', 6) - .2 });
-  pop('mond2', SE(3) + .6, { x: X1 + 1650, y: 290 }, null, 'sanft'); schweben('mond2', 3);
   // Auto fährt ein, Scheinwerferkegel tastet die Straße ab
   const CX = X1 + 1010, CY = 762, K = 1.5, HX = CX + 56 * K, HY = CY + 9 * K;
   akteur('auto2', { x: CX - 260, y: CY, o: 0 });
@@ -550,14 +545,20 @@ pan2(SE(3) + .3, 1);
   landen('refl2', W('Rucksack', 5), .9); tw('refl2', W('Rucksack', 5), .3, { r: 0 }, 'sanft'); cue(W('Rucksack', 5), 'klick');
   bump('sack2', W('Rucksack', 5), 1.05);
   zusatz('refl2', t => { const d = t - W('Rucksack', 5) - .25; return d > 0 && d < .9 ? `scale(${1 + .12 * Math.sin(Math.PI * d / .9)})` : ''; });
-  HOOKS.push(t => { const d = t - W('Rucksack', 5) - .25; el('refl2').style.filter = d > 0 ? `drop-shadow(0 0 ${(4 + 14 * Math.max(0, Math.sin(Math.PI * clamp(d / .9)))).toFixed(1)}px var(--warning-bg))` : ''; });
+  HOOKS.push(t => { const d = t - W('Rucksack', 5) - .25, d2 = t - tLi, puls = x => Math.max(0, Math.sin(Math.PI * clamp(x / .9)));
+    el('refl2').style.filter = d > 0 ? `drop-shadow(0 0 ${(4 + 14 * Math.max(puls(d), d2 > 0 ? puls(d2) * 1.6 : 0)).toFixed(1)}px var(--warning-bg))` : ''; });
   // Fahrrad: Licht an (vorne weißer Kegel, hinten rot), Auto fährt weg
   const RX = X1 + 1330, RY = 720, RK = 380 / 160;
   ein('rad2', W('Fahrrad', 6) - .35, { x: RX, y: RY }, { x: -120 }, 'whoosh');
   akteur('radlicht2', { x: RX, y: RY, o: 0 });
   tw('auto2', W('Fahrrad', 6) - .4, .8, { x: CX - 200, o: 0 }, 'in'); tw('kegel2', W('Fahrrad', 6) - .4, .5, { o: 0 }, 'in');
   const tLi = W('Licht', 6) - .05;
-  set('radlicht2', tLi, { o: 1 }); cue(tLi, 'klick'); akzent(tLi, .035);
+  set('radlicht2', tLi, { o: 1 }); cue(tLi, 'klick'); akzent(tLi, .06);
+  // Überraschung: Licht an – alles Reflektierende blitzt gleichzeitig auf
+  HOOKS.push(t => { const d = t - tLi; el('blitz').style.opacity = d > 0 && d < .5 ? (.55 * (1 - d / .5) ** 2).toFixed(3) : 0; });
+  tw('streifen2', tLi, .1, { o: 1 }, 'out'); tw('streifen2', tLi + .8, .6, { o: .6 }, 'inout'); bump('hell2', tLi + .05, 1.06); bump('streifen2', tLi + .05, 1.06);
+  bump('refl2', tLi + .05, 1.2); bump('sack2', tLi + .1, 1.05); cue(tLi + .05, 'ding'); cue(tLi + .2, 'erfolg');
+  HOOKS.push(t => { const d = t - tLi; el('rad2').style.filter = d > 0 && d < .9 ? `drop-shadow(0 0 ${(16 * Math.sin(Math.PI * d / .9)).toFixed(1)}px var(--warning-bg))` : ''; });
   const VX = RX + (122.7 - 80) * RK, VY = RY + (66 + 3.3 - 80) * RK;      // Vorderlicht
   const HXr = RX + (28 - 80) * RK, HYr = RY + (70.3 - 80) * RK;          // Rücklicht
   akteur('kegelRad2', { x: VX + 150 + 4, y: VY + 6, o: 0, sx: .3, r: 6 });
@@ -601,17 +602,17 @@ pan2(SE(7) + .3, 2);
   // kleine Schritte: Stiefel macht kurze Schritte, Spuren bleiben
   const SP = [['sp3a', 1000], ['sp3b', 1110], ['sp3c', 1220], ['sp3d', 1330], ['sp3e', 1440]];
   const tK = W('kleine', 10) - .2, dS = (W('ganzen', 10) - tK) / 4;
-  akteur('sp3a', { x: X2 + 1000, y: 800, o: 0, r: 90 }); tw('sp3a', W('Profil', 9) - .1, .3, { o: 1 }, 'out');
+  akteur('sp3a', { x: X2 + 1000, y: 800, o: 0, r: 90, s: 1.25 }); tw('sp3a', W('Profil', 9) - .1, .3, { o: 1 }, 'out');
   set('sp3a', 0, { x: X2 + BX - X2 - 30, y: 806 });
   for (let k = 1; k < SP.length; k++) {
     const [id, x] = SP[k], t0 = tK + (k - 1) * dS;
     flug('stiefel3', t0, dS * .7, X2 + x + 30, BY, 40); landen('stiefel3', t0 + dS * .7, .6); cue(t0 + dS * .7, 'tipp');
-    akteur(id, { x: X2 + x - 6, y: 806, o: 0, r: 90 }); tw(id, t0 + dS * .7 + .05, .25, { o: 1 }, 'out');
+    akteur(id, { x: X2 + x - 6, y: 806, o: 0, r: 90, s: 1.25 }); tw(id, t0 + dS * .7 + .05, .25, { o: 1 }, 'out');
   }
   // ganzer Fuß: Ring um die letzte Spur
   akteur('ring3', { x: X2 + 1434, y: 806, o: 0, s: .6 }); tw('ring3', W('Fuß', 10), .4, { o: 1, s: 1 }, 'back'); cue(W('Fuß', 10), 'ding');
   bump('stiefel3', W('Fuß', 10) - .05, 1.08);
-  tw(['stiefel3'], W('Und', 11) - .2, .5, { x: X2 + 1560, y: BY }, 'inout', { bogen: 40 });
+  tw(['stiefel3'], W('Und', 11) - .2, .5, { x: X2 + 1730, y: BY }, 'inout', { bogen: 40 });
   aus('ring3', W('Und', 11), .3);
   // Hände aus den Taschen: Amir, Hände kommen heraus
   const AX = X2 + 1320, AY = 450;
@@ -671,19 +672,23 @@ pan2(SE(12) + .3, 3);
   welle('welle4', W('Eigentümer', 15), HX, HY, 1.1, 280); cue(W('Eigentümer', 15), 'erfolg');
   pop('schl4', W('Eigentümer', 15) + .1, { x: HX + 70, y: HY - 130, r: -3 }); wackeln('schl4', W('weiter', 15), 3, 3);
   akzent(W('Eigentümer', 15), .035);
-  // Mietvertrag und Hausordnung blättern auf
+  // Mietvertrag blättert auf, die Lupe findet „Winterdienst“
   aus(['rathaus4', 'brief4'], W('Manchmal', 16) - .2, .3);
   akteur('dokA4', { x: X3 + 1060, y: 470, sy: 0, o: 0 }); tw('dokA4', W('Mietvertrag', 16) - .15, .1, { o: 1 }); tw('dokA4', W('Mietvertrag', 16) - .15, .5, { sy: 1 }, 'back'); cue(W('Mietvertrag', 16) - .15, 'klick');
-  akteur('dokB4', { x: X3 + 1310, y: 470, sy: 0, o: 0 }); tw('dokB4', W('Hausordnung', 16) - .15, .1, { o: 1 }); tw('dokB4', W('Hausordnung', 16) - .15, .5, { sy: 1 }, 'back'); cue(W('Hausordnung', 16) - .15, 'klick');
-  // Lupe sucht und findet „Winterdienst“
-  akteur('lupe4', { x: X3 + 1100, y: 620, o: 0, s: .6 });
-  const tL = W('dass', 16) - .3;
+  akteur('lupe4', { x: X3 + 1100, y: 640, o: 0, s: .6 });
+  const tL = W('dass', 16) - .35;
   tw('lupe4', tL, .3, { o: 1, s: 1 }, 'sanft');
-  tw('lupe4', tL, .6, { x: X3 + 1080, y: 480 }, 'inout', { bogen: 20 });
-  tw('lupe4', tL + .7, .7, { x: X3 + 1330, y: 500 }, 'inout', { bogen: 30 });
+  tw('lupe4', tL, .5, { x: X3 + 1050, y: 430 }, 'inout', { bogen: 20 });
+  tw('lupe4', tL + .55, .55, { x: X3 + 1085, y: 505 }, 'inout', { bogen: 15 });
   bump('lupe4', W('dran', 16) - .05, 1.1); cue(W('dran', 16), 'ding');
   HOOKS.push(t => { const an = t >= W('dran', 16) - .05; const f = el('fund4'); f.style.background = an ? 'var(--success-bg)' : 'transparent'; f.style.borderColor = an ? 'var(--success)' : 'transparent'; f.style.color = an ? 'var(--success-text)' : 'var(--n300)'; });
-  bump('dokB4', W('dran', 16), 1.04);
+  bump('dokA4', W('dran', 16), 1.04);
+  // Hausordnung kommt dazu und wird an den Mietvertrag geklammert
+  tw('lupe4', W('Oft', 17) - .1, .4, { x: X3 + 1060, y: 660, s: .8 }, 'inout');
+  akteur('dokB4', { x: X3 + 1360, y: 470, sy: 0, o: 0 }); tw('dokB4', W('Hausordnung', 17) - .15, .1, { o: 1 }); tw('dokB4', W('Hausordnung', 17) - .15, .5, { sy: 1 }, 'back'); cue(W('Hausordnung', 17) - .15, 'klick');
+  const tG = W('Mietvertrag', 17) - .2;
+  tw('dokB4', tG, .55, { x: X3 + 1265, y: 490, r: 2 }, 'inout'); cue(tG, 'whoosh'); bump('dokA4', tG + .55, 1.04);
+  pop('klammer4', tG + .5, { x: X3 + 1165, y: 405 }, 'klick');
   // Lies nach und frag deinen Vermieter: Fragezeichen fliegt zum Haus, Haken kommt zurück
   bump('lupe4', W('Lies', 18), 1.1);
   tw('lupe4', W('frag', 18) - .2, .3, { o: 0, s: .7 }, 'in');
@@ -695,46 +700,74 @@ pan2(SE(12) + .3, 3);
   akteur('ok4', { x: HX, y: HY - 150, o: 0, s: .4 });
   const tO = W('Vermieter', 18) + .35;
   tw('ok4', tO, .15, { o: 1 }); flug('ok4', tO, .7, X3 + 1450, 300, 70, { s: 1 }); cue(tO + .7, 'erfolg');
-  textAus('tb4', SE(18) + .2);
+  STUNDE.push([SE(7) + 1.2, 31.1], [SE(12) + .3, 32.35], [SE(18) + .25, 34.5]);
+  textAus('tb4', SE(18) + .1);
 }
 
-/* ================= 5 · Zwiebellook ================= */
+/* ================= Übergang 4 → 5: Schneegestöber-Blende aus dem Haus heraus ================= */
 const X4 = S(4);
-pan2(SE(18) + .3, 4);
+const TB = SE(18) + .25;
 {
-  SCHNEE[4] = () => .55;
-  titelEin('tb5', W('Zwiebellook', 19) - .25, { unter: W('mehrere', 20) - .2 });
-  const SY = 300, JY = SY + 65 * 1.75;
-  ein('stange5', SE(18) + .7, { x: X4 + 1320, y: SY }, { y: -40 });
-  ein('dicke5', W('Zieh', 19) - .1, { x: X4 + 1080, y: JY + 2 }, { y: -50 }, 'whoosh');
-  // dünne Schichten fliegen nacheinander auf den zweiten Bügel
-  const LX = X4 + 1340;
-  [['hemd5', 'mehrere'], ['pulli5', 'dünne'], ['offen5', 'Schichten']].forEach(([id, w], k) => {
-    const t0 = W(w, 19) - .45;
-    akteur(id, { x: LX + 260, y: JY - 260, o: 0, r: 6, s: .7 });
-    tw(id, t0, .15, { o: 1 }); flug(id, t0, .55, LX, JY, 60, { s: 1, r: 0 }); landen(id, t0 + .55, .6); cue(t0, 'whoosh'); cue(t0 + .55, 'plopp');
+  akzent(TB - .1, .08);
+  HOOKS.push(t => {
+    let r = 0, cx = 1560, cy = 560;
+    if (t > TB && t < TB + .6) r = 125 * E.in(clamp((t - TB) / .6));
+    else if (t >= TB + .6 && t < TB + 1.3) { r = 125 * (1 - E.out(clamp((t - TB - .7) / .6))); cx = 1500; cy = 520; }
+    el('gestoeber').style.clipPath = `circle(${r.toFixed(2)}% at ${cx}px ${cy}px)`;
   });
-  // statt einer dicken Jacke: die dicke Jacke tritt zurück
+  tw('welt', TB + .62, .0001, { x: -X4 }, 'lin');
+  cue(TB, 'whoosh'); cue(TB + .7, 'whoosh');
+  STUNDE.push([TB + .62, 36]);
+}
+
+/* ================= 5 · Zwiebellook: Amir zieht sich Schicht für Schicht an ================= */
+{
+  titelEin('tb5', W('Zwiebellook', 19) - .25, { unter: W('mehrere', 20) - .2 });
+  const SY = 300, JY = SY + 65 * 1.5, AX = X4 + 1500, AY = 500, BAUCH = [AX, AY + 115];
+  const t0 = TB + .62;
+  akteur('stange5', { x: X4 + 1150, y: SY }); akteur('dicke5', { x: X4 + 1060, y: JY });
+  akteur('am5', { x: AX, y: AY });
+  ['l1', 'l2', 'l3', 'schal', 'muetze'].forEach(k => akteur($(`#am5 .${k}`), { o: 0 }, true));
+  akteur('ablage5', { x: X4 + 1250, y: JY, o: 0 });
+  huepfen('am5', W('Zwiebellook', 19) - .1, 16); froh('am5', W('Zwiebellook', 19));
+  schweben('dicke5', 2);
+  // mehrere dünne Schichten: Shirt, Pulli, Jacke fliegen herein und legen sich übereinander
+  [['hemd5', 'mehrere', 'l1'], ['pulli5', 'dünne', 'l2'], ['offen5', 'Schichten', 'l3']].forEach(([id, w, l], k) => {
+    const ta = W(w, 20) - .5;
+    akteur(id, { x: X4 + 1800, y: 230 + k * 40, o: 0, r: -8, s: .8 });
+    tw(id, ta - .15, .15, { o: 1 }); flug(id, ta - .15, .72, BAUCH[0], BAUCH[1], 70, { s: .45, r: 0 }); tw(id, ta + .45, .12, { o: 0 });
+    set($(`#am5 .${l}`), ta + .54, { o: 1 }); bump('am5', ta + .54, 1.05); cue(ta - .15, 'whoosh'); cue(ta + .54, 'plopp');
+  });
+  // statt einer dicken Jacke: die dicke Jacke wackelt und tritt zurück
   wackeln('dicke5', W('dicken', 20), 3, 3);
   tw('dicke5', W('Jacke', 20), .6, { o: .45, s: .92 }, 'inout');
-  // Die Luft dazwischen hält warm: warme Wellen steigen zwischen den Schichten auf
-  akteur('luft5', { x: LX, y: JY + 20, o: 0 });
-  const tLu = W('Luft', 21) - .1;
-  tw('luft5', tLu, .2, { o: 1 }); el('luft5').querySelectorAll('path').forEach((p, i) => strich(p, tLu + i * .12, .7));
-  tw('luft5', tLu, 1.6, { y: JY - 40 }, 'out'); tw('luft5', W('warm', 21) + .4, .5, { o: 0 }, 'in');
+  // Die Luft dazwischen hält warm: warme Wellen steigen neben Amir auf, Mütze und Schal kommen dazu
+  akteur('luft5', { x: AX, y: AY + 80, o: 0 });
+  const tLu = W('Luft', 21) - .15;
+  tw('luft5', tLu, .2, { o: 1 }); el('luft5').querySelectorAll('path').forEach((p, i) => strich(p, tLu + i * .1, .7));
+  tw('luft5', tLu, 1.6, { y: AY + 10 }, 'out'); tw('luft5', W('warm', 21) + .5, .5, { o: 0 }, 'in');
   cue(tLu, 'scan');
-  akteur('glut5', { x: LX, y: JY, o: 0, s: .7 }); tw('glut5', W('warm', 21) - .1, .6, { o: .8, s: 1 }, 'weich'); tw('glut5', W('warm', 21) + 1.4, .6, { o: 0 }, 'inout');
+  akteur('glut5', { x: AX, y: AY, o: 0, s: .7 }); tw('glut5', W('warm', 21) - .1, .6, { o: .9, s: 1 }, 'weich'); tw('glut5', W('warm', 21) + 1.4, .6, { o: 0 }, 'inout');
   akzent(W('warm', 21), .03);
-  // Mütze, Schal und Handschuhe ploppen auf
-  pop('muetze5', W('hält', 21), { x: X4 + 1000, y: 690 }); pop('schal5', W('hält', 21) + .15, { x: X4 + 1160, y: 690 }, null); pop('hand5', W('hält', 21) + .3, { x: X4 + 1320, y: 690 });
-  schweben(['muetze5', 'schal5', 'hand5'], 3);
-  // drinnen: Thermometer steigt, eine Schicht fliegt ab an den freien Platz
-  ein('thermo5', W('drinnen', 22) - .3, { x: X4 + 1600, y: 680 }, { y: 60 }, 'pop'); ein('saeule5', W('drinnen', 22) - .3, { x: X4 + 1600, y: 680 }, { y: 60 });
-  set('saeule5', 0, { sy: .2 }); tw('saeule5', W('drinnen', 22) + .1, 1.0, { sy: .75 }, 'inout'); cue(W('drinnen', 22) + .1, 'scan');
-  const tA = W('Schicht', 22) - .1;
-  flug('offen5', tA, .65, X4 + 1590, JY, 70); landen('offen5', tA + .65, .6); cue(tA, 'whoosh'); cue(tA + .65, 'plopp');
-  zusatz('offen5', t => { const d = t - tA; return d > 0 && d < .65 ? `rotate(${(4 * Math.sin(Math.PI * d / .65)).toFixed(2)}deg)` : ''; });
-  huepfen('pulli5', W('aus', 22), 8);
+  [['schal5', 'hält', 'schal', [AX, AY + 70]], ['muetze5', 'warm', 'muetze', [AX, AY - 120]]].forEach(([id, w, l, [x, y]]) => {
+    const ta = W(w, 21) - .45;
+    akteur(id, { x: X4 + 1820, y: 260, o: 0, r: 8, s: .8 });
+    tw(id, ta - .2, .15, { o: 1 }); flug(id, ta - .2, .7, x, y, 50, { s: .6, r: 0 }); tw(id, ta + .4, .12, { o: 0 });
+    set($(`#am5 .${l}`), ta + .48, { o: 1 }); cue(ta + .48, 'plopp');
+  });
+  huepfen('am5', W('warm', 21) + .1, 12);
+  pop('hand5', W('warm', 21) + .2, { x: X4 + 1730, y: 690 }); schweben('hand5', 3);
+  // drinnen: Thermometer steigt, die Jacke kommt wieder aus und hängt sich an die Stange
+  ein('thermo5', W('drinnen', 22) - .3, { x: X4 + 1060, y: 655 }, { y: 60 }, 'pop'); ein('saeule5', W('drinnen', 22) - .3, { x: X4 + 1060, y: 655 }, { y: 60 });
+  set('saeule5', 0, { sy: .25 }); tw('saeule5', W('drinnen', 22) + .1, 1.0, { sy: .8 }, 'inout'); cue(W('drinnen', 22) + .1, 'scan');
+  const tA = W('Schicht', 22) - .15;
+  set($('#am5 .l3'), tA, { o: 0 }); bump('am5', tA, 1.04);
+  akteur('offen5', { x: BAUCH[0], y: BAUCH[1], o: 0, s: .45 });
+  set('offen5', tA, { o: 1, s: .45, x: BAUCH[0], y: BAUCH[1], r: 0 });
+  flug('offen5', tA, .65, X4 + 1250, JY, 110, { s: 1 }); set('offen5', tA + .66, { o: 0 }); set('ablage5', tA + .66, { o: 1 }); landen('ablage5', tA + .66, .6);
+  cue(tA, 'whoosh'); cue(tA + .66, 'plopp');
+  froh('am5', W('aus', 22));
+  STUNDE.push([SE(22) + .3, 36.6]);
   textAus('tb5', SE(22) + .2);
 }
 
@@ -742,7 +775,7 @@ pan2(SE(18) + .3, 4);
 const X5 = S(5);
 pan2(SE(22) + .3, 5);
 {
-  NACHT[5] = rampe(SE(22), .1, .25, .25);
+  STUNDE.push([SE(22) + 1.2, 39.6], [SE(26) + .3, 40.4]);
   titelEin('tb6', W('Fahr', 25) - .25);
   ein('halt6', SE(22) + .65, { x: X5 + 980, y: steh(200) }, { y: 70 });
   ein('anz6', SE(22) + .8, { x: X5 + 1180, y: 335 }, { y: -60 }, 'whoosh');
@@ -760,7 +793,7 @@ pan2(SE(22) + .3, 5);
   // zu Fuß: Fußspuren, langsam
   const tF = W('Auch', 24);
   [['sp6a', 1440], ['sp6b', 1540], ['sp6c', 1640], ['sp6d', 1740]].slice(0, 3).forEach(([id, x], k) => {
-    akteur(id, { x: X5 + x, y: 806, o: 0, r: 90 }); tw(id, tF + k * .45, .3, { o: 1 }, 'out'); cue(tF + k * .45, 'tipp');
+    akteur(id, { x: X5 + x, y: 806, o: 0, r: 90, s: 1.25 }); tw(id, tF + k * .45, .3, { o: 1 }, 'out'); cue(tF + k * .45, 'tipp');
   });
   // früher: Wecker klingelt, Zeiger springt eine Viertelstunde zurück
   const WX = X5 + 1580, WY = 345;
@@ -795,7 +828,7 @@ pan2(SE(22) + .3, 5);
 const X6 = S(6);
 pan2(SE(26) + .3, 6);
 {
-  SCHNEE[6] = () => .45;
+  STUNDE.push([SE(30) + .3, 41.2]);
   titelEin('tb7', W('erkältet', 27) - .3, { unter: W('Arbeitsbeginn', 28) - .3 });
   const AX = X6 + 1110, AY = 470;
   ein('am7', SE(26) + .7, { x: AX, y: AY }, { y: 80 }, 'pop');
@@ -815,10 +848,10 @@ pan2(SE(26) + .3, 6);
   mund('am7', tN + .5, 'zu');
   // vor Arbeitsbeginn im Betrieb melden: Handy ruft den Betrieb an, Uhr steht vor Arbeitsbeginn
   aus(['thermo7', 'saeule7', 'box7', 'tuch7'], W('Dann', 28) - .2, .3);
-  tw('am7', W('Dann', 28), .6, { x: X6 + 1040, y: 400, s: .78 }, 'inout');
+  tw('am7', W('Dann', 28), .6, { x: X6 + 1040, y: 375, s: .78 }, 'inout');
   ein('handy7', W('melde', 28) - .1, { x: X6 + 1190, y: 520 }, { y: 60 }, 'pop');
   ein('betrieb7', W('melde', 28) + .1, { x: X6 + 1580, y: 520 }, { x: 80 }, 'whoosh');
-  const UX = X6 + 1580, UY = 300;
+  const UX = X6 + 1410, UY = 300;
   ['uhr7', 'uhrM7', 'uhrH7'].forEach(id => ein(id, W('Arbeitsbeginn', 28) - .2, { x: UX, y: UY }, { y: -50 }));
   set('uhrM7', 0, { r: 0 }); set('uhrH7', 0, { r: 200 });
   tw('uhrM7', W('Arbeitsbeginn', 28) + .1, 1.0, { r: 270 }, 'inout'); tw('uhrH7', W('Arbeitsbeginn', 28) + .1, 1.0, { r: 222 }, 'inout'); cue(W('Arbeitsbeginn', 28) + .1, 'scan');
@@ -853,35 +886,58 @@ pan2(SE(26) + .3, 6);
   akteur('ksG7', { x: K4, y: 548, o: 0, s: .82 });
   const tG = W('früher', 30) - .45;
   tw('ksG7', tG, .2, { o: 1 }); tw('ksG7', tG, .9, { x: K1 }, 'inout'); cue(tG, 'whoosh');
-  bump('t1', W('früher', 30) + .5, 1.1);
+  HOOKS.push(t => { const d = t - W('früher', 30) - .45; if (d > 0 && d < .45) el('t1').style.transform = `scale(${1 + .14 * Math.sin(Math.PI * d / .45)})`; });
   textAus('tb7', SE(30) + .2);
 }
 
-/* ================= 8 · Sichtbar · Rutschfest · Warm · Früh los ================= */
+/* ================= 8 · Abend: Sichtbar · Rutschfest · Warm · Früh los ================= */
 const X7 = S(7);
 pan2(SE(30) + .3, 7);
 {
-  NACHT[7] = rampe(W('Dann', 32) - .2, 1.6, .55, 0);
+  STUNDE.push([SE(32), 41.8]);
   titelEin('tb8', 0, [W('sichtbar', 31) - .15, null, W('rutschfeste', 31) - .15, null, W('warme', 31) - .15, null, W('früher', 31) - .15, W('losfahren', 31) - .1]);
-  const KX = [1028, 1236, 1444, 1652], KY = 640, KW = ['sichtbar', 'rutschfeste', 'warme', 'früher'], KID = ['k8a', 'k8b', 'k8c', 'k8d'], OK = ['ok8a', 'ok8b', 'ok8c', 'ok8d'];
-  KID.forEach((id, i) => pop(id, W('Also', 31) - .2 + i * .12, { x: X7 + KX[i], y: KY }, i % 2 ? null : 'pop', 'sanft'));
-  // Amir springt von Kachel zu Kachel
-  const AY = 455;
-  akteur('am8', { x: X7 + KX[0] - 40, y: AY + 40, o: 0, s: .5 });
-  tw('am8', W('Also', 31) + .3, .3, { o: 1, s: 1, x: X7 + KX[0], y: AY }, 'back'); cue(W('Also', 31) + .3, 'pop');
-  KW.forEach((w, i) => {
-    const t0 = W(w, 30) - .45;
-    if (i) { flug('am8', t0, .42, X7 + KX[i], AY, 70); landen('am8', t0 + .42, .7); cue(t0 + .42, 'plopp'); }
-    bump(KID[i], t0 + .45, 1.08);
-    pop(OK[i], t0 + .5, { x: X7 + KX[i] + 66, y: KY - 74 }, 'ding');
+  const AX = X7 + 1320, AY = 470, R = 163;
+  ein('haus8', SE(30) + .6, { x: X7 + 1680, y: steh(200) }, { y: 70 }, 'whoosh');
+  ein('lat8', SE(30) + .75, { x: X7 + 980, y: steh(240, 148) }, { y: 70 });
+  akteur('licht8', { x: X7 + 1680, y: steh(200), o: 0 }); akteur('latan8', { x: X7 + 980, y: steh(240, 148), o: 0 });
+  ein('am8', W('Also', 31) - .3, { x: AX, y: AY }, { y: 80 }, 'pop');
+  akteur('kreis8', { x: AX, y: AY, o: 0, s: .9 }); tw('kreis8', W('Also', 31), .5, { o: 1, s: 1 }, 'sanft');
+  strich(el('kreis8').querySelector('circle'), W('Also', 31), 1.2);
+  HOOKS.push(t => { el('kreis8').querySelector('circle').style.strokeDasharray = '.02 .025'; });
+  // die vier Dinge fliegen herein und docken an
+  const D = [['d8a', 'sichtbar', -1, -1], ['d8b', 'rutschfeste', -1, 1], ['d8c', 'warme', 1, -1], ['d8d', 'früher', 1, 1]];
+  const POS = {};
+  D.forEach(([id, w, sx, sy]) => {
+    const x = AX + sx * R, y = AY + sy * R, ta = W(w, 31) - .45; POS[id] = [x, y];
+    akteur(id, { x: x + sx * 420, y: y + sy * 200, o: 0, s: .7, r: sx * 8 });
+    tw(id, ta - .15, .15, { o: 1 }); flug(id, ta - .15, .65, x, y, 40, { s: 1, r: 0 }); landen(id, ta + .5, .8); cue(ta, 'whoosh'); cue(ta + .5, 'plopp');
   });
+  const tS = W('sichtbar', 31) + .1, tR = W('rutschfeste', 31) + .1, tW = W('warme', 31) + .1, tF = W('früher', 31) + .1;
+  HOOKS.push(t => { const d = t - tS; el('d8a').style.filter = d > 0 && d < 1 ? `drop-shadow(0 0 ${(18 * Math.sin(Math.PI * d)).toFixed(1)}px var(--warning-bg))` : ''; });
+  cue(tS, 'ding'); ruetteln(tR, 5); bump('d8b', tR, 1.1);
+  HOOKS.push(t => { const d = t - tW; el('d8c').style.filter = d > 0 && d < 1.2 ? `drop-shadow(0 0 ${(16 * Math.sin(Math.PI * d / 1.2)).toFixed(1)}px var(--warning))` : ''; });
+  akteur('z8d', { x: POS.d8d[0], y: POS.d8d[1], o: 0, r: 0 });
+  // Wecker-Zeiger mitführen (eigene Ebene)
+  const ta4 = W('früher', 31) - .45;
+  akteur('z8d', { x: POS.d8d[0] + 420, y: POS.d8d[1] + 200, o: 0, s: .7, r: 8 });
+  tw('z8d', ta4 - .15, .15, { o: 1 }); flug('z8d', ta4 - .15, .65, POS.d8d[0], POS.d8d[1], 40, { s: 1, r: 0 }); landen('z8d', ta4 + .5, .8);
+  for (let i = 0; i < 6; i++) { tw('d8d', tF + i * .06, .06, { r: i % 2 ? 6 : -6 }, 'sinus'); tw('z8d', tF + i * .06, .06, { r: i % 2 ? 6 : -6 }, 'sinus'); }
+  tw(['d8d', 'z8d'], tF + .36, .2, { r: 0 }, 'sinus'); cue(tF, 'ding');
   froh('am8', W('sichtbar', 31));
-  // Sonne geht auf
-  akteur('sonne8', { x: X7 + 1640, y: 470, o: 0, s: .7 });
-  tw('sonne8', W('Dann', 32) - .2, 1.4, { y: 310, o: 1, s: 1 }, 'inout'); cue(W('Dann', 32), 'whoosh');
-  zusatz('sonne8', t => t > W('Dann', 32) ? `rotate(${((t - W('Dann', 32)) * 18).toFixed(1)}deg)` : '');
-  huepfen('am8', W('gut', 32) - .1, 22); welle('welle8', W('gut', 32), X7 + KX[3], AY, 1.1, 180); cue(W('gut', 32), 'erfolg'); akzent(W('gut', 32), .04);
-  KID.forEach((id, i) => huepfen(id, W('Winter', 32) + i * .07, 10));
+  D.forEach(([id], i) => bump('am8', [tS, tR, tW, tF][i] + .05, 1.04));
+  // Dann kommst du gut durch den Winter: Licht geht an, alles kreist um Amir, Amir hüpft
+  const tD = W('Dann', 32) - .1;
+  set('latan8', tD, { o: 1 }); cue(tD, 'klick');
+  akteur('glut8', { x: X7 + 980, y: steh(240, 148) - 35 * 1.5, o: 0, s: .6 }); tw('glut8', tD, .5, { o: 1, s: 1 }, 'weich');
+  tw('licht8', tD + .3, .3, { o: 1 }, 'out'); cue(tD + .3, 'klick');
+  const tO = W('kommst', 32);
+  ['d8a', 'd8b', 'd8c', 'd8d', 'z8d'].forEach(id => {
+    const [x, y] = POS[id === 'z8d' ? 'd8d' : id];
+    zusatz(id, t => { const p = E.inout(clamp((t - tO) / 1.6)); if (p <= 0) return ''; const w = Math.atan2(y - AY, x - AX) + p * Math.PI / 2;
+      return `translate(${(AX + Math.hypot(x - AX, y - AY) * Math.cos(w) - x).toFixed(1)}px,${(AY + Math.hypot(x - AX, y - AY) * Math.sin(w) - y).toFixed(1)}px)`; });
+  });
+  cue(tO, 'scan');
+  huepfen('am8', W('gut', 32) - .1, 22); welle('welle8', W('gut', 32), AX, AY, 1.1, 260); cue(W('gut', 32), 'erfolg'); akzent(W('gut', 32), .04);
 }
 
 /* ---------- Abspann ---------- */

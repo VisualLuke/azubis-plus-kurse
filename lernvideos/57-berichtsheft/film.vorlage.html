@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Das Berichtsheft führen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 600px}
+/* Schreibtisch in Draufsicht */
+.buehne.tisch57{width:1840px;height:1000px;border-radius:52px;
+  background:repeating-linear-gradient(100deg,transparent 0 140px,color-mix(in srgb,var(--b200) 18%,transparent) 140px 143px),linear-gradient(165deg,var(--b100),var(--b50) 75%)}
+
+/* Gesprächspartner: sitzen oben am Tisch */
+.sprecher{position:absolute;width:250px;height:250px;border-radius:999px;overflow:hidden;top:58px;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.14)}
+.sprecher .ebene,.mini .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.sprecher .figur{position:absolute;left:0;top:12px;width:100%;height:100%;transform-origin:50% 100%}
+.sprecher .augen{transform-origin:50% 45%}
+.sprecher .auf{transform-origin:50% 53%}
+#sabine{left:110px}
+#kwame{right:110px}
+
+/* Text im Bild: oben zwischen den beiden */
+.kopf{width:1000px;text-align:center}
+.kopf .titel{font:700 44px/54px Inter;letter-spacing:-.01em;color:var(--ink)}
+.kopf .w.hell{color:var(--b500)}
+
+/* Das Berichtsheft: Ursprung = oberes Ende der Spirale */
+#heft{perspective:2600px;perspective-origin:0 305px}
+.seite{position:absolute;top:0;width:540px;height:610px;background:var(--surface);
+  background-image:linear-gradient(var(--b50),var(--b50)),repeating-linear-gradient(transparent 0 46px,var(--b100) 46px 48px);
+  background-size:100% 52px,100% 100%;background-repeat:no-repeat,repeat;background-position:0 0,0 104px;
+  box-shadow:0 10px 26px rgba(22,19,37,.12)}
+.seite.r{left:0;border-radius:0 20px 20px 0;transform-origin:0 50%}
+.seite.l{left:-540px;border-radius:20px 0 0 20px;transform-origin:100% 50%}
+.seite::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:var(--sh,0)}
+.seite.r::after{background:linear-gradient(90deg,rgba(22,19,37,.28),rgba(22,19,37,.04) 70%)}
+.seite.l::after{background:linear-gradient(270deg,rgba(22,19,37,.28),rgba(22,19,37,.04) 70%)}
+.seite.r::before,.seite.l::before{content:"";position:absolute;top:0;bottom:0;width:36px;pointer-events:none}
+.seite.r::before{left:0;background:linear-gradient(90deg,rgba(22,19,37,.08),transparent)}
+.seite.l::before{right:0;background:linear-gradient(270deg,rgba(22,19,37,.08),transparent)}
+.seite .nr{position:absolute;right:26px;top:13px;font:700 20px/26px Inter;color:var(--n500);letter-spacing:.04em}
+.seite.l .nr{right:auto;left:26px}
+.seite.deckel57{background:linear-gradient(150deg,var(--b500),var(--b700));box-shadow:0 14px 30px rgba(58,37,153,.3)}
+.seite.deckel57::before{width:44px;background:linear-gradient(90deg,rgba(22,19,37,.25),transparent)}
+.seite.innen{background:var(--b50);background-image:none}
+.dicke{position:absolute;left:0;top:0;width:540px;height:610px;border-radius:0 20px 20px 0;background:var(--surface);border:2px solid var(--b200)}
+.ruecken{position:absolute;left:-16px;top:16px;width:32px;height:578px;display:flex;flex-direction:column;justify-content:space-between;z-index:400}
+.ruecken i{display:block;width:32px;height:14px;border-radius:7px;background:linear-gradient(var(--n300),var(--n500));box-shadow:0 2px 3px rgba(22,19,37,.25)}
+/* gefüllte Seiten (schnelles Blättern) */
+.eintrag{position:absolute;left:40px;width:300px;height:80px}
+.eintrag b{position:absolute;left:0;top:6px;width:64px;height:64px;border-radius:12px}
+.eintrag i{position:absolute;left:84px;height:12px;border-radius:6px;background:var(--n200)}
+
+/* Umschlag-Etikett */
+.etikett{width:440px;height:124px;border-radius:18px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.etikett span{font:800 38px/44px Inter;color:var(--b700);letter-spacing:-.01em;white-space:nowrap}
+.etikett i{width:200px;height:8px;border-radius:4px;background:var(--n200)}
+.abdruck57{width:132px;height:132px;border-radius:999px;border:6px solid var(--b200);color:var(--b100);font:800 76px/120px Inter;text-align:center}
+
+/* Bausteine */
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:36px}
+.plakette.gruen{background:var(--success)}
+.plakette.rot{background:var(--error)}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.sprechb{width:96px;height:62px;border-radius:24px;background:var(--surface);box-shadow:0 4px 14px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center;gap:9px}
+.sprechb i{width:12px;height:12px;border-radius:999px;background:var(--b400)}
+.sprechb::after{content:"";position:absolute;bottom:-12px;border:8px solid transparent;border-top:12px solid var(--surface)}
+.sprechb.l::after{left:18px}
+.sprechb.r::after{right:18px}
+.chip57{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--success-bg);color:var(--success-text);box-shadow:0 6px 18px rgba(22,19,37,.1)}
+.chip57 svg{width:30px;height:30px;flex:none}
+
+/* Klebezettel */
+.zettel57{width:360px;border-radius:6px 6px 22px 6px;padding:20px 22px 22px;box-shadow:0 8px 18px rgba(22,19,37,.14)}
+.zettel57::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;border-radius:6px 6px 0 0;background:rgba(22,19,37,.05)}
+.zettel57.gelb{background:var(--warning-bg)}
+.zettel57.blau{background:var(--info-bg)}
+.zettel57.gruen{background:var(--success-bg)}
+.zettel57.lila{background:var(--b100)}
+.zettel57 .zk{display:flex;align-items:center;gap:14px;height:72px}
+.zettel57 .zk svg{width:72px;height:72px;flex:none}
+.zettel57 .zk b{font:800 30px/36px Inter;color:var(--ink);white-space:nowrap}
+.hand{display:block;margin-top:12px;font:600 27px/34px Inter;color:var(--b700);white-space:nowrap;transform:rotate(-1deg)}
+.kritzel path{fill:none;stroke:var(--b600);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.kleinzettel{width:160px;height:118px;border-radius:6px 6px 18px 6px;box-shadow:0 6px 14px rgba(22,19,37,.14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.kleinzettel b{font:800 44px/46px Inter}
+.kleinzettel span{font:700 22px/26px Inter;white-space:nowrap}
+.kleinzettel.gruen{background:var(--success-bg);color:var(--success-text)}
+.kleinzettel.gelb{background:var(--warning-bg);color:var(--warning-text)}
+
+/* Papier / digital */
+.tablet57{width:360px;height:220px;border-radius:26px;background:var(--b700);padding:18px;box-shadow:0 10px 22px rgba(22,19,37,.2)}
+.tablet57 .schirm{width:100%;height:100%;border-radius:12px;background:var(--b50);padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.tablet57 .schirm i{display:block;height:14px;border-radius:7px;background:var(--b300);transform-origin:0 50%}
+.tag57{width:84px;height:66px;border-radius:14px;background:var(--surface);border:3px solid var(--b200);font:700 24px/60px Inter;color:var(--b600);text-align:center}
+.haekchen{width:34px;height:34px;border-radius:999px;background:var(--b300);display:flex;align-items:center;justify-content:center}
+.haekchen svg{width:20px}
+.wochenzettel{width:340px;height:84px;border-radius:6px 6px 20px 6px;background:var(--warning-bg);box-shadow:0 6px 16px rgba(22,19,37,.14);
+  font:800 30px/84px Inter;color:var(--warning-text);text-align:center;white-space:nowrap}
+.klammer path{fill:none;stroke:var(--b500);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+
+/* Stichworte: lange Sätze werden kurz */
+.absatz{width:430px;height:170px}
+.absatz .zeile{position:absolute;left:0;height:20px;display:flex;align-items:center;gap:10px}
+.absatz .pkt{width:14px;height:14px;border-radius:999px;background:var(--b500)}
+.absatz .wb{height:16px;border-radius:8px;background:var(--n300)}
+.absatz .wb.kern{background:var(--b400)}
+
+/* Prüfungstür */
+.tuer57{width:340px;height:520px;border-radius:30px;background:linear-gradient(var(--surface),var(--b50));box-shadow:0 10px 28px rgba(22,19,37,.14)}
+.tuer57 .schild57{position:absolute;left:30px;right:30px;top:26px;height:58px;border-radius:14px;background:var(--b700);color:var(--surface);font:800 24px/58px Inter;text-align:center;white-space:nowrap}
+.tuer57 .rahmen57{position:absolute;left:50px;right:50px;top:110px;bottom:34px;border-radius:16px 16px 6px 6px;background:var(--b700)}
+.tuer57 .licht{position:absolute;left:58px;right:58px;top:118px;bottom:34px;border-radius:12px 12px 4px 4px;background:linear-gradient(var(--warning-bg),var(--surface))}
+.tuer57 .licht.gruen{background:linear-gradient(var(--success-bg),var(--surface))}
+.tuer57 .blatt57{position:absolute;left:58px;top:118px;width:224px;height:368px;border-radius:12px 12px 4px 4px;background:linear-gradient(160deg,var(--b400),var(--b600))}
+.tuer57 .blatt57::before{content:"";position:absolute;left:24px;right:24px;top:28px;height:140px;border-radius:10px;border:4px solid var(--b300);opacity:.6}
+.tuer57 .blatt57::after{content:"";position:absolute;left:24px;right:24px;bottom:30px;height:130px;border-radius:10px;border:4px solid var(--b300);opacity:.6}
+.tuer57 .knauf{position:absolute;right:20px;top:190px;width:24px;height:24px;border-radius:999px;background:var(--warning)}
+.tuer57.klein{width:200px;height:300px;border-radius:22px}
+.tuer57.klein .schild57{left:18px;right:18px;top:16px;height:40px;font-size:17px;line-height:40px}
+.tuer57.klein .rahmen57{left:30px;right:30px;top:70px;bottom:20px}
+.tuer57.klein .blatt57{left:36px;top:76px;width:128px;height:204px}
+.tuer57.klein .blatt57::before,.tuer57.klein .blatt57::after{display:none}
+.tuer57.klein .knauf{right:12px;top:96px;width:16px;height:16px}
+.geist{width:200px;height:226px;border-radius:6px 16px 16px 6px;border:5px dashed var(--b300);background:color-mix(in srgb,var(--surface) 50%,transparent)}
+.ticket{width:300px;height:150px;border-radius:20px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 10px 24px rgba(58,37,153,.3);color:var(--surface)}
+.ticket .loch{position:absolute;top:58px;width:34px;height:34px;border-radius:999px;background:var(--b50)}
+.ticket .perf{position:absolute;left:206px;top:16px;bottom:16px;border-left:4px dashed var(--b300)}
+.ticket b{position:absolute;left:30px;top:34px;font:800 30px/36px Inter;white-space:nowrap}
+.ticket small{position:absolute;left:30px;top:80px;font:600 20px/26px Inter;color:var(--b100);white-space:nowrap}
+.ticket svg{position:absolute;left:216px;top:38px;width:70px}
+.anmeldung{width:210px;height:250px;border-radius:14px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.16);padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.anmeldung b{font:800 24px/30px Inter;color:var(--b600);margin-bottom:6px}
+.anmeldung i{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.anmeldung u{display:block;width:26px;height:26px;border-radius:7px;border:3px solid var(--b400);text-decoration:none}
+.luecke{width:420px;height:150px;border-radius:16px;border:4px dashed var(--n300)}
+.gedanke57{width:300px;height:220px;border-radius:60px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center;gap:6px}
+.gedanke57 div{width:84px}
+.punkt-g{border-radius:999px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.uhr57 .zg{position:absolute;left:0;top:0;width:100%}
+.uhr57 .std,.uhr57 .min{transform-origin:80px 76px}
+#nacht{position:absolute;left:0;top:0;width:1920px;height:1080px;background:color-mix(in srgb,var(--b700) 52%,transparent);pointer-events:none}
+
+.vorhang57{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.vorhang57 .gross{font:800 96px/108px Inter;letter-spacing:-.03em;text-align:center}
+.vorhang57 .klein{font:400 42px/56px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne tisch57" id="bue0"></div>
+
+  <!-- ===================== Das Berichtsheft ===================== -->
+  <div class="a" id="heft" data-frei>
+    <div class="dicke" id="dk1"></div><div class="dicke" id="dk2"></div><div class="dicke" id="dk3"></div><div class="dicke" id="dk4"></div>
+
+    <!-- Blatt 0: Umschlag / Innenseite -->
+    <div class="seite r deckel57" id="f0">
+      <div class="a etikett" id="etikett"><span id="etikettText">Berichtsheft</span><i></i></div>
+      <div class="a plakette gruen" id="ok1"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="a abdruck57" id="para1">§</div>
+    </div>
+    <div class="seite l innen" id="b0">
+      <svg class="a kritzel" id="kritzel3" viewBox="0 0 440 200" style="width:440px">
+        <path class="zeichnen" pathLength="1" d="M6 30c14-14 22 10 34-4s20 8 32-6 18 12 32-2 22 8 34-6 18 10 30-4 22 10 36-4 18 8 32-4 20 10 34-2 16 6 28-6 20 8 34-2 22 6 34-4"/>
+        <path class="zeichnen" pathLength="1" d="M6 98c12-12 20 8 32-4s22 10 34-4 16 8 30-4 24 10 36-2 18 8 30-6 20 10 34-2 20 6 32-6 18 10 32 0"/>
+        <path class="zeichnen" pathLength="1" d="M6 166c14-12 22 10 34-2s18 8 32-6 20 10 34-2 18 8 32-4 20 6 30-4"/>
+      </svg>
+      <div class="a plakette gruen" id="ok3a"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    </div>
+
+    <!-- Blatt 1: Papier oder digital · jede Woche -->
+    <div class="seite r" id="f1"><div class="nr">Nr. 1</div>
+      <div class="a tablet57" id="tablet3"><div class="schirm"><i id="tz1" style="width:80%"></i><i id="tz2" style="width:62%"></i><i id="tz3" style="width:74%"></i><i id="tz4" style="width:40%"></i></div></div>
+      <div class="a plakette gruen" id="ok3b"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="a tag57" id="tag3_0" data-gruppe="woche3">Mo</div><div class="a tag57" id="tag3_1" data-gruppe="woche3">Di</div><div class="a tag57" id="tag3_2" data-gruppe="woche3">Mi</div><div class="a tag57" id="tag3_3" data-gruppe="woche3">Do</div><div class="a tag57" id="tag3_4" data-gruppe="woche3">Fr</div>
+      <div class="a haekchen" id="hk3_0" data-gruppe="woche3"></div><div class="a haekchen" id="hk3_1" data-gruppe="woche3"></div><div class="a haekchen" id="hk3_2" data-gruppe="woche3"></div><div class="a haekchen" id="hk3_3" data-gruppe="woche3"></div><div class="a haekchen" id="hk3_4" data-gruppe="woche3"></div>
+      <svg class="a klammer" id="klammer3" viewBox="0 0 440 40" style="width:440px" data-gruppe="woche3"><path class="zeichnen" pathLength="1" d="M4 6c0 14 6 18 20 18h170c14 0 22 4 26 14 4-10 12-14 26-14h170c14 0 20-4 20-18"/></svg>
+      <div class="a wochenzettel" id="woche3" data-gruppe="woche3">1 × pro Woche</div>
+    </div>
+    <div class="seite l" id="b1">
+      <div class="a zettel57 gelb" id="z4a"><div class="zk">{{steckdose~4}}<b>Betrieb</b></div>
+        <span class="hand" id="h4a">Steckdosen montiert</span><span class="hand" id="h4b">Leitungen verlegt</span></div>
+      <div class="a absatz" id="absatz4"></div>
+    </div>
+
+    <!-- Blatt 2: was ins Heft gehört -->
+    <div class="seite r" id="f2"><div class="nr">Nr. 2</div>
+      <div class="a zettel57 blau" id="z4b"><div class="zk">{{schule~4}}<b>Berufsschule</b></div>
+        <svg class="kritzel" id="kr4a" viewBox="0 0 300 30" style="width:300px;margin-top:14px"><path class="zeichnen" pathLength="1" d="M4 16c12-12 20 8 30-4s18 10 30-2 18 8 30-4 20 10 32-2 16 6 28-4 18 8 30-2 20 8 30-2"/></svg>
+        <svg class="kritzel" id="kr4b" viewBox="0 0 300 30" style="width:220px;margin-top:10px"><path class="zeichnen" pathLength="1" d="M4 16c12-12 20 8 30-4s18 10 30-2 18 8 30-4 20 10 32-2 16 6 28-4"/></svg></div>
+      <div class="a zettel57 gruen" id="z4c"><div class="zk">{{schutzhelm~4}}<b>Unterweisung</b></div>
+        <span class="hand" id="h4c">Sicherheit</span></div>
+    </div>
+    <div class="seite l" id="b2">
+      <div class="a" id="mond5" style="width:210px">{{mond}}</div>
+      <div class="a uhr57" id="uhr5" style="width:270px">{{uhr}}
+        <svg class="zg" viewBox="0 0 160 160"><path class="zeichnen" id="bogen5" pathLength="1" d="M80 20a56 56 0 1 1-48.5 84" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <path class="std" d="M80 76V54" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><path class="min" d="M80 76V44" stroke="var(--b600)" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="76" r="5" fill="var(--b700)"/></svg></div>
+    </div>
+
+    <!-- Blatt 3: abends? Nein – Arbeitszeit -->
+    <div class="seite r" id="f3"><div class="nr">Nr. 3</div>
+      <div class="a" id="sofa5" style="width:250px">{{sofa}}</div>
+      <svg class="a kritzel" id="kritzel5" viewBox="0 0 440 200" style="width:420px">
+        <path class="zeichnen" pathLength="1" d="M6 30c14-14 22 10 34-4s20 8 32-6 18 12 32-2 22 8 34-6 18 10 30-4 22 10 36-4 18 8 32-4 20 10 34-2"/>
+        <path class="zeichnen" pathLength="1" d="M6 98c12-12 20 8 32-4s22 10 34-4 16 8 30-4 24 10 36-2 18 8 30-6 20 10 34-2"/>
+        <path class="zeichnen" pathLength="1" d="M6 166c14-12 22 10 34-2s18 8 32-6 20 10 34-2"/>
+      </svg>
+    </div>
+    <div class="seite l voll" id="b3"></div>
+    <div class="seite r voll" id="f4"></div><div class="seite l voll" id="b4"></div>
+    <div class="seite r voll" id="f5"></div><div class="seite l voll" id="b5"></div>
+    <div class="seite r voll" id="f6"></div>
+
+    <!-- Blatt 6/7: einmal im Monat -->
+    <div class="seite l voll" id="b6">
+      <div class="a kleinzettel gruen" id="gut6"><b>✓</b><span>gut</span></div>
+    </div>
+    <div class="seite r voll" id="f7"><div class="nr">Nr. 8</div>
+      <div class="a kleinzettel gelb" id="fehlt6"><b>?</b><span>fehlt noch</span></div>
+      <svg class="a kritzel" id="unter6" viewBox="0 0 300 90" style="width:270px"><path d="M10 80h280" style="stroke:var(--n300);stroke-width:3"/>
+        <path class="zeichnen" pathLength="1" d="M18 62c10-30 22-46 30-40s-12 44-4 44 14-36 24-34-4 30 4 30 12-22 20-22 2 20 10 20 16-18 26-18 8 16 18 14 20-14 30-14 40 8 60 4"/></svg>
+      <div class="a plakette gruen" id="ok6"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    </div>
+    <div class="seite l" id="b7"></div>
+    <div class="seite r" id="f8"></div><div class="seite l" id="b8"></div>
+    <div class="seite r" id="f9"></div>
+
+    <!-- Blatt 9/10: vergessene Wochen -->
+    <div class="seite l" id="b9">
+      <div class="a luecke" id="lu6a" data-frei></div><div class="a luecke" id="lu6b" data-frei></div>
+    </div>
+    <div class="seite r" id="f10"><div class="nr">Nr. 14</div>
+      <div class="a luecke" id="lu6c" data-frei></div><div class="a luecke" id="lu6d" data-frei></div>
+    </div>
+
+    <!-- Blatt 10/11: Zusammenfassung -->
+    <div class="seite l" id="b10">
+      <div class="a zettel57 lila" id="z7a"><div class="zk">{{kalender~7}}<b>Jede Woche</b></div></div>
+      <div class="a zettel57 gelb" id="z7b"><div class="zk">{{steckdose~7}}<b>Betrieb</b></div></div>
+    </div>
+    <div class="seite r" id="f11"><div class="nr">Nr. 15</div>
+      <div class="a zettel57 blau" id="z7c"><div class="zk">{{schule~7}}<b>Schule</b></div></div>
+      <div class="a zettel57 gruen" id="z7d"><div class="zk">{{schutzhelm~7}}<b>Unterweisung</b></div></div>
+      <svg class="a kritzel" id="unter7" viewBox="0 0 300 90" style="width:270px"><path d="M10 80h280" style="stroke:var(--n300);stroke-width:3"/>
+        <path class="zeichnen" pathLength="1" d="M18 62c10-30 22-46 30-40s-12 44-4 44 14-36 24-34-4 30 4 30 12-22 20-22 2 20 10 20 16-18 26-18 8 16 18 14 20-14 30-14 40 8 60 4"/></svg>
+      <div class="a plakette gruen" id="ok7"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    </div>
+    <div class="ruecken" id="ruecken"></div>
+  </div>
+
+  <!-- ===================== Dinge auf dem Tisch ===================== -->
+  <div class="a sprechb l" id="sb1a" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb r" id="sb1b" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb l" id="sb1c" data-frei><i></i><i></i><i></i></div>
+  <div class="a frage" id="frage1">?</div>
+  <div class="a" id="stempel1" style="width:170px" data-frei>{{stempel}}</div>
+
+  <div class="a tuer57" id="tuer"><div class="licht" id="licht"></div><div class="rahmen57" style="background:none"></div>
+    <div class="blatt57" id="tblatt"><div class="knauf"></div></div><div class="schild57">Abschlussprüfung</div></div>
+  <div class="a plakette rot" id="nein2" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="a geist" id="geist2" data-frei></div>
+  <div class="a anmeldung" id="anm2" data-frei><b>Anmeldung</b><i></i><i style="width:70%"></i><div style="display:flex;gap:10px;align-items:center"><u></u><i style="flex:1"></i></div><i style="width:84%"></i></div>
+  <div class="a" id="kammer2" style="width:240px">{{kammer}}</div>
+  <div class="a ticket" id="ticket2" data-frei><div class="loch" style="left:-17px"></div><div class="loch" style="right:-17px"></div><div class="perf"></div>
+    <b>Prüfung</b><small>Eintrittskarte</small>
+    <svg viewBox="0 0 70 70"><rect x="12" y="6" width="46" height="58" rx="6" fill="var(--b300)"/><rect x="12" y="6" width="8" height="58" rx="3" fill="var(--b200)"/><rect x="26" y="18" width="24" height="12" rx="3" fill="var(--surface)"/></svg></div>
+  <div class="a plakette gruen" id="ok2" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <div class="a" id="vertrag3" style="width:250px">{{vertrag}}</div>
+
+  <div class="a" id="betrieb5" style="width:230px">{{betrieb}}</div>
+  <div class="a" id="miniheft5" style="width:140px">{{heft}}</div>
+  <div class="a" id="laptop5" style="width:160px">{{laptop}}</div>
+  <div class="a chip57" id="gratis5"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--success)"/><path d="M9 15.5l4 4 8-9" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>kostenlos</div>
+
+  <div class="a sprechb l" id="sb6a" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb r" id="sb6b" data-frei><i></i><i></i><i></i></div>
+  <div class="a punkt-g" id="gp6a" style="width:22px;height:22px" data-frei></div>
+  <div class="a punkt-g" id="gp6b" style="width:34px;height:34px" data-frei></div>
+  <div class="a gedanke57" id="gedanke6"><div id="gi6a">{{steckdose~6}}</div><div id="gi6b">{{schule~6}}</div><div id="gi6c">{{schutzhelm~6}}</div></div>
+  <div class="a tuer57 klein" id="tuer6"><div class="licht"></div><div class="blatt57"><div class="knauf"></div></div><div class="schild57">Prüfung</div></div>
+  <div class="a plakette rot" id="nein6" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></div>
+
+  <div class="a" id="lupe" style="width:150px" data-frei>{{lupe}}</div>
+  <div class="a" id="stift" style="width:120px" data-frei>{{stift}}</div>
+
+  <div id="nacht"></div>
+
+  <div class="a kopf" id="kopf1"><div id="tb1"><div class="titel">Berichtsheft = Ausbildungsnachweis</div></div></div>
+  <div class="a kopf" id="kopf2"><div id="tb2"><div class="titel">Ohne Berichtsheft keine Prüfung</div></div></div>
+  <div class="a kopf" id="kopf3"><div id="tb3"><div class="titel">Papier oder digital · jede Woche</div></div></div>
+  <div class="a kopf" id="kopf4"><div id="tb4"><div class="titel">Betrieb · Schule · Unterweisungen</div></div></div>
+  <div class="a kopf" id="kopf5"><div id="tb5"><div class="titel">Während der Arbeitszeit · kostenlos</div></div></div>
+  <div class="a kopf" id="kopf6"><div id="tb6"><div class="titel">Jeden Monat: ansehen &amp; unterschreiben</div></div></div>
+  <div class="a kopf" id="kopf7"><div id="tb7"><div class="titel">Jede Woche · unterschreiben lassen</div></div></div>
+</div></div>
+
+<div class="sprecher" id="sabine"><div class="figur">
+  <div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+<div class="sprecher" id="kwame"><div class="figur">
+  <div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen~k}}</div>
+  <div class="ebene zu">{{figur-mund-zu~k}}</div><div class="ebene auf">{{figur-mund-auf~k}}</div><div class="ebene froh">{{figur-mund-froh~k}}</div></div></div>
+
+<div class="vorhang57" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Jede Woche ein Eintrag.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Dein Berichtsheft ist deine Eintrittskarte zur Prüfung.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Seiten vorbereiten: Spirale, gefüllte Seiten, Stichwort-Absatz ---------- */
+document.getElementById('ruecken').innerHTML = '<i></i>'.repeat(17);
+const FARBEN = ['var(--warning-bg)', 'var(--info-bg)', 'var(--success-bg)', 'var(--b100)'];
+document.querySelectorAll('.seite.voll').forEach((s, k) => {
+  const html = [0, 1, 2].map(i => `<div class="eintrag" style="top:${84 + i * 118}px"><b style="background:${FARBEN[(i + k) % 4]}"></b>` +
+    `<i style="top:12px;width:${150 + ((i * 37 + k * 23) % 60)}px"></i><i style="top:38px;width:${110 + ((i * 53 + k * 31) % 70)}px"></i></div>`).join('');
+  s.insertAdjacentHTML('afterbegin', html);
+});
+// Absatz: drei lange Zeilen, nur die Kernwörter bleiben
+const ABSATZ = [[[90, 1], [60, 0], [120, 0], [70, 0]], [[110, 1], [80, 0], [50, 0], [100, 0]], [[80, 1], [130, 0], [60, 0], [70, 0]]];
+document.getElementById('absatz4').innerHTML = ABSATZ.map((z, i) => `<div class="zeile" style="top:${20 + i * 60}px"><span class="pkt" id="pk4_${i}"></span>` +
+  z.map(([w, k], j) => `<span class="wb${k ? ' kern' : ''}" id="wb4_${i}_${j}" style="width:${w}px"></span>`).join('') + '</div>').join('');
+
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.8;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const N = SPRACHDATEN.saetze.length;
+const ENDE_SPRACHE = SE(N);
+akteur('bue0', { x: 960, y: 540 });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { const r0 = wertBei(id, 'r', t); for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: r0 + (i % 2 ? w : -w) }, 'sinus'); tw(id, t + n * .1, .25, { r: r0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+// Klebezettel: fällt leicht gedreht von oben auf die Seite und klebt
+const kleben = (id, t, basis, snd = 'plopp') => {
+  akteur(id, { ...basis, o: 0, s: 1.35, r: (basis.r || 0) - 7, y: basis.y - 40 });
+  tw(id, t - .25, .12, { o: 1 }); tw(id, t - .25, .25, { s: 1, y: basis.y, r: basis.r || 0 }, 'in');
+  tw(id, t, .08, { sy: .9, sx: 1.06 }, 'out'); tw(id, t + .08, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aufschlag = (id, t, basis, h = 220, snd = 'plopp') => {
+  akteur(id, { ...basis, y: basis.y - h, o: 0 });
+  tw(id, t - .32, .1, { o: 1 }); tw(id, t - .32, .32, { y: basis.y }, 'in');
+  tw(id, t, .09, { sy: .8, sx: 1.12 }, 'out'); tw(id, t + .09, .5, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+// Kopfzeile (Text im Bild), Wörter aus der Maske
+function kopf(i, zeiten, hell = []) {
+  akteur('kopf' + i, { x: 460, y: 108 }, true);
+  titelEin('tb' + i, 0, zeiten);
+  const w = document.querySelectorAll(`#tb${i} .w`); hell.forEach(k => w[k].classList.add('hell'));
+}
+const kopfAus = (i, t) => tw('kopf' + i, t, .3, { o: 0, y: 88 }, 'in');
+
+/* ---------- Kamera: Einfahrt, Akzente, beim Umblättern kurz zurück ---------- */
+const DIPS = [], AKZENTE = [];
+const akzent = (t, z = .03) => AKZENTE.push([t, z]);
+HOOKS.push(t => {
+  let z = 1 + .07 * (1 - E.inout(clamp(t / 1.6)));
+  for (const p of DIPS) z -= .025 * Math.sin(Math.PI * clamp((t - p[0]) / p[1]));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  $('#kamera').style.transform = `scale(${z.toFixed(5)})`;
+});
+
+/* ---------- Blätter: Vorderseite rechts, Rückseite links; Winkel 0 … 180° ---------- */
+const NB = 12, BL = [];
+for (let j = 0; j < NB; j++) {
+  const d = document.createElement('i'); d.hidden = true; document.body.appendChild(d);
+  BL.push({ f: el('f' + j), b: el('b' + j), a: akteur(d, { r: 0 }, true) });
+}
+const winkel = (j, t) => wert(BL[j].a, 'r', t);
+HOOKS.push(t => {
+  const th = BL.map((_, j) => winkel(j, t));
+  BL.forEach((s, j) => {
+    const w = th[j], bewegt = w > .01 && w < 179.99;
+    const vorne = w < 90;
+    // eine Seite ist nur sichtbar, wenn kein ruhendes Blatt sie verdeckt
+    const fSicht = vorne && (j === 0 || th[j - 1] > .01);
+    const bSicht = !vorne && (j === NB - 1 || th[j + 1] < 179.99);
+    s.f.style.display = fSicht ? '' : 'none';
+    s.b.style.display = bSicht ? '' : 'none';
+    if (fSicht) { s.f.style.transform = `rotateY(${(-w).toFixed(2)}deg)`; s.f.style.zIndex = bewegt ? 500 - j : 100 - j; s.f.style.setProperty('--sh', Math.sin(w * Math.PI / 180).toFixed(3)); }
+    if (bSicht) { s.b.style.transform = `rotateY(${(180 - w).toFixed(2)}deg)`; s.b.style.zIndex = bewegt ? 500 + j : 10 + j; s.b.style.setProperty('--sh', Math.sin(w * Math.PI / 180).toFixed(3)); }
+  });
+});
+const umblaettern = (j, t, d = .8, snd = 'whoosh') => { tw(BL[j].a.el, t, d, { r: 180 }, 'sinus'); if (snd) cue(t, snd); DIPS.push([t, d + .2]); };
+const zuklappen = (t, d = 1) => { for (let j = 0; j < NB; j++) if (winkel(j, t) > 90) tw(BL[j].a.el, t, d, { r: 0 }, 'sinus'); cue(t, 'whoosh'); DIPS.push([t, d]); };
+
+/* Heft-Container: Lage in der Welt (oberes Ende der Spirale) */
+const HY = 345;
+akteur('heft', { x: 690, y: 1150 }, true);
+// Seitenkoordinaten → Welt (für Stift und Lupe), zum Zeitpunkt t
+const welt = (seite, lx, ly, t) => { const s = wertBei('heft', 's', t); return [wertBei('heft', 'x', t) + s * (lx + (seite === 'l' ? -540 : 0)), wertBei('heft', 'y', t) + s * ly]; };
+
+/* ---------- Stift: Spitze unten links ---------- */
+const SPX = 43.5, SPY = -37.5;                  // Mitte = Spitze + Versatz
+const RUHE = [1740, 940];
+akteur('stift', { x: 2120, y: RUHE[1] + SPY });
+const stiftHin = (t, x, y, d = .45) => { tw('stift', t, d, { x: x + SPX, y: y + SPY, s: 1.06 }, 'inout'); tw('stift', t + d - .1, .15, { s: 1 }, 'out'); };
+const stiftRuhe = (t, d = .5) => tw('stift', t, d, { x: RUHE[0] + SPX, y: RUHE[1] + SPY, s: 1 }, 'inout');
+// schreibt eine Zeile von (x0,y) nach (x1,y): kleine Auf-und-ab-Bewegung der Spitze
+const zeileSchreiben = (t0, t1, x0, x1, y, amp = 6) => {
+  const n = Math.max(4, Math.round((x1 - x0) / 28));
+  for (let i = 1; i <= n; i++) tw('stift', t0 + (t1 - t0) * (i - 1) / n, (t1 - t0) / n, { x: x0 + (x1 - x0) * i / n + SPX, y: y + (i % 2 ? -amp : amp) + SPY }, 'sinus');
+  cue(t0, 'kritzeln');
+};
+// Handschrift: Text wird von links nach rechts sichtbar
+const HAND = [];
+HOOKS.push(t => HAND.forEach(([e, a, b]) => { const p = clamp((t - a) / (b - a)); e.style.clipPath = `inset(-10px ${(100 - 100 * p).toFixed(1)}% -10px -10px)`; }));
+const handschrift = (id, a, b) => HAND.push([el(id), a, b]);
+// gezeichnete Pfade (Kritzel, Unterschrift) als eigene Akteure
+const zeichne = (id, t, d, e = 'lin') => { if (!AKTEURE.get(el(id))) akteur(id, {}, true); tw(id, 0, 0, { draw: 0 }); tw(id, t, d, { draw: 1 }, e); };
+
+/* ---------- Gesprächspartner: Sprecher exakt aus sprache.json ---------- */
+const KURZ_ = { Sabine: 'S', Kwame: 'K' };
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), KURZ_[s.sprecher]]);
+const ABSCHNITTE = [];
+for (const [a, b, w] of SAETZE_Z) { const l = ABSCHNITTE.at(-1); if (l && l[2] === w) l[1] = b; else ABSCHNITTE.push([a, b, w]); }
+const FROH = {
+  K: [[W('Kammer', 8) + .3, SE(8) + .7], [W('kostenlos', 20), SE(20) + .3], [W('Genau', 28), 999]],
+  S: [[W('Also', 27) + .4, SE(27) + .3]],
+};
+const PERSONEN = [['sabine', 'S', 3, .13], ['kwame', 'K', -3, .61]];
+const AUFTRITT = { sabine: .15, kwame: .3 };
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+  const wer = SAETZE_Z.find(([a, b]) => t >= a && t <= b)?.[2];
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const p = document.getElementById(id), aktiv = wer === w;
+    const k = ABSCHNITTE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .25) / .25, (b + .2 - t) / .2))), 0);
+    const ein_ = E.back(clamp((t - AUFTRITT[id]) / .6));
+    p.style.opacity = clamp((t - AUFTRITT[id]) / .3);
+    p.style.transform = `translateY(${(1 - ein_) * -60 - 6 * k}px) scale(${(.92 + .1 * k) * (.6 + .4 * ein_)})`;
+    p.style.filter = `saturate(${.7 + .3 * k})`;
+    p.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    const zuh = wer && !aktiv ? Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.4 * zuh;
+    p.querySelector('.figur').style.transform = `rotate(${neig + nick + (KRATZ(t, id))}deg) translateY(${2 * zuh}px)`;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    const froh = !aktiv && FROH[w].some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || froh ? 0 : 1;
+    const z = (t * .27 + phase) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  }
+});
+// Kwame wiegt nachdenklich den Kopf (vergessene Wochen)
+let KRATZ_T = [];
+function KRATZ(t, id) { if (id !== 'kwame') return 0; let r = 0; for (const a of KRATZ_T) { const d = t - a; if (d > 0 && d < 1.2) r += 6 * Math.sin(d * 10) * (1 - d / 1.2); } return r; }
+
+/* ================= 1 · Das Heft kommt auf den Tisch ================= */
+kopf(1, [W('Offiziell', 4) - .1, W('Ausbildungsnachweis', 4) - .25, W('Ausbildungsnachweis', 4) - .05], [2]);
+// die anderen Azubis reden: Sprechblasen auf dem Tisch
+pop('sb1a', W('Azubis', 1) - .1, { x: 760, y: 560 });
+pop('sb1b', W('reden', 1) - .1, { x: 1160, y: 520 }, null);
+pop('sb1c', W('immer', 1) - .05, { x: 960, y: 690 }, 'pop');
+schweben(['sb1a', 'sb1b', 'sb1c'], 3);
+// … vom Berichtsheft: das Heft rutscht von unten herein und schiebt die Blasen weg
+const T_HEFT = W('Berichtsheft', 1) - .2;
+tw('heft', T_HEFT - .35, .6, { y: HY }, 'weich'); cue(T_HEFT - .35, 'whoosh');
+tw('heft', T_HEFT + .2, .1, { sy: .97 }, 'out'); tw('heft', T_HEFT + .3, .35, { sy: 1 }, 'sanft'); cue(T_HEFT + .2, 'plopp');
+[['sb1a', 380, 520], ['sb1b', 1560, 470], ['sb1c', 960, 1150]].forEach(([id, x, y], i) => { tw(id, T_HEFT - .3 + i * .04, .45, { x, y }, 'in'); tw(id, T_HEFT - .1, .3, { o: 0 }); });
+akzent(T_HEFT + .2, .025);
+akteur('etikett', { x: 270, y: 190 });
+akteur('ok1', { x: 430, y: 342, s: 0 });
+akteur('para1', { x: 250, y: 470, o: 0 });
+akteur('dk1', { x: 3, y: 4 }, true); akteur('dk2', { x: 6, y: 8 }, true); akteur('dk3', { x: 3, y: 4, o: 0 }, true); akteur('dk4', { x: 3, y: 4, o: 0 }, true);
+// Muss ich das wirklich schreiben? – Fragezeichen bei Kwame, der Stift rollt herein
+pop('frage1', W('Muss', 2) - .05, { x: 1500, y: 430 });
+wackeln('frage1', W('wirklich', 2), 4, 6);
+stiftHin(W('schreiben', 2) - .3, 1330, 760, .6); cue(W('schreiben', 2) - .3, 'whoosh');
+// Ja, das musst du: Fragezeichen geht, Haken auf dem Umschlag
+aus('frage1', W('Ja', 3) - .05, .3);
+tw('ok1', W('musst', 3) - .1, .45, { s: 1 }, 'back'); cue(W('musst', 3) - .1, 'erfolg');
+bump('heft', W('musst', 3), 1.02); akzent(W('musst', 3), .03);
+// Offiziell heißt es Ausbildungsnachweis: das Etikett dreht sich wie eine Münze
+{ const t = W('Ausbildungsnachweis', 4) - .3;
+  tw('etikett', t, .2, { sx: 0 }, 'in'); tw('etikett', t + .2, .3, { sx: 1 }, 'out'); cue(t, 'muenze');
+  HOOKS.push(tt => { el('etikettText').textContent = tt < t + .2 ? 'Berichtsheft' : 'Ausbildungsnachweis'; });
+  bump('etikett', W('Ausbildungsnachweis', 4) + .5, 1.05); }
+// Das steht so im Gesetz: der Stempel schlägt ein Paragrafenzeichen auf den Umschlag
+{ const t = W('Gesetz', 5), [px, py] = welt('r', 250, 470, t);
+  akteur('stempel1', { x: px, y: py - 360, o: 0 });
+  tw('stempel1', t - .4, .15, { o: 1 }); tw('stempel1', t - .4, .4, { y: py - 70 }, 'in');
+  tw('stempel1', t, .08, { sy: .86 }, 'out'); tw('stempel1', t + .08, .2, { sy: 1 }, 'out');
+  tw('stempel1', t + .25, .45, { y: py - 380 }, 'in'); tw('stempel1', t + .5, .2, { o: 0 });
+  set('para1', t, { o: 1, s: 1.25 }); tw('para1', t, .3, { s: 1 }, 'out'); cue(t, 'plopp');
+  tw('heft', t, .07, { sy: .985 }, 'out'); tw('heft', t + .07, .3, { sy: 1 }, 'sanft');
+  akzent(t, .035); }
+kopfAus(1, SE(5) + .25);
+
+/* ================= 2 · Ohne Heft keine Prüfung ================= */
+const T2 = SE(5) + .3;
+stiftRuhe(T2, .6);
+tw('heft', T2, .8, { x: 360, y: 400, s: .8 }, 'inout'); cue(T2, 'whoosh');
+const TX = 1450, TY = 640;
+ein('tuer', T2 + .2, { x: TX, y: TY }, { x: 160, y: 0 });
+akteur('tblatt', { sx: 1 }, true);
+akteur('licht', { o: 1 }, true);
+bump('tuer', W('wichtig', 6), 1.04);
+kopf(2, [W('Ohne', 7) - .1, W('Berichtsheft', 7) - .1, W('nicht', 7) - .1, W('Abschlussprüfung', 7) - .05], [3]);
+// Ohne Berichtsheft: ein leerer Umriss läuft zur Tür und prallt ab
+{ const t0 = W('Ohne', 7), th = W('nicht', 7) + .05;
+  akteur('geist2', { x: 1000, y: 660, s: 0, r: -3 });
+  tw('geist2', t0, .45, { s: 1 }, 'back'); cue(t0, 'pop');
+  tw('geist2', W('kommst', 7) - .1, th - W('kommst', 7) + .1, { x: TX - 230, r: 3 }, 'in');
+  tw('geist2', th, .5, { x: TX - 400, r: -6 }, 'out'); tw('geist2', th + .45, .3, { o: 0, s: .8 }, 'in');
+  cue(th, 'plopp'); wackeln('tuer', th, 4, 2); akzent(th, .03);
+  pop('nein2', th + .05, { x: TX + 90, y: TY + 20 }); wackeln('nein2', th + .45, 3, 8); }
+bump('tuer', W('Abschlussprüfung', 7) + .1, 1.04);
+// Bei der Anmeldung: Anmeldeblatt kommt von Sabine und legt sich auf das Heft
+aus('nein2', W('Bei', 8) - .1, .3);
+akteur('anm2', { x: 250, y: 400, s: 0, r: -3 });
+tw('anm2', W('Anmeldung', 8) - .3, .4, { s: 1 }, 'back'); cue(W('Anmeldung', 8) - .3, 'pop');
+flug('anm2', W('Anmeldung', 8) + .15, .55, 735, 520, 60, { r: 3 }); cue(W('Anmeldung', 8) + .15, 'whoosh');
+// … zur Prüfung: das Heft wird zur Eintrittskarte
+const HC = [360 + .8 * 270, 400 + .8 * 305];           // Mitte des Umschlags
+{ const t = W('Prüfung', 8) - .15;
+  tw('anm2', t - .05, .3, { x: HC[0], y: HC[1], s: .3, o: 0 }, 'in');
+  tw('heft', t, .25, { sx: 0, x: HC[0] }, 'in'); cue(t, 'muenze');
+  akteur('ticket2', { x: HC[0], y: HC[1], sx: 0, r: -2 });
+  tw('ticket2', t + .25, .35, { sx: 1 }, 'out');
+  bump('ticket2', t + .65, 1.08); akzent(t + .3, .035); }
+// … bekommt die Kammer es zu sehen: Kammer, Karte fliegt hin, Lupe, Haken
+const KX = 1000, KY = 450;
+ein('kammer2', W('bekommt', 8) - .2, { x: KX, y: KY }, { y: -80 }, 'whoosh');
+flug('ticket2', W('Kammer', 8) - .05, .65, KX, KY + 225, 90, { r: 0 }); cue(W('Kammer', 8) - .05, 'whoosh');
+{ const t = W('sehen', 8) - .25;
+  akteur('lupe', { x: KX - 260, y: KY + 380, o: 0, r: 0 });
+  tw('lupe', t - .2, .2, { o: 1 });
+  tw('lupe', t - .2, .45, { x: KX - 70, y: KY + 210 }, 'inout'); tw('lupe', t + .25, .4, { x: KX + 50, y: KY + 220 }, 'inout');
+  cue(t, 'scan');
+  pop('ok2', t + .55, { x: KX + 120, y: KY + 160 }, 'erfolg');
+  tw('lupe', t + .75, .45, { x: KX - 60, y: KY + 560, o: 0 }, 'in'); }
+// die Karte öffnet die Tür
+{ const t = SE(8) + .05;
+  aus('ok2', t, .25);
+  flug('ticket2', t, .55, TX - 10, TY + 30, 80, { s: .55 }); cue(t, 'whoosh');
+  tw('ticket2', t + .55, .2, { s: .2, o: 0 }, 'in');
+  tw('tblatt', t + .55, .5, { sx: .3 }, 'out'); cue(t + .6, 'erfolg');
+  HOOKS.push(tt => el('licht').classList.toggle('gruen', tt >= t + .55));
+  akzent(t + .6, .03); }
+kopfAus(2, SE(8) + .5);
+
+/* ================= 3 · Papier oder digital · jede Woche ================= */
+const T3 = SE(8) + 1.0;
+aus(['tuer', 'kammer2'], T3, .35);
+set('heft', T3 + .3, { x: 690, y: 1150, s: 1, sx: 1 });
+tw('heft', T3 + .35, .55, { y: HY }, 'weich'); cue(T3 + .35, 'whoosh');
+const T3O = T3 + .85;
+tw('heft', T3O, .8, { x: 960 }, 'sinus'); umblaettern(0, T3O, .8);
+kopf(3, [W('Papier', 10) - .1, W('oder', 10), W('digital', 10) - .05, W('jede', 11) - .2, W('jede', 11) - .05, W('Woche', 11)], [0, 2, 5]);
+// Muss ich das mit der Hand schreiben? – der Stift wartet
+huepfen('stift', W('Hand', 9), 14);
+// Papier: der Stift schreibt drei Zeilen auf die linke Seite
+akteur('kritzel3', { x: 270, y: 210 });
+akteur('ok3a', { x: 270, y: 390, s: 0 });
+{ const t0 = W('Papier', 10) - .35, d = 1.05;
+  const z = [[0, 30], [1, 98], [2, 166]];
+  z.forEach(([i]) => {});
+  zeichne('kritzel3', t0, d);
+  const [x0, y0] = welt('l', 50, 110 + 30 * 0, t0);
+  stiftHin(t0 - .35, x0, y0, .35);
+  zeileSchreiben(t0, t0 + d * .45, x0, x0 + 400, y0, 7);
+  zeileSchreiben(t0 + d * .45, t0 + d * .8, x0, x0 + 360, y0 + 68, 7);
+  zeileSchreiben(t0 + d * .8, t0 + d, x0, x0 + 190, y0 + 136, 7);
+  tw('ok3a', t0 + d + .05, .45, { s: 1 }, 'back'); cue(t0 + d + .05, 'ding');
+  stiftRuhe(t0 + d + .15, .5); }
+// digital: Tablet erscheint, Zeilen tippen sich
+pop('tablet3', W('digital', 10) - .2, { x: 250, y: 175 });
+['tz1', 'tz2', 'tz3', 'tz4'].forEach((id, i) => { akteur(id, { sx: 0 }, true); tw(id, W('digital', 10) + .15 + i * .18, .25, { sx: 1 }, 'out'); cue(W('digital', 10) + .15 + i * .18, 'tipp'); });
+pop('ok3b', W('digital', 10) + .85, { x: 485, y: 175 }, 'ding');
+// jede Woche: Woche Mo–Fr, Klammer, Zettel „1 × pro Woche“
+const TAGX = i => 70 + i * 100;
+for (let i = 0; i < 5; i++) {
+  pop('tag3_' + i, W('Bei', 11) + i * .08, { x: TAGX(i), y: 385 }, i ? null : 'pop');
+  akteur('hk3_' + i, { x: TAGX(i) + 30, y: 360, s: 0 });
+}
+document.querySelectorAll('[id^=hk3_]').forEach(h => { h.innerHTML = '<svg viewBox="0 0 20 20"><path d="M5 10.5l3 3 7-7" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>'; });
+akteur('klammer3', { x: 270, y: 442 });
+zeichne('klammer3', W('jede', 11) - .1, .45, 'inout');
+kleben('woche3', W('Woche', 11) + .1, { x: 270, y: 515, r: -2 });
+akzent(W('Woche', 11) + .1, .03);
+// in manchen Betrieben jeden Tag: an jedem Tag ein kleiner Haken
+for (let i = 0; i < 5; i++) { tw('hk3_' + i, W('jeden', 11) + i * .09, .35, { s: 1 }, 'back'); cue(W('jeden', 11) + i * .09, 'klick'); }
+// Was gilt, steht in deinem Ausbildungsvertrag: Vertrag rutscht auf den Tisch, die Lupe liest
+ein('vertrag3', W('Was', 12) - .1, { x: 250, y: 700, r: -2 }, { x: -200, y: 0, r: -8 }, 'whoosh');
+{ const t = W('steht', 12) - .1;
+  akteur('lupe', { x: 120, y: 900, o: 0 });
+  set('lupe', t, { x: 120, y: 900, o: 0, s: 1 });
+  tw('lupe', t, .2, { o: 1 }); tw('lupe', t, .5, { x: 230, y: 690 }, 'inout'); tw('lupe', t + .5, .7, { x: 290, y: 705 }, 'sinus');
+  cue(t, 'scan');
+  bump('vertrag3', W('Ausbildungsvertrag', 12) + .1, 1.06); akzent(W('Ausbildungsvertrag', 12) + .1, .03); }
+kopfAus(3, SE(12) + .2);
+
+/* ================= 4 · Was ins Heft gehört ================= */
+const T4 = SE(12) + .3;
+tw('lupe', T4, .4, { x: -200, y: 760, o: 0 }, 'in');
+tw('vertrag3', T4, .45, { x: -260, o: 0 }, 'in');
+umblaettern(1, T4 + .15);
+kopf(4, [W('Betrieb', 14) - .1, W('Berufsschule', 15) - .3, W('Berufsschule', 15) - .15, W('Unterweisungen', 16) - .3, W('Unterweisungen', 16) - .1], [0, 2, 4]);
+// Und was schreibe ich da rein? – der Stift kommt über das leere Heft
+{ const t = W('was', 13); stiftHin(t, 960, 620, .5); wackeln('stift', t + .55, 4, 6); }
+// Betrieb: gelber Zettel, der Stift schreibt die Stichworte
+kleben('z4a', W('Betrieb', 14), { x: 270, y: 175, r: -1.5 });
+{ const t = W('Steckdosen', 14) - .1, t1 = WE('montiert', 14), [x, y] = welt('l', 52, 196, t);
+  handschrift('h4a', t, t1); stiftHin(t - .4, x, y, .35); zeileSchreiben(t, t1, x, x + 255, y, 5); }
+{ const t = W('Leitungen', 14) - .1, t1 = WE('verlegt', 14), [x, y] = welt('l', 52, 240, t);
+  handschrift('h4b', t, t1); tw('stift', t - .2, .2, { x: x + SPX, y: y + SPY }, 'inout'); zeileSchreiben(t, t1, x, x + 225, y, 5); }
+// Berufsschule: blauer Zettel, zwei Zeilen
+stiftRuhe(WE('verlegt', 14) + .1, .45);
+kleben('z4b', W('Themen', 15), { x: 270, y: 165, r: 1.5 });
+{ const t = W('Berufsschule', 15) - .1, [x, y] = welt('r', 52, 192, t);
+  zeichne('kr4a', t, .55); zeichne('kr4b', t + .6, .4);
+  stiftHin(t - .35, x, y, .35); zeileSchreiben(t, t + .55, x, x + 300, y, 6); zeileSchreiben(t + .6, t + 1, x, x + 220, y + 40, 6); }
+// Unterweisungen: grüner Zettel, „Sicherheit“
+kleben('z4c', W('Unterweisungen', 16) + .1, { x: 270, y: 440, r: -1 });
+{ const t = W('Sicherheit', 16) - .1, t1 = WE('Sicherheit', 16) + .1, [x, y] = welt('r', 52, 474, t);
+  handschrift('h4c', t, t1); tw('stift', t - .35, .35, { x: x + SPX, y: y + SPY }, 'inout'); zeileSchreiben(t, t1, x, x + 140, y, 5); }
+stiftRuhe(WE('Sicherheit', 16) + .2, .45);
+// Stichworte reichen: lange Zeilen schrumpfen zu Stichpunkten
+akteur('absatz4', { x: 270, y: 460 });
+{ const t0 = W('Stichworte', 17) - .35, tR = W('reichen', 17) - .05;
+  ABSATZ.forEach((z, i) => {
+    akteur('pk4_' + i, { s: 0 }, true);
+    tw('pk4_' + i, tR + i * .08, .35, { s: 1 }, 'back');
+    let x = 0;
+    z.forEach(([w, k], j) => {
+      const id = `wb4_${i}_${j}`;
+      akteur(id, { sx: 0 }, true); el(id).style.transformOrigin = '0 50%';
+      tw(id, t0 + i * .18 + j * .06, .2, { sx: 1 }, 'out');
+      if (!k) { tw(id, tR + i * .08 + j * .03, .25, { o: 0, y: -16 }, 'in'); }
+    });
+    cue(t0 + i * .18, 'tipp');
+  });
+  cue(tR, 'pop'); akzent(tR + .1, .03); }
+kopfAus(4, SE(17) + .2);
+
+/* ================= 5 · Abends zu Hause? Nein: Arbeitszeit ================= */
+const T5 = SE(17) + .3;
+umblaettern(2, T5);
+kopf(5, [W('während', 19) - .1, W('der', 19) - .05, W('Arbeitszeit', 19) - .05, W('kostenlos', 20) - .25, W('kostenlos', 20) - .05], [2, 4]);
+// abends zu Hause: Licht geht aus, Mond und Sofa
+akteur('nacht', { o: 0 }, true);
+tw('nacht', W('abends', 18) - .25, .6, { o: 1 }, 'inout');
+akteur('mond5', { x: 270, y: 300, s: 0, r: -3 });
+tw('mond5', W('abends', 18) - .05, .5, { s: 1 }, 'back'); cue(W('abends', 18) - .05, 'pop');
+pop('sofa5', W('Hause', 18) - .1, { x: 270, y: 250 }, 'plopp');
+schweben('mond5', 3);
+// Nein: wackeln, Licht geht wieder an
+{ const t = W('Nein', 19) - .05;
+  wackeln('heft', t, 4, 1.2); tw('nacht', t + .1, .45, { o: 0 }, 'inout'); cue(t, 'plopp');
+  aus(['mond5', 'sofa5'], t + .3, .35); akzent(t, .025); }
+// während der Arbeitszeit: Uhr, die Zeiger laufen durch den Tag, Bogen zeichnet sich
+pop('uhr5', W('während', 19) - .2, { x: 270, y: 300 });
+zeichne('uhr5', W('Arbeitszeit', 19) - .1, 1.1, 'inout');
+{ const t1 = W('Arbeitszeit', 19) - .1;
+  HOOKS.push(t => { const p = E.inout(clamp((t - t1) / 1.1)); const h = 8 + 8 * p;   // 8 Uhr → 16 Uhr
+    el('uhr5').querySelector('.std').style.transform = `rotate(${(h * 30).toFixed(1)}deg)`; el('uhr5').querySelector('.min').style.transform = `rotate(${(h * 360).toFixed(1)}deg)`; });
+  akzent(t1 + .3, .035); cue(t1, 'whoosh'); }
+// … schreiben: der Stift schreibt auf die rechte Seite
+akteur('kritzel5', { x: 270, y: 280 });
+{ const t0 = W('schreiben', 19) - .2, d = .9, [x, y] = welt('r', 60, 210, t0);
+  zeichne('kritzel5', t0, d); stiftHin(t0 - .35, x, y, .35);
+  zeileSchreiben(t0, t0 + d * .45, x, x + 340, y, 7); zeileSchreiben(t0 + d * .45, t0 + d * .8, x, x + 300, y + 64, 7); zeileSchreiben(t0 + d * .8, t0 + d, x, x + 130, y + 128, 7);
+  stiftRuhe(t0 + d + .1, .45); }
+// Heft oder Programm bekommst du kostenlos vom Betrieb
+pop('betrieb5', W('Und', 20) - .05, { x: 245, y: 640 });
+{ const t = W('Heft', 20) - .15;
+  akteur('miniheft5', { x: 245, y: 640, s: 0 });
+  tw('miniheft5', t, .25, { s: .7 }, 'back');
+  flug('miniheft5', t + .2, .9, 1610, 620, 230, { s: 1 }); cue(t + .2, 'whoosh'); }
+{ const t = W('Programm', 20) - .15;
+  akteur('laptop5', { x: 245, y: 640, s: 0 });
+  tw('laptop5', t, .25, { s: .7 }, 'back');
+  flug('laptop5', t + .2, .9, 1760, 640, 260, { s: 1 }); }
+pop('gratis5', W('kostenlos', 20) - .05, { x: 1685, y: 760 }, 'erfolg');
+bump('betrieb5', W('Betrieb', 20), 1.08);
+huepfen('miniheft5', W('Betrieb', 20) + .1, 12); huepfen('laptop5', W('Betrieb', 20) + .18, 12);
+kopfAus(5, SE(20) + .2);
+
+/* ================= 6 · Einmal im Monat: ansehen und unterschreiben ================= */
+const T6 = SE(20) + .3;
+aus(['betrieb5', 'miniheft5', 'laptop5', 'gratis5'], T6, .35);
+// vier Wochen flattern um
+[3, 4, 5, 6].forEach((j, i) => umblaettern(j, T6 + .1 + i * .2, .34, i ? null : 'whoosh'));
+[1, 2].forEach(i => cue(T6 + .1 + i * .3, 'whoosh'));
+kopf(6, [W('Einmal', 21) - .1, W('Monat', 21) - .05, W('schaue', 21) - .05, W('alles', 21), W('unterschreibe', 21) - .1], [4]);
+// … schaue ich mir alles an: die Lupe fährt über beide Seiten
+{ const t = W('schaue', 21) - .15;
+  set('lupe', t - .25, { x: 380, y: 920, o: 0, s: 1, r: 0 });
+  tw('lupe', t - .25, .2, { o: 1 });
+  tw('lupe', t - .25, .4, { x: 560, y: 520 }, 'inout'); tw('lupe', t + .15, .45, { x: 820, y: 600 }, 'sinus'); tw('lupe', t + .6, .45, { x: 1120, y: 520 }, 'sinus');
+  tw('lupe', t + 1.05, .4, { x: 1330, y: 640 }, 'sinus'); cue(t, 'scan');
+  tw('lupe', W('unterschreibe', 21) - .2, .35, { x: 1520, y: 980, o: 0 }, 'in'); }
+// … und unterschreibe: der Stift zieht die Unterschrift
+akteur('unter6', { x: 300, y: 530 });
+akteur('ok6', { x: 476, y: 518, s: 0 });
+{ const t0 = W('unterschreibe', 21) - .05, d = .85;
+  zeichne('unter6', t0, d, 'inout');
+  const [x0, y0] = welt('r', 300 - 135 + 18 * .9, 530 - 45 + 62 * .9, t0);
+  const P = [[18, 62], [48, 22], [44, 66], [68, 32], [72, 62], [92, 40], [102, 60], [128, 42], [146, 56], [176, 42], [236, 46]];
+  stiftHin(t0 - .35, x0, y0, .32);
+  P.forEach(([px, py], i) => { if (!i) return; const [x, y] = welt('r', 165 + px * .9, 485 + py * .9, t0); tw('stift', t0 + d * (i - 1) / (P.length - 1), d / (P.length - 1), { x: x + SPX, y: y + SPY }, 'sinus'); });
+  cue(t0, 'kritzeln');
+  tw('ok6', t0 + d + .05, .45, { s: 1 }, 'back'); cue(t0 + d + .05, 'erfolg');
+  stiftRuhe(t0 + d + .2, .45); akzent(t0 + d, .03); }
+// Dann sprechen wir kurz darüber: Sprechblasen; was lief gut, was fehlt noch
+pop('sb6a', W('sprechen', 22) - .1, { x: 250, y: 420 });
+pop('sb6b', W('sprechen', 22) + .15, { x: 1670, y: 420 }, null);
+schweben(['sb6a', 'sb6b'], 3);
+kleben('gut6', W('gut', 22), { x: 435, y: 470, r: -2 }, 'ding');
+kleben('fehlt6', W('fehlt', 22), { x: 435, y: 165, r: 2 });
+// Und wenn ich ein paar Wochen vergesse? – leere Seiten flattern
+aus(['sb6a', 'sb6b'], W('Und', 23) - .1, .3);
+[7, 8, 9].forEach((j, i) => umblaettern(j, W('Wochen', 23) - .2 + i * .22, .36, i === 1 ? null : 'whoosh'));
+KRATZ_T.push(W('vergesse', 23));
+// Dann wird es schwer: Lücken zeichnen sich ab, das Heft sackt
+[['lu6a', 270, 200], ['lu6b', 270, 430], ['lu6c', 270, 210], ['lu6d', 270, 440]].forEach(([id, x, y], i) => {
+  akteur(id, { x, y, o: 0, s: .9 }); tw(id, W('Dann', 24) - .1 + i * .1, .4, { o: 1, s: 1 }, 'out'); });
+{ const t = W('schwer', 24);
+  tw('heft', t, .12, { y: HY + 10 }, 'out'); tw('heft', t + .12, .5, { y: HY }, 'sanft'); cue(t, 'plopp'); akzent(t, .03); }
+// Nach ein paar Monaten weißt du nicht mehr: Erinnerung bei Kwame verblasst
+pop('gp6a', W('Nach', 25) - .15, { x: 1700, y: 360 }, null);
+pop('gp6b', W('Nach', 25) - .05, { x: 1680, y: 400 }, null);
+pop('gedanke6', W('paar', 25), { x: 1670, y: 530 });
+['gi6a', 'gi6b', 'gi6c'].forEach((id, i) => pop(id, W('Monaten', 25) + i * .1, {}, i ? null : 'pop'));
+{ const t1 = W('nicht', 25) - .05;
+  HOOKS.push(t => { const p = E.inout(clamp((t - t1) / 1.1));
+    ['gi6a', 'gi6b', 'gi6c'].forEach(id => { el(id).style.filter = p > 0 ? `blur(${(p * 7).toFixed(2)}px) grayscale(${p.toFixed(2)})` : ''; }); });
+  ['gi6a', 'gi6b', 'gi6c'].forEach((id, i) => tw(id, t1 + i * .08, 1.1, { o: .35, s: .9 }, 'inout'));
+  cue(t1, 'whoosh'); }
+// Und vor der Prüfung fehlen dir dann Seiten: Prüfungstür bleibt zu, die Lücken leuchten rot
+pop('tuer6', W('Prüfung', 26) - .15, { x: 245, y: 640 });
+{ const t = W('Seiten', 26) - .1;
+  HOOKS.push(tt => document.querySelectorAll('.luecke').forEach(l => { l.style.borderColor = tt >= t ? 'var(--error)' : ''; l.style.background = tt >= t ? 'color-mix(in srgb,var(--error-bg) 70%,transparent)' : ''; }));
+  ['lu6a', 'lu6b', 'lu6c', 'lu6d'].forEach((id, i) => bump(id, t + i * .06, 1.04));
+  pop('nein6', W('fehlen', 26), { x: 300, y: 690 }); wackeln('tuer6', W('fehlen', 26) + .1, 4, 3);
+  cue(t, 'plopp'); akzent(t, .035); }
+
+/* ================= 7 · Jede Woche, unterschreiben lassen ================= */
+const T7 = SE(26) + .3;
+aus(['gedanke6', 'gp6a', 'gp6b', 'tuer6', 'nein6'], T7, .35);
+umblaettern(10, T7 + .1);
+kopf(7, [W('jede', 27) - .1, W('Woche', 27) - .05, W('unterschreiben', 27) - .2, W('unterschreiben', 27) - .05, W('lassen', 27)], [1, 3]);
+kleben('z7a', W('Woche', 27), { x: 270, y: 150, r: -1.5 });
+kleben('z7b', W('Betrieb', 27), { x: 270, y: 330, r: 1 });
+kleben('z7c', W('Schule', 27), { x: 270, y: 130, r: 1.5 });
+kleben('z7d', W('Unterweisungen', 27) + .1, { x: 270, y: 300, r: -1 });
+// … dann unterschreiben lassen
+akteur('unter7', { x: 290, y: 480 });
+akteur('ok7', { x: 470, y: 470, s: 0 });
+{ const t0 = W('unterschreiben', 27) - .05, d = .8;
+  zeichne('unter7', t0, d, 'inout');
+  const P = [[18, 62], [48, 22], [44, 66], [68, 32], [72, 62], [92, 40], [102, 60], [128, 42], [146, 56], [176, 42], [236, 46]];
+  const [x0, y0] = welt('r', 155 + 18 * .9, 435 + 62 * .9, t0);
+  stiftHin(t0 - .35, x0, y0, .32);
+  P.forEach(([px, py], i) => { if (!i) return; const [x, y] = welt('r', 155 + px * .9, 435 + py * .9, t0); tw('stift', t0 + d * (i - 1) / (P.length - 1), d / (P.length - 1), { x: x + SPX, y: y + SPY }, 'sinus'); });
+  cue(t0, 'kritzeln');
+  tw('ok7', t0 + d + .05, .45, { s: 1 }, 'back'); cue(t0 + d + .05, 'erfolg');
+  stiftRuhe(t0 + d + .2, .45); }
+// Genau: das Heft klappt zu
+{ const t = W('Genau', 28) + .05;
+  zuklappen(t, 1); tw('heft', t, 1, { x: 690 }, 'sinus');
+  // am Ende: das Heft ist dick geworden
+  const te = W('Ende', 28) - .1;
+  tw('dk1', te, .5, { x: 4, y: 6 }, 'back'); tw('dk2', te + .08, .5, { x: 8, y: 12 }, 'back');
+  set('dk3', te + .1, { o: 1 }); tw('dk3', te + .16, .5, { x: 12, y: 18 }, 'back'); set('dk4', te + .2, { o: 1 }); tw('dk4', te + .24, .5, { x: 16, y: 24 }, 'back');
+  cue(te, 'pop'); bump('heft', te + .5, 1.03); }
+// … wie viel du schon gelernt hast: Tür erscheint, das Heft fliegt hinein, Licht wird grün
+{ const t = W('siehst', 28) - .1, TX7 = 1530;
+  akteur('tblatt', { sx: 1 }, true);
+  set('tblatt', t - .1, { sx: 1 }); set('tuer', t - .1, { x: TX7 + 160, y: TY, o: 0, s: 1, sx: 1, sy: 1 });
+  tw('tuer', t, .5, { o: 1 }, 'out'); tw('tuer', t, .55, { x: TX7 }, 'weich'); cue(t, 'whoosh');
+  HOOKS.push(tt => { if (tt >= t - .1 && tt < W('gelernt', 28) + .2) el('licht').classList.remove('gruen'); });
+  const tg = W('gelernt', 28) - .1;
+  tw('tblatt', tg, .5, { sx: .25 }, 'out'); cue(tg, 'klick');
+  HOOKS.push(tt => { if (tt >= W('gelernt', 28) + .2) el('licht').classList.add('gruen'); });
+  // Heft fliegt im Bogen zur Tür und wird klein
+  tw('heft', tg + .2, .9, { x: TX7 - 80, y: TY - 160, s: .3 }, 'inout', { bogen: 120 }); cue(tg + .2, 'whoosh');
+  tw('heft', tg + 1.0, .25, { o: 0, s: .15 }, 'in');
+  cue(tg + 1.1, 'erfolg'); akzent(tg + 1.1, .04); bump('tuer', tg + 1.15, 1.05); }
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+// Sprechblasen-Punkte „reden“
+HOOKS.push(t => document.querySelectorAll('.sprechb i').forEach((p, i) => { p.style.transform = `translateY(${(-4 * Math.max(0, Math.sin(t * 7 - (i % 3) * .9))).toFixed(1)}px)`; }));
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

@@ -22,9 +22,16 @@ gestrichelte Felder auf einem Formular; am Ende füllen sich beide.
 | 7 | Beide Karten nebeneinander wie auf einer Waage: links 11 Ziffern pulsieren, Symbol Steuer (Münze mit Prozentzeichen); rechts 12 Zeichen, der Buchstabe wackelt kurz, Symbole Rente (Sparschwein) und Krankenkasse (Kreuz-Schild) ploppen auf „Rente“ und „Krankenkasse“; auf „Zwei Nummern“ schlagen beide mit Wackler auf | Steuer-ID = Steuer · SV-Nummer = Sozialversicherung |
 | 8 | Azubis Plus Helper App (Bereich „Dokumente“): beide Briefe fliegen als Fotos hinein, Schloss schnappt zu, „✓ Gespeichert“; Formular im Personalbüro: beide Felder grün; auf „Fremde“ E-Mail-Umschlag und Telefon mit Haken-Angel fliegen auf Kwame zu und prallen an einem Schild ab (rotes ✕), Kwame nickt | Nur an Stellen, die sie brauchen |
 
-Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; jede Animation hängt an einem Wort aus
-`sprache.json`. Szene 1 steht ohne Titel in der Bildmitte; Kamera-Akzente auf „elf Ziffern“, „ganzes Leben“, „zwölf Zeichen“.
-Abspann: „Zwei Nummern – gut aufheben.“ und die Kernbotschaft.
+Umsetzung (Leitidee „zwei Briefe, zwei Schlüssel“, Stand 03.10.2026): Die Bühne ist ein Papierstapel in der Bildmitte,
+der Text im Bild steht als Kopfzeile darüber (Wörter steigen aus einer Maske) mit einem Farbstreifen je Kapitel – violett für die
+Steuer-ID, blau für die Sozialversicherungsnummer. Die Ziffern rasten wie ein Zahlenschloss ein (11 Stellen / 12 Zeichen), jeder Brief
+öffnet sich wie ein Umschlag (Klappe auf, Blatt gleitet heraus). Szene 1 steht ohne Titel; „Steuer-ID? Sozialversicherungsnummer?“
+erscheint als Beschriftung der beiden Formularfelder. Übergänge: Zoom aus dem Formularfeld, das zur Karte wird (1 → 2 und 4 → 5),
+Kamera kippt nach unten (2 → 3) und nach oben (7 → 8), Zoom durch den Briefkasten in den Umschlag (3 → 4), Schwenk (5 → 6),
+Wischblende in Violett und Blau (6 → 7). Szene 7: Statt der Waage werden die beiden Karten zu zwei Schlüsseln an einem Schlüsselbund;
+jeder schließt seine Tür auf („Steuer“ → Münze mit %, „Sozialversicherung“ → Sparschwein und Kreuz-Schild). Überraschung in Szene 8:
+Als E-Mail und Anruf kommen, springt der Schlüsselbund in den Tresor (Azubis Plus Helper App), Mail und Anruf gehen leer aus (rotes ✕).
+Abspann: „Zwei Nummern – gut aufheben.“ und „Gib sie deinem Betrieb – und sonst nur Stellen, die sie wirklich brauchen.“
 
 ## Abweichungen vom Briefing
 

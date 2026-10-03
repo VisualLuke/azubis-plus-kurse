@@ -10,18 +10,23 @@
 
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
-| 1 | Trübe Bühne in der Bildmitte: Priya (Porträt) hüpft herein, neben ihr ein Pass, der aufklappt (Visum-Seite); auf „zwei Monate“ ploppt eine Sanduhr, der Sand beginnt zu rieseln; auf „Aufenthaltserlaubnis“ schwebt eine leere, gestrichelte Karte über ihr; Priya spricht, winkt lässig ab (Porträt wippt), eine Sprechwolke mit Sonnenbrille-Symbol („kein Stress“) | Visum gilt nur noch 2 Monate |
-| 2 | Ausländerbehörde: Gebäude mit Glastür; Priya hüpft zur Tür, die Tür bleibt zu und wackelt, Schild „Nur mit Termin“ klappt herunter, rotes ✕ in der Tagesleiste; Kalender: Blätter fliegen ab, sechs Wochen, das letzte Blatt pocht; die Sanduhr läuft sichtbar schneller | Ohne Termin: kein Einlass |
-| 3 | Uhr springt vor („sechs Wochen später“), Schalter mit Ablage: auf „Foto“ leerer Fotorahmen mit rotem ✕, auf „Meldebescheinigung“ leeres Blatt mit ✕; Schwenk zu Priyas Wohnung: ein ungeöffneter Brief „Ausländerbehörde“ liegt ganz unten in einem Stapel Werbung und rutscht hervor, Lupe zeigt „Liste“; Priya spricht, ihr Ring färbt sich rot; ein Stempel „Neuer Termin“ schlägt mit Wackler auf, Kalenderblätter fliegen wieder, die Sanduhr ist fast leer | Unterlagen fehlen · Brief nicht geöffnet |
-| 4 | „Stopp!“: Standbild (Blitz, Tönung, Band-Zittern, Rauschen), roter Stopp-Knopf. „Zurückspulen!“: Knopf wird zum Rückspul-Zeichen, große Uhr dreht rückwärts, Streifen und Bänder aus Token-Farben, Kamera-Zoom; die Welt läuft schnell rückwärts (Szene 3 → 2 → 1): Stempel hebt ab, Brief rutscht zurück in den Stapel, Kalenderblätter fliegen zurück, die Sanduhr füllt sich oben wieder; Wetter-Plakette dreht sich von Wolke zu Sonne | ⏪ Nochmal – aber richtig |
-| 5 | Dieselbe Bühne, jetzt hell: Laptop klappt auf, Website mit Kalender, viele graue Tage, ein freier Tag leuchtet grün; Klick auf „Buchen“ (Welle), Bestätigungs-E-Mail fliegt in die Azubis Plus Helper App (Bereich „Dokumente“), Schritt-Marke 1 wird grün; die Sanduhr läuft ruhig weiter | 1. Termin früh buchen |
-| 6 | Briefkasten: der Brief „Ausländerbehörde“ wird sofort geöffnet, eine Liste faltet sich auf; Gegenstände springen nacheinander auf ihre Wörter in eine Mappe: Pass, Foto (Blitz), Meldebescheinigung, Ausbildungsvertrag, Karte der Krankenkasse; jede Zeile bekommt einen Haken; auf „Liste deiner Behörde“ legt sich ein Stempel-Siegel „gilt“ auf die Liste | 2. Liste deiner Behörde abarbeiten |
-| 7 | Schalter, hell: Priya legt die Mappe ab; Fingerabdruck-Scanner, zwei Finger-Abdrücke leuchten nacheinander auf (Scan-Linie); auf „Gebühr“ fällt eine Münze in eine Schale; auf „bestellt“ fliegt eine Karte (eAT, ohne Daten) in einem Bogen aus dem Bild zu einer Druckerei, Uhr läuft | 3. Fingerabdrücke · Gebühr · Karte wird bestellt |
-| 8 | Kalenderblätter (ein paar Wochen), Briefkasten klappert, Brief „PIN“ kommt; Priya geht mit Pass und PIN-Brief zum Schalter, die Karte gleitet heraus und dreht sich, die gestrichelte Karte aus Szene 1 füllt sich, grüner Haken, Sanduhr verschwindet; Priya spricht, strahlt; Schluss: drei Kacheln (Kalender, Liste, Brief) mit Haken | Früh buchen · Liste · Briefe öffnen |
+| 1 | Trübe Bühne in der Bildmitte: Priya (Porträt) hüpft herein; auf „Visum“ macht die Kamera Platz für den Text, ein Pass ploppt und klappt zur Visum-Seite auf; auf „zwei Monate“ ploppt eine Sanduhr, der Sand beginnt zu rieseln; auf „Aufenthaltserlaubnis“ schwebt eine leere, gestrichelte Karte über ihr; „Kein Stress“: Priya wippt lässig, Sprechwolke nur mit Sonnenbrillen-Symbol | Visum gilt nur noch · 2 Monate |
+| 2 | Ausländerbehörde: Gebäude mit Glastür; Priya hüpft zur Tür, drückt – die Tür bleibt zu und wackelt; Schild „Nur mit Termin“ klappt herunter, rotes ✕; Kalender: Wochen-Blätter fliegen ab, die 6 pocht; die Sanduhr ist in die Wartenummer-Anzeige oben links gewandert | Ohne Termin: · kein Einlass |
+| 3 | Wartesaal mit Schalter: die Aufruf-Tafel rast auf „Sechs Wochen später“ durch die Nummern (Chip „6 Wochen später“); Priyas Tasche auf der Theke, der Pass kommt heraus; auf „Kein Foto, keine Meldebescheinigung“ sucht Priya hektisch, aus der Tasche fliegen die falschen Dinge (Schlüssel, Werbezettel, Stift, Becher), leerer Fotorahmen und leeres Blatt mit rotem ✕. Schwenk nach Hause: Werbung fällt auf einen Stapel, darunter der Brief „Ausländerbehörde“, die Lupe zeigt „Liste“, der Brief rutscht hervor, Haus, rotes ✕ (ungeöffnet). Wartesaal: Priya sitzt auf einem Stuhl, ihr Ring färbt sich rot, „?“; Stempel „Neuer Termin“ schlägt auf, die Aufruf-Tafel springt endlos weiter; „die Zeit wird knapp“: die Sanduhr kommt groß ins Bild, fast leer, rote Wellen | Unterlagen fehlen · Brief nicht geöffnet |
+| 4 | „Stopp!“: Standbild (Blitz, Tönung, Band-Zittern, Rauschen), roter Stopp-Knopf. „Zurückspulen!“: Knopf wird zum Rückspul-Zeichen, daneben eine große Nummernanzeige, die rückwärts zählt; die Welt läuft schnell rückwärts (Wartesaal → Wohnung → Schalter → Behörde → Anfang): Stempel hebt ab, Brief rutscht zurück, Dinge fliegen zurück in die Tasche, Kalenderblätter blättern zurück, die Sanduhr füllt sich wieder; die Wartenummer-Anzeige dreht sich von Orange zu Grün | ⏪ Nochmal – aber richtig |
+| 5 | Dieselbe Bühne, jetzt hell: der Pass klappt zu, Laptop mit Website der Behörde; das Raster läuft durch viele belegte (graue) Tage, ein freier Tag leuchtet grün; Klick auf „Buchen“ (Welle), „✓ Gebucht“; die Bestätigung fliegt in die Azubis Plus Helper App (Bereich „Dokumente“); Marke 1 wird grün; die Sanduhr läuft ruhig weiter | 1. Termin früh buchen |
+| 6 | Briefkasten: der Brief der Behörde fliegt heraus und wird sofort geöffnet, die Liste faltet sich auf (Pass, Biometrisches Foto, Meldebescheinigung, Ausbildungsvertrag, Formular vom Betrieb, Krankenversicherung); daneben eine offene Mappe als Puzzle mit sechs Plätzen: jedes Dokument schwebt auf seinem Wort heran und rastet in seinen Platz ein (Foto mit Blitz), Platz und Zeile werden grün; auf „gilt“ schlägt ein grüner Stempel „✓ gilt“ auf die Liste | 2. Liste deiner Behörde abarbeiten |
+| 7 | Schalter, hell; die Wartenummer-Anzeige pocht (Aufruf); Priya legt die Mappe ab; Fingerabdruck-Scanner, zwei Abdrücke leuchten nacheinander auf (Scan-Linie); auf „Gebühr“ fällt eine Münze in eine Schale; auf „bestellt“ fliegt die Karte (eAT, ohne Daten) in einem Bogen in den Kartendrucker, Fortschrittsbalken | 3. Fingerabdrücke · Gebühr · Karte wird bestellt |
+| 8 | Wochen-Blätter fliegen (ein paar Wochen), Briefkasten klappert, Brief „PIN“ kommt; Pass ploppt dazu, beide gehen in den Kartendrucker, die Karte kommt oben heraus, dreht sich und füllt die gestrichelte Karte, grüner Haken, Sanduhr verschwindet; Priya strahlt; Schluss: drei Kacheln (Kalender, Liste, Brief) mit Haken | 4. PIN-Brief + Pass: Karte abholen; dann Früh buchen · Liste · Briefe öffnen |
 
-Tagesleiste oben links wie in Kurs 20 (ohne Text): Wolke → Sonne, kleine Uhr, Abspielkopf; im schlechten Tag je Fehler
-(Szene 2, Szene 3) eine rote ✕-Marke, beim Zurückspulen läuft der Kopf zurück, im richtigen Tag wird je Schritt eine Marke grün.
+Wartenummer-Anzeige oben links (ohne Text, eigenes Layout statt der Tagesleiste aus Kurs 20): Ticket-Symbol und Nummer, daneben die Sanduhr
+und Marken. Im schlechten Tag springt die Nummer immer weiter (orange), je Fehler (Tür, Unterlagen, Brief) eine rote ✕-Marke; beim
+Zurückspulen zählt sie rückwärts; im richtigen Tag bleibt Priyas Nummer stehen (grün), je Schritt wird eine Marke grün.
 Abspann: „Früh buchen. Liste abarbeiten. Briefe öffnen.“ und die Kernbotschaft.
+
+Kursspezifische Teile in `teile/`: `behoerde`, `glastuer`, `schalter`, `scanner`, `schale` (neu); Kopien: `laptop`, `lupe` (Kurs 5),
+`versichertenkarte` (Kurs 1), `stempel-rot`, `stempel-gruen` (Kurs 20), `drucker` (Kurs 26), `umschlag-*`, `stuhl`, `flyer` (Kurs 21),
+`tasche-hinten`, `tasche-vorne` (Kurs 22), `haus` (Kurs 7).
 
 ## Abweichungen vom Briefing
 
@@ -33,6 +38,9 @@ Abspann: „Früh buchen. Liste abarbeiten. Briefe öffnen.“ und die Kernbotsc
   der schlechte Tag endet mit „die Zeit wird knapp“.
 - PIN gesprochen „Pinn“ (übliche deutsche Aussprache), im Bild und Untertitel „PIN“.
 - Die Behörde erscheint nicht als Figur; was sie sagt, erzählt der Erzähler.
+- Faktencheck 46–65: In Szene 6 kommt „ein Formular, das dein Betrieb ausfüllt“ dazu (Satz neu vertont); im Bild ein Blatt „Formular“ mehr in der Mappe.
+- Szene 8 bekommt als Schritt 4 den Text im Bild „4. PIN-Brief + Pass: Karte abholen“ (aus dem Sprechertext), danach die Zusammenfassung.
+- Bildaufbau bewusst anders als Kurs 20/21/35: Wartesaal mit Aufruf-Tafel, Wartenummer-Anzeige statt Tagesleiste, Rückwärts-Zähler statt Uhr, Mappe als Puzzle, Kartendrucker.
 
 ## Sprechertext
 

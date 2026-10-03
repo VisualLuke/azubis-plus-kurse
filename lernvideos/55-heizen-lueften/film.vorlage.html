@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Der schlechte Tag: Heizen und Lüften</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+#aussen{position:absolute;inset:0;background:linear-gradient(var(--b600),var(--b700));opacity:0}
+/* ---------- Priyas Zimmer: eine Bühne für den ganzen Film ---------- */
+.buehne.raum{width:1600px;height:820px;border-radius:44px;overflow:hidden;background:none}
+.raum .wand{position:absolute;left:0;top:0;width:1600px;height:650px;background:linear-gradient(var(--b100),var(--b200))}
+.raum.hell .wand{background:linear-gradient(var(--b50),var(--b100))}
+.raum .boden{position:absolute;left:0;top:640px;width:1600px;height:180px;background:linear-gradient(var(--b200),var(--b300))}
+.raum.hell .boden{background:linear-gradient(var(--b100),var(--b200))}
+.raum .leiste{position:absolute;left:0;top:628px;width:1600px;height:14px;background:var(--surface);opacity:.7}
+.raum .dunst{position:absolute;inset:0;background:var(--b700);opacity:0}
+/* Tür links */
+.raum .tuer{position:absolute;left:60px;top:226px;width:156px;height:404px;border-radius:14px 14px 0 0;background:var(--b700);border:10px solid var(--surface);border-bottom:none}
+.raum .tuer .blatt{position:absolute;inset:0;background:linear-gradient(90deg,var(--b300),var(--b400));transform-origin:0 50%}
+.raum .tuer .blatt i{position:absolute;right:16px;top:200px;width:26px;height:12px;border-radius:6px;background:var(--surface)}
+.raum .tuer .blatt b{position:absolute;left:22px;right:22px;top:30px;height:130px;border-radius:10px;border:5px solid var(--b200);opacity:.6}
+/* Fenster (zwei Flügel, Kipp- und Drehstellung) */
+.raum .fenster{position:absolute;left:290px;top:96px;width:260px;height:326px;border-radius:18px;background:var(--surface);padding:12px;box-shadow:0 8px 0 var(--b300)}
+.raum .glas{position:absolute;left:12px;top:12px;right:12px;bottom:12px;border-radius:8px;overflow:hidden;background:linear-gradient(var(--n300),var(--b100))}
+.raum .glas .nacht{position:absolute;inset:0;background:linear-gradient(var(--b700),var(--b600));opacity:0}
+.raum .glas .tag{position:absolute;inset:0;background:linear-gradient(var(--info-bg),var(--surface));opacity:0}
+.raum .glas .gestirn{position:absolute;width:96px;height:96px}
+.raum .glas .schnee{position:absolute;left:0;right:0;bottom:0;height:40px;background:var(--surface);border-radius:50% 50% 0 0/24px 24px 0 0}
+.raum .glas svg.flocken{position:absolute;inset:0;width:100%;height:100%}
+.raum .fluegel{position:absolute;inset:12px;perspective:900px}
+.raum .fl{position:absolute;top:0;bottom:0;width:50%;border:9px solid var(--b200);border-radius:8px;background:color-mix(in srgb,var(--b50) 22%,transparent)}
+.raum .fl.l{left:0;transform-origin:0 50%} .raum .fl.r{right:0;transform-origin:100% 50%}
+.raum .fl i{position:absolute;top:44%;width:8px;height:34px;border-radius:4px;background:var(--b500)}
+.raum .fl.l i{right:6px} .raum .fl.r i{left:6px}
+.raum .fl.r.kippt{transform-origin:50% 100%}
+.raum .spalt{position:absolute;left:142px;top:12px;width:106px;height:0;background:var(--b700);border-radius:0 0 6px 6px}
+.raum .bank{position:absolute;left:276px;top:420px;width:288px;height:18px;border-radius:9px;background:var(--surface)}
+/* Wärmewellen über dem Heizkörper (Normalansicht) */
+.raum svg.waerme{position:absolute;left:300px;top:330px;width:240px;height:150px}
+
+/* Gegenstände */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .flach{opacity:0}
+.portrait .schal{transform-origin:50% 72%}
+.portrait.warm{border-color:var(--warning);box-shadow:0 0 0 8px color-mix(in srgb,var(--warning) 35%,transparent),0 0 60px var(--error)}
+.dial{width:62px;height:62px}
+.gauge{width:84px;height:300px}
+.hygro{width:150px;height:150px}
+.plakette{width:66px;height:66px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.chip{display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;font:800 30px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--b700);box-shadow:0 6px 18px rgba(22,19,37,.16)}
+.chip svg{width:34px;height:34px}
+.chip.gruen{background:var(--success);color:var(--surface);box-shadow:0 6px 16px rgba(31,169,113,.3)}
+.chip.rot{background:var(--error);color:var(--surface)}
+.chip.mond{background:var(--b600);color:var(--surface)}
+.welle{border-radius:999px;border:5px solid var(--success);opacity:0}
+.zettel{width:96px;height:96px;border-radius:14px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.15);display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px}
+.zettel b{width:56px;height:8px;border-radius:4px;background:var(--b200)}
+.schadenbrief{width:200px}
+.schadenbrief .q{position:absolute;right:-10px;top:-14px;width:62px;height:62px;border-radius:999px;background:var(--error);color:var(--surface);font:800 40px/58px Inter;text-align:center;border:4px solid var(--surface)}
+.geruch{width:150px;height:130px}
+.trocken{display:flex;align-items:center;gap:12px;padding:12px 20px 12px 14px;border-radius:20px;background:var(--surface);font:800 26px/30px Inter;color:var(--b700);white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.16)}
+.trocken svg{width:44px;height:44px}
+/* Draufsicht: Schrank von oben, Abstand zur Wand */
+.lupe{width:330px;height:330px;border-radius:999px;background:var(--surface);border:8px solid var(--b500);box-shadow:0 14px 40px rgba(22,19,37,.25);overflow:hidden}
+.lupe .w{position:absolute;left:0;right:0;top:0;height:74px;background:repeating-linear-gradient(135deg,var(--b300) 0 12px,var(--b200) 12px 24px)}
+.lupe .w::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--b600)}
+.lupe .sk{position:absolute;left:66px;width:198px;height:118px;top:82px;border-radius:12px;background:linear-gradient(135deg,var(--b400),var(--b600))}
+.lupe .sk::after{content:"";position:absolute;left:96px;top:10px;bottom:10px;width:6px;border-radius:3px;background:var(--b200)}
+.lupe .mb{position:absolute;left:236px;top:56px;width:90px}
+.lupe .zug{position:absolute;left:32px;top:80px;width:260px;height:40px}
+.lupe .cm{position:absolute;left:40px;top:236px;font:800 28px/34px Inter;color:var(--b700);white-space:nowrap}
+/* Handy und Nachricht an den Vermieter */
+.schirm{border-radius:12px;overflow:hidden;background:var(--b50)}
+.schirm .cam{position:absolute;inset:8px;border-radius:10px;background:linear-gradient(var(--b100),var(--b200))}
+.schirm .cam .fl{position:absolute;left:24px;top:34px;width:40px;height:40px;border-radius:999px;background:var(--b700)}
+.blitz{position:absolute;inset:0;background:var(--surface);opacity:0}
+.nachricht{width:420px;border-radius:28px;background:var(--surface);box-shadow:0 16px 44px rgba(22,19,37,.22);overflow:hidden}
+.nachricht .kopf{height:62px;background:var(--b500);display:flex;align-items:center;gap:12px;padding:0 20px;color:var(--surface);font:800 24px/1 Inter}
+.nachricht .kopf .av{width:42px;height:42px;border-radius:999px;background:var(--b200);position:relative;overflow:hidden;flex:none}
+.nachricht .kopf .av .figur{position:absolute;inset:0;top:8%}
+.nachricht .inhalt{padding:20px 22px 24px;display:flex;flex-direction:column;gap:12px}
+.nachricht .zl{height:16px;border-radius:8px;background:var(--b200);transform-origin:left center}
+.nachricht .zl.wort{height:auto;width:max-content;padding:6px 14px;border-radius:12px;background:var(--error-bg);color:var(--error-text);font:800 26px/30px Inter}
+.nachricht .foto{width:150px;height:110px;border-radius:16px;background:linear-gradient(var(--b50),var(--b200));position:relative;overflow:hidden;border:4px solid var(--b100)}
+.nachricht .foto i{position:absolute;left:44px;top:24px;width:60px;height:56px}
+.nachricht .gesendet{align-self:flex-end;font:800 20px/24px Inter;color:var(--success-text)}
+/* Abschluss: Plaketten an den Dingen im Zimmer */
+.marke{display:flex;align-items:center;gap:10px;padding:10px 20px 10px 10px;border-radius:999px;background:var(--success);color:var(--surface);font:800 28px/32px Inter;white-space:nowrap;box-shadow:0 6px 16px rgba(31,169,113,.3)}
+.marke u{width:40px;height:40px;border-radius:999px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none}
+.marke u svg{width:26px}
+
+/* ---------- Wärmebild-Ebene ---------- */
+.thermo{width:1600px;height:820px;border-radius:44px;overflow:hidden}
+svg.partikel{position:absolute;left:160px;top:190px;width:1600px;height:820px;overflow:hidden;border-radius:44px}
+/* Haus von außen (Szene 9) */
+svg.haus{position:absolute;left:-2640px;top:-2400px;width:7200px;height:5800px}
+svg.fahne{position:absolute;left:0;top:0;width:7200px;height:5800px}
+
+/* ---------- Bildschirm-Ebene: Schalter und Text im Bild ---------- */
+#schalter{position:absolute;left:0;top:0;display:flex;align-items:center;gap:16px;padding:12px 16px 12px 22px;border-radius:999px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.14)}
+#schalter .lb{font:800 24px/28px Inter;color:var(--b700);white-space:nowrap}
+#schalter .bahn{position:relative;width:104px;height:54px;border-radius:999px;background:var(--b100)}
+#schalter .bahn .farbe{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,var(--info),var(--warning),var(--error));opacity:0}
+#schalter .knopf{position:absolute;left:5px;top:5px;width:44px;height:44px;border-radius:999px;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.25);display:flex;align-items:center;justify-content:center}
+#schalter .knopf svg{width:26px;height:26px}
+.tk{position:absolute;left:0;top:0;padding:16px 34px 20px;border-radius:30px;background:var(--surface);box-shadow:0 8px 26px rgba(22,19,37,.12)}
+.tk .titel{font:800 50px/60px Inter;letter-spacing:-.02em;white-space:nowrap}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+/* Zurückspulen */
+#spul{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#schleier{position:absolute;inset:0;background:var(--b700)}
+#zeilen{position:absolute;inset:0;background:repeating-linear-gradient(var(--ink) 0 2px,transparent 2px 6px);opacity:0}
+.spur{position:absolute;left:0;width:1920px;background:var(--surface)}
+#lichtband{position:absolute;left:0;top:-200px;width:900px;height:1480px;background:linear-gradient(90deg,transparent,var(--warning-bg) 30%,var(--surface) 50%,var(--warning-bg) 70%,transparent)}
+#rTitel{position:absolute;left:0;top:0;display:flex;align-items:center;gap:26px;padding:20px 40px 24px 30px;border-radius:999px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.3)}
+#rTitel .titel{font:800 64px/76px Inter;letter-spacing:-.02em;color:var(--b700);white-space:nowrap}
+#rTitel .ic{width:76px;height:76px}
+/* Nebenkosten (Szene 9) */
+.umschlag{width:360px;height:240px;border-radius:24px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.3);overflow:hidden}
+.umschlag .klappe{position:absolute;left:0;top:0;width:360px;height:150px;transform-origin:50% 0}
+.umschlag .ab{position:absolute;left:30px;bottom:26px;font:800 30px/34px Inter;color:var(--b700)}
+.abrechnung{width:440px;padding:28px 30px 30px;border-radius:28px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.3);display:flex;flex-direction:column;gap:20px}
+.abrechnung .kopf{display:flex;align-items:center;gap:14px;font:800 30px/34px Inter;color:var(--b700)}
+.abrechnung .kopf svg{width:46px;height:46px}
+.abrechnung .zeile{display:flex;align-items:center;gap:16px}
+.abrechnung .zeile .ic{width:64px;height:64px;flex:none;border-radius:16px;background:var(--b50);display:flex;align-items:center;justify-content:center}
+.abrechnung .zeile .ic svg{width:48px;height:48px}
+.abrechnung .balken{height:38px;border-radius:12px;transform-origin:left center}
+.abrechnung .balken.rot{width:280px;background:var(--error)} .abrechnung .balken.gruen{width:92px;background:var(--success)}
+.abrechnung .linien{display:flex;flex-direction:column;gap:10px}
+.abrechnung .linien i{display:block;height:12px;border-radius:6px;background:var(--b100)}
+/* Abspann: Kreis öffnet sich aus dem Fenster */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 26% 42%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHakenG"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgMond"><svg viewBox="0 0 40 40"><path d="M25 6a15 15 0 1 0 10 25A13 13 0 0 1 25 6Z" fill="var(--warning-bg)"/></svg></template>
+<template id="svgSofa"><svg viewBox="0 0 40 40"><rect x="5" y="16" width="30" height="14" rx="5" fill="var(--surface)"/><rect x="9" y="10" width="22" height="10" rx="4" fill="var(--b100)"/><path d="M9 30v4M31 30v4" stroke="var(--surface)" stroke-width="3" stroke-linecap="round"/></svg></template>
+<template id="svgKipp"><svg viewBox="0 0 40 40"><rect x="9" y="6" width="22" height="28" rx="3" fill="none" stroke="var(--b500)" stroke-width="3.5"/><path d="M9 34L4 8h22" stroke="var(--b300)" stroke-width="3" fill="none" stroke-linejoin="round"/></svg></template>
+<template id="svgFensterZu"><svg viewBox="0 0 48 48"><rect x="8" y="6" width="32" height="36" rx="4" fill="var(--b100)" stroke="var(--b500)" stroke-width="4"/><path d="M24 6v36" stroke="var(--b500)" stroke-width="3.5"/></svg></template>
+<template id="svgFensterKipp"><svg viewBox="0 0 48 48"><rect x="8" y="6" width="32" height="36" rx="4" fill="var(--b100)" stroke="var(--b500)" stroke-width="4"/><path d="M8 42L3 9h18" stroke="var(--error)" stroke-width="3.5" fill="none" stroke-linejoin="round"/><path d="M28 14q6-6 12-2M30 22q6-6 12-2" stroke="var(--error)" stroke-width="3" fill="none" stroke-linecap="round"/></svg></template>
+<template id="svgFlamme"><svg viewBox="0 0 48 48"><path d="M24 4c3 9 13 13 13 25a13 13 0 0 1-26 0c0-7 4-10 6-15 1 5 4 7 6 7-2-6-1-12 1-17Z" fill="var(--warning)"/><path d="M24 26c2 4 6 5 6 10a6 6 0 0 1-12 0c0-3 3-5 4-8 0 2 1 3 2 3Z" fill="var(--error)"/></svg></template>
+<template id="svgWaesche"><svg viewBox="0 0 48 48"><path d="M6 12h36" stroke="var(--b500)" stroke-width="4" stroke-linecap="round"/><path d="M12 12h10v18l-5-3-5 3Z" fill="var(--b300)"/><path d="M27 12h14v22H27Z" fill="var(--b200)"/></svg></template>
+<template id="svgRunter"><svg viewBox="0 0 48 48"><path d="M24 8v28M12 26l12 12 12-12" stroke="var(--b500)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAuge"><svg viewBox="0 0 30 30"><path d="M3 15q12-14 24 0-12 14-24 0Z" fill="var(--b300)"/><circle cx="15" cy="15" r="5" fill="var(--b700)"/></svg></template>
+<template id="svgTherm"><svg viewBox="0 0 30 30"><rect x="11" y="3" width="8" height="17" rx="4" fill="var(--surface)" stroke="var(--error)" stroke-width="2.5"/><circle cx="15" cy="22" r="6" fill="var(--error)"/></svg></template>
+<template id="svgFoto"><svg viewBox="0 0 44 44"><rect x="5" y="8" width="34" height="28" rx="5" fill="var(--b500)"/><circle cx="15" cy="17" r="3.5" fill="var(--b200)"/><path d="M8 33l10-10 7 7 5-5 7 7" stroke="var(--b200)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none"/></svg></template>
+
+<template id="pPriya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene schal">{{figur-schal}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene flach"><svg viewBox="0 0 160 160"><path d="M74 88q6-3 12 0" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="pSchmitt"><div class="figur"><div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen~v}}</div>
+  <div class="ebene flach"><svg viewBox="0 0 160 160"><path d="M75 88h10" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/></svg></div>
+  <div class="ebene zu">{{figur-mund-zu~v}}</div><div class="ebene auf">{{figur-mund-auf~v}}</div><div class="ebene froh">{{figur-mund-froh~v}}</div></div></template>
+
+<div id="aussen"></div>
+<div id="kamera"><div id="welt">
+  <!-- Szene 9: das Haus von außen (liegt um das Zimmer herum) -->
+  <svg class="haus" id="haus" viewBox="-2640 -2400 7200 5800"></svg>
+
+  <!-- Priyas Zimmer -->
+  <div class="a buehne raum" id="bue0">
+    <div class="wand"></div><div class="boden"></div><div class="leiste"></div>
+    <div class="tuer"><div class="blatt" id="tuerBlatt"><b></b><i></i></div></div>
+    <div class="fenster" id="fenster">
+      <div class="glas"><div class="tag" id="himmelTag"></div><div class="nacht" id="himmelNacht"></div>
+        <div class="gestirn" id="mondF" style="left:136px;top:24px">{{mond}}</div>
+        <div class="gestirn" id="sonneF" style="left:120px;top:14px">{{sonne}}</div>
+        <svg class="flocken" id="flocken" viewBox="0 0 236 302"></svg><div class="schnee"></div></div>
+      <div class="fluegel"><div class="fl l" id="flL"><i></i></div><div class="fl r" id="flR"><i></i></div></div>
+      <div class="spalt" id="spalt"></div>
+    </div>
+    <div class="bank"></div>
+    <svg class="waerme" id="waerme" viewBox="0 0 240 150"></svg>
+    <div class="dunst" id="dunst"></div>
+  </div>
+
+  <div class="a" id="schimmel" style="width:300px" data-gruppe="schrank">{{schimmelfleck}}</div>
+  <div class="a" id="schimmelA" style="width:110px" data-gruppe="schrank">{{schimmelfleck~a}}</div>
+  <div class="a" id="schimmelB" style="width:90px" data-gruppe="schrank">{{schimmelfleck~b}}</div>
+  <div class="a" id="heiz" style="width:290px" data-gruppe="heiz">{{heizung}}</div>
+  <div class="a dial" id="dial" data-gruppe="heiz"></div>
+  <div class="a gauge" id="gauge"></div>
+  <div class="a hygro" id="hygro"></div>
+  <div class="a" id="kal" style="width:130px">{{kalender}}</div>
+  <div class="a zettel" id="blatt1" data-frei><b></b></div>
+  <div class="a zettel" id="blatt2" data-frei><b></b></div>
+  <div class="a zettel" id="blatt3" data-frei><b></b></div>
+  <div class="a" id="bett" style="width:390px">{{bett}}</div>
+  <div class="a" id="staender" style="width:300px" data-gruppe="waesche">{{waeschestaender}}</div>
+  <div class="a" id="hemd" style="width:150px" data-gruppe="waesche">{{hemd}}</div>
+  <div class="a" id="tuch" style="width:140px" data-gruppe="waesche">{{handtuch}}</div>
+  <div class="a" id="schrank" style="width:450px" data-gruppe="schrank">{{kleiderschrank}}</div>
+  <div class="a" id="muenze1" style="width:90px" data-frei>{{muenze}}</div>
+  <div class="a geruch" id="geruch" data-frei><svg viewBox="0 0 150 130"><g stroke="var(--b400)" stroke-width="7" fill="none" stroke-linecap="round">
+    <path id="gr1" d="M30 120q-14-18 0-36t0-36 0-36"/><path id="gr2" d="M75 120q-14-18 0-36t0-36 0-36"/><path id="gr3" d="M120 120q-14-18 0-36t0-36 0-36"/></g></svg></div>
+  <div class="a schadenbrief" id="brief3">{{brief}}<div class="q">?</div></div>
+  <div class="a" id="mz3a" style="width:70px" data-frei>{{muenze~a}}</div>
+  <div class="a" id="mz3b" style="width:70px" data-frei>{{muenze~b}}</div>
+  <div class="a" id="mz3c" style="width:70px" data-frei>{{muenze~c}}</div>
+
+  <!-- richtiger Tag -->
+  <div class="a chip" id="kippNein"><span class="ic"></span><span id="kippStrich" style="position:absolute;left:14px;top:30px;width:52px;height:6px;border-radius:3px;background:var(--error);transform:rotate(-40deg)"></span>Kipp</div>
+  <div class="a" id="sanduhr" style="width:120px">{{sanduhr}}</div>
+  <div class="a" id="dusche" style="width:120px" data-frei>{{dusche}}</div>
+  <div class="a" id="topf" style="width:120px" data-frei>{{topf}}</div>
+  <div class="a chip gruen" id="c20" data-frei><span class="ic"></span>20 °C</div>
+  <div class="a chip mond" id="c17" data-frei><span class="ic"></span>17 °C</div>
+  <div class="a" id="massband" style="width:120px" data-frei>{{massband}}</div>
+  <div class="a trocken" id="trocken"><span class="ic"></span>Trockenraum<span class="ic2"></span></div>
+  <div class="a" id="fleck8" style="width:90px">{{schimmelfleck~c}}</div>
+  <div class="a" id="handy8" style="width:190px" data-gruppe="handy8">{{handy}}</div>
+  <div class="a schirm" id="schirm8" style="width:88px;height:162px" data-gruppe="handy8"><div class="cam"><div class="fl" style="opacity:.8"></div></div><div class="blitz" id="blitz8"></div></div>
+  <div class="a nachricht" id="msg8">
+    <div class="kopf"><div class="av" id="avSchmitt"></div>Herr Schmitt</div>
+    <div class="inhalt"><div class="zl" id="z8a" style="width:62%"></div><div class="zl" id="z8b" style="width:92%"></div><div class="zl wort" id="z8w">Schimmel</div>
+      <div class="zl" id="z8c" style="width:78%"></div><div class="foto" id="foto8"><i>{{schimmelfleck~d}}</i></div><div class="gesendet" id="ges8">✓✓</div></div></div>
+  <div class="a portrait" id="schmitt" style="width:180px;height:180px" data-figur="Schmitt"></div>
+  <div class="a" id="schluessel" style="width:130px" data-frei>{{schraubenschluessel}}</div>
+  <div class="a plakette gruen" id="ok8" data-frei></div>
+
+  <!-- Wärmebild und Luft -->
+  <div class="a thermo" id="thermo" data-frei><svg viewBox="0 0 1600 820" width="1600" height="820">
+    <defs>
+      <radialGradient id="gHeiss"><stop offset="0" stop-color="var(--error)"/><stop offset=".45" stop-color="var(--warning)" stop-opacity=".9"/><stop offset="1" stop-color="var(--warning)" stop-opacity="0"/></radialGradient>
+      <radialGradient id="gWarm"><stop offset="0" stop-color="var(--warning)" stop-opacity=".85"/><stop offset="1" stop-color="var(--warning)" stop-opacity="0"/></radialGradient>
+      <radialGradient id="gKalt"><stop offset="0" stop-color="var(--info)"/><stop offset=".55" stop-color="var(--info)" stop-opacity=".75"/><stop offset="1" stop-color="var(--info)" stop-opacity="0"/></radialGradient>
+      <linearGradient id="gWand" x2="0" y2="1"><stop offset="0" stop-color="var(--b600)"/><stop offset="1" stop-color="var(--b700)"/></linearGradient>
+    </defs>
+    <rect width="1600" height="820" fill="var(--ink)"/>
+    <rect width="1600" height="640" fill="url(#gWand)"/>
+    <rect id="thWandKalt" width="1600" height="640" fill="var(--info)" opacity="0"/>
+    <rect y="640" width="1600" height="180" fill="var(--b700)"/>
+    <ellipse id="thFenster" cx="420" cy="380" rx="230" ry="330" fill="url(#gKalt)" opacity="0"/>
+    <ellipse id="thEcke" cx="1390" cy="420" rx="230" ry="300" fill="url(#gKalt)" opacity="0"/>
+    <ellipse id="thHeiz" cx="420" cy="540" rx="240" ry="150" fill="url(#gHeiss)" opacity="0"/>
+    <ellipse id="thFahne" cx="420" cy="330" rx="260" ry="250" fill="url(#gWarm)" opacity="0"/>
+    <ellipse id="thPriya" cx="0" cy="0" rx="170" ry="170" fill="url(#gWarm)" opacity="0"/>
+    <g fill="none" stroke="var(--surface)" stroke-width="4" opacity=".55" stroke-linejoin="round">
+      <rect x="290" y="96" width="260" height="326" rx="18"/><path d="M420 108v302"/>
+      <rect x="60" y="226" width="156" height="404" rx="14"/>
+      <rect x="306" y="463" width="228" height="150" rx="18"/>
+      <rect id="thSchrank" x="1256" y="250" width="263" height="390" rx="16"/>
+      <path d="M880 470v170M880 560h330v80M1180 520v120"/>
+      <path id="thStaender" d="M620 470h260M650 640l40-160M850 640l-40-160" opacity="0"/>
+      <path d="M0 640h1600"/>
+    </g>
+  </svg></div>
+  <svg class="partikel" id="partikel" viewBox="0 0 1600 820">
+    <path id="kippFaden" d="M420 112C410 210 360 300 340 420S300 560 290 636" fill="none" stroke="var(--info)" stroke-width="12" stroke-linecap="round" stroke-dasharray="26 22" opacity="0"/>
+    <path id="stossBand" d="M500 330C700 420 1000 640 1200 560S1100 140 760 150 440 200 420 230" fill="none" stroke="var(--info)" stroke-width="64" stroke-linecap="round" opacity="0"/>
+    <path id="stossPfeile" d="M500 330C700 420 1000 640 1200 560S1100 140 760 150 440 200 420 230" fill="none" stroke="var(--surface)" stroke-width="10" stroke-linecap="round" stroke-dasharray="30 60" opacity="0"/>
+    <path id="spaltLuft" d="M1250 640V250" fill="none" stroke="var(--info-bg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="20 26" opacity="0"/>
+    <g id="tropfen"></g>
+  </svg>
+  <div class="a lupe" id="lupe"><div class="w"></div><div class="sk" id="lupeSk"></div><svg class="zug" id="lupeZug" viewBox="0 0 260 40"><path d="M10 22h240" stroke="var(--info)" stroke-width="10" stroke-linecap="round" stroke-dasharray="18 14"/></svg>
+    <div class="mb" id="lupeMb">{{massband~l}}</div><div class="cm" id="lupeCm">ein paar cm</div></div>
+  <div class="a portrait" id="priya" style="width:200px;height:200px" data-figur="Priya"></div>
+  <div class="a marke" id="m9a"><u></u>Lüften</div>
+  <div class="a marke" id="m9b"><u></u>Heizen</div>
+  <div class="a marke" id="m9c"><u></u>Abstand</div>
+  <div class="a marke" id="m9d"><u></u>Melden</div>
+</div></div>
+
+<!-- Nebenkosten (Bildschirm-Ebene, Szene 9) -->
+<div class="a umschlag" id="umschlag"><svg class="klappe" id="klappe" viewBox="0 0 360 150"><path d="M0 0h360L180 140Z" fill="var(--b100)"/><path d="M0 0L180 140 360 0" stroke="var(--b300)" stroke-width="5" fill="none" stroke-linejoin="round"/></svg>
+  <div class="ab">Nebenkosten</div></div>
+<div class="a abrechnung" id="abr">
+  <div class="kopf"><span class="ic"></span>Abrechnung · 1 × im Jahr</div>
+  <div class="linien"><i style="width:90%"></i><i style="width:70%"></i></div>
+  <div class="zeile"><div class="ic" id="icKipp"></div><div class="balken rot" id="balkenRot"></div></div>
+  <div class="zeile"><div class="ic" id="icZu"></div><div class="balken gruen" id="balkenGruen"></div></div>
+</div>
+
+<!-- Schalter Wärmebild -->
+<div id="schalter"><span class="lb">Wärmebild</span><div class="bahn"><div class="farbe" id="schFarbe"></div><div class="knopf" id="schKnopf"><span id="schAuge"></span><span id="schTherm" style="position:absolute"></span></div></div></div>
+
+<!-- Text im Bild -->
+<div class="tk" id="tb1"><div class="titel">Fenster auf Kipp · Heizung aus</div></div>
+<div class="tk" id="tb2"><div class="titel">Wäsche im Zimmer · Schrank an der Wand</div></div>
+<div class="tk" id="tb3"><div class="titel">Schimmel – und nichts gesagt</div></div>
+<div class="tk" id="tb5"><div class="titel">1. Stoßlüften: 2–3 × am Tag, ca. 5 Min.</div></div>
+<div class="tk" id="tb6"><div class="titel">2. Heizen: ca. 20 °C · möglichst nicht unter 16 °C</div></div>
+<div class="tk" id="tb7"><div class="titel">3. Abstand zur Wand · Wäsche raus</div></div>
+<div class="tk" id="tb8"><div class="titel">4. Schimmel sofort melden</div></div>
+<div class="tk" id="tb9"><div class="titel">Lüften · Heizen · Abstand · Melden</div></div>
+
+<!-- Zurückspulen: liegt über allem -->
+<div id="spul">
+  <div id="schleier"></div><div id="zeilen"></div><div id="spuren"></div>
+  <div class="a" id="pauseIc" style="width:230px;height:230px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <rect x="88" y="78" width="26" height="94" rx="8" fill="var(--b500)"/><rect x="136" y="78" width="26" height="94" rx="8" fill="var(--b500)"/></svg></div>
+  <div class="a" id="rewIc" style="width:230px;height:230px"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="120" fill="var(--surface)"/>
+    <g id="rewTri"><path d="M126 82v86l-62-43Z" fill="var(--b500)"/><path d="M190 82v86l-62-43Z" fill="var(--b500)"/></g></svg></div>
+  <div class="a" id="rTitel"><div class="ic"><svg viewBox="0 0 92 92"><path d="M44 18v56L8 46Z" fill="var(--b500)"/><path d="M84 18v56L48 46Z" fill="var(--b500)"/></svg></div>
+    <div id="tbR"><div class="titel">Nochmal – aber richtig</div></div></div>
+  <div id="lichtband"></div>
+</div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Frische Luft – aber richtig.</div>
+  <div class="klein" id="asUnter">Kurz und kräftig lüften, gleichmäßig heizen, Möbel weg von der Außenwand – und Schimmel sofort dem Vermieter melden.</div>
+</div></div>
+<div id="zustand" style="display:none"></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const LX = 160, LY = 190;                          // Ursprung des Zimmers (Bühne 1600×820, Mitte 960/600)
+const P = (x, y) => ({ x: LX + x, y: LY + y });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const lerp = (a, b, p) => a + (b - a) * p;
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const wellen = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.6 }, 'weich'); }); };
+const atmen = (id, t) => { tw(id, t, .35, { sy: 1.1, sx: .95 }, 'sinus'); tw(id, t + .35, .25, { sy: .94, sx: 1.05 }, 'sinus'); tw(id, t + .6, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Text im Bild: Karte gleitet herein, Wörter steigen aus der Maske
+function titel(id, t0, zeiten, farben = {}, pos = { x: 150, y: 52 }) {
+  titelEin(id, t0, zeiten);
+  const w = [...document.querySelectorAll(`#${id} .w`)];
+  for (const [i, f] of Object.entries(farben)) w[i].classList.add(f);
+  akteur(id, { x: pos.x - 40, y: pos.y, o: 0 }, true);
+  tw(id, t0 - .25, .35, { o: 1 }, 'out'); tw(id, t0 - .25, .6, { x: pos.x }, 'sanft');
+}
+const titelAus = (id, t) => tw(id, t, .35, { o: 0, y: 12 }, 'in');
+
+/* ---------- Welt-Zeit: bis „Stopp!“ normal, dann Standbild, beim Zurückspulen schnell rückwärts bis TS ---------- */
+const TSTOP = W('Stopp', 14) - .05;
+const R0 = W('Zurückspulen', 16) - .05, R1 = SA(17) - .45;
+const TS = W('Winter', 2) + .5;
+const rueckP = t => clamp((t - R0) / (R1 - R0));
+function ZT(t) {
+  if (t < TSTOP) return t;
+  if (t < R0) return TSTOP;
+  if (t < R1) return TSTOP - (TSTOP - TS) * E.inout(rueckP(t));
+  return t;
+}
+const ECHT = new Set();
+const echt = id => ECHT.add(el(id));
+
+/* ---------- Zustände der Welt (unsichtbare Akteure, laufen beim Zurückspulen mit) ---------- */
+const ZUST = {};
+function zustand(n, v) { const d = document.createElement('div'); d.id = 'z_' + n; el('zustand').appendChild(d); ZUST[n] = d; akteur(d, { x: v }, true); }
+const zw = (n, t, d, v, e = 'inout') => tw(ZUST[n], t, d, { x: v }, e);
+const zv = (n, t) => wert(AKTEURE.get(ZUST[n]), 'x', ZT(t));
+[['thermo', 0], ['kipp', 0], ['offen', 0], ['heiz', .15], ['temp', 18], ['feuchte', .3], ['wandKalt', 0], ['ecke', 0], ['fenKalt', 0],
+ ['stoss', 0], ['nacht', 0], ['tuer', 0], ['schnee', .5], ['fahne', 0], ['linie16', 0], ['luftSpalt', 0], ['kamX', 960], ['kamY', 540], ['kamZ', 1]].forEach(([n, v]) => zustand(n, v));
+// Kamera: Fokus (Welt-Koordinaten) und Zoom; akzent() wirkt in Echtzeit
+const AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+const kam = (t, d, x, y, z, e = 'inout') => { zw('kamX', t, d, x, e); zw('kamY', t, d, y, e); zw('kamZ', t, d, z, e); };
+HOOKS.push(t => {
+  let z = zv('kamZ', t);
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .06 * Math.sin(Math.PI * clamp((t - R0 + .15) / (R1 - R0 + .5)));     // Rückspul-Zoom
+  const cx = zv('kamX', t), cy = zv('kamY', t);
+  const zit = t >= TSTOP && t < R1 ? 1.4 * Math.sin(t * 57) * Math.sin(t * 23) : 0;
+  const rk = t >= R0 && t < R1 ? Math.sin(Math.PI * rueckP(t)) : 0;
+  $('#kamera').style.transform = `translate(${(960 - cx * z + 6 * rk * Math.sin(t * 41)).toFixed(2)}px,${(540 - cy * z + zit).toFixed(2)}px) scale(${z.toFixed(4)})`;
+  const g = t >= TSTOP && t < R1 ? clamp((t - TSTOP) / .3) : 0;
+  $('#kamera').style.filter = g > 0 ? `saturate(${(1 - .75 * g).toFixed(3)}) brightness(${(1 - .12 * g).toFixed(3)})` : '';
+});
+
+/* ---------- Zimmer: Licht, Fenster, Tür, Schnee, Wärmewellen ---------- */
+const FLOCKEN = Array.from({ length: 22 }, (_, k) => ({ x: (k * 97) % 236, v: 26 + (k * 37) % 30, p: (k * 53) % 302, r: 3 + (k % 3) * 1.5 }));
+el('flocken').innerHTML = FLOCKEN.map((f, k) => `<circle id="fk${k}" r="${f.r}" fill="var(--surface)"/>`).join('');
+el('waerme').innerHTML = [40, 120, 200].map((x, k) => `<path id="ww${k}" d="M${x} 140q-16-22 0-44t0-44 0-44" stroke="var(--b300)" stroke-width="8" fill="none" stroke-linecap="round"/>`).join('');
+HOOKS.push(t => {
+  const tz = ZT(t), gut = t >= R1 - .3;
+  el('bue0').classList.toggle('hell', gut);
+  const nacht = zv('nacht', t);
+  el('himmelNacht').style.opacity = nacht; el('dunst').style.opacity = (nacht * .22).toFixed(3);
+  el('himmelTag').style.opacity = gut ? 1 : 0;
+  el('mondF').style.opacity = nacht; el('mondF').style.transform = `translateY(${(30 * (1 - nacht)).toFixed(1)}px)`;
+  el('sonneF').style.opacity = gut ? 1 : 0; el('sonneF').style.transform = `rotate(${(t * 12).toFixed(1)}deg)`;
+  const sn = zv('schnee', t);
+  FLOCKEN.forEach((f, k) => { const y = (f.p + tz * f.v) % 320 - 10, x = f.x + 8 * Math.sin(tz * 1.3 + k);
+    const c = el('fk' + k); c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('opacity', k / FLOCKEN.length < sn ? .9 : 0); });
+  // Fenster: Kipp (rechter Flügel oben nach innen), ganz auf (beide Flügel drehen nach innen)
+  const kipp = zv('kipp', t), offen = zv('offen', t);
+  el('flR').classList.toggle('kippt', kipp > .001);
+  el('flR').style.transform = kipp > .001 ? `rotateX(${(-24 * kipp).toFixed(2)}deg)` : `rotateY(${(72 * offen).toFixed(2)}deg)`;
+  el('flL').style.transform = `rotateY(${(-72 * offen).toFixed(2)}deg)`;
+  el('spalt').style.height = (26 * kipp).toFixed(1) + 'px';
+  el('tuerBlatt').style.transform = `perspective(700px) rotateY(${(-68 * zv('tuer', t)).toFixed(2)}deg)`;
+  const h = zv('heiz', t);
+  [0, 1, 2].forEach(k => { const w = el('ww' + k), ph = ((tz * .9 + k * .33) % 1);
+    w.setAttribute('transform', `translate(0 ${(-30 * ph).toFixed(1)})`); w.setAttribute('opacity', (h * Math.sin(Math.PI * ph) * .9).toFixed(3)); });
+});
+
+/* ---------- Thermostat, Thermometer, Feuchte-Anzeige ---------- */
+el('dial').innerHTML = `<svg viewBox="0 0 62 62"><circle cx="31" cy="31" r="28" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/>
+  <g id="dialRot"><circle cx="31" cy="31" r="18" fill="var(--b500)"/><rect x="28.5" y="10" width="5" height="16" rx="2.5" fill="var(--surface)"/></g></svg>`;
+const TY = c => 238 - (c - 10) * 15;            // Temperatur → y in der Thermometer-Grafik
+el('gauge').innerHTML = `<svg viewBox="0 0 84 300"><rect x="22" y="8" width="40" height="250" rx="20" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/>
+  <circle cx="42" cy="262" r="30" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/>
+  <rect id="gSaeule" x="33" y="40" width="18" height="230" rx="9" fill="var(--error)"/><circle id="gKugel" cx="42" cy="262" r="21" fill="var(--error)"/>
+  <g stroke="var(--b300)" stroke-width="3" stroke-linecap="round">${[12, 14, 16, 18, 20, 22].map(c => `<path d="M62 ${TY(c)}h10"/>`).join('')}</g>
+  <path id="gLinie" d="M10 ${TY(16)}h66" stroke="var(--error)" stroke-width="6" stroke-linecap="round" opacity="0"/></svg>`;
+el('hygro').innerHTML = `<svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="68" fill="var(--surface)" stroke="var(--b300)" stroke-width="5"/>
+  <path d="M30 95A50 50 0 0 1 52 34" stroke="var(--success)" stroke-width="13" fill="none" stroke-linecap="round"/>
+  <path d="M60 30A50 50 0 0 1 90 30" stroke="var(--warning)" stroke-width="13" fill="none"/>
+  <path d="M98 34A50 50 0 0 1 120 95" stroke="var(--error)" stroke-width="13" fill="none" stroke-linecap="round"/>
+  <path d="M75 116c-8-12-15-19-15-28a15 15 0 0 1 30 0c0 9-7 16-15 28Z" fill="var(--info)" opacity=".85"/>
+  <g id="hygroZ"><path d="M71 78L75 34 79 78Z" fill="var(--ink)"/></g><circle cx="75" cy="78" r="8" fill="var(--ink)"/></svg>`;
+HOOKS.push(t => {
+  const tz = ZT(t);
+  $('#dialRot').setAttribute('transform', `rotate(${(-150 + 260 * zv('heiz', t)).toFixed(1)} 31 31)`);
+  const c = zv('temp', t), y = TY(c);
+  $('#gSaeule').setAttribute('y', y.toFixed(1)); $('#gSaeule').setAttribute('height', (262 - y).toFixed(1));
+  const kalt = clamp((18 - c) / 5);
+  ['gSaeule', 'gKugel'].forEach(i => $('#' + i).setAttribute('fill', kalt > .5 ? 'var(--info)' : 'var(--error)'));
+  $('#gLinie').setAttribute('opacity', zv('linie16', t).toFixed(3));
+  const f = zv('feuchte', t), zit = f > .8 ? 4 * (f - .8) / .2 * Math.sin(tz * 31) : 0;
+  $('#hygroZ').setAttribute('transform', `rotate(${(-75 + 150 * f + zit).toFixed(1)} 75 78)`);
+});
+
+/* ---------- Wärmebild: Ebene, Schalter, Farben ---------- */
+akteur('thermo', { x: 960, y: 600, o: 0 });
+HOOKS.push(t => {
+  const th = zv('thermo', t), tz = ZT(t);
+  el('thermo').style.opacity = th.toFixed(3); el('thermo').style.visibility = th > .002 ? 'visible' : 'hidden';
+  const h = zv('heiz', t);
+  $('#thHeiz').setAttribute('opacity', (.15 + .85 * h).toFixed(3));
+  $('#thHeiz').setAttribute('fill', h > .2 ? 'url(#gHeiss)' : 'url(#gKalt)');
+  $('#thFahne').setAttribute('opacity', (h * .7).toFixed(3));
+  $('#thFahne').setAttribute('ry', (230 + 20 * Math.sin(tz * 2.2)).toFixed(1));
+  $('#thWandKalt').setAttribute('opacity', (.45 * zv('wandKalt', t)).toFixed(3));
+  $('#thFenster').setAttribute('opacity', zv('fenKalt', t).toFixed(3));
+  $('#thEcke').setAttribute('opacity', zv('ecke', t).toFixed(3));
+  const sx = wert(AKTEURE.get(el('schrank')), 'x', tz) - 160 - 1390 + 1256, sy = wert(AKTEURE.get(el('schrank')), 's', tz);
+  $('#thSchrank').setAttribute('x', sx.toFixed(1)); $('#thSchrank').setAttribute('transform', `scale(1)`);
+  $('#thStaender').setAttribute('opacity', wert(AKTEURE.get(el('staender')), 'o', tz) * wert(AKTEURE.get(el('staender')), 'sx', tz) > .5 ? 1 : 0);
+  const px = wert(AKTEURE.get(el('priya')), 'x', tz) - LX, py = wert(AKTEURE.get(el('priya')), 'y', tz) - LY;
+  $('#thPriya').setAttribute('cx', px.toFixed(1)); $('#thPriya').setAttribute('cy', py.toFixed(1));
+  $('#thPriya').setAttribute('opacity', (wert(AKTEURE.get(el('priya')), 'o', tz)).toFixed(3));
+  el('priya').classList.toggle('warm', th > .5);
+  // Kippfaden: dünner kalter Faden, der nur die Wand unter dem Fenster kühlt
+  const k = zv('kipp', t);
+  $('#kippFaden').setAttribute('opacity', (k * (.35 + .65 * th)).toFixed(3));
+  $('#kippFaden').setAttribute('stroke-dashoffset', (-tz * 60).toFixed(1));
+  const s = zv('stoss', t);
+  $('#stossBand').setAttribute('opacity', (s * (.25 + .45 * th)).toFixed(3));
+  $('#stossPfeile').setAttribute('opacity', (s * .9).toFixed(3));
+  $('#stossPfeile').setAttribute('stroke-dashoffset', (-tz * 420).toFixed(1));
+  const ls = zv('luftSpalt', t);
+  $('#spaltLuft').setAttribute('opacity', (ls * .9).toFixed(3)); $('#spaltLuft').setAttribute('stroke-dashoffset', (tz * 90).toFixed(1));
+});
+// Schalter (Bildschirm-Ebene): Knopf und Farbe folgen dem Zustand der Welt
+el('schAuge').innerHTML = tpl('svgAuge'); el('schTherm').innerHTML = tpl('svgTherm');
+akteur('schalter', { x: 1500, y: 62, o: 0 }, true); echt('schalter');
+HOOKS.push(t => {
+  const th = zv('thermo', t);
+  el('schKnopf').style.transform = `translateX(${(50 * th).toFixed(1)}px)`;
+  el('schFarbe').style.opacity = th.toFixed(3);
+  el('schAuge').style.opacity = (1 - th).toFixed(3); el('schTherm').style.opacity = th.toFixed(3);
+});
+let SCH_DA = false;
+function waermebild(t, an, d = .45) {
+  if (!SCH_DA) { SCH_DA = true; tw('schalter', t - .5, .4, { o: 1 }, 'out'); }
+  zw('thermo', t, d, an ? 1 : 0, 'inout'); cue(t, 'klick'); bump('schalter', t, 1.06);
+}
+
+/* ---------- Feuchte Luft: Tröpfchen (laufen beim Zurückspulen rückwärts) ---------- */
+const TROPFEN = [];
+const hash = k => { const x = Math.sin(k * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+// b: Geburt, q: Quelle, c: Wolke, m/md: Abflug zum Ziel, z: Ziel, art: 'kleben' | 'raus', gut: nur im richtigen Tag
+function tropfen(o) { TROPFEN.push({ r: 7, ...o, ph: hash(TROPFEN.length) * 6.28 }); }
+const RAUS = { x: 420, y: 236 };
+function tropfenFertig() {
+  el('tropfen').innerHTML = TROPFEN.map((d, k) => `<circle id="tr${k}" r="${d.r}" fill="var(--info)" stroke="var(--surface)" stroke-width="2.5"/>`).join('') +
+    Array.from({ length: 6 }, (_, k) => `<circle id="drip${k}" r="5" fill="var(--info)"/>`).join('');
+  HOOKS.push(t => {
+    const tz = ZT(t), th = zv('thermo', t), gutWelt = t >= R1;
+    TROPFEN.forEach((d, k) => {
+      const c = el('tr' + k);
+      if ((d.gut && !gutWelt) || (!d.gut && gutWelt) || tz < d.b) { c.setAttribute('opacity', 0); return; }
+      const wob = tt => ({ x: d.c.x + 16 * Math.sin(tt * 1.3 + d.ph), y: d.c.y + 10 * Math.cos(tt * 1.1 + d.ph) });
+      const p0 = E.out(clamp((tz - d.b) / 1.4));
+      let w = wob(tz), x = lerp(d.q.x, w.x, p0), y = lerp(d.q.y, w.y, p0) + 14 * Math.sin(p0 * 9 + d.ph) * (1 - p0), op = clamp((tz - d.b) / .3), r = d.r;
+      if (tz >= d.m) {
+        const s = wob(d.m), q = clamp((tz - d.m) / d.md), u = E.inout(q);
+        const ctl = d.art === 'raus' ? { x: (s.x + RAUS.x) / 2 + 120, y: Math.max(s.y, RAUS.y) + 160 } : { x: (s.x + d.z.x) / 2, y: Math.min(s.y, d.z.y) - 60 };
+        const z = d.art === 'raus' ? RAUS : d.z;
+        x = (1 - u) ** 2 * s.x + 2 * (1 - u) * u * ctl.x + u * u * z.x; y = (1 - u) ** 2 * s.y + 2 * (1 - u) * u * ctl.y + u * u * z.y;
+        if (d.art === 'raus') { const a = clamp((tz - d.m - d.md) / .5); y -= 90 * a; op *= 1 - a; r = d.r * (1 - .4 * a); }
+        else if (q >= 1) { r = d.r * .8; op *= .35 + .65 * th; }
+      } else op *= .55 + .45 * th;
+      c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', r.toFixed(2)); c.setAttribute('opacity', op.toFixed(3));
+    });
+    // Tropfen fallen aus der nassen Wäsche
+    const nass = wert(AKTEURE.get(el('hemd')), 'o', tz) > .9 && !gutWelt;
+    for (let k = 0; k < 6; k++) {
+      const c = el('drip' + k), p = ((tz * .8 + k * .37) % 1);
+      const x = [700, 716, 744, 792, 808, 832][k], y0 = k < 3 ? 560 : 552;
+      c.setAttribute('cx', x); c.setAttribute('cy', (y0 + 80 * p * p).toFixed(1)); c.setAttribute('opacity', nass ? (p < .85 ? .9 : 0) : 0);
+    }
+  });
+}
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher aus sprache.json) ---------- */
+const PT = { Priya: 'pPriya', Schmitt: 'pSchmitt' };
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl(PT[p.dataset.figur]); });
+el('avSchmitt').innerHTML = `<div class="figur">${el('schmitt').querySelector('.ebene').innerHTML}</div>`;
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], FLACH = [], BLICK = [], NICK = [];      // [id, von, bis, …] in Welt-Zeit
+HOOKS.push(t => {
+  const tz = ZT(t);
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.figur && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    const flach = !spricht && !froh && FLACH.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    const hoert = !spricht && NICK.some(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    const blick = BLICK.find(([id, a, b]) => id === p.id && tz >= a && tz < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.flach').style.opacity = flach ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || froh || flach ? 0 : 1;
+    let bx = 0, by = 0;
+    if (blick) { const [, a, b, dx, dy] = blick, k = Math.min(clamp((tz - a) / .25), clamp((b - tz) / .25)); bx = dx * E.sinus(k); by = dy * E.sinus(k); }
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `translate(${bx.toFixed(2)}%,${by.toFixed(2)}%) scaleY(${z < .035 ? .12 : 1})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : hoert ? 3.2 * Math.max(0, Math.sin(t * 3.4 + i)) ** 4 : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick.toFixed(2)}deg) translateY(${nick.toFixed(2)}px)`;
+    if (!p.classList.contains('warm')) p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+akteur('#priya .schal', { o: 1 }, true);
+
+/* ================= Aufbau des Zimmers (steht schon beim Start) ================= */
+{
+  const T0 = A(-.6);
+  akteur('bue0', { x: 960, y: 600, o: 0, s: .94 }); tw('bue0', T0, .5, { o: 1 }, 'out'); tw('bue0', T0, .8, { s: 1 }, 'sanft'); cue(T0, 'whoosh');
+  const P1 = P(420, 526); ein('heiz', T0 + .25, { ...P1 }, { y: 50 });
+  const PD = P(554, 497); ein('dial', T0 + .3, { ...PD }, { y: 50 });
+  ein('gauge', T0 + .35, { ...P(650, 250) }, { y: -40 });
+  ein('hygro', T0 + .4, { ...P(790, 220) }, { y: -40 });
+  ein('kal', T0 + .45, { ...P(1200, 125) }, { y: -40 });
+  ein('bett', T0 + .3, { ...P(1030, 520) }, { y: 60 });
+  ein('schrank', T0 + .2, { ...P(1390, 420) }, { y: 60 }, 'whoosh');
+  akteur('schimmel', { ...P(1390, 430), s: 0 }); akteur('schimmelA', { ...P(1250, 300), s: 0 }); akteur('schimmelB', { ...P(1530, 560), s: 0 });
+  zw('temp', 0, .01, 18); zw('heiz', 0, .01, .35); zw('feuchte', 0, .01, .3);
+}
+akteur('kamera', {}, true);
+
+/* ================= 1 · Fenster auf Kipp, Heizung aus ================= */
+{
+  const tP = W('Priya', 1) - .15;
+  akteur('priya', { ...P(1010, 330), o: 0, y: LY + 470 }); tw('priya', tP, .3, { o: 1 }); tw('priya', tP, .65, { y: LY + 300 }, 'sanft'); cue(tP, 'pop');
+  landen('priya', tP + .6, .8);
+  const tWi = W('Winter', 2);
+  zw('schnee', tWi - .2, 1.2, 1, 'out'); bump('kal', tWi, 1.06);
+  BLICK.push(['priya', tWi, W('gekippt', 3) + 1, -5, 0]);
+  // Kamera zum Fenster; auf „gekippt“ klappt der Flügel nach innen, das Wärmebild zeigt den kalten Faden
+  const tF = W('Fenster', 3), tK = W('gekippt', 3);
+  kam(tF - .3, 1.1, 640, 470, 1.3);
+  zw('kipp', tK, .5, 1, 'back'); cue(tK, 'klick'); akzent(tK, .03);
+  waermebild(W('ganzen', 3), 1);
+  zw('fenKalt', tK + .3, 2.2, .85, 'out'); zw('temp', tK, 4, 15.5, 'inout');
+  // Heizung aus: Thermostat dreht ganz nach links, die Wärme verlischt
+  const tH = W('Heizung', 3), tAus = W('aus', 3);
+  zw('heiz', tAus - .1, .45, 0, 'back'); cue(tAus - .1, 'klick'); bump('dial', tAus - .1, 1.15);
+  zw('temp', tAus, 3, 13, 'inout'); zw('wandKalt', tAus, 2, .6, 'inout');
+  titel('tb1', tK - .1, [tF - .1, tF - .02, tK - .1, tK - .02, tH, tH + .08, tAus], { 2: 'rot', 6: 'rot' });
+  // Priya: frische Luft – tief einatmen; Heizen ist teuer: Münze springt aus dem Heizkörper, sie schiebt sie weg
+  kam(SE(3) + .1, 1, 760, 520, 1.12);
+  waermebild(W('Frische', 4) - .2, 0);
+  atmen('priya', W('Luft', 4)); FROH.push(['priya', W('Luft', 4), SE(4) + .2]);
+  const tT = W('teuer', 5);
+  akteur('muenze1', { ...P(470, 470), s: 0 }); tw('muenze1', tT - .2, .3, { s: 1 }, 'back'); flug('muenze1', tT - .2, .55, LX + 620, LY + 360, 90, { r: 360 }); cue(tT - .2, 'muenze');
+  tw('priya', tT + .1, .4, { x: LX + 900 }, 'sanft'); tw('priya', tT + .5, .5, { x: LX + 1010 }, 'sanft');
+  flug('muenze1', tT + .4, .6, LX + 260, LY + 260, 80, { r: 0, s: .4, o: 0 }); cue(tT + .4, 'whoosh');
+  FROH.push(['priya', tT + .5, SE(5) + .6]);
+  titelAus('tb1', SE(5) + .25);
+}
+
+/* ================= 2 · Abends: Wäsche im Zimmer, Schrank an der kalten Außenwand ================= */
+{
+  const tAb = W('Abends', 6);
+  kam(tAb - .4, 1.1, 960, 540, 1);
+  zw('nacht', tAb - .2, 1.2, 1, 'inout'); cue(tAb, 'whoosh');
+  const tW = W('Wäsche', 6);
+  akteur('staender', { ...P(760, 538), sx: 0, o: 0 }); tw('staender', tW - .35, .1, { o: 1 }); tw('staender', tW - .35, .55, { sx: 1 }, 'back'); cue(tW - .35, 'klick');
+  akteur('hemd', { ...P(700, 534), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
+  tw('hemd', tW, .15, { o: 1 }); flug('hemd', tW, .6, LX + 700, LY + 534, 140, { s: 1 }); cue(tW, 'whoosh'); landen('hemd', tW + .6);
+  akteur('tuch', { ...P(818, 528), o: 0, x: LX + 1010, y: LY + 330, s: .3 });
+  tw('tuch', tW + .35, .15, { o: 1 }); flug('tuch', tW + .35, .6, LX + 818, LY + 528, 140, { s: 1 }); cue(tW + .35, 'whoosh'); landen('tuch', tW + .95);
+  titel('tb2', tW, [tW, tW + .08, W('Zimmer', 6), W('Schrank', 7), W('Schrank', 7) + .08, W('Außenwand', 7) - .1, W('Außenwand', 7) - .02], { 2: 'rot', 6: 'rot' });
+  // Schrank an der kalten Außenwand: Akzent, Wärmebild zeigt die kalte Ecke hinter dem Schrank
+  const tS = W('Schrank', 7);
+  bump('schrank', tS, 1.04); akzent(tS, .035);
+  kam(tS - .2, 1, 1200, 520, 1.18);
+  const tKa = W('kalten', 7);
+  waermebild(tKa - .15, 1); zw('ecke', tKa + .1, 1.4, 1, 'out'); zw('wandKalt', tKa, 1.4, .8);
+  // Feuchte Luft: Tröpfchen steigen aus der Wäsche, ziehen zur kalten Wand hinter dem Schrank und ans Fenster
+  for (let k = 0; k < 46; k++) {
+    const r = hash(k + 3), r2 = hash(k + 101), r3 = hash(k + 211);
+    const zumSchrank = k % 3 !== 2;
+    tropfen({ b: tW + .9 + k * .1, q: { x: 680 + 160 * r, y: 520 }, c: { x: 520 + 640 * r2, y: 130 + 200 * r3 },
+      m: W('feuchte', 8) + .1 + 1.4 * r3, md: 1.6, art: 'kleben',
+      z: zumSchrank ? { x: 1280 + 220 * r, y: 290 + 320 * r2 } : { x: 300 + 240 * r, y: 395 + 20 * r2 } });
+  }
+  kam(W('feuchte', 8) - .3, 1, 960, 540, 1);
+  zw('feuchte', W('feuchte', 8), 1.6, .97, 'inout'); bump('hygro', W('bleibt', 8), 1.12); cue(W('bleibt', 8), 'plopp');
+}
+
+/* ================= 3 · Wochen später: Schimmel hinter dem Schrank ================= */
+{
+  const tW = W('Wochen', 9);
+  waermebild(SA(9) - .1, 0);
+  // Kalenderblätter fliegen ab
+  [['blatt1', 0], ['blatt2', .25], ['blatt3', .5]].forEach(([id, d], k) => {
+    akteur(id, { ...P(1200, 140), o: 0, s: .8 });
+    set(id, tW - .3 + d, { o: 1 }); flug(id, tW - .3 + d, .8, LX + 1060 - k * 110, LY + 700, -60, { r: -40 + k * 30, o: 0 }); cue(tW - .3 + d, 'whoosh');
+  });
+  bump('kal', tW - .3, 1.08);
+  // Die Wand hinter dem Schrank ist dunkel: Priya schiebt den Schrank zur Seite, Flecken wachsen in Ringen
+  const tWa = W('Wand', 9);
+  kam(tWa - .5, 1, 1180, 470, 1.25);
+  tw('priya', tWa - .6, .7, { x: LX + 1150, y: LY + 250 }, 'sanft');
+  tw('schrank', tWa - .2, .7, { x: LX + 1100 }, 'sanft'); cue(tWa - .2, 'whoosh');
+  tw('schimmel', W('dunkel', 9) - .2, 1.1, { s: 1 }, 'sanft'); cue(W('dunkel', 9), 'plopp');
+  const tSc = W('Schimmel', 10);
+  bump('schimmel', tSc, 1.1); akzent(tSc, .05);
+  // es riecht muffig: Geruchswellen, Priya rümpft die Nase
+  const tR = W('riecht', 10);
+  akteur('geruch', { ...P(1390, 260), o: 0, s: .8 }); tw('geruch', tR - .1, .3, { o: 1, s: 1 }, 'out');
+  HOOKS.push(t => { const tz = ZT(t); [1, 2, 3].forEach(k => el('gr' + k).setAttribute('transform', `translate(0 ${(-((tz * 30 + k * 12) % 36)).toFixed(1)})`)); });
+  tw('geruch', W('Ach', 11) + .2, .3, { o: 0 }, 'in');
+  FLACH.push(['priya', tR, SE(11) + .2]); wackeln('priya', tR + .2, 4, 5); BLICK.push(['priya', tR, SE(10), 5, 2]);
+  // „Ach, das sieht doch keiner“: Schrank zurück vor den Fleck
+  const tSi = W('sieht', 11);
+  tw('schrank', tSi - .2, .6, { x: LX + 1390 }, 'sanft'); cue(tSi - .2, 'whoosh'); landen('schrank', tSi + .4, .6);
+  tw('priya', tSi - .2, .6, { x: LX + 1010, y: LY + 300 }, 'sanft');
+  titel('tb3', tSc, [tSc, W('und', 10) + .2, W('und', 10) + .28, SE(11) - .4, SE(11) - .32], { 0: 'rot' });
+  // Der Fleck wird größer: Flecken kriechen am Schrankrand hervor
+  const tG = W('größer', 12);
+  tw('schimmelA', W('Fleck', 12), 1.2, { s: 1 }, 'sanft'); tw('schimmelB', tG - .1, 1.2, { s: 1 }, 'sanft'); cue(W('Fleck', 12), 'plopp');
+  kam(W('Fleck', 12) - .3, 1, 1240, 470, 1.18);
+  // Schaden: Brief mit Fragezeichen fliegt herein, Münzen fallen heraus
+  const tSd = W('Schaden', 13);
+  kam(W('meldet', 13) - .2, 1, 960, 540, 1);
+  ein('brief3', W('Schimmel', 13), { ...P(800, 300) }, { x: -300, y: -40, r: -8 }, 'whoosh'); wackeln('brief3', W('meldet', 13), 3, 4);
+  [['mz3a', 0], ['mz3b', .3], ['mz3c', .6]].forEach(([id, d], k) => {
+    akteur(id, { ...P(800, 320), o: 0, s: .5 });
+    const t0 = tSd - .5 + d; set(id, t0, { o: 1 }); flug(id, t0, .7, LX + 700 + k * 100, LY + 600, -40, { s: 1, r: 200 }); cue(t0 + .6, 'muenze');
+  });
+  akzent(tSd, .04);
+}
+
+/* ================= 4 · Stopp und Zurückspulen ================= */
+{
+  const tS = TSTOP, tR = R0, tC = R1;
+  ['schleier', 'zeilen', 'pauseIc', 'rewIc', 'rTitel', 'tbR'].forEach(echt);
+  akteur('schleier', { o: 0 }, true); tw('schleier', tS, .3, { o: .45 }); tw('schleier', tC - .3, .5, { o: 0 });
+  akteur('zeilen', { o: 0 }, true); tw('zeilen', tS, .2, { o: .1 }); tw('zeilen', tC - .2, .4, { o: 0 });
+  pop('pauseIc', tS, { x: 960, y: 500 }, 'plopp'); akzent(tS, .06); cue(tS + .02, 'klick');
+  wackeln('pauseIc', W('besser', 15), 3, 4);
+  tw('pauseIc', tR, .25, { s: 0, o: 0 }, 'in');
+  pop('rewIc', tR + .08, { x: 960, y: 500 }); tw('rewIc', tC - .55, .3, { s: 0, o: 0 }, 'in');
+  HOOKS.push(t => { const p = t > tR ? ((t - tR) * 2.4) % 1 : 0; $('#rewTri').setAttribute('transform', `translate(${(-14 * E.out(p)).toFixed(2)} 0)`); });
+  for (let k = 0; k < 7; k++) cue(tR + .1 + k * .42, k % 2 ? 'whoosh' : 'scan');
+  // Band-Spuren: dünne Störstreifen laufen durchs Bild
+  el('spuren').innerHTML = Array.from({ length: 5 }, (_, k) => `<div class="spur" id="sp${k}" style="height:${6 + k * 5}px"></div>`).join('');
+  HOOKS.push(t => {
+    const an = t > tR && t < tC - .2;
+    for (let k = 0; k < 5; k++) { const s = el('sp' + k); s.style.opacity = an ? (.18 + .1 * (k % 2)).toFixed(2) : 0;
+      s.style.transform = `translateY(${(((t - tR) * (380 + k * 170) + k * 230) % 1180 - 50).toFixed(1)}px)`; }
+  });
+  // Titel unten mittig; dann ein Lichtband wischt den hellen Tag ins Zimmer
+  titelEin('tbR', tR + 1.1); akteur('rTitel', { x: 580, y: 840, o: 0 }, true); tw('rTitel', tR + .9, .4, { o: 1 }, 'out'); tw('rTitel', tC + .5, .35, { o: 0, y: 860 }, 'in');
+  HOOKS.push(t => { const p = clamp((t - (tC - .55)) / 1.1); el('lichtband').style.transform = `translateX(${lerp(-1000, 2100, E.inout(p)).toFixed(1)}px) skewX(-12deg)`; el('lichtband').style.visibility = p > 0 && p < 1 ? 'visible' : 'hidden'; });
+  cue(tC - .5, 'whoosh');
+  titelAus('tb3', TS - .3);   // (wird beim Zurückspulen vom Text selbst rückwärts erledigt)
+}
+// ab R1: alle Akteure der Welt im Zustand des Anfangs (TS)
+function zuruecksetzen() {
+  const PR = ['x', 'y', 's', 'sx', 'sy', 'r', 'o'];
+  for (const a of AKTEURE.values()) {
+    if (ECHT.has(a.el)) continue;
+    const to = {}; PR.forEach(p => { to[p] = wert(a, p, TS); });
+    a.tw.push({ t0: R1, d: 1e-4, to, from: {}, e: E.lin, nr: TW_NR++, bogen: 0 }); a.unsortiert = true;
+  }
+}
+zuruecksetzen();
+
+/* ================= 5 · Derselbe Wintertag, richtig: Stoßlüften ================= */
+{
+  // etwas feuchte Luft von der Nacht hängt im Zimmer
+  zw('feuchte', R1 + .05, .01, .55);
+  const tAuf = W('ganz', 19);
+  for (let k = 0; k < 24; k++) tropfen({ gut: true, b: R1 - 2, q: { x: 600, y: 300 }, c: { x: 520 + 760 * hash(k + 400), y: 130 + 260 * hash(k + 500) }, m: tAuf + .5 + .9 * hash(k + 600), md: 1.2, art: 'raus' });
+  const tDe = W('Derselbe', 17);
+  bump('priya', tDe, 1.06); FROH.push(['priya', tDe, W('Kipp', 18)]);
+  // nicht auf Kipp: der Flügel will kippen, das Kipp-Zeichen wird durchgestrichen, Flügel bleibt zu
+  const tN = W('nicht', 18), tKi = W('Kipp', 18);
+  kam(W('Fenster', 18) - .3, 1, 640, 470, 1.3);
+  zw('kipp', W('Fenster', 18), .35, .4, 'out'); zw('kipp', tKi + .05, .35, 0, 'back'); cue(tKi + .05, 'klick');
+  el('kippNein').querySelector('.ic').innerHTML = tpl('svgKipp');
+  pop('kippNein', tN, { ...P(700, 140) }); akteur('kippStrich', { sx: 0 }, true); tw('kippStrich', tKi, .3, { sx: 1 }, 'out'); cue(tKi, 'plopp'); wackeln('kippNein', tKi + .2, 2, 4);
+  aus('kippNein', W('macht', 19));
+  // ganz auf: beide Flügel schwingen auf, kräftiger Luftstrom fegt die Tröpfchen hinaus
+  zw('offen', tAuf - .05, .6, 1, 'back'); cue(tAuf - .05, 'whoosh'); akzent(tAuf, .05);
+  kam(tAuf - .2, 1, 960, 540, 1);
+  waermebild(W('auf', 19) + .05, 1);
+  zw('stoss', tAuf + .2, .6, 1, 'out'); zw('feuchte', tAuf + .6, 2.4, .2, 'inout'); zw('fenKalt', tAuf + .3, 1, .45, 'out');
+  // fünf Minuten: Sanduhr dreht sich einmal und rieselt
+  const tFu = W('fünf', 19);
+  pop('sanduhr', tFu - .2, { ...P(700, 150) }); tw('sanduhr', tFu + .1, .6, { r: 180 }, 'inout'); cue(tFu + .1, 'whoosh');
+  tw('sanduhr', W('dann', 19) - .1, .01, { r: 0 });
+  // dann wieder zu
+  const tZu = W('zu', 19);
+  zw('offen', tZu - .15, .45, 0, 'inout'); cue(tZu + .25, 'klick'); zw('stoss', tZu - .2, .5, 0, 'in'); zw('fenKalt', tZu, 1, 0, 'out');
+  aus('sanduhr', tZu + .2);
+  waermebild(SE(19) + .1, 0);
+  const tSt = W('Stoßlüften', 20);
+  akzent(tSt, .04); bump('hygro', tSt, 1.1);
+  titel('tb5', tSt - .1, [tSt - .1, tSt, W('zwei', 21), W('zwei', 21) + .08, W('dreimal', 21) - .05, W('am', 21), W('Tag', 21), W('Minuten', 19) > 0 ? W('Tag', 21) + .25 : 0, W('Tag', 21) + .33, W('Tag', 21) + .41], { 0: 'gruen' });
+  // nach dem Duschen und Kochen: Tür auf, Dampf zieht herein, das Fenster geht kurz auf und der Dampf saust hinaus
+  const tDu = W('Duschen', 21), tKo = W('Kochen', 21);
+  zw('tuer', tDu - .5, .5, 1, 'sanft'); cue(tDu - .5, 'klick');
+  pop('dusche', tDu - .2, { ...P(140, 170) }); pop('topf', tKo - .2, { ...P(140, 440) });
+  for (let k = 0; k < 10; k++) tropfen({ gut: true, b: tDu - .1 + k * .07, q: { x: 160, y: 200 }, c: { x: 300 + 200 * hash(k + 700), y: 160 + 120 * hash(k + 710) }, m: tKo + .9 + .25 * hash(k + 720), md: .9, art: 'raus' });
+  for (let k = 0; k < 10; k++) tropfen({ gut: true, b: tKo - .1 + k * .07, q: { x: 160, y: 420 }, c: { x: 300 + 220 * hash(k + 800), y: 300 + 120 * hash(k + 810) }, m: tKo + 1.1 + .3 * hash(k + 820), md: .9, art: 'raus' });
+  zw('feuchte', tDu, .8, .6, 'inout'); zw('offen', tKo + .7, .45, 1, 'back'); cue(tKo + .7, 'whoosh'); zw('stoss', tKo + .8, .4, .7, 'out');
+  zw('offen', tKo + 2.4, .45, 0, 'inout'); zw('stoss', tKo + 2.3, .5, 0); cue(tKo + 2.85, 'klick'); zw('feuchte', tKo + 1.2, 1.4, .2, 'inout');
+  aus(['dusche', 'topf'], tKo + 2.2); zw('tuer', tKo + 2.1, .5, 0, 'inout');
+  titelAus('tb5', SE(21) + .3);
+}
+
+/* ================= 6 · Heizen: etwa 20 °C, 17 °C zum Schlafen, nicht unter 16 °C ================= */
+{
+  const tH = W('Heizung', 22);
+  kam(tH - .4, 1, 560, 500, 1.28);
+  zw('heiz', W('bleibt', 22), .5, .75, 'back'); cue(W('bleibt', 22), 'klick'); bump('dial', W('bleibt', 22), 1.15);
+  waermebild(W('an', 22) - .1, 1);
+  zw('temp', W('an', 22), 2.2, 20, 'inout'); zw('wandKalt', W('an', 22), 1.5, 0);
+  const t20 = W('zwanzig', 23);
+  el('c20').querySelector('.ic').innerHTML = tpl('svgSofa'); el('c17').querySelector('.ic').innerHTML = tpl('svgMond');
+  pop('c20', t20, { ...P(760, 150) }, 'ding'); bump('gauge', t20, 1.06);
+  // zum Schlafen: Schwenk zum Bett, Thermometer sinkt auf 17 °C
+  const tSch = W('Schlafen', 23);
+  kam(tSch - .3, 1.1, 820, 470, 1.15);
+  zw('heiz', tSch, .5, .55, 'inout'); zw('temp', tSch, 1.6, 17, 'inout');
+  pop('c17', W('siebzehn', 23), { ...P(1030, 360) }, 'ding'); bump('bett', W('siebzehn', 23), 1.04);
+  // Unter sechzehn Grad: rote Linie, das Thermometer stößt nicht darunter und federt zurück
+  const t16 = W('sechzehn', 24);
+  kam(t16 - .5, 1, 700, 430, 1.25); akzent(t16, .05);
+  zw('linie16', t16 - .1, .3, 1, 'out'); cue(t16, 'plopp');
+  zw('temp', W('sollte', 24), .6, 16.15, 'in'); zw('temp', W('werden', 24) + .1, .7, 17.2, 'back'); cue(W('werden', 24) + .1, 'pop'); bump('gauge', W('werden', 24) + .1, 1.08);
+  // sonst Schimmel: kurz flackert die kalte Ecke im Wärmebild auf und verschwindet wieder
+  zw('ecke', W('Schimmel', 24) - .2, .4, .55, 'out'); zw('ecke', WE('wachsen', 24), .6, 0, 'in');
+  aus(['c20', 'c17'], SE(24) + .1);
+  // Ein paar Stunden weg: Priya geht durch die Tür, das Thermostat dreht nur etwas herunter
+  const tWe = W('weg', 25);
+  kam(W('Ist', 25) - .2, 1, 900, 520, 1.05);
+  zw('tuer', W('Stunden', 25) - .3, .45, 1, 'sanft'); cue(W('Stunden', 25) - .3, 'klick');
+  tw('priya', W('Stunden', 25) - .1, .8, { x: LX + 140, y: LY + 400, s: .7 }, 'inout'); tw('priya', tWe + .4, .3, { o: 0 }, 'in');
+  zw('tuer', tWe + .55, .4, 0, 'inout'); cue(tWe + .95, 'klick');
+  const tDr = W('dreht', 25);
+  zw('heiz', tDr, .5, .38, 'sanft'); cue(tDr, 'klick'); bump('dial', tDr, 1.15); zw('temp', tDr + .2, 1.8, 18.2, 'inout');
+  titel('tb6', W('Wohnen', 23) - .2, [W('Wohnen', 23) - .2, W('Wohnen', 23) - .1, t20 - .1, t20 - .02, t20 + .06, t16 - .55, t16 - .47, t16 - .39, t16 - .31, t16 - .1, t16 - .02], { 0: 'gruen' }, { x: 120, y: 52 });
+  waermebild(SE(25) + .15, 0); zw('linie16', SE(25), .4, 0);
+  titelAus('tb6', SE(25) + .3);
+}
+
+/* ================= 7 · Schrank weg von der Außenwand, Wäsche in den Trockenraum ================= */
+{
+  const tSc = W('Schrank', 26);
+  // Priya kommt zurück und schiebt den Schrank ein Stück nach vorn (Draufsicht: Abstand zur Wand)
+  tw('priya', tSc - .7, .01, { x: LX + 140, y: LY + 400, s: .7 }); tw('priya', tSc - .7, .3, { o: 1 }); cue(tSc - .7, 'klick');
+  zw('tuer', tSc - .9, .3, 1, 'sanft'); zw('tuer', tSc + .3, .4, 0, 'inout');
+  tw('priya', tSc - .5, .9, { x: LX + 1180, y: LY + 300, s: 1 }, 'inout');
+  kam(tSc - .4, 1, 1200, 480, 1.2);
+  const tSb = W('schiebt', 26);
+  tw('priya', tSb, .2, { sx: 1.12, sy: .9 }, 'sinus'); tw('priya', tSb + .2, .3, { sx: 1, sy: 1 }, 'sanft');
+  tw('schrank', tSb + .05, .5, { s: 1.04, y: LY + 432 }, 'sanft'); cue(tSb, 'whoosh'); landen('schrank', tSb + .55, .5);
+  pop('lupe', W('Zentimeter', 26) - .3, { ...P(860, 290) }, 'pop');
+  akteur('lupeSk', { y: 0 }, true); tw('lupeSk', W('Zentimeter', 26), .6, { y: 30 }, 'sanft');
+  akteur('lupeMb', { sx: 0 }, true); tw('lupeMb', W('Zentimeter', 26) + .2, .4, { sx: 1 }, 'back'); cue(W('Zentimeter', 26) + .2, 'klick');
+  akteur('lupeCm', { o: 0, y: 10 }, true); tw('lupeCm', W('Zentimeter', 26) + .3, .4, { o: 1, y: 0 }, 'sanft');
+  akteur('lupeZug', { o: 0 }, true); tw('lupeZug', W('Außenwand', 26), .4, { o: 1 });
+  HOOKS.push(t => { el('lupeZug').querySelector('path').setAttribute('stroke-dashoffset', (-t * 70).toFixed(1)); });
+  waermebild(W('Außenwand', 26) - .1, 1);
+  zw('luftSpalt', W('weg', 26), .5, 1, 'out'); zw('ecke', W('Außenwand', 26), .01, .5); zw('ecke', W('weg', 26), 1.6, 0, 'inout');
+  aus('lupe', SE(26) + .2);
+  waermebild(SE(26) + .2, 0); zw('luftSpalt', SE(26) + .2, .4, 0);
+  // Wäsche im Trockenraum: Ständer mit Wäsche ploppt, klappt zusammen und hüpft durch die Tür
+  const tWs = W('Wäsche', 27), tTr = W('Trockenraum', 27);
+  kam(tWs - .3, 1, 760, 520, 1.1);
+  tw('priya', tWs - .3, .7, { x: LX + 1010, y: LY + 300 }, 'sanft');
+  pop('staender', tWs - .15, { ...P(760, 538) }); pop('hemd', tWs - .05, { ...P(700, 534) }, null); pop('tuch', tWs + .05, { ...P(818, 528) }, null);
+  el('trocken').querySelector('.ic').innerHTML = tpl('svgWaesche'); el('trocken').querySelector('.ic2').innerHTML = tpl('svgRunter');
+  pop('trocken', tTr - .2, { ...P(250, 150) }, 'ding');
+  zw('tuer', tTr, .4, 1, 'sanft'); cue(tTr, 'klick');
+  ['hemd', 'tuch'].forEach((id, k) => { flug(id, tTr + .1 + k * .1, .7, LX + 140, LY + 470, 160, { s: .3, o: 0 }); });
+  tw('staender', tTr + .25, .2, { sx: .12 }, 'in'); flug('staender', tTr + .45, .7, LX + 140, LY + 500, 140, { s: .4 }); tw('staender', tTr + 1, .2, { o: 0 }); cue(tTr + .45, 'whoosh');
+  zw('tuer', W('gibt', 27), .4, 0, 'inout'); cue(W('gibt', 27) + .4, 'klick');
+  aus('trocken', SE(27) + .1);
+  // Sonst lüftet sie öfter: das Fenster geht noch einmal kurz auf, die Anzeige bleibt grün
+  const tOe = W('lüftet', 28);
+  zw('offen', tOe - .1, .4, 1, 'back'); cue(tOe - .1, 'whoosh'); zw('stoss', tOe, .3, .7);
+  zw('offen', SE(28) - .1, .4, 0, 'inout'); zw('stoss', SE(28) - .2, .4, 0); cue(SE(28) + .3, 'klick');
+  bump('hygro', W('öfter', 28), 1.12); cue(W('öfter', 28), 'ding');
+  titel('tb7', tSc, [tSc, tSc + .08, W('Außenwand', 26) - .3, W('Außenwand', 26) - .22, tWs, tWs + .08], { 0: 'gruen' });
+  titelAus('tb7', SE(28) + .3);
+}
+
+/* ================= 8 · Schimmel sofort melden – schriftlich, mit Foto ================= */
+{
+  const tFl = W('Fleck', 29);
+  kam(W('Und', 29), 1, 1100, 420, 1.12);
+  pop('fleck8', tFl - .1, { ...P(1530, 120) }, 'plopp'); wackeln('fleck8', tFl + .4, 2, 3);
+  BLICK.push(['priya', tFl, W('sofort', 29) + .3, 6, -4]); wackeln('priya', W('sieht', 29), 2, 3);
+  const tSo = W('sofort', 29);
+  akzent(tSo, .05); huepfen('priya', tSo - .05, 14);
+  pop('schmitt', W('Vermieter', 29) - .1, { ...P(1410, 690) });
+  // schriftlich und mit Foto: Handy hoch, die Kamera blitzt
+  const tSchr = W('schriftlich', 30), tFo = W('Foto', 30);
+  ein('handy8', tSchr - .4, { ...P(1180, 300), r: -3 }, { x: 40, y: 60 }, 'whoosh'); ein('schirm8', tSchr - .4, { ...P(1180, 300), r: -3 }, { x: 40, y: 60 });
+  akteur('blitz8', { o: 0 }, true); tw('blitz8', tFo, .06, { o: 1 }); tw('blitz8', tFo + .06, .4, { o: 0 }, 'out'); cue(tFo, 'klick');
+  bump('fleck8', tFo + .05, 1.15);
+  // Nachricht: Zeilen tippen sich, während Priya spricht; das Foto hängt dran
+  const tG = W('Guten', 31);
+  kam(tG - .4, 1, 1000, 470, 1.08);
+  ein('msg8', tG - .3, { ...P(760, 330) }, { y: 60 }, 'whoosh');
+  [['z8a', tG], ['z8b', W('in', 31)], ['z8w', W('Schimmel', 31) - .1], ['z8c', W('an', 31)]].forEach(([id, t]) => {
+    akteur(id, { sx: 0 }, true); tw(id, t, .5, { sx: 1 }, 'out'); cue(t, 'tipp'); cue(t + .25, 'tipp');
+  });
+  akteur('foto8', { s: 0 }, true); tw('foto8', W('Foto', 32), .45, { s: 1 }, 'back'); cue(W('Foto', 32), 'pop');
+  akteur('ges8', { o: 0 }, true);
+  // Senden: Nachricht fliegt zu Herrn Schmitt; er liest, nickt und hält den Schraubenschlüssel hoch
+  const tSe = SE(32) + .1;
+  tw('ges8', tSe, .2, { o: 1 }); cue(tSe, 'klick');
+  bump('msg8', tSe, 1.04); flug('msg8', tSe + .2, .7, LX + 1300, LY + 640, 120, { s: .25, o: 0 }); cue(tSe + .2, 'whoosh');
+  bump('schmitt', tSe + .85, 1.1); BLICK.push(['schmitt', W('Guten', 31), tSe + 2, -6, -2]); NICK.push(['schmitt', tSe + .9, tSe + 2]);
+  FROH.push(['schmitt', tSe + 1.2, 999], ['priya', tSe + 1.3, 999]);
+  akteur('schluessel', { ...P(1560, 620), s: 0, r: -30 }); tw('schluessel', tSe + 1.2, .5, { s: 1, r: -8 }, 'back'); cue(tSe + 1.2, 'pop'); wackeln('schluessel', tSe + 1.7, 2, 6);
+  el('ok8').innerHTML = tpl('svgHaken'); pop('ok8', tSe + 1.5, { ...P(1300, 580) }, 'erfolg');
+  titel('tb8', W('sofort', 29) - .1, [tFl, tFl + .08, tSo - .1, W('Vermieter', 29)], { 0: 'gruen' });
+  titelAus('tb8', SE(32) + .6);
+  aus(['handy8', 'schirm8'], SE(32) + .5);
+}
+
+/* ================= 9 · Nebenkosten: das Haus von außen im Wärmebild ================= */
+const T9 = SA(33) - .2;
+{
+  // Haus um das Zimmer: Fassade mit Fenstern, Dach und Schnee
+  const FX = [-1040, 960, 2960], FY = [-700, 600, 1900];
+  let s = `<rect x="-1840" y="-1400" width="5600" height="4100" rx="60" fill="var(--b200)"/><rect x="-1840" y="-1400" width="5600" height="4100" rx="60" fill="var(--info)" id="hausKalt" opacity="0"/>
+    <path d="M-2100 -1360L960 -2300 4020 -1360Z" fill="var(--b600)"/><path d="M-1500 -1520L960 -2280 3420 -1520Q960 -1900 -1500 -1520Z" fill="var(--surface)"/>
+    <rect x="-2400" y="2660" width="6720" height="700" fill="var(--surface)"/>`;
+  FX.forEach((x, i) => FY.forEach((y, j) => {
+    if (i === 1 && j === 1) return;
+    s += `<rect x="${x - 830}" y="${y - 440}" width="1660" height="880" rx="60" fill="var(--surface)"/><rect x="${x - 780}" y="${y - 390}" width="1560" height="780" rx="40" fill="${(i + j) % 2 ? 'var(--warning-bg)' : 'var(--b100)'}"/>
+      <rect class="hk" x="${x - 780}" y="${y - 390}" width="1560" height="780" rx="40" fill="var(--b700)" opacity="0"/>`;
+  }));
+  s += `<rect x="130" y="160" width="1660" height="880" rx="60" fill="var(--surface)"/>`;
+  // Nachbarfenster rechts oben: dauernd gekippt – im Wärmebild strömt die Wärme hinaus
+  s += `<g id="nachbarKipp"><rect x="2160" y="-1100" width="1600" height="90" rx="30" fill="var(--b500)" transform="rotate(-3 2960 -1100)"/></g>
+    <g id="fahneG" opacity="0"><ellipse id="fahne1" cx="2960" cy="-1250" rx="900" ry="620" fill="url(#gHausW)"/><ellipse id="fahne2" cx="2960" cy="-1650" rx="620" ry="520" fill="url(#gHausW)"/></g>
+    <defs><radialGradient id="gHausW"><stop offset="0" stop-color="var(--error)"/><stop offset=".5" stop-color="var(--warning)" stop-opacity=".8"/><stop offset="1" stop-color="var(--warning)" stop-opacity="0"/></radialGradient></defs>`;
+  el('haus').innerHTML = s;
+  HOOKS.push(t => {
+    const th = zv('thermo', t), f = zv('fahne', t);
+    $('#hausKalt').setAttribute('opacity', (th * .75).toFixed(3));
+    document.querySelectorAll('#haus .hk').forEach(r => r.setAttribute('opacity', (th * .6).toFixed(3)));
+    $('#fahneG').setAttribute('opacity', (f * th).toFixed(3));
+    $('#fahne1').setAttribute('ry', (620 + 60 * Math.sin(t * 2.3)).toFixed(0)); $('#fahne2').setAttribute('cy', (-1650 - 80 * Math.sin(t * 1.7)).toFixed(0));
+    el('aussen').style.opacity = clamp((zv('kamZ', t) < .9 ? 1 : 0) * (1 - (zv('kamZ', t) - .3) / .6) * 1.4).toFixed(3);
+  });
+  // Übrigens: Kamera fährt aus dem Zimmer heraus – es ist ein Fenster in einem Haus im Schnee
+  kam(T9, 1.8, 1100, 300, .26, 'inout'); cue(T9, 'whoosh');
+  zw('schnee', T9, .1, 1);
+  // Nebenkosten: Umschlag fliegt herein und öffnet sich zur Abrechnung
+  const tNk = W('Nebenkosten', 33);
+  ['umschlag', 'abr', 'klappe', 'balkenRot', 'balkenGruen'].forEach(echt);
+  akteur('umschlag', { x: 1680, y: 600, o: 0, r: 8 }); tw('umschlag', tNk - .6, .3, { o: 1 }); tw('umschlag', tNk - .6, .8, { x: 1290, y: 560, r: -2 }, 'sanft'); cue(tNk - .6, 'whoosh');
+  const tAb = W('Abrechnung', 34);
+  akteur('klappe', { sy: 1 }, true); tw('klappe', W('Einmal', 34) + .2, .4, { sy: -1 }, 'inout'); cue(W('Einmal', 34) + .2, 'klick');
+  tw('umschlag', tAb - .4, .4, { o: 0, y: 640 }, 'in');
+  el('abr').querySelector('.kopf .ic').innerHTML = tpl('svgFlamme');
+  el('icKipp').innerHTML = tpl('svgFensterKipp'); el('icZu').innerHTML = tpl('svgFensterZu');
+  akteur('abr', { x: 1240, y: 480, o: 0, s: .7 }); tw('abr', tAb - .35, .3, { o: 1 }); tw('abr', tAb - .35, .6, { s: 1 }, 'back'); cue(tAb - .35, 'pop');
+  akteur('balkenRot', { sx: 0 }, true); akteur('balkenGruen', { sx: 0 }, true);
+  // Wer dauernd kippt, heizt nach draußen: Wärmebild des Hauses, das gekippte Fenster bläst Wärme hinaus
+  const tKp = W('kippt', 35), tDr = W('draußen', 35), tMe = W('mehr', 35);
+  waermebild(W('Fenster', 35), 1);
+  zw('fahne', tKp, 1.2, 1, 'out'); akzent(tDr, .05);
+  tw('balkenGruen', tKp, .5, { sx: 1 }, 'out');
+  tw('balkenRot', W('zahlt', 35) - .1, .9, { sx: 1 }, 'sanft'); cue(W('zahlt', 35), 'muenze'); cue(tMe, 'muenze');
+  bump('balkenRot', tMe + .1, 1.06);
+  // Also: zurück ins Zimmer, die vier Dinge bekommen grüne Marken
+  const tAl = W('Also', 36);
+  waermebild(tAl - .3, 0); zw('fahne', tAl, .5, 0);
+  tw('abr', tAl - .3, .4, { o: 0, y: 520 }, 'in');
+  kam(tAl - .2, 1.6, 960, 540, 1, 'inout'); cue(tAl - .2, 'whoosh');
+  const M = [['m9a', W('lüften', 36), P(420, 70)], ['m9b', W('heizen', 36), P(560, 420)], ['m9c', W('Abstand', 36), P(1260, 190)], ['m9d', W('melden', 36), P(1010, 470)]];
+  M.forEach(([id, t, p]) => { el(id).querySelector('u').innerHTML = tpl('svgHakenG'); pop(id, t, p, 'erfolg'); });
+  bump('dial', W('heizen', 36), 1.15); bump('schrank', W('Abstand', 36), 1.04);
+  zw('offen', W('lüften', 36) - .1, .4, 1, 'back'); zw('offen', W('heizen', 36) + .2, .5, 0, 'inout');
+  // Melden: Handy ploppt kurz bei Priya auf
+  pop('handy8', W('Schimmel', 36), { ...P(1180, 300), r: -3 }, null); pop('schirm8', W('Schimmel', 36), { ...P(1180, 300), r: -3 }, null);
+  titel('tb9', W('lüften', 36) - .1, [W('lüften', 36) - .1, W('heizen', 36) - .1, W('heizen', 36) - .02, W('Abstand', 36) - .1, W('Abstand', 36) - .02, W('melden', 36) - .1]);
+  // Priya strahlt, der Schal fliegt ab
+  const tE = ENDE_SPRACHE + .2;
+  huepfen('priya', tE, 16); tw('#priya .schal', tE + .1, .7, { y: 120, r: 20, o: 0 }, 'in'); cue(tE + .1, 'whoosh');
+}
+
+/* ---------- Abspann: ein Kreis öffnet sich aus dem Fenster ---------- */
+const AB = ENDE_SPRACHE + 1.6;
+['asTitel', 'asUnter'].forEach(echt);
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann').style.clipPath = `circle(${(p * 130).toFixed(2)}% at 26% 42%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+titelAus('tb9', AB);
+tropfenFertig();
+
+/* ---------- eigenes render: Welt-Zeit je Akteur ---------- */
+function renderZ(t) {
+  const tz = ZT(t);
+  for (const a of AKTEURE.values()) {
+    const tt = ECHT.has(a.el) ? t : tz;
+    const g = p => wert(a, p, tt);
+    const o = g('o'), skx = g('s') * g('sx'), sky = g('s') * g('sy');
+    a.el.style.opacity = o;
+    a.el.style.visibility = o <= 0.001 || Math.abs(skx) < 0.001 || Math.abs(sky) < 0.001 ? 'hidden' : 'visible';
+    a.el.style.transform = `translate(${g('x')}px,${g('y')}px)` + (a.rel ? '' : ' translate(-50%,-50%)') + ` rotate(${g('r')}deg) scale(${skx},${sky})`;
+  }
+  for (const h of HOOKS) h(t);
+}
+start(AB + 3.8, AB + 2);
+window.render = renderZ;
+</script>
+</body></html>

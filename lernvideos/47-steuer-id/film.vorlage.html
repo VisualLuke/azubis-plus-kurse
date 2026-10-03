@@ -19,12 +19,26 @@
   --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
 }
 #kamera{position:absolute;inset:0;transform-origin:1320px 540px}
-.buehne{width:900px;height:720px;border-radius:48px}
-.titel{font-size:58px;line-height:68px}
-.titel.schmal{font-size:54px;line-height:64px}
-.unter{font-size:38px;line-height:50px}
-.unter + .unter{margin-top:6px}
-.unter.oben{margin:0 0 12px}
+.buehne{width:900px;height:720px;border-radius:36px;background:linear-gradient(var(--b50),var(--b100));box-shadow:14px 14px 0 var(--surface),28px 28px 0 var(--n200)}
+.buehne.sv{background:linear-gradient(var(--info-bg),var(--b50))}
+/* Text im Bild als Kopfzeile über der Bühne, mit Kapitel-Farbstreifen */
+.block{left:510px;top:64px;width:1180px;height:184px;justify-content:flex-end}
+.titel{font-size:56px;line-height:64px}
+.unter{font-size:34px;line-height:44px;margin-top:6px}
+.tbbar{position:absolute;left:-32px;bottom:6px;width:10px;border-radius:5px;background:var(--b500);transform-origin:50% 100%}
+.block.sv .tbbar{background:var(--info)}
+.block.beide .tbbar{background:linear-gradient(var(--b500),var(--info))}
+.wrap{position:absolute;left:0;top:0;width:0;height:0}
+/* Blenden */
+#blende{position:absolute;display:none;left:0;top:0}
+.wisch{position:absolute;left:0;top:-40px;width:1900px;height:1160px;display:none}
+#wischA{background:linear-gradient(135deg,var(--b500),var(--b700))} #wischB{background:linear-gradient(135deg,var(--info),var(--b500))}
+/* Schlüssel */
+.schl{width:70px;height:190px;transform-origin:50% 7%}
+.schl svg{width:70px}
+.bund{width:64px;height:64px;border-radius:999px;border:7px solid var(--n400)}
+.etikett.sv{background:var(--info);color:var(--surface)}
+.nk-felder i.rollt{color:var(--n400);background:var(--surface);border:3px solid var(--surface)}
 
 /* Porträts */
 .portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
@@ -143,9 +157,9 @@
 .start5 small{display:block;font:700 20px/24px Inter;color:var(--ink)}
 
 /* Versicherungsnummernachweis und alter Ausweis */
-.nachweis{width:380px;padding:24px 26px 26px;border-radius:20px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:12px;transform-origin:50% 0}
+.nachweis{width:412px;padding:24px 26px 26px;border-radius:20px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:12px;transform-origin:50% 0}
 .nachweis small{font:700 14px/18px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--info)}
-.nachweis b{font:800 22px/26px Inter;color:var(--ink);white-space:nowrap;letter-spacing:-.01em}
+.nachweis b{font:800 21px/26px Inter;color:var(--ink);white-space:nowrap;letter-spacing:-.01em}
 .nachweis .nr{display:flex;gap:4px}
 .nachweis .nr i{width:22px;height:32px;flex:none;border-radius:6px;background:var(--info-bg);font:800 17px/32px Inter;font-style:normal;text-align:center;color:var(--ink)}
 .nachweis .nr i.lu{margin-left:8px}
@@ -177,6 +191,10 @@
 <template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
 <template id="svgSchloss"><svg viewBox="0 0 40 40"><path d="M13 18v-4a7 7 0 0 1 14 0v4" stroke="var(--surface)" stroke-width="4" fill="none"/><rect x="9" y="17" width="22" height="17" rx="4" fill="var(--surface)"/></svg></template>
 <template id="svgOrdner"><svg viewBox="0 0 16 16"><path d="M1.5 4a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5h5.5A1.5 1.5 0 0 1 14.5 5.5v6.5a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 12Z" fill="var(--b500)"/></svg></template>
+<template id="svgSchl"><svg viewBox="0 0 70 190"><g transform="translate(3 4)" opacity=".25"><circle cx="35" cy="38" r="33" fill="var(--b700)"/><rect x="27" y="62" width="16" height="118" rx="8" fill="var(--b700)"/></g>
+  <rect x="27" y="62" width="16" height="118" rx="8" fill="var(--k)"/><rect x="39" y="134" width="20" height="13" rx="4" fill="var(--k)"/><rect x="39" y="155" width="15" height="12" rx="4" fill="var(--k)"/>
+  <circle cx="35" cy="38" r="33" fill="var(--k)"/><circle cx="35" cy="14" r="6" fill="var(--bg)"/>
+  <text x="35" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="24" fill="var(--surface)">NN</text></svg></template>
 <template id="svgFoto"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="2" fill="var(--surface)"/><path d="M3.5 11.5l3-3.5 2.5 2.5 1.5-1.5 2 2.5Z" fill="var(--b300)"/></svg></template>
 
 <div id="kamera"><div id="welt">
@@ -213,7 +231,8 @@
   <div class="a" id="muenze2" style="width:120px" data-gruppe="m2">{{muenze}}</div>
   <div class="a plakette rot" id="nein2b" data-gruppe="m2"></div>
 
-  <!-- 3 · Ein paar Wochen, nach drei Monaten anfordern -->
+  <!-- 3 · Ein paar Wochen, nach drei Monaten anfordern (unter Szene 2: Kamera kippt nach unten) -->
+  <div class="wrap" id="w3" style="transform:translate(-1920px,1080px)">
   <div class="a buehne" id="bue2"></div>
   <div class="a abreiss" id="kal3"><i class="ring" style="left:58px"></i><i class="ring" style="right:58px"></i><div class="kopf"></div></div>
   <div class="a monat" id="mon3a"><div class="kopf"></div><small>Monat</small><b>1</b></div>
@@ -229,6 +248,8 @@
       <div class="knopf" id="knopf3">Absenden</div></div></div>
   <div class="a finger" id="finger3" data-frei></div>
   <div class="a" id="brief3" style="width:120px" data-frei>{{brief~3}}</div>
+
+  </div>
 
   <!-- 4 · Ein Leben lang gleich, Lohnsteuer, gleich ans Personalbüro (erst mittig) -->
   <div class="a buehne" id="bue3"></div>
@@ -260,7 +281,7 @@
     <div class="fb-feld"><span>Sozialversicherungsnummer</span><div class="fb-box"></div></div></div>
 
   <!-- 5 · Sozialversicherungsnummer: von der Rentenversicherung -->
-  <div class="a buehne" id="bue4"></div>
+  <div class="a buehne sv" id="bue4"></div>
   <div class="a nk sv" id="k5"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
   <div class="a" id="amt5" style="width:200px">{{amt~5}}</div>
   <div class="a etikett" id="eRv5">Rentenversicherung</div>
@@ -273,7 +294,7 @@
   <div class="a" id="koffer5" style="width:130px" data-gruppe="kw5">{{werkzeugkoffer}}</div>
 
   <!-- 6 · Betrieb meldet an, Versicherungsnummernachweis (erst mittig) -->
-  <div class="a buehne" id="bue5"></div>
+  <div class="a buehne sv" id="bue5"></div>
   <div class="a" id="betrieb6" style="width:210px" data-gruppe="b6">{{betrieb~6}}</div>
   <div class="a" id="zahn6a" style="width:70px" data-gruppe="b6" data-dreht>{{zahnrad}}</div>
   <div class="a" id="zahn6b" style="width:52px" data-gruppe="b6" data-dreht>{{zahnrad~6}}</div>
@@ -288,32 +309,36 @@
   <div class="a nk sv leer" id="k6leer" data-gruppe="k6"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">?</span></div><div class="nk-felder"></div></div>
   <div class="a nk sv" id="k6" data-gruppe="k6"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
   <div class="a plakette grau" id="frage6" data-gruppe="k6"><b>?</b></div>
-  <div class="a" id="brief6" style="width:170px" data-frei>{{brief~6}}</div>
-  <div class="a nachweis" id="nw6"><small>Deutsche Rentenversicherung</small><b>Versicherungsnummernachweis</b><div class="nr" id="nr6"></div>
+  <div class="a" id="umO6" style="width:300px;transform-origin:50% 31.25%" data-gruppe="post6">{{umschlag-offen~6}}</div>
+  <div class="a" id="umH6" style="width:300px" data-gruppe="post6">{{umschlag-hinten~6}}</div>
+  <div class="a nachweis" id="nw6" data-gruppe="post6"><small>Deutsche Rentenversicherung</small><b>Versicherungsnummernachweis</b><div class="nr" id="nr6"></div>
     <div class="ln" style="width:86%"></div><div class="ln" style="width:64%"></div></div>
+  <div class="a" id="umV6" style="width:300px" data-gruppe="post6">{{umschlag-vorne~6}}</div>
+  <div class="a" id="umK6" style="width:300px;transform-origin:50% 31.25%" data-gruppe="post6">{{umschlag-klappe~6}}</div>
   <div class="a altkarte" id="alt6" data-dreht><b>Sozialversicherungsausweis</b><i style="width:62%"></i><i style="width:44%"></i><div class="bild"></div></div>
   <div class="a etikett" id="eFr6">früher</div>
   <div class="a etikett brand" id="eHe6">heute: Brief</div>
 
-  <!-- 7 · Zwei Nummern, zwei Aufgaben (Waage) -->
+  <!-- 7 · Zwei Nummern, zwei Aufgaben: zwei Schlüssel, zwei Türen -->
   <div class="a buehne" id="bue6"></div>
-  <div class="a saeule" id="saeule7" data-gruppe="waage"></div>
-  <div class="a fuss" id="fuss7" data-gruppe="waage"></div>
-  <div class="a balken" id="balken7" data-gruppe="waage"></div>
-  <div class="a gelenk" id="gelenk7" data-gruppe="waage"></div>
-  <div class="a nk" id="k7s"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
-  <div class="a nk sv" id="k7v"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
-  <svg class="a" id="linie7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
-    <g stroke="var(--b300)" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" fill="none">
-      <path id="l7a" d="M1110 580V626"/><path id="l7b" d="M1460 580V630"/><path id="l7c" d="M1620 580V630"/></g></svg>
-  <div class="a" id="muenze7" style="width:130px">{{muenze-prozent}}</div>
-  <div class="a" id="schwein7" style="width:150px">{{sparschwein}}</div>
-  <div class="a" id="kasse7" style="width:130px">{{schild-kreuz~7}}</div>
-  <div class="a etikett" id="eSt7">Steuer</div>
-  <div class="a etikett" id="eRe7">Rente</div>
-  <div class="a etikett" id="eKk7">Krankenkasse</div>
+  <div class="a" id="tuer7a" style="width:260px" data-gruppe="t7a">{{haustuer~7a}}</div>
+  <div class="a" id="muenze7" style="width:120px">{{muenze-prozent}}</div>
+  <div class="a" id="blatt7a" style="width:260px;transform-origin:27.5% 50%" data-gruppe="t7a" data-dreht>{{haustuer-blatt~7a}}</div>
+  <div class="a" id="tuer7b" style="width:260px" data-gruppe="t7b">{{haustuer~7b}}</div>
+  <div class="a" id="schwein7" style="width:130px">{{sparschwein}}</div>
+  <div class="a" id="kasse7" style="width:112px">{{schild-kreuz~7}}</div>
+  <div class="a" id="blatt7b" style="width:260px;transform-origin:27.5% 50%" data-gruppe="t7b" data-dreht>{{haustuer-blatt~7b}}</div>
+  <div class="a etikett brand" id="eSt7">Steuer</div>
+  <div class="a etikett sv" id="eSv7">Sozialversicherung</div>
+  <div class="a nk" id="k7s" data-dreht><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
+  <div class="a nk sv" id="k7v" data-dreht><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
+  <div class="a bund" id="ring7" data-gruppe="bund7"></div>
+  <div class="a schl" id="key7s" data-frei data-gruppe="bund7" data-dreht data-nr="11" style="--k:var(--b500)"></div>
+  <div class="a schl" id="key7v" data-frei data-gruppe="bund7" data-dreht data-nr="12" style="--k:var(--info)"></div>
+  <div class="a frage" id="buchst7" style="background:var(--warning)" data-frei>A</div>
 
-  <!-- 8 · Sicher ablegen, nur an Stellen, die sie brauchen (erst mittig) -->
+  <!-- 8 · Sicher ablegen, nur an Stellen, die sie brauchen (über Szene 7: Kamera kippt nach oben) -->
+  <div class="wrap" id="w8" style="transform:translate(-1920px,-1080px)">
   <div class="a buehne" id="bue7"></div>
   <div class="a nk" id="k8s"><div class="nk-kopf"><b>Steuer-ID</b><span class="nk-zahl">11</span></div><div class="nk-felder"></div></div>
   <div class="a nk sv" id="k8v"><div class="nk-kopf"><b>Sozialversicherungsnummer</b><span class="nk-zahl">12</span></div><div class="nk-felder"></div></div>
@@ -336,25 +361,31 @@
   <div class="a etikett" id="zahl8a" data-frei>12 345 678 901</div>
   <div class="a etikett" id="zahl8b" data-frei>12 345678 A 901</div>
   <div class="a portrait" id="kw8" data-f="kwame" style="width:180px;height:180px"></div>
-  <div class="a" id="schutz8" style="width:200px">{{schild}}</div>
+  <div class="a bund" id="ring8" data-gruppe="bund8"></div>
+  <div class="a schl" id="key8s" data-frei data-gruppe="bund8" data-dreht data-nr="11" style="--k:var(--b500)"></div>
+  <div class="a schl" id="key8v" data-frei data-gruppe="bund8" data-dreht data-nr="12" style="--k:var(--info)"></div>
   <div class="a" id="mail8" style="width:150px" data-gruppe="mail8">{{brief~8c}}</div>
   <div class="a plakette rot" id="nein8a" data-gruppe="mail8"></div>
   <div class="a angel" id="tel8" data-gruppe="tel8"><svg viewBox="0 0 54 54"><rect x="13" y="4" width="22" height="40" rx="5" fill="var(--b500)"/><rect x="16" y="9" width="16" height="27" rx="2" fill="var(--b100)"/>
     <path d="M42 8v22a7 7 0 0 1-14 0v-3" stroke="var(--n500)" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M28 27l-3 4" stroke="var(--n500)" stroke-width="4" stroke-linecap="round"/></svg></div>
   <div class="a plakette rot" id="nein8b" data-gruppe="tel8"></div>
+  </div>
 </div></div>
 
-<div class="block" id="tb2"><div class="titel">Steuer-ID</div><div class="unter">11 Ziffern</div><div class="unter">kommt per Post</div><div class="unter">kostenlos</div></div>
-<div class="block" id="tb3"><div class="titel">Nach 3 Monaten kein Brief?</div><div class="unter">→ beim BZSt anfordern</div></div>
-<div class="block" id="tb4"><div class="titel">Gleich ans Personalbüro</div></div>
-<div class="block" id="tb5"><div class="titel schmal">Sozialversicherungs- nummer</div><div class="unter">von der Rentenversicherung</div></div>
-<div class="block" id="tb6"><div class="unter oben">Heute:</div><div class="titel schmal">Versicherungs- nummernachweis</div></div>
-<div class="block" id="tb7"><div class="titel">Steuer-ID = Steuer</div><div class="unter">SV-Nummer = Sozialversicherung</div></div>
-<div class="block" id="tb8"><div class="titel">Nur an Stellen, die sie brauchen</div></div>
+<div class="block st" id="tb2"><i class="tbbar"></i><div class="titel">Steuer-ID</div><div class="unter">11 Ziffern · kommt per Post · kostenlos</div></div>
+<div class="block st" id="tb3"><i class="tbbar"></i><div class="titel">Nach 3 Monaten kein Brief?</div><div class="unter">→ beim BZSt anfordern</div></div>
+<div class="block st" id="tb4"><i class="tbbar"></i><div class="titel">Gleich ans Personalbüro</div></div>
+<div class="block sv" id="tb5"><i class="tbbar"></i><div class="titel">Sozialversicherungsnummer</div><div class="unter">von der Rentenversicherung</div></div>
+<div class="block sv" id="tb6"><i class="tbbar"></i><div class="titel">Heute: Versicherungsnummernachweis</div></div>
+<div class="block beide" id="tb7"><i class="tbbar"></i><div class="titel">Steuer-ID = Steuer</div><div class="unter">SV-Nummer = Sozialversicherung</div></div>
+<div class="block beide" id="tb8"><i class="tbbar"></i><div class="titel">Nur an Stellen, die sie brauchen</div></div>
+
+<div id="blende"></div>
+<div class="wisch" id="wischA"></div><div class="wisch" id="wischB"></div>
 
 <div class="deckel" id="abspann"><div class="ende">
   <div class="gross a" id="asTitel" style="position:relative">Zwei Nummern – gut aufheben.</div>
-  <div class="klein a" id="asUnter" style="position:relative">Gib sie deinem Betrieb – und sonst nur Stellen, die sie wirklich brauchen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Gib sie deinem Betrieb –<br>und sonst nur Stellen, die sie wirklich brauchen.</div>
 </div></div>
 
 <script src="../../werkzeug/motor.js"></script>
@@ -380,12 +411,16 @@ document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl(
 document.querySelectorAll('.fb-ok').forEach(e => { e.innerHTML = tpl('svgHaken'); });
 ['nein2', 'nein2b', 'nein8a', 'nein8b'].forEach(id => { el(id).innerHTML = tpl('svgKreuz'); });
 el('schloss8').innerHTML = tpl('svgSchloss');
+document.querySelectorAll('.schl').forEach(k => { k.innerHTML = tpl('svgSchl').replace('NN', k.dataset.nr); });
 document.querySelectorAll('#schirm8 .app-zeile:not(.neu) i').forEach(i => { i.innerHTML = tpl('svgOrdner'); });
 document.querySelectorAll('#schirm8 .app-zeile.neu i').forEach(i => { i.innerHTML = tpl('svgFoto'); });
 
 const N = 8;
 for (let i = 0; i < N; i++) akteur('bue' + i, { x: S(i) + 1320, y: 540 });
-kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte
+// Die Bühne steht immer in der Bildmitte, der Text im Bild darüber. Szene 3 liegt unter Szene 2 (Wrapper w3),
+// Szene 8 über Szene 7 (Wrapper w8) – dorthin kippt die Kamera senkrecht.
+kamera.basis.x = -360; kamera.basis.y = 100;
+const KX = i => -S(i) - 360;
 
 /* ---------- Helfer (wie Kurs 32) ---------- */
 const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
@@ -410,12 +445,12 @@ const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8
 const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
 const STRICHE = [];
 const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
-HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); p.style.opacity = t < t0 + .02 ? 0 : 1; }));
 // gestrichelte Linien: nur einblenden (Strichmuster bleibt)
 const linieEin = (pfad, t0) => { akteur(pfad, { o: 0 }, true); tw(pfad, t0, .35, { o: 1 }); };
 // zusätzliche Welle-Elemente erzeugen
 let WN = 0;
-const neueWelle = (X, gruen) => { const w = document.createElement('div'); w.className = 'a welle' + (gruen ? ' gruen' : ''); w.id = 'welle' + (WN++); w.dataset.frei = ''; el('welt').appendChild(w); return w.id; };
+const neueWelle = (eltern = 'welt') => { const w = document.createElement('div'); w.className = 'a welle'; w.id = 'welle' + (WN++); w.dataset.frei = ''; el(eltern).appendChild(w); return w.id; };
 
 /* ---------- Figuren: blinzeln, nicken, Mund ---------- */
 document.querySelectorAll('.portrait').forEach(p => {
@@ -438,11 +473,18 @@ function kaestchen(id) {
   k.querySelector('.nk-felder').innerHTML = Array.from({ length: n }, (_, i) => `<i class="${lu.includes(i) ? 'lu' : ''}${sv && i === 8 ? ' bst' : ''}"></i>`).join('');
   return [...k.querySelectorAll('.nk-felder i')];
 }
-const TIPP = [];   // [Kästchen, Text, t0, dt]
-const tippen = (boxen, text, t0, dt) => TIPP.push([boxen, text, t0, dt]);
-HOOKS.push(t => TIPP.forEach(([bx, txt, t0, dt]) => bx.forEach((b, i) => {
-  const c = txt[i] || ' ', an = c !== ' ' && t >= t0 + i * dt;
-  b.textContent = an ? c : ''; b.classList.toggle('voll', an);
+// Zahlenschloss: jedes Zeichen rollt kurz durch (Ziffern bzw. Buchstaben) und rastet dann ein
+const TIPP = [];   // [Kästchen, Text, t0, dt, Rollzeit]
+const tippen = (boxen, text, t0, dt, roll = 0) => {
+  TIPP.push([boxen, text, t0, dt, roll]);
+  if (roll) [...text].forEach((c, i) => { if (c !== ' ') cue(t0 + i * dt, 'klick'); });
+};
+const ABC = 'ABCDEFGHKLMNPRSTUVWZ';
+HOOKS.push(t => TIPP.forEach(([bx, txt, t0, dt, roll]) => bx.forEach((b, i) => {
+  const c = txt[i] || ' ', tf = t0 + i * dt, an = c !== ' ' && t >= tf, rollt = c !== ' ' && !an && roll && t >= tf - roll;
+  const k = Math.floor(t * 24) + i * 7;
+  b.textContent = an ? c : rollt ? (/[A-Z]/.test(c) ? ABC[k % ABC.length] : String(k % 10)) : '';
+  b.classList.toggle('voll', an); b.classList.toggle('rollt', !!rollt);
 })));
 // Kästchen fahren nacheinander herein; der Zähler zählt mit
 function kaestchenEin(boxen, zahl, t0, dt) {
@@ -469,28 +511,50 @@ const LABEL = [];   // [span, Text, t0, dt]
 HOOKS.push(t => LABEL.forEach(([s, txt, t0, dt]) => { s.textContent = txt.slice(0, Math.max(0, Math.floor((t - t0) / dt))); }));
 
 /* ---------- Kamera: Schwenk, mittige Bühnen, Akzente ---------- */
-const PANS = [], WECHSEL = [], AKZENTE = [];
-const MITTIG = [0, 3, 5, 7];
-const RUHE = Array.from({ length: N }, (_, i) => i === 0 ? [-360, -360] : MITTIG.includes(i) ? [-S(i) - 360, -S(i)] : [-S(i), -S(i)]);
-const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
-const panMitte = (t0, i) => { tw('welt', t0, .9, { x: -S(i) - 360 }, 'inout'); cue(t0, 'whoosh'); PANS.push(t0); };
-const schieben = (t0, i) => { tw('welt', t0, .9, { x: -S(i) }, 'inout'); cue(t0, 'whoosh'); WECHSEL.push(t0); };
+const PANS = [], AKZENTE = [];
+const fahrt = (t0, x, y) => { tw('welt', t0, .9, { x, y }, 'inout'); cue(t0, 'whoosh'); PANS.push(t0); };
+const schnitt = (t, i, y = 100) => set('welt', t, { x: KX(i), y });
 const akzent = (t, z = .035) => AKZENTE.push([t, z]);
 bewegungsunschaerfe(.1);
+const RX = [KX(0), KX(1), KX(1), KX(3), KX(4), KX(5), KX(6), KX(6)];   // Ruhelage der Kamera je Bühne
 HOOKS.push(t => {
   let z = 1;
   for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
-  for (const p of WECHSEL) z -= .035 * Math.sin(Math.PI * clamp((t - p) / .9));
   for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
   z *= 1 + .012 * (1 - Math.cos(t * 2 * Math.PI / 18));
-  const wx = wert(kamera, 'x', t);
-  let c = 0;
-  for (const i of MITTIG) c = Math.max(c, clamp(1 - Math.abs(wx - RUHE[i][0]) / 360));
-  $('#kamera').style.transformOrigin = `${(1320 - 360 * c).toFixed(1)}px 540px`;
+  $('#kamera').style.transformOrigin = '960px 640px';
   $('#kamera').style.transform = `scale(${z})`;
-  // Tiefe: die Bühne bleibt beim Schwenk etwas zurück
-  for (let i = 0; i < N; i++) { const [lo, hi] = RUHE[i]; $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - Math.min(hi, Math.max(lo, wx)))).toFixed(1)}px)`; }
+  // Tiefe: die Bühne bleibt beim waagrechten Schwenk etwas zurück
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RX[i])).toFixed(1)}px)`;
 });
+// Bewegungsunschärfe auch senkrecht (Kamera kippt)
+document.getElementById('wischer').setAttribute('y', '-8%'); document.getElementById('wischer').setAttribute('height', '116%');
+HOOKS.push(t => {
+  const v = p => Math.abs(wert(kamera, p, t) - wert(kamera, p, t - 1 / 30));
+  const bx = Math.min(22, v('x') * .1), by = Math.min(22, v('y') * .1);
+  document.getElementById('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('welt').style.filter = bx > .3 || by > .3 ? 'url(#wischer)' : '';
+});
+// Titel mit Farbstreifen
+const titel = (id, t0, zeiten) => {
+  titelEin(id, t0, zeiten);
+  const b = el(id), bar = b.querySelector('.tbbar'), erst = b.querySelector('.titel');
+  bar.style.height = (b.offsetHeight - erst.offsetTop - 10) + 'px';
+  akteur(bar, { sy: 0 }, true); tw(bar, t0 - .1, .5, { sy: 1 }, 'weich');
+};
+// Zoom-Blende: ein Rechteck wächst aus einem Gegenstand auf Bildgröße, die Kamera springt, es schrumpft in den nächsten
+const BLENDEN = [];
+const lerp = (a, b, p) => a + (b - a) * p;
+const kasten = (id, f = [0, 0, 1, 1]) => () => { const r = el(id).getBoundingClientRect(); return [r.left + r.width * f[0], r.top + r.height * f[1], r.width * (f[2] - f[0]), r.height * (f[3] - f[1])]; };
+function blende(t0, von, nach, bg, o = {}) {
+  const b = { t0, d1: o.d1 ?? .5, h: o.h ?? .06, d2: o.d2 ?? .55, von, nach, bg, r0: o.r0 ?? 14, r1: o.r1 ?? 30 };
+  BLENDEN.push(b); cue(t0, 'whoosh'); cue(t0 + b.d1 + b.h, 'whoosh');
+  return t0 + b.d1 + b.h / 2;   // Zeitpunkt des Schnitts
+}
+// Wischblende in den Farben der beiden Nummern
+const WISCH = [];
+const wisch = t0 => { WISCH.push(t0); cue(t0, 'whoosh'); cue(t0 + .62, 'whoosh'); return t0 + .56; };
 
 /* ================= 1 · Kwames erster Tag: zwei Nummern? (mittig, ohne Titel) ================= */
 {
@@ -533,12 +597,14 @@ HOOKS.push(t => {
 }
 
 /* ================= 2 · Steuer-ID: elf Ziffern, per Post, kostenlos ================= */
-pan2(SE(3) + .3, 1);
+// Übergang 1 → 2: das Feld „Steuer-ID“ wächst auf Bildgröße und schrumpft in die violette Karte
+const C12 = blende(SE(3) + .2, kasten(el('fb1').querySelectorAll('.fb-box')[0]), kasten('k2'), 'linear-gradient(135deg,var(--b500),var(--b700))');
+schnitt(C12, 1);
 {
   const X = S(1);
-  titelEin('tb2', W('Steuer', 4) - .2, [W('Steuer', 4) - .2, W('elf', 5) - .1, W('elf', 5) + .02, W('Brief', 7) - .3, W('Brief', 7) - .22, W('Brief', 7) - .14, W('kostet', 8) - .1]);
+  titel('tb2', W('Steuer', 4) - .2, [W('Steuer', 4) - .2, W('elf', 5) - .1, W('elf', 5) + .02, W('Brief', 7) - .45, W('Brief', 7) - .37, W('Brief', 7) - .29, W('Brief', 7) - .21, W('kostet', 8) - .25, W('kostet', 8) - .1]);
   // Die Karte kommt, elf Kästchen fahren herein, der Zähler läuft
-  ein('k2', W('Zuerst', 4) - .1, { x: X + 1320, y: 330 }, { y: -80 }, 'whoosh');
+  akteur('k2', { x: X + 1320, y: 330 });
   const bx = kaestchen('k2'), zahl = el('k2').querySelector('.nk-zahl');
   kaestchenEin(bx, zahl, W('hat', 5) - .05, .09);
   akzent(W('elf', 5), .04); bump('k2', W('Ziffern', 5) + .45, 1.04); cue(W('Ziffern', 5) + .45, 'ding');
@@ -555,7 +621,7 @@ pan2(SE(3) + .3, 1);
   const tS = W('Anmeldung', 7);
   akteur('stempel2', { x: X + 1010, y: 460, o: 0 });
   tw('stempel2', tS - .5, .2, { o: 1 }); tw('stempel2', tS - .2, .18, { y: 560 }, 'in'); tw('stempel2', tS - .02, .5, { y: 450, o: 0 }, 'weich');
-  akteur('abdruck2', { x: X + 1010, y: 640, o: 0, r: -3, s: 1.4 }); tw('abdruck2', tS - .02, .16, { o: 1, s: 1 }, 'out'); cue(tS - .02, 'plopp');
+  akteur('abdruck2', { x: X + 1030, y: 640, o: 0, r: -3, s: 1.4 }); tw('abdruck2', tS - .02, .16, { o: 1, s: 1 }, 'out'); cue(tS - .02, 'plopp');
   wackeln('rathaus2', tS, 3, 2);
   // Daten gehen zum Bundeszentralamt, das schickt einen Brief
   ein('amt2', W('schickt', 7) - .3, { x: X + 1340, y: 650 }, { y: 70 }, 'whoosh');
@@ -577,7 +643,8 @@ pan2(SE(3) + .3, 1);
 }
 
 /* ================= 3 · Ein paar Wochen – nach drei Monaten anfordern ================= */
-pan2(SE(8) + .3, 2);
+// Übergang 2 → 3: die Kamera kippt nach unten (Szene 3 liegt unter Szene 2)
+fahrt(SE(8) + .3, KX(1), -980);
 {
   const X = S(2);
   // Abreißkalender: Woche um Woche fliegt ein Blatt ab
@@ -596,7 +663,7 @@ pan2(SE(8) + .3, 2);
   // Kwame schaut in den Briefkasten: leer
   wackeln('kasten3', W('Wochen', 9) + .2, 4, 3); cue(W('Wochen', 9) + .2, 'klick'); mund('kw3', W('Wochen', 9) + .3, 'auf');
   // Nach drei Monaten: drei Monatsblätter, das dritte pocht
-  titelEin('tb3', W('nach', 10) - .15, [W('nach', 10) - .15, W('drei', 10) - .05, W('Monaten', 10) - .05, W('kein', 10) - .1, W('Brief', 10) - .1,
+  titel('tb3', W('nach', 10) - .15, [W('nach', 10) - .15, W('drei', 10) - .05, W('Monaten', 10) - .05, W('kein', 10) - .1, W('Brief', 10) - .1,
     W('Dann', 11) - .1, W('beim', 11) - .1, W('Bundeszentralamt', 11) - .05, W('anfordern', 11) - .1]);
   aus('kal3', W('Kommt', 10) - .2, .3);
   [['mon3a', 985], ['mon3b', 1110], ['mon3c', 1235]].forEach(([id, x], i) => { pop(id, W('drei', 10) - .1 + i * .16, { x: X + x, y: 430 }, 'pop'); });
@@ -621,30 +688,28 @@ pan2(SE(8) + .3, 2);
   cue(tA, 'klick'); bump('handy3', tA, 1.03); bump('schirm3', tA, 1.03);
   // ein neuer Brief fliegt zu Kwames Briefkasten
   akteur('brief3', { x: X + 1120, y: 560, s: .3, o: 0 });
-  tw('brief3', tA + .1, .1, { o: 1 }); flug('brief3', tA + .1, .7, X + 1590, 400, 150, { s: .6 }); tw('brief3', tA + .72, .1, { o: 0 }); cue(tA + .1, 'whoosh');
+  tw('brief3', tA + .1, .1, { o: 1 }); flug('brief3', tA + .1, .7, X + 1590, 400, 100, { s: .6 }); tw('brief3', tA + .72, .1, { o: 0 }); cue(tA + .1, 'whoosh');
   bump('kasten3', tA + .8, 1.08); cue(tA + .8, 'erfolg'); tw('frage3', tA + .8, .25, { s: 0 }, 'sinus');
   froh('kw3', tA + .85); huepfen('kw3', tA + .85, 14);
   textAus('tb3', SE(11) + .2);
 }
 
 /* ================= 4 · Ein Leben lang gleich, Lohnsteuer, gleich ans Personalbüro ================= */
-panMitte(SE(11) + .35, 3);
+// Übergang 3 → 4: Zoom in den Briefkasten, heraus kommt der Umschlag
+const C34 = blende(SE(11) + .35, kasten('kasten3', [36 / 160, 32 / 160, 120 / 160, 100 / 160]), kasten('umH4', [20 / 160, 50 / 160, 140 / 160, 128 / 160]),
+  'linear-gradient(var(--surface),var(--n200))', { d1: .4, h: .05, d2: .45, r0: 20, r1: 17 });
+schnitt(C34, 3);
 {
   const X = S(3), UX = X + 1320, UY = 600, UM = ['umO4', 'umH4', 'umV4', 'umK4'];
-  // Der Brief landet und öffnet sich, die Karte kommt heraus und die Ziffern tippen sich
-  const tL = SE(11) + .5;
-  UM.forEach(id => {
-    akteur(id, { x: X + 1720, y: 300, o: 0, s: .5, r: -3 });
-    tw(id, tL, .2, { o: 1 }); tw(id, tL, .9, { x: UX, y: UY, s: 1 }, 'inout', { bogen: 100 }); tw(id, tL, .9, { r: 0 }, 'sinus');
-    tw(id, tL + .9, .1, { sy: .9, sx: 1.05 }, 'sinus'); tw(id, tL + 1.0, .4, { sy: 1, sx: 1 }, 'sanft');
-  });
-  set('umO4', 0, { sy: 0 }); cue(tL + .9, 'plopp');
-  const tK = W('Steuer', 12) + .1;
+  // Der Brief liegt da und öffnet sich wie ein Umschlag, die Karte gleitet heraus, die Ziffern rasten ein wie ein Zahlenschloss
+  UM.forEach(id => akteur(id, { x: UX, y: UY }));
+  set('umO4', 0, { sy: 0 });
+  const tK = Math.max(W('Steuer', 12) + .1, C34 + .55);
   tw('umK4', tK, .2, { sy: 0 }, 'in'); set('umK4', tK + .2, { o: 0 }); tw('umO4', tK + .2, .26, { sy: 1 }, 'weich'); cue(tK, 'klick');
   akteur('k4', { x: UX, y: UY + 10, s: .34, o: 0 });
   set('k4', tK + .25, { o: 1 }); tw('k4', tK + .3, .8, { y: 330, s: 1 }, 'inout'); cue(tK + .3, 'whoosh');
   const bx = kaestchen('k4');
-  tippen(bx, STEUER, tK + .9, .07); for (let i = 0; i < 11; i += 2) cue(tK + .9 + i * .07, 'tipp');
+  tippen(bx, STEUER, tK + .85, .085, .5);
   aus(['umO4', 'umH4', 'umV4'], tK + 1.1, .35);
   // ganzes Leben gleich: grüner Rahmen
   const rahmen = el('k4').querySelector('.nk-rahmen');
@@ -688,9 +753,8 @@ panMitte(SE(11) + .35, 3);
   tw('k4', tA, .45, { o: 1, s: 1 }, 'sanft'); cue(tA, 'whoosh');
   pop('brief4', W('Brief', 15) - .1, { x: UX, y: 620 }, 'pop');
   pop('da4', W('da', 15), { x: UX + 62, y: 580 }, 'ding');
-  schieben(W('Nummer', 15) - .6, 3);
   aus(['brief4', 'da4'], W('Nummer', 15) - .55, .3);
-  titelEin('tb4', W('gleich', 15) - .25, [W('gleich', 15) - .25, W('ans', 15) - .1, W('Personalbüro', 15) - .1]);
+  titel('tb4', W('gleich', 15) - .25, [W('gleich', 15) - .25, W('ans', 15) - .1, W('Personalbüro', 15) - .1]);
   ein('fb4', W('Nummer', 15) - .1, { x: X + 1480, y: 650 }, { y: 80 }, 'whoosh');
   const F = [...el('fb4').querySelectorAll('.fb-feld')], B = F.map(f => f.querySelector('.fb-box')), OK = F[0].querySelector('.fb-ok');
   const tP = W('Personalbüro', 15) - .35, FY4 = 650 - el('fb4').offsetHeight / 2 + F[0].offsetTop + 64;
@@ -698,22 +762,24 @@ panMitte(SE(11) + .35, 3);
   akteur('zahl4', { x: UX, y: 352, o: 0, s: .6 });
   tw('zahl4', tP, .12, { o: 1 }); flug('zahl4', tP, .62, X + 1460, FY4, 80, { s: 1 }); tw('zahl4', tP + .55, .12, { o: 0 }); cue(tP, 'whoosh');
   feld(B[0], [[0, 'rot'], [tP + .62, 'gruen', '12 345 678 901', .025]]);
-  feld(B[1], [[0, '']]);
+  feld(B[1], [[0, 'rot']]);
   akteur(OK, { s: 0 }, true); tw(OK, tP + .7, .5, { s: 1 }, 'back'); cue(tP + .7, 'erfolg');
   bump('fb4', tP + .65, 1.04); akzent(tP + .65, .035);
   textAus('tb4', SE(15) + .25);
 }
 
 /* ================= 5 · Sozialversicherungsnummer: von der Rentenversicherung ================= */
-pan2(SE(15) + .35, 4);
+// Übergang 4 → 5: das Feld „Sozialversicherungsnummer“ wächst auf und wird zur blauen Karte
+const C45 = blende(SE(15) + .3, kasten(el('fb4').querySelectorAll('.fb-box')[1]), kasten('k5'), 'linear-gradient(135deg,var(--info),var(--b500))');
+schnitt(C45, 4);
 {
   const X = S(4);
-  titelEin('tb5', W('Sozialversicherungsnummer', 16) - .2, [W('Sozialversicherungsnummer', 16) - .2, W('Sozialversicherungsnummer', 16) + .4,
+  titel('tb5', W('Sozialversicherungsnummer', 16) - .2, [W('Sozialversicherungsnummer', 16) - .2,
     W('von', 17) - .1, W('der', 17) - .05, W('Rentenversicherung', 17) - .1]);
-  ein('k5', W('zweite', 16) - .15, { x: X + 1320, y: 330 }, { y: -80 }, 'whoosh');
+  akteur('k5', { x: X + 1320, y: 330 });
   const bx = kaestchen('k5'), zahl = el('k5').querySelector('.nk-zahl');
   kaestchenEin(bx, zahl, W('Sozialversicherungsnummer', 16), .09);
-  tippen(bx, '        A   ', W('Sozialversicherungsnummer', 16) + 8 * .09 + .1, 0);
+  tippen(bx, '        A   ', W('Sozialversicherungsnummer', 16) + 8 * .09 + .5, 0, .4);
   const tBu = W('Sozialversicherungsnummer', 16) + 1.4;
   wackeln(bx[8], tBu, 4, 8); cue(tBu, 'ding'); akzent(W('Sozialversicherungsnummer', 16) + .3, .035);
   // Sie kommt von der Deutschen Rentenversicherung
@@ -739,7 +805,8 @@ pan2(SE(15) + .35, 4);
 }
 
 /* ================= 6 · Anmeldung bei der Krankenkasse, Versicherungsnummernachweis ================= */
-panMitte(SE(18) + .3, 5);
+// Übergang 5 → 6: waagrechter Schwenk
+fahrt(SE(18) + .3, KX(5), 100);
 {
   const X = S(5);
   ein('betrieb6', W('Dein', 19) - .2, { x: X + 1110, y: 460 }, { y: 70 }, 'whoosh');
@@ -768,20 +835,26 @@ panMitte(SE(18) + .3, 5);
   // Dann kommt ein Brief: Kamera schiebt, der Nachweis faltet sich auf
   aus(['kasse6', 'eKk6', 'ok6'], W('Dann', 21) - .45, .3);
   tw('pfeil6', W('Dann', 21) - .45, .3, { o: 0 });
-  schieben(W('Dann', 21) - .3, 5);
-  titelEin('tb6', W('Brief', 21) - .2, [W('Brief', 21) - .2, W('Versicherungsnummernachweis', 21) - .15, W('Versicherungsnummernachweis', 21) + .35]);
-  const tB = W('kommt', 21) - .25;
-  akteur('brief6', { x: X + 1760, y: 250, o: 0, s: .6, r: -3 });
-  tw('brief6', tB, .15, { o: 1 }); tw('brief6', tB, .8, { x: X + 1520, y: 470, s: 1, r: 0 }, 'inout', { bogen: 60 }); cue(tB, 'whoosh');
-  landen('brief6', tB + .8); cue(tB + .8, 'plopp');
-  const tN = W('Versicherungsnummernachweis', 21) - .3;
-  tw('brief6', tN, .25, { o: 0, s: .8 }, 'in');
-  const nr = el('nr6'); nr.innerHTML = [...SVNR].map((c, i) => `<i class="${[2, 8, 9].includes(i) ? 'lu' : ''}${i === 8 ? ' bst' : ''}">${c}</i>`).join('');
+  titel('tb6', W('Brief', 21) - .2, [W('Brief', 21) - .2, W('Versicherungsnummernachweis', 21) - .15]);
+  // Der Brief kommt als Umschlag, die Klappe geht auf, der Nachweis gleitet heraus
+  const UX = X + 1500, UY = 640, UM = ['umO6', 'umH6', 'umV6', 'umK6'];
+  const tB = W('kommt', 21) - .45;
+  UM.forEach(id => {
+    akteur(id, { x: X + 1760, y: 300, o: 0, s: .5, r: -3 });
+    tw(id, tB, .2, { o: 1 }); tw(id, tB, .8, { x: UX, y: UY, s: 1 }, 'inout', { bogen: 80 }); tw(id, tB, .8, { r: 0 }, 'sinus');
+    tw(id, tB + .8, .1, { sy: .9, sx: 1.05 }, 'sinus'); tw(id, tB + .9, .4, { sy: 1, sx: 1 }, 'sanft');
+  });
+  set('umO6', 0, { sy: 0 }); cue(tB, 'whoosh'); cue(tB + .8, 'plopp');
+  const tKl = W('Brief', 21) + .15;
+  tw('umK6', tKl, .2, { sy: 0 }, 'in'); set('umK6', tKl + .2, { o: 0 }); tw('umO6', tKl + .2, .26, { sy: 1 }, 'weich'); cue(tKl, 'klick');
+  const nr = el('nr6'); nr.innerHTML = [...SVNR].map((c, i) => `<i class="${[2, 8, 9].includes(i) ? 'lu' : ''}${i === 8 ? ' bst' : ''}"></i>`).join('');
   const NR = [...nr.querySelectorAll('i')];
-  akteur('nw6', { x: X + 1520, y: 560, sy: 0, o: 0 });
-  set('nw6', tN + .1, { o: 1 }); tw('nw6', tN + .1, .55, { sy: 1 }, 'sanft'); cue(tN + .1, 'kritzeln');
-  NR.forEach((b, i) => { akteur(b, { o: 0, s: .5 }, true); tw(b, tN + .55 + i * .06, .3, { o: 1, s: 1 }, 'back'); });
-  akzent(tN + .4, .035);
+  const tN = W('Versicherungsnummernachweis', 21) - .2;
+  akteur('nw6', { x: UX, y: UY + 10, s: .5, o: 0 });
+  set('nw6', tKl + .3, { o: 1 }); tw('nw6', tN, .8, { y: 500, s: 1 }, 'inout'); cue(tN, 'whoosh');
+  aus(['umO6', 'umH6', 'umV6'], tN + .5, .35);
+  tippen(NR, SVNR, tN + .75, .06, .35);
+  akzent(tN + .5, .035);
   // die Nummer kommt in die Karte: grau → blau, Ziffern tippen sich
   const tF = tN + 1.45;
   const bx = kaestchen('k6');
@@ -797,56 +870,68 @@ panMitte(SE(18) + .3, 5);
   tw('alt6', tA + .1, .4, { o: 1, s: 1 }, 'sanft'); cue(tA + .1, 'pop');
   pop('eFr6', tA + .3, { x: X + 1100, y: 290 }, null);
   const tD = W('Sozialversicherungsausweis', 22) + .3;
-  tw('alt6', tD, .3, { sx: 0 }, 'in'); tw('alt6', tD + .3, .35, { sx: -.85, o: .55, s: .9 }, 'out'); cue(tD, 'whoosh');
+  tw('alt6', tD, .3, { sx: 0 }, 'in'); tw('alt6', tD + .3, .35, { sx: 1, o: .45, s: .86 }, 'out'); cue(tD, 'whoosh');
   pop('eHe6', tD + .55, { x: X + 1335, y: 352 }, 'ding');
   bump('nw6', tD + .7, 1.04);
   textAus('tb6', SE(22) + .2);
 }
 
-/* ================= 7 · Zwei Nummern, zwei Aufgaben (Waage) ================= */
-pan2(SE(22) + .35, 6);
+/* ================= 7 · Zwei Nummern, zwei Aufgaben: zwei Schlüssel, zwei Türen ================= */
+// Übergang 6 → 7: Wischblende in Violett und Blau
+const C67 = wisch(SE(22) + .3);
+schnitt(C67, 6);
 {
-  const X = S(6), BY = 560;
-  ein('fuss7', SA(23) - .45, { x: X + 1320, y: 830 }, { y: 60 }, 'whoosh');
-  ein('saeule7', SA(23) - .35, { x: X + 1320, y: 700 }, { y: 80 });
-  pop('balken7', SA(23) - .25, { x: X + 1320, y: BY }, null, 'sanft');
-  pop('gelenk7', SA(23) - .15, { x: X + 1320, y: BY }, 'pop');
-  // beide Karten fallen auf die Waage
+  const X = S(6), D1 = { x: X + 1010, y: 640 }, D2 = { x: X + 1590, y: 640 };
   const bs = kaestchen('k7s'), bv = kaestchen('k7v');
   tippen(bs, STEUER, -1, 0); tippen(bv, SVNR, -1, 0);
-  const KY = BY - 9 - 46;
-  const fall = (id, x, t) => { akteur(id, { x, y: KY - 260, s: .46, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .38, { y: KY }, 'in'); landen(id, t + .38, .8); cue(t + .38, 'plopp'); };
-  const tS = W('Zwei', 23) - .4, tV = W('zwei', 23, .5) - .4;
-  fall('k7s', X + 1125, tS); fall('k7v', X + 1515, tV);
-  // Balken kippt kurz und pendelt sich ein (höchstens 3°), Karten fahren mit
-  const kipp = [[tS + .38, -2.5], [tV + .38, 1.6], [tV + .7, -.8], [tV + 1.0, .3], [tV + 1.3, 0]];
-  kipp.forEach(([t, r], i) => {
-    const d = i ? .3 : .25;
-    tw('balken7', t, d, { r }, 'sinus');
-    const dy = Math.sin(r * Math.PI / 180) * 195;
-    tw('k7s', t, d, { y: KY - dy, r }, 'sinus'); if (i) tw('k7v', t, d, { y: KY + dy, r }, 'sinus');
-  });
-  bump('k7s', W('Aufgaben', 23), 1.05); bump('k7v', W('Aufgaben', 23) + .1, 1.05); cue(W('Aufgaben', 23), 'ding');
-  // Steuer-ID: elf Ziffern, für die Steuer
-  titelEin('tb7', W('Steuer', 24) - .2, [W('Steuer', 24) - .2, W('ist', 24) - .1, W('Steuer', 24, 2.5) - .1,
+  const fall = (id, x, t) => { akteur(id, { x, y: 230, s: .4, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .38, { y: 330 }, 'in'); landen(id, t + .38, .8); cue(t + .38, 'plopp'); };
+  fall('k7s', X + 1150, Math.max(W('Zwei', 23) - .3, C67 + .2)); fall('k7v', X + 1490, W('zwei', 23, .5) - .3);
+  // zwei Aufgaben: die Karten drehen sich um und werden zu zwei Schlüsseln am Schlüsselbund
+  const tF = W('Aufgaben', 23) - .35;
+  const zuSchluessel = (k, key, x, kx, t) => {
+    tw(k, t, .18, { sx: 0 }, 'in');
+    akteur(key, { x, y: 330, sx: 0, s: .8 }); tw(key, t + .18, .25, { sx: 1 }, 'out');
+    flug(key, t + .55, .55, kx, 413, 50, { s: 1 }); cue(t, 'whoosh');
+  };
+  zuSchluessel('k7s', 'key7s', X + 1150, X + 1296, tF); zuSchluessel('k7v', 'key7v', X + 1490, X + 1344, tF + .12);
+  pop('ring7', tF + .95, { x: X + 1320, y: 300 }, 'klick');
+  [['key7s', 0], ['key7v', .08]].forEach(([k, d]) => [5, -3.5, 2, -1, 0].forEach((r, i) => tw(k, tF + 1.1 + d + i * .18, .18, { r }, 'sinus')));
+  ein('tuer7a', tF + .3, D1, { y: 70 }, 'whoosh'); ein('blatt7a', tF + .3, D1, { y: 70 });
+  ein('tuer7b', tF + .45, D2, { y: 70 }); ein('blatt7b', tF + .45, D2, { y: 70 });
+  pop('eSt7', tF + .7, { x: X + 1010, y: 470 }, 'pop'); pop('eSv7', tF + .85, { x: X + 1580, y: 470 }, null);
+  titel('tb7', W('Steuer', 24) - .2, [W('Steuer', 24) - .2, W('ist', 24) - .1, W('Steuer', 24, 2.5) - .1,
     W('Sozialversicherungsnummer', 25) - .15, W('Sozialversicherung', 26) - .3, W('Sozialversicherung', 26) - .15]);
-  kaestchenWelle(bs, W('elf', 24) - .1, .05, 1.2); cue(W('elf', 24), 'scan'); akzent(W('elf', 24), .03);
-  const tSt = W('Steuer', 24, 2.5) - .1;
-  linieEin('l7a', tSt); pop('muenze7', tSt, { x: X + 1110, y: 690 }, 'muenze'); pop('eSt7', tSt + .25, { x: X + 1110, y: 790 }, null);
-  // Sozialversicherungsnummer: zwölf Zeichen, auch ein Buchstabe
-  bump('k7v', W('Sozialversicherungsnummer', 25), 1.05);
-  kaestchenWelle(bv, W('zwölf', 25) - .1, .05, 1.2); cue(W('zwölf', 25), 'scan'); akzent(W('zwölf', 25), .03);
-  wackeln(bv[8], W('Buchstaben', 25) - .05, 4, 10); tw(bv[8], W('Buchstaben', 25) - .05, .15, { s: 1.35 }, 'sinus'); tw(bv[8], W('Buchstaben', 25) + .45, .35, { s: 1 }, 'sanft');
-  cue(W('Buchstaben', 25), 'ding');
+  // Jeder Schlüssel schließt seine Tür auf
+  const aufschliessen = (key, blatt, tuer, kx, t, tOffen) => {
+    flug(key, t, .6, kx, 625, 90, { r: 0, s: .6 }); cue(t, 'whoosh');
+    tw(key, t + .62, .14, { sx: .25 }, 'sinus'); tw(key, t + .76, .14, { sx: 1 }, 'sinus'); cue(t + .7, 'klick');
+    tw(key, tOffen + .25, .3, { o: 0, s: .4 }, 'in');
+    tw(blatt, tOffen, .45, { sx: .18 }, 'inout'); cue(tOffen, 'klick'); bump(tuer, tOffen, 1.03);
+  };
+  bump('key7s', W('Steuer', 24), 1.12); cue(W('Steuer', 24), 'pop');
+  bump('key7s', W('elf', 24), 1.15); cue(W('elf', 24), 'ding'); akzent(W('elf', 24), .03);
+  aufschliessen('key7s', 'blatt7a', 'tuer7a', X + 1049, W('ist', 24) - .55, W('Steuer', 24, 2.5) - .1);
+  // aus der offenen Tür kommt, wofür die Nummer ist
+  const heraus = (id, t, x0, y0, x, y, snd) => { akteur(id, { x: x0, y: y0, s: .3, o: 0 }); tw(id, t, .1, { o: 1 }); flug(id, t, .6, x, y, 90, { s: 1 }); landen(id, t + .6, .8); if (snd) cue(t + .6, snd); cue(t, 'whoosh'); };
+  heraus('muenze7', W('Steuer', 24, 2.5) + .15, X + 1010, 650, X + 1185, 735, 'muenze');
+  // zwölf Zeichen, auch ein Buchstabe: ein „A“ springt aus dem blauen Schlüssel
+  bump('key7v', W('Sozialversicherungsnummer', 25), 1.12); cue(W('Sozialversicherungsnummer', 25), 'pop');
+  bump('key7v', W('zwölf', 25), 1.15); cue(W('zwölf', 25), 'ding'); akzent(W('zwölf', 25), .03);
+  const tA = W('Buchstaben', 25) - .15;
+  akteur('buchst7', { x: X + 1344, y: 380, s: 0 });
+  tw('buchst7', tA, .5, { s: 1, x: X + 1440, y: 330 }, 'back'); cue(tA, 'pop'); wackeln('buchst7', tA + .5, 4, 8);
+  tw('buchst7', tA + 1.1, .35, { s: 0, x: X + 1344, y: 380 }, 'in');
   // für die Sozialversicherung: Rente und Krankenkasse
-  bump('k7v', W('Sozialversicherung', 26), 1.05);
-  linieEin('l7b', W('Rente', 26) - .1); pop('schwein7', W('Rente', 26) - .1, { x: X + 1460, y: 695 }, 'pop'); pop('eRe7', W('Rente', 26) + .15, { x: X + 1460, y: 790 }, null);
-  linieEin('l7c', W('Krankenkasse', 26) - .1); pop('kasse7', W('Krankenkasse', 26) - .1, { x: X + 1625, y: 695 }, 'pop'); pop('eKk7', W('Krankenkasse', 26) + .15, { x: X + 1625, y: 790 }, null);
+  aufschliessen('key7v', 'blatt7b', 'tuer7b', X + 1629, W('Sozialversicherung', 26) - .3, W('Sozialversicherung', 26) + .45);
+  heraus('schwein7', W('Rente', 26) - .35, X + 1590, 650, X + 1405, 690, 'plopp');
+  heraus('kasse7', W('Krankenkasse', 26) - .35, X + 1590, 650, X + 1405, 800, 'plopp');
+  aus('ring7', W('Rente', 26), .3);
   textAus('tb7', SE(26) + .2);
 }
 
 /* ================= 8 · Sicher ablegen – nur an Stellen, die sie brauchen ================= */
-panMitte(SE(26) + .3, 7);
+// Übergang 7 → 8: die Kamera kippt nach oben (Szene 8 liegt über Szene 7)
+fahrt(SE(26) + .3, KX(6), 1180);
 {
   const X = S(7), HX = X + 1320, HY = 540;
   // Beide Nummern sind persönlich
@@ -878,8 +963,7 @@ panMitte(SE(26) + .3, 7);
   // Gib die Nummern nur an Stellen, die sie brauchen – wie deinen Betrieb
   const tG = W('Gib', 29) - .25;
   aus('eApp8', tG, .3);
-  schieben(tG, 7);
-  titelEin('tb8', W('nur', 29) - .15, [W('nur', 29) - .15, W('an', 29) - .1, W('Stellen', 29) - .1, W('die', 29, 1.5) - .1, W('sie', 29, 1.5) - .1,
+  titel('tb8', W('nur', 29) - .15, [W('nur', 29) - .15, W('an', 29) - .1, W('Stellen', 29) - .1, W('die', 29, 1.5) - .1, W('sie', 29, 1.5) - .1,
     W('brauchen', 29) - .1]);
   const PX = X + 1050, PY = 540, PS = .8;
   tw(['handy8', 'schirm8'], tG + .1, .8, { x: PX, y: PY, s: PS }, 'inout');
@@ -898,31 +982,60 @@ panMitte(SE(26) + .3, 7);
     akteur(OK[i], { s: 0 }, true); tw(OK[i], t0 + .65, .5, { s: 1 }, 'back'); cue(t0 + .65, 'ding');
   });
   cue(tBe + 1.0, 'erfolg'); akzent(tBe + .9, .035);
-  // Und nie an Fremde: E-Mail und Telefon prallen am Schild ab, Kwame nickt
-  const tU = W('Und', 30) - .3;
-  aus(['handy8', 'schirm8', 'schloss8', 'fb8'], tU, .35);
-  pop('kw8', W('nie', 30) - .15, { x: X + 1060, y: 600 }, 'pop', 'sanft');
-  ein('schutz8', W('Fremde', 30) - .2, { x: X + 1290, y: 600 }, { x: -40 }, 'whoosh');
-  const angriff = (id, kreuz, t, x0, y0, x1, y1) => {
-    akteur(id, { x: x0 + 90, y: y0, o: 0, s: .8 });
-    tw(id, t - .6, .3, { o: 1, x: x0, s: 1 }, 'sanft'); cue(t - .6, 'pop');
-    tw(id, t - .1, .3, { x: X + 1410, y: 600 + (y0 - 600) * .35 }, 'in');
-    tw(id, t + .2, .5, { x: x1, y: y1, r: 3 }, 'weich'); tw(id, t + .7, .3, { r: 0 }, 'sinus');
-    cue(t + .2, 'plopp'); bump('schutz8', t + .2, 1.08);
-    pop(kreuz, t + .35, { x: x1 + 52, y: y1 - 44 }, null);
+  // Und nie an Fremde: Überraschung – der Schlüsselbund springt in den Tresor (Helper App), Mail und Anruf gehen leer aus
+  const tU = W('Und', 30) - .3, BX = X + 1340;
+  aus('fb8', tU, .35);
+  pop('ring8', tU + .1, { x: BX, y: 300 }, 'klick');
+  [['key8s', BX - 24], ['key8v', BX + 24]].forEach(([k, x], i) => { akteur(k, { x, y: 380, o: 0 }); tw(k, tU + .15 + i * .1, .12, { o: 1 }); tw(k, tU + .15 + i * .1, .4, { y: 413 }, 'back'); });
+  pop('kw8', tU + .25, { x: BX, y: 700, s: .85 }, 'pop', 'sanft');
+  const angreifer = (id, kreuz, tAuf, tLos, x0, y0, zx, zy) => {
+    pop(id, tAuf, { x: x0, y: y0 }, 'pop');
+    // fliegt hin, findet nichts mehr (der Schlüsselbund ist im Tresor), schüttelt sich und zieht ab
+    tw(id, tLos, .4, { x: zx, y: zy }, 'inout'); cue(tLos, 'whoosh');
+    wackeln(id, tLos + .4, 3, 6);
+    tw(id, tLos + .75, .45, { x: x0, y: y0 }, 'inout');
+    pop(kreuz, tLos + 1.1, { x: x0 + 52, y: y0 - 44 }, 'plopp');
   };
-  angriff('mail8', 'nein8a', W('E-Mail', 30), X + 1640, 420, X + 1610, 430);
-  angriff('tel8', 'nein8b', W('Telefon', 30), X + 1640, 790, X + 1610, 770);
+  angreifer('mail8', 'nein8a', W('Fremde', 30) - .15, W('E-Mail', 30) - .15, X + 1610, 430, BX + 40, 420);
+  angreifer('tel8', 'nein8b', W('Fremde', 30) + .05, W('Telefon', 30) - .15, X + 1610, 740, BX + 120, 560);
+  for (let k = 0; k < 3; k++) wackeln('tel8', W('Fremde', 30) + .5 + k * .45, 3, 5);
+  const tJ = W('Fremde', 30) + .3;
+  mund('kw8', tJ - .1, 'auf');
+  ['ring8', 'key8s', 'key8v'].forEach((id, i) => {
+    flug(id, tJ + i * .06, .85, PX + (i - 1) * 10, PY - 30, 150, { s: .3, r: i ? 360 : 0 });
+    tw(id, tJ + .7 + i * .06, .15, { o: 0 });
+  });
+  cue(tJ, 'whoosh');
+  const tT = tJ + .95;
+  bump('schloss8', tT, 1.3); bump('handy8', tT, 1.04); bump('schirm8', tT, 1.04); cue(tT, 'klick'); cue(tT + .1, 'erfolg');
+  const wT = neueWelle('w8'); welle(wT, tT, PX, PY, 1.0, 230); el(wT).classList.add('gruen');
   mund('kw8', W('fragen', 30) - .1, 'froh');
-  [0, .45].forEach(d => { tw('kw8', W('danach', 30) + d, .18, { r: 4, y: 606 }, 'sinus'); tw('kw8', W('danach', 30) + d + .18, .25, { r: 0, y: 600 }, 'sanft'); });
+  [0, .45].forEach(d => { tw('kw8', W('danach', 30) + d, .18, { r: 4, y: 706 }, 'sinus'); tw('kw8', W('danach', 30) + d + .18, .25, { r: 0, y: 700 }, 'sanft'); });
 }
 
 /* ---------- Abspann ---------- */
 const AB = ENDE_SPRACHE + 1.4;
-HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 59%)`; });
 cue(AB, 'whoosh');
 akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
 akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+/* ---------- Blenden (nach der Kamera, damit die gemessenen Rechtecke stimmen) ---------- */
+HOOKS.push(t => {
+  const BLD = el('blende'); let b = null;
+  for (const x of BLENDEN) if (t >= x.t0 && t < x.t0 + x.d1 + x.h + x.d2) b = x;
+  if (!b) BLD.style.display = 'none';
+  else {
+    const VOLL = [-30, -30, 1980, 1140], d = t - b.t0; let r, rad, o = 1;
+    if (d < b.d1) { const p = E.inout(d / b.d1), a = b.von(); r = a.map((v, i) => lerp(v, VOLL[i], p)); rad = lerp(b.r0, 0, p); o = clamp(d / .08); }
+    else if (d < b.d1 + b.h) { r = VOLL; rad = 0; }
+    else { const q = (d - b.d1 - b.h) / b.d2, p = E.inout(q), z = b.nach(); r = VOLL.map((v, i) => lerp(v, z[i], p)); rad = lerp(0, b.r1, p); o = 1 - clamp((q - .78) / .22); }
+    Object.assign(BLD.style, { display: 'block', background: b.bg, opacity: o, left: r[0] + 'px', top: r[1] + 'px', width: r[2] + 'px', height: r[3] + 'px', borderRadius: rad + 'px' });
+  }
+  let x = null;
+  for (const w of WISCH) { const d = t - w; if (d >= 0 && d < 1.17) x = d < .5 ? lerp(-4000, -1100, E.inout(d / .5)) : d < .62 ? -1100 : lerp(-1100, 2200, E.inout((d - .62) / .55)); }
+  ['wischA', 'wischB'].forEach((id, i) => { const e = el(id); e.style.display = x === null ? 'none' : 'block'; if (x !== null) e.style.transform = `translateX(${(x + i * 1880).toFixed(1)}px) skewX(-14deg)`; });
+});
 
 start(AB + 3.6, AB + 1.8);
 </script>

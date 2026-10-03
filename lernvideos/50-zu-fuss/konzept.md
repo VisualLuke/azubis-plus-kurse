@@ -57,7 +57,7 @@ Erzählerin: Am Zebrastreifen müssen Autos dich über die Straße lassen. Aber 
 Erzählerin: In Deutschland fahren die Autos rechts. Darum schaust du zuerst nach links, dann nach rechts und dann noch einmal nach links. Das ist besonders wichtig, wenn du Linksverkehr gewohnt bist.
 
 ### Szene 6
-Erzählerin: Wenn du über die Straße gehst, gilt: Handy weg und Kopfhörer raus. Du musst Autos und Fahrräder sehen und hören.
+Erzählerin: Wenn du über die Straße gehst, mach es so: Handy weg und Kopfhörer raus. Du musst Autos und Fahrräder sehen und hören.
 
 ### Szene 7
 Erzählerin: Im Dunkeln sieht man dich schlecht. In dunkler Kleidung erst aus etwa fünfundzwanzig Metern. Mit Reflektoren schon aus bis zu hundertvierzig Metern. Trag also helle Kleidung oder Reflektoren, zum Beispiel an der Jacke oder an der Tasche.
