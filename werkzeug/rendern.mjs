@@ -91,7 +91,7 @@ if (sprache) {
 // in sprache.mp3, die keine Zeiten verschiebt)
 if (args.includes('--nur-ton')) {
   await browser.close();
-  writeFileSync(FRAMES + 'cues.json', JSON.stringify(cues));
+  writeFileSync(FRAMES + 'cues.json', JSON.stringify(cues.filter(c => c && c[1])));
   execFileSync('python3', [WURZEL + 'werkzeug/ton.py', FRAMES + 'cues.json', String(dauer), String(musikEnde), FRAMES + 'ton.wav',
     ...(sprache ? [spracheWav, String(sprache.versatz)] : [])], { stdio: 'inherit' });
   execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-i', ORDNER + 'film.mp4', '-i', FRAMES + 'ton.wav', '-map', '0:v', '-map', '1:a',
@@ -113,7 +113,7 @@ await browser.close();
 if (fehler.length) throw new Error(fehler.join('\n'));
 if (standbilder) { rmSync(FRAMES, { recursive: true, force: true }); console.log('ok Standbilder'); process.exit(0); }
 
-writeFileSync(FRAMES + 'cues.json', JSON.stringify(cues));
+writeFileSync(FRAMES + 'cues.json', JSON.stringify(cues.filter(c => c && c[1])));
 execFileSync('python3', [WURZEL + 'werkzeug/ton.py', FRAMES + 'cues.json', String(dauer), String(musikEnde), FRAMES + 'ton.wav',
   ...(sprache ? [spracheWav, String(sprache.versatz)] : [])], { stdio: 'inherit' });
 execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', FRAMES + '%05d.png', '-i', FRAMES + 'ton.wav',

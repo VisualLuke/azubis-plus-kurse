@@ -703,7 +703,7 @@ HOOKS.push(t => {
     el('bit').style.backgroundPosition = an ? `${((t * 90) % 12).toFixed(1)}px 0` : '0 0'; });
   bump('maschine', W('Maschine', 4) + .3, 1.04); cue(W('Maschine', 4) + .3, 'ding');
   // wie alle anderen auch: vier gleiche Schutzbrillen am Brett
-  [...el('brett').querySelectorAll('div')].forEach((d, i) => { rel(d, {}); const t = W('alle', 4) + i * .12; tw(d, t, .12, { s: 1.25, y: -8 }, 'sinus'); tw(d, t + .12, .35, { s: 1, y: 0 }, 'sanft'); cue(t, i % 2 ? null : 'klick'); });
+  [...el('brett').querySelectorAll('div')].forEach((d, i) => { rel(d, {}); const t = W('alle', 4) + i * .12; tw(d, t, .12, { s: 1.25, y: -8 }, 'sinus'); tw(d, t + .12, .35, { s: 1, y: 0 }, 'sanft'); if (i % 2 === 0) cue(t, 'klick'); });
   // Ich war erst ganz still: Priya schluckt, kleines Fragezeichen
   stumm('priyaW', SS(5) - .1, SE(5) + .3);
   tw('priyaW', W('erst', 5), .12, { sy: .9, sx: 1.05 }, 'sinus'); tw('priyaW', W('erst', 5) + .12, .45, { sy: 1, sx: 1 }, 'sanft');
@@ -742,7 +742,7 @@ const OX = 2250, OY = 1600, OZ = .3;
     pop('sym' + (i + 1), t, { x, y: y - 60 }, i % 2 ? null : 'pop');
     akteur('fa' + (i + 1), { x, y: y + 180, o: 0, s: 1.4 });
     const t2 = W('Beruf', 8) + i * .12;
-    tw('fa' + (i + 1), t2, .12, { o: 1 }); tw('fa' + (i + 1), t2, .4, { s: 1 }, 'sanft'); cue(t2, i % 2 ? null : 'klick');
+    tw('fa' + (i + 1), t2, .12, { o: 1 }); tw('fa' + (i + 1), t2, .4, { s: 1 }, 'sanft'); if (i % 2 === 0) cue(t2, 'klick');
     aus(['sym' + (i + 1), 'fa' + (i + 1)], SE(8) + .45 + i * .04, .3);
   });
   stoss(WE('lernen', 8), 3);
