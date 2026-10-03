@@ -289,7 +289,7 @@ const FENSTER = [...document.querySelectorAll('#strasse .fen')];
 const fen = k => FENSTER.find(f => f.dataset.k === k);
 
 /* ---------- Gegenstände der Straße ---------- */
-neu('mond', kopie('t-mond', 'mond'), 'width:150px'); akteur('mond', { x: 1000, y: 290, o: 0 });
+neu('mond', kopie('t-mond', 'mond'), 'width:150px'); akteur('mond', { x: 1100, y: 300, o: 0 });
 neu('wolke', kopie('t-wolke', 'wolke'), 'width:230px', 'data-frei');
 // Laternen (dunkel; Schein und Lichtpfütze gehen in Szene 4 an)
 const LAT = [[260, 690, 220], [800, 690, 220], [1440, 690, 220], [1740, 690, 210], [1180, 640, 120], [1320, 640, 120], [1212, 588, 72], [1288, 588, 72]];
@@ -418,8 +418,8 @@ function tafel(id, text, t, zeiten, aust) {
   bump('uhr1', tZw + .05, 1.15); cue(tZw + .05, 'ding'); akzent(tZw, .03);
   // Mond schiebt sich hinter der Wolke hervor
   tw('mond', A(-.4), .8, { o: 1 });
-  akteur('wolke', { x: 1010, y: 300 });
-  tw('wolke', W('nachts', 1) - .2, 2.6, { x: 1250, y: 330, o: 0 }, 'inout');
+  akteur('wolke', { x: 1110, y: 310 });
+  tw('wolke', W('nachts', 1) - .2, 2.6, { x: 1330, y: 340, o: 0 }, 'inout');
   schweben('mond', 3);
   // Ana kommt von der Spätschicht (von links, hüpft, stoppt mit Squash)
   akteur('ana', { x: 40, y: 885, o: 0 });
@@ -492,6 +492,7 @@ function tafel(id, text, t, zeiten, aust) {
   const tTr = W('trennen', 9), tMu = W('Müll', 9);
   [0, 1, 2].forEach(k => { huepfen('to' + k, tTr - .1 + k * .17, 16); tw('de' + k, tTr - .02 + k * .17, .14, { r: -38 }, 'out'); tw('de' + k, tTr + .16 + k * .17, .3, { r: 0 }, 'bounce'); cue(tTr + .2 + k * .17, 'klick'); });
   stueck(2, tMu + .1, 1590, 600, tMu + .65, 1.0);
+  aus('mondschild', tMu, .4);
   // Hofladen-Stand rollt herein; Kasse des Vertrauens
   const tHo = W('Hofläden', 10), tKa = W('Kasse', 10), tVe = W('Vertrauens', 10);
   const SX = ST.x, SY = steht(ST.yb, ST.w, 152);
@@ -514,12 +515,12 @@ function tafel(id, text, t, zeiten, aust) {
   HOOKS.push(t => { const p = t - tGe + .3; if (p > 0 && p < 1.1) el('muenze').style.transform += ` scaleX(${Math.cos(p * Math.PI * 3).toFixed(3)})`; });
   bump('kasse', tGe + .76, 1.12); cue(tGe + .74, 'muenze');
   fahrt(tHi - .2, 1.0, 960, 540, 1);
-  stueck(3, tHi - .1, SX + 70, KY - 6, tHi + .45, 1.0);
+  stueck(3, tHi - .2, SX + 70, KY - 6, tHi + .15, .9);
 }
 
 /* ================= 3 · Regeln gelten für alle ================= */
 {
-  const t0 = SA(12) - .2;
+  const t0 = SA(12) + .15;
   tw('dimm', t0, .8, { o: .62 }, 'inout');
   rahmenZu(t0, 1.0, 1200, 400, 1.7);
   cue(t0, 'whoosh');
@@ -603,12 +604,12 @@ function tafel(id, text, t, zeiten, aust) {
   akzent(tLicht - .6, .03);
   // Ich verlasse mich auf dich – und du dich auf mich: Pfeile zwischen Ana und dem Fahrradlicht
   neu('bezug', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><defs><marker id="bzsp" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--surface)"/></marker></defs>
-    <path id="bz1" class="zeichnen" pathLength="1" d="M440 820C380 760 420 700 520 668" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/>
-    <path id="bz2" class="zeichnen" pathLength="1" d="M600 680C660 740 640 800 590 838" stroke="var(--surface)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/></svg>`, 'width:1920px;height:1080px', 'data-frei');
+    <path id="bz1" class="zeichnen" pathLength="1" d="M440 820C380 760 420 700 520 668" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/>
+    <path id="bz2" class="zeichnen" pathLength="1" d="M600 680C660 740 640 800 590 838" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#bzsp)"/></svg>`, 'width:1920px;height:1080px', 'data-frei');
   akteur('bezug', { x: 960, y: 540, o: 0 });
   akteur('bz1', { draw: 0 }, true); akteur('bz2', { draw: 0 }, true);
   const tIc = WI(19, 0), tDi = WI(19, 4), tDu = WI(19, 6), tMi = WI(19, 10);
-  fahrt(tIc - .3, 1.0, 850, 570, 1.25); cue(tIc - .3, 'whoosh');
+  akzent(tIc, .03);
   set('bezug', tIc, { o: 1 });
   tw('bz1', W('verlasse', 19), tDi - W('verlasse', 19) + .2, { draw: 1 }, 'inout'); cue(W('verlasse', 19), 'scan');
   tw('radschein', tDi + .1, .3, { s: 1.4 }, 'sinus'); tw('radschein', tDi + .4, .5, { s: 1 }, 'sanft'); bump('rad', tDi + .1, 1.06);
