@@ -205,11 +205,11 @@ html,body{background:var(--b700)}
   <!-- Räume: Licht aus, Lampen -->
   <div class="z lampe" id="lampeM" style="left:1560px;top:330px;width:300px;height:300px;opacity:0"></div>
   <div class="z dunkel" id="dunkelN" style="left:724px;top:390px;width:364px;height:240px;opacity:.55"></div>
-  <div class="z dunkel" id="dunkelM" style="left:1512px;top:390px;width:364px;height:240px"></div>
+  <div class="z dunkel" id="dunkelM" style="left:1512px;top:390px;width:364px;height:240px;opacity:.6"></div>
   <!-- Rauch: Nachbarwohnung, Treppenhaus; Glut hinter der Nachbartür; Glut in Mais Wohnung (Szene 8) -->
   <div class="z clip" id="clipN" style="left:724px;top:390px;width:364px;height:240px"><div class="glut" id="glutN" style="left:30px;top:-40px;width:360px;height:360px;opacity:0"></div></div>
   <div class="z clip" id="clipT" style="left:1112px;top:390px;width:376px;height:500px"></div>
-  <div class="z clip" id="clipM" style="left:1512px;top:390px;width:364px;height:240px"><div class="glut" id="glutM" style="left:200px;top:40px;width:240px;height:240px;opacity:0"></div></div>
+  <div class="z clip" id="clipM" style="left:1512px;top:390px;width:364px;height:240px"><div class="glut" id="glutM" style="left:218px;top:100px;width:200px;height:200px;opacity:0"></div></div>
   <!-- Rauchmelder -->
   <div class="a" id="melderN" style="width:120px" data-gruppe="haus">{{rauchmelder}}</div>
   <div class="z led" id="ledN" style="opacity:0"></div>
@@ -262,6 +262,9 @@ const SA = n => A(satz(n).start);
 const SE = n => A(satz(n).ende);
 const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
 const WELT = document.getElementById('welt');
+const P2 = SE(5) + .3, P4 = WE('Eins', 13) + .3, P5 = SE(18) + .25, P6 = SE(25) + .3, P7 = SE(30) + .3, P8 = SE(34) + .2;
+const ZEICHNEN = { A: [], B: [], C: [] }, WEG_O = {};
+const LICHT_M = [[0, 0]], DIMM = [[0, 0]];
 
 const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
 const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
@@ -397,10 +400,10 @@ el('hausbild').innerHTML = HAUS + GEB;
 akteur('bue', { x: 4200, y: 850 });
 
 // Fassade: Fenster je Wohnung, Gurtgesimse, Haustür mit Hausnummer
-el('fassade').innerHTML = [190, 450, 710].map(y => `<div class="gurt" style="top:${y - 196}px"></div>`).join('') +
-  [[200, 60], [500, 60], [880, 60], [200, 320], [500, 320], [880, 320], [200, 580], [500, 580]].map(([x, y], k) =>
+el('fassade').innerHTML = [252, 512].map(y => `<div class="gurt" style="top:${y}px"></div>`).join('') +
+  [[135, 64], [541, 64], [941, 64], [135, 324], [541, 324], [941, 324], [135, 584], [541, 584]].map(([x, y], k) =>
     `<div class="fenster" style="left:${x}px;top:${y}px"><div class="hell" id="ff${k}"></div></div>`).join('') +
-  '<div class="ftuer" style="left:960px"><b id="ftuerb"></b></div><div class="nummer" style="left:1080px;top:560px">12</div>';
+  '<div class="ftuer" style="left:940px"><b id="ftuerb"></b></div><div class="nummer" style="left:1080px;top:560px">12</div>';
 
 /* ---------- Mai: Porträt, Mund nur in ihren Sätzen, blinzeln, Schlaf ---------- */
 el('mai').innerHTML = tpl('tplMai');
@@ -479,19 +482,21 @@ function markeHud(L, t, gut) {
   tw(`h${L}m`, t, .45, { s: 1 }, 'back'); bump('h' + L, t, 1.15); cue(t, 'plopp'); cue(t + .05, gut ? 'erfolg' : 'klick');
 }
 
+HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6 * (1 - l)).toFixed(3); el('lampeM').style.opacity = l.toFixed(3);
+  el('dimm').style.opacity = kurve(DIMM, t).toFixed(3); });
 /* =========================== Szene 1 · Abend, Rauch im Treppenhaus =========================== */
 {
   // Dämmerung → Abend: der Himmel wird dunkel, der Mond steigt, Fenster gehen an
   const tAb = W('Abend', 1);
   HOOKS.push(t => { el('daemmer').style.opacity = (1 - E.inout(clamp((t - (tAb - .7)) / 1.6))).toFixed(3); });
   ein('mond', tAb - .3, { x: 2120, y: 300 }, { y: 90 });
-  [0, 3, 1, 5, 6, 2, 4].forEach((k, i) => { const t = tAb + .15 + i * .14; HOOKS.push(z => { el('ff' + k).style.opacity = E.out(clamp((z - t) / .3)).toFixed(3); }); });
+  [3, 6, 1, 5, 4, 7].forEach((k, i) => { const t = tAb + .15 + i * .14; HOOKS.push(z => { el('ff' + k).style.opacity = E.out(clamp((z - t) / .3)).toFixed(3); }); });
   // Mai kommt nach Hause: auf dem Gehweg von rechts, die Haustür (Fassade) öffnet sich, Mai geht hinein
   const tMa = W('Mai', 2), tHa = W('Hause', 2);
   akteur('mai', { x: 2480, y: 1082 });
   weg(tMa - .5, [[2380, 1082], [2280, 1082], [2180, 1082], [2080, 1082], [1980, 1082]], .3, 16);
   rel('ftuerb', {}); tw('ftuerb', tHa - .1, .35, { sx: .1 }, 'inout'); cue(tHa - .1, 'klick');
-  tw('mai', tHa + .2, .5, { x: 1820, s: .92 }, 'inout');
+  tw('mai', tHa + .2, .5, { x: 1695, s: .92 }, 'inout');
   tw('ftuerb', tHa + .75, .3, { sx: 1 }, 'inout');
   // „Im Treppenhaus“: die Fassade klappt auf wie bei einem Puppenhaus
   const tTr = W('Treppenhaus', 3), tFa = tTr - .3;
@@ -502,7 +507,7 @@ function markeHud(L, t, gut) {
   // Mai läuft durch den Flur zur Treppe und hüpft Stufe für Stufe nach oben (Kamera fährt mit)
   tw('mai', tFa + .9, .3, { s: 1 }, 'sanft');
   const tLos = tFa + 1.0;
-  let t = weg(tLos, [[1700, 1082], [1580, 1082], [1470, 1082]], .3, 14);
+  let t = weg(tLos, [[1600, 1082], [1470, 1082]], .3, 14);
   t = weg(t, TREPPE_AUF, .28, 14);
   kam(tLos + .2, 3.4, 1290, 560, 1.32);
   // „riecht es nach Rauch“: graue Schwaden kriechen unter der Nachbartür hervor
@@ -511,7 +516,6 @@ function markeHud(L, t, gut) {
     dichte: [[0, 0], [tRa - .4, .5, 1.4], [W('piept', 4), .65, 1.5]] });
   rauch('clipN', 8, { x0: 180, y0: 180, sx: 120, dx: -60, dy: -140, r0: 30, r1: 90, per: 3.6, deckeH: 140,
     dichte: [[0, .35], [tRa - .4, .7, 1.4]] });
-  HOOKS.push(z => { el('spaltN').style.opacity = 0; });
   // „In der Wohnung nebenan piept laut ein Rauchmelder“: rote LED blinkt, Piep-Wellen
   akteur('melderN', { x: 880, y: 428 }); akteur('melderM', { x: 1745, y: 428 });
   ['ledN', 'ledM'].forEach((id, k) => { el(id).style.left = `${[880, 1745][k] - 8}px`; el(id).style.top = '410px'; });
@@ -535,10 +539,9 @@ function markeHud(L, t, gut) {
 }
 
 /* =========================== Szene 2 · Was würdest du tun? Drei Wege durchs Haus =========================== */
-const P2 = SE(5) + .3;
 {
   kam(P2, 1.1, 1500, 760, 1.0); cue(P2, 'whoosh');
-  HOOKS.push(t => { el('dimm').style.opacity = (.5 * E.inout(clamp((t - P2) / .8)) * (1 - E.inout(clamp((t - A(37.4)) / .7)))).toFixed(3); });
+  DIMM.push([P2, .5, .8], [P4 - .3, 0, .7]);
   bump('frage', W('tun', 6), 1.15);
   // Wege: gepunktete Linien, die sich von Mai aus zeichnen; Pfeilspitze am Ende
   const WEGE = {
@@ -551,16 +554,13 @@ const P2 = SE(5) + .3;
     `<mask id="m${L}" maskUnits="userSpaceOnUse" x="0" y="0" width="2400" height="1300"><path id="mp${L}" d="${d}" stroke="var(--surface)" stroke-width="30" fill="none" stroke-linecap="round" pathLength="1" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></mask>`).join('') + '</defs>' +
     Object.entries(WEGE).map(([L, d]) => `<g id="w${L}" mask="url(#m${L})"><path class="wegl" d="${d}" stroke="var(--b200)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="2 24"/></g>`).join('') +
     Object.entries(SPITZE).map(([L, [x, y, r]]) => `<path id="sp${L}" d="M-16 -15L8 0L-16 15" transform="translate(${x} ${y}) rotate(${r})" stroke="var(--b200)" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>`).join('');
-  const ZEICHNEN = {};
-  const zeichne = (L, t0, d) => { ZEICHNEN[L] = [t0, d]; cue(t0, 'kritzeln'); };
-  const WEG_O = {};       // Deckkraft der Wege über die Zeit
-  HOOKS.push(t => Object.entries(ZEICHNEN).forEach(([L, [t0, d]]) => {
-    const p = E.inout(clamp((t - t0) / d));
+  const zeichne = (L, t0, d) => { ZEICHNEN[L].push([t0, d]); cue(t0, 'kritzeln'); };
+  HOOKS.push(t => Object.entries(ZEICHNEN).forEach(([L, seg]) => {
+    let p = 0; for (const [t0, d] of seg) if (t >= t0) p = E.inout(clamp((t - t0) / d));
     el('mp' + L).style.strokeDashoffset = (1 - p).toFixed(4);
     el('sp' + L).setAttribute('opacity', p > .97 ? 1 : 0);
     el('w' + L).style.opacity = el('sp' + L).style.opacity = WEG_O[L] ? kurve(WEG_O[L], t).toFixed(3) : 1;
   }));
-  window.WEG_O = WEG_O; window.zeichne = zeichne;
   // Wegkarten mit Buchstabe und spielendem Symbol
   WELT.insertAdjacentHTML('beforeend', `
     <div class="a wkarte" id="kA"><i class="licht" id="kAl"></i>
@@ -569,8 +569,8 @@ const P2 = SE(5) + .3;
         <svg class="dampf" id="kAd" viewBox="0 0 60 40" style="position:absolute;left:32px;top:-30px;width:60px;height:40px"><path d="M14 36q-6-8 0-16t0-16"/><path d="M30 36q-6-8 0-16t0-16"/><path d="M46 36q-6-8 0-16t0-16"/></svg></div>
       <div class="bst" id="kAb">A</div></div>
     <div class="a wkarte" id="kB"><i class="licht" id="kBl"></i>
-      <div class="tel" id="kBt" style="left:24px;top:18px;width:110px;height:158px"><div class="schirm"><div class="wer" style="top:46px">Vermieter</div>
-        <div class="av" style="left:25px;top:-0px;width:42px;height:42px;position:absolute;left:25px;top:6px"></div>
+      <div class="tel" id="kBt" style="left:24px;top:18px;width:110px;height:158px"><div class="schirm"><div class="wer" style="top:50px">Vermieter</div>
+        <div class="av" style="left:25px;top:8px;width:42px;height:38px"></div>
         <div class="knopf gruen" style="left:24px;bottom:10px;width:44px;height:44px">${tpl('svgHoerer')}</div></div></div>
       <div class="sanduhr" id="kBs" style="left:146px;top:36px">${tpl('svgSandgross')}</div>
       <div class="bst" id="kBb">B</div></div>
@@ -581,15 +581,14 @@ const P2 = SE(5) + .3;
       <div class="bst" id="kCb">C</div></div>`);
   // Inhalt der Notiz in Karte C: Zeilen mit Fragezeichen
   el('kCz').innerHTML = [0, 1, 2].map(k => `<i class="zeile" id="kCz${k}" style="left:12px;top:${50 + k * 22}px;width:38px;height:9px"></i><b id="kCq${k}" style="position:absolute;left:56px;top:${41 + k * 22}px;font:800 20px/24px Inter;color:var(--b500)">?</b>`).join('');
-  el('kCz').style.setProperty('--x', 0);
   const KP = { A: [1700, 505], B: [1290, 782], C: [2172, 1000] };
-  const karte = (L, t) => { const [x, y] = KP[L]; el('k' + L).style.transformOrigin = '0 0'; pop('k' + L, t, { x, y }, 'pop'); };
+  const karte = (L, t) => { const [x, y] = KP[L]; pop('k' + L, t, { x, y }, 'pop'); };
   // A: „In die eigene Wohnung gehen“ – Mais Tür schließt sich; „Vielleicht ist nur das Essen angebrannt“ – Gedanke mit Topf und Dampf
   const tA = WN(7, 0), tB = WN(9, 0), tC = WN(10, 0);
   pop('hA', tA, { x: 1584, y: 104 }); zeichne('A', tA, .8); karte('A', tA + .55);
-  rel('kAtb', {}); rel('kAg', { s: 0 }, '0% 100%'); rel('kAp', {}); rel('kAd', { o: 0 });
+  rel('kAtb', { sx: .15 }); rel('kAg', { s: 0 }, '0% 100%'); rel('kAp', {}); rel('kAd', { o: 0 });
   const tWo = W('Wohnung', 7), tEs = W('Essen', 8), tAn = W('angebrannt', 8);
-  tw('kAtb', tWo - .1, .4, { sx: 1 }, 'inout'); set('kAtb', tA + .5, { sx: .15 }); tw('kAtb', tWo, .35, { sx: 1 }, 'inout'); cue(tWo + .3, 'klick');
+  tw('kAtb', tWo, .35, { sx: 1 }, 'inout'); cue(tWo + .3, 'klick');
   tw('kAg', tEs - .2, .45, { s: 1 }, 'back'); cue(tEs - .2, 'pop');
   tw('kAd', tAn, .5, { o: 1 }); HOOKS.push(t => { const d = t - tAn; if (d > 0) el('kAd').style.transform += ` translateY(${(-4 * Math.sin(d * 3)).toFixed(1)}px)`; });
   wackeln('kAp', tAn + .1, 3, 3);
@@ -637,11 +636,10 @@ const P2 = SE(5) + .3;
 }
 
 /* =========================== Szene 4 · Option A: in die Wohnung – Option B: Vermieter =========================== */
-const P4 = WE('Eins', 13) + .3;
 {
   // A: die anderen Wege gehen, Mai folgt Weg A in ihre Wohnung, die Kamera fährt mit
   aus(['kA', 'kB', 'kC', 'frage'], P4 - .1, .35);
-  WEG_O.A = [[0, 1], [P4, 0, .5]]; WEG_O.B = [[0, 1], [P4 - .1, 0, .4]]; WEG_O.C = [[0, 1], [P4 - .1, 0, .4]];
+  WEG_O.A = [[0, 1], [P4 + 1.2, 0, .5]]; WEG_O.B = [[0, 1], [P4 - .1, 0, .4]]; WEG_O.C = [[0, 1], [P4 - .1, 0, .4]];
   kam(P4, 1.1, 1300, 520, 1.5); cue(P4, 'whoosh');
   const tAh = WN(14, 1);
   bump('hA', P4 + .1, 1.25);
@@ -649,19 +647,19 @@ const P4 = WE('Eins', 13) + .3;
   rel('tuerMb', {}); tw('tuerMb', P4 + .2, .35, { sx: .12 }, 'inout'); cue(P4 + .2, 'klick');
   weg(P4 + .3, [[1340, 560], [1430, 560], [1530, 560], [1610, 560]], .28, 12);
   tw('tuerMb', P4 + 1.55, .3, { sx: 1 }, 'in'); cue(P4 + 1.8, 'plopp'); akzent(P4 + 1.85, .02);
-  HOOKS.push(t => { el('dunkelM').style.opacity = (1 - E.inout(clamp((t - (P4 + 1.4)) / .5)) * (1 - E.inout(clamp((t - (SE(16) + .2)) / .4)))).toFixed(3);
-    el('lampeM').style.opacity = (E.inout(clamp((t - (P4 + 1.4)) / .5)) * (1 - E.inout(clamp((t - (SE(16) + .2)) / .4)))).toFixed(3); });
   // „gefährlich: Niemand ruft die Feuerwehr“ – Warnzeichen; ein Handy bleibt still (rotes ✕)
   const tGe = W('gefährlich', 14), tNi = W('Niemand', 14), tFw = W('Feuerwehr', 14);
-  pop('warn', tGe, { x: 1300, y: 452 }, 'plopp');
+  WELT.insertAdjacentHTML('beforeend', '<div class="a ausruf" id="warn" data-frei>!</div>');
+  pop('warn', tGe, { x: 1222, y: 452 }, 'plopp');
   WELT.insertAdjacentHTML('beforeend', `<div class="a tel" id="telA" style="width:92px;height:150px"><div class="schirm"><div class="nr" style="top:30px;font-size:26px;color:var(--n400)">112</div></div></div>
     <div class="a plakette rot" id="telAx">${tpl('svgX')}</div>`);
-  pop('telA', tNi - .1, { x: 1680, y: 488 }); pop('telAx', tFw, { x: 1722, y: 424 }, 'klick'); wackeln('telA', tFw + .1, 3, 4);
+  pop('telA', tNi - .1, { x: 1398, y: 516 }); pop('telAx', tFw, { x: 1440, y: 452 }, 'klick'); wackeln('telA', tFw + .1, 3, 4);
   akzent(tFw, .03);
   // „Das Feuer wird größer, und Rauch ist giftig“ – Glut hinter der Nachbartür wächst, der Rauch wird dicht und dunkel
   const tFe = W('Feuer', 15), tGr = W('größer', 15), tRa = W('Rauch', 15), tGi = W('giftig', 15);
   GLUT.push(['glutN', [[0, 0], [tFe - .3, .55, 1], [tGr, 1, 1.4], [P4 + 13.6, 1.15, 2], [A(50.2) + 1.0, .1, .5], [W('Vermieter', 17), .7, 2.5], [W('vergeht', 18), 1.15, 2], [SE(18) + .25, .15, .5]]]);
   const DICHTE_T = RAUCH[0].dichte, DICHTE_N = RAUCH[1].dichte;
+  LICHT_M.push([P4 + 1.4, 1, .5], [SE(16) + .2, 0, .4]);
   DICHTE_T.push([tGr - .2, 1.1, 1.6], [tGi, 1.5, 2], [SE(16) + .3, .45, .5], [W('Vermieter', 17), 1.0, 2.5], [W('vergeht', 18), 1.6, 2], [SE(18) + .25, .45, .5], [SA(25), .15, 2]);
   DICHTE_N.push([tFe, 1.2, 2], [SE(16) + .3, .7, .5], [W('vergeht', 18), 1.3, 2], [SE(18) + .25, .7, .5]);
   RAUCH[0].dunkel = [[0, 0], [tGi - .2, .75, .9], [SE(16) + .3, 0, .5], [W('vergeht', 18), .6, 1.5], [SE(18) + .25, 0, .5]];
@@ -671,7 +669,7 @@ const P4 = WE('Eins', 13) + .3;
   // „Schon wenige Atemzüge können lebensgefährlich sein“ – Atem-Chip, Warnzeichen pocht
   WELT.insertAdjacentHTML('beforeend', `<div class="a ichip" id="atem"><svg viewBox="0 0 60 60"><path d="M12 22h24a7 7 0 1 0-7-7M10 32h34a7 7 0 1 1-7 7M14 42h12" stroke="var(--n500)" stroke-width="5" stroke-linecap="round" fill="none"/></svg></div>`);
   const tWe = W('wenige', 16), tLe = W('lebensgefährlich', 16);
-  pop('atem', tWe, { x: 1300, y: 562 }, 'pop');
+  pop('atem', tWe, { x: 1222, y: 572 }, 'pop');
   HOOKS.push(t => { const d = t - tLe; if (d > 0 && d < SE(16) + .3 - tLe) { const p = .5 + .5 * Math.sin(d * 7); el('warn').style.boxShadow = `0 0 ${(16 + 20 * p).toFixed(1)}px ${(4 + 8 * p).toFixed(1)}px rgba(226,85,106,${(.55 * p).toFixed(3)})`; } else el('warn').style.boxShadow = ''; });
   bump('warn', tLe, 1.2); bump('atem', tLe + .1, 1.12); akzent(tLe, .035); cue(tLe, 'klick');
   // ⏪ zurück zur Klingel: Rauch und Glut gehen zurück, Mai kommt aus der Wohnung (Weg B)
@@ -683,21 +681,21 @@ const P4 = WE('Eins', 13) + .3;
   // B: „Option Beh: Der Vermieter kann nicht löschen“
   const tBe = WN(17, 1), tVe = W('Vermieter', 17), tLo = W('löschen', 17), tNc = W('nicht', 17);
   bump('hB', tZ + .4, 1.25); markeHud('B', tBe, false);
-  WEG_O.B.push([tZ + .2, 1, .4], [SE(18) + .1, 0, .4]); ZEICHNEN.B = [tZ + .2, .3];
-  weg(tZ + .75, [[1215, 640], [1200, 720], [1197, 822]], .26, 10);
-  WELT.insertAdjacentHTML('beforeend', `<div class="a tel" id="telB"><div class="schirm"><div class="wer">Vermieter</div><div class="av" style="left:30px;top:-6px;position:absolute;width:42px;height:42px;left:30px;top:-48px"></div>
+  WEG_O.B.push([tZ + .2, 1, .4], [SE(18) + .1, 0, .4]); ZEICHNEN.B.push([tZ + .2, .3]);
+  weg(tZ + .75, [[1330, 560], ...TREPPE_AB.slice(0, 5)], .22, 10);
+  WELT.insertAdjacentHTML('beforeend', `<div class="a tel" id="telB"><div class="schirm"><div class="wer" style="top:58px">Vermieter</div><div class="av" style="left:30px;top:10px;width:42px;height:40px"></div>
       <div class="knopf gruen" style="left:28px">${tpl('svgHoerer')}</div></div></div>
     <div class="a welle grau" id="vb1" style="width:150px;height:150px" data-frei></div><div class="a welle grau" id="vb2" style="width:150px;height:150px" data-frei></div>
     <div class="a" id="loescher" style="width:120px" data-gruppe="loe">{{feuerloescher}}</div><div class="a plakette rot" id="loescherX" data-gruppe="loe">${tpl('svgX')}</div>
     <div class="a sanduhr" id="sandB" style="width:110px;height:146px">${tpl('svgSandgross')}</div>`);
-  pop('telB', tVe - .25, { x: 1372, y: 760 }); summen('telB', tVe + .3, 2.2, 4);
-  wellen(['vb1', 'vb2'], [tVe + .3, tVe + .9, tVe + 1.5, tVe + 2.1], 1372, 740, 1.0, 1.5);
+  pop('telB', tVe - .25, { x: 1385, y: 770 }); summen('telB', tVe + .3, 2.2, 4);
+  wellen(['vb1', 'vb2'], [tVe + .3, tVe + .9, tVe + 1.5, tVe + 2.1], 1385, 750, 1.0, 1.5);
   [0, .6, 1.2, 1.8].forEach(d => cue(tVe + .3 + d, 'tipp'));
-  pop('loescher', tLo - .45, { x: 1290, y: 478 }, 'pop'); pop('loescherX', tLo, { x: 1338, y: 432 }, 'klick'); wackeln('loescher', tLo + .05, 3, 3);
+  pop('loescher', tLo - .45, { x: 1290, y: 500 }, 'pop'); pop('loescherX', tLo, { x: 1340, y: 450 }, 'klick'); wackeln('loescher', tLo + .05, 3, 3);
   // „Und bis er kommt, vergeht wertvolle Zeit“ – die Sanduhr läuft, Rauch und Glut wachsen weiter
   const tKo = W('kommt', 18), tVg = W('vergeht', 18), tZe = W('Zeit', 18);
   aus(['loescher', 'loescherX'], tKo - .3, .3);
-  pop('sandB', tKo, { x: 1300, y: 486 }, 'pop'); sanduhr('sandB', tKo + .2, SE(18) - tKo + .2);
+  pop('sandB', tKo, { x: 1300, y: 500 }, 'pop'); sanduhr('sandB', tKo + .2, SE(18) - tKo + .2);
   bump('sandB', tZe, 1.12); akzent(tZe, .035); cue(tZe, 'klick');
   binde('cap4', [tBe, tBe + .08, tBe + .16, W('wertvolle', 18), W('wertvolle', 18) + .08, W('wertvolle', 18) + .16], SE(18) + .9);
   ['#cap4 .w'].forEach(s => document.querySelectorAll(s).forEach((w, k) => { if (k >= 3) w.classList.add('rot'); }));
@@ -705,10 +703,9 @@ const P4 = WE('Eins', 13) + .3;
 }
 
 /* =========================== Szene 5 · Option C: raus, eins-eins-zwei, Wo zuerst =========================== */
-const P5 = SE(18) + .25;
 {
   const tZe = WN(19, 2);
-  WEG_O.C.push([P5, 1, .4]); ZEICHNEN.C = [P5 + .05, .5];
+  WEG_O.C.push([P5, 1, .4]); ZEICHNEN.C.push([P5 + .05, .5]);
   bump('hC', P5 + .1, 1.25); markeHud('C', tZe, true);
   // zurück zur Klingel, dann die Treppe hinunter, durch die Haustür nach draußen – die Kamera folgt
   tw('mai', P5, .6, { x: 1252, y: 560 }, 'inout'); cue(P5, 'whoosh');
@@ -721,12 +718,13 @@ const P5 = SE(18) + .25;
   kam(tZe + .2, t - tZe, 1950, 760, .95);
   // „ruft die eins-eins-zwei an“: großes Handy, die Ziffern tippen sich, die Verbindung steht (grüne Wellen)
   WELT.insertAdjacentHTML('beforeend', `<div class="a tel gross" id="tel"><div class="schirm"><div class="guthaben" id="telG">Guthaben <b>0,00 €</b></div><div class="nr" id="teln"></div>
-      <div class="zeit" id="telz">verbunden</div><div class="knopf gruen" id="telk" style="left:50px">${tpl('svgHoerer')}</div></div></div>
+      <div class="zeit" id="telz"></div><div class="knopf gruen" id="telk" style="left:50px">${tpl('svgHoerer')}</div></div></div>
     <div class="a welle gruen" id="tw1" style="width:230px;height:230px" data-frei></div><div class="a welle gruen" id="tw2" style="width:230px;height:230px" data-frei></div>`);
   const t112 = W('eins-eins-zwei', 19), tAn = WN(19, 11);
   pop('tel', t112 - .55, { x: 2400, y: 800 }, 'pop');
   tippen('teln', [[t112, '1'], [t112 + .27, '11'], [t112 + .54, '112']]); [0, .27, .54].forEach(d => cue(t112 + d, 'tipp'));
   rel('telG', { o: 0 }); rel('telz', { o: 0 }); tw('telz', tAn, .3, { o: 1 });
+  HOOKS.push(z => { const s = Math.max(0, Math.floor(z - tAn)); el('telz').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; });
   const verb = []; for (let z = tAn; z < SE(24) + .6; z += 1.4) verb.push(z);
   wellen(['tw1', 'tw2'], verb, 2400, 760, 1.3, 1.6); cue(tAn, 'ding'); akzent(tAn, .03);
   // Mai spricht: „In der Musterstraße zwölf“ – eine Ortsmarke fällt aufs Haus, die Hausnummer leuchtet
@@ -739,7 +737,6 @@ const P5 = SE(18) + .25;
   akteur('pin', { x: 1882, y: 140, o: 0 });
   set('pin', tMu - .25, { o: 1 }); tw('pin', tMu - .25, .55, { y: 332 }, 'in'); landen('pin', tMu + .3); cue(tMu + .3, 'plopp');
   akzent(tMu + .3, .03);
-  HOOKS.push(z => { const p = clamp((z - tZw) / .3) * (1 - clamp((z - (SE(24) + .5)) / .4)); el('stock2').style.opacity = 0; el('hausnr') && 0; });
   WELT.insertAdjacentHTML('beforeend', '<div class="z" id="nrGlow" style="left:1900px;top:894px;width:92px;height:78px;border-radius:14px;box-shadow:0 0 0 6px var(--warning),0 0 30px 8px rgba(224,153,43,.5);opacity:0"></div>');
   HOOKS.push(z => { el('nrGlow').style.opacity = (clamp((z - tZw) / .3) * (1 - clamp((z - (tSt + .2)) / .4)) * (.75 + .25 * Math.sin(z * 6))).toFixed(3); });
   cue(tZw, 'ding');
@@ -774,18 +771,16 @@ const P5 = SE(18) + .25;
   const tKu = W('Kurz', 25), tFw = W('Feuerwehr', 25), tDa = WN(25, 5);
   aus(['notiz', 'sand5'], tKu - .3, .3);
   kam(tKu - .3, 1.0, 1800, 790, .86);
-  akteur('auto', { x: 600, y: 1144 });
+  akteur('auto', { x: 200, y: 1144 });
   tw('auto', tKu, tDa + .1 - tKu, { x: 1560 }, 'out'); cue(tKu, 'whoosh');
   landen('auto', tDa + .1); akzent(tDa + .1, .03);
   HOOKS.push(z => { const x = wertBei('auto', 'x', z), b = el('blau1');
-    b.style.transform = `translate(${(x + 50 - 60).toFixed(1)}px, ${(1144 - 200 * .3 - 96).toFixed(1)}px)`;
+    b.style.transform = `translate(${(x + 115 - 60).toFixed(1)}px, ${(1114 - 60).toFixed(1)}px)`;
     b.style.opacity = z > tKu - .2 && z < P7 ? (.55 + .45 * Math.max(0, Math.sin(z * 9))).toFixed(3) : 0; });
-  DICHTE_T.push([tDa, .05, 1.5]);
+  RAUCH[0].dichte.push([tDa, .05, 1.5]);
 }
 
 /* =========================== Szene 6 · Funk zwischen Handy und Leitstelle: Wo? Was? Wie viele? Warten =========================== */
-const P6 = SE(25) + .3;
-const P7 = SE(30) + .3;
 {
   kam(P6, 1.3, 2850, 760, 1.0); cue(P6, 'whoosh');
   WELT.insertAdjacentHTML('beforeend', `<div class="a welle hell" id="an1" style="width:160px;height:160px" data-frei></div><div class="a welle hell" id="an2" style="width:160px;height:160px" data-frei></div>
@@ -822,7 +817,7 @@ const P7 = SE(30) + .3;
 /* =========================== Szene 7 · Drei Nummern an der Straße: 112, 110, 116 117 =========================== */
 {
   WELT.insertAdjacentHTML('beforeend', `
-    <div class="a rtor" id="tor1" style="width:240px;height:220px" data-gruppe="fw"><div id="tor1i" style="left:6px;top:28px;width:228px">{{feuerwehrauto~w}}</div><div class="lam" id="tor1l"></div></div>
+    <div class="a rtor" id="tor1" style="width:240px;height:220px" data-gruppe="fw"><div id="tor1i" style="left:6px;top:20px;width:228px">{{feuerwehrauto~w}}</div><div class="lam" id="tor1l"></div></div>
     <div class="a rtor" id="tor2" style="width:240px;height:220px" data-gruppe="fw"><div id="tor2i" style="left:10px;top:26px;width:220px">{{rettungswagen}}</div><div class="lam" id="tor2l"></div></div>
     <div class="z blau" id="blau2" style="width:110px;height:110px;opacity:0"></div><div class="z blau" id="blau3" style="width:110px;height:110px;opacity:0"></div>
     <div class="a nschild" id="s112" data-gruppe="fw"><span id="s112t"></span></div>
@@ -833,29 +828,28 @@ const P7 = SE(30) + .3;
     <div class="a" id="thermo" style="width:100px">{{thermometer}}</div>
     <div class="a" id="mond2" style="width:150px">{{mond~2}}</div>
     <div class="a kal" id="kal"></div>
-    <div class="a wtext" id="l1"><div class="titel">Feuerwehr &amp; Rettung</div></div>
-    <div class="a wtext" id="l2"><div class="titel">Polizei</div></div>
-    <div class="a wtext" id="l3"><div class="titel">Arzt-Bereitschaft</div></div>`);
+    <div class="a wtext" id="l1"><div id="l1b"><div class="titel">Feuerwehr &amp; Rettung</div></div></div>
+    <div class="a wtext" id="l2"><div id="l2b"><div class="titel">Polizei</div></div></div>
+    <div class="a wtext" id="l3"><div id="l3b"><div class="titel">Arzt-Bereitschaft</div></div></div>`);
   el('kal').innerHTML = Array.from({ length: 21 }, (_, k) => `<i class="${k % 7 > 4 ? 'we' : ''}" id="kd${k}" style="left:${13 + (k % 7) * 18.5}px;top:${48 + Math.floor(k / 7) * 28}px"></i>`).join('');
   // Fahrt die Straße entlang zur Feuerwache
   kam(P7, 1.5, 4300, 790, 1.12); cue(P7, 'whoosh');
   akteur('tor1', { x: 4160, y: 1040 }); akteur('tor2', { x: 4440, y: 1040 });
   rel('tor1l', {}); rel('tor2l', {}); rel('tor1i', {}); rel('tor2i', {});
-  akteur('s112', { x: 4300, y: 820, s: 0 }); akteur('s110', { x: 5000, y: 790, s: 0 }); akteur('s116', { x: 5660, y: 830, s: 0 });
+  akteur('s112', { x: 4300, y: 862, s: 0 }); akteur('s110', { x: 5000, y: 790, s: 0 }); akteur('s116', { x: 5660, y: 830, s: 0 });
   const t112 = W('eins-eins-zwei', 31), tFw = W('Feuerwehr', 31), tRd = W('Rettungsdienst', 31);
   tw('s112', t112 - .3, .5, { s: 1 }, 'back'); cue(t112 - .3, 'pop');
   tippen('s112t', [[t112, '1'], [t112 + .3, '11'], [t112 + .6, '112']]); [0, .3, .6].forEach(d => cue(t112 + d, 'tipp'));
   bump('s112', t112 + .75, 1.1);
-  tw('tor1l', tFw - .2, .7, { y: -200 }, 'inout'); cue(tFw - .2, 'whoosh'); tw('tor1i', tFw + .3, .5, { x: 6 }, 'out');
-  tw('tor2l', tRd - .2, .7, { y: -200 }, 'inout'); cue(tRd - .2, 'whoosh');
+  tw('tor1l', tFw - .2, .7, { y: -200 }, 'inout'); cue(tFw - .2, 'whoosh'); bump('tor1', tFw + .5, 1.04);
+  tw('tor2l', tRd - .2, .7, { y: -200 }, 'inout'); cue(tRd - .2, 'whoosh'); bump('tor2', tRd + .5, 1.04);
   HOOKS.push(z => {
     const b2 = el('blau2'), b3 = el('blau3');
-    b2.style.transform = 'translate(4105px, 990px)'; b3.style.transform = 'translate(4355px, 990px)';
+    b2.style.transform = 'translate(4171px, 992px)'; b3.style.transform = 'translate(4348px, 948px)';
     b2.style.opacity = z > tFw + .2 && z < SE(33) ? (.5 + .5 * Math.max(0, Math.sin(z * 9))).toFixed(3) : 0;
     b3.style.opacity = z > tRd + .2 && z < SE(33) ? (.5 + .5 * Math.max(0, Math.sin(z * 9 + 1.6))).toFixed(3) : 0;
   });
-  binde('l1', [tFw, tFw + .08, tRd], P8 + 3);
-  akteur('l1', { x: 4300, y: 1240 });
+  akteur('l1', { x: 4300, y: 1240 }); binde('l1b', [tFw, tFw + .08, tRd], P8 + 3);
   // „Die eins-eins-null ist für die Polizei“
   const P72 = SE(31) + .1, t110 = W('eins-eins-null', 32), tPo = W('Polizei', 32);
   kam(P72, 1.0, 4880, 790, 1.12); cue(P72, 'whoosh');
@@ -864,8 +858,7 @@ const P7 = SE(30) + .3;
   pop('muetze', tPo - .1, { x: 5000, y: 930 }, 'pop'); bump('s110', tPo, 1.1);
   HOOKS.push(z => { const b = el('blau4'); b.style.transform = 'translate(4925px, 610px)'; b.style.opacity = z > tPo && z < SE(33) ? (.5 + .5 * Math.max(0, Math.sin(z * 8))).toFixed(3) : 0; });
   WELT.insertAdjacentHTML('beforeend', '<div class="z" id="dachlicht" style="left:4975px;top:668px;width:50px;height:22px;border-radius:10px 10px 4px 4px;background:var(--info)"></div>');
-  binde('l2', [tPo], P8 + 3);
-  akteur('l2', { x: 5000, y: 1240 });
+  akteur('l2', { x: 5000, y: 1240 }); binde('l2b', [tPo], P8 + 3);
   // „Du bist krank, aber es ist kein Notfall?“ – Thermometer; die Blaulichter gehen aus
   const P73 = SE(32) + .1, tKr = W('krank', 33), tNf = W('Notfall', 33);
   kam(P73, 1.0, 5520, 790, 1.12); cue(P73, 'whoosh');
@@ -877,14 +870,13 @@ const P7 = SE(30) + .3;
   tippen('s116t', [[t116, '1'], [t116 + .3, '11'], [t116 + .6, '116'], [t117, '116 1'], [t117 + .25, '116 11'], [t117 + .5, '116 117']]);
   [0, .3, .6].forEach(d => { cue(t116 + d, 'tipp'); cue(t117 + d * .83, 'tipp'); });
   bump('s116', t117 + .65, 1.1);
-  binde('l3', [tBd], P8 + 3);
-  akteur('l3', { x: 5660, y: 1240 });
+  akteur('l3', { x: 5660, y: 1240 }); binde('l3b', [tBd], P8 + 3);
   // „zum Beispiel nachts, am Wochenende und an Feiertagen“ – Mond, Kalender
   const tNa = W('nachts', 34), tWe = W('Wochenende', 34), tFt = W('Feiertagen', 34);
   ein('mond2', tNa - .2, { x: 5820, y: 600 }, { y: 80 }, 'whoosh');
   pop('kal', tWe - .25, { x: 5450, y: 590 }, 'pop');
   [5, 6, 12, 13, 19, 20].forEach(k => { el('kd' + k).style.transformOrigin = '50% 50%'; rel('kd' + k, {}); bump('kd' + k, tWe + .1 + (k % 7 - 5) * .05, 1.6); });
-  rel('kd9', {}, '50% 50%'); set('kd9', tFt, {});
+  rel('kd9', {}, '50% 50%');
   HOOKS.push(z => { el('kd9').style.background = z >= tFt ? 'var(--warning)' : ''; });
   bump('kd9', tFt, 1.8); cue(tFt, 'ding');
   // zum Schluss alle drei Häuser im Bild
@@ -892,7 +884,6 @@ const P7 = SE(30) + .3;
 }
 
 /* =========================== Szene 8 · Die beste Wahl: C – bei Feuer raus, Tür zu, 112; Rauchmelder =========================== */
-const P8 = SE(34) + .2;
 {
   // große Fahrt zurück zum Haus: weit hinaus, die ganze Straße, dann ins Haus
   kam(P8, 2.0, 1300, 690, .9); TAUCH.push([P8, 2.0, .55]); cue(P8, 'whoosh'); cue(P8 + 1.2, 'whoosh');
@@ -901,9 +892,9 @@ const P8 = SE(34) + .2;
   // die drei Wege noch einmal: A und B blass, C leuchtet grün
   const tBe = W('beste', 35), tC = WN(35, 4);
   WEG_O.A.push([P8 + 1.2, .35, .5]); WEG_O.B.push([P8 + 1.2, .35, .5]); WEG_O.C.push([P8 + 1.2, .35, .5], [tC - .1, 1, .3]);
-  ZEICHNEN.A = [P8 + 1.2, .01]; ZEICHNEN.B = [P8 + 1.2, .01]; ZEICHNEN.C = [P8 + 1.2, .01];
+  ['A', 'B', 'C'].forEach(L => ZEICHNEN[L].push([P8 + 1.2, .01]));
   HOOKS.push(t => { const g = t >= tC - .1; el('wC').querySelector('.wegl').style.stroke = g ? 'var(--success)' : ''; el('spC').style.stroke = g ? 'var(--success)' : ''; });
-  HOOKS.push(t => { el('dimm').style.opacity = (.5 * E.inout(clamp((t - (P8 + 1)) / .6)) * (1 - E.inout(clamp((t - (SE(36) + .1)) / .6)))).toFixed(3); });
+  DIMM.push([P8 + 1, .5, .6], [SE(36) + .1, 0, .6]);
   ['A', 'B', 'C'].forEach(L => { tw('h' + L, P8 + 1.2, .4, { s: 1 }, 'back'); });
   tw(['hA', 'hB'], tBe, .5, { o: .45 }, 'inout'); bump('hC', tC, 1.3); cue(tC, 'erfolg'); akzent(tC, .04);
   WELT.insertAdjacentHTML('beforeend', '<div class="a welle gruen" id="gw1" style="width:200px;height:200px" data-frei></div><div class="a welle gruen" id="gw2" style="width:200px;height:200px" data-frei></div>');
@@ -925,13 +916,12 @@ const P8 = SE(34) + .2;
   const tBr = W('Brennt', 37), tRa = W('raus', 37), tTu = W('Tür', 37), tZu = WN(37, 7), t112 = W('eins-eins-zwei', 37);
   const tIn = SE(36) + .1;
   kam(tIn, 1.0, 1440, 520, 1.6); cue(tIn, 'whoosh');
-  DICHTE_T.push([tIn, 0, .5]);
+  RAUCH[0].dichte.push([tIn, 0, .5]);
   RAUCH[1].dichte.push([tIn, 0, .5]); GLUT[0][1].push([tIn, 0, .5]);
   tw('tuerMb', tIn + .1, .25, { sx: .12 }, 'inout');
   weg(tIn + .15, [[1340, 560], [1450, 560], [1540, 560], [1610, 560]], .24, 12);
   tw('tuerMb', tIn + 1.2, .25, { sx: 1 }, 'inout'); cue(tIn + 1.4, 'klick');
-  HOOKS.push(t => { const p = E.inout(clamp((t - (tIn + .8)) / .5));
-    el('dunkelM').style.opacity = Math.min(+el('dunkelM').style.opacity, 1 - p) + (t > tIn + .8 ? 0 : 0); el('lampeM').style.opacity = Math.max(+el('lampeM').style.opacity, p); });
+  LICHT_M.push([tIn + .8, 1, .5]);
   rauch('clipM', 6, { x0: 300, y0: 200, sx: 30, dx: -40, dy: -150, r0: 20, r1: 60, per: 3.4, deckeH: 70, dichte: [[0, 0], [tBr, .7, 1.2], [SE(37) + .4, 0, .6]] });
   GLUT.push(['glutM', [[0, 0], [tBr - .1, .7, .9], [SE(37) + .4, 0, .6]]]);
   // „raus“: ein Pfeil läuft zur Tür, Mai geht hinaus; „Tür zu“: die Tür fällt zu (Klack)
@@ -939,10 +929,11 @@ const P8 = SE(34) + .2;
   HOOKS.push(t => { const p = E.inout(clamp((t - (tRa - .35)) / .5)); el('pfeilp').style.strokeDashoffset = (1 - p).toFixed(3); el('pfeil').style.opacity = (1 - clamp((t - (tTu + .3)) / .3)).toFixed(3); });
   cue(tRa - .35, 'kritzeln');
   tw('tuerMb', tRa - .1, .2, { sx: .12 }, 'inout');
-  weg(tRa, [[1520, 560], [1420, 560], [1330, 560]], .17, 10);
+  weg(tRa, [[1520, 560], [1440, 560], [1360, 560]], .17, 10);
+  rel('tuerM', {}, '50% 100%');
   tw('tuerMb', tZu - .1, .16, { sx: 1 }, 'in'); landen('tuerM', tZu + .06); cue(tZu + .06, 'plopp'); cue(tZu + .06, 'klick'); akzent(tZu + .06, .045);
   WELT.insertAdjacentHTML('beforeend', `<div class="a tel" id="tel8" style="width:96px;height:150px"><div class="schirm"><div class="nr" id="tel8n" style="top:32px;font-size:30px"></div><div class="knopf gruen" style="left:17px;width:44px;height:44px;bottom:12px">${tpl('svgHoerer')}</div></div></div>`);
-  pop('tel8', t112 - .35, { x: 1200, y: 500 }, 'pop');
+  pop('tel8', t112 - .35, { x: 1240, y: 520 }, 'pop');
   tippen('tel8n', [[t112, '1'], [t112 + .28, '11'], [t112 + .56, '112']]); [0, .28, .56].forEach(d => cue(t112 + d, 'tipp'));
   binde('cap8', [tBr, tBr + .08, tRa, tTu, tTu + .08, tZu, t112 - .05, t112], ENDE_SPRACHE + .8);
   // „Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt.“ – Melder über dem Bett, Mai schläft und wacht auf
@@ -955,13 +946,13 @@ const P8 = SE(34) + .2;
     <div class="a welle rot" id="pM1" style="width:150px;height:150px" data-frei></div><div class="a welle rot" id="pM2" style="width:150px;height:150px" data-frei></div>
     <div class="a" id="wecker" style="width:84px">{{wecker}}</div>`);
   pop('pflicht', tPf, { x: 1812, y: 418 }, 'ding'); akzent(tPf, .025);
-  set('mai', tPf - .2, { x: 1724, y: 528, s: .62 }); SCHLAF.push([0, tWk + .15]);
+  set('mai', tPf - .2, { x: 1745, y: 516, s: .62 }); SCHLAF.push([tPf - .3, tWk + .15]);
   tw('mai', tPf - .1, .5, { o: 1 }, 'out');
   const pz = piepZeiten(tWk - .1, tBn + .8, .8);
   wellen(['pM1', 'pM2'], pz, 1745, 420, 1.1, 2);
   pz.forEach(z => cue(z, 'tipp'));
-  pop('wecker', tWk, { x: 1600, y: 590 }, 'pop'); wackeln('wecker', tWk + .4, 5, 7);
-  tw('mai', tWk + .2, .3, { y: 506 }, 'out'); tw('mai', tWk + .5, .35, { y: 528 }, 'sanft');
+  pop('wecker', tWk, { x: 1588, y: 555 }, 'pop'); wackeln('wecker', tWk + .4, 5, 7);
+  tw('mai', tWk + .2, .3, { y: 494 }, 'out'); tw('mai', tWk + .5, .35, { y: 516 }, 'sanft');
   FROH.push([tBn + .5, ENDE_SPRACHE + 6]);
   // „Bau sie also nie ab“ – der Melder wackelt nur kurz und bleibt fest an der Decke
   const tBa = W('Bau', 40), tNe = W('nie', 40);

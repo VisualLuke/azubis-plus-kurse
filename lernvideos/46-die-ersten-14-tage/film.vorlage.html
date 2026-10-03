@@ -719,7 +719,7 @@ cam(0, 0, FR.A);
   pop('lbl3c', tAb, { x: B(1560, 0)[0], y: 652 }, 'pop', 'sanft');
   akteur('kop3c', { x: B(1608, 0)[0], y: 372, o: 0, r: 3 });
   tw('kop3c', tAb + .1, .1, { o: 1 }); tw('kop3c', tAb + .1, 1.0, { x: B(1720, 0)[0], y: 1250, s: .7, r: 10 }, 'in', { bogen: 120 }); cue(tAb + .1, 'whoosh');
-  bump('lbl3c', tAb + .8, 1.08);
+  bump('lbl3c', tAb + .8, 1.08); tw('kop3c', tAb + .85, .25, { o: 0 });
   stempeln(0, SE(11) - .45, [1250, 300]);
 }
 
@@ -1001,6 +1001,7 @@ cam(0, 0, FR.A);
 {
   const t9 = W('Mach', 33) - .35;
   akteur('schleier', { o: 0 }, true); tw('schleier', t9, .5, { o: .9 });
+  tw(['handy8', 'scan8', 'ok8', 'pass8'], t9 + .5, .3, { o: 0 });
   tw('heft', t9, .7, { x: 560, y: 690, s: 1.55 }, 'inout'); cue(t9, 'whoosh');
   const D9 = [['d9a', 300, 300, -2], ['d9b', 460, 290, 1], ['d9c', 620, 290, 2], ['d9d', 780, 300, -1]];
   D9.forEach(([id, x, y, r], i) => {
@@ -1027,12 +1028,11 @@ cam(0, 0, FR.A);
   // Und denk dran: zurück auf die ganze Karte
   const tE = W('Und', 34) - .35;
   schildWeg('schildH', tE);
-  tw(['handy8', 'scan8', 'ok8', 'pass8'], tE, .3, { o: 0 });
   tw('handy9', tE, .5, { x: 1360 + 700, o: 0 }, 'in');
   tw('schleier', tE + .1, .6, { o: 0 });
   tw('heft', tE, .8, { x: HEFT[0], y: HEFT[1], s: 1 }, 'inout'); cue(tE, 'whoosh');
-  cam(tE, 1.3, [1810, 1330], .335);
-  wachsen('schildZ', W('Termine', 34) - .25, { x: 250, y: 330 }, 'plopp');
+  cam(tE, 1.3, [1781, 1330], .32); tw('mai', tE + .4, .8, { s: 2.1 }, 'inout');
+  wachsen('schildZ', W('Termine', 34) - .25, { x: 250, y: 610 }, 'plopp');
   titelEin('tZ', W('Termine', 34) + .05, { unter: W('eins', 34) - .1 });
   // Termine früh buchen: die Termin-Stationen leuchten; eins nach dem anderen: Stein für Stein grün
   wellen('welleB', [W('Termine', 34), W('früh', 34) + .1], 2750, 470, 1.0, 420);

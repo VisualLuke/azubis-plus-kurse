@@ -8,8 +8,10 @@
 - **Kernbotschaft:** Zu Fuß bist du sicher unterwegs, wenn du die Regeln kennst: Gehweg, bei Rot warten, richtig schauen und gut sichtbar sein.
 - **Aufnahme:** `sprache.mp3` + `sprache.json`, erzeugt mit `node werkzeug/stimme.mjs lernvideos/50-zu-fuss` (ElevenLabs, Eleven v4)
 
-Roter Faden: eine Straßen-Bühne (Häuserzeile, Gehweg, Radweg, Fahrbahn mit Zebrastreifen und Fußgängerampel), die Szene für
-Szene aus einem anderen Blickwinkel gezeigt wird; Ana läuft als Marker darüber.
+Roter Faden: **eine durchgehende Straße in der Seitenansicht (Side-Scroller)**. Vorne Anas Gehweg und der Radweg, in der Mitte
+die zweispurige Fahrbahn, hinten der ferne Gehweg und die Häuserzeile. Die Kamera fährt mit Ana die Straße entlang von Halt zu
+Halt (Gehweg/Radweg → Ampel → Zebrastreifen → links-rechts-links → Abend → Betrieb); Parallaxe: Häuser hinten halb so schnell,
+große Bäume vorne schneller und leicht unscharf. Wer die Straße überquert, geht in die Tiefe (wird kleiner) bzw. nach vorn.
 
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
@@ -22,8 +24,18 @@ Szene aus einem anderen Blickwinkel gezeigt wird; Ana läuft als Marker darüber
 | 7 | Die Bühne wird Nacht (Mond geht auf, Laternen gehen an); der Scheinwerferkegel eines Autos tastet die Straße ab, eine Entfernungslinie zeichnet sich; Ana in dunkler Jacke wird erst bei „25 m“ sichtbar; dann trägt Ana eine helle Jacke mit Reflektorstreifen und einen Reflektor an der Tasche – die Streifen blitzen schon bei „140 m“ auf, die Linie wächst mit; Kamera-Akzent auf „Reflektoren“ | Dunkel: ab 25 m · Reflektoren: bis 140 m |
 | 8 | Fünf Kacheln ploppen nacheinander auf (Gehweg, rote Ampel, Blickpfeile links-rechts-links, Handy in der Tasche, Reflektor); Ana springt von Kachel zu Kachel, jede bekommt einen Haken; am Ende legt sich der Schutzring um Ana, sie lächelt | Gehweg · Rot = warten · Links-rechts-links · Handy weg · Sichtbar sein |
 
-Umsetzung: Text im Bild links (Wörter steigen aus einer Maske), Bühne rechts; jede Animation hängt an einem Wort aus
-`sprache.json`. Szene 1 steht ohne Titel in der Bildmitte, dann Schwenk zur Erklär-Bühne; Szenenwechsel mit Kamera-Atmer.
+Umsetzung: Bild über die volle Breite, Text im Bild oben links im Himmel (Wörter steigen aus einer Maske, nachts weiß);
+jede Animation hängt an einem Wort aus `sprache.json`. Szene 1 ohne Titel, die Straße baut sich auf; Szenenwechsel als
+Kamerafahrt entlang der Straße, Szene 6 als Irisblende, die auf Ana aufzieht (Großaufnahme) und sich wieder schließt.
+
+Abweichungen von der Tabelle (Bildaufbau, gleiche Inhalte):
+- 3/4: Ampel und Zebrastreifen liegen an der Hauptstraße; Ana geht über die Ampel in die Tiefe, über den Zebrastreifen wieder nach vorn.
+  Das Auto am Zebrastreifen kommt auf der Spur an Anas Seite von rechts, bremst (nickt nach vorn, Bremslicht), Blicklinie zur Scheibe.
+- 5: Seitenansicht statt Draufsicht; Ana steht vorn mit Blick über die Straße, ihr Links ist im Bild links. Nahe Spur: Auto von links,
+  ferne Spur: Bus von rechts. Der Chip „Linksverkehr“ zeigt gespiegelte Pfeile und dreht sich auf die deutschen Pfeile mit Haken.
+- 7: Überraschung: Auf „Reflektoren“ wird das Bild schwarz, nur Anas Reflektorstreifen leuchten in 140 m auf; dann kommt die Nacht zurück.
+- 8: Statt Kacheln stehen fünf Schilder am Gehweg; Ana läuft (Kamera fährt mit) an ihnen vorbei, jedes bekommt beim Wort einen Haken;
+  Ana kommt am Betrieb an (aus ihrem Gedanken in Szene 1), Schutzring.
 Abspann: „Schauen und gesehen werden.“ und die Kernbotschaft.
 
 ## Hinweise zum Briefing
