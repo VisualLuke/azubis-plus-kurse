@@ -119,8 +119,8 @@ html,body{background:var(--b700)}
 .chip .ic{width:60px;height:60px;border-radius:999px;background:var(--b500);flex:none;display:flex;align-items:center;justify-content:center}
 .chip .ic svg{width:36px}
 .chip.gruen{background:var(--success-bg);color:var(--success-text)} .chip.gruen .ic{background:var(--success)}
-.ichip{width:92px;height:92px;border-radius:999px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.28);display:flex;align-items:center;justify-content:center}
-.ichip svg{width:58px}
+.ichip{width:104px;height:104px;border-radius:999px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.28);display:flex;align-items:center;justify-content:center}
+.ichip svg{width:76px}
 .notiz{width:230px;height:290px;border-radius:22px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.3)}
 .notiz::before{content:'';position:absolute;left:0;right:0;top:0;height:46px;border-radius:22px 22px 0 0;background:var(--b500)}
 .notiz .zeile{position:absolute;left:26px;height:12px;border-radius:6px;background:var(--n200)}
@@ -220,6 +220,7 @@ html,body{background:var(--b700)}
   <div class="z tuer" id="tuerM" style="left:1462px;top:454px"><i></i><b id="tuerMb"></b></div>
   <div class="z tuer" id="haustuer" style="left:1838px;top:974px;width:62px"><i></i><b id="haustuerb" style="width:50px"></b></div>
   <div class="a klingel" id="klingel" data-gruppe="haus"></div>
+  <div class="z" id="nr12" style="left:1916px;top:910px;width:60px;height:46px;border-radius:8px;background:var(--info);color:var(--surface);font:800 28px/46px Inter;text-align:center;opacity:0">12</div>
   <!-- Möbel in Mais Wohnung -->
   <div class="a" id="bett" style="width:190px" data-gruppe="haus">{{bett}}</div>
   <!-- Wellen -->
@@ -318,7 +319,7 @@ HOOKS.push(t => BINDEN.forEach(id => {
 
 /* ---------- Kamera: Mittelpunkt (x, y) und Zoom (s) der Welt, Akzente, Unschärfe bei schnellen Fahrten ---------- */
 const CAM = el('cam');
-akteur(CAM, { x: 1300, y: 690, s: .9 }, true);
+akteur(CAM, { x: 1300, y: 680, s: .9 }, true);
 const kam = (t, d, x, y, s, e = 'inout') => tw(CAM, t, d, { x, y, s }, e);
 const AKZ = [];
 const akzent = (t, z = .03) => AKZ.push([t, z]);
@@ -382,7 +383,7 @@ const HAUS = (() => {
   // Deckenlampen in den bewohnten Räumen
   [[906, 910], [906, 650], [1300, 650], [1694, 650], [1300, 910], [1694, 910], [1300, 390]].forEach(([x, y]) => s.push(`<path d="M${x} ${y}v22" stroke="var(--b700)" stroke-width="3"/><path d="M${x - 22} ${y + 40}a22 18 0 0 1 44 0Z" fill="var(--warning-bg)"/>`));
   // Hausnummer neben der Haustür
-  s.push('<rect x="1916" y="910" width="60" height="46" rx="8" fill="var(--info)"/><text x="1946" y="943" text-anchor="middle" font-family="Inter" font-weight="800" font-size="28" fill="var(--surface)">12</text>');
+
   return s.join('');
 })();
 // Leitstelle (Antenne) und die drei Wachen an der Straße
@@ -462,7 +463,7 @@ function rauch(clipId, n, cfg) {
 HOOKS.push(t => {
   for (const R of RAUCH) {
     const D = kurve(R.dichte, t), K = R.dunkel ? kurve(R.dunkel, t) : 0;
-    const farbe = `color-mix(in srgb, var(--n700) ${(K * 100).toFixed(0)}%, var(--n300))`;
+    const farbe = `color-mix(in srgb, var(--n700) ${(K * 100).toFixed(0)}%, ${R.hell || 'var(--n400)'})`;
     R.decke.style.height = `${(R.deckeH * D).toFixed(1)}px`;
     R.decke.style.background = `linear-gradient(${farbe}, color-mix(in srgb, ${farbe} 70%, transparent) 60%, transparent)`;
     R.decke.style.opacity = (Math.min(1, D) * .95).toFixed(3);
@@ -518,6 +519,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
     el('fassade').style.transform = `perspective(2600px) rotateY(${(-104 * p).toFixed(2)}deg)`;
     el('fassade').style.opacity = (1 - clamp((p - .55) / .35)).toFixed(3); el('fassade').style.visibility = p >= .999 ? 'hidden' : 'visible'; });
   cue(tFa, 'whoosh'); akzent(tFa + .6, .025);
+  HOOKS.push(t => { el('nr12').style.opacity = clamp((t - (tFa + .9)) / .3).toFixed(3); });
   // Mai läuft durch den Flur zur Treppe und hüpft Stufe für Stufe nach oben (Kamera fährt mit)
   tw('mai', tFa + .9, .3, { s: 1 }, 'sanft');
   const tLos = tFa + 1.0;
@@ -750,8 +752,8 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
     <div class="a ichip" id="cRauch" data-gruppe="chips"><svg viewBox="0 0 40 40"><path d="M11 30a7 7 0 0 1-1-14 9 9 0 0 1 17-3 7 7 0 0 1 4 13 5 5 0 0 1-4 4Z" fill="var(--n400)"/></svg></div>
     <div class="a ichip" id="cMelder" data-gruppe="chips"><svg viewBox="0 0 40 40"><rect x="8" y="9" width="24" height="4" rx="2" fill="var(--n400)"/><path d="M10 14h20c0 7-4 11-10 11s-10-4-10-11Z" fill="var(--n400)"/><circle cx="20" cy="19" r="2.6" fill="var(--error)"/><path d="M12 30q8 5 16 0" stroke="var(--error)" stroke-width="3" stroke-linecap="round" fill="none"/></svg></div>`);
   const tMu = W('Musterstraße', 20), tZw = W('zwölf', 20), tSt = W('zweiten', 20), tRa = W('Rauch', 20), tRm = W('Rauchmelder', 21);
-  akteur('pin', { x: 1882, y: 140, o: 0 });
-  set('pin', tMu - .25, { o: 1 }); tw('pin', tMu - .25, .55, { y: 332 }, 'in'); landen('pin', tMu + .3); cue(tMu + .3, 'plopp');
+  akteur('pin', { x: 1946, y: 600, o: 0 });
+  set('pin', tMu - .25, { o: 1 }); tw('pin', tMu - .25, .55, { y: 862 }, 'in'); landen('pin', tMu + .3); cue(tMu + .3, 'plopp');
   akzent(tMu + .3, .03);
   WELT.insertAdjacentHTML('beforeend', '<div class="z" id="nrGlow" style="left:1900px;top:894px;width:92px;height:78px;border-radius:14px;box-shadow:0 0 0 6px var(--warning),0 0 30px 8px rgba(224,153,43,.5);opacity:0"></div>');
   HOOKS.push(z => { el('nrGlow').style.opacity = (clamp((z - tZw) / .3) * (1 - clamp((z - (tSt + .2)) / .4)) * (.75 + .25 * Math.sin(z * 6))).toFixed(3); });
@@ -760,7 +762,7 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   HOOKS.push(z => { el('stock2').style.opacity = (clamp((z - tSt) / .35) * (1 - clamp((z - (tRa + .6)) / .5))).toFixed(3); });
   pop('cStock', W('Stock', 20) - .05, { x: 2130, y: 470 });
   // „kommt Rauch aus einer Wohnung“ – Rauch-Chip; „Ein Rauchmelder piept“ – Melder-Chip
-  pop('cRauch', tRa, { x: 2066, y: 610 }); pop('cMelder', tRm, { x: 2066, y: 740 });
+  pop('cRauch', tRa, { x: 2072, y: 620 }); pop('cMelder', tRm, { x: 2072, y: 760 });
   HOOKS.push(z => { const d = z - tRm; if (d > 0 && d < 2.4) el('cMelder').style.boxShadow = `0 10px 26px rgba(22,19,37,.28), 0 0 0 ${(4 + 4 * Math.max(0, Math.sin(d * 9))).toFixed(1)}px color-mix(in srgb, var(--error) 60%, transparent)`; else el('cMelder').style.boxShadow = ''; });
   bump('cRauch', W('Wohnung', 20), 1.1);
   // „Mein Name ist Mai Nguyen“ – Mai nickt
@@ -956,20 +958,20 @@ HOOKS.push(t => { const l = kurve(LICHT_M, t); el('dunkelM').style.opacity = (.6
   // „Rauchmelder sind in Wohnungen Pflicht. Sie wecken dich, wenn es brennt.“ – Melder über dem Bett, Mai schläft und wacht auf
   const tRm = W('Rauchmelder', 38), tPf = W('Pflicht', 38), tWk = W('wecken', 39), tBn = W('brennt', 39);
   aus(['tel8'], tRm - .5, .3); tw('mai', tRm - .5, .35, { o: 0 }, 'in');
-  kam(tRm - .5, 1.0, 1580, 505, 2.0);
+  kam(tRm - .5, 1.0, 1650, 500, 2.25);
   blinken('ledM', tRm, ENDE_SPRACHE + 2, .8);
   bump('melderM', tRm + .1, 1.15); cue(tRm + .1, 'tipp');
   WELT.insertAdjacentHTML('beforeend', `<div class="a plakette gruen" id="pflicht" data-frei>${tpl('svgHaken')}</div>
     <div class="a welle rot" id="pM1" style="width:150px;height:150px" data-frei></div><div class="a welle rot" id="pM2" style="width:150px;height:150px" data-frei></div>
     <div class="a" id="wecker" style="width:84px">{{wecker}}</div>`);
   pop('pflicht', tPf, { x: 1812, y: 418 }, 'ding'); akzent(tPf, .025);
-  set('mai', tPf - .2, { x: 1745, y: 516, s: .62 }); SCHLAF.push([tPf - .3, tWk + .15]);
+  set('mai', tPf - .2, { x: 1745, y: 526, s: .62 }); SCHLAF.push([tPf - .3, tWk + .15]);
   tw('mai', tPf - .1, .5, { o: 1 }, 'out');
   const pz = piepZeiten(tWk - .1, tBn + .8, .8);
   wellen(['pM1', 'pM2'], pz, 1745, 420, 1.1, 2);
   pz.forEach(z => cue(z, 'tipp'));
   pop('wecker', tWk, { x: 1588, y: 555 }, 'pop'); wackeln('wecker', tWk + .4, 5, 7);
-  tw('mai', tWk + .2, .3, { y: 494 }, 'out'); tw('mai', tWk + .5, .35, { y: 516 }, 'sanft');
+  tw('mai', tWk + .2, .3, { y: 504 }, 'out'); tw('mai', tWk + .5, .35, { y: 526 }, 'sanft');
   FROH.push([tBn + .5, ENDE_SPRACHE + 6]);
   // „Bau sie also nie ab“ – der Melder wackelt nur kurz und bleibt fest an der Decke
   const tBa = W('Bau', 40), tNe = W('nie', 40);
