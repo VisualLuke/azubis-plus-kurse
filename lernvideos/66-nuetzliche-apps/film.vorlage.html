@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Nützliche Apps für den Start</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+/* Anas Startbildschirm: Die Welt ist ein Bildschirm, die Kamera zoomt in die Kacheln hinein */
+html,body{background:linear-gradient(160deg,var(--b50),var(--b100) 70%,var(--b200))}
+#kamera{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.buehne{width:1920px;height:1080px;border-radius:0;background:none}
+#heim{position:absolute;left:0;top:0;width:1920px;height:1080px}
+
+/* Handy */
+.telefon{width:500px;height:960px;border-radius:78px;background:var(--ink);box-shadow:0 34px 70px rgba(58,37,153,.26),inset 0 0 0 4px var(--n700)}
+.telefon .glas{position:absolute;left:16px;top:16px;right:16px;bottom:16px;border-radius:62px;overflow:hidden;background:var(--ink)}
+.telefon .tapete{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(165deg,var(--b50),var(--b100) 45%,var(--b200))}
+.telefon .tapete svg{position:absolute;left:0;bottom:0;width:100%}
+.telefon .insel{position:absolute;left:50%;top:16px;width:118px;height:34px;margin-left:-59px;border-radius:17px;background:var(--ink)}
+.status{position:absolute;left:0;top:0;width:100%;height:70px}
+.status .zeit{position:absolute;left:44px;top:19px;font:700 23px/30px Inter;color:var(--ink)}
+.status .akkuk{position:absolute;right:40px;top:23px;width:44px;height:22px;border:2.5px solid var(--ink);border-radius:7px;padding:2.5px}
+.status .akkuk i{position:absolute;left:2.5px;top:2.5px;bottom:2.5px;width:34px;border-radius:3px;transform-origin:0 50%}
+.status .akkuk::after{content:'';position:absolute;right:-7px;top:5px;width:4px;height:7px;border-radius:0 2px 2px 0;background:var(--ink)}
+.status .wlan{position:absolute;right:98px;top:24px;width:28px}
+.dock{position:absolute;left:14px;right:14px;bottom:16px;height:150px;border-radius:46px;background:rgba(255,255,255,.5)}
+.seitenp{position:absolute;left:0;width:100%;bottom:186px;display:flex;justify-content:center;gap:12px}
+.seitenp i{width:11px;height:11px;border-radius:50%;background:var(--b300)}
+.seitenp i:first-child{background:var(--b600)}
+
+.kachel{width:112px;height:112px;border-radius:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(58,37,153,.22)}
+.kachel svg{width:70%}
+.kachel.gross{width:124px;height:124px;border-radius:31px}
+.kachel.klein{width:96px;height:96px;border-radius:24px}
+.platz{width:112px;height:112px;border-radius:28px;border:4px dashed var(--b400);background:rgba(255,255,255,.35)}
+.platz.gross{width:124px;height:124px;border-radius:31px}
+.klabel{font:600 19px/24px Inter;color:var(--ink);white-space:nowrap}
+.ordnerk{width:112px;height:112px;border-radius:28px;background:rgba(255,255,255,.6);box-shadow:0 8px 18px rgba(58,37,153,.16),inset 0 0 0 2px rgba(255,255,255,.8)}
+.badge3{padding:6px 16px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 20px/26px Inter;white-space:nowrap;box-shadow:0 6px 14px rgba(58,37,153,.2)}
+
+.akku{width:250px;height:122px}
+.akku .huelle{position:absolute;left:0;top:0;width:226px;height:122px;border:10px solid var(--b700);border-radius:30px;background:var(--surface)}
+.akku .kappe{position:absolute;right:0;top:38px;width:18px;height:46px;border-radius:0 12px 12px 0;background:var(--b700)}
+.akku .fuell{position:absolute;left:10px;top:10px;width:186px;height:82px;border-radius:16px;transform-origin:0 50%}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 10px 26px rgba(58,37,153,.22)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.tippkreis{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.75);border:5px solid var(--b500);box-shadow:0 6px 18px rgba(22,19,37,.25)}
+.welle{border-radius:999px;border:5px solid var(--b400);opacity:0}
+.plakette{width:62px;height:62px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.warn{background:var(--warning)}
+.plakette.warn b{font:800 34px/1 Inter;color:var(--surface)}
+.gedanke{width:180px;height:180px;border-radius:999px;background:var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.18);display:flex;align-items:center;justify-content:center}
+.gedanke svg{width:132px}
+.gpunkt{border-radius:999px;background:var(--surface);box-shadow:0 4px 12px rgba(58,37,153,.15)}
+
+/* App-Fenster: wächst aus der Kachel, Kopf in Kachelfarbe, Körper gleitet hoch */
+.fenster{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;display:none}
+.fenster .koerper{position:absolute;left:0;top:250px;width:1920px;height:830px;border-radius:52px 52px 0 0;box-shadow:0 -8px 26px rgba(22,19,37,.10)}
+.fenster .splash{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center}
+.fenster .splash svg{width:70%}
+.fenster .splash .ring{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:25%;border:4px solid rgba(255,255,255,.45);opacity:0}
+.fenster.hell .splash .ring{border-color:rgba(22,19,37,.14)}
+.kopf{position:absolute;left:290px;top:64px;width:1560px}
+.kopf .titel{font:800 58px/66px Inter;letter-spacing:-.02em;color:var(--surface)}
+.kopf .unter{font:500 34px/44px Inter;margin-top:8px;color:var(--surface);opacity:.88}
+.kopf.dunkel .titel{color:var(--ink)} .kopf.dunkel .unter{color:var(--n700);opacity:1}
+
+.karte{background:var(--surface);border-radius:32px;box-shadow:0 14px 34px rgba(58,37,153,.14)}
+.chipk{display:flex;align-items:center;gap:12px;padding:12px 24px 12px 14px;border-radius:999px;background:var(--surface);color:var(--ink);
+  font:700 27px/32px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(58,37,153,.16)}
+.chipk .ok{width:34px;height:34px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center}
+.chipk .ok svg{width:20px}
+.cursor{display:inline-block;width:4px;height:1em;margin-left:3px;vertical-align:-.12em;background:currentColor;border-radius:2px;opacity:0}
+
+/* 2 · DB Navigator */
+.such{width:680px;padding:30px}
+.feld{display:flex;align-items:center;gap:20px;height:74px;border-radius:20px;background:var(--info-bg);padding:0 26px;margin-bottom:14px}
+.feld .was{font:600 26px/30px Inter;color:var(--n500);width:72px}
+.feld .ein{font:700 34px/40px Inter;color:var(--ink);white-space:nowrap}
+.knopf{display:flex;align-items:center;justify-content:center;gap:14px;height:70px;border-radius:999px;background:var(--info);color:var(--surface);font:700 28px/70px Inter;margin-top:4px}
+.knopf svg{width:30px}
+.verb{width:820px;height:112px;display:flex;align-items:center;gap:26px;padding:0 30px;border-radius:28px}
+.vz{width:68px;height:68px;flex:none;border-radius:18px;display:flex;align-items:center;justify-content:center}
+.vz svg{width:72%}
+.zeiten{flex:1}
+.zeiten b{display:block;font:800 36px/42px Inter;color:var(--ink);white-space:nowrap}
+.zeiten small{display:block;font:500 24px/30px Inter;color:var(--n500)}
+.plus{display:inline-block;padding:6px 18px;border-radius:999px;background:var(--error);color:var(--surface);font:800 30px/36px Inter}
+.pfeilr{width:22px;flex:none}
+.ticket{width:680px;height:250px}
+.ticket .seite{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:30px;display:flex;align-items:center;gap:30px;padding:0 40px}
+.ticket .vorne{background:var(--surface);box-shadow:0 14px 34px rgba(58,37,153,.14)}
+.ticket .hinten{background:linear-gradient(135deg,var(--n700),var(--ink));flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;
+  box-shadow:0 14px 34px rgba(22,19,37,.25)}
+.ticket .tinfo{flex:1;border-right:4px dashed var(--n200);height:170px;display:flex;flex-direction:column;justify-content:center}
+.ticket small{font:600 26px/32px Inter;color:var(--n500)}
+.ticket .tinfo b{font:800 34px/44px Inter;color:var(--ink);white-space:nowrap}
+.ticket .hinten small{color:var(--b200)}
+.ticket .hinten b{font:800 60px/68px Inter;letter-spacing:-.02em;color:var(--surface);white-space:nowrap}
+.ticket .hinten .streifen{display:flex;gap:10px;margin-top:10px}
+.ticket .hinten .streifen i{width:46px;height:10px;border-radius:5px;background:var(--b300)}
+.qr{width:176px;height:176px;flex:none}
+
+/* 3 · Bus & Bahn */
+.plan{width:540px;padding:30px 34px}
+.pkopf{display:flex;align-items:center;gap:16px;font:800 36px/44px Inter;color:var(--ink);margin-bottom:16px}
+.pkopf svg{width:44px}
+.pz{display:flex;align-items:center;gap:20px;height:78px;border-radius:20px;padding:0 20px;margin-top:10px;background:var(--warning-bg)}
+.pz .lin{width:50px;height:50px;border-radius:14px;background:var(--warning);display:flex;align-items:center;justify-content:center}
+.pz .lin svg{width:70%}
+.pz b{font:800 34px/40px Inter;color:var(--ink)}
+.pz span{font:500 28px/34px Inter;color:var(--n700)}
+.tick3{width:540px;height:150px;display:flex;align-items:center;gap:26px;padding:0 30px}
+.tick3 .qr{width:100px;height:100px}
+.tick3 b{display:block;font:800 36px/42px Inter;color:var(--ink)}
+.tick3 small{display:block;font:500 26px/32px Inter;color:var(--n500)}
+
+/* 4 · WG-Gesucht */
+.liste{width:620px;height:660px;border-radius:36px;background:var(--n200);overflow:hidden;box-shadow:inset 0 2px 10px rgba(22,19,37,.06)}
+.rolle{position:absolute;left:24px;top:24px;width:572px}
+.zk{position:relative;height:196px;border-radius:28px;background:var(--surface);display:flex;gap:24px;align-items:center;padding:0 26px;margin-bottom:20px;
+  box-shadow:0 6px 16px rgba(58,37,153,.10)}
+.zk .bild{width:150px;height:150px;border-radius:22px;background:var(--b50);flex:none;display:flex;align-items:center;justify-content:center}
+.zk .bild svg{width:128px}
+.zk .ztext{flex:1}
+.zk .ztext b{display:block;font:800 32px/38px Inter;color:var(--ink);margin-bottom:14px;white-space:nowrap}
+.zk .ztext i{display:block;height:12px;border-radius:6px;background:var(--n200);margin-top:10px}
+.zk .hl{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:28px;box-shadow:inset 0 0 0 6px var(--b500);opacity:0}
+.blase{padding:30px 44px;border-radius:44px 44px 44px 12px;background:var(--b500);color:var(--surface);font:600 40px/50px Inter;white-space:nowrap;min-width:620px;
+  box-shadow:0 12px 28px rgba(90,63,230,.28)}
+.blase.weiss{background:var(--surface);color:var(--ink);min-width:330px;box-shadow:0 12px 28px rgba(58,37,153,.16)}
+.blase .dots{display:inline-flex;gap:12px;align-items:center;height:50px}
+.blase .dots i{width:14px;height:14px;border-radius:50%;background:var(--n300)}
+.filter4{display:flex;align-items:center;gap:12px;padding:12px 26px 12px 18px;border-radius:999px;background:var(--b100);color:var(--b700);font:700 28px/34px Inter;white-space:nowrap}
+.filter4 svg{width:30px}
+.avatar{width:130px;height:130px;border-radius:50%;background:var(--n700);display:flex;align-items:center;justify-content:center;border:6px solid var(--surface);
+  box-shadow:0 8px 20px rgba(22,19,37,.18)}
+.avatar svg{width:62%}
+
+/* 5 · Kleinanzeigen */
+.ka{width:420px;height:560px;padding:24px}
+.ka .kabild{height:340px;border-radius:24px;background:var(--b50)}
+.ka .katext{padding:22px 10px 0}
+.ka .katext b{display:block;font:800 38px/44px Inter;color:var(--ink)}
+.ka .katext span{display:inline-block;margin-top:12px;padding:6px 16px;border-radius:999px;background:var(--warning-bg);color:var(--ink);font:600 24px/30px Inter}
+.ueb{width:660px;height:400px;padding:34px 40px;background:var(--surface);border-radius:32px;box-shadow:0 18px 40px rgba(22,19,37,.22)}
+.ueb .ukopf{font:800 40px/48px Inter;color:var(--ink);margin-bottom:20px}
+.ueb .uz{display:flex;align-items:center;gap:20px;height:70px;border-radius:18px;background:var(--b50);padding:0 24px;margin-bottom:14px;font:600 28px/34px Inter;color:var(--n500)}
+.ueb .uz i{flex:1;height:14px;border-radius:7px;background:var(--n200)}
+.ueb .uz b{color:var(--ink);font-weight:800}
+.ueb .uknopf{height:68px;border-radius:999px;background:var(--info);color:var(--surface);font:700 28px/68px Inter;text-align:center;margin-top:6px}
+.ueb.halb{box-shadow:none}
+.marke5{width:150px;height:150px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 8px var(--success),0 12px 28px rgba(22,19,37,.2)}
+.marke5 svg{width:116px}
+
+/* 6 · Krankenkasse */
+.rund{width:150px;height:150px;border-radius:50%;background:var(--b500);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(90,63,230,.3)}
+.rund svg{width:46%}
+.rund .fortschritt{position:absolute;left:-14px;top:-14px;width:178px;height:178px}
+.foto{width:170px;height:124px;border-radius:16px;background:var(--surface);padding:8px;box-shadow:0 10px 24px rgba(22,19,37,.25)}
+.foto div{width:100%;height:100%;border-radius:10px;background:var(--b100);display:flex;align-items:center;justify-content:center}
+.foto svg{width:80%}
+
+/* 7 · Azubis Plus */
+.apk{width:480px;height:620px;padding:34px 36px}
+.apk .akopf{display:flex;align-items:center;justify-content:space-between;font:800 38px/46px Inter;color:var(--ink)}
+.apk .akopf .num{width:50px;height:50px;border-radius:16px;background:var(--b100);display:flex;align-items:center;justify-content:center}
+.apk .akopf .num svg{width:30px}
+.aufg{display:flex;align-items:center;gap:20px;height:96px;border-radius:22px;background:var(--b50);padding:0 22px;margin-top:18px}
+.aufg .box{width:46px;height:46px;flex:none;border-radius:50%;border:4px solid var(--b300);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.aufg .box svg{width:26px}
+.aufg .bars{flex:1}
+.aufg .bars i{display:block;height:13px;border-radius:7px;background:var(--b200);margin:8px 0}
+.frist{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:var(--n200);color:var(--n700);font:700 22px/28px Inter}
+.frist svg{width:22px}
+.mini7{width:300px;height:196px;border-radius:24px;background:var(--ink);box-shadow:0 14px 32px rgba(22,19,37,.35);border:6px solid var(--surface)}
+
+/* 8 · Store */
+.listing{width:780px;padding:40px}
+.lkopf{display:flex;align-items:center;gap:28px;margin-bottom:28px}
+.lkopf .licon{width:128px;height:128px;border-radius:32px;background:linear-gradient(135deg,var(--info),var(--b500));display:flex;align-items:center;justify-content:center}
+.lkopf .licon svg{width:62%}
+.lkopf b{display:block;font:800 44px/52px Inter;color:var(--ink)}
+.lkopf small{display:block;font:500 28px/34px Inter;color:var(--n500)}
+.zeile{display:flex;align-items:center;justify-content:space-between;height:82px;border-radius:20px;background:var(--b50);padding:0 28px;margin-bottom:14px;font:600 28px/34px Inter;color:var(--n500)}
+.zeile b{font:800 30px/36px Inter;color:var(--ink)}
+.zeile .hl{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:20px;box-shadow:inset 0 0 0 5px var(--success);background:rgba(31,169,113,.08);opacity:0}
+.laden{position:relative;height:80px;border-radius:999px;background:var(--b100);overflow:hidden;margin-top:24px;text-align:center;font:800 32px/80px Inter;color:var(--surface)}
+.laden i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--b500);transform-origin:0 50%}
+.laden span{position:absolute;left:0;top:0;width:100%;height:100%}
+.dialog{width:660px;padding:40px 40px 36px;text-align:center}
+.dialog .dsym{width:116px;height:116px;border-radius:50%;background:var(--b100);margin:0 auto 22px;display:flex;align-items:center;justify-content:center}
+.dialog .dsym svg{width:58%}
+.dialog b{display:block;font:800 40px/48px Inter;color:var(--ink);margin-bottom:28px}
+.dialog .dk{display:flex;gap:20px}
+.dialog .dk span{flex:1;height:80px;border-radius:999px;font:700 28px/80px Inter;position:relative;overflow:hidden}
+.dialog .dk .nein{background:var(--n200);color:var(--ink)}
+.dialog .dk .ja{background:var(--b500);color:var(--surface)}
+.dialog .dk em{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:999px;opacity:0;font-style:normal}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0 at 50% 50%)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+</style></head><body>
+
+<!-- Vorlagen -->
+<template id="t-figur-ana">{{figur-ana}}</template>
+<template id="t-augen">{{figur-augen}}</template>
+<template id="t-zu">{{figur-mund-zu}}</template>
+<template id="t-auf">{{figur-mund-auf}}</template>
+<template id="t-froh">{{figur-mund-froh}}</template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgPfeilR"><svg viewBox="0 0 22 40"><path d="M5 6l12 14L5 34" stroke="var(--n300)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne" id="bue0"></div>
+
+  <!-- ============ Startbildschirm ============ -->
+  <div id="heim">
+    <div class="a portrait" id="ana" data-gruppe="ana" style="width:300px;height:300px"></div>
+    <div class="a" id="koffer" style="width:180px">{{koffer}}</div>
+    <div class="a gpunkt" id="gp1" style="width:24px;height:24px" data-gruppe="ana"></div>
+    <div class="a gpunkt" id="gp2" style="width:36px;height:36px" data-gruppe="ana"></div>
+    <div class="a gedanke" id="gd4" data-gruppe="ana">{{bett-einzel~g4}}</div>
+    <div class="a plakette warn" id="warn8" data-gruppe="ana"><b>!</b></div>
+
+    <div class="a telefon" id="handy" data-frei><div class="glas">
+      <div class="tapete" id="tapete"><svg viewBox="0 0 468 928"><path d="M0 560C120 500 250 640 468 540V928H0Z" fill="var(--surface)" opacity=".28"/><path d="M0 700C160 640 300 760 468 690V928H0Z" fill="var(--surface)" opacity=".25"/></svg>
+        <div class="seitenp"><i></i><i></i></div><div class="dock" id="dock"></div></div>
+      <div class="status" id="status"><span class="zeit">07:30</span>
+        <svg class="wlan" viewBox="0 0 28 22"><path d="M2 8a17 17 0 0 1 24 0M6.5 12.5a10.5 10.5 0 0 1 15 0M11 17a4 4 0 0 1 6 0" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+        <span class="akkuk"><i id="sbR" style="background:var(--error)"></i><i id="sbG" style="background:var(--success)"></i></span></div>
+      <div class="insel"></div>
+    </div></div>
+
+    <div class="a akku" id="akku"><div class="huelle"></div><div class="kappe"></div>
+      <div class="fuell" id="akkuR" style="background:var(--error)"></div><div class="fuell" id="akkuG" style="background:var(--success)"></div></div>
+    <div class="a platz" id="p1" data-gruppe="s1"></div><div class="a platz" id="p2" data-gruppe="s2"></div><div class="a platz" id="p3" data-gruppe="s3"></div>
+    <div class="a platz" id="p4" data-gruppe="s4"></div><div class="a platz" id="p5" data-gruppe="s5"></div><div class="a platz gross" id="p6" data-gruppe="s6"></div>
+    <div class="a kachel klein" id="kTel"></div><div class="a kachel klein" id="kKam"></div>
+    <div class="a ordnerk" id="o1" data-frei></div><div class="a ordnerk" id="o2" data-frei></div><div class="a ordnerk" id="o3" data-frei></div>
+    <div class="a kachel" id="k1" data-gruppe="s1"></div><div class="a kachel" id="k2" data-gruppe="s2"></div><div class="a kachel" id="k3" data-gruppe="s3"></div>
+    <div class="a kachel" id="k4" data-gruppe="s4"></div><div class="a kachel" id="k5" data-gruppe="s5"></div><div class="a kachel gross" id="k6" data-gruppe="s6"></div>
+    <div class="a klabel" id="l1">DB Navigator</div><div class="a klabel" id="l2">Bus &amp; Bahn</div><div class="a klabel" id="l3">WG-Gesucht</div>
+    <div class="a klabel" id="l4">Kleinanzeigen</div><div class="a klabel" id="l5">AOK</div>
+    <div class="a klabel" id="ol1">Unterwegs</div><div class="a klabel" id="ol2">Wohnen</div><div class="a klabel" id="ol3">Papiere</div>
+    <div class="a badge3" id="stadt3">deine Stadt</div>
+    <div class="a welle" id="tippW" data-frei></div>
+    <div class="a tippkreis" id="tipp" data-frei></div>
+  </div>
+
+  <!-- ============ 2 · DB Navigator ============ -->
+  <div class="fenster" id="f2"><div class="koerper" style="background:var(--info-bg)"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a karte such" id="such2">
+      <div class="feld"><span class="was">von</span><span class="ein"><span id="von2"></span><i class="cursor" id="cur2a"></i></span></div>
+      <div class="feld"><span class="was">nach</span><span class="ein"><span id="nach2"></span><i class="cursor" id="cur2b"></i></span></div>
+      <div class="knopf" id="knopf2"><svg viewBox="0 0 30 30"><circle cx="13" cy="13" r="8.5" stroke="var(--surface)" stroke-width="3.5" fill="none"/><path d="M19.5 19.5l6 6" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/></svg>Verbindung suchen</div>
+    </div>
+    <div class="a karte verb" id="v2a"><span class="vz" style="background:var(--info)" data-g="zug"></span><span class="zeiten"><b id="zt2">08:12 – 08:47</b><small>35 min · direkt</small></span><b class="plus" id="plus2">+5</b><span class="pfeilr" data-p></span></div>
+    <div class="a karte verb" id="v2b"><span class="vz" style="background:var(--info)" data-g="zug"></span><span class="zeiten"><b>08:42 – 09:17</b><small>35 min · direkt</small></span><span class="pfeilr" data-p></span></div>
+    <div class="a karte verb" id="v2c"><span class="vz" style="background:var(--info)" data-g="zug"></span><span class="zeiten"><b>09:12 – 09:47</b><small>35 min · direkt</small></span><span class="pfeilr" data-p></span></div>
+    <div class="a ticket" id="ticket2" data-gruppe="t2" data-dreht>
+      <div class="seite vorne" id="tv2"><div class="tinfo"><small>Ticket</small><b>Hauptbahnhof</b><b>→ Musterstadt</b></div><svg class="qr" id="qr2" viewBox="0 0 90 90"></svg></div>
+      <div class="seite hinten" id="th2"><small>Monatskarte</small><b>Deutschlandticket</b><div class="streifen"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="a plakette gruen" id="ok2" data-gruppe="t2"></div>
+  </div>
+
+  <!-- ============ 3 · Bus & Bahn ============ -->
+  <div class="fenster" id="f3"><div class="koerper" style="background:var(--warning-bg)"></div><div class="splash"><div class="ring"></div></div>
+    <svg class="a" id="karte3" viewBox="0 0 1000 650" style="width:1000px;height:650px" data-frei>
+      <defs><clipPath id="kc3"><rect width="1000" height="650" rx="40"/></clipPath></defs><g clip-path="url(#kc3)"><rect width="1000" height="650" fill="var(--surface)"/>
+      <g fill="var(--b50)"><rect x="60" y="50" width="200" height="130" rx="20"/><rect x="300" y="40" width="160" height="110" rx="20"/><rect x="620" y="60" width="300" height="120" rx="20"/>
+        <rect x="70" y="250" width="170" height="170" rx="20"/><rect x="560" y="230" width="150" height="150" rx="20"/><rect x="760" y="250" width="180" height="200" rx="20"/>
+        <rect x="280" y="470" width="200" height="130" rx="20"/><rect x="560" y="490" width="160" height="110" rx="20"/></g>
+      <rect x="300" y="210" width="210" height="190" rx="30" fill="var(--success-bg)"/>
+      <path d="M0 610C200 560 380 640 560 600S860 540 1000 580V650H0Z" fill="var(--info-bg)"/>
+      <g stroke="var(--n200)" stroke-width="16" stroke-linecap="round" fill="none"><path d="M40 210H960"/><path d="M40 445H960"/><path d="M280 30V630"/><path d="M535 30V630"/><path d="M740 30V630"/></g></g>
+      <rect id="reg3" x="26" y="26" width="948" height="598" rx="34" fill="none" stroke="var(--b500)" stroke-width="7" stroke-dasharray="20 14" opacity="0"/>
+      <path id="lin3c" pathLength="1" d="M540 70V300C540 360 470 380 420 420S300 520 230 560" stroke="var(--b400)" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <path id="lin3b" pathLength="1" d="M110 120C300 160 400 250 520 330S760 520 900 500" stroke="var(--info)" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <path id="lin3a" pathLength="1" d="M90 520C230 520 320 420 440 380S700 210 900 150" stroke="var(--warning)" stroke-width="16" stroke-linecap="round" fill="none"/>
+      <g id="halte3"></g>
+      <g id="bus3m"><rect x="-38" y="-27" width="76" height="54" rx="15" fill="var(--warning)" stroke="var(--surface)" stroke-width="5"/><g id="bus3g"></g></g>
+    </svg>
+    <div class="a karte plan" id="plan3"><div class="pkopf"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" stroke="var(--warning)" stroke-width="5" fill="none"/><path d="M22 12v11l7 5" stroke="var(--ink)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Fahrplan</div>
+      <div class="pz" id="pz3a"><span class="lin" data-g="bus"></span><b>08:04</b><span>Markt</span></div>
+      <div class="pz" id="pz3b"><span class="lin" data-g="bus"></span><b>08:14</b><span>Markt</span></div>
+      <div class="pz" id="pz3c"><span class="lin" data-g="bus"></span><b>08:24</b><span>Markt</span></div></div>
+    <div class="a karte tick3" id="tick3"><svg class="qr" id="qr3" viewBox="0 0 90 90"></svg><div><b>Ticket</b><small>für deine Region</small></div></div>
+  </div>
+
+  <!-- ============ 4 · WG-Gesucht ============ -->
+  <div class="fenster" id="f4"><div class="koerper" style="background:var(--bg)"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a liste" id="liste4" data-frei><div class="rolle" id="rolle4">
+      <div class="zk" id="zk1"><div class="bild">{{bett-einzel~z1}}</div><div class="ztext"><b>WG-Zimmer</b><i style="width:210px"></i><i style="width:150px"></i></div><div class="hl" id="hl1"></div></div>
+      <div class="zk" id="zk2"><div class="bild">{{sofa~z2}}</div><div class="ztext"><b>Kleine Wohnung</b><i style="width:190px"></i><i style="width:130px"></i></div><div class="hl" id="hl2"></div></div>
+      <div class="zk" id="zk3"><div class="bild">{{pflanze~z3}}</div><div class="ztext"><b>WG-Zimmer</b><i style="width:220px"></i><i style="width:120px"></i></div><div class="hl" id="hl3"></div></div>
+      <div class="zk" id="zk4"><div class="bild">{{bett-einzel~z4}}</div><div class="ztext"><b>Kleine Wohnung</b><i style="width:200px"></i><i style="width:160px"></i></div><div class="hl" id="hl4"></div></div>
+      <div class="zk" id="zk5"><div class="bild">{{sofa~z5}}</div><div class="ztext"><b>WG-Zimmer</b><i style="width:180px"></i><i style="width:140px"></i></div><div class="hl" id="hl5"></div></div>
+    </div></div>
+    <div class="a" id="lupe4" style="width:170px" data-frei>{{lupe}}</div>
+    <div class="a filter4" id="f4a"><svg viewBox="0 0 30 30"><circle cx="13" cy="13" r="8.5" stroke="var(--b600)" stroke-width="3.5" fill="none"/><path d="M19.5 19.5l6 6" stroke="var(--b600)" stroke-width="3.5" stroke-linecap="round"/></svg>WG-Zimmer</div>
+    <div class="a filter4" id="f4b"><svg viewBox="0 0 30 30"><circle cx="13" cy="13" r="8.5" stroke="var(--b600)" stroke-width="3.5" fill="none"/><path d="M19.5 19.5l6 6" stroke="var(--b600)" stroke-width="3.5" stroke-linecap="round"/></svg>Kleine Wohnung</div>
+    <div class="a portrait" id="ana4" data-gruppe="ana4" style="width:150px;height:150px"></div>
+    <div class="a blase" id="msg4"><span id="msgT4"></span><i class="cursor" id="cur4"></i></div>
+    <div class="a chipk" id="c4a"><span class="ok"></span>kurz</div>
+    <div class="a chipk" id="c4b"><span class="ok"></span>freundlich</div>
+    <div class="a chipk" id="c4c"><span class="ok"></span>über dich</div>
+    <div class="a avatar" id="wg4" data-g="haus"></div>
+    <div class="a blase weiss" id="ant4"><span class="dots" id="dots4"><i></i><i></i><i></i></span><span id="antT4" style="position:absolute;left:44px;top:30px">Hallo Ana!</span></div>
+  </div>
+
+  <!-- ============ 5 · Kleinanzeigen ============ -->
+  <div class="fenster hell" id="f5"><div class="koerper" style="background:var(--bg)"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a karte ka" id="ka1" data-gruppe="ka1"><div class="kabild"></div><div class="katext"><b>Möbel</b><span>gebraucht</span></div></div>
+    <div class="a karte ka" id="ka2" data-gruppe="ka2"><div class="kabild"></div><div class="katext"><b>Fahrrad</b><span>gebraucht</span></div></div>
+    <div class="a karte ka" id="ka3" data-gruppe="ka3"><div class="kabild"></div><div class="katext"><b>Lampe</b><span>gebraucht</span></div></div>
+    <div class="a" id="st5" style="width:250px" data-gruppe="ka1">{{stuhl}}</div>
+    <div class="a" id="fr5" style="width:310px" data-gruppe="ka2">{{fahrrad}}</div>
+    <div class="a" id="la5" style="width:250px" data-gruppe="ka3">{{lampe}}</div>
+    <div class="a" id="herz5" style="width:104px" data-gruppe="ka2"><svg viewBox="0 0 100 92"><path d="M50 88C20 68 6 52 6 32A22 22 0 0 1 50 20 22 22 0 0 1 94 32C94 52 80 68 50 88Z" fill="var(--error)"/><path d="M24 30a12 12 0 0 1 10-10" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none" opacity=".7"/></svg></div>
+    <div class="a" id="muenze5" style="width:110px" data-gruppe="ka2" data-dreht>{{muenze}}</div>
+    <div class="a ueb" id="ueb5" data-gruppe="ueb"><div class="ukopf">Überweisung</div><div class="uz">an <i></i></div><div class="uz">Betrag <b>€</b><i></i></div><div class="uknopf">Jetzt senden</div></div>
+    <div class="a ueb halb" id="ueb5a" data-gruppe="ueb"><div class="ukopf">Überweisung</div><div class="uz">an <i></i></div><div class="uz">Betrag <b>€</b><i></i></div><div class="uknopf">Jetzt senden</div></div>
+    <div class="a ueb halb" id="ueb5b" data-gruppe="ueb"><div class="ukopf">Überweisung</div><div class="uz">an <i></i></div><div class="uz">Betrag <b>€</b><i></i></div><div class="uknopf">Jetzt senden</div></div>
+    <div class="a" id="warn5" style="width:250px" data-gruppe="ueb">{{warndreieck}}</div>
+    <div class="a marke5" id="auge5" data-gruppe="ka2">{{auge}}</div>
+    <div class="a plakette gruen" id="ok5" data-gruppe="ka2"></div>
+  </div>
+
+  <!-- ============ 6 · Krankenkasse ============ -->
+  <div class="fenster hell" id="f6"><div class="koerper" style="background:var(--surface)"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a rund" id="dl6"><svg viewBox="0 0 40 40"><path d="M20 6v22M10 19l10 10 10-10" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M8 35h24" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></div>
+    <div class="a" id="doc6" style="width:330px" data-gruppe="doc6">{{krankschreibung}}</div>
+    <div class="a plakette gruen" id="ok6a" data-gruppe="doc6"></div>
+    <div class="a chipk" id="cdoc6">Bescheinigung</div>
+    <div class="a" id="brief6" style="width:320px">{{brief}}</div>
+    <svg class="a" id="sucher6" viewBox="0 0 420 320" style="width:420px;height:320px" data-frei><g stroke="var(--b500)" stroke-width="10" stroke-linecap="round" fill="none">
+      <path d="M8 70V8H70M350 8H412V70M412 250V312H350M70 312H8V250"/></g></svg>
+    <div class="a" id="blitz6" style="width:440px;height:340px;border-radius:30px;background:var(--b100)" data-frei></div>
+    <div class="a foto" id="foto6" data-frei><div>{{brief~f6}}</div></div>
+    <div class="a rund" id="ul6" data-gruppe="ul6"><svg viewBox="0 0 40 40"><path d="M20 30V8M10 17L20 7l10 10" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M8 35h24" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg>
+      <svg class="fortschritt" viewBox="0 0 178 178"><circle cx="89" cy="89" r="83" stroke="var(--b100)" stroke-width="8" fill="none"/><circle id="ring6" pathLength="1" cx="89" cy="89" r="83" stroke="var(--success)" stroke-width="8" stroke-linecap="round" fill="none" transform="rotate(-90 89 89)"/></svg></div>
+    <div class="a plakette gruen" id="ok6b" data-gruppe="ul6"></div>
+    <div class="a chipk" id="cfoto6">Unterlagen als Foto</div>
+  </div>
+
+  <!-- ============ 7 · Azubis Plus App ============ -->
+  <div class="fenster" id="f7"><div class="koerper" style="background:linear-gradient(var(--b50),var(--b100))"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a karte apk" id="ap1" data-gruppe="ap1"><div class="akopf">Lektionen<span class="num" data-g="weg"></span></div>
+      <svg id="weg7" viewBox="0 0 408 470" style="position:absolute;left:36px;top:120px;width:408px;height:470px">
+        <path id="pfad7" pathLength="1" d="M70 420C240 420 330 360 300 300S90 250 100 180S260 90 330 70" stroke="var(--b200)" stroke-width="12" stroke-linecap="round" stroke-dasharray=".02 .03" fill="none"/>
+        <g id="st7"></g></svg></div>
+    <div class="a mini7" id="mini7" data-gruppe="ap1"><svg viewBox="0 0 288 184" style="width:288px;height:184px">
+      <circle cx="58" cy="92" r="30" fill="var(--b300)"/><circle cx="58" cy="84" r="11" fill="var(--b50)"/><path d="M38 112c4-14 36-14 40 0" fill="var(--b50)"/>
+      <rect x="110" y="20" width="72" height="144" rx="14" fill="var(--b100)" stroke="var(--b300)" stroke-width="4"/>
+      <g id="mk7"><rect x="122" y="40" width="20" height="20" rx="5" fill="var(--info)"/><rect x="150" y="40" width="20" height="20" rx="5" fill="var(--warning)"/>
+        <rect x="122" y="68" width="20" height="20" rx="5" fill="var(--n700)"/><rect x="150" y="68" width="20" height="20" rx="5" fill="var(--surface)"/>
+        <rect x="122" y="96" width="20" height="20" rx="5" fill="var(--error-bg)"/><rect x="136" y="132" width="20" height="20" rx="5" fill="var(--b500)"/></g>
+      <circle cx="236" cy="92" r="30" fill="var(--surface)"/><path d="M228 78L250 92L228 106Z" fill="var(--b500)"/></svg></div>
+    <div class="a karte apk" id="ap2" data-gruppe="ap2"><div class="akopf">Dokumente<span class="num" data-g="ordner"></span></div></div>
+    <div class="a" id="mh7" style="width:300px" data-gruppe="ap2">{{mappe-hinten}}</div>
+    <div class="a" id="br7" style="width:200px" data-gruppe="ap2">{{brief~b7}}</div>
+    <div class="a" id="mv7" style="width:300px" data-gruppe="ap2">{{mappe-vorne}}</div>
+    <div class="a" id="sl7" style="width:120px" data-gruppe="ap2">{{schloss}}</div>
+    <div class="a plakette gruen" id="ok7" data-gruppe="ap2"></div>
+    <div class="a karte apk" id="ap3" data-gruppe="ap3"><div class="akopf">Aufgaben<span class="num" data-g="liste"></span></div>
+      <div class="aufg" style="margin-top:34px"><span class="box" id="box7a"></span><span class="bars"><i style="width:180px"></i><i style="width:120px"></i></span></div>
+      <div class="aufg"><span class="box"></span><span class="bars"><i style="width:150px"></i><i style="width:100px"></i></span><span class="frist" id="frist7" data-g="kal">Frist</span></div>
+      <div class="aufg"><span class="box"></span><span class="bars"><i style="width:170px"></i><i style="width:110px"></i></span></div></div>
+    <div class="a" id="gl7" style="width:150px" data-gruppe="ap3">{{glocke}}</div>
+  </div>
+
+  <!-- ============ 8 · App-Store ============ -->
+  <div class="fenster" id="f8"><div class="koerper" style="background:var(--bg)"></div><div class="splash"><div class="ring"></div></div>
+    <div class="a plakette gruen" id="veri8"></div>
+    <div class="a karte listing" id="app8" data-gruppe="app8">
+      <div class="lkopf"><div class="licon" data-g="raster"></div><div><b>Beispiel-App</b><small>Lernen &amp; Alltag</small></div></div>
+      <div class="zeile" id="anb8" style="position:relative"><span>Anbieter</span><b>Beispiel GmbH</b><div class="hl" id="anbHl8"></div></div>
+      <div class="zeile"><span>Braucht</span><b>Kamera</b></div>
+      <div class="laden" id="laden8"><i id="ladenF8"></i><span id="ladenA8">Laden</span><span id="ladenB8">Geladen ✓</span></div>
+    </div>
+    <div class="a plakette gruen" id="ok8" data-gruppe="app8"></div>
+    <div class="a" id="lupe8" style="width:170px" data-frei>{{lupe~l8}}</div>
+    <div class="a karte dialog" id="d8a"><div class="dsym" data-g="kontakte"></div><b>Zugriff auf Kontakte?</b>
+      <div class="dk"><span class="nein">Nicht erlauben<em id="neinA8" style="background:var(--ink);color:var(--surface)">Nicht erlauben</em></span><span class="ja">Erlauben</span></div></div>
+    <div class="a karte dialog" id="d8b"><div class="dsym" data-g="kamera"></div><b>Zugriff auf Kamera?</b>
+      <div class="dk"><span class="nein">Nicht erlauben</span><span class="ja">Erlauben<em id="jaB8" style="background:var(--success);color:var(--surface)">Erlauben</em></span></div></div>
+    <div class="a" id="kam8" style="width:290px">{{kamera}}</div>
+    <div class="a" id="brief8" style="width:230px">{{brief~b8}}</div>
+    <div class="a welle" id="welle8" data-frei></div>
+    <div class="a plakette gruen" id="ok8b"></div>
+    <div class="a tippkreis" id="tipp8" data-frei></div>
+  </div>
+</div></div>
+
+<div class="kopf" id="tb2"><div class="titel">DB Navigator</div><div class="unter">Verbindung · Ticket · Verspätung</div></div>
+<div class="kopf" id="tb3"><div class="titel">Bus &amp; Bahn</div><div class="unter">App deines Verkehrsverbunds</div></div>
+<div class="kopf" id="tb4"><div class="titel">WG-Gesucht</div><div class="unter">Zimmer &amp; kleine Wohnungen</div></div>
+<div class="kopf dunkel" id="tb5"><div class="titel">Kleinanzeigen</div><div class="unter">gebraucht kaufen – nie vorab zahlen</div></div>
+<div class="kopf dunkel" id="tb6"><div class="titel">App deiner Krankenkasse</div><div class="unter">z. B. AOK</div></div>
+<div class="kopf" id="tb7"><div class="titel">Azubis Plus App</div><div class="unter">lernen · Dokumente · Fristen</div></div>
+<div class="kopf" id="tb8"><div class="titel">Nur aus dem offiziellen Store</div><div class="unter">nur nötige Rechte</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Die richtigen Apps<br>machen vieles leichter.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+/* ---------- Symbole der Kacheln (eigene, neutrale Zeichen – keine Logos) ---------- */
+const STERN = (() => { const p = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 15 : 34, w = -Math.PI / 2 + i * Math.PI / 5; p.push(`${(50 + r * Math.cos(w)).toFixed(1)} ${(53 + r * Math.sin(w)).toFixed(1)}`); } return 'M' + p.join('L') + 'Z'; })();
+const G = {
+  zug: (f, h) => `<svg viewBox="0 0 100 100"><rect x="25" y="12" width="50" height="60" rx="15" fill="${f}"/><rect x="33" y="22" width="34" height="20" rx="6" fill="${h}"/>
+    <circle cx="38" cy="58" r="5" fill="${h}"/><circle cx="62" cy="58" r="5" fill="${h}"/><path d="M36 74L27 88M64 74L73 88M31 82H69" stroke="${f}" stroke-width="6" stroke-linecap="round"/></svg>`,
+  bus: (f, h) => `<svg viewBox="0 0 100 100"><rect x="21" y="14" width="58" height="64" rx="13" fill="${f}"/><rect x="29" y="25" width="42" height="24" rx="5" fill="${h}"/>
+    <circle cx="35" cy="63" r="5" fill="${h}"/><circle cx="65" cy="63" r="5" fill="${h}"/><rect x="27" y="76" width="12" height="12" rx="4" fill="${f}"/><rect x="61" y="76" width="12" height="12" rx="4" fill="${f}"/></svg>`,
+  haus: (f, h) => `<svg viewBox="0 0 100 100"><path d="M16 48L50 20L84 48" stroke="${f}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="27" y="44" width="46" height="40" rx="7" fill="${f}"/><rect x="43" y="60" width="14" height="24" rx="4" fill="${h}"/>
+    <circle cx="74" cy="74" r="12" fill="var(--warning)" stroke="${h}" stroke-width="4"/><circle cx="74" cy="74" r="4" fill="${h}"/></svg>`,
+  tag: (f, h) => `<svg viewBox="0 0 100 100"><path d="M40 24H78a8 8 0 0 1 8 8V68a8 8 0 0 1-8 8H40L16 50Z" fill="${f}" stroke="${f}" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="35" cy="50" r="6" fill="${h}"/><path d="M52 42H74M52 58H68" stroke="${h}" stroke-width="6" stroke-linecap="round"/></svg>`,
+  schild: (f, h) => `<svg viewBox="0 0 100 100"><path d="M50 12L82 25V48C82 68 68 81 50 89C32 81 18 68 18 48V25Z" fill="${f}"/>
+    <path d="M50 68C37 59 32 53 32 46a9 9 0 0 1 18-4 9 9 0 0 1 18 4C68 53 63 59 50 68Z" fill="${h}"/></svg>`,
+  stern: (f) => `<svg viewBox="0 0 100 100"><path d="${STERN}" fill="${f}" stroke="${f}" stroke-width="7" stroke-linejoin="round"/></svg>`,
+  telefon: (f) => `<svg viewBox="0 0 100 100"><path d="M33 18c5-3 10-1 12 4l5 11c2 4 0 8-3 10l-6 4c4 9 10 15 19 19l4-6c2-3 6-5 10-3l11 5c5 2 7 7 4 12l-4 7c-3 4-8 6-13 5C50 82 22 54 18 32c-1-5 1-10 5-13Z" fill="${f}"/></svg>`,
+  kamera: (f, h) => `<svg viewBox="0 0 100 100"><rect x="38" y="22" width="24" height="12" rx="4" fill="${f}"/><rect x="14" y="30" width="72" height="50" rx="12" fill="${f}"/>
+    <circle cx="50" cy="55" r="16" fill="${h}"/><circle cx="50" cy="55" r="9" fill="${f}"/></svg>`,
+  tuete: (f, h) => `<svg viewBox="0 0 100 100"><path d="M37 34V28a13 13 0 0 1 26 0v6" stroke="${f}" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <path d="M22 34H78L74 84H26Z" fill="${f}" stroke="${f}" stroke-width="6" stroke-linejoin="round"/><path d="M50 46V68M41 60L50 69L59 60" stroke="${h}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
+  raster: (f) => `<svg viewBox="0 0 100 100"><rect x="18" y="18" width="28" height="28" rx="8" fill="${f}"/><rect x="54" y="18" width="28" height="28" rx="14" fill="${f}"/><rect x="18" y="54" width="28" height="28" rx="14" fill="${f}"/><rect x="54" y="54" width="28" height="28" rx="8" fill="${f}"/></svg>`,
+  kontakte: (f) => `<svg viewBox="0 0 100 100"><circle cx="50" cy="36" r="16" fill="${f}"/><path d="M20 84c2-20 14-28 30-28s28 8 30 28Z" fill="${f}"/></svg>`,
+  weg: (f) => `<svg viewBox="0 0 30 30"><circle cx="7" cy="23" r="4" fill="${f}"/><circle cx="23" cy="7" r="4" fill="${f}"/><path d="M7 23C7 12 23 18 23 7" stroke="${f}" stroke-width="3" fill="none" stroke-dasharray="3 3"/></svg>`,
+  ordner: (f) => `<svg viewBox="0 0 30 30"><path d="M3 8a2 2 0 0 1 2-2h7l3 3h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" fill="${f}"/></svg>`,
+  liste: (f) => `<svg viewBox="0 0 30 30"><g stroke="${f}" stroke-width="3.5" stroke-linecap="round"><path d="M11 8H25M11 15H25M11 22H21"/></g><g fill="${f}"><circle cx="5" cy="8" r="2.5"/><circle cx="5" cy="15" r="2.5"/><circle cx="5" cy="22" r="2.5"/></g></svg>`,
+  kal: (f) => `<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="4" fill="none" stroke="${f}" stroke-width="2.6"/><path d="M3 10H21M8 3V7M16 3V7" stroke="${f}" stroke-width="2.6" stroke-linecap="round"/></svg>`,
+};
+const W0 = 'var(--surface)';
+// Kacheln: Farbe, Zeichen
+const KACHEL = {
+  k1: ['var(--info)', G.zug(W0, 'var(--info)')],
+  k2: ['var(--warning)', G.bus(W0, 'var(--warning)')],
+  k3: ['var(--n700)', G.haus(W0, 'var(--n700)')],
+  k4: ['var(--surface)', G.tag('var(--warning)', W0)],
+  k5: ['var(--error-bg)', G.schild('var(--error)', W0)],
+  k6: ['linear-gradient(140deg,var(--b400),var(--b700))', G.stern(W0)],
+  kTel: ['var(--b200)', G.telefon('var(--b700)')],
+  kKam: ['var(--b200)', G.kamera('var(--b700)', 'var(--b200)')],
+};
+for (const [id, [bg, g]] of Object.entries(KACHEL)) { el(id).style.background = bg; el(id).innerHTML = g; }
+el('k4').style.boxShadow = '0 8px 18px rgba(58,37,153,.22), inset 0 0 0 2px var(--n200)';
+document.querySelectorAll('[data-g]').forEach(e => {
+  const g = e.dataset.g, f = {
+    zug: () => G.zug(W0, 'var(--info)'), bus: () => G.bus(W0, 'var(--warning)'), haus: () => G.haus(W0, 'var(--n700)'),
+    raster: () => G.raster(W0), kontakte: () => G.kontakte('var(--b600)'), kamera: () => G.kamera('var(--b600)', 'var(--b100)'),
+    weg: () => G.weg('var(--b500)'), ordner: () => G.ordner('var(--b500)'), liste: () => G.liste('var(--b500)'), kal: () => G.kal('currentColor'),
+  }[g];
+  e.insertAdjacentHTML('afterbegin', f());
+});
+document.querySelectorAll('[data-p]').forEach(e => { e.innerHTML = tpl('svgPfeilR'); });
+['ok2', 'ok5', 'ok6a', 'ok6b', 'ok7', 'ok8', 'ok8b', 'veri8'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.chipk .ok').forEach(e => { e.innerHTML = tpl('svgHaken'); });
+el('box7a').innerHTML = `<svg viewBox="0 0 40 40" id="hk7"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+
+// Ana-Porträts
+document.querySelectorAll('.portrait').forEach(p => {
+  p.innerHTML = `<div class="figur"><div class="ebene basis">${tpl('t-figur-ana')}</div><div class="ebene augen">${tpl('t-augen')}</div>` +
+    `<div class="ebene zu">${tpl('t-zu')}</div><div class="ebene auf">${tpl('t-auf')}</div><div class="ebene froh">${tpl('t-froh')}</div></div>`;
+});
+
+// QR-Codes (deterministisch, mit drei Ecken-Markern)
+const qrBau = (id, n = 9) => {
+  const svg = el(id), s = 90 / n, zellen = [];
+  const ecke = (x, y) => x < 3 && y < 3 || x >= n - 3 && y < 3 || x < 3 && y >= n - 3;
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const an = ecke(x, y) ? !(((x % (n - 3)) === 1 || x === 1) && ((y % (n - 3)) === 1 || y === 1)) : (((x * 73856093) ^ (y * 19349663) ^ (x * y * 83492791)) >>> 0) % 7 < 3;
+    if (!an) continue;
+    svg.insertAdjacentHTML('beforeend', `<rect x="${(x * s + .6).toFixed(1)}" y="${(y * s + .6).toFixed(1)}" width="${(s - 1.2).toFixed(1)}" height="${(s - 1.2).toFixed(1)}" rx="1.6" fill="var(--ink)"/>`);
+    zellen.push([svg.lastElementChild, ((x * 31 + y * 17) % 23) / 23]);
+  }
+  return zellen;
+};
+const QR2 = qrBau('qr2', 11), QR3 = qrBau('qr3', 9);
+const QR_AN = [];
+const qrEin = (zellen, t0, d) => QR_AN.push([zellen, t0, d]);
+HOOKS.push(t => QR_AN.forEach(([z, t0, d]) => z.forEach(([r, k]) => { r.style.opacity = t >= t0 + k * d ? 1 : 0; })));
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const sichtbar = (id, t, o = 1) => set(id, t, { o });
+const WELLEN = {};
+const welleAn = (id, t, x, y, g = 200, d = .9) => (WELLEN[id] ??= []).push([t, x, y, g, d]);
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([el(pfad), t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Einfahren von rechts mit kleinem Überschwung (Karten im App-Fenster)
+const rein = (id, t, x, y, dx = 520, snd = 'whoosh') => { akteur(id, { x: x + dx, y, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .6, { x }, 'sanft'); if (snd) cue(t, snd); };
+const hoch = (id, t, x, y, dy = 160, snd = 'pop') => { akteur(id, { x, y: y + dy, o: 0 }); tw(id, t, .15, { o: 1 }); tw(id, t, .55, { y }, 'sanft'); if (snd) cue(t, snd); };
+// Tippen: Text erscheint Zeichen für Zeichen, Cursor blinkt
+const TIPPEN = [];
+const tippText = (id, cursor, text, t0, d) => {
+  TIPPEN.push([el(id), el(cursor), text, t0, d]);
+  for (let i = 0; i < text.length; i += 3) cue(t0 + d * i / text.length, 'tipp');
+};
+HOOKS.push(t => TIPPEN.forEach(([e, c, s, t0, d]) => {
+  const n = Math.round(s.length * clamp((t - t0) / d)), txt = s.slice(0, n);
+  if (e._v !== txt) { e.textContent = txt; e._v = txt; }
+  if (c) c.style.opacity = t >= t0 - .3 && t < t0 + d + .5 ? (t < t0 + d ? 1 : (Math.floor((t - t0 - d) * 4) % 2 ? 0 : 1)) : 0;
+}));
+
+/* ---------- Figuren: blinzeln, Blick, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) akteur(p.querySelector('.' + k), { o: 0 }, true);
+  akteur(p.querySelector('.zu'), {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) set(el(id).querySelector('.' + m), t, { o: m === k ? 1 : 0 }); };
+const froh = (id, t) => mund(id, t, 'froh');
+const BLICK = new Map();
+const blick = (id, t, dx, d = .2) => { const p = el(id); if (!BLICK.has(p)) BLICK.set(p, []); BLICK.get(p).push([t, dx, d]); BLICK.get(p).sort((a, b) => a[0] - b[0]); };
+const blickWert = (p, t) => { let v = 0; for (const [t0, dx, d] of BLICK.get(p) || []) { if (t < t0) break; v += (dx - v) * E.sinus(clamp((t - t0) / d)); } return v; };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `translateX(${(3.2 * blickWert(p, t)).toFixed(2)}%) scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera und App-Fenster ---------- */
+// Plätze auf dem Startbildschirm (Weltkoordinaten = Bildschirm, solange die Kamera ruht)
+const SL = { 1: [820, 262], 2: [960, 262], 3: [1100, 262], 4: [820, 444], 5: [960, 444], 6: [960, 913], tel: [826, 913], kam: [1094, 913] };
+const LY = 82;                    // Abstand Kachel → Beschriftung
+const APPS = [], AKZENTE = [];
+let ZOOMAUS = Infinity;
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+// Kamera: Fokus (fx, fy) und Zoom z. Beim Öffnen fliegt sie in die Kachel, beim Schließen wieder heraus.
+function cam(t) {
+  let fx = 960, fy = 540, z = 1;
+  for (const a of APPS) {
+    if (a.art !== 'kachel') continue;
+    let u = -1;
+    if (t >= a.o0 && t < a.o0 + a.od) u = E.inout(clamp((t - a.o0) / a.od));
+    else if (t >= a.c0 && t < a.c0 + a.cd) u = E.inout(1 - clamp((t - a.c0) / a.cd));
+    if (u >= 0) { fx = lerp(960, a.cx, u); fy = lerp(540, a.cy, u); z = lerp(1, a.Z, u); }
+  }
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  z *= 1 + .006 * (1 - Math.cos(t * 2 * Math.PI / 14));
+  z *= 1 - .17 * E.inout(clamp((t - ZOOMAUS) / 1.9));
+  return { fx, fy, z };
+}
+// oeffnen(nr, platz, t0, tZu): Fenster wächst aus der Kachel; tZu = Beginn des Schließens
+const oeffnen = (nr, platz, t0, tZu, opt = {}) => {
+  const f = el('f' + nr), [cx, cy] = SL[platz], size = platz === 6 ? 124 : 112;
+  const a = { nr, el: f, splash: f.querySelector('.splash'), ring: f.querySelector('.ring'), koerper: f.querySelector('.koerper'),
+    cx, cy, size, o0: t0, od: opt.od ?? .8, c0: tZu, cd: .75, Z: opt.Z ?? 2.6, art: opt.art ?? 'kachel' };
+  const [bg, glyph] = opt.kachel ?? KACHEL['k' + platz];
+  f.style.background = bg; a.splash.insertAdjacentHTML('beforeend', glyph);
+  APPS.push(a); cue(t0, 'whoosh'); cue(tZu, 'whoosh');
+  return a.o0 + a.od;
+};
+const heim = el('heim');
+HOOKS.push(t => {
+  const k = cam(t);
+  $('#kamera').style.transform = `translate(${(960 - k.fx * k.z).toFixed(2)}px,${(540 - k.fy * k.z).toFixed(2)}px) scale(${k.z.toFixed(5)})`;
+  let voll = false;
+  for (const a of APPS) {
+    const f = a.el;
+    if (t < a.o0 || t >= a.c0 + a.cd) { f.style.display = 'none'; continue; }
+    f.style.display = 'block';
+    const v = t < a.o0 + a.od ? E.inout(clamp((t - a.o0) / a.od)) : t < a.c0 ? 1 : E.inout(1 - clamp((t - a.c0) / a.cd));
+    const ganz = t >= a.o0 + a.od && t < a.c0;
+    if (ganz) voll = true;
+    let x, y, w, h, r;
+    if (ganz) { x = 0; y = 0; w = 1920; h = 1080; r = 0; }
+    else if (a.art === 'blatt') { x = 0; y = 1080 * (1 - v); w = 1920; h = 1080; r = 56 * (1 - v); }
+    else {
+      const sx = (a.cx - k.fx) * k.z + 960, sy = (a.cy - k.fy) * k.z + 540, ss = a.size * k.z;
+      const L = lerp(sx - ss / 2, 0, v), T = lerp(sy - ss / 2, 0, v), Wd = lerp(ss, 1920, v), Hd = lerp(ss, 1080, v);
+      x = (L - 960) / k.z + k.fx; y = (T - 540) / k.z + k.fy; w = Wd / k.z; h = Hd / k.z; r = lerp(a.size * .25 * k.z, 0, v) / k.z;
+    }
+    Object.assign(f.style, { left: x.toFixed(2) + 'px', top: y.toFixed(2) + 'px', width: w.toFixed(2) + 'px', height: h.toFixed(2) + 'px',
+      borderRadius: a.art === 'blatt' && !ganz ? `${r.toFixed(1)}px ${r.toFixed(1)}px 0 0` : r.toFixed(2) + 'px' });
+    // Körper gleitet hoch, das Kachel-Zeichen wandert in den Kopf
+    const innen = a.art === 'blatt' ? 1 : Math.min(E.inout(clamp((t - a.o0 - a.od - .05) / .5)), E.inout(clamp((a.c0 - t) / .45)));
+    a.koerper.style.transform = `translateY(${((1 - innen) * 860).toFixed(1)}px)`;
+    const gS = a.art === 'blatt' ? 124 : ganz ? lerp(240, 124, innen) : lerp(a.size * k.z, 240, v) / k.z;
+    const gx = ganz || a.art === 'blatt' ? lerp(960, 175, innen) : w / 2, gy = ganz || a.art === 'blatt' ? lerp(540, 140, innen) : h / 2;
+    Object.assign(a.splash.style, { left: (gx - gS / 2).toFixed(2) + 'px', top: (gy - gS / 2).toFixed(2) + 'px', width: gS.toFixed(2) + 'px', height: gS.toFixed(2) + 'px' });
+    a.ring.style.opacity = (ganz || a.art === 'blatt' ? innen : 0).toFixed(3);
+  }
+  heim.style.display = voll ? 'none' : 'block';
+});
+// Ana tippt auf eine Kachel: Fingerkreis, Druck, Welle
+const tippe = (platz, t, ziel) => {
+  const [x, y] = SL[platz];
+  set('tipp', t - .45, { x: x + 70, y: y + 90, o: 0, s: 1.3 });
+  tw('tipp', t - .45, .35, { x: x + 6, y: y + 10, o: 1, s: 1 }, 'out');
+  tw('tipp', t, .12, { s: .86 }, 'sinus'); tw('tipp', t + .12, .25, { s: 1 }, 'sinus');
+  tw('tipp', t + .28, .2, { o: 0, s: 1.2 }, 'in');
+  tw(ziel, t, .08, { s: .9 }, 'sinus'); tw(ziel, t + .08, .3, { s: 1 }, 'sanft');
+  welleAn('tippW', t, x, y, 150, .6); cue(t, 'klick');
+  blick('ana', t - .6, 1); tw('ana', t - .5, .3, { r: 4 }, 'sinus'); tw('ana', t + .1, .45, { r: 0 }, 'sanft'); blick('ana', t + .7, 0);
+};
+// Kachel ploppt auf ihren Platz (der gestrichelte Platz verschwindet)
+const kachelEin = (nr, t, label = true) => {
+  const [x, y] = SL[nr];
+  pop('k' + nr, t, { x, y }, 'plopp', 'sanft');
+  tw('p' + nr, t, .2, { o: 0 });
+  if (label) { akteur('l' + nr, { x, y: y + LY, o: 0 }); tw('l' + nr, t + .15, .3, { o: 1 }); }
+};
+
+/* ---------- Startbildschirm: Grundaufstellung ---------- */
+akteur('handy', { x: 960, y: 1700 });
+akteur('tapete', { o: 0 }, true); akteur('status', { o: 0 }, true); akteur('dock', { o: 0 }, true);
+akteur('ana', { x: 430, y: 1500 });
+akteur('koffer', { x: -160, y: 760 });
+akteur('tipp', { x: 960, y: 540, o: 0 });
+akteur('sbR', { sx: .22 }, true); akteur('sbG', { o: 0, sx: .22 }, true);
+akteur('akkuR', { sx: .16 }, true); akteur('akkuG', { o: 0, sx: .16 }, true);
+
+/* ================= 1 · Ana und ihr leeres Handy (ohne Titel, Bild mittig) ================= */
+{
+  const tA = W('Ana', 1) - .2;
+  tw('ana', tA, .75, { y: 470 }, 'sinus', { bogen: 120 }); landen('ana', tA + .75, 1.1); cue(tA, 'whoosh'); cue(tA + .75, 'plopp');
+  froh('ana', tA + .8);
+  // neu in Deutschland: der Koffer rollt heran
+  const tK = W('neu', 2) - .3;
+  tw('koffer', tK, .9, { x: 330 }, 'out'); tw('koffer', tK, .25, { r: -3 }, 'sinus'); tw('koffer', tK + .7, .4, { r: 0 }, 'sanft'); cue(tK, 'whoosh');
+  landen('koffer', tK + .85, .6); blick('ana', tK + .2, -1); blick('ana', tK + 1.1, 0);
+  // Handy steigt auf, der Bildschirm geht an
+  const tH = W('Handy', 2) - .45;
+  tw('handy', tH, .8, { y: 540 }, 'sanft'); cue(tH, 'whoosh'); blick('ana', tH + .3, 1);
+  const tAn = W('fast', 2) - .1;
+  tw('tapete', tAn, .45, { o: 1 }); tw('status', tAn + .1, .3, { o: 1 }); tw('dock', tAn + .25, .3, { o: 1 }); cue(tAn, 'ding');
+  pop('kTel', W('leer', 2) - .05, { x: SL.tel[0], y: SL.tel[1] }, 'pop'); pop('kKam', W('leer', 2) + .1, { x: SL.kam[0], y: SL.kam[1] }, null);
+  mund('ana', W('leer', 2), 'zu');
+  // ein paar Apps: sechs leere Plätze
+  const tP = W('paar', 3) - .1;
+  [1, 2, 3, 4, 5, 6].forEach((n, i) => pop('p' + n, tP + i * .1, { x: SL[n][0], y: SL[n][1] }, i % 2 ? null : 'pop'));
+  // leichter: der Akku füllt sich
+  pop('akku', W('leer', 2) + .25, { x: 1490, y: 470 }, 'pop', 'sanft'); wackeln('akku', W('leer', 2) + .8, 3, 3);
+  const tL = W('leichter', 3) - .1;
+  tw('akkuR', tL, .7, { sx: 1 }, 'inout'); tw('akkuG', tL, .7, { sx: 1 }, 'inout'); tw('akkuG', tL + .15, .4, { o: 1 });
+  cue(tL + .65, 'erfolg'); bump('akku', tL + .7, 1.1); froh('ana', tL + .2); huepfen('ana', tL + .3, 14);
+  // Hier sind die wichtigsten: der Akku fliegt in die Statusleiste, die Plätze laufen als Welle
+  const tW = W('Hier', 4) - .05;
+  flug('akku', tW, .8, 1138, 115, 70, { s: .17 }); tw('akku', tW + .65, .15, { o: 0 }); cue(tW, 'whoosh');
+  tw(['sbR', 'sbG'], tW + .7, .4, { sx: 1 }, 'out'); tw('sbG', tW + .7, .2, { o: 1 }); cue(tW + .75, 'ding');
+  const tWi = W('wichtigsten', 4);
+  [1, 2, 3, 4, 5, 6].forEach((n, i) => bump('p' + n, tWi - .1 + i * .08, 1.12));
+  akzent(tWi, .03);
+}
+
+/* ================= 2 · DB Navigator ================= */
+const Z2 = SE(7) + .4;
+{
+  kachelEin(1, W('Bahnfahrten', 5) - .1, false);
+  akteur('l1', { x: SL[1][0], y: SL[1][1] + LY, o: 0 });
+  tw('l1', W('DB', 5) - .1, .3, { o: 1 }); bump('k1', W('DB', 5) - .1, 1.08);
+  const tT = W('Navigator', 5) + .15;
+  tippe(1, tT, 'k1');
+  const OE = oeffnen(2, 1, tT + .25, Z2);
+  titelEin('tb2', OE + .2, [OE + .2, OE + .28, W('Verbindung', 6) - .1, W('Verbindung', 6), W('Ticket', 6) - .1, W('Ticket', 6), W('Verspätung', 6) - .1]);
+  // Suche: von – nach tippt sich
+  hoch('such2', OE + .35, 520, 480);
+  tippText('von2', 'cur2a', 'Hauptbahnhof', W('suchst', 6) - .15, .55);
+  tippText('nach2', 'cur2b', 'Musterstadt', W('deine', 6) + .25, .5);
+  const tS = W('Verbindung', 6) + .2;
+  akteur('knopf2', {}, true); tw('knopf2', tS, .08, { s: .94 }, 'sinus'); tw('knopf2', tS + .08, .3, { s: 1 }, 'sanft'); cue(tS, 'klick');
+  // Verbindungen rollen herein
+  ['v2a', 'v2b', 'v2c'].forEach((id, i) => rein(id, tS + .2 + i * .14, 1330, 430 + i * 140, 640, i ? null : 'whoosh'));
+  akteur('plus2', { s: 0 }, true);
+  // Ticket kaufen: Zeile 1 leuchtet, Ticket baut sich auf
+  const tK = W('kaufst', 6) - .1;
+  bump('v2a', tK, 1.04);
+  hoch('ticket2', tK + .15, 520, 822, 200, 'plopp');
+  akteur('tv2', { o: 1 }, true); akteur('th2', { o: 0 }, true);
+  qrEin(QR2, W('Ticket', 6) - .15, .6); cue(W('Ticket', 6) - .1, 'scan');
+  // Verspätung: +5 in Rot
+  const tV = W('Verspätung', 6) - .05;
+  tw('plus2', tV, .45, { s: 1 }, 'back'); cue(tV, 'pop'); wackeln('v2a', tV + .3, 4, 1.5);
+  HOOKS.push(t => { el('zt2').style.color = t >= tV ? 'var(--error)' : ''; });
+  akzent(tV, .03);
+  // Deutschlandticket: das Ticket dreht sich um
+  const tD = W('Deutschlandticket', 7) - .25;
+  tw('ticket2', tD, .22, { sx: 0 }, 'in'); set('tv2', tD + .22, { o: 0 }); set('th2', tD + .22, { o: 1 }); tw('ticket2', tD + .22, .4, { sx: 1 }, 'back'); cue(tD, 'whoosh');
+  bump('ticket2', tD + .7, 1.04);
+  pop('ok2', W('bekommst', 7), { x: 838, y: 706 }, 'erfolg');
+  aus(['such2', 'v2a', 'v2b', 'v2c', 'ticket2', 'ok2'], Z2 - .55, .35);
+  textAus('tb2', Z2 - .65);
+}
+
+/* ================= 3 · Bus & Bahn ================= */
+const Z3 = SE(9) + .4;
+{
+  kachelEin(2, W('Bahn', 8) - .1);
+  pop('stadt3', W('Stadt', 8) - .1, { x: 960, y: 176 }, 'pop');
+  const tT = W('Verkehrsverbund', 8) + .25;
+  tippe(2, tT, 'k2');
+  tw('stadt3', tT + .1, .25, { o: 0 });
+  const OE = oeffnen(3, 2, tT + .25, Z3);
+  titelEin('tb3', OE + .2, [OE + .2, OE + .26, OE + .32, W('eigene', 8) - .1, W('eigene', 8) - .02, W('eigene', 8) + .06]);
+  // Stadtplan: Linien ziehen sich, Haltestellen ploppen
+  hoch('karte3', OE + .3, 640, 655, 140, 'whoosh');
+  const linien = ['lin3a', 'lin3b', 'lin3c'], halte = el('halte3'), HALT = [];
+  const tLi = W('Dort', 9) - .2;
+  linien.forEach((l, i) => { strich(l, tLi + i * .25, .9); });
+  cue(tLi, 'kritzeln');
+  [['lin3a', [.06, .3, .55, .8, .97]], ['lin3b', [.08, .45, .9]], ['lin3c', [.05, .6, .95]]].forEach(([l, us], i) => {
+    const p = el(l), L = p.getTotalLength();
+    us.forEach((u, j) => {
+      const q = p.getPointAtLength(u * L);
+      halte.insertAdjacentHTML('beforeend', `<circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="13" fill="var(--surface)" stroke="${p.getAttribute('stroke')}" stroke-width="7"/>`);
+      HALT.push([halte.lastElementChild, tLi + i * .25 + .9 * u + .1, l === 'lin3a' ? u : null]);
+    });
+  });
+  HOOKS.push(t => HALT.forEach(([c, t0]) => { const d = clamp((t - t0) / .3); c.setAttribute('r', (13 * E.back(d)).toFixed(2)); c.style.opacity = d > 0 ? 1 : 0; }));
+  // Bus fährt die Linie entlang, Haltestellen blinken
+  el('bus3g').innerHTML = `<g transform="translate(-20 -20) scale(.4)">${G.bus(W0, 'var(--warning)').replace(/<\/?svg[^>]*>/g, '')}</g>`;
+  const pa = el('lin3a'), La = pa.getTotalLength(), tB = W('Fahrplan', 9) - .3, dB = 3.6;
+  HOOKS.push(t => {
+    const u = clamp((t - tB) / dB), g = el('bus3m');
+    // fährt stückweise: hält kurz an jeder Haltestelle
+    const st = [.06, .3, .55, .8, .97], seg = u * (st.length - 1), i = Math.min(st.length - 2, Math.floor(seg)), f = seg - i;
+    const pos = lerp(st[i], st[i + 1], E.inout(clamp(f / .75)));
+    const q = pa.getPointAtLength(pos * La);
+    g.setAttribute('transform', `translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
+    g.style.opacity = t < tB - .25 ? 0 : clamp((t - tB + .25) / .25);
+    HALT.forEach(([c, , hu]) => { if (hu == null) return; const nah = Math.abs(pos - hu) < .02 && t > tB; c.setAttribute('fill', nah ? 'var(--warning)' : 'var(--surface)'); });
+  });
+  cue(tB, 'whoosh');
+  // Fahrplan-Karte
+  hoch('plan3', W('Fahrplan', 9) - .05, 1500, 560, 140, 'pop');
+  ['pz3a', 'pz3b', 'pz3c'].forEach((id, i) => { akteur(id, { o: 0, x: 40 }, true); tw(id, W('Fahrplan', 9) + .25 + i * .15, .4, { o: 1, x: 0 }, 'out'); });
+  [0, 1, 2, 3].forEach(i => bump('pz3a', tB + .9 * i + .6, 1.03));
+  // Tickets
+  hoch('tick3', W('Tickets', 9) - .1, 1500, 872, 120, 'plopp');
+  qrEin(QR3, W('Tickets', 9) + .1, .45); cue(W('Tickets', 9) + .1, 'scan');
+  // deine Region: gestrichelter Rahmen um den ganzen Plan
+  const tR = W('deine', 9) + .35;
+  const reg = el('reg3');
+  HOOKS.push(t => { const d = clamp((t - tR) / .5); reg.style.opacity = d.toFixed(3); reg.style.strokeDashoffset = (-60 * Math.max(0, t - tR)).toFixed(1); });
+  cue(tR, 'ding'); bump('karte3', tR + .05, 1.02);
+  aus(['karte3', 'plan3', 'tick3'], Z3 - .55, .35);
+  textAus('tb3', Z3 - .65);
+}
+
+/* ================= 4 · WG-Gesucht ================= */
+const Z4 = SE(13) + .4;
+{
+  // Du suchst ein Zimmer? Ana denkt an ein Bett
+  const tG = Math.max(W('suchst', 10) - .1, Z3 + .8);
+  pop('gp1', tG, { x: 586, y: 322 }, null); pop('gp2', tG + .1, { x: 622, y: 278 }, null);
+  pop('gd4', tG + .2, { x: 610, y: 168 }, 'pop', 'sanft');
+  AKTEURE.get(el('gd4')).basis.schweben = 4;
+  blick('ana', tG, 1); mund('ana', tG, 'zu');
+  // WG-Gesucht: der Gedanke fliegt in die neue Kachel
+  const tW = W('WG-Gesucht', 11) - .15;
+  aus(['gp1', 'gp2'], tW);
+  flug('gd4', tW, .55, SL[3][0], SL[3][1], 60, { s: .3 }); tw('gd4', tW + .4, .15, { o: 0 }); cue(tW, 'whoosh');
+  kachelEin(3, tW + .45);
+  froh('ana', tW + .5);
+  const tT = W('WG-Gesucht', 11) + .95;
+  tippe(3, tT, 'k3');
+  const OE = oeffnen(4, 3, tT + .25, Z4, { od: .75 });
+  titelEin('tb4', OE + .15, [OE + .15, OE + .25, OE + .33, W('kleine', 11) - .1, W('Wohnungen', 11) - .1]);
+  // Liste: kurzer Schwung nach oben, Lupe sucht
+  hoch('liste4', OE + .1, 470, 655, 140, 'whoosh');
+  HOOKS.push(t => { const u = E.out(clamp((t - OE - .1) / 1.0)); el('rolle4').style.transform = `translateY(${(-432 * (1 - u)).toFixed(1)}px)`; });
+  const tZi = Math.max(W('WG-Zimmer', 11) + .3, OE + 1.05), tKl = W('kleine', 11) - .05;
+  akteur('lupe4', { x: 600, y: 860, o: 0 });
+  tw('lupe4', OE + .5, .2, { o: 1 }); tw('lupe4', OE + .5, tZi - OE - .5, { x: 430, y: 462 }, 'inout'); cue(OE + .6, 'scan');
+  tw('lupe4', tKl - .45, .45, { x: 440, y: 678 }, 'inout');
+  // WG-Zimmer und kleine Wohnung: Karten leuchten, Filter-Chips erscheinen
+  ['hl1', 'hl2'].forEach(id => akteur(id, { o: 0 }, true));
+  tw('hl1', tZi, .25, { o: 1 }); cue(tZi, 'ding'); tw('hl1', tKl - .1, .25, { o: 0 });
+  tw('hl2', tKl, .25, { o: 1 }); cue(tKl, 'ding');
+  pop('f4a', tZi, { x: 1112, y: 372 }, null, 'sanft'); pop('f4b', tKl, { x: 1408, y: 372 }, null, 'sanft');
+  // Nachricht schreiben
+  const tN = W('Schreib', 12) - .3;
+  tw('lupe4', tN - .2, .3, { o: 0, s: .8 }, 'in');
+  pop('ana4', tN, { x: 990, y: 560 }, 'pop', 'sanft'); froh('ana4', tN + .2);
+  akteur('msg4', { x: 1405, y: 560, o: 0, sx: .2 });
+  tw('msg4', tN + .2, .12, { o: 1 }); tw('msg4', tN + .2, .5, { sx: 1 }, 'back'); el('msg4').style.transformOrigin = '0 50%';
+  tippText('msgT4', 'cur4', 'Hallo, ich bin Ana …', W('eine', 12), 1.6);
+  [['c4a', 'kurze', 1165], ['c4b', 'freundliche', 1382], ['c4c', 'über', 1638]].forEach(([id, w, x]) => pop(id, W(w, 12) - .05, { x, y: 712 }, 'ding'));
+  // Dann: Nachricht fliegt ab, eine Antwort kommt
+  const tF = W('Dann', 13) - .1;
+  aus(['c4a', 'c4b', 'c4c'], tF - .1, .3);
+  flug('msg4', tF, .9, 1900, 380, 110, { s: .35 }); tw('msg4', tF + .7, .2, { o: 0 }); cue(tF + .15, 'whoosh');
+  mund('ana4', tF, 'zu'); blick('ana4', tF + .2, 1);
+  pop('wg4', W('eher', 13) - .2, { x: 990, y: 872 }, 'pop', 'sanft');
+  pop('ant4', W('eher', 13), { x: 1250, y: 872 }, 'plopp', 'sanft');
+  akteur('dots4', {}, true); akteur('antT4', { o: 0 }, true);
+  HOOKS.push(t => el('dots4').querySelectorAll('i').forEach((d, i) => { d.style.transform = `translateY(${(-6 * Math.max(0, Math.sin(t * 9 - i * .9))).toFixed(1)}px)`; }));
+  const tAn = W('Antwort', 13) - .1;
+  set('dots4', tAn, { o: 0 }); set('antT4', tAn, { o: 1 }); cue(tAn, 'ding'); bump('ant4', tAn, 1.06);
+  blick('ana4', tAn - .3, 0); froh('ana4', tAn + .1); huepfen('ana4', tAn + .15, 14);
+  aus(['liste4', 'ana4', 'wg4', 'ant4', 'f4a', 'f4b'], Z4 - .55, .35);
+  textAus('tb4', Z4 - .65);
+}
+
+/* ================= 5 · Kleinanzeigen ================= */
+const Z5 = SE(17) + .4;
+{
+  const tK = Math.max(W('Kleinanzeigen', 14), Z4 + .85);
+  kachelEin(4, tK);
+  const tT = W('verkaufen', 14) + .15;
+  tippe(4, tT, 'k4');
+  const OE = oeffnen(5, 4, tT + .25, Z5);
+  const tGe = W('gebrauchte', 14), tNie = W('nie', 16);
+  titelEin('tb5', OE + .2, [OE + .2, tGe - .1, tGe, tNie - .3, tNie - .1, tNie + .1, W('vorab', 16) - .05]);
+  // Karten mit gebrauchten Sachen
+  const KX = [450, 960, 1470];
+  ['ka1', 'ka2', 'ka3'].forEach((id, i) => hoch(id, W('Sachen', 14) - .5 + i * .14, KX[i], 640, 180, i ? null : 'whoosh'));
+  // Möbel, Fahrräder, Lampen fallen in ihre Karten
+  [['st5', 'Möbel', 0, 560], ['fr5', 'Fahrräder', 1, 578], ['la5', 'Lampen', 2, 556]].forEach(([id, w, i, y]) => {
+    const t = W(w, 14) - .15;
+    akteur(id, { x: KX[i], y: y - 150, o: 0 }); tw(id, t, .15, { o: 1 }); tw(id, t, .35, { y }, 'in'); landen(id, t + .4, .8); cue(t + .4, 'plopp');
+  });
+  // Das spart viel Geld: Herz für das Fahrrad, eine Münze
+  pop('herz5', W('spart', 15) - .05, { x: 1100, y: 425 }, 'ding');
+  huepfen('herz5', W('spart', 15) + .5, 12);
+  pop('muenze5', W('Geld', 15) - .15, { x: 818, y: 420 }, 'muenze');
+  tw('muenze5', W('Geld', 15) - .1, .7, { sx: -1 }, 'inout'); tw('muenze5', W('Geld', 15) + .6, .5, { sx: 1 }, 'inout');
+  // Aber Achtung: Überweisung, Warnschild, zerreißt
+  const tAc = W('Achtung', 16) - .1;
+  const dim = ['ka1', 'ka2', 'ka3', 'st5', 'fr5', 'la5', 'herz5', 'muenze5'];
+  tw(dim, tAc, .4, { o: .25 }); akzent(tAc, .03);
+  const tU = W('Überweise', 16) - .2;
+  akteur('ueb5', { x: 900, y: 640, o: 0, s: .9 }); tw('ueb5', tU, .15, { o: 1 }); tw('ueb5', tU, .5, { s: 1 }, 'back');
+  ['ueb5a', 'ueb5b'].forEach(id => akteur(id, { x: 900, y: 640, o: 0 }));
+  cue(tU, 'pop');
+  el('ueb5a').style.clipPath = 'polygon(0 0,52% 0,47% 12%,53% 25%,46% 38%,54% 50%,47% 62%,53% 75%,46% 88%,51% 100%,0 100%)';
+  el('ueb5b').style.clipPath = 'polygon(52% 0,100% 0,100% 100%,51% 100%,46% 88%,53% 75%,47% 62%,54% 50%,46% 38%,53% 25%,47% 12%)';
+  akteur('warn5', { x: 1250, y: 1300, o: 0 });
+  const tWa = W('nie', 16) - .15;
+  tw('warn5', tWa, .1, { o: 1 }); tw('warn5', tWa, .45, { y: 560 }, 'out', { bogen: 0 }); landen('warn5', tWa + .45, 1); cue(tWa + .4, 'plopp');
+  wackeln('warn5', tWa + .55, 4, 3);
+  const tR = W('vorab', 16) + .05;
+  set('ueb5', tR, { o: 0 }); set(['ueb5a', 'ueb5b'], tR, { o: 1 });
+  tw('ueb5a', tR, .08, { x: 890 }, 'sinus'); tw('ueb5b', tR, .08, { x: 910 }, 'sinus'); cue(tR, 'kritzeln');
+  tw('ueb5a', tR + .1, .9, { x: 760, y: 1000, r: -14, o: 0 }, 'in'); tw('ueb5b', tR + .1, .9, { x: 1060, y: 1020, r: 12, o: 0 }, 'in');
+  akzent(tR, .04);
+  // Schau dir alles zuerst an: Auge über dem Fahrrad, Haken
+  const tS = W('Schau', 17) - .2;
+  tw('warn5', tS - .2, .35, { o: 0, s: .8 }, 'in');
+  tw(dim, tS, .4, { o: 1 });
+  pop('auge5', tS + .1, { x: 1072, y: 800 }, 'ding', 'sanft');
+  bump('ka2', tS + .2, 1.03);
+  pop('ok5', W('zuerst', 17), { x: 1128, y: 748 }, 'erfolg');
+  aus([...dim, 'auge5', 'ok5'], Z5 - .55, .35);
+  textAus('tb5', Z5 - .65);
+}
+
+/* ================= 6 · Krankenkasse ================= */
+const Z6 = SE(19) + .4;
+{
+  const tK = Math.max(W('Krankenkasse', 18) - .1, Z5 + .85);
+  kachelEin(5, tK, false);
+  akteur('l5', { x: SL[5][0], y: SL[5][1] + LY, o: 0 });
+  tw('l5', W('AOK', 18) - .1, .3, { o: 1 }); bump('k5', W('AOK', 18) - .1, 1.1); cue(W('AOK', 18) - .1, 'ding');
+  const tT = W('AOK', 18) + .45;
+  tippe(5, tT, 'k5');
+  const OE = oeffnen(6, 5, tT + .25, Z6, { Z: 2.4 });
+  titelEin('tb6', OE + .15, [OE + .15, OE + .22, OE + .29, OE + .5, OE + .56, OE + .62]);
+  // Bescheinigung: Download-Knopf, das Dokument kommt heraus
+  pop('dl6', OE + .3, { x: 330, y: 500 }, 'pop', 'sanft');
+  const tD = W('Bescheinigungen', 19) - .3;
+  tw('dl6', tD - .3, .12, { y: 512 }, 'sinus'); tw('dl6', tD - .18, .3, { y: 500 }, 'sanft'); cue(tD - .3, 'klick');
+  akteur('doc6', { x: 330, y: 500, s: .25, o: 0 });
+  tw('doc6', tD, .1, { o: 1 }); tw('doc6', tD, .7, { x: 650, y: 640, s: 1 }, 'sanft', { bogen: 90 }); cue(tD, 'whoosh');
+  pop('cdoc6', tD + .5, { x: 650, y: 860 }, null);
+  pop('ok6a', tD + .75, { x: 760, y: 512 }, 'erfolg');
+  // Unterlagen als Foto: Sucher, Blitz, hochladen
+  const tB = W('schickst', 19) - .25;
+  pop('brief6', tB, { x: 1290, y: 650 }, 'pop', 'sanft');
+  akteur('sucher6', { x: 1290, y: 650, o: 0, s: 1.25 }); tw('sucher6', tB + .25, .15, { o: 1 }); tw('sucher6', tB + .25, .5, { s: 1 }, 'out'); cue(tB + .25, 'scan');
+  const tF = W('Unterlagen', 19) + .4;
+  akteur('blitz6', { x: 1290, y: 650, o: 0 }); tw('blitz6', tF, .05, { o: .95 }); tw('blitz6', tF + .08, .4, { o: 0 }, 'out'); cue(tF, 'klick');
+  akteur('foto6', { x: 1290, y: 650, o: 0, s: .5 });
+  set('foto6', tF + .1, { o: 1 }); tw('foto6', tF + .1, .35, { s: 1.15 }, 'back');
+  pop('ul6', tF - .1, { x: 1680, y: 420 }, 'pop', 'sanft');
+  const tU = W('einfach', 19) - .1;
+  flug('foto6', tU, .55, 1680, 420, 80, { s: .45 }); tw('foto6', tU + .45, .12, { o: 0 }); cue(tU, 'whoosh');
+  tw('sucher6', tU, .3, { o: 0 });
+  bump('ul6', tU + .55, 1.1);
+  el('ring6').style.strokeDasharray = '1 1'; strich('ring6', tU + .55, W('Foto', 19) + .1 - tU - .55, 'inout');
+  pop('ok6b', W('Foto', 19) + .2, { x: 1738, y: 362 }, 'erfolg');
+  pop('cfoto6', W('Foto', 19) - .1, { x: 1290, y: 860 }, 'pop');
+  aus(['dl6', 'doc6', 'ok6a', 'cdoc6', 'brief6', 'ul6', 'ok6b', 'cfoto6'], Z6 - .55, .35);
+  textAus('tb6', Z6 - .65);
+}
+
+/* ================= 7 · Azubis Plus App ================= */
+const Z7 = SE(23) + .35;
+{
+  // Die Kachel ploppt größer als die anderen und federt nach
+  const tA = W('Azubis', 20) - .15;
+  const [x6, y6] = SL[6];
+  akteur('k6', { x: x6, y: y6, s: 0 });
+  tw('k6', tA, .4, { s: 1.35 }, 'out'); tw('k6', tA + .4, .25, { s: .9 }, 'sinus'); tw('k6', tA + .65, .25, { s: 1.08 }, 'sinus'); tw('k6', tA + .9, .4, { s: 1 }, 'sanft');
+  tw('p6', tA, .2, { o: 0 }); cue(tA, 'plopp'); cue(tA + .4, 'erfolg');
+  froh('ana', tA + .2); huepfen('ana', tA + .3, 16); akzent(tA + .3, .03);
+  const tT = W('App', 20) + .1;
+  tippe(6, tT, 'k6');
+  const OE = oeffnen(7, 6, tT + .25, Z7, { Z: 2.2 });
+  titelEin('tb7', OE + .15, [OE + .15, OE + .22, OE + .29, Math.max(OE + .5, W('Lektionen', 21) - .2), W('Dokumente', 22) - .1, W('Dokumente', 22), W('Fristen', 23) - .1, W('Fristen', 23)]);
+  // Lektionen: ein Weg mit Stationen
+  rein('ap1', Math.max(OE + .45, W('lernst', 21) - .1), 400, 650);
+  const st = el('st7'), pf = el('pfad7'), PL = pf.getTotalLength(), ST = [];
+  [0, .3, .62, 1].forEach((u, i) => {
+    const q = pf.getPointAtLength(u * PL);
+    const farbe = i < 2 ? 'var(--success)' : i === 2 ? 'var(--b500)' : 'var(--n200)';
+    st.insertAdjacentHTML('beforeend', `<g transform="translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})"><g class="sti"><circle r="30" fill="${farbe}" stroke="var(--surface)" stroke-width="6"/>${i < 2 ? '<path d="M-11 1l7 7 15-15" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' : i === 2 ? '<circle r="10" fill="var(--surface)"/>' : ''}</g></g>`);
+    ST.push([st.lastElementChild.firstElementChild, W('Lektionen', 21) - .1 + i * .2]);
+  });
+  HOOKS.push(t => ST.forEach(([g, t0]) => { const d = clamp((t - t0) / .4); g.setAttribute('transform', `scale(${E.back(d).toFixed(3)})`); }));
+  cue(W('Lektionen', 21) - .1, 'pop');
+  // Überraschung: „wie dieser“ – die Station zeigt dieses Video im Kleinen
+  const tDi = W('dieser', 21) - .2;
+  const q3 = pf.getPointAtLength(.62 * PL);
+  akteur('mini7', { x: 160 + 36 + q3.x, y: 340 + 120 + q3.y, s: 0 });
+  tw('mini7', tDi, .55, { x: 400, y: 700, s: 1 }, 'back'); cue(tDi, 'whoosh'); akzent(tDi + .2, .06);
+  const MK = [...el('mk7').children];
+  HOOKS.push(t => MK.forEach((r, i) => { r.style.opacity = t >= tDi + .45 + i * .09 ? 1 : 0; }));
+  cue(tDi + .45, 'pop'); cue(tDi + .9, 'ding');
+  // Dokumente: Brief fällt in den Ordner, Schloss schnappt zu
+  const tDo = W('Dokumente', 22) - .5;
+  rein('ap2', tDo, 960, 650);
+  hoch('mh7', tDo + .2, 960, 720, 120, null); hoch('mv7', tDo + .2, 960, 720, 120, null);
+  akteur('br7', { x: 960, y: 420, o: 0 });
+  tw('br7', W('Dokumente', 22) + .05, .1, { o: 1 }); tw('br7', W('Dokumente', 22) + .05, .45, { y: 650 }, 'in'); landen('mv7', W('Dokumente', 22) + .5, .5); cue(W('Dokumente', 22) + .5, 'plopp');
+  pop('sl7', W('sicher', 22) - .1, { x: 1060, y: 812 }, 'klick', 'sanft'); wackeln('sl7', W('sicher', 22) + .3, 3, 3);
+  pop('ok7', W('sicher', 22) + .3, { x: 1110, y: 520 }, 'erfolg');
+  // Aufgaben und Fristen: Haken, Frist-Chip, Glocke
+  const tAu = W('Aufgaben', 23) - .5;
+  rein('ap3', tAu, 1520, 650);
+  akteur('hk7', { s: 0 }, true); tw('hk7', W('Aufgaben', 23) + .2, .4, { s: 1 }, 'back'); cue(W('Aufgaben', 23) + .2, 'ding');
+  HOOKS.push(t => { const b = el('box7a'); const an = t >= W('Aufgaben', 23) + .2; b.style.background = an ? 'var(--success)' : ''; b.style.borderColor = an ? 'var(--success)' : ''; });
+  const tFr = W('Fristen', 23) - .05;
+  akteur('frist7', {}, true); bump('frist7', tFr, 1.15);
+  HOOKS.push(t => { const f = el('frist7'), an = t >= tFr; f.style.background = an ? 'var(--warning)' : ''; f.style.color = an ? 'var(--surface)' : ''; });
+  pop('gl7', W('Blick', 23) - .5, { x: 1520, y: 872 }, 'pop', 'sanft');
+  wackeln('gl7', W('Blick', 23) - .1, 6, 12); cue(W('Blick', 23) - .1, 'ding'); cue(W('Blick', 23) + .2, 'ding');
+  aus(['ap1', 'mini7', 'ap2', 'mh7', 'br7', 'mv7', 'sl7', 'ok7', 'ap3', 'gl7'], Z7 - .55, .35);
+  textAus('tb7', Z7 - .65);
+}
+
+/* ================= 8 · Nur aus dem offiziellen Store ================= */
+const Z8 = SE(26) + .3;
+{
+  // Ganz wichtig: Ana wird aufmerksam
+  const tG = Math.max(W('wichtig', 24) - .2, Z7 + .8);
+  pop('warn8', tG, { x: 566, y: 350 }, 'pop'); wackeln('warn8', tG + .4, 4, 8);
+  mund('ana', tG, 'auf'); blick('ana', tG, 0); akzent(tG + .1, .03);
+  // Das Store-Fenster schiebt sich von unten hoch
+  const tS = W('Lade', 24) - .35;
+  tw('warn8', tS - .1, .3, { o: 0, s: .8 }, 'in'); mund('ana', tS, 'zu');
+  const OE = oeffnen(8, 6, tS, Z8, { art: 'blatt', od: .7, kachel: ['var(--ink)', G.tuete(W0, 'var(--ink)')] });
+  const t8 = [W('nur', 24) - .1, W('nur', 24) + .1, W('dem', 24) - .05, W('offiziellen', 24) - .1, W('App-Store', 24) - .1, W('erlaube', 26) - .1, W('erlaube', 26) + .1, W('erlaube', 26) + .3];
+  titelEin('tb8', t8[0], t8);
+  // Offiziell: grüner Haken am Store
+  pop('veri8', W('offiziellen', 24) + .1, { x: 232, y: 198 }, 'erfolg');
+  // Eintrag einer App
+  hoch('app8', OE + .1, 560, 640, 160, 'whoosh');
+  akteur('ladenF8', { sx: 0 }, true); akteur('ladenA8', { o: 1 }, true); akteur('ladenB8', { o: 0 }, true);
+  const tL = W('Handy', 24) - .25;
+  akteur('laden8', {}, true); tw('laden8', tL, .08, { s: .96 }, 'sinus'); tw('laden8', tL + .08, .25, { s: 1 }, 'sanft'); cue(tL, 'klick');
+  tw('ladenF8', tL + .1, .9, { sx: 1 }, 'inout'); set('ladenA8', tL + .5, { o: 0 }); set('ladenB8', tL + 1.0, { o: 1 }); cue(tL + 1.0, 'ding');
+  // Schau, wer die App anbietet: Lupe über „Anbieter“
+  const tLu = W('Schau', 25) - .2;
+  akteur('lupe8', { x: 380, y: 760, o: 0 });
+  tw('lupe8', tLu, .2, { o: 1 }); tw('lupe8', tLu, .6, { x: 360, y: 626 }, 'inout'); tw('lupe8', tLu + .7, .9, { x: 720, y: 626 }, 'inout'); cue(tLu + .7, 'scan');
+  akteur('anbHl8', { o: 0 }, true); tw('anbHl8', W('anbietet', 25) - .1, .3, { o: 1 });
+  pop('ok8', W('anbietet', 25) + .1, { x: 944, y: 611 }, 'erfolg');
+  tw('lupe8', W('anbietet', 25) + .4, .3, { o: 0, s: .85 }, 'in');
+  // Erlaube nur, was die App braucht: Kontakte? – Nicht erlauben
+  const tD1 = W('erlaube', 26) - .1;
+  rein('d8a', tD1, 1400, 560, 520);
+  const tN = W('wirklich', 26) + .1;
+  akteur('tipp8', { x: 1400, y: 900, o: 0 });
+  tw('tipp8', tN - .45, .35, { x: 1250, y: 676, o: 1 }, 'out'); tw('tipp8', tN, .12, { s: .86 }, 'sinus'); tw('tipp8', tN + .12, .25, { s: 1 }, 'sinus'); cue(tN, 'klick');
+  akteur('neinA8', { o: 0 }, true); set('neinA8', tN, { o: 1 });
+  tw('tipp8', tN + .3, .2, { o: 0 });
+  const tW1 = W('braucht', 26);
+  [0, 1, 2, 3].forEach(i => tw('d8a', tW1 - .1 + i * .1, .1, { x: 1400 + (i % 2 ? 12 : -12) }, 'sinus')); tw('d8a', tW1 + .3, .1, { x: 1400 }, 'sinus');
+  tw('d8a', tW1 + .4, .65, { x: 2300 }, 'in'); cue(tW1 + .35, 'whoosh');
+  // Kamera? – Erlauben
+  const tD2 = W('Beispiel', 26) - .2;
+  rein('d8b', tD2, 1400, 560, 520);
+  const tJ = W('Kamera', 26) + .15;
+  tw('tipp8', tJ - .45, .35, { x: 1550, y: 676, o: 1, s: 1 }, 'out'); tw('tipp8', tJ, .12, { s: .86 }, 'sinus'); tw('tipp8', tJ + .12, .25, { s: 1 }, 'sinus'); cue(tJ, 'klick');
+  set('tipp8', tJ - .46, { x: 1550, y: 900 });
+  akteur('jaB8', { o: 0 }, true); set('jaB8', tJ, { o: 1 }); cue(tJ + .1, 'ding');
+  tw('tipp8', tJ + .3, .2, { o: 0 });
+  // Kamera für Fotos von Briefen
+  const tK = W('Fotos', 26) - .1;
+  tw('d8b', tK - .15, .3, { o: 0, s: .7 }, 'in');
+  pop('kam8', tK + .1, { x: 1320, y: 620 }, 'pop', 'sanft');
+  pop('brief8', W('Briefen', 26) - .25, { x: 1580, y: 730 }, 'plopp', 'sanft');
+  const tBl = W('Briefen', 26) + .25;
+  bump('kam8', tBl, 1.08); cue(tBl, 'klick');
+  el('welle8').style.borderColor = 'var(--surface)';
+  welleAn('welle8', tBl, 1320, 610, 150, .7);
+  HOOKS.push(t => { const d = t - tBl; el('kam8').style.filter = d > 0 && d < .5 ? `brightness(${(1 + .7 * Math.sin(Math.PI * d / .5)).toFixed(2)})` : ''; });
+  pop('ok8b', tBl + .3, { x: 1680, y: 618 }, 'erfolg');
+  aus(['app8', 'ok8', 'veri8', 'kam8', 'brief8', 'ok8b'], Z8 - .6, .3);
+  textAus('tb8', Z8 - .65);
+}
+
+/* ================= 9 · Alles in Ordnern ================= */
+{
+  const tA = W('Ana', 27) - .1;
+  froh('ana', tA); huepfen('ana', tA, 16); blick('ana', tA + .4, 1);
+  // Bearbeiten: die Kacheln wackeln
+  const tW = W('dabei', 27) - .1;
+  ['k1', 'k2', 'k3', 'k4', 'k5'].forEach((k, i) => { for (let j = 0; j < 5; j++) tw(k, tW + j * .14 + i * .03, .14, { r: (j + i) % 2 ? 2.5 : -2.5 }, 'sinus'); tw(k, tW + .7 + i * .03, .2, { r: 0 }, 'sinus'); });
+  cue(tW, 'tipp');
+  // Ordner bilden sich: Unterwegs, Wohnen, Papiere
+  const ORD = [
+    ['o1', 'ol1', 1, W('Weg', 27) - .35, [['k1', 'l1', -22, -22], ['k2', 'l2', 22, -22]]],
+    ['o2', 'ol2', 2, W('Wohnung', 27) - .35, [['k3', 'l3', -22, -22], ['k4', 'l4', 22, -22]]],
+    ['o3', 'ol3', 3, W('Papiere', 27) - .35, [['k5', 'l5', -22, -22]]],
+  ];
+  ORD.forEach(([o, ol, p, t, ks]) => {
+    const [x, y] = SL[p];
+    pop(o, t, { x, y }, 'pop', 'sanft');
+    ks.forEach(([k, l, dx, dy], i) => {
+      tw(l, t - .1, .2, { o: 0 });
+      flug(k, t + .1 + i * .12, .55, x + dx, y + dy, 50, { s: .3 }); cue(t + .1 + i * .12, 'whoosh');
+    });
+    akteur(ol, { x, y: y + LY, o: 0 }); tw(ol, t + .55, .3, { o: 1 }); bump(o, t + .7, 1.1); cue(t + .7, 'plopp');
+  });
+  // Die Azubis Plus App bleibt groß im Dock
+  bump('k6', W('Papiere', 27) + .5, 1.12); cue(W('Papiere', 27) + .5, 'erfolg');
+  froh('ana', W('Papiere', 27)); blick('ana', W('Papiere', 27) + .3, 0);
+  ZOOMAUS = SE(27) + .1;
+}
+
+/* ---------- Wellen ---------- */
+for (const [id, liste] of Object.entries(WELLEN)) {
+  akteur(id, { x: liste[0][1], y: liste[0][2], o: 0, s: .8 });
+  el(id).style.width = el(id).style.height = '200px';
+  liste.forEach(([t, x, y, g, d]) => { set(id, t, { x, y, o: .9, s: .8 * g / 200 }); tw(id, t, d, { o: 0, s: 1.6 * g / 200 }, 'weich'); });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .8)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
