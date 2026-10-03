@@ -50,6 +50,15 @@ Abspann: „Alle sind gleich viel wert.“ und die Kernbotschaft.
   besteht (z. B. Vermieter wohnt auf demselben Grundstück). „schützt dich … auch bei der Wohnungssuche“ bleibt als Grundsatz richtig;
   dass die Absage in Szene 1 Rassismus ist, gilt unabhängig davon.
 - **Tipp „Lach nicht mit … frag später“** ist eine Empfehlung (Zivilcourage), keine Rechtsaussage.
+- **Bild-Anpassungen bei der Umsetzung:** „aussehen“ zeigt einen Standspiegel statt einer Kopf-Silhouette (keine Menschen außer den
+  Figuren); die Handys zeigen nur Vornamen (Kwame / Jonas), die Lupe markiert die Namen, dazwischen ein „≠“; statt eines Balkens
+  „erlebt Rassismus“ (wirkt wie eine Statistik ohne Zahl) ziehen in einigen erleuchteten Fenstern graue Wolken auf, auf „darüber
+  sprechen“ werden daraus Sprechblasen; die Zeitreise zeigt nur „1933 – 1945“ und drei Reihen gleich großer Punkte, die auf „ermordet“
+  ihre Füllung verlieren (ohne Ton), dann das Grundgesetz mit „1949“; der Paragraf in Szene 3 ist ein Schild mit „§“; in Szene 6 schrumpft
+  die graue Blase auf „Sag ruhig“ zu einem Punkt, „Alles gut bei dir?“ zeigt nur ein Herz (keine Sprechblase mit dem gesprochenen Text).
+- **Übergänge:** Kamerafahrt an der Hauswand (Szene 1), Zoom in ein Fenster (1 → 2) und wieder heraus (2 → 3), Fahrt am Haus hinauf in
+  den Himmel (3 → 4) und zurück an die Fenster, Wischblende in den Pausenraum (4 → 5), lange Fahrt die Straße entlang (5 → 6);
+  der Abspann öffnet sich aus der Klingelanlage.
 
 ## Sprechertext
 

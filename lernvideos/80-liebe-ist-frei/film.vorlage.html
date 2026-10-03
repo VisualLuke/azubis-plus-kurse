@@ -87,7 +87,7 @@ html,body{background:var(--b50)}
 .tagebuch .seiten i{position:absolute;left:50px;right:50px;height:10px;border-radius:5px;background:var(--n200)}
 .tagebuch .deckel{position:absolute;left:0;top:0;width:440px;height:520px;border-radius:24px;background:linear-gradient(150deg,var(--b400),var(--b600));transform-origin:0 50%;
   box-shadow:inset 30px 0 0 rgba(58,37,153,.35)}
-.tagebuch .deckel div{position:absolute;left:120px;top:150px;width:220px}
+.tagebuch .deckel div{position:absolute;left:110px;top:140px;width:240px;padding:34px;border-radius:999px;background:var(--b50)}
 .tagebuch .riemen{position:absolute;left:320px;top:230px;width:190px;height:70px;border-radius:0 18px 18px 0;background:var(--b700);transform-origin:0 50%}
 .tagebuch .schloss{position:absolute;left:400px;top:190px;width:150px}
 
@@ -143,11 +143,13 @@ html,body{background:var(--b50)}
   <div id="deko"></div>
 
   <!-- Bühnen (für die Prüfung): Pinnwand, Wand rechts mit Dienstplan -->
-  <div class="a buehne" id="bueWand" style="left:-560px;top:-260px;width:4520px;height:2440px"></div>
+  <div class="a buehne" id="bueWand" style="left:-560px;top:-260px;width:4520px;height:2700px"></div>
   <div class="a buehne" id="bueRechts" style="left:3640px;top:-100px;width:3200px;height:2160px"></div>
 
   <!-- Karten an der Pinnwand (werden per Skript gefüllt) -->
   <div id="karten"></div>
+
+  <div class="a pw-kal" id="kalMo" data-gruppe="kalMo"><div class="kopf"></div><div class="blattk" style="font-size:54px;line-height:200px">Montag</div><div class="pw-pin" id="kalMopin" style="top:10px"></div></div>
 
   <!-- Szene 2 -->
   <div class="a pw-text" id="t2" data-gruppe="t2"><div class="pw-pin" id="t2pin"></div><div class="eyebrow" id="t2e">In Deutschland</div><div id="t2t"><div class="titel">Liebe ist frei</div><div class="unter">Ehe für alle seit 2017</div></div></div>
@@ -179,6 +181,8 @@ html,body{background:var(--b50)}
   <svg class="a" id="girlande" viewBox="0 0 1200 260" style="width:1200px;height:260px" data-frei></svg>
   <div class="a" id="konfetti" style="width:1200px;height:700px" data-frei></div>
 
+  <div class="a pw-text" id="t4" data-gruppe="t4"><div class="pw-pin" id="t4pin"></div><div class="eyebrow" id="t4e">1994</div><div id="t4t"><div class="titel" style="font-size:80px;line-height:92px;white-space:nowrap">Das Verbot ist ganz weg</div></div></div>
+
   <!-- Szene 5 -->
   <div class="a pw-text" id="t5" data-gruppe="t5"><div class="pw-pin" id="t5pin"></div><div id="t5t"><div class="titel" style="font-size:80px;line-height:92px;white-space:nowrap">Was würdest du tun?</div></div></div>
   <div class="a blase-off" id="bl3" data-gruppe="bl3"><div class="zipfel"></div><svg viewBox="0 0 320 120"><path id="bl3w" d="M10 60c25-50 50-50 75 0s50 50 75 0 50-50 75 0 35 45 75 0" stroke="var(--n400)" stroke-width="16" stroke-linecap="round" fill="none"/></svg></div>
@@ -194,14 +198,14 @@ html,body{background:var(--b50)}
   <div class="a hilfe" id="hi1" data-gruppe="hilfe"><div class="pw-pin"></div>Ausbilder/in</div>
   <div class="a hilfe" id="hi2" data-gruppe="hilfe"><div class="pw-pin"></div>Betriebsrat</div>
   <div class="a hilfe" id="hi3" data-gruppe="hilfe"><div class="pw-pin"></div>Kammer</div>
-  <svg class="a" id="respekt" viewBox="0 0 1300 560" style="width:1300px;height:560px" data-frei>
-    <ellipse id="respektP" pathLength="1" cx="650" cy="280" rx="610" ry="240" stroke="var(--b400)" stroke-width="16" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none" stroke-linecap="round"/></svg>
+  <svg class="a" id="respekt" viewBox="0 0 1300 480" style="width:1300px;height:480px" data-frei>
+    <ellipse id="respektP" pathLength="1" cx="650" cy="240" rx="610" ry="200" stroke="var(--b400)" stroke-width="16" stroke-dasharray="1 1" stroke-dashoffset="1" fill="none" stroke-linecap="round"/></svg>
   <svg class="a" id="band" viewBox="-100 -100 3600 2100" style="width:3600px;height:2100px" data-frei></svg>
 
   <!-- Figuren (vorne) -->
-  <div class="a portrait" id="ana" style="width:330px;height:330px" data-p="ana"></div>
+  <div class="a portrait" id="ana" style="width:330px;height:330px" data-p="ana" data-gruppe="ana"></div>
   <div class="a portrait" id="sabine" style="width:330px;height:330px" data-p="sabine"></div>
-  <div class="a" id="anaTasse" style="width:170px"></div>
+  <div class="a" id="anaTasse" style="width:230px" data-gruppe="ana"></div>
   <div class="a ruf" id="frage1">?</div>
 </div></div></div>
 
@@ -248,7 +252,6 @@ const lerp = (a, b, u) => a + (b - a) * u;
   s += R(-520, 1180, 380, 26, 'var(--b300)', 'rx="10"');
   s += R(-520, 1700, 380, 26, 'var(--b300)', 'rx="10"');
   // Fenster rechts hinter dem Dienstplan
-  s += R(5980, 200, 700, 520, 'var(--b100)', 'rx="30" stroke="var(--b300)" stroke-width="24"') + R(6320, 200, 20, 520, 'var(--b300)') + R(5980, 450, 700, 20, 'var(--b300)');
   s += '</svg>';
   el('raum').innerHTML = s;
 }
@@ -311,30 +314,30 @@ innen('see', `<svg style="position:absolute;left:0;top:0;width:1920px;height:132
 <div class="a" id="seeGl1" style="width:70px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
 <div class="a" id="seeGl2" style="width:50px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
 <div class="a" id="seeGl3" style="width:80px;height:12px;border-radius:6px;background:var(--surface)" data-frei></div>
-<div class="a" id="seeT1" style="width:300px" data-gruppe="see">${tpl('tasse')}</div>
-<div class="a" id="seeT2" style="width:300px" data-gruppe="see">${tpl('tasse2')}</div>
-<div class="a" id="seeS1" style="width:360px" data-gruppe="see">${tpl('turnschuhe')}</div>
-<div class="a" id="seeS2" style="width:360px" data-gruppe="see">${tpl('halbschuhe')}</div>
-<div class="a" id="seeHerz" style="width:260px" data-gruppe="see">${tpl('herz')}</div>`);
+<div class="a" id="seeT1" style="width:300px" data-gruppe="k-see">${tpl('tasse')}</div>
+<div class="a" id="seeT2" style="width:300px" data-gruppe="k-see">${tpl('tasse2')}</div>
+<div class="a" id="seeS1" style="width:360px" data-gruppe="k-see">${tpl('turnschuhe')}</div>
+<div class="a" id="seeS2" style="width:360px" data-gruppe="k-see">${tpl('halbschuhe')}</div>
+<div class="a" id="seeHerz" style="width:260px" data-gruppe="k-see">${tpl('herz')}</div>`);
 // Alte Karte: Zeitreise (grau-hell), Gesetzesblatt, Gitter, Kalender 1994, Text im Bild
 innen('alt', `<div style="position:absolute;inset:0;background:linear-gradient(160deg,var(--s2),var(--n200))"></div>
-<div class="a" id="altUhr" style="width:520px" data-gruppe="alt0">${tpl('uhr')}</div>
-<div class="a altblatt" id="altblatt" data-gruppe="alt"><div class="para">§</div><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i></div>
-<div class="a altblatt haelfte" id="altL" data-gruppe="alt" style="clip-path:polygon(0 0,52% 0,46% 22%,55% 40%,45% 62%,53% 80%,47% 100%,0 100%)"></div>
-<div class="a altblatt haelfte" id="altR" data-gruppe="alt" style="clip-path:polygon(52% 0,100% 0,100% 100%,47% 100%,53% 80%,45% 62%,55% 40%,46% 22%)"></div>
-<div class="a" id="altSchloss" style="width:330px" data-gruppe="alt">${tpl('schloss')}</div>
-<div class="a pw-kal" id="kal94" style="width:420px;height:460px" data-gruppe="alt"><div class="kopf" style="height:110px"></div><div class="blattk" id="kal94a" style="top:110px;font:800 150px/350px Inter">&nbsp;</div><div class="blattk" id="kal94b" style="top:110px;font:800 150px/350px Inter">1994</div></div>
+<div class="a" id="altUhr" style="width:900px" data-gruppe="k-alt">${tpl('uhr')}</div>
+<div class="a altblatt" id="altblatt" data-gruppe="k-alt"><div class="para">§</div><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i></div>
+<div class="a altblatt haelfte" id="altL" data-gruppe="k-alt" style="clip-path:polygon(0 0,52% 0,46% 22%,55% 40%,45% 62%,53% 80%,47% 100%,0 100%)"></div>
+<div class="a altblatt haelfte" id="altR" data-gruppe="k-alt" style="clip-path:polygon(52% 0,100% 0,100% 100%,47% 100%,53% 80%,45% 62%,55% 40%,46% 22%)"></div>
+<div class="a" id="altSchloss" style="width:330px" data-gruppe="k-alt">${tpl('schloss')}</div>
+<div class="a pw-kal" id="kal94" style="width:420px;height:460px" data-gruppe="k-alt"><div class="kopf" style="height:110px"></div><div class="blattk" id="kal94a" style="top:110px;font:800 150px/350px Inter">&nbsp;</div><div class="blattk" id="kal94b" style="top:110px;font:800 150px/350px Inter">1994</div></div>
 <div class="a gitter" id="gitter" data-frei>${Array.from({ length: 13 }, (_, i) => `<div style="left:${60 + i * 148}px"></div>`).join('')}<div class="quer" style="top:240px"></div><div class="quer" style="top:1040px"></div></div>
-<div class="a pw-text" id="t4" data-gruppe="t4" style="padding:50px 80px 60px;width:1100px"><div class="pw-pin" id="t4pin"></div><div class="eyebrow" id="t4e" style="font-size:64px;line-height:76px">1994</div><div id="t4t"><div class="titel" style="font-size:120px;line-height:136px">Das Verbot ist ganz weg</div></div></div>`);
+`);
 // Händchen: Straße von oben, zwei Spuren laufen nebeneinander
 el('k-ha-v').innerHTML = `<svg style="position:absolute;left:0;top:0;width:480px;height:330px" viewBox="0 0 480 330">
   <rect width="480" height="330" fill="var(--b50)"/><rect y="95" width="480" height="140" fill="var(--b100)"/>
   <path d="M0 95h480M0 235h480" stroke="var(--b200)" stroke-width="6"/>
   <g fill="var(--b200)"><circle cx="60" cy="50" r="26"/><circle cx="200" cy="44" r="22"/><circle cx="340" cy="52" r="26"/><circle cx="110" cy="284" r="24"/><circle cx="270" cy="290" r="26"/><circle cx="420" cy="282" r="22"/></g>
   <clipPath id="haClip"><rect id="haClipR" x="0" y="0" width="0" height="330"/></clipPath>
-  <g clip-path="url(#haClip)" fill="none" stroke-linecap="round" stroke-width="14"><path d="M24 148C120 140 200 150 300 146S400 140 420 146" stroke="var(--b500)" stroke-dasharray="1 26"/>
-  <path d="M24 184C120 178 200 188 300 182S400 176 420 182" stroke="var(--b400)" stroke-dasharray="1 26"/></g>
-</svg><div class="a" id="haHerz" style="width:120px" data-gruppe="k-ha">${tpl('herz')}</div>`;
+  <g clip-path="url(#haClip)" fill="none" stroke-linecap="round" stroke-width="14"><path d="M24 148C120 140 200 150 280 146S340 142 352 146" stroke="var(--b500)" stroke-dasharray="1 26"/>
+  <path d="M24 184C120 178 200 188 280 182S340 178 352 182" stroke="var(--b400)" stroke-dasharray="1 26"/></g>
+</svg><div class="a" id="haHerz" style="width:110px" data-gruppe="k-ha">${tpl('herz')}</div>`;
 el('k-alt-v').insertAdjacentHTML('beforeend', '');
 // Dienstplan: alle Namen gleich groß
 el('dienst').insertAdjacentHTML('beforeend', ['Ana', 'Sabine', 'Jonas', 'Mai', 'Kwame', 'Priya'].map((n, i) =>
@@ -345,20 +348,20 @@ el('anaTasse').innerHTML = tpl('tasse');
 
 /* ---------- Helfer ---------- */
 const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
-const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'inout');
 const wackeln = (id, t, n = 3, w = 3, r0 = 0) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: r0 + (i % 2 ? w : -w) }, 'sinus'); tw(id, t + n * .1, .25, { r: r0 }, 'sinus'); };
 const huepfen = (id, t, h = 18) => {
   const y = wertBei(id, 'y', t);
   tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
   tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
-  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+  tw(id, t + .44, .13, { sy: .96, sx: 1.03 }, 'sinus'); tw(id, t + .57, .35, { sy: 1, sx: 1 }, 'sanft');
 };
 const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
 const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
 const sprung = (id, t, x, y, h = 80, d = .4) => {
   tw(id, t, .1, { sy: .95, sx: 1.03 }, 'sinus');
   tw(id, t + .07, d, { x, y }, 'sinus', { bogen: h }); tw(id, t + .1, .16, { sy: 1.03, sx: .98 }, 'sinus');
-  tw(id, t + .07 + d, .12, { sy: .94, sx: 1.04 }, 'sinus'); tw(id, t + .19 + d, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t + .07 + d, 'plopp');
+  tw(id, t + .07 + d, .15, { sy: .95, sx: 1.03 }, 'sinus'); tw(id, t + .22 + d, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t + .07 + d, 'plopp');
 };
 const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
 const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
@@ -368,18 +371,19 @@ HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDashoffset = 
 const rel = (id, basis = {}) => akteur(id, basis, true);
 // Karte anpinnen: Karte kommt mit leichtem Bogen, die Nadel schlägt ein, die Karte pendelt aus
 const anpinnen = (id, t, von = { dx: 0, dy: -260 }, pinId = id + '-pin') => {
-  const a = AKTEURE.get(el(id)), x = a.basis.x, y = a.basis.y, r = a.basis.r;
+  const a = AKTEURE.get(el(id)), x = a.basis.x, y = a.basis.y, r = a.basis.r, d = von.d || .6;
   a.basis = { ...a.basis, x: x + von.dx, y: y + von.dy, o: 0, s: 1.08, r: r + (von.dx > 0 ? 6 : -6) };
-  tw(id, t, .15, { o: 1 }); tw(id, t, .55, { x, y, s: 1 }, 'out', { bogen: von.bogen || 0 }); tw(id, t, .55, { r: r - 1 }, 'out');
+  tw(id, t, .05, { o: 1 }); tw(id, t, d, { x, y, s: 1 }, 'inout', { bogen: von.bogen || 0 }); tw(id, t, d, { r: r - 1 }, 'inout');
   rel(pinId, { y: -90, s: 1.8, o: 0 });
-  tw(pinId, t + .45, .06, { o: 1 }); tw(pinId, t + .45, .2, { y: 0, s: 1 }, 'in'); cue(t + .65, 'klick');
-  landen(id, t + .65, .4);
-  [2.4, -1.6, 1, -.4, 0].forEach((w, i) => tw(id, t + .65 + i * .14, .14, { r: r + w }, 'sinus'));
+  tw(pinId, t + d - .15, .06, { o: 1 }); tw(pinId, t + d - .15, .2, { y: 0, s: 1 }, 'in'); cue(t + d + .05, 'klick');
+  tw(id, t + d + .05, .14, { sy: .95, sx: 1.03 }, 'sinus'); tw(id, t + d + .19, .45, { sy: 1, sx: 1 }, 'sanft');
+  const f = 480 / Math.max(480, el(id).offsetWidth);
+  [1.8, -1.1, .6, -.2, 0].forEach((w, i) => tw(id, t + d + .05 + i * .17, .17, { r: r + w * f }, 'sinus'));
 };
 const abpinnen = (id, t, pinId = id + '-pin') => {
   tw(pinId, t, .2, { y: -70, s: 1.5, o: 0 }, 'in'); cue(t, 'klick');
-  tw(id, t + .15, .25, { r: wertBei(id, 'r', t) + 7 }, 'out');
-  tw(id, t + .2, .7, { y: wertBei(id, 'y', t) + 700, o: 0 }, 'in');
+  tw(id, t + .15, .3, { r: wertBei(id, 'r', t) + 7 * 480 / Math.max(480, el(id).offsetWidth) }, 'sinus');
+  tw(id, t + .2, .6, { y: wertBei(id, 'y', t) + 500 }, 'in'); tw(id, t + .2, .4, { o: 0 }, 'lin');
 };
 // Karte umdrehen (um die senkrechte Achse durch die Nadel)
 const drehen = (k, t, zurueck = false) => {
@@ -485,19 +489,21 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
 
 /* ===================== 1 · Situation (ohne Titel, Bild mittig) ===================== */
 {
-  // Montagmorgen: Ana hüpft mit ihrer Tasse herein
+  // Montagmorgen: ein Kalenderblatt wird angepinnt, Ana hüpft mit ihrer Tasse herein
+  akteur('kalMo', { x: 2400, y: 1000, r: 2 });
+  anpinnen('kalMo', W('Montagmorgen', 1) - .25, { dx: 0, dy: -300 }, 'kalMopin');
   const t0 = A(0) + .1;
   akteur('ana', { x: -700, y: 1640, o: 1 });
   sprung('ana', t0, -180, 1650, 120, .45);
   sprung('ana', t0 + .62, 330, 1640, 110, .45);
-  pop('anaTasse', W('Pause', 1) - .1, { x: 560, y: 1760, r: -3 });
+  pop('anaTasse', W('Pause', 1) - .1, { x: 520, y: 1750, r: -3 });
   wackeln('anaTasse', W('Pause', 1) + .4, 2, 3, -3);
   huepfen('ana', W('Pause', 1) + .1, 22);
   // Sabine kommt dazu und pinnt die Postkarte „See“ an
   pop('sabine', W('Sabine', 2) - .15, { x: 1900, y: 1640 }, 'pop', 'sanft');
   kopf('ana', W('Sabine', 2) + .1, 6); kopf('ana', W('erzählt', 2), 0);
   froh('sabine', W('Wochenende', 2) - .3, SS(3));
-  anpinnen('k-see', W('Wochenende', 2) - .2, { dx: 560, dy: 380, bogen: 160 });
+  anpinnen('k-see', W('Wochenende', 2) - .35, { dx: 560, dy: 380, bogen: 160, d: .85 });
   akzent(W('Wochenende', 2) + .5, .03);
   // in die Postkarte hinein: Steg, Wasser, zwei Tassen, zwei Paar Schuhe
   const tE = SS(3) - .25;
@@ -513,7 +519,7 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
   // zurück: Ana staunt
   fahrt(SS(5) - .45, 1.2, 1110, 1060, .62);
   pop('frage1', W('Frau', 5) - .1, { x: 560, y: 1380 }, 'pop');
-  wackeln('frage1', W('Frau', 5) + .4, 4, 8);
+  for (let i = 0; i < 4; i++) tw('frage1', W('Frau', 5) + .4 + i * .14, .14, { r: i % 2 ? 6 : -6 }, 'sinus'); tw('frage1', W('Frau', 5) + .96, .3, { r: 0 }, 'sinus');
   kopf('ana', W('hat', 5), -7); kopf('ana', W('überrascht', 6), 4); kopf('ana', W('sagen', 6), 0);
   augenZu('ana', W('überrascht', 6) + .05, W('überrascht', 6) + .2);
   augenZu('ana', W('überrascht', 6) + .35, W('überrascht', 6) + .5);
@@ -526,11 +532,13 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
 {
   // Figuren gehen, Kamera auf die ganze Wand
   aus(['frage1', 'anaTasse'], SS(7) - .2, .3);
+  abpinnen('kalMo', SS(7) - .3, 'kalMopin');
   tw('ana', SS(7) - .1, .35, { o: 0, s: .8 }, 'in'); tw('sabine', SS(7), .35, { o: 0, s: .8 }, 'in');
   fahrt(SS(7) - .2, 1.4, 1700, 950, .5);
   textKarte(2, 2850, 430, W('Deutschland', 7) - .1, { unter: W('zweitausendsiebzehn', 11) });
   akzent(W('normal', 7), .025);
   // Die Karten drehen sich um: jede zeigt ein Paar
+  fahrt(SS(8) - .5, 1.1, 1110, 720, .86);
   drehen('kon', W('Männer', 8) - .15);
   drehen('rad', W('Männer', 8) + .75);
   drehen('ku', W('Frauen', 8) - .15);
@@ -538,6 +546,7 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
   drehen('see', W('beide', 8) - .2);
   akzent(W('beide', 8) + .2, .03);
   // schwul · lesbisch · bi
+  fahrt(SE(8) + .05, 1.1, 1700, 950, .5);
   pop('streifen', SS(9) - .1, { x: 900, y: 1600 }, 'whoosh', 'sanft');
   pop('chip1', W('schwul', 9) - .1, { x: 470, y: 1600, r: -2 });
   pop('chip2', W('lesbisch', 9) - .1, { x: 900, y: 1600, r: 1 });
@@ -564,23 +573,23 @@ HOOKS.push(t => { el('seeWellen').setAttribute('transform', `translate(${(18 * M
   anpinnen('k-ha', W('Liebe', 12) - .3, { dx: 300, dy: -200 });
   { const t1 = W('Händchen', 12) - .45, t2 = WE('halten', 12) + .1, r = el('haClipR');
     HOOKS.push(t => r.setAttribute('width', (500 * E.inout(clamp((t - t1) / (t2 - t1)))).toFixed(1))); cue(t1, 'tipp'); cue(t1 + .5, 'tipp'); cue(t1 + 1, 'tipp'); }
-  akteur('haHerz', { x: 420, y: 165, s: 0 }, false);
+  akteur('haHerz', { x: 412, y: 166, s: 0 }, false);
   tw('haHerz', WE('halten', 12) + .1, .5, { s: 1 }, 'back'); cue(WE('halten', 12) + .1, 'ding');
 }
 
 /* ---------- Grundzustand der späteren Akteure ---------- */
-akteur('t3', { x: 5150, y: 560, o: 0 }); akteur('t5', { x: 1110, y: 1300, o: 0 }); akteur('t6', { x: 2380, y: 300, o: 0 });
+akteur('t3', { x: 5150, y: 720, o: 0 }); akteur('t5', { x: 1110, y: 1300, o: 0 }); akteur('t6', { x: 2380, y: 300, o: 0 });
 akteur('dienst', { x: 4100, y: 1000 });
 for (let i = 0; i < 6; i++) { rel('dz' + i, { o: 0 }); rel('db' + i, { sx: .2 + .13 * ((i * 7) % 5) }); }
 akteur('paragraf', { x: 5000, y: 1150, s: 0 }); akteur('chipAGG', { x: 5000, y: 1420, s: 0 });
-akteur('bl1', { x: 7400, y: 1060, o: 0 }); akteur('bl2', { x: 7400, y: 1430, o: 0 }); rel('bl1s', { sx: 0 }); rel('bl2s', { sx: 0 });
+akteur('bl1', { x: 7400, y: 1110, o: 0 }); akteur('bl2', { x: 7400, y: 1470, o: 0 }); rel('bl1s', { sx: 0 }); rel('bl2s', { sx: 0 });
 akteur('tagebuch', { x: 6500, y: 1150, s: 0 }); rel('tbDeckel', {}); rel('tbRiemen', { r: -75 }); rel('tbSchloss', { x: -150, y: 190, r: -20 });
 akteur('tbHerzFlug', { x: 6500, y: 1150, s: 0 });
 akteur('girlande', { x: 2755, y: 1500, o: 1 }); akteur('konfetti', { x: 2755, y: 1450, o: 1 });
 akteur('bl3', { x: 2900, y: 1330, o: 0 });
 akteur('ring5', { x: 700, y: 1600, o: 0 }); ['gp1', 'gp2', 'gp3'].forEach(id => akteur(id, { x: 700, y: 1500, s: 0 }));
 ['hi1', 'hi2', 'hi3'].forEach((id, i) => akteur(id, { x: 2980, y: 300 + i * 175, o: 0 }));
-akteur('respekt', { x: 1110, y: 2110, o: 0 }); akteur('band', { x: 1700, y: 950, o: 1 });
+akteur('respekt', { x: 1110, y: 2080, o: 0 }); akteur('band', { x: 1700, y: 950, o: 1 });
 ['streifen', 'chip1', 'chip2', 'chip3', 'haken', 'kal17', 'ringL', 'ringR', 'ringV'].forEach(id => { if (!AKTEURE.has(el(id))) akteur(id, { o: 0 }); });
 rel('abspann', { y: -1250 });
 // Innenwelt alte Karte
@@ -590,14 +599,14 @@ akteur('altL', { x: 760, y: 680, o: 0 }); akteur('altR', { x: 760, y: 680, o: 0 
 akteur('altSchloss', { x: 760, y: 980, s: 0 });
 akteur('kal94', { x: 1450, y: 560, o: 0 }); rel('kal94a', {}); rel('kal94b', { sy: 0 });
 akteur('gitter', { x: 960, y: -700 });
-akteur('t4', { x: 760, y: 680, o: 0 });
+akteur('t4', { x: 2800, y: 1330, o: 0 });
 
 /* ===================== 3 · Im Betrieb: an der Wand neben der Pinnwand ===================== */
 {
   // Kamerafahrt an der Pinnwand entlang zum Dienstplan
-  fahrt(SS(13) - .45, 1.6, 4750, 1000, .85);
+  fahrt(SS(13) - .45, 1.6, 4750, 1060, .85);
   aus(['streifen', 'chip1', 'chip2', 'chip3'], SS(13) + 1.2, .2);
-  textKarte(3, 5150, 560, W('Niemand', 13) - .2, { unter: W('liebt', 13) - .3 });
+  textKarte(3, 5150, 720, W('Niemand', 13) - .2, { unter: W('liebt', 13) - .3 });
   // alle Namen gleich: eine Welle läuft durch die Zeilen, alle Balken werden gleich lang
   for (let i = 0; i < 6; i++) {
     const t = W('benachteiligt', 13) - .3 + i * .12;
@@ -607,21 +616,21 @@ akteur('t4', { x: 760, y: 680, o: 0 });
   cue(W('benachteiligt', 13) - .2, 'scan');
   // Gleichbehandlungsgesetz: Schild mit Paragraf schlägt auf
   pop('paragraf', W('Gleichbehandlungsgesetz', 14) - .25, { x: 5000, y: 1150, r: 0 }, 'plopp');
-  wackeln('paragraf', W('Gleichbehandlungsgesetz', 14) + .25, 4, 4);
+  for (let i = 0; i < 4; i++) tw('paragraf', W('Gleichbehandlungsgesetz', 14) + .25 + i * .13, .13, { r: i % 2 ? 3 : -3 }, 'sinus'); tw('paragraf', W('Gleichbehandlungsgesetz', 14) + .77, .3, { r: 0 }, 'sinus');
   welle('welleP', W('Gleichbehandlungsgesetz', 14) + .2, 5000, 1150);
   pop('chipAGG', W('Gleichbehandlungsgesetz', 14) + .2, { x: 5000, y: 1420 }, 'pop', 'sanft');
   akzent(W('Gleichbehandlungsgesetz', 14) + .2, .035);
   // dumme Sprüche: graue Blasen aus dem Off, durchgestrichen
-  fahrt(SS(15) - .3, 1.1, 5480, 1050, .85);
-  tw('bl1', W('Sprüche', 15) - .4, .15, { o: 1 }); tw('bl1', W('Sprüche', 15) - .4, .55, { x: 5850 }, 'sanft'); cue(W('Sprüche', 15) - .4, 'whoosh');
-  tw('bl2', W('Beleidigungen', 15) - .2, .15, { o: 1 }); tw('bl2', W('Beleidigungen', 15) - .2, .55, { x: 5800 }, 'sanft'); cue(W('Beleidigungen', 15) - .2, 'whoosh');
+  fahrt(SS(15) - .3, 1.1, 5400, 1080, .85);
+  tw('bl1', W('Sprüche', 15) - .4, .05, { o: 1 }); tw('bl1', W('Sprüche', 15) - .5, .8, { x: 5850 }, 'out'); cue(W('Sprüche', 15) - .4, 'whoosh');
+  tw('bl2', W('Beleidigungen', 15) - .2, .05, { o: 1 }); tw('bl2', W('Beleidigungen', 15) - .3, .8, { x: 5800 }, 'out'); cue(W('Beleidigungen', 15) - .2, 'whoosh');
   tw('bl1s', W('nicht', 15) - .1, .35, { sx: 1 }, 'out'); cue(W('nicht', 15) - .1, 'kritzeln');
   tw('bl2s', W('Ordnung', 15), .35, { sx: 1 }, 'out');
   tw(['bl1', 'bl2'], WE('Ordnung', 15) + .2, .4, { s: .9, o: .6 }, 'inout');
-  wackeln('bl2', W('Witz', 15) - .1, 3, 3);
+  for (let i = 0; i < 3; i++) tw('bl2', W('Witz', 15) - .1 + i * .16, .16, { r: i % 2 ? 2 : -2 }, 'sinus'); tw('bl2', W('Witz', 15) + .38, .25, { r: 0 }, 'sinus');
   tw('bl1', W('Witz', 15) + .1, .25, { sy: .85 }, 'sinus'); tw('bl1', W('Witz', 15) + .35, .3, { sy: 1 }, 'sanft');
   // Privatsache: Tagebuch schließt sich mit Schloss – und öffnet sich wieder
-  fahrt(SS(16) - .3, 1.0, 5950, 1100, .85);
+  fahrt(SS(16) - .3, 1.0, 5700, 1120, .85);
   pop('tagebuch', SS(16) - .2, { x: 6500, y: 1150 }, 'pop', 'sanft');
   tw('tbRiemen', W('Privatsache', 16) - .3, .45, { r: 0 }, 'back');
   tw('tbSchloss', W('Privatsache', 16) - .3, .45, { x: 0, y: 0, r: 0 }, 'back'); cue(W('Privatsache', 16) + .15, 'klick');
@@ -629,9 +638,9 @@ akteur('t4', { x: 760, y: 680, o: 0 });
   wackeln('tbSchloss', W('Niemand', 17), 3, 5);
   // „Aber alle dürfen es“: das Schloss springt auf, der Deckel klappt auf, ein Herz steigt auf
   tw('tbSchloss', W('Aber', 18) - .1, .4, { x: 30, y: 230, r: 25 }, 'out'); tw('tbRiemen', W('Aber', 18) - .1, .45, { r: -70 }, 'out'); cue(W('Aber', 18) - .1, 'klick');
-  tw('tbDeckel', W('alle', 18), .5, { sx: -.15 }, 'inout'); cue(W('alle', 18), 'whoosh');
+  tw('tbDeckel', W('alle', 18), .5, { sx: -.6 }, 'inout'); cue(W('alle', 18), 'whoosh');
   set('tbHerzFlug', W('dürfen', 18), { s: .2, x: 6500, y: 1150 }); tw('tbHerzFlug', W('dürfen', 18), .5, { s: 1 }, 'back');
-  tw('tbHerzFlug', W('dürfen', 18) + .2, 1.2, { y: 820 }, 'out'); cue(W('dürfen', 18), 'ding');
+  tw('tbHerzFlug', W('dürfen', 18) + .2, 1.2, { y: 820 }, 'inout'); cue(W('dürfen', 18), 'ding');
 }
 
 /* ===================== 4 · Warum? Zeitreise in die alte Karte ===================== */
@@ -666,13 +675,13 @@ akteur('t4', { x: 760, y: 680, o: 0 });
   set('altblatt', tA, { o: 0 }); set(['altL', 'altR'], tA, { o: 1 }); cue(tA, 'kritzeln');
   tw('altL', tA, .9, { x: 560, y: 1700, r: -22 }, 'in'); tw('altR', tA, .9, { x: 980, y: 1750, r: 18 }, 'in');
   tw('altSchloss', tA, .7, { y: 1700, r: 30 }, 'in');
+  set(['altL', 'altR', 'altSchloss'], tA + 1.0, { o: 0 });
   GRAU.push([tA + .1, 0, 1.2]);
-  textKarte(4, 760, 680, tA + .5, null, -1);
-  set('t4', tA + .4, {});
+  textKarte(4, 2800, 1330, tA + 1.25, null, -1);
   // Christopher Street Day: heraus aus der Karte, eine Straße aus Postkarten, Regenbogen als Girlande
-  fahrt(SS(23) - .2, 1.5, 2750, 1380, .95);
-  tw('k-alt', SS(23) + .6, .6, { r: 2 }, 'inout');
-  ['cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => anpinnen('k-' + k, W('Städte', 23) - .5 + i * .18, { dx: 0, dy: -240 }));
+  fahrt(tA + .55, 1.5, 2750, 1380, .95);
+  tw('k-alt', tA + 1.3, .6, { r: 2 }, 'inout');
+  ['cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => anpinnen('k-' + k, W('Städte', 23) - .5 + i * .18, { dx: 0, dy: 300 }));
   akzent(W('Sommer', 23), .02);
 }
 
@@ -710,16 +719,17 @@ const bandPfad = (pts, sag) => { let d = `M${pts[0][0]} ${pts[0][1]}`; for (let 
 /* ===================== 5 · Was würdest du tun? ===================== */
 {
   fahrt(SS(24) - .3, 1.4, 1500, 1350, .8);
+  aus('t4', SS(24) - .2, .3);
   set('ana', SS(24) - .3, { x: 700, y: 1600, o: 0, s: .5 });
   tw('ana', W('Kollege', 24) - .3, .2, { o: 1 }); tw('ana', W('Kollege', 24) - .3, .5, { s: 1 }, 'sanft'); cue(W('Kollege', 24) - .3, 'pop');
   anpinnen('k-kino', W('Freund', 24) - .35, { dx: 200, dy: -260, bogen: 60 });
   glanz('kino', W('Freund', 24) + .4, 1.0);
   froh('ana', W('Freund', 24), SS(25) + .4);
   // aus dem Off: eine graue Blase, Lachwellen
-  tw('bl3', W('lacht', 25) - .35, .15, { o: 1 }); tw('bl3', W('lacht', 25) - .35, .55, { x: 2380 }, 'sanft'); cue(W('lacht', 25) - .35, 'whoosh');
+  tw('bl3', W('lacht', 25) - .35, .05, { o: 1 }); tw('bl3', W('lacht', 25) - .45, .8, { x: 2380 }, 'out'); cue(W('lacht', 25) - .35, 'whoosh');
   HOOKS.push(t => { const a = W('lacht', 25) - .2; el('bl3w').setAttribute('transform', t > a ? `translate(0 ${(8 * Math.sin(t * 16) * (t < SS(27) ? 1 : 0)).toFixed(1)})` : ''); });
   bump('bl3', W('Spruch', 25) - .1, 1.12);
-  wackeln('k-kino', W('Spruch', 25) + .1, 4, 3, -1.5);
+  for (let i = 0; i < 4; i++) tw('k-kino', W('Spruch', 25) + .1 + i * .15, .15, { r: -1.5 + (i % 2 ? 2 : -2) }, 'sinus'); tw('k-kino', W('Spruch', 25) + .7, .3, { r: -1.5 }, 'sinus');
   kopf('ana', W('Spruch', 25), -6);
   // Was würdest du tun? Kamera zu Ana, Denkpause mit Ring und Gedankenpunkten
   fahrt(SS(26) - .2, 1.0, 1180, 1450, 1.1);
@@ -742,11 +752,11 @@ const bandPfad = (pts, sag) => { let d = `M${pts[0][0]} ${pts[0][1]}`; for (let 
   tw('bl3', t0, .35, { s: 0 }, 'in'); cue(t0, 'pop');
   abpinnen('t5', t0 + .1, 't5pin');
   aus(['ring5', 'gp1', 'gp2', 'gp3'], t0, .3);
-  fahrt(t0, 1.3, 1110, 1520, .7);
-  sprung('ana', t0 + .2, 830, 2110, 140, .5);
-  set('sabine', W('Sabine', 27) - .3, { x: 1390, y: 2110, s: .5, o: 0 });
+  fahrt(t0, 1.3, 1110, 1560, .7);
+  sprung('ana', t0 + .2, 830, 2080, 140, .5);
+  set('sabine', W('Sabine', 27) - .3, { x: 1390, y: 2080, s: .5, o: 0 });
   tw('sabine', W('Sabine', 27) - .25, .2, { o: 1 }); tw('sabine', W('Sabine', 27) - .25, .5, { s: 1 }, 'sanft'); cue(W('Sabine', 27) - .25, 'pop');
-  anpinnen('k-frage', W('gefragt', 27) - .35, { dx: -280, dy: 400, bogen: 120 });
+  anpinnen('k-frage', W('gefragt', 27) - .5, { dx: -280, dy: 400, bogen: 120, d: .85 });
   drehen('see', W('See', 27) - .3, true); glanz('see', W('See', 27) + .3, 1.2);
   froh('sabine', W('waren', 27) - .2); kopf('sabine', W('waren', 27), 5); kopf('sabine', W('waren', 27) + .5, 0);
   // fragen – freundlich – Respekt
@@ -757,12 +767,12 @@ const bandPfad = (pts, sag) => { let d = `M${pts[0][0]} ${pts[0][1]}`; for (let 
   // jeder Mensch darf lieben: Blick auf die ganze Wand, alle Paare leuchten nacheinander
   fahrt(SS(29) - .2, 1.4, 1700, 1050, .47);
   tw('respekt', SS(29), .3, { o: 0 });
+  aus(['ana', 'sabine'], SS(29) + .1, .35);
   ['kon', 'rad', 'ku', 'fb', 'kino', 'ha', 'cs1', 'cs2', 'cs3', 'cs4'].forEach((k, i) => glanz(k, W('lieben', 29) - .2 + i * .1, .9));
   // Glauben: eine Karte mit Kerze und Buch hängt gleichberechtigt daneben
   anpinnen('k-glaube', W('Glauben', 30) - .45, { dx: -300, dy: -200, bogen: 60 }); akzent(W('Glauben', 30) + .2, .03);
   glanz('glaube', W('respektieren', 30) + .3, 1.2); glanz('frage', W('respektieren', 30) + .4, 1.2);
   // Hilfe: Die Karte „In Deutschland“ wird abgenommen, Hilfe-Karten werden angepinnt
-  aus(['ana', 'sabine'], SS(31), .3);
   fahrt(SS(31) - .2, 1.3, 2700, 560, .85);
   abpinnen('t2', W('Hilfe', 31) - .5, 't2pin');
   textKarte(6, 2380, 300, W('Hilfe', 31) - .1);
@@ -772,11 +782,11 @@ const bandPfad = (pts, sag) => { let d = `M${pts[0][0]} ${pts[0][1]}`; for (let 
   // Gleiche Rechte: zurück auf die ganze Wand, das Regenbogen-Band verbindet alle Karten
   fahrt(SS(32) - .3, 1.5, 1700, 960, .5);
   const P = k => [KARTEN[k].x, KARTEN[k].y - 165 + 12];
-  const reihe1 = [P('kon'), P('rad'), [1620, 420 - 135 + 22], [2380, 300 - 140], [3277, 248]];
+  const reihe1 = [P('kon'), P('rad'), [1620, 420 - 135 + 22], [2380, 300 - 105], [3277, 248]];
   const reihe2 = ['alt', 'ha', 'fb', 'see', 'ku'].map(P);
   const reihe3 = ['glaube', 'frage', 'kino'].map(P).concat(['cs1', 'cs2', 'cs3', 'cs4'].map(k => [KARTEN[k].x, KARTEN[k].y - 105 + 12]));
-  const pfad = bandPfad(reihe1, 90) + ` Q3420 ${(248 + 847) / 2} ${reihe2[0][0]} ${reihe2[0][1]}` + bandPfad(reihe2, 90).replace(/^M[^Q]+/, '') +
-    ` Q-60 ${(847 + 1427) / 2} ${reihe3[0][0]} ${reihe3[0][1]}` + bandPfad(reihe3, 90).replace(/^M[^Q]+/, '');
+  const pfad = bandPfad(reihe1, 45) + ` Q3420 ${(248 + 847) / 2} ${reihe2[0][0]} ${reihe2[0][1]}` + bandPfad(reihe2, 45).replace(/^M[^Q]+/, '') +
+    ` Q-60 ${(847 + 1427) / 2} ${reihe3[0][0]} ${reihe3[0][1]}` + bandPfad(reihe3, 45).replace(/^M[^Q]+/, '');
   el('band').innerHTML = RB.map((c, i) => `<path class="bd" pathLength="1" d="${pfad}" transform="translate(0 ${i * 9 - 18})" stroke="var(${c})" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>`).join('');
   const tB = W('gleichen', 32) - .6;
   el('band').querySelectorAll('.bd').forEach((p, i) => strich(p, tB + i * .05, 2.6));
