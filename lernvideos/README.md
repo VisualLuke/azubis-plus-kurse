@@ -1,6 +1,6 @@
-# Lernvideos – 65 Kurse für internationale Azubis
+# Lernvideos – 68 Kurse für internationale Azubis
 
-Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“; 46–65 aus eigener Recherche ([`BRIEFING-46-65.md`](BRIEFING-46-65.md), Faktencheck in [`faktencheck-46-65.md`](faktencheck-46-65.md)). Nummern und Themen aus dem Briefing,
+Quelle: Briefings „Azubis Plus – 30 Lernvideos für internationale Azubis“ und „Azubis Plus – Lernvideos 31–45“; 46–65 aus eigener Recherche, 66–68 auf Wunsch des Nutzers ([`BRIEFING-46-65.md`](BRIEFING-46-65.md), Faktencheck in [`faktencheck-46-65.md`](faktencheck-46-65.md)). Nummern und Themen aus dem Briefing,
 Sprechertext je Kurs in `NN-thema/konzept.md` (Abschnitt `## Sprechertext`), Korrekturen am Briefing in `korrekturen.md`.
 
 Ablauf je Kurs:
@@ -86,3 +86,6 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 63 | [Wortschatz Einzelhandel](63-vokabeln-einzelhandel/) | Fachvokabeln | Erzähler, Priya, Filialleiterin | 2:22 | fertig |
 | 64 | [Wortschatz Lager und Logistik](64-vokabeln-lager/) | Fachvokabeln | Erzählerin, Yusuf, Kollege | 2:37 | fertig |
 | 65 | [Wortschatz Sanitär, Heizung, Klima](65-vokabeln-shk/) | Fachvokabeln | Erzählerin, Kwame, Geselle | 2:38 | fertig |
+| 66 | [Nützliche Apps für den Start](66-nuetzliche-apps/) | Erklärvideo | Erzählerin (Ana als Figur) | 1:53 | fertig |
+| 67 | [Wortschatz Naturwerkstein](67-vokabeln-naturstein/) | Fachvokabeln | Erzähler, Kwame, Sabine | – | in Arbeit |
+| 68 | [Wortschatz Straßenbau](68-vokabeln-strassenbau/) | Fachvokabeln | Erzählerin, Amir, Geselle | – | in Arbeit |
