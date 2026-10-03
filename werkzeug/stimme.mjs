@@ -114,6 +114,23 @@ function zuschnitt(pcm) {
   while (b > a && !laut(b)) b--;
   return [Math.max(0, (a - 3) * fenster), Math.min(pcm.length, (b + 9) * fenster)];     // 30 ms davor, 90 ms danach
 }
+// Schnipsel vom Nachbarsatz entfernen: ElevenLabs spricht mit previous_text/next_text manchmal den Anfang des
+// nächsten (oder das Ende des vorigen) Satzes kurz an. Ein abgesetzter Laut (≤ 300 ms, ≥ 100 ms Stille davor bzw.
+// danach) hinter dem letzten bzw. vor dem ersten Wort laut Alignment wird abgeschnitten.
+// erstesWort/letztesWort: Sekunden relativ zum Anfang von pcm. Gibt [a, b] in Samples zurück.
+function ohneSchnipsel(pcm, erstesWort, letztesWort) {
+  const fenster = SR / 100, schwelle = 32768 * 10 ** (-42 / 20), n = Math.floor(pcm.length / fenster);
+  const laut = []; for (let i = 0; i < n; i++) { let s = 0; for (let k = i * fenster; k < (i + 1) * fenster; k++) s += pcm[k] * pcm[k]; laut.push(Math.sqrt(s / fenster) > schwelle); }
+  const seg = [];
+  for (let i = 0; i < n; i++) if (laut[i]) { let k = i; while (k < n && laut[k]) k++; if (seg.length && i - seg.at(-1)[1] < 6) seg.at(-1)[1] = k; else seg.push([i, k]); i = k; }
+  let a = 0, b = pcm.length;
+  if (seg.length < 2) return [a, b];
+  const e = seg.at(-1), v = seg.at(-2);
+  if (e[1] - e[0] <= 30 && e[0] - v[1] >= 10 && e[0] / 100 >= letztesWort - .05) b = Math.min(pcm.length, (v[1] + 9) * fenster);
+  const f = seg[0], w = seg[1];
+  if (f[1] - f[0] <= 30 && w[0] - f[1] >= 10 && f[1] / 100 <= erstesWort + .05) a = Math.max(0, (w[0] - 3) * fenster);
+  return [a, b];
+}
 function woerterAus(al, versatz) {
   const W = []; let cur = null;
   // Satzzeichen zählen nicht zur Wortzeit – ElevenLabs dehnt das letzte Zeichen bis ans Klipende
@@ -163,6 +180,12 @@ for (const [i, s] of SAETZE.entries()) {
     altPcm ??= dekodieren(ORDNER + 'sprache.mp3');
     pcm = altPcm.slice(Math.round((o.start - .03) * SR), Math.round((o.ende + .09) * SR));
     woerter = o.woerter.map(w => ({ ...w, start: +(w.start - o.start + .03).toFixed(3), ende: +(w.ende - o.start + .03).toFixed(3) }));
+  }
+  if (woerter.length) {
+    const [a, b] = ohneSchnipsel(pcm, woerter[0].start, woerter.at(-1).ende);
+    if (a > 0 || b < pcm.length) console.log(`   Schnipsel entfernt in Satz ${i + 1} (${a ? 'Anfang' : ''}${a && b < pcm.length ? ' + ' : ''}${b < pcm.length ? 'Ende' : ''})`);
+    pcm = pcm.slice(a, b);
+    woerter = woerter.map(w => ({ ...w, start: +(w.start - a / SR).toFixed(3), ende: +(w.ende - a / SR).toFixed(3) }));
   }
   klips.push({ s, pcm, woerter });
 }

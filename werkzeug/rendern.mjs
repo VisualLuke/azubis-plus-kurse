@@ -1,5 +1,5 @@
 // Rendert ein Kursvideo: <ordner>/film.vorlage.html → film.html → film.mp4 (+ film-poster.png).
-// Aufruf: node werkzeug/rendern.mjs kurse/01-brutto-netto [--nur-html] [--fps 30] [--standbilder 7,20.5,…]
+// Aufruf: node werkzeug/rendern.mjs kurse/01-brutto-netto [--nur-html] [--nur-ton] [--fps 30] [--standbilder 7,20.5,…]
 //
 // {{teil}} setzt <ordner>/teile/<teil>.svg oder teile/<teil>.svg ein (gebaut mit bauen.mjs);
 // {{teil~2}} dasselbe Teil mit eigenen Verlaufs-ids (zweite Kopie in anderem Farbkontext).
@@ -85,6 +85,21 @@ if (sprache) {
   const ref = [...pegel].sort((x, y) => x - y)[Math.floor(pegel.length * .95)] || 1;
   const glatt = pegel.map((v, i) => Math.min(1, ((pegel[i - 1] ?? v) + 2 * v + (pegel[i + 1] ?? v)) / 4 / ref));
   await page.evaluate(p => { window.PEGEL = p; }, glatt);
+}
+
+// --nur-ton: Bild aus der vorhandenen film.mp4 behalten, nur die Tonspur neu mischen (z. B. nach einer Korrektur
+// in sprache.mp3, die keine Zeiten verschiebt)
+if (args.includes('--nur-ton')) {
+  await browser.close();
+  writeFileSync(FRAMES + 'cues.json', JSON.stringify(cues));
+  execFileSync('python3', [WURZEL + 'werkzeug/ton.py', FRAMES + 'cues.json', String(dauer), String(musikEnde), FRAMES + 'ton.wav',
+    ...(sprache ? [spracheWav, String(sprache.versatz)] : [])], { stdio: 'inherit' });
+  execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-i', ORDNER + 'film.mp4', '-i', FRAMES + 'ton.wav', '-map', '0:v', '-map', '1:a',
+    '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', FRAMES + 'film.mp4']);
+  execFileSync('mv', [FRAMES + 'film.mp4', ORDNER + 'film.mp4']);
+  rmSync(FRAMES, { recursive: true, force: true });
+  console.log('ok film.mp4 (nur Ton neu)');
+  process.exit(0);
 }
 
 const standbilder = opt('--standbilder');

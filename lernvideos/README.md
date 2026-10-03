@@ -66,7 +66,7 @@ und Untertiteln `film.vtt`); ältere Fassungen gibt es nur in der Git-Historie.
 | 43 | [Wie funktioniert die Demokratie?](43-demokratie/) | Erklärvideo | Erzählerin | 2:02 | fertig |
 | 44 | [Das Grundgesetz – deine Grundrechte](44-grundgesetz/) | Erklärvideo | Erzähler | 1:39 | fertig |
 | 45 | [Prüfungssprache: Was will die Aufgabe von mir?](45-pruefungssprache/) | Erklärvideo | Erzählerin | 1:55 | fertig |
-| 46 | [Die ersten 14 Tage](46-die-ersten-14-tage/) | Erklärvideo | Erzähler | 2:00 | fertig |
+| 46 | [Die ersten 14 Tage](46-die-ersten-14-tage/) | Erklärvideo | Erzähler | 1:45 | fertig |
 | 47 | [Steuer-ID und Sozialversicherungsnummer](47-steuer-id/) | Erklärvideo | Erzählerin | 2:07 | fertig |
 | 48 | [Der erste Termin bei der Ausländerbehörde](48-auslaenderbehoerde/) | Der schlechte Tag | Erzähler, Priya | 1:52 | fertig |
 | 49 | [Handy und SIM-Karte](49-handy-sim/) | Was würdest du tun? | Erzählerin, Yusuf | 2:01 | fertig |
