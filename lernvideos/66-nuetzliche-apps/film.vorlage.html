@@ -442,7 +442,6 @@ const tpl = id => document.getElementById(id).innerHTML;
 const lerp = (a, b, u) => a + (b - a) * u;
 
 /* ---------- Symbole der Kacheln (eigene, neutrale Zeichen – keine Logos) ---------- */
-const STERN = (() => { const p = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 15 : 34, w = -Math.PI / 2 + i * Math.PI / 5; p.push(`${(50 + r * Math.cos(w)).toFixed(1)} ${(53 + r * Math.sin(w)).toFixed(1)}`); } return 'M' + p.join('L') + 'Z'; })();
 const G = {
   zug: (f, h) => `<svg viewBox="0 0 100 100"><rect x="25" y="12" width="50" height="60" rx="15" fill="${f}"/><rect x="33" y="22" width="34" height="20" rx="6" fill="${h}"/>
     <circle cx="38" cy="58" r="5" fill="${h}"/><circle cx="62" cy="58" r="5" fill="${h}"/><path d="M36 74L27 88M64 74L73 88M31 82H69" stroke="${f}" stroke-width="6" stroke-linecap="round"/></svg>`,
@@ -455,7 +454,7 @@ const G = {
     <circle cx="35" cy="50" r="6" fill="${h}"/><path d="M52 42H74M52 58H68" stroke="${h}" stroke-width="6" stroke-linecap="round"/></svg>`,
   schild: (f, h) => `<svg viewBox="0 0 100 100"><path d="M50 12L82 25V48C82 68 68 81 50 89C32 81 18 68 18 48V25Z" fill="${f}"/>
     <path d="M50 68C37 59 32 53 32 46a9 9 0 0 1 18-4 9 9 0 0 1 18 4C68 53 63 59 50 68Z" fill="${h}"/></svg>`,
-  stern: (f) => `<svg viewBox="0 0 100 100"><path d="${STERN}" fill="${f}" stroke="${f}" stroke-width="7" stroke-linejoin="round"/></svg>`,
+  plus: (f) => `<svg viewBox="0 0 100 100"><path d="M50 22V78M22 50H78" stroke="${f}" stroke-width="19" stroke-linecap="round"/></svg>`,
   telefon: (f) => `<svg viewBox="0 0 100 100"><path d="M33 18c5-3 10-1 12 4l5 11c2 4 0 8-3 10l-6 4c4 9 10 15 19 19l4-6c2-3 6-5 10-3l11 5c5 2 7 7 4 12l-4 7c-3 4-8 6-13 5C50 82 22 54 18 32c-1-5 1-10 5-13Z" fill="${f}"/></svg>`,
   kamera: (f, h) => `<svg viewBox="0 0 100 100"><rect x="38" y="22" width="24" height="12" rx="4" fill="${f}"/><rect x="14" y="30" width="72" height="50" rx="12" fill="${f}"/>
     <circle cx="50" cy="55" r="16" fill="${h}"/><circle cx="50" cy="55" r="9" fill="${f}"/></svg>`,
@@ -476,7 +475,7 @@ const KACHEL = {
   k3: [W0, G.haus('var(--b600)', W0)],
   k4: [W0, G.tag('var(--b500)', W0)],
   k5: [W0, G.schild('var(--b600)', W0)],
-  k6: ['linear-gradient(140deg,var(--b400),var(--b700))', G.stern(W0)],
+  k6: ['linear-gradient(140deg,var(--b400),var(--b700))', G.plus(W0)],
   kTel: ['var(--b200)', G.telefon('var(--b700)')],
   kKam: ['var(--b200)', G.kamera('var(--b700)', 'var(--b200)')],
 };
