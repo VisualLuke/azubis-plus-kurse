@@ -178,7 +178,7 @@
 <div id="kamera"><div id="welt">
   <!-- Bühnen = Bildausschnitte der Stationen (unsichtbar, für die Kantenprüfung) -->
   <div class="a buehne leer" id="bA"></div><div class="a buehne leer" id="bB"></div><div class="a buehne leer" id="bC"></div>
-  <div class="a buehne leer" id="bD"></div><div class="a buehne leer" id="bE"></div><div class="a buehne leer" id="bH"></div><div class="a buehne leer" id="bG"></div>
+  <div class="a buehne leer" id="bD"></div><div class="a buehne leer" id="bE"></div><div class="a buehne leer" id="bH"></div><div class="a buehne leer" id="bG"></div><div class="a buehne leer" id="bU1" style="width:4683px;height:2634px"></div><div class="a buehne leer" id="bU2" style="width:6000px;height:3375px"></div>
 
   <!-- Landkarte: Land, Weg, Steine (wird im Skript gefüllt) -->
   <svg class="a" id="karte" viewBox="0 0 5000 2700" style="width:5000px;height:2700px" data-frei>
@@ -395,9 +395,10 @@ el('x7').innerHTML = tpl('svgX');
 el('d9c').querySelector('.kreuz9').innerHTML = tpl('svgKreuz');
 
 /* ---------- Welt: Stationen (Bildmitte je Station), Steine, Weg ---------- */
-const FR = { A: [960, 540], B: [2460, 540], C: [3910, 540], D: [3910, 1990], E: [2460, 1990], G: [1000, 700], H: [1460, 860] };
+const FR = { A: [960, 540], B: [2460, 540], C: [3910, 540], D: [3910, 1990], E: [2460, 1990], G: [1000, 700], H: [1395, 810] };
 const Wp = (f, sx, sy) => [FR[f][0] - 960 + sx, FR[f][1] - 540 + sy];        // Bildpunkt einer Station → Welt
 Object.entries(FR).forEach(([k, [x, y]]) => akteur('b' + k, { x, y }));
+FR.U1 = [2490, 1330]; FR.U2 = [1781, 1330]; akteur('bU1', { x: 2490, y: 1330 }); akteur('bU2', { x: 1781, y: 1330 });
 const STEINE = [[1000, 800], [1330, 760], [1620, 770], [1950, 720], [2400, 700], [3850, 700], [3850, 2150], [2400, 2150],
   [2050, 2250], [1750, 2300], [1450, 2280], [1180, 2200], [980, 2050], [900, 1830]];
 const M_END = [585, 900];
@@ -493,8 +494,8 @@ const L_bei = t => wertBei('wegP', 'draw', t) * LTOT;
 const geh = (t, d, L) => { tw('wegP', t, d, { draw: L / LTOT }, 'inout'); };
 const schritt = L => {
   for (let k = 0; k < STOPS.length - 1; k++) if (L >= STOPS[k] - .01 && L <= STOPS[k + 1] + .01) {
-    const len = STOPS[k + 1] - STOPS[k], n = Math.max(1, Math.round(len / 110));
-    return 18 * Math.sin(Math.PI * n * (L - STOPS[k]) / len) ** 2;
+    const len = STOPS[k + 1] - STOPS[k], n = Math.max(1, Math.round(len / 600));
+    return 14 * Math.sin(Math.PI * n * (L - STOPS[k]) / len) ** 2;
   }
   return 0;
 };
@@ -542,7 +543,8 @@ const BUEHNEN = Object.keys(FR).map(k => [el('b' + k), FR[k]]);
 HOOKS.push(t => {
   const cx = 960 - wert(kamera, 'x', t), cy = 540 - wert(kamera, 'y', t);
   let best = null, bd = 1e9;
-  BUEHNEN.forEach(([e, [x, y]]) => { const d = Math.hypot(x - cx, y - cy); if (d < bd) { bd = d; best = e; } });
+  const z = wertBei('zoomA', 's', t);
+  BUEHNEN.forEach(([e, [x, y]]) => { const ueb = e.id.startsWith('bU'); if (ueb !== z < .7) return; const d = Math.hypot(x - cx, y - cy); if (d < bd) { bd = d; best = e; } });
   BUEHNEN.forEach(([e]) => { e.style.display = e === best ? '' : 'none'; });
 });
 // Bildpunkt einer Weltposition, wenn die Kamera auf Station f steht (Zoom 1)
@@ -569,7 +571,7 @@ cam(0, 0, FR.A);
   // Mai hüpft mit ihrem Koffer zur Tür
   akteur('mai', { x: 420, y: -60, o: 0, s: 1.2 });
   tw('mai', t1 - .2, .15, { o: 1 });
-  [[260, -100], [80, -135], [-150, -160]].forEach(([x, y], i) => { const t0 = t1 - .15 + i * .38; tw('mai', t0, .38, { x, y }, 'inout', { bogen: 40 }); landen('mai', t0 + .38, .6); cue(t0 + .38, 'tipp'); });
+  [[260, -100], [80, -135], [-130, -160]].forEach(([x, y], i) => { const t0 = t1 - .15 + i * .38; tw('mai', t0, .38, { x, y }, 'inout', { bogen: 40 }); landen('mai', t0 + .38, .6); cue(t0 + .38, 'tipp'); });
   akteur('koffer1', { x: 1560, y: 700, o: 0 });
   tw('koffer1', t1 - .05, .15, { o: 1 }); tw('koffer1', t1 - .05, 1.2, { x: 985, y: 610 }, 'inout'); landen('koffer1', t1 + 1.15, .7); cue(t1 + 1.15, 'plopp');
   froh('mai', t1 + 1.0);
@@ -616,8 +618,8 @@ cam(0, 0, FR.A);
   mund('mai', W('Keine', 4), 'zu'); froh('mai', W('Panik', 4) + .3);
   // Plan: die Kamera fährt zurück – die ganze Landkarte; jedes Symbol fliegt an seine Station
   const tO = W('Hier', 5) - .15; cam(tO, 1.25, [2490, 1330], .41); cue(tO, 'whoosh');
-  const ZIEL = [[2750, 470], [4200, 470], [4200, 1920], [2750, 1920], [380, 620], [1450, 1100]];
-  SY.forEach((id, k) => { tw(id, tR + .1 + k * .08, 1.3, { x: ZIEL[k][0], y: ZIEL[k][1], s: 2.3 }, 'inout'); landen(id, tR + 1.4 + k * .08, .8); });
+  const ZIEL = [[2750, 470], [4200, 470], [4200, 1920], [2750, 1920], [330, 620], [1450, 980]];
+  SY.forEach((id, k) => { tw(id, tR + .1 + k * .08, 1.45, { x: ZIEL[k][0], y: ZIEL[k][1], s: 2.3 }, 'inout'); landen(id, tR + 1.55 + k * .08, .8); });
   cue(tR + 1.25, 'ding');
   // der Weg zeichnet sich, 14 Steine ploppen auf
   const tZ = W('für', 5) - .2, tV = W('vierzehn', 5) + .35, dZ = tV - tZ;
@@ -797,7 +799,7 @@ cam(0, 0, FR.A);
   const tF = W('suchst', 17) - .15, FX = [360, 500, 640, 780], FR5 = [-3, -1, 1, 3];
   KK.forEach((id, i) => tw(id, tF + i * .05, .6, { x: D(FX[i], 0)[0], y: D(0, 470)[1], r: FR5[i] }, 'sanft'));
   cue(tF, 'whoosh');
-  KK.forEach((id, i) => { const t0 = W('selbst', 17) + i * .13; tw(id, t0, .12, { y: D(0, 456)[1] }, 'sinus'); tw(id, t0 + .12, .3, { y: D(0, 470)[1] }, 'sanft'); cue(t0, 'tipp'); });
+  KK.forEach((id, i) => { const t0 = W('selbst', 17) + i * .13; tw(id, t0, .22, { y: D(0, 460)[1] }, 'sinus'); tw(id, t0 + .22, .35, { y: D(0, 470)[1] }, 'sinus'); cue(t0, 'tipp'); });
   const tAk = W('Ah-Oh-Kah', 17) - .25;
   tw(['kh5a', 'kg5', 'kh5b'], tAk, .4, { o: 0, s: .8 }, 'sinus');
   tw('vk5', tAk, .65, { x: D(570, 0)[0], y: D(0, 445)[1], r: 0, s: 1.25 }, 'sanft'); cue(tAk, 'whoosh');
@@ -908,9 +910,9 @@ cam(0, 0, FR.A);
   schild('schildG', G(1450, 0)[0], G(0, 195)[1], W('Steuer-Aidih', 25) - .5, W('Post', 25) - .1);
   // der Briefkasten wächst aus dem Boden
   tw('sy5', W('Post', 25) - .7, .25, { s: 0 }, 'in');
-  wachsen('bk7', W('Post', 25) - .45, { x: 380, y: 625 });
-  pop('klappe7', W('Post', 25) - .2, { x: 380, y: 585 }, null);
-  pop('plate7', W('Post', 25) - .1, { x: 380, y: 638 }, null);
+  wachsen('bk7', W('Post', 25) - .45, { x: 330, y: 625 });
+  pop('klappe7', W('Post', 25) - .2, { x: 330, y: 585 }, null);
+  pop('plate7', W('Post', 25) - .1, { x: 330, y: 638 }, null);
   wackeln('klappe7', W('Post', 25) + .3, 4, 6);
   // Du musst sie nicht beantragen
   pop('antrag7', W('musst', 26) - .1, { x: G(900, 0)[0], y: G(0, 430)[1], r: 2 }, 'pop', 'sanft');
@@ -929,11 +931,11 @@ cam(0, 0, FR.A);
   // Wichtig: Dein Name muss am Briefkasten stehen
   const tN = W('Name', 28) - .1;
   klasse('plate7', 'hell', W('Wichtig', 28), tN + 1.0);
-  welle('welle7', W('Wichtig', 28), 380, 638, .9, 150); cue(W('Wichtig', 28), 'ding');
+  welle('welle7', W('Wichtig', 28), 330, 638, .9, 150); cue(W('Wichtig', 28), 'ding');
   tippen('plate7T', 'Mai', tN, .45); bump('plate7', W('Briefkasten', 28), 1.15); akzent(tN, .03);
   froh('mai', tN + .4);
   // Überraschung: der Brief fliegt von selbst herein
-  const tU = W('Briefkasten', 28) - .3, dU = 1.5, NP = G(900, 525);
+  const tU = W('Briefkasten', 28) - .45, dU = 1.7, NP = G(900, 525);
   el('briefWeg').setAttribute('d', `M${G(2150, 0)[0]} ${G(0, -160)[1]}C${G(1500, 0)[0]} ${G(0, 120)[1]} ${G(820, 0)[0]} ${G(0, 120)[1]} ${G(560, 0)[0]} ${G(0, 380)[1]}` +
     `S${G(380, 0)[0]} ${G(0, 700)[1]} ${G(640, 0)[0]} ${G(0, 700)[1]}S${NP[0] + 40} ${NP[1] + 60} ${NP[0]} ${NP[1]}`);
   const BW = el('briefWeg'), BL = BW.getTotalLength();
@@ -954,7 +956,7 @@ cam(0, 0, FR.A);
   const tB = W('Betrieb', 29) - .35;
   flug('note7', tB, .8, G(1680, 0)[0], G(0, 505)[1], 60, { s: .3 }); tw('note7', tB + .5, .15, { o: 0 }); cue(tB, 'whoosh');
   bump('betr7', tB + .65, 1.08); pop('ok7', tB + .75, { x: G(1740, 0)[0], y: G(0, 460)[1] }, 'erfolg');
-  stempeln(4, SE(29) - .25, Bild('G', [380, 470]));
+  stempeln(4, SE(29) - .25, Bild('G', [330, 470]));
 }
 
 /* ================= Sprung zurück an den Anfang, 8 · Handy ================= */
@@ -968,12 +970,12 @@ cam(0, 0, FR.A);
   cam(tJ, dJ, FR.H); reise(tJ, dJ, .18);
   schild('schildH', H(1470, 0)[0], H(0, 190)[1], W('Handy', 30) - .3, W('Pri-Peid-Karte', 31) - .1);
   tw('sy6', W('Handy', 30) - .6, .25, { s: 0 }, 'in');
-  wachsen('shop8', W('Handy', 30) - .35, { x: 1450, y: 1100 });
+  wachsen('shop8', W('Handy', 30) - .35, { x: 1450, y: 980 });
   const HP = H(640, 690);
   pop('handy8', W('Handy', 30) + .15, { x: HP[0], y: HP[1] }, 'pop', 'sanft');
   wackeln('handy8', W('Handy', 30) + .6, 3, 2);
   // Prepaid-Karte kommt aus dem Laden und gleitet ins Fach
-  const SP0 = H(1010, 760), SP1 = H(1250, 600);
+  const SP0 = H(1015, 640), SP1 = H(1250, 600);
   akteur('sim8', { x: SP0[0], y: SP0[1], o: 0, s: .4 });
   tw('sim8', W('reicht', 31) - .2, .1, { o: 1 }); flug('sim8', W('reicht', 31) - .2, .6, SP1[0], SP1[1], 80, { s: 1 }); cue(W('reicht', 31) - .2, 'whoosh');
   const tI = W('Pri-Peid-Karte', 31) + .4;
@@ -1002,7 +1004,7 @@ cam(0, 0, FR.A);
   tw('handy8', tN + .74, .12, { x: HP[0] }, 'sinus');
   welle('welle8', tN + .45, HP[0], HP[1], .9, 280); cue(tN + .45, 'erfolg');
   huepfen('mai', tN + .5, 14); froh('mai', tN + .5);
-  stempeln(5, SE(32) - .3, Bild('H', [1450, 1000]));
+  stempeln(5, SE(32) - .3, Bild('H', [1450, 880]));
 }
 
 /* ================= 9 · Alles in die Helper App, dann die ganze Reise ================= */
