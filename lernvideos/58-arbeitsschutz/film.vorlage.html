@@ -439,7 +439,7 @@ HOOKS.push(t => {
 
 /* ---------- Amir ---------- */
 const HUD = { x: 215, y: 938, s: .56 };
-akteur('amir', { x: -260, y: 640, s: .78 });
+akteur('amir', { x: -260, y: 640, s: .9 });
 akteur('ebBrille', { o: 0, s: 1.4 }, true); akteur('ebGehoer', { o: 0, s: 1.2 }, true);
 el('ebBrille').style.transformOrigin = '50% 45%'; el('ebGehoer').style.transformOrigin = '50% 45%';
 akteur('abzH', { x: 63, y: 297, s: 0 }); akteur('abzS', { x: 297, y: 297, s: 0 });
@@ -456,7 +456,7 @@ akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, tru
   huepfen('amir', W('erster', 1), 14);
   // Rolltor fährt hoch und gibt die Halle frei
   const tT = W('Werkstatt', 1) - .45;
-  tw('rolltor', tT, 1.15, { y: -760 }, 'inout'); cue(tT, 'scan'); akzent(tT + .7, .03);
+  tw('rolltor', tT, 1.15, { y: -760 }, 'inout'); tw('torkasten', tT + .9, .5, { y: -50 }, 'in'); cue(tT, 'scan'); akzent(tT + .7, .03);
   stelle('hebe', 360, 440); stelle('auto1', 360, 510); stelle('arm1', 360, 600);
   stelle('bank1', 1400, 505); stelle('bohr1', 1290, 410); stelle('schl1', 1520, 446);
   // Maschinen: die Hebebühne hebt das Auto, die Bohrmaschine surrt
@@ -473,7 +473,7 @@ akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, tru
     wackeln(id, W('Schilder', 2) + .45 + i * .06, 3, 4);
   });
   // Was musst du wissen? Fragezeichen, Amir schaut sich um, der leere Ring zeichnet sich
-  pop('q1', W('Was', 3) - .05, { x: 880, y: 292 }); mund('amirP', W('Was', 3), 'zu');
+  pop('q1', W('Was', 3) - .05, { x: 880, y: 262 }); mund('amirP', W('Was', 3), 'zu');
   tw('amir', W('musst', 3), .35, { r: -6 }, 'sinus'); tw('amir', W('musst', 3) + .35, .5, { r: 5 }, 'sinus'); tw('amir', W('Sicherheit', 3) + .2, .4, { r: 0 }, 'sanft');
   wackeln('q1', W('wissen', 3), 4, 7);
   RING_T = W('Sicherheit', 3) - .15; cue(RING_T, 'scan');
@@ -486,11 +486,11 @@ akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, tru
 {
   const t0 = SE(3) + .3; fahrt(t0, 'r1', 'r2');
   titelEin('tb2', 0, [W('Unterweisung', 4) - .15, W('bevor', 6) - .1, , , W('mindestens', 6) - .3, W('mindestens', 6) - .15]);
-  pop('sab2', W('Zuerst', 4) - .1, { x: 290, y: 330 }, 'pop', 'sanft'); froh('sab2', W('Zuerst', 4));
+  pop('sab2', W('Zuerst', 4) - .1, { x: 280, y: 330 }, 'pop', 'sanft'); froh('sab2', W('Zuerst', 4));
   // Das Klemmbrett fliegt von Sabine herüber
   const tU = W('Unterweisung', 4) - .3;
-  akteur('brett', { x: 290, y: 330, s: .25, o: 0 });
-  tw('brett', tU, .12, { o: 1 }); flug('brett', tU, .8, 720, 400, 120, { s: 1 }); landen('brett', tU + .8, .6); cue(tU, 'whoosh'); cue(tU + .8, 'plopp');
+  akteur('brett', { x: 280, y: 330, s: .25, o: 0 });
+  tw('brett', tU, .12, { o: 1 }); flug('brett', tU, .8, 690, 390, 120, { s: 1 }); landen('brett', tU + .8, .6); cue(tU, 'whoosh'); cue(tU + .8, 'plopp');
   akzent(W('Unterweisung', 4) + .2, .035);
   // Punkte schreiben sich: Gefahren (Blitz, Zahnrad), Schutz (Helm); Amir nickt bei jedem Punkt
   [['z2a', W('Gefahren', 5) - .1], ['z2b', W('Arbeitsplatz', 5) - .1], ['z2c', W('schützt', 5) - .15]].forEach(([id, t]) => {
@@ -501,11 +501,11 @@ akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, tru
   });
   mund('sab2', W('Gefahren', 5), 'froh');
   // Vor dem Start: Tag 1 leuchtet; einmal im Jahr: der Kalender springt um, der Pfeil läuft rundherum
-  pop('kal', W('Das', 6) - .1, { x: 1140, y: 330 }, 'pop', 'sanft');
+  stelle('kal', 1120, 330); bump('kal', W('Das', 6) - .1, 1.06); cue(W('Das', 6) - .1, 'pop');
   const tTag = W('anfängst', 6) - .1;
   akteur('kalZelle', { o: 0 }, true); tw('kalZelle', tTag, .25, { o: 1 }); cue(tTag, 'ding');
   bump('kal', tTag, 1.06);
-  akteur('wieder', { x: 1140, y: 330, o: 0 }); tw('wieder', W('mindestens', 6) - .2, .15, { o: 1 });
+  akteur('wieder', { x: 1120, y: 330, o: 0 }); tw('wieder', W('mindestens', 6) - .2, .15, { o: 1 });
   strich('wiederPfad', W('mindestens', 6) - .2, 1.0); cue(W('mindestens', 6) - .2, 'scan');
   const BL = [W('einmal', 6) - .05, W('Jahr', 6) + .15];
   BL.forEach(t => { tw('kal', t, .14, { sy: .05 }, 'in'); tw('kal', t + .14, .3, { sy: 1 }, 'sanft'); cue(t + .14, 'klick');
@@ -513,10 +513,10 @@ akteur('rolltor', { x: 0, y: 0 }, true); akteur('torkasten', { x: 0, y: 0 }, tru
   HOOKS.push(t => { el('kalKopf').textContent = 'Jahr ' + (1 + BL.filter(b => t >= b + .14).length); });
   // Arbeitszeit: die Wanduhr dreht, der Chip bekommt seinen Haken
   const tUhr = W('Die', 7) - .1;
-  pop('uhr2', tUhr, { x: 1500, y: 300 }, 'pop', 'sanft'); pop('std2', tUhr, { x: 1500, y: 300 }, null, 'sanft'); pop('zgr2', tUhr, { x: 1500, y: 300 }, null, 'sanft');
+  ['uhr2', 'std2', 'zgr2'].forEach(id => { stelle(id, 1490, 290); bump(id, tUhr, 1.06); }); cue(tUhr, 'pop');
   const tZ = W('Arbeitszeit', 7) - .3;
   tw('zgr2', tZ, 1.3, { r: 720 }, 'inout'); tw('std2', tZ, 1.3, { r: 60 }, 'inout'); cue(tZ, 'scan');
-  pop('chipZeit', W('Arbeitszeit', 7) + .05, { x: 1500, y: 480 });
+  pop('chipZeit', W('Arbeitszeit', 7) + .05, { x: 1490, y: 505 });
   akteur('okZeit', { s: 0 }, true); tw('okZeit', W('Arbeitszeit', 7) + .55, .45, { s: 1 }, 'back');
   segment(0, W('Arbeitszeit', 7) + .6, 1); froh('amirP', W('Arbeitszeit', 7) + .6);
   textAus('tb2', SE(7) + .2);
@@ -567,23 +567,23 @@ const AW = { x: FX + AM.x, y: FY + AM.y };          // … in der Welt
   akzent(tP + .2, .03);
   titelEin('tb3', 0, [tP - .05, W('vom', 10) - .15, , W('kostenlos', 10) - .1]);
   // vom Betrieb – und für dich kostenlos: Preisschild „0 €“ fällt, das Portemonnaie bleibt zu
-  pop('betrieb3', W('Betrieb', 10) - .25, { x: 1530, y: 205 }, 'pop', 'sanft');
+  pop('betrieb3', W('Betrieb', 10) - .25, { x: 1530, y: 210 }, 'pop', 'sanft');
   ['iBrille', 'iGehoer', 'iHand', 'iSchuh'].forEach((id, i) => bump(id, W('Betrieb', 10) + .2 + i * .1, 1.08));
   pop('geld3', W('für', 10) - .15, { x: 1530, y: 612 }, 'pop', 'sanft');
   const tPr = W('kostenlos', 10) - .2;
   akteur('preis3', { x: 1530, y: -120, o: 0, r: -6 });
-  tw('preis3', tPr, .05, { o: 1 }); tw('preis3', tPr, .38, { y: 420 }, 'in'); landen('preis3', tPr + .38, 1); cue(tPr + .38, 'muenze');
+  tw('preis3', tPr, .05, { o: 1 }); tw('preis3', tPr, .38, { y: 425 }, 'in'); landen('preis3', tPr + .38, 1); cue(tPr + .38, 'muenze');
   wackeln('preis3', tPr + .45, 4, 5);
   akzent(W('kostenlos', 10), .04);
   huepfen('geld3', W('kostenlos', 10) + .35, 8);
-  pop('okGeld', W('kostenlos', 10) + .55, { x: 1615, y: 578 }, 'ding');
+  pop('okGeld', W('kostenlos', 10) + .55, { x: 1628, y: 586 }, 'ding');
   segment(1, W('kostenlos', 10) + .6, .5);
 }
 
 /* ================= 4 · Benutzen, prüfen, Kaputtes melden ================= */
 {
   const t0 = SE(10) + .2;
-  aus(['betrieb3', 'preis3', 'geld3', 'okGeld', 'kopfPSA'], t0); tw('rahmen3', t0, .3, { o: 0 });
+  aus(['betrieb3', 'preis3', 'geld3', 'okGeld', 'kopfPSA'], t0); tw('rahmen3', t0, .3, { o: 0 }); textAus('tb3', t0);
   titelEin('tb4', 0, [W('benutzen', 11) - .15, W('Schau', 12) - .2, , W('kaputt', 13) - .25]);
   // Amir zieht an: Brille und Gehörschutz an den Kopf, Handschuhe und Schuhe als Abzeichen an den Ring
   const ANZ = [['iBrille', 'TL', W('benutzen', 11) - .2, [AW.x, AW.y + 2, .5], 'ebBrille'],
@@ -602,29 +602,29 @@ const AW = { x: FX + AM.x, y: FY + AM.y };          // … in der Welt
   akteur('hand4', { x: AM.x - 117, y: AM.y + 117, s: .3, o: 0 });
   tw('hand4', tS + .1, .1, { o: 1 }); flug('hand4', tS + .1, .7, 560, 420, 90, { s: 1 }); cue(tS + .1, 'whoosh');
   bump('abzH', tS, 1.15);
-  const HL = [547, 358];                              // Loch am Zeigefinger
+  const HL = [544, 340];                              // Loch am Zeigefinger
   akteur('lupe4', { x: 690, y: 300, o: 0, s: .7 });
   tw('lupe4', W('Arbeit', 12) - .25, .3, { o: 1, s: 1 }, 'sanft');
-  tw('lupe4', W('Arbeit', 12) + .05, .45, { x: 600, y: 470 }, 'inout'); cue(W('Arbeit', 12), 'scan');
+  tw('lupe4', W('Arbeit', 12) + .05, .45, { x: 610, y: 480 }, 'inout'); cue(W('Arbeit', 12), 'scan');
   tw('lupe4', W('kurz', 12) - .15, .4, { x: HL[0] + 13, y: HL[1] + 13 }, 'inout', { bogen: 30 });
   pop('loch4', W('an', 12) - .05, { x: HL[0], y: HL[1] }, 'klick');
   [W('kaputt', 13), W('kaputt', 13) + .45].forEach(t => bump('loch4', t, 1.3));
   wackeln('hand4', W('kaputt', 13) + .05, 4, 4);
   tw('lupe4', W('kaputt', 13) + .3, .3, { o: 0, s: .7 }, 'in');
   // sag es sofort: kaputter Handschuh zu Sabine, ein neuer kommt zurück
-  pop('sab4', W('kaputt', 13) + .1, { x: 1480, y: 330 }, 'pop', 'sanft');
-  const tG = W('sag', 13) - .1;
-  flug('hand4', tG, .65, 1480, 330, 110, { s: .35 }); tw('hand4', tG + .55, .1, { o: 0 }); cue(tG, 'whoosh');
-  flug('loch4', tG, .65, 1480 - 4, 330 - 22, 110, { s: .35 }); tw('loch4', tG + .55, .1, { o: 0 });
-  nicken('sab4', tG + .65); froh('sab4', tG + .7);
+  pop('sab4', W('kaputt', 13) - .05, { x: 1480, y: 330 }, 'pop', 'sanft');
+  const tG = W('sag', 13) - .3;
+  flug('hand4', tG, .5, 1480, 330, 100, { s: .3 }); tw('hand4', tG + .42, .08, { o: 0 }); cue(tG, 'whoosh');
+  flug('loch4', tG, .5, 1476, 314, 100, { s: .3 }); tw('loch4', tG + .42, .08, { o: 0 });
+  nicken('sab4', tG + .5); froh('sab4', tG + .55);
   akzent(W('sofort', 13), .04);
-  const tN = W('sofort', 13) + .15;
-  akteur('handNeu', { x: 1480, y: 330, s: .35, o: 0 });
-  tw('handNeu', tN, .1, { o: 1 }); flug('handNeu', tN, .7, 560, 420, 110, { s: 1 }); landen('handNeu', tN + .7, .6); cue(tN + .7, 'plopp');
-  pop('okHand', tN + .85, { x: 660, y: 305 }, 'erfolg');
-  segment(1, tN + .85, 1); bump('abzH', tN + .9, 1.15);
-  textAus('tb4', SE(13) + .15);
-  zurLeiste(SE(13) + .15);
+  const tN = tG + .75;
+  akteur('handNeu', { x: 1480, y: 330, s: .3, o: 0 });
+  tw('handNeu', tN, .1, { o: 1 }); flug('handNeu', tN, .55, 560, 420, 100, { s: 1 }); landen('handNeu', tN + .55, .6); cue(tN + .55, 'plopp');
+  pop('okHand', tN + .62, { x: 700, y: 290 }, 'erfolg');
+  segment(1, tN + .7, 1); bump('abzH', tN + .75, 1.15);
+  textAus('tb4', SE(13) + .2);
+  zurLeiste(SE(13) + .2);
 }
 
 /* ================= 5 · Schilder: Wendetafeln färben die Bühne ================= */
@@ -633,7 +633,7 @@ const TOENE = [];
 const toenen = (t, farbe) => { TOENE.push([t, farbe]); tw('toenung', t, .15, { o: .42 }, 'out'); tw('toenung', t + .45, .9, { o: 0 }, 'sinus'); };
 HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c; if (f) el('toenung').style.background = `var(--${f})`; });
 {
-  const t0 = SE(13) + .3; fahrt(t0, 'r3', 'r5');
+  const t0 = SE(13) + .45; fahrt(t0, 'r3', 'r5');
   const TX = [385, 715, 1045, 1375], T = ['t5a', 't5b', 't5c', 't5d'];
   T.forEach((id, i) => stelle(id, TX[i], 255));
   T.forEach((id, i) => bump(id, W('Schilder', 14) - .1 + i * .1, 1.08)); cue(W('Schilder', 14) - .1, 'pop');
@@ -730,35 +730,35 @@ HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c;
 {
   const t0 = SE(22) + .2; fahrt(t0, 'r6', 'r7');
   // kaputtes Kabel mit Blitz-Zacken, Ölpfütze mit Rutsch-Pfeil
-  ein('kabel7', W('kaputtes', 23) - .15, { x: 470, y: 540 }, { y: 40 }, 'whoosh');
+  ein('kabel7', W('kaputtes', 23) - .15, { x: 480, y: 520 }, { y: 40 }, 'whoosh');
   const tKb = W('Kabel', 23) - .05, tStop = SE(24) + .3;
-  [['zk1', 452, 572, 0], ['zk2', 506, 562, 1.7]].forEach(([id, x, y, ph]) => {
+  [['zk1', 462, 552, 0], ['zk2', 524, 540, 1.7]].forEach(([id, x, y, ph]) => {
     akteur(id, { x, y, o: 0, s: .7 });
     HOOKS.push(t => { if (t < tKb || t > tStop + .4) return; const v = .5 + .5 * Math.sin(t * 17 + ph), aus_ = 1 - clamp((t - tStop) / .4);
       el(id).style.opacity = (Math.min(1, (t - tKb) * 4) * (.35 + .65 * v) * aus_).toFixed(3); el(id).style.visibility = 'visible'; });
   });
   cue(tKb, 'kritzeln');
-  akteur('oel7', { x: 1150, y: 570, sx: .2, sy: .4, o: 0 });
+  akteur('oel7', { x: 1170, y: 560, sx: .2, sy: .4, o: 0 });
   tw('oel7', W('Öl', 23) - .1, .1, { o: 1 }); tw('oel7', W('Öl', 23) - .1, 1.0, { sx: 1, sy: 1 }, 'out'); cue(W('Öl', 23), 'plopp');
   akteur('rutsch7', { x: 880, y: 370, draw: 0, o: 0 }); tw('rutsch7', W('Boden', 23) - .1, .1, { o: 1 }); tw('rutsch7', W('Boden', 23) - .1, .5, { draw: 1 }, 'inout'); cue(W('Boden', 23), 'whoosh');
   // Amir in der Leiste zeigt hin
   tw('amir', W('siehst', 23), .4, { r: 10 }, 'sanft'); tw('amir', SE(24) + .2, .5, { r: 0 }, 'sanft');
   // Melde es: Warnschild, Sprechblase fliegt zu Sabine
   titelEin('tb7', W('Melde', 24) - .2);
-  pop('warn7', W('Melde', 24) - .15, { x: 850, y: 250 }, 'pop', 'sanft'); wackeln('warn7', W('es', 24) + .1, 3, 4);
+  pop('warn7', W('Melde', 24) - .15, { x: 850, y: 255 }, 'pop', 'sanft'); wackeln('warn7', W('es', 24) + .1, 3, 4);
   pop('sab7', W('Melde', 24) - .25, { x: 1500, y: 300 }, 'pop', 'sanft');
   const tBl = W('Melde', 24) - .05;
   akteur('blase7', { x: HUD.x + 40, y: HUD.y - 90, s: .3, o: 0 });
-  tw('blase7', tBl, .1, { o: 1 }); flug('blase7', tBl, .8, FX + 1290, FY + 175, 180, { s: 1 }); cue(tBl, 'whoosh'); landen('blase7', tBl + .8, .6);
+  tw('blase7', tBl, .1, { o: 1 }); flug('blase7', tBl, .8, FX + 1255, FY + 175, 180, { s: 1 }); cue(tBl, 'whoosh'); landen('blase7', tBl + .8, .6);
   akzent(W('sofort', 24), .04);
   nicken('sab7', W('Ausbilder', 24) - .1); froh('sab7', W('Ausbilder', 24) + .2); nicken('sab7', W('Vorgesetzten', 24));
   // Absperrkegel und Bindemittel
   const kegel = (id, t, x) => { akteur(id, { x, y: 380, o: 0 }); tw(id, t, .05, { o: 1 }); tw(id, t, .35, { y: 520 }, 'in'); landen(id, t + .35, 1); cue(t + .35, 'plopp'); };
-  kegel('kegel7a', W('Ausbilder', 24) - .2, 180);
-  kegel('kegel7b', W('oder', 24) - .05, 1400);
+  kegel('kegel7a', W('Ausbilder', 24) - .2, 150);
+  kegel('kegel7b', W('oder', 24) - .05, 1440);
   const tKo = W('Vorgesetzten', 24) - .05;
   for (let i = 0; i < 10; i++) {
-    const x = 1050 + (i * 37) % 220, y = 590 + ((i * 13) % 5) * 8, t = tKo + i * .04;
+    const x = 1060 + (i * 47) % 240, y = 596 + ((i * 13) % 5) * 7, t = tKo + i * .04;
     akteur('k7_' + i, { x: x + 10, y: 400, o: 0 }); tw('k7_' + i, t, .05, { o: 1 }); tw('k7_' + i, t, .4, { x, y }, 'in');
     tw('k7_' + i, SE(24) + .35, .35, { o: 0 });
   }
@@ -799,7 +799,7 @@ HOOKS.push(t => { let f = null; for (const [t0, c] of TOENE) if (t >= t0) f = c;
   // Also: die fünf Abzeichen legen sich um den Ring, der Ring schließt sich
   const WOERTER = ['Unterweisung', 'Schutzausrüstung', 'Schilder', 'Wege', 'Mängel'];
   WOERTER.forEach((w, k) => {
-    const a = (-54 + 72 * k) * Math.PI / 180, x = 880 + 250 * Math.cos(a), y = 380 + 250 * Math.sin(a);
+    const a = (-54 + 72 * k) * Math.PI / 180, x = 880 + 240 * Math.cos(a), y = 380 + 240 * Math.sin(a);
     const t = W(w, 27) - .1;
     akteur('a8_' + k, { x: 880 + 175 * Math.cos(a), y: 380 + 175 * Math.sin(a), s: 0 });
     tw('a8_' + k, t, .55, { x, y, s: 1 }, 'back'); cue(t, 'pop');

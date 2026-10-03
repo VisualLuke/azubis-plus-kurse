@@ -159,7 +159,7 @@
 <template id="t-rathaus">{{rathaus}}</template>
 <template id="t-kasse">{{kasse}}</template>
 <template id="t-klingel">{{tresenklingel}}</template>
-<template id="t-tasse">{{tasse}}</template>
+<template id="t-tasse">{{kaffeebecher}}</template>
 <template id="t-werkbank">{{werkbank}}</template>
 <template id="t-helm">{{schutzhelm}}</template>
 <template id="t-stempel">{{stempel}}</template>
@@ -342,7 +342,7 @@ function theater(i, { cx, cy, w, h, v, sw, boden, spots, gaze = false }) {
       <path d="${bog}Z" fill="url(#sofG${i})"/><path d="${kante}" stroke="var(--warning)" stroke-width="5" fill="none"/>
       <rect y="${v - 40}" width="${w}" height="4" fill="var(--b500)" opacity=".6"/></svg>`;
   akteur(f, {}, true);
-  if (gaze) { akteur('gzL' + i, { y: -h - 20 }, true); akteur('gzR' + i, { y: -h - 20 }, true); }
+  if (gaze) { akteur('gzL' + i, { y: -h - 20, o: .58 }, true); akteur('gzR' + i, { y: -h - 20, o: .58 }, true); }
   akteur('vhL' + i, {}, true); akteur('vhR' + i, {}, true);
   TH[i] = { cy, h };
 }
@@ -520,9 +520,9 @@ akteur('bue1', { x: 1320, y: 540 - 1100 }); akteur('raum1', { y: -1100 }, true);
   tw('wagR', tFo - .05, .25, { o: 1 }); tw('wagR', tFo + .5, .35, { o: 0 }); cue(tFo, 'pop'); bump('wasR', tFo, 1.15);
   // „Sie sagst du …“: die Waage kippt zu „Sie“; Tafel fährt herunter
   tafel('ktR', '„Sie“ + Herr/Frau + Nachname', 'tafel', 'left:auto;right:220px');
-  herab('ktR', SA(10) - .7, { x: 0, y: 306 }, .9, null, { rel: true });
-  const tS = WI(10, 0);
-  titelEin('ktRt', tS, [tS, W('Herr', 13), W('Herr', 13) + .1, W('Nachnamen', 13) - .1, W('Nachnamen', 13)]);
+  const tS = WI(10, 0), tDz = W('Dazu', 13);
+  herab('ktR', tDz - .75, { x: 0, y: 306 }, .9, 'whoosh', { rel: true });
+  titelEin('ktRt', tDz, [tDz, W('Herr', 13) - .1, W('Herr', 13), W('Nachnamen', 13) - .1, W('Nachnamen', 13)]);
   kipp('wa', tS - .1, 13, .5); tw('wagR', tS, .25, { o: 1 }); tw('wagR', tS + .9, .4, { o: 0 }); cue(tS, 'klick');
   blick('ana', W('Menschen', 10), W('nicht', 10), -6); blick('ana', W('nicht', 10), W('Also', 11), 6);
   // „Also bei Behörden, beim Einkaufen und zu Kunden“: drei Kulissen fahren herunter, der Stempel setzt „Sie“
@@ -598,7 +598,7 @@ akteur('bue1', { x: 1320, y: 540 - 1100 }); akteur('raum1', { y: -1100 }, true);
     const [px, py] = [[845, 432], [1125, 432], [1405, 432]][k];
     tw('pS' + k, t - .25, .55, { y: 760, r: 40, o: 0 }, 'in');
     neu('pD' + k, 'du', '', 'data-frei', 'plak du');
-    akteur('pD' + k, { x: 1020, y: 740, s: .4, o: 0 });
+    akteur('pD' + k, { x: 1020, y: 790, s: .3, o: 0 });
     tw('pD' + k, t, .15, { o: 1 }); flug('pD' + k, t, .7, px, py, 160, { s: 1 }); landen('pD' + k, t + .7); cue(t, 'whoosh'); cue(t + .7, 'pop');
   };
   const tFa = W('Familie', 14), tFr = W('Freunden', 14), tAz = W('Azubis', 15), tDu15 = WI(15, 6);

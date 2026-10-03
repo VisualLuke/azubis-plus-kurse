@@ -27,7 +27,7 @@ html,body{background:var(--b200)}
 .tisch{left:300px;top:470px;width:4000px;height:620px;border-radius:44px;background:linear-gradient(170deg,var(--b100),var(--b200));
   box-shadow:inset 0 0 0 16px var(--b300),0 26px 0 var(--b300),0 40px 60px rgba(22,19,37,.16)}
 .tisch::before{content:'';position:absolute;inset:16px;border-radius:30px;background:repeating-linear-gradient(transparent 0 58px,rgba(164,139,244,.22) 58px 62px)}
-.tablett{left:3060px;top:500px;width:1040px;height:560px;border-radius:54px;background:linear-gradient(160deg,var(--b300),var(--b400));
+.tablett{left:3060px;top:496px;width:1040px;height:584px;border-radius:54px;background:linear-gradient(160deg,var(--b300),var(--b400));
   box-shadow:inset 0 0 0 18px var(--b500),0 14px 30px rgba(22,19,37,.2)}
 .tablett i{position:absolute;top:30px;width:110px;height:22px;border-radius:11px;background:var(--b600)}
 .nachtdeko{left:-1500px;top:-1500px;width:7000px;height:4600px;background:var(--b700);opacity:0}
@@ -330,7 +330,7 @@ function wellen(ids, zeiten, x, y, d = .9, gross = 1.6) {
 const CAM = el('cam');
 const V = {
   sit: [1270, 780, 1.0],         // Kwame unten, der Geselle oben, rechts Platz für die Serviette
-  tab: [3580, 780, 1.25],        // Tablett mit drei Tassen
+  tab: [3580, 745, 1.33],        // Tablett mit drei Tassen (gehobene Tassen schweben über der Tablettkante)
   uhr6: [1100, 210, 1.1],        // Wand und Tür am nächsten Tag, unten der Geselle am Tisch
   themen: [1600, 960, .74],      // ganzer Platz mit Tischset und Boden
 };
@@ -423,7 +423,7 @@ function tasseBau(L) {
 ['A', 'B', 'C'].forEach(tasseBau);
 HOOKS.push(t => ['tA', 'tB', 'tC'].forEach(id => {
   const h = kurve(HUB[id], t), e = el(id);
-  e.querySelector('.tk').style.transform = `translate(${(-16 * h).toFixed(1)}px,${(-150 * h).toFixed(1)}px) scale(${(1 + .18 * h).toFixed(3)})`;
+  e.querySelector('.tk').style.transform = `translate(${(-10 * h).toFixed(1)}px,${(-250 * h).toFixed(1)}px) scale(${(1 + .12 * h).toFixed(3)})`;
   e.querySelector('.ts').style.transform = `scale(${(1 - .12 * h).toFixed(3)})`;
   e.querySelector('.ts').style.opacity = (1 - .5 * h).toFixed(3);
 }));
@@ -438,11 +438,11 @@ function markeAuf(L, t) {
 }
 
 /* ---------- Untersetzer: Symbole unter den Tassen ---------- */
-el('uA').innerHTML = `<div class="blase" id="sA1" style="left:24px;top:60px;width:110px;height:84px"><i class="pkt" style="left:44px;top:31px"></i></div>
-  <div id="sA2" style="left:112px;top:36px;width:110px;height:170px"><div id="sA2l" style="position:absolute;left:-26px;top:-20px;width:162px;height:210px;border-radius:50px;background:radial-gradient(closest-side,rgba(255,255,255,1),rgba(201,186,250,0));opacity:0"></div>${tpl('tHandy')}</div>`;
-el('uB').innerHTML = `<div id="sB1" style="left:40px;top:56px;width:150px">${tpl('tMuenzen')}</div><div class="frage" id="sB2" style="left:142px;top:30px;width:70px;height:70px;font-size:44px;line-height:70px">?</div>`;
-el('uC').innerHTML = `<div class="blase" id="sC1" style="left:22px;top:44px;width:110px;height:80px"><i class="z" style="top:24px;width:66px"></i><i class="z" style="top:44px;width:50px"></i></div>
-  <div class="blase rechts" id="sC2" style="left:108px;top:120px;width:110px;height:80px"><i class="z" style="top:24px;width:66px"></i><i class="z" style="top:44px;width:50px"></i></div>`;
+el('uA').innerHTML = `<div class="blase" id="sA1" style="left:14px;top:74px;width:118px;height:88px"><i class="pkt" style="left:48px;top:33px"></i></div>
+  <div id="sA2" style="left:96px;top:26px;width:150px;height:190px"><div id="sA2l" style="position:absolute;left:-10px;top:-10px;width:170px;height:210px;border-radius:60px;background:radial-gradient(closest-side,rgba(255,255,255,1),rgba(201,186,250,0));opacity:0"></div>${tpl('tHandy')}</div>`;
+el('uB').innerHTML = `<div id="sB1" style="left:22px;top:30px;width:190px">${tpl('tMuenzen')}</div><div class="frage" id="sB2" style="left:146px;top:22px;width:72px;height:72px;font-size:46px;line-height:72px">?</div>`;
+el('uC').innerHTML = `<div class="blase" id="sC1" style="left:14px;top:34px;width:124px;height:88px"><i class="z" style="top:26px;width:76px"></i><i class="z" style="top:48px;width:56px"></i></div>
+  <div class="blase rechts" id="sC2" style="left:102px;top:118px;width:124px;height:88px"><i class="z" style="top:26px;width:76px"></i><i class="z" style="top:48px;width:56px"></i></div>`;
 [['sA1', '20% 100%'], ['sA2', '50% 50%'], ['sB1', '50% 90%'], ['sB2', '50% 50%'], ['sC1', '20% 100%'], ['sC2', '80% 100%']].forEach(([id, o]) => rel(id, { s: 0 }, o));
 rel('sA2l', { o: 0 });
 
@@ -504,10 +504,10 @@ const XK = 800, YK = 1090, XG = 1300, YG = 470;                   // Plätze von
 /* ================= 2 · Was würdest du tun? Drei Tassen auf dem Tablett ================= */
 const P2 = SE(5) + .25;
 kam(P2, 1.1, V.tab);
-const TX = { A: 3280, B: 3580, C: 3880 }, TY = 700;
+const TX = { A: 3280, B: 3580, C: 3880 }, TY = 785;
 {
   ['A', 'B', 'C'].forEach(L => { akteur('u' + L, { x: TX[L], y: TY }); akteur('t' + L, { x: TX[L] + 15, y: TY + 4 }); });
-  akteur('zaehler', { x: 3580, y: 962 });
+  akteur('zaehler', { x: 3580, y: 995 });
   // „Was würdest du tun?“: das Fragezeichen auf dem Teller pocht, die Tassen wackeln der Reihe nach
   const tTu = W('tun', 6);
   ['A', 'B', 'C'].forEach((L, k) => { wackeln('t' + L, W('Was', 6) + k * .14, 2, 3); });
@@ -779,7 +779,7 @@ const P6 = SE(28) + .2;
   heben('C', tBe - .1, 1, .6); cue(tBe, 'whoosh');
   LICHT.tC.push([tZe - .1, 1, .3]);
   bump('tCm', tZe, 1.35); cue(tZe, 'erfolg'); akzent(tZe, .05);
-  wellen(['wC1', 'wC2'], [tZe, tZe + .35], TX.C - 16, TY - 150, 1.1, 1.8);
+  wellen(['wC1', 'wC2'], [tZe, tZe + .35], TX.C - 10, TY - 250, 1.1, 1.8);
   HOOKS.push(t => { const d = t - tZe; if (d > 0 && d < 3) el('tClicht').setAttribute('opacity', (.7 + .3 * Math.sin(d * 5)).toFixed(3)); });
   // „Smalltalk muss nicht lang oder perfekt sein.“: lange Blase wird zur kurzen
   const t30 = SA(30), tSm = W('Smalltalk', 30), tLa = W('lang', 30), tPe = W('perfekt', 30);
