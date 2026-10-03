@@ -21,7 +21,7 @@ zwei Ketten vom Kran herunterkommt; der Artikel steht als farbiger Punkt davor (
 | 3 | Wortkarte „der Kran – die Kräne“; Laufkatze fährt über die Kranbahn, Haken senkt sich, Ketten spannen sich, der Block hebt ab und schwingt leicht; bei „nie unter einer hängenden Last“ rote Zone am Boden unter dem Block, ein Fußabdruck-Symbol springt aus der Zone heraus | der Kran – die Kräne |
 | 4 | Wortkarte „die Säge – die Sägen“; ein großes Sägeblatt mit Diamant-Segmenten dreht sich, Wasserstrahlen laufen darüber; bei „Platten“ schneidet das Blatt durch den Block, Scheiben fallen nach; bei „Staub unten“ sinkt eine kleine Staubwolke zu Boden und verschwindet | die Säge – die Sägen |
 | 5 | Wortkarte „die Rohplatte – die Rohplatten“; die Scheiben stehen nebeneinander, rau (Körnung sichtbar); Kwame-Satz: eine Platte wird auf Maß geschnitten, Maßpfeile ploppen | die Rohplatte – die Rohplatten |
-| 6 | Wortkarte „das Maß – die Maße“; Zollstock klappt sich auf, Maßlinien „120 cm“ und „60 cm“ ziehen sich; bei „zweimal“ fährt ein Stift zweimal über die Linie, Haken | das Maß – die Maße |
+| 6 | Wortkarte „das Maß – die Maße“; Zollstock klappt sich auf, Maßlinien „120 cm“ und „25 cm“ ziehen sich (Fensterbank); bei „zweimal“ fährt ein Stift zweimal über die Linie, Haken | das Maß – die Maße |
 | 7 | Wortkarte „die Kante – die Kanten“; Nahaufnahme einer Plattenkante, scharf (Zickzack); eine Schleifscheibe fährt entlang, die Kante wird rund und glatt; Funken entfallen (Stein: nur feiner Wasserstrahl) | die Kante – die Kanten |
 | 8 | Wortkarte „die Oberfläche – die Oberflächen“; drei Musterfelder nebeneinander: rau, geschliffen (matt), poliert (glänzt, Lichtreflex wandert); Überraschung: Kwames Porträt spiegelt sich im polierten Feld | die Oberfläche – die Oberflächen |
 | 9 | Wortkarte „der Staub“, Chip „die Atemschutzmaske“; bei „feiner Staub“ steigt eine Wolke auf, eine Lunge (einfaches Symbol) wird grau; bei „Wasser“ fallen Tropfen, die Wolke sinkt; bei „Absaugung“ zieht ein Schlauch den Rest weg; die Maske legt sich als Ebene über Kwames Porträt, die Lunge wird wieder hell | der Staub · die Atemschutzmaske |
@@ -39,6 +39,10 @@ Abspann: „Genauer und sicherer.“
 - Sabine ist hier Ausbilderin (Industrieberuf, darum nicht „Meisterin“).
 - Keine Gewichtsangabe in Zahlen (Rohblöcke sind sehr unterschiedlich schwer) – nur „viele Tonnen“.
 - Keine Altersregeln (Vorgabe).
+- Sprechertext Szene 11: „Gut. Prüf zuerst die Maße.“ → „Gut, prüf zuerst die Maße.“ (kein Ein-Wort-Satz für die Stimme).
+- Szene 6: Tiefe der Fensterbank im Bild 25 cm statt 60 cm (60 cm ist das Maß einer Arbeitsplatte, nicht einer Fensterbank).
+- Umsetzung: Überblenden zwischen den Stationen als Fahrt der Laufkatze (Kamera fährt mit), Zoom in die Plattenkante (6 → 7),
+  Staubwolke als Wischblende (8 → 9); Abspann als polierte Steinplatte, die sich an zwei Ketten senkt.
 
 ## Sprechertext
 

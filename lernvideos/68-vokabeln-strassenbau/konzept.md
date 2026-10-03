@@ -39,6 +39,14 @@ Abspann: „Schicht für Schicht.“
 - Bagger, Walze und Fertiger ohne Menschen im Bild (Kabinen leer bzw. nur angedeutet), keine Marken oder Logos.
 - Temperatur nur als „über hundert Grad“ (Einbautemperatur von Walzasphalt meist etwa 140–190 °C, je nach Sorte).
 - Keine Altersregeln (Vorgabe).
+- Umsetzung (03.10.2026): Wortkarten als weiße Baustellenschilder mit schmalem warning-Rand (CI: keine großen Signalflächen),
+  Boden in Brand-Tints, Wischblende als Absperrschranke in Markenviolett. Beispielsatz auf einer dunklen Anzeigetafel.
+  Übergänge: Wischblende (1→2), Fahrt entlang der Baustelle mit Leitbaken, Tauchfahrt in den Boden (3→4), Bogenflug über
+  den Himmel zurück zur fertigen Straße (10→11). Bei „Bordsteine“ und „Reihe für Reihe“ zusätzlich eine Draufsicht-Karte.
+- Kurze Etiketten im Bild, die nur Gesprochenes wiederholen: „Gehweg“, „Fahrbahn“ (7), „über 100 °C“ (6), Straßenschild
+  „Schulstraße“ (11).
+- Sprechertext: „Genau. Am Ende kommt die Rüttelplatte.“ → „Genau, und am Ende kommt die Rüttelplatte.“ (kein Ein-Wort-Satz);
+  Pause vor Szene 11 auf 2,4 s verlängert (Platz für den Bogenflug).
 
 ## Sprechertext
 

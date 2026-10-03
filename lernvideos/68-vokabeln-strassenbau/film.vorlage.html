@@ -15,9 +15,9 @@
   --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
   --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
   /* Bodenarten aus Token-Mischungen */
-  --boden:color-mix(in srgb,var(--warning) 30%,var(--warning-bg));
-  --boden2:color-mix(in srgb,var(--warning-text) 38%,var(--warning-bg));
-  --grube:color-mix(in srgb,var(--warning-text) 55%,var(--warning-bg));
+  --boden:var(--b100);
+  --boden2:color-mix(in srgb,var(--b200) 70%,var(--b100));
+  --grube:color-mix(in srgb,var(--b400) 50%,var(--b200));
   --himmel:linear-gradient(var(--b50) 0,var(--bg) 560px);
 }
 html,body{background:var(--b50)}
@@ -27,7 +27,7 @@ html,body{background:var(--b50)}
 /* Welt: Himmel, Geländeband, Tiefe */
 #land{position:absolute;left:-6000px;top:-9000px;width:42000px;height:20000px;background:var(--b50)}
 #land .band{position:absolute;left:0;right:0;top:9000px;height:1080px;background:var(--himmel)}
-#land .tief{position:absolute;left:0;right:0;top:10080px;bottom:0;background:var(--boden2)}
+#land .tief{position:absolute;left:0;right:0;top:10080px;bottom:0;background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--b300) 55%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,var(--boden)}
 .gel{position:absolute}
 /* Lücke zwischen zwei Stationen: Leitbake auf Fuß */
 .bake{width:46px;height:210px;border-radius:10px;background:repeating-linear-gradient(-45deg,var(--error) 0 22px,var(--surface) 22px 44px);box-shadow:inset 0 0 0 5px var(--surface),0 6px 14px rgba(22,19,37,.12)}
@@ -36,39 +36,40 @@ html,body{background:var(--b50)}
 /* ================= Station = Bühne: Querschnitt durch die Straße ================= */
 .st68{width:1920px;height:1080px;overflow:hidden;border-radius:0;background:var(--himmel)}
 .sch{position:absolute}
-.boden{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--warning-text) 32%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,
+.boden{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--b300) 55%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,
   radial-gradient(circle at 70% 70%,color-mix(in srgb,var(--surface) 55%,transparent) 0 2.5px,transparent 3.5px) 0 0/34px 30px,var(--boden)}
-.boden.tief2{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--warning-text) 40%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,var(--boden2)}
-.grube{background:linear-gradient(var(--grube),color-mix(in srgb,var(--grube) 70%,var(--warning-bg)));box-shadow:inset 0 10px 18px rgba(22,19,37,.18)}
+.boden.tief2{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--b300) 60%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,var(--boden2)}
+.grube{background:linear-gradient(color-mix(in srgb,var(--b600) 38%,var(--b200)),color-mix(in srgb,var(--b500) 22%,var(--b100)));box-shadow:inset 0 12px 20px rgba(22,19,37,.22),inset 8px 0 14px rgba(22,19,37,.10),inset -8px 0 14px rgba(22,19,37,.10)}
 .altasph{background:radial-gradient(circle,var(--n700) 0 2px,transparent 3px) 0 0/22px 16px,linear-gradient(var(--n500),color-mix(in srgb,var(--n500) 80%,var(--ink)))}
 .altbase{background:radial-gradient(circle,var(--n500) 0 3px,transparent 4px) 0 0/26px 20px,var(--n300)}
 .schotter{background:radial-gradient(circle at 30% 35%,var(--n500) 0 4px,transparent 5px) 0 0/30px 24px,
   radial-gradient(circle at 75% 70%,var(--surface) 0 3px,transparent 4px) 0 0/22px 26px,var(--n300)}
 .asph{background:radial-gradient(circle,var(--n700) 0 2px,transparent 3px) 0 0/18px 14px,var(--ink)}
-.sand{background:radial-gradient(circle,var(--warning) 0 1.5px,transparent 2.5px) 0 0/12px 10px,var(--warning-bg)}
+.sand{background:radial-gradient(circle,var(--n300) 0 1.5px,transparent 2.5px) 0 0/12px 10px,var(--n200)}
 .beton{background:radial-gradient(circle,var(--n300) 0 2px,transparent 3px) 0 0/16px 14px,var(--n200)}
 .pflrow{background:repeating-linear-gradient(90deg,transparent 0 4px,var(--b200) 4px 68px,transparent 68px 72px);box-shadow:inset 0 -6px 0 color-mix(in srgb,var(--b300) 60%,transparent)}
 .buckel{background:radial-gradient(circle at 50% 100%,var(--n300) 0 17px,transparent 18px) 0 0/34px 18px repeat-x}
 .riss{position:absolute;height:3px;border-radius:2px;background:var(--n700);transform-origin:0 50%}
-.glimm{border-radius:12px;box-shadow:inset 0 0 0 6px var(--f),0 0 0 6px color-mix(in srgb,var(--f) 35%,transparent);background:color-mix(in srgb,var(--f) 22%,transparent);opacity:0}
+.glimm{border-radius:12px;box-shadow:inset 0 0 0 6px var(--b500),0 0 0 6px color-mix(in srgb,var(--b500) 35%,transparent);background:color-mix(in srgb,var(--b500) 18%,transparent);opacity:0}
 .geist{border:5px dashed var(--b400);border-radius:6px;background:color-mix(in srgb,var(--ink) 18%,transparent);opacity:0}
 .stein{border-radius:6px 6px 3px 3px;background:linear-gradient(var(--b200),var(--b300));box-shadow:inset 0 4px 0 color-mix(in srgb,var(--surface) 45%,transparent)}
 .bord{border-radius:12px 4px 2px 2px;background:linear-gradient(90deg,var(--n200),var(--n300));box-shadow:inset 6px 6px 0 color-mix(in srgb,var(--surface) 55%,transparent),inset -5px 0 0 var(--n300)}
-.fuge{background:var(--warning-bg);transform-origin:50% 100%}
+.fuge{background:var(--n200);transform-origin:50% 100%}
 
 /* ================= Wortkarte = Baustellenschild auf Fuß ================= */
 .der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface);--fl:var(--b300)}
 .die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface);--fl:var(--success)}
 .das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface);--fl:var(--warning)}
-.tafel{width:640px;height:300px;border-radius:20px;background:var(--warning);padding:34px 46px 30px;display:flex;flex-direction:column;
-  box-shadow:inset 0 0 0 10px var(--warning),inset 0 0 0 16px var(--ink),0 18px 36px rgba(22,19,37,.16)}
+.tafel{width:640px;height:300px;border-radius:22px;background:var(--surface);padding:34px 46px 30px;display:flex;flex-direction:column;
+  box-shadow:inset 0 0 0 9px var(--warning),0 18px 36px rgba(22,19,37,.14)}
 .tafel .kopf{display:flex;align-items:center;gap:16px;height:50px;flex:none}
-.tafel .dot{width:38px;height:38px;border-radius:99px;background:var(--f);box-shadow:0 0 0 5px var(--surface)}
+.tafel .dot{width:38px;height:38px;border-radius:99px;background:var(--f)}
 .tafel .art{font:800 38px/44px Inter;color:var(--ink)}
 .tafel .wort{margin-top:10px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
 .tafel.ohne .wort{margin:auto 0}
 .tafel .pl{margin-top:auto;display:flex;align-items:baseline;gap:16px;font:600 40px/48px Inter;color:var(--ink);white-space:nowrap}
-.tafel .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 62%,var(--warning))}
+.tafel .pl{color:var(--n700)}
+.tafel .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
 .tafel .bolz{position:absolute;top:22px;width:14px;height:14px;border-radius:99px;background:var(--n300);box-shadow:inset 0 0 0 3px var(--n500)}
 .pfosten{width:26px;border-radius:5px;background:linear-gradient(90deg,var(--n300),var(--n200) 45%,var(--n300));transform-origin:50% 100%}
 .fuss{width:200px;height:34px;border-radius:16px 16px 6px 6px;background:linear-gradient(var(--b600),var(--b700))}
@@ -78,15 +79,16 @@ html,body{background:var(--b50)}
 .led::before{content:'';position:absolute;inset:0;border-radius:24px;background:radial-gradient(circle,color-mix(in srgb,var(--surface) 8%,transparent) 0 1.4px,transparent 2px) 0 0/7px 7px}
 .led .sw{display:inline-block;white-space:nowrap}
 .led u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
-.led .sw.lw u{color:var(--fl);font-weight:800}
+.led .sw.lw u{color:var(--b300);font-weight:800}
 .led .q{color:var(--b300);font-weight:800}
 .led .portrait{position:absolute;left:24px;top:22px}
 .lg{display:inline-flex;align-items:center;gap:12px;padding:6px 24px 6px 12px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 34px/44px Inter;margin:0 9px;
   box-shadow:0 8px 20px rgba(22,19,37,.12)}
 .lg i{width:30px;height:30px;border-radius:99px;background:var(--f)}
-.chip{display:flex;align-items:center;justify-content:center;height:60px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
-  box-shadow:0 8px 22px rgba(22,19,37,.16)}
-.chip b{font-weight:600;opacity:.85;margin-right:9px}
+.chip{display:flex;align-items:center;justify-content:center;gap:10px;height:60px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.chip i{width:24px;height:24px;border-radius:99px;background:var(--f);flex:none}
+.chip b{font-weight:600;color:var(--n500)}
 
 /* Bausteine */
 .portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
@@ -121,7 +123,7 @@ html,body{background:var(--b50)}
 .schranke .fs{position:absolute;bottom:0;width:90px;height:16px;border-radius:8px 8px 3px 3px;background:var(--b700)}
 .schranke .lampe{position:absolute;top:-24px;width:30px;height:24px;border-radius:12px 12px 4px 4px;background:var(--warning);box-shadow:0 0 0 0 var(--warning)}
 /* Schwenkbereich und Pfeile */
-.zone{border-radius:50%;border:7px dashed var(--warning);background:color-mix(in srgb,var(--warning) 14%,transparent)}
+.zone{border-radius:50%;border:7px dashed var(--warning);background:color-mix(in srgb,var(--warning) 7%,transparent)}
 .pfeil2{height:12px;background:var(--b500);border-radius:6px}
 .pfeil2::before,.pfeil2::after{content:'';position:absolute;top:-12px;width:0;height:0;border:18px solid transparent}
 .pfeil2::before{left:-22px;border-right:22px solid var(--b500);border-left:0}
@@ -141,15 +143,15 @@ html,body{background:var(--b50)}
 .plan .fb{background:var(--ink)}
 .plan .fb i{position:absolute;top:50%;height:8px;width:70px;margin-top:-4px;border-radius:4px;background:var(--surface)}
 .plan .gw{background:var(--b50)}
-.plan .bs{position:absolute;border-radius:4px;background:linear-gradient(var(--n200),var(--n300));box-shadow:inset 0 3px 0 color-mix(in srgb,var(--surface) 60%,transparent)}
+.plan .bs{position:absolute;border-radius:4px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300),0 3px 6px rgba(22,19,37,.12)}
 .plan .ps{position:absolute;border-radius:5px;background:linear-gradient(var(--b200),var(--b300))}
 .schnur{height:4px;border-radius:2px;background:var(--warning);transform-origin:0 50%}
 .nagel{width:16px;height:16px;border-radius:99px;background:var(--b700);box-shadow:0 0 0 4px var(--warning)}
 /* Kacheln „Gehweg, Platz, Einfahrt“ (von oben) */
 .kachel{width:230px;height:170px;border-radius:22px;background:var(--surface);box-shadow:0 12px 28px rgba(22,19,37,.12);overflow:hidden}
-.kachel .gr{position:absolute;background:repeating-linear-gradient(90deg,transparent 0 3px,var(--b200) 3px 25px,transparent 25px 28px),var(--warning-bg);
+.kachel .gr{position:absolute;background:repeating-linear-gradient(90deg,transparent 0 3px,var(--b200) 3px 25px,transparent 25px 28px),var(--n200);
   -webkit-mask:repeating-linear-gradient(transparent 0 3px,#000 3px 21px,transparent 21px 24px);mask:repeating-linear-gradient(transparent 0 3px,#000 3px 21px,transparent 21px 24px)}
-.kachel .gb{position:absolute;background:var(--warning-bg)}
+.kachel .gb{position:absolute;background:var(--n200)}
 /* Rinne mit Rost */
 .rinne{width:84px;height:84px}
 .rinne .k{position:absolute;inset:6px 0 0 0;border-radius:4px 4px 18px 18px;background:var(--n200)}
@@ -168,14 +170,14 @@ html,body{background:var(--b50)}
   font:800 38px/76px Inter;color:var(--ink);text-align:center;letter-spacing:-.01em}
 .strom{height:10px;border-radius:5px;background:repeating-linear-gradient(90deg,var(--info) 0 26px,transparent 26px 40px)}
 .regen{width:4px;height:34px;border-radius:2px;background:var(--info)}
-.dampf{width:60px;height:60px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--surface) 85%,transparent) 0,color-mix(in srgb,var(--surface) 0%,transparent) 70%)}
+.dampf{width:70px;height:70px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--n300) 80%,transparent) 0,color-mix(in srgb,var(--n300) 0%,transparent) 70%)}
 .staub{width:46px;height:46px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--n300) 90%,transparent) 0,color-mix(in srgb,var(--n300) 0%,transparent) 70%)}
 .korn{width:16px;height:14px;border-radius:40% 50% 45% 55%;background:var(--n500)}
 .brocken{width:34px;height:22px;clip-path:polygon(0 30%,40% 0,100% 20%,85% 100%,10% 90%);background:var(--n500)}
 .schnecke{position:absolute;height:34px;border-radius:17px;background:repeating-linear-gradient(60deg,var(--n300) 0 10px,var(--b700) 10px 16px)}
 /* Wischblende: Absperrschranke über dem ganzen Bild */
 #wisch{position:absolute;left:0;top:0;width:2700px;height:1080px;z-index:5;clip-path:polygon(240px 0,100% 0,calc(100% - 240px) 100%,0 100%);
-  background:repeating-linear-gradient(-45deg,var(--error) 0 120px,var(--surface) 120px 240px)}
+  background:repeating-linear-gradient(-45deg,var(--b500) 0 120px,var(--b100) 120px 240px)}
 #wisch::before,#wisch::after{content:'';position:absolute;left:0;right:0;height:46px;background:var(--b700)}
 #wisch::before{top:0} #wisch::after{bottom:0}
 /* Abspann: Schichten stapeln sich */
@@ -227,7 +229,7 @@ html,body{background:var(--b50)}
   <div class="lage boden tief2" id="ab1" style="top:880px;height:200px"></div>
   <div class="lage schotter" id="ab2" style="top:700px;height:180px"></div>
   <div class="lage sand" id="ab3" style="top:620px;height:80px"></div>
-  <div class="lage asph" id="ab4" style="top:0;height:1080px"></div>
+  <div class="lage" id="ab4" style="top:0;height:1080px;background:linear-gradient(135deg,var(--b500),var(--b700))"></div>
   <div class="ende"><div class="gross" id="asTitel">Schicht für Schicht.</div></div>
   <div class="strich" id="asStrich"></div>
 </div>
@@ -300,7 +302,7 @@ const OX = SX(10) + 1920 + 1700;                // Übersicht (Szene 1 und 11)
 const RY = 660, GW = 610;                       // Höhe Fahrbahn, Höhe Gehweg
 // Gelände in den Lücken (nur bei Fahrten zu sehen): Boden, Deckschicht, eine Leitbake
 function gelaende(x0, x1, g, deck = 'altasph', bake = true) {
-  deko('ge' + WN++, 'gel boden tief2', `left:${x0}px;top:${g}px;width:${x1 - x0}px;height:${1080 - g + 40}px`);
+  deko('ge' + WN++, 'gel boden', `left:${x0}px;top:${g}px;width:${x1 - x0}px;height:${1080 - g + 40}px`);
   deko('ge' + WN++, 'gel ' + deck, `left:${x0}px;top:${g}px;width:${x1 - x0}px;height:${deck === 'pflrow' ? 35 : 44}px`);
   if (bake) { const m = (x0 + x1) / 2;
     deko('ge' + WN++, 'gel bake', `left:${m - 23}px;top:${g - 236}px`); deko('ge' + WN++, 'gel bakefuss', `left:${m - 60}px;top:${g - 26}px`); }
@@ -406,7 +408,7 @@ function tafel(i, o) {
   const woerter = o.wort.split(' ');
   neu(id + 'f', '', '', G, 'fuss');
   neu(id + 'p', '', `height:${g - 30 - (TY + TH) + 10}px`, G, 'pfosten');
-  neu(id, `<i class="bolz" style="left:300px"></i>
+  neu(id, `
     <div class="kopf"><i class="dot" id="${id}d"></i><span class="art" id="${id}a">${o.art}</span></div>
     <div class="wort" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
     ${o.zeile ? `<div class="pl" id="${id}z"><small>${o.zeile[0]}</small><span>${o.zeile[1]}</span></div>` : ''}`, 'transform-origin:50% 100%', G, `tafel ${o.art}${o.zeile ? '' : ' ohne'}`);
@@ -455,7 +457,7 @@ function anzeige(i, ns, art, lern, x0 = 1030, y0 = 56, X = SX(i)) {
     aus: t => { tw(id, t, .35, { o: 0, y: y - 40 }, 'in'); },
   };
 }
-const chipHTML = (art, text) => art ? `<b>${art}</b>${text}` : text;
+const chipHTML = (art, text) => art ? `<i></i><b>${art}</b>${text}` : text;
 
 /* ---------- Maschinen ---------- */
 // Auto (Seitenansicht) mit drehenden Rädern; Mittelpunkt so, dass die Räder bei Bodenhöhe g stehen: y = g - 35·k
@@ -550,7 +552,634 @@ akteur('wisch', { x: 1940 }, true);
 tw('wisch', TW1, 1.15, { x: -2720 }, 'inout'); cue(TW1, 'whoosh'); cue(TW1 + .5, 'plopp');
 const TJ = TW1 + .575;
 set('cam', TJ, { x: SX(2) + 960, y: 540 }); SPRUENGE.push(TJ); FAHRTEN.push([TJ, 0, 0]);
+aus(['am1', 'leg1'], TJ, .05);
+/* ---------- Helfer für Fahrzeuge aus mehreren Teilen: alle Teile fahren gemeinsam, Räder/Trommeln drehen sich passend ---------- */
+function fahrzeug(teile, raeder = [], R = 1) {
+  // teile: [[id, dx, dy]] relativ zur Mitte; raeder: ids, die sich mitdrehen
+  let cx = 0, cy = 0;
+  return {
+    setzen: (x, y, b = {}) => { cx = x; cy = y; teile.forEach(([id, dx, dy]) => akteur(id, { x: x + dx, y: y + dy, ...b })); },
+    fahren: (t, x, y, d, e = 'inout') => { const dx = x - cx; teile.forEach(([id, ox, oy]) => tw(id, t, d, { x: x + ox, y: y + oy }, e));
+      raeder.forEach(r => tw(r, t, d, { r: wertBei(r, 'r', t) + dx / R * 57.3 }, e)); cx = x; cy = y; },
+    ids: teile.map(t => t[0]),
+  };
+}
+// Partikelstrom (Schotter, Dampf, Staub, Regen): Elemente laufen in festem Takt eine Bahn ab – deterministisch
+function strom(ids, t0, t1, periode, bahn) {
+  HOOKS.push(t => ids.forEach((id, k) => {
+    const e = el(id), off = periode * ((k * .61803) % 1);
+    const q = (t - t0 - off) / periode;
+    if (t < t0 + off || t > t1 + periode || q < 0) { e.style.opacity = 0; return; }
+    const z = Math.floor(q), p = q - z, start = t0 + off + z * periode;
+    if (start > t1) { e.style.opacity = 0; return; }
+    const r = bahn(p, k, z, t);
+    e.style.opacity = r.o; e.style.transform = `translate(${r.x.toFixed(1)}px,${r.y.toFixed(1)}px) translate(-50%,-50%) scale(${(r.s ?? 1).toFixed(3)}) rotate(${(r.r ?? 0).toFixed(1)}deg)`;
+  }));
+}
+// Minimum eines Werts über die Zeit (für „schon verdichtet“, „schon gesetzt“)
+const minBis = (f, t0, t) => { let m = f(Math.min(t, t0)); for (let z = t0; z <= t; z += .05) m = Math.min(m, f(z)); return Math.min(m, f(t)); };
+
+/* ================= 2 · die Warnweste ================= */
+{
+  const i = 2, X = SX(i);
+  lage(i, 'boden', 0, 1920, 770, 1080); lage(i, 'altasph', 0, 1920, RY, 705); lage(i, 'altbase', 0, 1920, 705, 775); risse(i, 0, 1920, RY);
+  const tf = tafel(i, { art: 'die', wort: 'Warnweste', zeile: ['Plural', 'die Warnwesten'], gr: 92 });
+  tf.ein(TJ - .1); tf.art(W('Die', 5)); tf.wort(W('Warnweste', 5)); tf.zeile(W('Die', 6));
+  const led = anzeige(i, 9, 'die', ['warnweste']); led.ein(SA(9) - .55);
+  // Amir: erst ohne Weste – bei „Warnweste“ legt sie sich über das Porträt
+  portrait('am2', 'Amir', 300, 'data-frei');
+  WESTE.am2 = W('Warnweste', 5) + .15; cue(WESTE.am2, 'whoosh');
+  ein('am2', TJ + .35, { x: X + 1150, y: 390 }, { y: 120 }, 'pop');
+  nicken('am2', W('Warnweste', 5) + .5, 1); bump('am2', W('Warnwesten', 6), 1.05); FROH.push(['am2', W('Warnwesten', 6), SA(7)]);
+  // An der Straße fahren Autos direkt neben dir: ein Auto fährt vorbei, sein Licht streift die Weste – die Streifen blitzen
+  const a = auto('au2', 300, 'data-frei', true);
+  akteur('au2k', { o: .9 }, true); el('au2k').style.transform = 'rotate(-14deg)'; el('au2k').style.transformOrigin = '0 50%';
+  const t0 = W('fahren', 7) - .2;
+  akteur('au2', { x: X - 330, y: a.y(RY + 2) }); tw('au2', t0, 2.7, { x: X + 2280 }, 'lin'); set('au2', t0 + 2.7, { o: 0 }); cue(t0 + .3, 'whoosh');
+  const tGl = t0 + (1150 - 330 + 330) / 2610 * 2.7 - .55;
+  GLANZ.push(['am2', tGl, tGl + .7]); cue(tGl + .3, 'ding'); akzent(tGl + .3, .035);
+  wackeln('am2', W('direkt', 7), 3, 2.5);
+  // Mit der Warnweste sehen dich alle gut: Auge, Haken; ein zweites Auto (von rechts) – wieder leuchten die Streifen
+  plakette('ag2', 'weiss', 'svgAuge', 'data-frei', 'gross');
+  pop('ag2', W('sehen', 8) - .1, { x: X + 1410, y: 330 }, 'pop'); bump('ag2', W('alle', 8), 1.12);
+  haken('ok2', W('gut', 8), X + 1462, 278, 'data-frei');
+  const b = auto('au2b', 250, 'data-frei', true);
+  akteur('au2bk', { o: .85 }, true); el('au2bk').style.transform = 'rotate(-14deg)'; el('au2bk').style.transformOrigin = '0 50%';
+  const t1 = W('Mit', 8) - .4;
+  akteur('au2b', { x: X + 2240, y: b.y(RY + 2), sx: -1, o: .9 }); tw('au2b', t1, 2.4, { x: X - 300 }, 'lin'); set('au2b', t1 + 2.4, { o: 0 }); cue(t1 + .3, 'whoosh');
+  const tG2 = t1 + (2240 - 1150 - 260) / 2540 * 2.4;
+  GLANZ.push(['am2', tG2, tG2 + .6]);
+  aus(['ag2', 'ok2'], SA(9) - .4, .3);
+  // Ohne Warnweste gehst du nicht auf die Baustelle: Absperrschranke und Leitkegel, dann ein Haken für Amir
+  neu('sk2', '<div class="brett"></div><i class="bein" style="left:52px"></i><i class="bein" style="right:52px"></i><i class="fs" style="left:14px"></i><i class="fs" style="right:14px"></i><i class="lampe" id="sk2l" style="left:48px"></i><i class="lampe" style="right:48px"></i>', '', 'data-gruppe="sk2"', 'schranke');
+  const tO = W('Ohne', 9) - .15;
+  akteur('sk2', { x: X + 1670, y: RY - 75 - 380, o: 0 }); tw('sk2', tO, .12, { o: 1 }); tw('sk2', tO, .4, { y: RY - 75 }, 'in'); landen('sk2', tO + .4); cue(tO + .4, 'plopp');
+  bild('lk2', 't-kegel', 120, 'data-gruppe="sk2"');
+  pop('lk2', W('nicht', 9) - .1, { x: X + 1430, y: RY - 48 * .75 }, 'plopp');
+  wackeln('sk2', W('nicht', 9), 3, 2);
+  haken('ok2b', W('Baustelle', 9) + .05, X + 1670, 500);
+  nicken('am2', W('Baustelle', 9) + .1, 1); FROH.push(['am2', SE(9), 99]); akzent(W('Baustelle', 9), .035);
+  led.aus(SE(9) + .55);
+}
+
+/* ================= 3 · der Bagger ================= */
+{
+  const i = 3, X = SX(i), P = SE(9) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 770, 1080); lage(i, 'altasph', 0, 1920, RY, 705); lage(i, 'altbase', 0, 1920, 705, 775); risse(i, 0, 760, RY); risse(i, 1280, 1920, RY);
+  lage(i, 'grube', 1010, 1250, RY, 760, 'gr3a', 'transform-origin:50% 0'); lage(i, 'grube', 780, 1250, RY, 800, 'gr3b', 'transform-origin:50% 0');
+  akteur('gr3a', { sy: 0 }, true); akteur('gr3b', { sy: 0 }, true);
+  const tf = tafel(i, { art: 'der', wort: 'Bagger', zeile: ['Plural', 'die Bagger'], gr: 120 });
+  tf.ein(P + .3); tf.art(W('Der', 10)); tf.wort(W('Bagger', 10)); tf.zeile(W('Die', 11));
+  const led = anzeige(i, 13, 'der', ['bagger']); led.ein(SA(13) - .55);
+  // Bagger aus Gelenken (Oberwagen, Ausleger, Stiel, Löffel): fährt auf der alten Straße heran
+  const BGX = X + 1232, BGY = RY - (152 - 80) * 4;
+  bild('bg3', 't-bagger', 640, 'data-gruppe="bg3" data-dreht');
+  akteur('bg3', { x: BGX + 620, y: BGY });
+  regler('r3a', { r: 8 }); regler('r3b', { r: 12 }); regler('r3c', { r: 25 }); regler('r3o', { sx: 1 });
+  HOOKS.push(t => {
+    el('bgArm_bg3').setAttribute('transform', `rotate(${wertBei('r3a', 'r', t).toFixed(2)} 112 100)`);
+    el('bgStiel_bg3').setAttribute('transform', `rotate(${wertBei('r3b', 'r', t).toFixed(2)} 62 58)`);
+    el('bgLoeffel_bg3').setAttribute('transform', `rotate(${wertBei('r3c', 'r', t).toFixed(2)} 40 104)`);
+    el('bgOben_bg3').setAttribute('transform', `translate(122 0) scale(${wertBei('r3o', 'sx', t).toFixed(3)} 1) translate(-122 0)`);
+    el('bgKette_bg3').style.strokeDashoffset = (wertBei('bg3', 'x', t) / 4).toFixed(1);
+    el('bgErde_bg3').setAttribute('opacity', t >= W('Erde', 12) + .25 ? 1 : 0);
+  });
+  const tE = P + .55; tw('bg3', tE, 1.4, { x: BGX }, 'sanft'); cue(tE, 'whoosh'); federn('bg3', tE + 1.35);
+  akzent(W('Bagger', 10) + .2, .03);
+  // Die Bagger: Arm nickt einmal (Gruß)
+  tw('r3a', W('Bagger', 11) - .2, .35, { r: 14 }, 'sinus'); tw('r3a', W('Bagger', 11) + .15, .45, { r: 8 }, 'sanft');
+  // Er gräbt die alte Straße auf: Löffel bricht den Asphalt auf, Brocken springen
+  const g1 = W('gräbt', 12);
+  tw('r3a', g1 - .55, .5, { r: -12 }, 'inout'); tw('r3b', g1 - .55, .5, { r: 20 }, 'inout'); tw('r3c', g1 - .55, .5, { r: 30 }, 'inout');
+  tw('r3a', g1 - .05, .45, { r: -33 }, 'in'); tw('r3b', g1 - .05, .45, { r: 4 }, 'in'); tw('r3c', g1 - .05, .45, { r: -35 }, 'in');
+  const tB = g1 + .4; cue(tB, 'plopp'); akzent(tB, .04);
+  tw('gr3a', tB, .5, { sy: 1 }, 'out');
+  for (let k = 0; k < 7; k++) {
+    const id = deko('br3' + k, 'brocken', `transform-origin:50% 50%`);
+    const x0 = X + 1040 + k * 30, x1 = X + 1010 + ((k * 37) % 120);
+    akteur(id, { x: x0, y: RY + 10, o: 0, r: k * 30 });
+    set(id, tB, { o: 1 }); flug(id, tB, .55 + (k % 3) * .08, x1, RY + 40 + (k % 2) * 30, 90 + (k % 3) * 40, { r: k * 30 + 160 });
+    tw(id, tB + .6, .3, { o: 0 });
+  }
+  tw('r3c', W('alte', 12) + .1, .4, { r: 35 }, 'sinus'); tw('r3b', W('alte', 12) + .1, .4, { r: 18 }, 'sinus');
+  tw('r3a', W('auf', 12) - .1, .5, { r: 2 }, 'inout'); cue(W('auf', 12), 'whoosh');
+  // … und holt die Erde heraus: zweiter Hub, tiefer, der Löffel kommt voll heraus
+  const g2 = W('holt', 12);
+  tw('r3a', g2 - .2, .5, { r: -35 }, 'in'); tw('r3b', g2 - .2, .5, { r: 10 }, 'in'); tw('r3c', g2 - .2, .5, { r: -40 }, 'in');
+  tw('gr3b', g2 + .3, .55, { sy: 1 }, 'out'); cue(g2 + .3, 'plopp');
+  tw('r3c', W('Erde', 12), .45, { r: 40 }, 'sinus'); tw('r3b', W('Erde', 12), .45, { r: 18 }, 'sinus');
+  tw('r3a', W('heraus', 12) - .15, .7, { r: 6 }, 'inout'); akzent(W('heraus', 12), .035);
+  for (let k = 0; k < 5; k++) {
+    const id = deko('er3' + k, 'korn', 'background:var(--boden2);width:20px;height:16px');
+    akteur(id, { x: X + 900 + k * 40, y: 780, o: 0 }); set(id, g2 + .4, { o: 1 });
+    flug(id, g2 + .4, .5, X + 880 + k * 46, 790, 60 + k * 12); tw(id, g2 + .85, .2, { o: 0 });
+  }
+  // Halt Abstand vom Bagger, wenn er sich dreht: Schwenkbereich, Amir steht außerhalb
+  neu('zo3', '', 'width:680px;height:130px', 'data-frei', 'zone');
+  pop('zo3', W('Abstand', 13) - .25, { x: X + 1360, y: RY }, 'plopp', 'out');
+  tw('zo3', W('Abstand', 13) + .3, .25, { s: 1.04 }, 'sinus'); tw('zo3', W('Abstand', 13) + .55, .4, { s: 1 }, 'sanft');
+  portrait('am3', 'Amir', 150);
+  pop('am3', W('Halt', 13), { x: X + 820, y: 560 }, 'pop');
+  neu('pf3', '', 'width:96px', 'data-frei', 'pfeil2');
+  akteur('pf3', { x: X + 962, y: 600, sx: 0 }); tw('pf3', W('Abstand', 13), .45, { sx: 1 }, 'sanft'); cue(W('Abstand', 13), 'whoosh');
+  akzent(W('Abstand', 13), .04); nicken('am3', W('Bagger', 13), 1);
+  plakette('dr3', 'weiss', 'svgDreh', 'data-frei', 'gross');
+  pop('dr3', W('dreht', 13) - .35, { x: X + 1640, y: 300 }, 'pop');
+  tw('r3o', W('dreht', 13) - .35, .55, { sx: -.6 }, 'inout'); tw('r3o', W('dreht', 13) + .45, .55, { sx: 1 }, 'inout'); cue(W('dreht', 13) - .3, 'whoosh');
+  led.aus(SE(13) + .55);
+}
+
+/* ================= 4 · die Tragschicht ================= */
+{
+  const i = 4, X = SX(i), P = SE(13) + .15;
+  zuStation(P, i, 1.15, -320);       // Tauchfahrt: die Kamera sinkt kurz in den Boden
+  lage(i, 'boden', 0, 1920, 770, 1080);
+  lage(i, 'altasph', 0, 780, RY, 705); lage(i, 'altbase', 0, 780, 705, 775); lage(i, 'altasph', 1500, 1920, RY, 705); lage(i, 'altbase', 1500, 1920, 705, 775);
+  risse(i, 0, 760, RY); risse(i, 1500, 1920, RY);
+  lage(i, 'grube', 780, 1500, RY, 800);
+  lage(i, 'geist', 780, 1500, RY, 700, 'ga4'); akteur('ga4', { o: 0 }, true);
+  lage(i, 'schotter', 780, 1500, 700, 800, 'ts4', 'transform-origin:50% 100%'); akteur('ts4', { sy: 0 }, true);
+  lage(i, 'buckel', 780, 1500, 684, 702, 'bk4'); akteur('bk4', { o: 0 }, true);
+  glimm(i, 'g4ts', 'die', 784, 1496, 690, 798);
+  const tf = tafel(i, { art: 'die', wort: 'Tragschicht', zeile: ['Plural', 'die Tragschichten'], gr: 80 });
+  tf.ein(P + .35); tf.art(W('Die', 14)); tf.wort(W('Tragschicht', 14)); tf.zeile(W('Die', 15));
+  const led = anzeige(i, 18, 'die', ['tragschicht', 'asphalt']); led.ein(SA(18) - .55);
+  // Kipper setzt zurück, kippt die Mulde: Schotter rieselt in die Grube, die Schicht wächst
+  const K = 360, kk = K / 160, KX = X + 1490 + 72 * kk, KY = RY - (145 - 80) * kk;
+  bild('lk4', 't-lkw', K, 'data-gruppe="lk4"'); bild('mu4', 't-mulde', K, 'data-gruppe="lk4"', 'transform-origin:6.25% 68.75%');
+  akteur('lk4', { x: KX + 560, y: KY }); akteur('mu4', { x: KX + 560, y: KY });
+  tw(['lk4', 'mu4'], P + .5, 1.3, { x: KX }, 'sanft'); cue(P + .5, 'whoosh'); federn('lk4', P + 1.75);
+  const tK = W('Tragschicht', 14) - .35;
+  tw('mu4', tK, .8, { r: -34 }, 'inout'); cue(tK, 'scan');
+  const tP = tK + .55, dP = 1.9;
+  tw('ts4', tP, dP, { sy: 1 }, 'out'); cue(tP + .1, 'kritzeln'); cue(tP + .9, 'kritzeln');
+  tw('bk4', tP + dP - .5, .3, { o: 1 });
+  const koerner = []; for (let k = 0; k < 26; k++) koerner.push(deko('ko4' + k, 'korn', `width:${12 + (k % 3) * 4}px;height:${10 + (k % 2) * 4}px`));
+  const top4 = t => 800 - 100 * wertBei('ts4', 'sy', t);
+  strom(koerner, tP, tP + dP - .3, .55, (p, k, z, t) => ({ x: X + 1452 - p * (40 + (k % 7) * 18), y: 540 + (top4(t) - 545) * p * p, o: p < .92 ? 1 : 0, r: k * 40 + p * 200 }));
+  tw('mu4', tP + dP, .6, { r: 0 }, 'inout');
+  bump('ts4', W('Tragschichten', 15), 1.03); zeig('g4ts', W('Tragschichten', 15) - .05, .9);
+  akzent(W('Tragschichten', 15), .03);
+  // Sie liegt unter der Straße, zum Beispiel aus Schotter: Kipper fährt weg, Straßen-Umriss darüber, Lupe zeigt den Schotter
+  tw(['lk4', 'mu4'], SA(16) + .1, 1.3, { x: KX + 700 }, 'in'); tw(['lk4', 'mu4'], SA(16) + 1.1, .3, { o: 0 }); cue(SA(16) + .1, 'whoosh');
+  tw('ga4', W('unter', 16) - .1, .4, { o: 1 }); cue(W('unter', 16), 'pop');
+  plakette('pk4s', 'weiss', 'svgStrasse', 'data-frei', 'gross');
+  pop('pk4s', W('Straße', 16) - .1, { x: X + 1140, y: 560 }, 'pop'); aus('pk4s', W('zum', 16), .3);
+  const steine = [[30, 40, 70, 54], [112, 26, 80, 60], [40, 110, 76, 56], [124, 102, 64, 70], [74, 160, 84, 52], [10, 170, 50, 44], [170, 50, 48, 64]]
+    .map(([l, o, b, h]) => `<i style="left:${l}px;top:${o}px;width:${b}px;height:${h}px"></i>`).join('');
+  neu('lu4', steine, 'width:230px;height:230px;background:var(--n300)', 'data-frei', 'lupe68');
+  pop('lu4', W('Schotter', 16) - .2, { x: X + 1140, y: 430 }, 'pop'); akzent(W('Schotter', 16), .04);
+  aus('lu4', SA(17) + .1, .3);
+  // Sie trägt das Gewicht von Autos und Lastwagen: Pfeile drücken, Auto und Lastwagen stehen darauf – die Schicht hält
+  const tG = W('Gewicht', 17) - .1;
+  [930, 1140, 1350].forEach((x, k) => { neu('dk4' + k, '', '', 'data-frei', 'druck'); pop('dk4' + k, tG + k * .08, { x: X + x, y: 470 }, k ? null : 'pop');
+    tw('dk4' + k, tG + .5, .25, { y: 490 }, 'in'); tw('dk4' + k, tG + .75, .4, { y: 470 }, 'sanft'); aus('dk4' + k, SA(18) - .3, .3); });
+  tw('ts4', tG + .7, .14, { sy: .96 }, 'sinus'); tw('ts4', tG + .84, .4, { sy: 1 }, 'sanft');
+  const a4 = auto('au4', 230, 'data-gruppe="last4"');
+  const tA = W('Autos', 17) - .25;
+  akteur('au4', { x: X + 950, y: a4.y(700) - 320, o: 0 }); tw('au4', tA, .12, { o: 1 }); tw('au4', tA, .38, { y: a4.y(700) }, 'in'); landen('au4', tA + .38); cue(tA + .38, 'plopp');
+  const L = 300, lk = L / 160, LY = 700 - (145 - 80) * lk, tL = W('Lastwagen', 17) - .25;
+  bild('lw4', 't-lkw', L, 'data-gruppe="last4"'); bild('lw4m', 't-mulde', L, 'data-gruppe="last4"');
+  ['lw4', 'lw4m'].forEach(id => akteur(id, { x: X + 1300, y: LY - 340, o: 0 })); tw(['lw4', 'lw4m'], tL, .12, { o: 1 }); tw(['lw4', 'lw4m'], tL, .4, { y: LY }, 'in'); landen('lw4', tL + .4); cue(tL + .4, 'plopp');
+  tw('ts4', tL + .4, .14, { sy: .95 }, 'sinus'); tw('ts4', tL + .54, .45, { sy: 1 }, 'sanft');
+  haken('ok4', WE('Lastwagen', 17) + .1, X + 1585, 560); akzent(WE('Lastwagen', 17), .04);
+  aus(['au4', 'lw4', 'lw4m', 'ok4'], SA(18) - .35, .35);
+  // Zuerst die Tragschicht (1), dann der Asphalt (2)
+  plakette('n41', 'lila', null); el('n41').textContent = '1';
+  pop('n41', W('Tragschicht', 18) - .1, { x: X + 845, y: 750 }, 'pop'); zeig('g4ts', W('Tragschicht', 18) - .1, .9);
+  plakette('n42', 'lila', null); el('n42').textContent = '2';
+  pop('n42', W('Asphalt', 18) - .1, { x: X + 845, y: 642 }, 'pop');
+  tw('ga4', W('Asphalt', 18) - .1, .3, { o: .55 }); tw('ga4', W('Asphalt', 18) + .2, .4, { o: 1 }); akzent(W('Asphalt', 18), .035);
+  led.aus(SE(18) + .55);
+}
+
+/* ================= 5 · die Walze ================= */
+{
+  const i = 5, X = SX(i), P = SE(18) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 770, 1080);
+  lage(i, 'altasph', 0, 780, RY, 705); lage(i, 'altbase', 0, 780, 705, 775); lage(i, 'altasph', 1640, 1920, RY, 705); lage(i, 'altbase', 1640, 1920, 705, 775);
+  risse(i, 0, 760, RY);
+  lage(i, 'grube', 780, 1640, RY, 800);
+  lage(i, 'geist', 780, 1500, RY, 700, 'ga5'); akteur('ga5', { o: 0 }, true);
+  lage(i, 'schotter', 780, 1500, 700, 800);
+  lage(i, 'schotter', 1500, 1640, RY, 800, '', 'clip-path:polygon(0 40px,100% 0,100% 100%,0 100%)');
+  lage(i, 'buckel', 780, 1500, 684, 702, 'bk5');
+  glimm(i, 'g5b', 'der', 784, 1636, 806, 1020); glimm(i, 'g5s', 'die', 784, 1496, 692, 798);
+  const tf = tafel(i, { art: 'die', wort: 'Walze', zeile: ['Plural', 'die Walzen'], gr: 120 });
+  tf.ein(P + .3); tf.art(W('Die', 19)); tf.wort(W('Walze', 19)); tf.zeile(W('Die', 20));
+  const led = anzeige(i, 23, 'die', ['walze']); led.ein(SA(23) - .55);
+  // Walze: Körper + zwei Trommeln, rollt die Rampe hinunter auf den Schotter
+  const WB = 420, wk = WB / 160, TB = 44 * wk * 160 / 140, R = 22 * wk, WY = 700 - (150 - 80) * wk;
+  bild('wz5', 't-walze', WB, 'data-gruppe="wz5"'); bild('wz5v', 't-trommel', TB, 'data-gruppe="wz5" data-dreht'); bild('wz5h', 't-trommel', TB, 'data-gruppe="wz5" data-dreht');
+  const wz = fahrzeug([['wz5', 0, 0], ['wz5v', (42 - 80) * wk, (128 - 80) * wk], ['wz5h', (122 - 80) * wk, (128 - 80) * wk]], ['wz5v', 'wz5h'], R);
+  wz.setzen(X + 1990, WY - 40);
+  const t0 = P + .45;
+  wz.fahren(t0, X + 1640, WY - 40, .9, 'out'); cue(t0, 'whoosh');
+  wz.fahren(t0 + .9, X + 1000, WY, 1.5, 'inout');
+  const front = t => wertBei('wz5', 'x', t) - X - 99.75 - 57.75;
+  const tEnd = t0 + 2.4;
+  HOOKS.push(t => { const f = minBis(front, t0, t); el('bk5').style.clipPath = `inset(0 ${Math.max(0, 1500 - 780 - Math.max(0, f - 780)).toFixed(0)}px 0 0)`; });
+  ruetteln('wz5', t0 + .9, tEnd, 2.5);
+  for (let k = 0; k < 4; k++) { wellen(t0 + 1.1 + k * .3, wertBei('wz5', 'x', t0 + 1.1 + k * .3) - 100, 700, 'var(--b300)', 120); }
+  akzent(W('Walze', 19) + .2, .03);
+  // Sie drückt den Boden, den Schotter und den Asphalt fest
+  zeig('g5b', W('Boden', 21) - .05, .9); zeig('g5s', W('Schotter', 21) - .05, .9);
+  tw('ga5', W('Asphalt', 21) - .05, .35, { o: 1 }); cue(W('Asphalt', 21), 'pop');
+  ruetteln('wz5', W('drückt', 21) - .2, SE(21) + .3, 3);
+  wz.fahren(W('drückt', 21), X + 1380, WY, SE(21) - W('drückt', 21), 'inout');
+  [0, 1, 2].forEach(k => { const tw0 = W('drückt', 21) + k * .9; wellen(tw0, wertBei('wz5', 'x', tw0) - 100, 704, 'var(--b300)', 130); wellen(tw0 + .2, wertBei('wz5', 'x', tw0) + 110, 704, 'var(--b300)', 130); });
+  wellen(W('fest', 21), X + 1280, 704, 'var(--b500)', 200); akzent(W('fest', 21), .035);
+  // So wird alles stabil und eben: die Richtlatte liegt flach auf, Haken
+  neu('lt5', '', 'width:360px', 'data-frei', 'latte');
+  akteur('lt5', { x: X + 975, y: 520, o: 0, r: -4 });
+  tw('lt5', W('stabil', 22) - .35, .15, { o: 1 }); tw('lt5', W('stabil', 22) - .35, .45, { y: 693, r: 0 }, 'in'); landen('lt5', W('stabil', 22) + .1); cue(W('stabil', 22) + .1, 'klick');
+  haken('ok5', W('eben', 22), X + 975, 615); akzent(W('eben', 22), .035);
+  aus(['lt5', 'ok5'], SA(23) - .2, .3);
+  // Die Walze fährt noch zweimal drüber: hin und zurück, Zähler 1 – 2
+  const tz = W('fährt', 23) - .15;
+  ruetteln('wz5', tz, tz + 2.3, 2.5);
+  wz.fahren(tz, X + 1010, WY, 1.05, 'inout'); wz.fahren(tz + 1.15, X + 1380, WY, 1.05, 'inout');
+  neu('zl5', '<span id="zl5n">1</span>', '', 'data-frei', 'plakette lila gross');
+  pop('zl5', tz + .9, { x: X + 1200, y: 300 }, 'ding');
+  HOOKS.push(t => el('zl5n').textContent = t >= tz + 2.05 ? '2' : '1');
+  bump('zl5', tz + 2.05, 1.15); cue(tz + 2.05, 'ding'); akzent(tz + 2.05, .035);
+  led.aus(SE(23) + .55);
+}
+
+/* ================= 6 · der Asphalt ================= */
+{
+  const i = 6, X = SX(i), P = SE(23) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 770, 1080);
+  lage(i, 'altasph', 0, 780, RY, 705); lage(i, 'altbase', 0, 780, 705, 775); lage(i, 'altasph', 1640, 1920, RY, 705); lage(i, 'altbase', 1640, 1920, 705, 775);
+  risse(i, 1660, 1920, RY);
+  lage(i, 'grube', 780, 1640, RY, 800);
+  lage(i, 'schotter', 780, 1500, 700, 800);
+  lage(i, 'schotter', 1500, 1640, RY, 800, '', 'clip-path:polygon(0 40px,100% 0,100% 100%,0 100%)');
+  lage(i, 'asph', 780, 1640, RY, 700, 'as6');
+  const tf = tafel(i, { art: 'der', wort: 'Asphalt', gr: 120 });
+  tf.ein(P + .3); tf.art(W('Der', 24)); tf.wort(W('Asphalt', 24));
+  const led = anzeige(i, 27, 'der', ['asphalt']); led.ein(SA(27) - .55);
+  // Fertiger fährt nach links: hinten (rechts) kommt die schwarze, heiße Masse heraus
+  const FB = 440, fk = FB / 160, FY = 700 - (152 - 80) * fk;
+  bild('fe6', 't-fertiger', FB, 'data-gruppe="fe6"');
+  deko('sn6', 'schnecke', `width:${16 * fk}px`);
+  const fe = fahrzeug([['fe6', 0, 0], ['sn6', (122 - 80) * fk, (134 - 80) * fk]]);
+  fe.setzen(X + 2100, FY - 40);
+  const t0 = P + .45;
+  fe.fahren(t0, X + 1560, FY - 40, .9, 'out'); cue(t0, 'whoosh');
+  fe.fahren(t0 + .9, X + 1120, FY, 1.3, 'inout');
+  fe.fahren(t0 + 2.3, X + 980, FY, SE(26) - t0 - 2.3, 'lin');
+  HOOKS.push(t => el('sn6').style.backgroundPosition = `${(t * 60).toFixed(1)}px 0`);
+  const hinten = t => wertBei('fe6', 'x', t) - X + 66 * fk - 6;
+  HOOKS.push(t => el('as6').style.clipPath = `inset(0 0 0 ${Math.max(0, Math.min(860, hinten(t) - 780)).toFixed(0)}px)`);
+  ruetteln('fe6', t0 + .9, SE(26), 1.2);
+  akzent(W('Asphalt', 24) + .2, .03);
+  // Dampf steigt vom frischen Asphalt auf (fester Takt), nach „heiß“ stärker
+  const dampf = []; for (let k = 0; k < 14; k++) dampf.push(deko('da6' + k, 'dampf'));
+  const tH = W('heiß', 26);
+  strom(dampf, t0 + 1, SE(27) + 1.5, 1.7, (p, k, z, t) => { const x = X + 800 + ((k * 61) % 14) * 60, sicht = x - X > hinten(t) + 30;
+    const st = .45 + .55 * clamp((t - tH) / .6);
+    return { x: x + 14 * Math.sin(p * 5 + k), y: 650 - 170 * p, o: sicht ? st * Math.sin(Math.PI * p) : 0, s: .7 + 1.1 * p }; });
+  // Daraus ist die Fahrbahn: Leitlinien erscheinen auf dem neuen Asphalt
+  [1330, 1470].forEach((x, k) => { const id = lage(i, '', x, x + 90, RY + 12, RY + 22, 'll6' + k, 'background:var(--surface);border-radius:4px;transform-origin:0 50%');
+    akteur(id, { sx: 0 }, true); tw(id, W('Fahrbahn', 25) - .1 + k * .2, .35, { sx: 1 }, 'out'); cue(W('Fahrbahn', 25) + k * .2, 'klick'); });
+  akzent(W('Fahrbahn', 25), .035);
+  // sehr heiß, über hundert Grad: Thermometer klettert, Etikett
+  const TB = 300;
+  bild('th6', 't-thermo', TB, 'data-gruppe="th6"');
+  neu('th6s', kopie('t-saeule', 'th6s'), `width:${TB}px;transform-origin:50% 78.75%`, 'data-gruppe="th6"');
+  pop('th6', tH - .25, { x: X + 1730, y: 420 }, 'pop'); akteur('th6s', { x: X + 1730, y: 420, s: 0, sy: .22 });
+  tw('th6s', tH - .25, .5, { s: 1 }, 'back'); tw('th6s', W('über', 26), WE('Grad', 26) - W('über', 26) + .3, { sy: 1 }, 'inout'); cue(W('über', 26), 'scan');
+  neu('et6', 'über <b>100 °C</b>', '', '', 'etikett gross');
+  pop('et6', W('hundert', 26), { x: X + 1480, y: 330 }, 'ding'); akzent(W('hundert', 26), .04);
+  // Vorsicht, frisch und heiß: Warnschild
+  neu('hz6', tpl('svgHeiss'), '', 'data-frei', 'dreieck');
+  pop('hz6', W('Vorsicht', 27) - .1, { x: X + 1450, y: 490 }, 'plopp'); wackeln('hz6', W('heiß', 27), 4, 4); akzent(W('Vorsicht', 27), .04);
+  bump('th6', W('heiß', 27), 1.06); bump('th6s', W('heiß', 27), 1.06);
+  led.aus(SE(27) + .55);
+}
+/* ================= 7 · der Bordstein ================= */
+{
+  const i = 7, X = SX(i), P = SE(27) + .15;
+  zuStation(P, i, 1.2);
+  lage(i, 'boden', 0, 1920, 765, 1080);
+  lage(i, 'schotter', 0, 905, 700, 800); lage(i, 'asph', 0, 905, RY, 700);
+  lage(i, 'schotter', 990, 1920, 665, 765);
+  lage(i, 'beton', 850, 1050, 845, 895, 'bt7a', 'border-radius:8px;transform-origin:50% 100%');
+  lage(i, 'beton', 985, 1090, 700, 870, 'bt7b', 'clip-path:polygon(0 0,28% 0,100% 100%,0 100%);transform-origin:50% 100%');
+  lage(i, 'beton', 855, 902, 770, 860, 'bt7c', 'clip-path:polygon(100% 0,100% 100%,0 100%);transform-origin:50% 100%');
+  ['bt7a', 'bt7b', 'bt7c'].forEach(id => akteur(id, { sy: 0 }, true));
+  glimm(i, 'g7f', 'der', 40, 895, 650, 712); glimm(i, 'g7g', 'der', 1000, 1870, 655, 772); glimm(i, 'g7b', 'der', 846, 1094, 692, 900);
+  const tf = tafel(i, { art: 'der', wort: 'Bordstein', zeile: ['Plural', 'die Bordsteine'], gr: 92 });
+  tf.ein(P + .35); tf.art(W('Der', 28)); tf.wort(W('Bordstein', 28)); tf.zeile(W('Die', 29));
+  const led = anzeige(i, 32, 'der', ['bordstein']); led.ein(SA(32) - .55);
+  // Der Bordstein: fällt in seine Lage zwischen Fahrbahn und Gehweg
+  neu('bd7', '', 'width:90px;height:250px', 'data-gruppe="bd7"', 'bord');
+  const tB = W('Bordstein', 28) - .3;
+  akteur('bd7', { x: X + 945, y: 735 - 520, o: 0 }); tw('bd7', tB, .1, { o: 1 }); tw('bd7', tB, .42, { y: 735 }, 'in'); landen('bd7', tB + .42); cue(tB + .42, 'plopp');
+  const staub = []; for (let k = 0; k < 6; k++) staub.push(deko('sb7' + k, 'staub'));
+  strom(staub, tB + .42, tB + .5, .7, (p, k) => ({ x: X + 945 + (k % 2 ? 1 : -1) * (40 + 90 * p) , y: 640 - 30 * p - (k % 3) * 10, o: .9 * (1 - p), s: .6 + p }));
+  akzent(tB + .45, .04);
+  // Die Bordsteine: von oben gesehen setzen sie sich nacheinander in eine Reihe
+  const PL = 640, PH = 290, PX = X + 1500, PY = 395;
+  const bs = [0, 1, 2, 3, 4].map(k => `<div class="bs" id="pb7${k}" style="left:${26 + k * 116}px;top:122px;width:108px;height:32px"></div>`).join('');
+  neu('pl7', `<div class="zone2 gw" style="top:0;height:122px;background:linear-gradient(90deg,var(--b200) 0 4px,transparent 4px) 0 0/56px 40px,linear-gradient(var(--b200) 0 4px,transparent 4px) 0 0/56px 40px,var(--b100)"></div>
+    <div class="zone2 fb" id="pl7f" style="top:154px;height:136px"><i style="left:60px"></i><i style="left:260px"></i><i style="left:460px"></i></div>
+    <div class="zone2" style="top:118px;height:40px;background:var(--b50)"></div>${bs}
+    <div class="d schnur" id="sn7" style="left:26px;top:120px;width:572px"></div><div class="d nagel" id="na7a" style="left:10px;top:114px"></div><div class="d nagel" id="na7b" style="left:598px;top:114px"></div>`,
+    `width:${PL}px;height:${PH}px`, 'data-gruppe="pl7"', 'plan');
+  const tP = W('Bordsteine', 29) - .45;
+  pop('pl7', tP, { x: PX, y: PY }, 'whoosh', 'out');
+  [0, 1, 2, 3, 4].forEach(k => { akteur('pb7' + k, { s: 0, y: k === 3 ? 13 : 0 }, true); tw('pb7' + k, tP + .35 + k * .13, .35, { s: 1 }, 'back'); cue(tP + .35 + k * .13, 'klick'); });
+  ['sn7', 'na7a', 'na7b'].forEach(id => akteur(id, { o: 0 }, true));
+  // Sie trennen den Gehweg von der Fahrbahn: beide Seiten leuchten, Etiketten
+  neu('et7g', 'Gehweg', '', '', 'etikett'); neu('et7f', 'Fahrbahn', '', '', 'etikett');
+  pop('et7g', W('Gehweg', 30) - .1, { x: X + 1430, y: 598 }, 'pop'); zeig('g7g', W('Gehweg', 30) - .1, 1.0);
+  pop('et7f', W('Fahrbahn', 30) - .1, { x: X + 650, y: 598 }, 'pop'); zeig('g7f', W('Fahrbahn', 30) - .1, 1.0);
+  wackeln('bd7', W('trennen', 30), 3, 1.5); akzent(W('trennen', 30), .03);
+  // Du setzt sie in Beton: das Betonbett wächst um den Stein
+  const tBe = W('Beton', 31) - .35;
+  tw('bt7a', tBe, .45, { sy: 1 }, 'sanft'); tw('bt7c', tBe + .15, .45, { sy: 1 }, 'sanft'); tw('bt7b', tBe + .25, .5, { sy: 1 }, 'sanft'); cue(tBe, 'kritzeln');
+  zeig('g7b', W('Beton', 31) + .2, .9); akzent(W('Beton', 31), .035);
+  aus(['et7g', 'et7f'], SA(32) - .3, .3);
+  // Der Bordstein muss genau in der Linie stehen: Richtschnur spannt sich, der vierte Stein rückt in die Linie
+  const tS = W('genau', 32) - .2;
+  tw(['na7a', 'na7b'], tS - .1, .2, { o: 1 }); cue(tS - .1, 'klick');
+  akteur('sn7', { o: 0, sx: 0 }, true); el('sn7').style.transformOrigin = '0 50%'; tw('sn7', tS, .1, { o: 1 }); tw('sn7', tS, .5, { sx: 1 }, 'out'); cue(tS, 'scan');
+  wackeln('pb73', W('Linie', 32) - .1, 3, 4);
+  tw('pb73', W('stehen', 32) - .15, .45, { y: 0 }, 'sanft'); cue(W('stehen', 32), 'klick');
+  haken('ok7', W('stehen', 32) + .25, PX + 280, PY - 118);
+  akzent(W('stehen', 32), .035);
+  led.aus(SE(32) + .55);
+}
+
+/* ================= 8 · der Pflasterstein ================= */
+{
+  const i = 8, X = SX(i), P = SE(32) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 765, 1080); lage(i, 'schotter', 0, 1920, 665, 765);
+  lage(i, 'sand', 0, 760, 645, 665); lage(i, 'pflrow', 0, 760, 610, 645); lage(i, 'sand', 1700, 1920, 645, 665); lage(i, 'pflrow', 1700, 1920, 610, 645);
+  lage(i, 'sand', 760, 1700, 645, 665, 'sa8', 'transform-origin:0 50%'); akteur('sa8', { sx: 0 }, true);
+  const FU = []; for (let k = 0; k < 12; k++) FU.push(lage(i, 'fuge', 764 + k * 72 + 64, 764 + k * 72 + 72, 612, 645, 'fu8' + k));
+  FU.forEach(id => akteur(id, { sy: 0 }, true));
+  const tf = tafel(i, { art: 'der', wort: 'Pflasterstein', zeile: ['Plural', 'die Pflastersteine'], gr: 70, boden: GW });
+  tf.ein(P + .35); tf.art(W('Der', 33)); tf.wort(W('Pflasterstein', 33)); tf.zeile(W('Die', 34));
+  const led = anzeige(i, 37, 'der', ['pflastersteine']); led.ein(SA(37) - .55);
+  // Bettung aus Splitt zieht sich glatt, dann landen die Steine einer nach dem anderen – mit schmalen Fugen
+  tw('sa8', P + .9, .8, { sx: 1 }, 'inout'); cue(P + .9, 'kritzeln');
+  const SX8 = k => X + 764 + k * 72 + 32;
+  for (let k = 0; k < 13; k++) {
+    neu('ps8' + k, '', 'width:64px;height:35px', 'data-gruppe="ps8"', 'stein');
+    const t = k === 0 ? W('Pflasterstein', 33) - .3 : W('Pflastersteine', 34) - .45 + k * .08;
+    akteur('ps8' + k, { x: SX8(k), y: 627.5 - 260, o: 0 }); tw('ps8' + k, t, .08, { o: 1 }); tw('ps8' + k, t, .3, { y: 627.5 }, 'in'); landen('ps8' + k, t + .3);
+    cue(t + .3, k % 2 ? 'klick' : 'plopp');
+  }
+  akzent(W('Pflasterstein', 33), .03); akzent(W('Pflastersteine', 34) + .4, .03);
+  // Damit baust du Gehwege, Plätze und Einfahrten: drei Flächen von oben
+  const kach = [
+    ['ka8a', W('Gehwege', 35), X + 980, `<div class="gb" style="left:0;right:0;top:118px;bottom:0;background:var(--ink)"></div><div class="gb" style="left:0;right:0;top:106px;height:12px;background:var(--n300)"></div><div class="gr" style="left:0;right:0;top:30px;height:76px"></div>`],
+    ['ka8b', W('Plätze', 35), X + 1300, `<div class="gr" style="left:14px;right:14px;top:14px;bottom:14px"></div><div class="gb" style="left:92px;top:62px;width:46px;height:46px;border-radius:99px;background:var(--success)"></div><div class="gb" style="left:150px;top:118px;width:46px;height:12px;border-radius:4px;background:var(--b600)"></div>`],
+    ['ka8c', W('Einfahrten', 35), X + 1620, `<div class="gb" style="left:40px;width:150px;top:0;height:54px;border-radius:0 0 6px 6px;background:repeating-linear-gradient(var(--b200) 0 10px,var(--b300) 10px 13px)"></div><div class="gr" style="left:50px;width:130px;top:54px;bottom:24px"></div><div class="gb" style="left:0;right:0;bottom:0;height:24px;background:var(--ink)"></div>`],
+  ];
+  kach.forEach(([id, t, x, inhalt]) => { neu(id, inhalt, '', 'data-frei', 'kachel'); pop(id, t - .15, { x, y: 370, s: 1.3 }, 'pop'); aus(id, SA(36) + .1, .3); });
+  // Zwischen den Steinen bleibt eine schmale Fuge: Lupe auf eine Fuge, dann rieselt Sand hinein
+  const JX = X + 764 + 6 * 72 + 68;
+  neu('rg8', '', 'width:86px;height:86px;border:6px solid var(--b500);border-radius:99px', 'data-frei');
+  pop('rg8', W('Zwischen', 36), { x: JX, y: 628 }, 'pop');
+  neu('lu8', `<div style="position:absolute;left:0;top:40px;width:94px;height:120px;border-radius:12px;background:linear-gradient(var(--b200),var(--b300))"></div>
+    <div style="position:absolute;right:0;top:40px;width:94px;height:120px;border-radius:12px;background:linear-gradient(var(--b200),var(--b300))"></div>
+    <div id="lu8f" style="position:absolute;left:94px;top:40px;width:32px;height:120px;background:var(--n200);transform-origin:50% 100%"></div>
+    <div class="pfeil2" style="position:absolute;left:72px;top:174px;width:76px;height:8px"></div>`, 'width:220px;height:220px;background:var(--b50)', 'data-frei', 'lupe68');
+  pop('lu8', W('Steinen', 36) - .1, { x: JX, y: 410 }, 'pop'); akzent(W('schmale', 36), .04);
+  akteur('lu8f', { sy: 0 }, true);
+  const tF = W('Fuge', 36) - .05;
+  tw('lu8f', tF, .6, { sy: 1 }, 'out');
+  FU.forEach((id, k) => tw(id, tF + .1 + k * .04, .4, { sy: 1 }, 'out')); cue(tF, 'kritzeln');
+  const sand = []; for (let k = 0; k < 16; k++) sand.push(deko('sd8' + k, 'korn', 'width:8px;height:8px;background:var(--n300)'));
+  strom(sand, tF, tF + .7, .45, (p, k) => ({ x: X + 764 + (k % 12) * 72 + 68, y: 540 + 80 * p, o: 1 - p * .6 }));
+  aus(['rg8', 'lu8'], SA(37) - .25, .3);
+  // Leg die Pflastersteine Reihe für Reihe: von oben gesehen füllt sich die Fläche Reihe um Reihe
+  const r1 = wortZeit('Reihe', satz(37).start), r2 = wortZeit('Reihe', r1.ende);
+  const RZ = [A(r1.start) - .1, A(wortZeit('für', r1.ende).start) - .05, A(r2.start) - .1, A(r2.ende) + .1];
+  let st = '';
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 10; c++) {
+    const x = 24 + c * 62 - (r % 2 ? 31 : 0); if (x < 6 || x + 56 > 634) continue;
+    st += `<div class="ps" id="pp8${r}${c}" style="left:${x}px;top:${24 + r * 60}px;width:56px;height:54px"></div>`;
+  }
+  neu('pl8', `<div class="zone2" style="top:0;bottom:0;background:var(--n200)"></div>${st}`, 'width:640px;height:270px', 'data-gruppe="pl8"', 'plan');
+  pop('pl8', SA(37) - .2, { x: X + 1390, y: 405 }, 'whoosh', 'out');
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 10; c++) { const e = el(`pp8${r}${c}`); if (!e) continue;
+    akteur(e, { s: 0 }, true); tw(e, RZ[r] + c * .035, .3, { s: 1 }, 'back'); }
+  RZ.forEach(t => cue(t, 'klick'));
+  akzent(RZ[2], .035);
+  led.aus(SE(37) + .55);
+}
+
+/* ================= 9 · die Rüttelplatte ================= */
+{
+  const i = 9, X = SX(i), P = SE(37) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 765, 1080); lage(i, 'schotter', 0, 1920, 665, 765); lage(i, 'sand', 0, 1920, 645, 665);
+  lage(i, 'pflrow', 0, 760, 610, 645); lage(i, 'pflrow', 1700, 1920, 610, 645);
+  for (let k = 0; k < 12; k++) lage(i, 'fuge', 764 + k * 72 + 64, 764 + k * 72 + 72, 612, 645);
+  const tf = tafel(i, { art: 'die', wort: 'Rüttelplatte', zeile: ['Plural', 'die Rüttelplatten'], gr: 74, boden: GW });
+  tf.ein(P + .35); tf.art(W('Die', 38)); tf.wort(W('Rüttelplatte', 38)); tf.zeile(W('Die', 39));
+  const led = anzeige(i, 42, 'die', ['rüttelplatte']); led.ein(SA(42) - .55);
+  const SX9 = k => X + 764 + k * 72 + 32;
+  for (let k = 0; k < 13; k++) { neu('ps9' + k, '', 'width:64px;height:35px', 'data-gruppe="ps9"', 'stein'); akteur('ps9' + k, { x: SX9(k), y: 625.5 }); }
+  // Rüttelplatte gleitet herein
+  const RB = 300, rk = RB / 160, RYc = GW - (150 - 80) * rk;
+  bild('rp9', 't-ruettel', RB, 'data-gruppe="ps9"');
+  akteur('rp9', { x: X + 2160, y: RYc });
+  const tR = W('Rüttelplatte', 38) - .5;
+  tw('rp9', tR, 1.1, { x: X + 1560 }, 'sanft'); cue(tR, 'whoosh'); ruetteln('rp9', tR, tR + 1.1, 1.5);
+  akzent(W('Rüttelplatte', 38) + .2, .03); federn('rp9', W('Rüttelplatten', 39));
+  // Sie rüttelt das Pflaster fest: sie fährt über die Steine, die Steine setzen sich, Staub
+  const t1 = W('rüttelt', 40) - .2, t2 = SE(40) + .5;
+  tw('rp9', t1, t2 - t1, { x: X + 950 }, 'inout'); ruetteln('rp9', t1, t2, 3);
+  const tK = W('kommt', 42) - .1, tKe = SE(42) + .4;
+  tw('rp9', tK, tKe - tK, { x: X + 1500 }, 'inout'); ruetteln('rp9', tK - .1, tKe, 3);
+  const plx = t => wertBei('rp9', 'x', t) - X;
+  HOOKS.push(t => { if (t < t1) return; const m = minBis(plx, t1, t);
+    for (let k = 0; k < 13; k++) { const sx = SX9(k) - X; if (m - 92 < sx + 32) el('ps9' + k).style.transform += ` translateY(${(4 * clamp((t - t1) / 3)).toFixed(2)}px)`; } });
+  const staub = []; for (let k = 0; k < 8; k++) staub.push(deko('sb9' + k, 'staub'));
+  strom(staub, t1, t2, .8, (p, k, z, t) => ({ x: X + plx(t) + 120 + 60 * p + (k % 3) * 10, y: 600 - 40 * p, o: .85 * Math.sin(Math.PI * p), s: .5 + p }));
+  akzent(W('fest', 40), .035);
+  // Sie ist laut, darum trägst du Gehörschutz: Schallbögen, Amir bekommt Kapseln auf die Ohren
+  portrait('am9', 'Amir', 230);
+  pop('am9', SA(41) - .1, { x: X + 1340, y: 320 }, 'pop');
+  [0, 1, 2].forEach(n => { const id = neu('sl9' + n, tpl('svgBogen'), `width:${24 + n * 9}px`, 'data-frei');
+    akteur(id, { x: X + 1110 + n * 30, y: 440, s: 0 }); const t = W('laut', 41) - .1 + n * .1;
+    tw(id, t, .35, { s: 1 }, 'back'); for (let r = 0; r < 4; r++) { tw(id, t + .4 + r * .45, .2, { s: 1.15 }, 'sinus'); tw(id, t + .6 + r * .45, .25, { s: 1 }, 'sinus'); }
+    aus(id, W('Gehörschutz', 41) + .4, .3); });
+  cue(W('laut', 41), 'plopp'); bump('am9', W('laut', 41) + .1, 1.05); akzent(W('laut', 41), .035);
+  GEHOER.am9 = W('Gehörschutz', 41) - .15; cue(GEHOER.am9, 'whoosh'); nicken('am9', W('Gehörschutz', 41) + .3, 1);
+  FROH.push(['am9', W('Gehörschutz', 41) + .5, 99]); akzent(W('Gehörschutz', 41), .035);
+  aus('am9', SA(42) - .7, .3);
+  GEHOER.led9p = SA(42) - .3;
+  led.aus(SE(42) + .55);
+}
+
+/* ================= 10 · das Gefälle ================= */
+{
+  const i = 10, X = SX(i), P = SE(42) + .15;
+  zuStation(P, i);
+  lage(i, 'boden', 0, 1920, 765, 1080);
+  lage(i, 'sand', 0, 770, 645, 665); lage(i, 'pflrow', 0, 762, 610, 645);
+  // kippbare Fläche: Bettung + Steine, Drehpunkt an der Rinne (856/610)
+  const steine = Array.from({ length: 15 }, (_, k) => `<div class="stein" style="position:absolute;left:${4 + k * 72}px;top:10px;width:64px;height:35px"></div><div class="fuge" style="position:absolute;left:${68 + k * 72}px;top:12px;width:8px;height:33px"></div>`).join('');
+  el('st10').insertAdjacentHTML('beforeend', `<div class="sch" id="kp10" style="left:856px;top:600px;width:1100px;height:130px;transform-origin:0 10px">
+    <div class="sand" style="position:absolute;left:0;right:0;top:45px;height:85px"></div>${steine}</div>`);
+  akteur('kp10', {}, true);
+  lage(i, 'schotter', 0, 1920, 665, 765);
+  // Winkelanzeige (gestrichelte Waagerechte + Bogen), wird bei „schräg“ sichtbar
+  el('st10').insertAdjacentHTML('beforeend', `<svg class="sch" id="wi10" style="left:856px;top:540px;width:520px;height:90px;overflow:visible" viewBox="0 0 520 90">
+    <path d="M0 70H520" stroke="var(--b500)" stroke-width="4" stroke-dasharray="14 10"/><path d="M380 70A380 380 0 0 0 379.7 60" stroke="var(--b500)" stroke-width="7" fill="none" stroke-linecap="round"/></svg>`);
+  akteur('wi10', { o: 0 }, true);
+  const tf = tafel(i, { art: 'das', wort: 'Gefälle', zeile: ['Plural', 'die Gefälle'], gr: 120, boden: GW });
+  tf.ein(P + .35); tf.art(W('Das', 43)); tf.wort(W('Gefälle', 43)); tf.zeile(SE(43) + .2);
+  const led = anzeige(i, 46, 'das', ['gefälle']); led.ein(SA(46) - .55);
+  // Rinne mit Rost
+  neu('ri10', '<div class="k"></div><div class="i"></div><div class="w" id="ri10w"></div><div class="rost"></div>', '', 'data-gruppe="ri10"', 'rinne');
+  pop('ri10', P + .8, { x: X + 812, y: 646 }, 'plopp', 'out');
+  akteur('ri10w', {}, true);
+  // Regentropfen (hinter der Wasserwaage)
+  const tR = W('Regenwasser', 45) - .2;
+  const ANG = 1.5 * Math.PI / 180, TAN = Math.tan(ANG);
+  const fl = x => 610 - (x - X - 856) * TAN;                 // Oberfläche nach dem Kippen
+  const TR = [[X + 1780, 0], [X + 1680, .35], [X + 1580, .7]];
+  TR.forEach(([x, d], k) => { const id = deko('tr10' + k, 'tropfen');
+    akteur(id, { x, y: 330, o: 0, r: 45, s: .9 });
+    const t = tR + d;
+    set(id, t, { o: 1 }); tw(id, t, .35, { y: fl(x) - 13 }, 'in'); cue(t + .35, 'klick');
+    tw(id, t + .35, .12, { sy: .7, sx: 1.25 }, 'sinus'); tw(id, t + .47, .2, { sy: 1, sx: 1 }, 'sanft');
+    const tRoll = t + .5, dRoll = 1.3 - k * .15;
+    tw(id, tRoll, dRoll, { x: X + 820, y: fl(X + 862) - 13 }, 'in');
+    tw(id, tRoll + dRoll, .25, { y: 660, o: 0, s: .5 }, 'in');
+    if (k === 0) cue(tRoll + dRoll, 'plopp');
+  });
+  const tVoll = tR + .5 + 1.3;
+  HOOKS.push(t => { const q = clamp((t - tVoll) / 1.2); el('ri10w').style.height = (40 * q).toFixed(1) + 'px'; });
+  // Wasserwaage (Libelle als eigene Ebene)
+  const WB = 300, wk = WB / 160;
+  neu('ww10', `<div style="position:absolute;left:0;top:${-64 * wk}px;width:${WB}px">${kopie('t-waage', 'ww10')}</div>
+    <i id="ww10b" style="position:absolute;left:${80 * wk - 15}px;top:${(77 - 64) * wk - 9}px;width:30px;height:18px;border-radius:99px;background:var(--success)"></i>`,
+    `width:${WB}px;height:${26 * wk}px`, 'data-gruppe="ww10"');
+  const WXc = X + 1300, WY0 = GW - 13 * wk;
+  akteur('ww10b', {}, true);
+  const tW = W('Gefälle', 43) + .2;
+  akteur('ww10', { x: WXc, y: WY0 - 300, o: 0, r: -6 }); tw('ww10', tW, .12, { o: 1 }); tw('ww10', tW, .45, { y: WY0, r: 0 }, 'in'); landen('ww10', tW + .45); cue(tW + .45, 'klick');
+  // Die Fläche ist ein bisschen schräg: die Fläche kippt, die Blase wandert, Winkel erscheint
+  const tS = W('schräg', 44) - .45, dS = .9;
+  tw('kp10', tS, dS, { r: -1.5 }, 'inout'); cue(tS, 'scan');
+  tw('ww10', tS, dS, { r: -1.5, y: WY0 - (WXc - X - 856) * TAN }, 'inout');
+  tw('ww10b', tS + .2, .8, { x: 15 }, 'sanft');
+  tw('wi10', tS + .3, .4, { o: 1 }); akzent(W('schräg', 44), .04);
+  tw('wi10', SA(45) + .6, .4, { o: 0 });
+  // So kann das Regenwasser abfließen: kleine Wolke, Tropfen rollen in die Rinne
+  bild('wo10', 't-wolke', 230, 'data-frei');
+  pop('wo10', tR - .4, { x: X + 1680, y: 300 }, 'pop'); aus('wo10', SA(46) - .2, .3);
+  akzent(W('abfließen', 45), .035);
+  // Prüf das Gefälle, sonst bleibt das Wasser stehen
+  bump('ww10', W('Prüf', 46), 1.06); haken('ok10', W('Gefälle', 46), WXc, 470);
+  aus('ok10', W('sonst', 46) - .2, .25);
+  neu('oh10', `<div style="position:absolute;left:40px;right:40px;top:112px;height:26px;border-radius:6px;background:linear-gradient(var(--b200),var(--b300))"></div>
+    <div id="oh10p" style="position:absolute;left:120px;top:96px;width:190px;height:26px;border-radius:50%;background:var(--info)"></div>`, '', 'data-gruppe="oh10"', 'inset');
+  const tO = W('sonst', 46) - .1;
+  pop('oh10', tO, { x: X + 1350, y: 380 }, 'pop');
+  akteur('oh10p', { sx: 0, sy: .4 }, true); tw('oh10p', W('Wasser', 46) - .1, .6, { sx: 1, sy: 1 }, 'out');
+  plakette('kr10', 'rot', 'svgKreuz', 'data-gruppe="oh10"');
+  pop('kr10', W('stehen', 46), { x: X + 1535, y: 312 }, 'plopp'); wackeln('kr10', W('stehen', 46) + .4, 3, 6);
+  akzent(W('stehen', 46), .035);
+  led.aus(SE(46) + .4);
+}
+
+/* ================= 11 · Übersicht: die fertige Straße – Dialog Geselle und Amir, dann Regen ================= */
+{
+  const tZ = SE(46) + .15;
+  fahrt(tZ, OX + 960, 540, 1, 2.2, .32, 1500);
+  // Wolken am Himmel auf dem Weg
+  [[SX(10) + 2400, -700, 320], [SX(10) + 3300, -1050, 260], [OX - 200, -620, 300], [SX(10) + 1500, -1200, 240]].forEach(([x, y, b], k) => {
+    const id = deko('hw' + k, '', `width:${b}px`, kopie('t-wolke', 'hw' + k)); akteur(id, { x, y }); tw(id, tZ, 3, { x: x - 160 }, 'lin'); });
+  cue(tZ + 2.1, 'plopp');
+  // Ab hier: Autos fahren nicht mehr, der Deckel ist weg (Schnitt bleibt offen)
+  const X = OX, T0 = tZ + 1.9;
+  portrait('gs11', 'Geselle', 240); portrait('am11', 'Amir', 240);
+  ein('gs11', T0, { x: X + 260, y: 270 }, { y: 110 }, 'pop');
+  ein('am11', T0 + .15, { x: X + 1665, y: 270 }, { y: 110 }, 'pop');
+  nicken('am11', W('Amir', 47) + .1, 1);
+  // Straßenschild „Schulstraße“
+  neu('ss11p', '', 'height:180px', 'data-gruppe="ss11"', 'pfosten'); neu('ss11', 'Schulstraße', '', 'data-gruppe="ss11"', 'strschild');
+  akteur('ss11p', { x: X + 1330, y: 572 - 90, sy: 0 });
+  tw('ss11p', W('Schulstraße', 47) - .45, .35, { sy: 1 }, 'sanft');
+  pop('ss11', W('Schulstraße', 47) - .15, { x: X + 1330, y: 400 }, 'pop'); akzent(W('Schulstraße', 47), .03);
+  zeig('g0gw', W('Gehweg', 47) - .1, 1.0);
+  // Wörter als Chips: ploppen in der Artikelfarbe auf und reihen sich unten im Boden ein
+  const CH = [['die', 'Tragschicht', W('Tragschicht', 48), 'g0ts'], ['die', 'Walze', W('gewalzt', 48), null], ['die', 'Bordsteine', W('Bordsteine', 49), 'g0bs'], ['die', 'Pflastersteine', W('Pflastersteine', 50), 'g0ps'],
+              ['das', 'Gefälle', W('Gefälle', 50), null], ['die', 'Rüttelplatte', W('Rüttelplatte', 51), null], ['die', 'Warnweste', W('Warnweste', 53), null]];
+  const breite = t => Math.round(t.length * 15.6 + 150), GAP = 20;
+  [CH.slice(0, 4), CH.slice(4)].forEach((reihe, ri) => {
+    const summe = reihe.reduce((s, c) => s + breite(c[1]), 0) + GAP * (reihe.length - 1);
+    let cx = 960 - summe / 2;
+    reihe.forEach(([art, text, t, gl], n) => {
+      const w = breite(text), id = neu(`ch11${ri}${n}`, chipHTML(art, text), `width:${w}px`, '', 'chip ' + art);
+      const x = X + cx + w / 2, y = 900 + ri * 80; cx += w + GAP;
+      akteur(id, { x, y: y - 40, s: 0, o: 0 });
+      tw(id, t - .05, .2, { o: 1 }); tw(id, t - .05, .5, { s: 1.18 }, 'back'); tw(id, t + .55, .5, { s: 1, y }, 'sanft'); cue(t, 'pop');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const q = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(12 * q).toFixed(1)}px color-mix(in srgb, var(--b500) ${Math.round(40 * q)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      if (gl) zeig(gl, t - .05, 1.1);
+    });
+  });
+  // gewalzt: kleine Walze rollt über die Fahrbahn
+  const MW = 230, mk = MW / 160, MT = 44 * mk * 160 / 140;
+  bild('wz11', 't-walze', MW, 'data-gruppe="wz11"'); bild('wz11v', 't-trommel', MT, 'data-gruppe="wz11" data-dreht'); bild('wz11h', 't-trommel', MT, 'data-gruppe="wz11" data-dreht');
+  const mw = fahrzeug([['wz11', 0, 0], ['wz11v', (42 - 80) * mk, (128 - 80) * mk], ['wz11h', (122 - 80) * mk, (128 - 80) * mk]], ['wz11v', 'wz11h'], 22 * mk);
+  const tWz = W('gewalzt', 48) - .3;
+  mw.setzen(X + 420, 610 - 70 * mk, { o: 0 });
+  tw(mw.ids, tWz, .25, { o: 1 }); mw.fahren(tWz, X + 700, 610 - 70 * mk, 1.2, 'inout'); ruetteln('wz11', tWz, tWz + 1.2, 2);
+  tw(mw.ids, tWz + 1.5, .35, { o: 0 });
+  nicken('gs11', W('gewalzt', 48) + .2, 1);
+  // Gefälle zur Straße: Pfeil auf dem Gehweg zeigt zur Fahrbahn
+  neu('gf11', '<svg viewBox="0 0 300 40"><path d="M290 14L30 24" stroke="var(--b500)" stroke-width="9" stroke-linecap="round"/><path d="M44 8L10 25l36 13Z" fill="var(--b500)"/></svg>', 'width:300px', 'data-frei');
+  pop('gf11', W('Gefälle', 50) - .1, { x: X + 1560, y: 520 }, 'pop'); zeig('g0gw', W('Gefälle', 50), .9); aus('gf11', SA(51) + .3, .3);
+  nicken('gs11', W('Straße', 50), 1);
+  // Rüttelplatte: kleine Platte rüttelt auf dem Gehweg
+  const RB = 170, rk = RB / 160;
+  bild('rp11', 't-ruettel', RB, 'data-gruppe="rp11"');
+  pop('rp11', W('Rüttelplatte', 51) - .2, { x: X + 1560, y: 574 - 70 * rk }, 'pop');
+  ruetteln('rp11', W('Rüttelplatte', 51) + .2, SE(51) + .6, 2.5); tw('rp11', W('Rüttelplatte', 51) + .2, 1.2, { x: X + 1700 }, 'inout'); aus('rp11', SE(51) + .6, .3);
+  // Alles klar. Warnweste hab ich an!
+  nicken('gs11', W('Alles', 52), 1);
+  GLANZ.push(['am11', W('Warnweste', 53) - .1, W('Warnweste', 53) + .8]); cue(W('Warnweste', 53), 'ding'); bump('am11', W('Warnweste', 53), 1.06);
+  FROH.push(['gs11', SE(52), 99]);
+  // Überraschung: ein Regenschauer zieht über die fertige Straße – das Wasser läuft ab, keine Pfütze
+  const tW = SE(53) - .4, tWe = tW + 3.6;
+  [[X + 640, 175, 300, -500], [X + 960, 150, 330, 0], [X + 1280, 178, 300, 500]].forEach(([x, y, b, dx], k) => {
+    bild('rw11' + k, 't-wolke', b, 'data-frei'); akteur('rw11' + k, { x: x + dx * 1.6, y: y - 40, o: 0 });
+    tw('rw11' + k, tW - .5 + k * .1, .3, { o: 1 }); tw('rw11' + k, tW - .5 + k * .1, .9, { x, y }, 'sanft');
+    tw('rw11' + k, tWe, .5, { o: 0, y: y - 60 }, 'in');
+  });
+  cue(tW - .4, 'whoosh');
+  const regen = []; for (let k = 0; k < 46; k++) regen.push(deko('rg11' + k, 'regen'));
+  strom(regen, tW + .2, tWe - .3, .5, (p, k) => { const x = X + 520 + ((k * 37) % 46) * 19; const boden = x - X < 1110 ? 610 : 575;
+    return { x: x - 20 * p, y: 235 + (boden - 250) * p, o: p < .95 ? .85 : 0, r: 8 }; });
+  // Wasser fließt: Fahrbahn → Gully, Gehweg → Fahrbahn, Schacht und Kanal füllen sich
+  deko('fl11a', 'strom', `width:600px`); deko('fl11b', 'strom', 'width:420px');
+  akteur('fl11a', { x: X + 760, y: 604, o: 0 }); akteur('fl11b', { x: X + 1450, y: 566, o: 0, r: -.9 });
+  tw(['fl11a', 'fl11b'], tW + .8, .4, { o: 1 }); tw(['fl11a', 'fl11b'], tWe + .3, .5, { o: 0 });
+  HOOKS.push(t => { el('fl11a').style.backgroundPosition = `${(t * 120).toFixed(1)}px 0`; el('fl11b').style.backgroundPosition = `${(-t * 100).toFixed(1)}px 0`; });
+  tw('wq0', tW + 1.2, .8, { sy: 1 }, 'in'); tw('wk0', tW + 1.9, 1.0, { sx: 1 }, 'out'); cue(tW + 1.3, 'plopp');
+  tw(['wq0', 'wk0'], tWe + .4, .6, { o: 0 });
+  haken('ok11', tW + 2.4, X + 1050, 470); akzent(tW + 2.4, .04);
+  FROH.push(['am11', SE(53), 99]); cue(tW + 2.4, 'erfolg');
+  huepfen('am11', tW + 2.5, 16); huepfen('gs11', tW + 2.65, 14);
+}
 /*SZENEN*/
+
+
 
 /* ---------- Abspann: die Schichten stapeln sich von unten – zuletzt die Asphaltdecke mit dem Satz ---------- */
 const AB = ENDE_SPRACHE + 3.4;
@@ -562,6 +1191,6 @@ const AB = ENDE_SPRACHE + 3.4;
 akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + 1.8, .7, { o: 1, y: 0 }, 'weich');
 akteur('asStrich', { sx: 0 }, true); el('asStrich').style.transformOrigin = '0 50%'; tw('asStrich', AB + 2.1, .8, { sx: 1 }, 'inout'); cue(AB + 2.1, 'scan');
 
-start(16);
+start(AB + 4.4, AB + 2.6);
 </script>
 </body></html>
