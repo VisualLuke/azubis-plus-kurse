@@ -178,7 +178,7 @@
 <div id="kamera"><div id="welt">
   <!-- Bühnen = Bildausschnitte der Stationen (unsichtbar, für die Kantenprüfung) -->
   <div class="a buehne leer" id="bA"></div><div class="a buehne leer" id="bB"></div><div class="a buehne leer" id="bC"></div>
-  <div class="a buehne leer" id="bD"></div><div class="a buehne leer" id="bE"></div><div class="a buehne leer" id="bG"></div><div class="a buehne leer" id="bH"></div>
+  <div class="a buehne leer" id="bD"></div><div class="a buehne leer" id="bE"></div><div class="a buehne leer" id="bH"></div><div class="a buehne leer" id="bG"></div>
 
   <!-- Landkarte: Land, Weg, Steine (wird im Skript gefüllt) -->
   <svg class="a" id="karte" viewBox="0 0 5000 2700" style="width:5000px;height:2700px" data-frei>
@@ -260,9 +260,9 @@
 
   <!-- 4 · Konto -->
   <div class="a env" id="env4" data-gruppe="env4"><div id="env4h">{{umschlag-hinten}}</div>
-    <div class="a" id="karte4" style="width:170px">{{karte}}</div>
+    <div class="a" id="karte4" data-gruppe="env4" style="width:170px">{{karte}}</div>
     <div id="env4v">{{umschlag-vorne}}</div></div>
-  <div class="a lab gruen" id="geh4">Gehalt</div>
+  <div class="a lab gruen" id="geh4" data-gruppe="env4">Gehalt</div>
   <div class="a" id="passZu4" style="width:150px">{{pass}}</div>
   <div class="a pass-auf" id="passAuf4"><div class="seite foto"><div class="portrait foto46" data-f="mai"></div><div class="z"><i></i><i class="k"></i></div></div>
     <div class="seite"><i></i><i></i><i class="k"></i><i></i><i class="k"></i></div></div>
@@ -400,7 +400,7 @@ const Wp = (f, sx, sy) => [FR[f][0] - 960 + sx, FR[f][1] - 540 + sy];        // 
 Object.entries(FR).forEach(([k, [x, y]]) => akteur('b' + k, { x, y }));
 const STEINE = [[1000, 800], [1330, 760], [1620, 770], [1950, 720], [2400, 700], [3850, 700], [3850, 2150], [2400, 2150],
   [2050, 2250], [1750, 2300], [1450, 2280], [1180, 2200], [980, 2050], [900, 1830]];
-const M_END = [560, 900];
+const M_END = [585, 900];
 // Wegpunkte: Steine (Index) und Zwischenpunkte für die Kurven
 const PUNKTE = [STEINE[0], STEINE[1], STEINE[2], STEINE[3], STEINE[4], [2850, 830], [3300, 720], STEINE[5], [4300, 860], [4560, 1350], [4520, 1900], [4250, 2330],
   STEINE[6], [3350, 2330], [2900, 2310], STEINE[7], STEINE[8], STEINE[9], STEINE[10], STEINE[11], STEINE[12], STEINE[13], [780, 1420], M_END];
@@ -494,7 +494,7 @@ const geh = (t, d, L) => { tw('wegP', t, d, { draw: L / LTOT }, 'inout'); };
 const schritt = L => {
   for (let k = 0; k < STOPS.length - 1; k++) if (L >= STOPS[k] - .01 && L <= STOPS[k + 1] + .01) {
     const len = STOPS[k + 1] - STOPS[k], n = Math.max(1, Math.round(len / 110));
-    return 16 * Math.abs(Math.sin(Math.PI * n * (L - STOPS[k]) / len));
+    return 18 * Math.sin(Math.PI * n * (L - STOPS[k]) / len) ** 2;
   }
   return 0;
 };
@@ -537,6 +537,14 @@ HOOKS.push(t => {
   z *= 1 + .01 * (1 - Math.cos(t * 2 * Math.PI / 18));
   $('#kamera').style.transform = `scale(${z.toFixed(5)})`;
 });
+// Prüfung: nur die Bühne der Station, auf die die Kamera gerade schaut, ist „da“
+const BUEHNEN = Object.keys(FR).map(k => [el('b' + k), FR[k]]);
+HOOKS.push(t => {
+  const cx = 960 - wert(kamera, 'x', t), cy = 540 - wert(kamera, 'y', t);
+  let best = null, bd = 1e9;
+  BUEHNEN.forEach(([e, [x, y]]) => { const d = Math.hypot(x - cx, y - cy); if (d < bd) { bd = d; best = e; } });
+  BUEHNEN.forEach(([e]) => { e.style.display = e === best ? '' : 'none'; });
+});
 // Bildpunkt einer Weltposition, wenn die Kamera auf Station f steht (Zoom 1)
 const Bild = (f, [wx, wy]) => [wx - FR[f][0] + 960, wy - FR[f][1] + 540];
 
@@ -561,9 +569,9 @@ cam(0, 0, FR.A);
   // Mai hüpft mit ihrem Koffer zur Tür
   akteur('mai', { x: 420, y: -60, o: 0, s: 1.2 });
   tw('mai', t1 - .2, .15, { o: 1 });
-  [[220, -100], [20, -135], [-190, -160]].forEach(([x, y], i) => { const t0 = t1 - .15 + i * .38; tw('mai', t0, .38, { x, y }, 'inout', { bogen: 40 }); landen('mai', t0 + .38, .6); cue(t0 + .38, 'tipp'); });
+  [[260, -100], [80, -135], [-150, -160]].forEach(([x, y], i) => { const t0 = t1 - .15 + i * .38; tw('mai', t0, .38, { x, y }, 'inout', { bogen: 40 }); landen('mai', t0 + .38, .6); cue(t0 + .38, 'tipp'); });
   akteur('koffer1', { x: 1560, y: 700, o: 0 });
-  tw('koffer1', t1 - .05, .15, { o: 1 }); tw('koffer1', t1 - .05, 1.2, { x: 945, y: 610 }, 'inout'); landen('koffer1', t1 + 1.15, .7); cue(t1 + 1.15, 'plopp');
+  tw('koffer1', t1 - .05, .15, { o: 1 }); tw('koffer1', t1 - .05, 1.2, { x: 985, y: 610 }, 'inout'); landen('koffer1', t1 + 1.15, .7); cue(t1 + 1.15, 'plopp');
   froh('mai', t1 + 1.0);
   // der Schlüssel dreht sich im Schloss, die Tür geht auf
   pop('schl1', W('Wohnung', 1) - .1, { x: 680, y: 552, sx: -1 }, 'pop');
@@ -579,9 +587,9 @@ cam(0, 0, FR.A);
   // plötzlich so viele Aufgaben
   const tP = W('plötzlich', 3) - .1;
   weg('schl1', tP); tw('tuerAi', tP, .3, { sx: 1 }, 'in'); aus('koffer1', tP + .1); aus(['betr1', 'kal1'], tP + .15);
-  tw('mai', tP + .1, .6, { x: -40, y: -100, s: 1.4 }, 'inout'); cue(tP + .1, 'whoosh');
+  tw('mai', tP + .1, .6, { x: 80, y: -100, s: 1.4 }, 'inout'); cue(tP + .1, 'whoosh');
   mund('mai', W('viele', 3), 'auf');
-  const OC = [960, 700 - 90 * 1.4];
+  const OC = [1080, 700 - 90 * 1.4];
   const SY = ['sy1', 'sy2', 'sy3', 'sy4', 'sy5', 'sy6'];
   const tB = W('viele', 3) - .15, tL = W('Keine', 4), DL = 1.0;
   const F = t => t < tL ? t - tB : (tL - tB) + Math.min(DL, t - tL) - Math.min(DL, t - tL) ** 2 / (2 * DL);
@@ -589,7 +597,7 @@ cam(0, 0, FR.A);
   const orbit = (k, t) => {
     const r = E.out(clamp((t - tB - k * .05) / .55)), a = k * Math.PI / 3 - Math.PI / 2 + 2.3 * F(Math.max(t, tB));
     const j = 7 * tempo(t) * Math.sin(t * 11 + k * 1.7);
-    return [OC[0] + r * 250 * Math.cos(a) + j, OC[1] + r * 185 * Math.sin(a) + j * .6];
+    return [OC[0] + r * 230 * Math.cos(a) + j, OC[1] + r * 185 * Math.sin(a) + j * .6];
   };
   SY.forEach((id, k) => { akteur(id, { x: OC[0], y: OC[1], s: 0 }); tw(id, tB + k * .05, .4, { s: 1 }, 'back'); if (k % 2 === 0) cue(tB + k * .05, 'pop'); });
   const tR = W('Plan', 5) - .15;
@@ -609,7 +617,7 @@ cam(0, 0, FR.A);
   // Plan: die Kamera fährt zurück – die ganze Landkarte; jedes Symbol fliegt an seine Station
   const tO = W('Hier', 5) - .15; cam(tO, 1.25, [2490, 1330], .41); cue(tO, 'whoosh');
   const ZIEL = [[2750, 470], [4200, 470], [4200, 1920], [2750, 1920], [380, 620], [1450, 1100]];
-  SY.forEach((id, k) => { tw(id, tR + .1 + k * .08, 1.1, { x: ZIEL[k][0], y: ZIEL[k][1], s: 2.3 }, 'inout'); landen(id, tR + 1.2 + k * .08, .8); });
+  SY.forEach((id, k) => { tw(id, tR + .1 + k * .08, 1.3, { x: ZIEL[k][0], y: ZIEL[k][1], s: 2.3 }, 'inout'); landen(id, tR + 1.4 + k * .08, .8); });
   cue(tR + 1.25, 'ding');
   // der Weg zeichnet sich, 14 Steine ploppen auf
   const tZ = W('für', 5) - .2, tV = W('vierzehn', 5) + .35, dZ = tV - tZ;
@@ -758,14 +766,14 @@ cam(0, 0, FR.A);
   tippen('ibanT', 'DE12 3456 …', W('Ih-Bahn', 14), .8);
   wachsen('betr4', W('gibst', 14) - .2, { x: Cx(1640), y: 790 });
   const tI = W('deinem', 14) - .15;
-  flug('iban4', tI, .8, Cx(1640), 770, 160, { s: .3 }); tw('iban4', tI + .65, .15, { o: 0 }); cue(tI, 'whoosh');
-  bump('betr4', tI + .8, 1.08); pop('ok4', tI + .9, { x: Cx(1700), y: 725 }, 'erfolg');
+  flug('iban4', tI, .95, Cx(1640), 770, 110, { s: .3 }); tw('iban4', tI + .8, .15, { o: 0 }); cue(tI, 'whoosh');
+  bump('betr4', tI + .95, 1.08); pop('ok4', tI + 1.05, { x: Cx(1700), y: 725 }, 'erfolg');
   // Gehalt: Münzen fliegen auf die Karte
   const tGe = W('Konto', 15) - .1;
   ['m4a', 'm4b', 'm4c'].forEach((m, i) => {
     const t0 = tGe + i * .18;
     akteur(m, { x: Cx(1640), y: 760, o: 0, s: .5 });
-    tw(m, t0, .1, { o: 1 }); flug(m, t0, .65, Cx(1580 + 20 * i), 230, 130, { s: 1 }); tw(m, t0 + .55, .15, { o: 0, s: .7 });
+    tw(m, t0, .1, { o: 1 }); flug(m, t0, .8, Cx(1580 + 20 * i), 230, 90, { s: 1 }); tw(m, t0 + .55, .15, { o: 0, s: .7 });
     cue(t0 + .6, 'muenze'); bump('env4', t0 + .65, 1.04);
   });
   pop('geh4', W('Gehalt', 15) - .05, { x: Cx(1600), y: 330 }, 'erfolg');
@@ -791,13 +799,13 @@ cam(0, 0, FR.A);
   cue(tF, 'whoosh');
   KK.forEach((id, i) => { const t0 = W('selbst', 17) + i * .13; tw(id, t0, .12, { y: D(0, 456)[1] }, 'sinus'); tw(id, t0 + .12, .3, { y: D(0, 470)[1] }, 'sanft'); cue(t0, 'tipp'); });
   const tAk = W('Ah-Oh-Kah', 17) - .25;
-  tw(['kh5a', 'kg5', 'kh5b'], tAk, .4, { o: 0, s: .8 }, 'in');
+  tw(['kh5a', 'kg5', 'kh5b'], tAk, .4, { o: 0, s: .8 }, 'sinus');
   tw('vk5', tAk, .65, { x: D(570, 0)[0], y: D(0, 445)[1], r: 0, s: 1.25 }, 'sanft'); cue(tAk, 'whoosh');
   tw('vk5', tAk + .3, .14, { sx: 0 }, 'in'); tw('vk5', tAk + .44, .14, { sx: -1 }, 'out'); tw('vk5', tAk + .58, .14, { sx: 0 }, 'in'); tw('vk5', tAk + .72, .2, { sx: 1 }, 'sanft');
   pop('aok5', tAk + .7, { x: D(570, 0)[0], y: D(0, 372)[1] }, 'ding');
   // zwei Wochen ab dem Start der Ausbildung
   const tD = W('Dafür', 18) - .2;
-  tw('vk5', tD, .6, { x: D(1600, 0)[0], y: D(0, 280)[1], s: .8 }, 'inout'); tw('aok5', tD, .6, { x: D(1600, 0)[0], y: D(0, 210)[1] }, 'inout'); cue(tD, 'whoosh');
+  tw('vk5', tD, .9, { x: D(1600, 0)[0], y: D(0, 280)[1], s: .8 }, 'inout'); tw('aok5', tD, .9, { x: D(1600, 0)[0], y: D(0, 210)[1] }, 'inout'); cue(tD, 'whoosh');
   pop('kal5', tD + .3, { x: D(400, 0)[0], y: D(0, 520)[1] }, 'pop', 'sanft');
   akteur('bar5', { x: D(640, 0)[0], y: D(0, 520)[1], o: 0 }); tw('bar5', W('zwei', 18) - .3, .25, { o: 1 });
   const tW = W('zwei', 18) - .05;
@@ -806,7 +814,7 @@ cam(0, 0, FR.A);
   pop('lbl5a', W('Start', 18) - .05, { x: D(400, 0)[0], y: D(0, 610)[1] }, null, 'sanft'); bump('kal5', W('Start', 18), 1.1); cue(W('Start', 18), 'ding');
   // Sag deinem Betrieb, welche Kasse: Nachricht fliegt zum Betrieb
   wachsen('betr5', W('Sag', 19) - .1, { x: D(1640, 0)[0], y: D(0, 650)[1] });
-  pop('blase5', W('deinem', 19), { x: D(1010, 0)[0], y: D(0, 440)[1] }, 'pop', 'sanft'); mund('mai', W('deinem', 19), 'auf');
+  pop('blase5', W('deinem', 19), { x: D(975, 0)[0], y: D(0, 440)[1] }, 'pop', 'sanft'); mund('mai', W('deinem', 19), 'auf');
   const tN = W('gewählt', 19) - .1;
   flug('blase5', tN, .75, D(1640, 0)[0], D(0, 640)[1], 110, { s: .35 }); tw('blase5', tN + .6, .15, { o: 0 }); cue(tN, 'whoosh');
   bump('betr5', tN + .75, 1.08); froh('mai', tN + .3);
@@ -925,7 +933,7 @@ cam(0, 0, FR.A);
   tippen('plate7T', 'Mai', tN, .45); bump('plate7', W('Briefkasten', 28), 1.15); akzent(tN, .03);
   froh('mai', tN + .4);
   // Überraschung: der Brief fliegt von selbst herein
-  const tU = W('Briefkasten', 28) - .15, dU = 1.3, NP = G(900, 525);
+  const tU = W('Briefkasten', 28) - .3, dU = 1.5, NP = G(900, 525);
   el('briefWeg').setAttribute('d', `M${G(2150, 0)[0]} ${G(0, -160)[1]}C${G(1500, 0)[0]} ${G(0, 120)[1]} ${G(820, 0)[0]} ${G(0, 120)[1]} ${G(560, 0)[0]} ${G(0, 380)[1]}` +
     `S${G(380, 0)[0]} ${G(0, 700)[1]} ${G(640, 0)[0]} ${G(0, 700)[1]}S${NP[0] + 40} ${NP[1] + 60} ${NP[0]} ${NP[1]}`);
   const BW = el('briefWeg'), BL = BW.getTotalLength();
@@ -944,7 +952,7 @@ cam(0, 0, FR.A);
   // gib die Nummer gleich deinem Betrieb
   wachsen('betr7', W('gib', 29) - .1, { x: G(1680, 0)[0], y: G(0, 520)[1] });
   const tB = W('Betrieb', 29) - .35;
-  flug('note7', tB, .65, G(1680, 0)[0], G(0, 505)[1], 90, { s: .3 }); tw('note7', tB + .5, .15, { o: 0 }); cue(tB, 'whoosh');
+  flug('note7', tB, .8, G(1680, 0)[0], G(0, 505)[1], 60, { s: .3 }); tw('note7', tB + .5, .15, { o: 0 }); cue(tB, 'whoosh');
   bump('betr7', tB + .65, 1.08); pop('ok7', tB + .75, { x: G(1740, 0)[0], y: G(0, 460)[1] }, 'erfolg');
   stempeln(4, SE(29) - .25, Bild('G', [380, 470]));
 }
@@ -977,8 +985,8 @@ cam(0, 0, FR.A);
   const PA = H(1060, 470);
   pop('pass8', W('Kauf', 32) - .05, { x: PA[0], y: PA[1] }, 'pop', 'sanft');
   const tA = W('ausweisen', 32) - .15;
-  flug('pass8', tA, .5, SC[0], SC[1] - 22, 60, { s: .85 }); cue(tA, 'whoosh');
-  const tScan = tA + .5, dScan = W('Beispiel', 32) + .25 - tScan;
+  flug('pass8', tA, .6, SC[0], SC[1] - 22, 40, { s: .85 }); cue(tA, 'whoosh');
+  const tScan = tA + .6, dScan = W('Beispiel', 32) + .25 - tScan;
   akteur('linie8', { x: SC[0], y: SC[1] - 70, o: 0 });
   set('linie8', tScan, { o: 1 }); set('linie8', tScan + dScan, { o: 0 });
   for (let k = 0; k < 3; k++) { tw('linie8', tScan + k * dScan / 3, dScan / 6, { y: SC[1] + 10 }, 'sinus'); tw('linie8', tScan + (k + .5) * dScan / 3, dScan / 6, { y: SC[1] - 70 }, 'sinus'); }

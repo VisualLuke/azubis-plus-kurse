@@ -24,7 +24,7 @@ und ein **Thermometer** am Heizkörper zeigen in jeder Szene, was mit der Luft p
 | 8 | Ein kleiner dunkler Fleck ploppt in der Zimmerecke auf; Priya hebt sofort das Handy, die Kamera blitzt, das Foto fliegt in eine Nachricht, die Zeilen tippen sich, während Priya spricht; die Nachricht fliegt zu Herrn Schmitt (Porträt), er liest, nickt, hält einen Schraubenschlüssel hoch, grüner Haken in der Tagesleiste | 4. Schimmel sofort melden |
 | 9 | Briefumschlag „Nebenkosten“ fliegt herein, klappt auf, ein Blatt mit Flamme und Balken entfaltet sich; auf „mehr“ wächst ein roter Balken neben einem gekippten Fenster, daneben bleibt ein grüner Balken klein (Fenster zu, Sanduhr); dann vier Kacheln (Fenster ganz auf, Thermostat, Schrank mit Lücke, Handy mit Foto) mit grünen Haken auf ihren Wörtern; Priya lächelt, Schal fliegt ab | Lüften · Heizen · Abstand · Melden |
 
-Umsetzung: Layout „Der schlechte Tag“ wie `../20-amirs-urlaub/konzept.md` und `../21-mais-post/konzept.md` (Tagesleiste,
+Ursprünglicher Plan (im Film ersetzt, siehe „Umsetzung im Film“): Layout „Der schlechte Tag“ wie `../20-amirs-urlaub/konzept.md` und `../21-mais-post/konzept.md` (Tagesleiste,
 Welt-Zeit `ZT`, Stopp und Zurückspulen, im richtigen Tag nummerierte Schritte mit grüner Nummer). Ohne Kurstitel steht die
 erste Bühne in der Bildmitte. Text im Bild links (Wörter steigen aus einer Maske, im schlechten Tag Fehlerwörter rot), Bühne
 rechts; jede Animation hängt an einem Wort aus `sprache.json`. Kamera-Akzente auf „gekippt“, „Schrank“, „Schimmel“,

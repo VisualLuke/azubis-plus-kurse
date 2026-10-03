@@ -11,27 +11,29 @@
 
 | Szene | Bild | Text im Bild |
 | --- | --- | --- |
-| 1 | Helle Bühne in der Bildmitte: Yusuf (Porträt) hüpft herein, das Handy fährt hoch und scrollt durch Anzeigen (Kacheln rauschen vorbei, bremsen ab); eine Anzeige springt nach vorn: Zimmer mit Fenster, Sonne, Pflanze, auf „groß“, „hell“, „zentral“ ploppt je ein Symbol (Pfeile auseinander, Sonne, Pin), auf „billig“ fällt ein Preisschild herunter und schrumpft auf winzig, Yusuf strahlt; auf „schreibt sofort“ tippt sich eine Nachricht, ✓✓; die Antwort kommt von einem grauen Profil ohne Gesicht mit Flugzeug und Weltkugel („Ausland“), Zeilen tippen sich: Geldschein-Symbol, Schlüssel fliegt in einen Umschlag mit Briefmarke, Ausweis-Symbol mit Kopierer-Blitz; Yusuf legt den Kopf schief | Vermieter im Ausland? |
-| 2 | Dunkle Quiz-Bühne: Fragezeichen; drei Optionskarten A/B/C fliegen auf „Ah“, „Beh“, „Zeh“ herein, jedes Symbol spielt: A Geldschein fliegt mit Tempo-Linien aus dem Handy, eine Sanduhr hetzt; B Ausweis wird kopiert (Blitz), die Kopie fliegt davon; C Hausschlüssel und Vertrag, ein Auge öffnet sich, ein Schloss bleibt vor dem Portemonnaie zu | A · B · C |
-| 3 | Denkpause: Countdown-Ring läuft leer (erst „?“), ein Lichtrahmen wandert über A → B → C, 3 – 2 – 1 ploppen auf den gesprochenen Zahlen | 3 – 2 – 1 |
-| 4 | Karte A nach vorn, rote Marke ✕, wird zur Kachel; helle Bühne: die Überweisung fliegt als Geldschein in den Schatten mit Fragezeichen; Yusuf wartet am Briefkasten, Kalenderblätter fliegen ab, der Briefkasten bleibt leer (Klappe schwingt, nichts kommt); der Chat: Nachricht ✓ grau, keine Antwort, das graue Profil verblasst; auf „gar nicht“ wird die Anzeige mit dem Zimmer durchsichtig und zerfällt in Pixel. Karte B als zweite Kachel, rote Marke ✕: die Ausweiskopie fliegt zum Schatten, dort wird sie vervielfältigt (drei Kopien fächern auf), aus jeder Kopie wächst ein Formular „Vertrag“ und ein Konto-Symbol mit Yusufs Namen-Strich; Warndreieck pocht | A: Geld weg · B: Daten weg |
-| 5 | Karte C nach vorn, grüne Marke ✓; Yusuf spricht, eine Sprechblase mit Auge (Besichtigung) und Vertrag ploppt auf seine Wörter „gesehen“ und „Vertrag“; das Schloss vor dem Portemonnaie rastet mit Klick ein; der Schatten zittert, das graue Profil verschwindet mit einem Puff; Stempel „Betrug“ schlägt rot auf die Anzeige (Wackler) | C: erst sehen, dann zahlen |
-| 6 | Neue helle Bühne: Haustür mit Klingel, Yusuf klingelt (Klingel-Wellen), die Tür geht auf; dahinter das WG-Zimmer, Ana und Kwame (Porträts) ploppen als Mitbewohner auf und lächeln; Checkliste schreibt sich und hakt ab: „Zimmer gesehen“ (Auge), „Vertrag“ (Stift unterschreibt), „Wohnungsgeberbestätigung“ (Formular mit Stempel fliegt zum Rathaus); der Ausweis wird nur kurz gezeigt (dreht sich, glänzt) und fliegt zurück in Yusufs Portemonnaie | Besichtigung · Vertrag · Bestätigung |
-| 7 | Vier Warnkarten fallen auf ihre Wörter: Preisschild winzig, Flugzeug „Ausland“, Geldschein „vorab“, Umschlag mit Schlüssel; jede bekommt ein rotes Warndreieck; dann ein Kalender: „Start der Miete“ leuchtet, erst dann teilt sich ein Geldstapel in drei gleiche Stapel, die nacheinander auf drei Monate springen; darüber Deckel „max. 3 Kaltmieten“ | Kaution: erst ab Mietstart · max. 3 Kaltmieten |
-| 8 | Dunkle Bühne: alle drei Karten, A und B verblassen, C wächst und leuchtet grün, grüne Welle; dann hell: Handy mit Chat, Kamera-Auslöser blitzt dreimal (Fotos von den Nachrichten fliegen in einen Ordner), Hörer mit Bank-Symbol (Gebäude ohne Namen) und Rufwellen, Polizei-Schild (blau, Stern ohne Wappen) mit Anzeige-Blatt, Stift unterschreibt; Yusuf atmet auf | Fotos sichern · Bank · Polizei |
+| 1 | Großes Handy rechts, Yusuf (Porträt) links. Im Handy rauschen Anzeigen-Kacheln vorbei und bremsen ab; auf „Anzeige“ springt eine Kachel zur Foto-Anzeige (Zimmer mit Fenster, Sonne, Bett, Pflanze); auf „groß“, „hell“, „zentral“ ploppt je ein Merkmal (Pfeile, Sonne, Pin), auf „billig“ fällt ein Preisschild herein und schrumpft auf winzig; Yusuf strahlt. „Er schreibt sofort“: Knopf, die Anzeige wird oben im Chat angeheftet, Yusuf tippt, zwei Nachrichten (Herz, Auge + ?) mit ✓✓. Antwort vom grauen Profil ohne Gesicht: Tipp-Punkte, dann Flugzeug + Globus, Geldschein → ?, Schlüssel fliegt in den Umschlag mit Briefmarke, Ausweis + Kopierer-Blitz + Kopie. Yusuf legt den Kopf schief, „?“ | Vermieter im Ausland? |
+| 2 | Der Raum wird dunkel-violett. Aus dem Eingabefeld steigen drei Antwort-Entwürfe A/B/C, jedes Symbol spielt: A Geldschein rast davon, Sanduhr dreht sich; B Ausweis wird kopiert (Blitz), Kopie gleitet heraus; C Schloss, „nicht senden“, Auge blinzelt | (A · B · C auf den Entwürfen) |
+| 3 | Denkpause: ein Ring läuft um Yusufs Porträt leer, ein Lichtrahmen wandert über A → B → C, daneben ploppen 3 – 2 – 1 auf den gesprochenen Zahlen | (3 – 2 – 1) |
+| 4 | Hell. Entwurf A rutscht ins Eingabefeld und wird gesendet; der Geldschein fliegt aus dem Handy zum grauen Unbekannten (Kreis mit „?“). Briefkasten bleibt leer, Kalenderblätter fliegen ab; nur ein grauer Haken, das Profil verblasst, der Online-Punkt geht aus. **Überraschung:** Das Anzeigen-Foto springt aus dem Handy, steht wie eine Kulisse – und kippt nach hinten um; dahinter nur ein gestrichelter leerer Rahmen. Rote ✕ am gesendeten Geld. Zurückspulen (⏪). B: die Ausweiskopie fliegt zum Unbekannten, er vervielfältigt sie (drei Kopien), daraus wachsen Verträge und Karten; Warndreieck pocht, rote ✕ | A: Geld weg · B: Daten weg |
+| 5 | Zurückspulen. C wird gesendet: Auge („gesehen“) und Vertrag ploppen in Yusufs Nachricht, grüner Haken; links rastet ein Schloss auf dem Portemonnaie ein. Der Unbekannte zittert und verpufft; ein Stempel schlägt „Betrug“ auf die angeheftete Anzeige | C: erst sehen, dann zahlen |
+| 6 | Raus aus dem Handy: es fällt aus dem Bild, Yusuf geht zur Haustür, klingelt (Wellen), die Tür geht auf (warmes Licht), Ana und Kwame (Porträts) kommen dazu und lächeln. Vertrag kommt von der WG, der Stift unterschreibt; Formular mit Stempel fliegt zum Rathaus (Haken); Ausweis dreht sich, eine Kopie bekommt ein rotes ✕, der Ausweis fliegt ins Portemonnaie | Besichtigung · Vertrag · Bestätigung |
+| 7 | Das Handy kommt mit dem alten Chat zurück. Die Warnzeichen leuchten als rote Markierungen an den Nachrichten, links rote Chips: „sehr billig“ (Preisschild), „im Ausland“, „Geld vorab“, „Schlüssel per Post“. Dann drei Monatskarten 1 · 2 · 3: „Start“ leuchtet grün (Schlüssel), der Geldstapel teilt sich in drei Stapel, die auf die Monate springen; ein Deckel schließt darüber | Kaution: erst ab Mietstart · max. 3 Kaltmieten |
+| 8 | Im Handy kommen die drei Entwürfe zurück, A und B mit rotem ✕ verblassen, C leuchtet grün mit Haken. Dann blitzt der Bildschirm dreimal (Fotos fliegen in einen Ordner), Bank-Gebäude (ohne Namen) mit klingelndem Hörer, Polizei-Schild (blau, Stern ohne Wappen) mit Anzeige, die unterschrieben wird; Yusuf atmet auf | Fotos sichern · Bank · Polizei |
 
-## Layout „Was würdest du tun?“
+## Leitidee und Layout
 
-Wie `../34-telefonieren/konzept.md` und `../39-kunde-beschwert-sich/konzept.md`: helle Situations-Bühne (900 × 720),
-dunkel-violette Quiz-Bühne 1680 × 880 mit drei weißen Optionskarten (Buchstabe + spielendes Symbol), Countdown-Ring unter den
-Karten; beim Durchspielen kommt die Karte nach vorn, die Marke schlägt auf (rot ✕ / grün ✓), die Karte wird zur Kachel links
-oben, die Bühne wird hell und klein, darunter steigt der Text im Bild. Ohne Kurstitel steht die erste Bühne in der Bildmitte
-(`kamera.basis.x = -360`). Abspann: „Erst sehen, dann zahlen.“ und die Kernbotschaft.
+**Ein Chatverlauf als Bühne** (Wunsch des Nutzers: Abwechslung, kein Karten-Schema): Die Geschichte läuft in einem großen
+Handy (600 × 960) rechts im Bild; links stehen Yusuf und die Folgen „draußen“. Nachrichten ploppen mit Tipp-Punkten herein,
+der Verlauf scrollt wie im echten Chat. Die Optionen sind drei Antwort-Entwürfe im Eingabefeld, die gewählte Antwort wird
+gesendet. Übergänge: Scrollen im Chat, Zurückspulen (⏪) zwischen den Optionen, Herausfallen des Handys (Szene 6, die echte WG
+gibt es nur draußen) und Wiederkommen (Szene 7). Überraschung: die Anzeige kippt wie eine Kulisse um, dahinter ist nichts.
+Ohne Kurstitel; die erste Bühne ist die ganze Bildfläche. Abspann: „Erst sehen, dann zahlen.“ und die Kernbotschaft.
 
-Kursspezifische Teile (neu, Stil C): `anzeige-zimmer`, `preisschild`, `weltkugel`, `kopierer-blitz`, `schatten-fragezeichen`
-(wie die Maske/der Schatten aus Kurs 19), `polizei-schild` (ohne Wappen), `warndreieck`; vorhanden: `handy`, `handy-chat`,
-`ausweis`, `geldschein`, `schluessel`, `brief`, `briefkasten`, `vertrag`, `rathaus`, `stempel`, `schloss`,
-`portemonnaie-*`, `haustuer`, `klingel`, `kalender`, `flugzeug`, `hoerer`.
+Kursspezifische Teile (Stil C): neu `preisschild`, `polizei-schild` (ohne Wappen), `bankhaus` (ohne Namen); übernommen
+aus anderen Kursen `warndreieck`, `globus`, `pin`, `sonne`, `pflanze`, `bett-einzel`, `kalender`, `umschlag-*`,
+`portemonnaie-*`, `klingel`, `stempel-rot`, `sanduhr`, `auge`, `muenzstapel`, `hoerer`, `ordner`; aus `teile/`:
+`geldschein`, `ausweis`, `schluessel`, `briefkasten`, `vertrag`, `rathaus`, `stempel`, `schloss`,
+`haustuer`, `flugzeug`, `karte`, `meldung`, `stift`. Der Unbekannte ist kein Mensch, nur ein grauer Kreis mit „?“.
 
 ## Abweichungen vom Briefing
 
