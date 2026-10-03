@@ -517,7 +517,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   pop('topf1', .8, { x: 150, y: 505 }, null); pop('topf1d', .8, { x: 150, y: 505 }, null);
   pop('topf2', .9, { x: 290, y: 505 }, 'klick'); pop('topf2d', .9, { x: 290, y: 505 }, null);
   // Jonas in der Küche, Amir unten im Treppenhaus
-  pop(JONAS, tJ, { x: WP('K', 930, 430)[0], y: WP('K', 930, 430)[1] });
+  pop(JONAS, tJ, { x: WP('K', 930, 418)[0], y: WP('K', 930, 418)[1] });
   pop(AMIR, tA, { x: 250, y: 818 });
   pop('teller1', tAb - .05, { x: 930, y: 548 }, 'klick'); pop('teller2', tAb + .07, { x: 1250, y: 548 }, null);
   pop('schuessel', tAb + .2, { x: 1090, y: 515 }, 'plopp');
@@ -527,12 +527,12 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   summen('handyJ', tEi - .15, .5, 5);
   neu('einl', `<div class="kopf"></div><div class="ic">${kopie('t-teller', 'einl')}</div><b>19:00</b>`, '', 'data-gruppe="amir"', 'einladung flieg');
   pop('einl', tEi, { x: 3040, y: 390 }, 'pop');
-  flug('einl', tEi + .45, 1.25, 420, 760, 560, { s: .62 }); ton(tEi + .45, 'whoosh');
+  flug('einl', tEi + .35, 1.6, 420, 760, 440, { s: .62 }); ton(tEi + .45, 'whoosh');
   tw('einl', tEi + .45, .55, { r: -3 }, 'sinus'); tw('einl', tEi + 1.0, .7, { r: 0 }, 'sinus');
-  landen('einl', tEi + 1.7);
+  landen('einl', tEi + 1.95);
   aus('handyJ', tEi + .6, .3);
   // „um sieben Uhr“: die Uhr über der Tür dreht auf 19:00
-  uhrAuf(tSi - .25, 1140, 1.0); bump('uhr', tSi + .75, 1.3); ton(tSi + .75, 'ding'); akzent(tSi + .7, .07, 1035, 250, 1.2);
+  uhrAuf(tSi - .25, 1140, 1.0); bump('uhr', tSi + .75, 1.16); ton(tSi + .75, 'ding'); akzent(tSi + .7, .07, 1035, 250, 1.2);
   // „Amir freut sich sehr“: Amir lacht und hüpft; die Kamera fährt zu ihm
   const tF = WI(2, 1), tSe = WI(2, 3), tAb2 = WI(2, 4);
   froh(AMIR, WI(2, 0), WI(2, 4) + .2);
@@ -542,7 +542,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // „aber er hat auch ein paar Fragen“: Kopf schief
   neigen(AMIR, tAb2 + .3, WI(3, 0) - .2, -8); blick(AMIR, tAb2 + .3, WI(3, 0) - .2, -4);
   // Drei Fragen: Uhr, Geschenk, Schuh – je ein Symbol mit Fragezeichen
-  const SYM = [['symA', 't-uhrs', 120, 600, WI(3, 3)], ['symB', 't-pralinen', 300, 540, WI(4, 2)], ['symC', 't-schuhe', 480, 600, WI(5, 6)]];
+  const SYM = [['symA', 't-uhrs', 150, 600, WI(3, 3)], ['symB', 't-pralinen', 300, 540, WI(4, 2)], ['symC', 't-schuhe', 450, 600, WI(5, 6)]];
   SYM.forEach(([id, t, x, y, tz], k) => {
     neu(id, `<div class="ic">${kopie(t, id)}</div><div class="fz" id="${id}q">?</div>`, '', 'data-frei', 'sym flieg');
     pop(id, tz - .15, { x, y, s: k === 1 ? .88 : 1 }, 'pop');
@@ -553,7 +553,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   blick(AMIR, WI(4, 2) - .1, WI(5, 0), 0); neigen(AMIR, WI(4, 2), WI(5, 0), 6);
   blick(AMIR, WI(5, 6) - .1, SE(5) + .2, 6); neigen(AMIR, WI(5, 6), SE(5) + .3, -6);
   // Die drei Symbole kreisen kurz um Amirs Kopf (Ellipse, vorne größer)
-  const tO = SE(5) + .05, dO = 1.5, CX = 300, CY = 600, RX = 180, RY = 60;
+  const tO = SE(5) + .02, dO = 1.8, CX = 300, CY = 600, RX = 150, RY = 60;
   const PH = { symA: Math.PI, symB: Math.PI / 2, symC: 0 };
   HOOKS.push(t => {
     const u = (t - tO) / dO; if (u <= 0 || u >= 1) return;
@@ -575,11 +575,11 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // Amir steigt die Treppe hoch, Stufe für Stufe – die Uhr läuft auf 19:00
   const tIn = WI(6, 0), tP = WI(6, 6);
   const STUFEN = [[415, 762], [485, 706], [555, 650], [625, 594], [695, 538], [790, 538]];
-  const dt = (tP - .25 - tIn) / STUFEN.length;
-  STUFEN.forEach(([x, y], k) => { const t = tIn + k * dt; tw(AMIR, t, dt * .82, { x, y }, 'inout', { bogen: 34 }); landen(AMIR, t + dt * .82, .7); if (k % 2 === 0) ton(t + dt * .8, 'klick'); });
+  const dt = (tP - .05 - tIn) / STUFEN.length;
+  STUFEN.forEach(([x, y], k) => { const t = tIn - .2 + k * dt; tw(AMIR, t, dt * .86, { x, y }, 'inout', { bogen: 24 }); landen(AMIR, t + dt * .82, .7); if (k % 2 === 0) ton(t + dt * .8, 'klick'); });
   uhrAuf(tIn, 1140, tP - tIn, 'lin');
   // „pünktlich“: Amir klingelt
-  wackeln('klingel', tP, 4, 12); welle(tP + .05, 905, 490, 'var(--b500)', 110, .8); welle(tP + .35, 905, 490, 'var(--b500)', 110, .8);
+  wackeln('klingel', tP, 4, 7); welle(tP + .05, 905, 490, 'var(--b500)', 110, .8); welle(tP + .35, 905, 490, 'var(--b500)', 110, .8);
   ton(tP + .05, 'ding'); bump('uhr', tP, 1.12); froh(AMIR, tP + .1, WI(7, 2)); akzent(tP + .05, .045, 905, 490);
   tafel('tP', 'rT', 400, 200, ['Pünktlich oder', 'ein paar Minuten später']);
   tafelEin('tP', tP - .3, [WI(6, 6), WI(6, 7), WI(6, 8), WI(6, 9), WI(6, 10), WI(6, 11)]);
@@ -592,7 +592,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   kam(tV - .25, 1.1, 1700, 540, .8);
   versetzen(JONAS, WI(6, 2), ...WP('K', 220, 320));
   uhrAuf(tFr - .1, 1125, .8); tw('keilOk', tFr - .1, .4, { o: 0 }); tw('keilFr', tFr, .8, { x: 15, o: 1 }, 'inout'); ton(tFr, 'scan');
-  wackeln('uhr', WI(7, 5), 4, 5); ton(WI(7, 5), 'klick');
+  wackeln('uhr', WI(7, 5), 4, 3); ton(WI(7, 5), 'klick');
   blick(AMIR, WI(7, 8), WI(8, 3), 6);
   // „die Gastgeber kochen vielleicht noch“: Dampf, Deckel klappern, Jonas eilt mit dem Kochlöffel hin und her
   const tG = WI(7, 10), tK = WI(7, 11);
@@ -615,7 +615,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   neu('nachr', `<div class="ic">${kopie('t-uhr', 'nachr')}</div><i></i><i></i><i></i>`, '', 'data-frei', 'nachricht flieg');
   el('nachr').querySelector('.ic svg').classList.add('auf-brand');
   pop('nachr', tN - .05, { x: 700, y: 470 }, 'pop');
-  flug('nachr', tN + .3, .9, WP('K', 220, 0)[0] + 10, 300, 160); ton(tN + .3, 'whoosh');
+  flug('nachr', tN + .2, 1.15, WP('K', 220, 0)[0] + 10, 300, 160); ton(tN + .3, 'whoosh');
   bump(JONAS, tN + 1.2, 1.08); nicken(JONAS, tN + 1.25, 1.1);
   aus('nachr', WI(9, 0) - .1, .3);
   welle(tR, 700, 612, 'var(--b500)', 120, .8); welle(tR + .3, 700, 612, 'var(--b500)', 120, .8); ton(tR, 'klick'); summen('handyA', tR, .6, 4);
@@ -672,8 +672,8 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   const tT = WI(13, 2), tGi = WI(13, 3), tNe = WI(13, 6), tH = WI(13, 8), tWi = WI(13, 9);
   aus('blaseF', tT - .5, .3); tafelAus('tF', tT);
   kam(tT - .2, 1.0, 3070, 540, 1.0);
-  fliegen(AMIR, tT - .15, .95, ...WP('K', 1250, 430), 150);
-  fliegen(JONAS, tT - .05, .95, ...WP('K', 930, 430), 120);
+  fliegen(AMIR, tT - .3, 1.2, ...WP('K', 1250, 418), 150);
+  fliegen(JONAS, tT - .15, 1.1, ...WP('K', 930, 418), 120);
   // Jonas bietet an: kleine Blase mit Schüssel, die Schüssel schiebt sich zu Amir
   neu('blaseJ', `<div class="ic">${kopie('t-schuessel', 'blaseJ')}</div><b>?</b>`, '', '', 'blase bild flieg');
   const tAn = WI(13, 4) + .3;
@@ -684,12 +684,12 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   schuetteln(AMIR, tNe - .1, .9); froh(AMIR, tNe + .2, tH);
   aus('blaseJ', tNe + .3, .3);
   // … und die Schüssel nimmt es wörtlich: macht kehrt, rollt zurück, springt ins Küchenregal
-  tw('schuessel', tH - .05, .25, { sx: -1 }, 'inout'); ton(tH - .05, 'klick');
+  tw('schuessel', tH - .1, .4, { sx: -1 }, 'inout'); ton(tH - .05, 'klick');
   tw('schuessel', tH + .25, .8, { x: 820 }, 'inout');
   [0, 1, 2, 3].forEach(k => tw('schuessel', tH + .25 + k * .2, .2, { r: k % 2 ? 7 : -7 }, 'sinus'));
   tw('schuessel', tH + 1.05, .2, { r: 0 }, 'sinus'); ton(tH + .3, 'whoosh');
-  fliegen('schuessel', tH + 1.08, .55, 535, 493, 150); tw('schuessel', tH + 1.7, .25, { sx: 1 }, 'inout'); ton(tH + 1.63, 'plopp');
-  blick(AMIR, tH, SE(14) - .6, -7); blick(JONAS, tH + .2, tH + 1.4, -6); akzent(tH + 1.65, .04, ...WP('K', 535, 493));
+  flug('schuessel', tH + 1.08, .75, 535, 493, 130); tw('schuessel', tH + 1.83, .08, { sy: .88 }, 'sinus'); tw('schuessel', tH + 1.91, .45, { sy: 1 }, 'sanft'); ton(tH + 1.83, 'plopp');
+  blick(AMIR, tH, SE(14) - .6, -7); blick(JONAS, tH + .2, tH + 1.4, -6); akzent(tH + 1.85, .04, ...WP('K', 535, 493));
   tafel('tN', 'rK', 760, 140, '„Nein, danke“ heißt oft wirklich nein');
   tafelEin('tN', tH - .2, [tH - .05, tH + .08, tH + .22, tH + .36, tWi, WI(13, 10)]);
   // „Viele Gastgeber fragen dann nicht noch einmal“: Jonas lächelt, die Schüssel zappelt im Regal – bleibt aber
@@ -715,7 +715,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   const tB = WI(16, 3), tO = WI(16, 4), tZ = WI(16, 5);
   bild('kasse', 't-kasse', 260, '', 'rR'); ein('kasse', tB - .15, { x: 1300, y: 455 }, { x: 260 }, 'whoosh');
   neu('bon', '<i style="top:26px;width:70px"></i><i style="top:46px;width:52px"></i><i style="top:66px;width:66px"></i><i style="top:110px;width:56px"></i><i style="top:130px;width:72px"></i><u style="top:162px"></u>', '', '', 'bon', 'rR');
-  akteur('bon', { x: 1300, y: 280, sy: 0, o: 0 });
+  akteur('bon', { x: 1300, y: 270, sy: 0, o: 0 });
   set('bon', tO + .05, { o: 1 }); tw('bon', tO + .05, .95, { sy: 1 }, 'inout');
   for (let k = 0; k < 6; k++) ton(tO + .1 + k * .14, 'tipp');
   blick('jonasR', tB, tZ + 1.2, 6); blick('amirR', tB + .1, tZ + 1.2, 6);
@@ -724,11 +724,11 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   // „Viele zahlen getrennt“: der Bon reißt in zwei Hälften, jede fliegt zu einer Platzkarte
   const tG = WI(17, 2);
   neu('bonO', '<i style="top:26px;width:70px"></i><i style="top:46px;width:52px"></i><i style="top:66px;width:66px"></i>', '', 'data-gruppe="kartenJ"', 'bonh oben', 'rR');
-  neu('bonU', '<i style="top:22px;width:56px"></i><i style="top:42px;width:72px"></i><u style="top:70px"></u>', '', 'data-gruppe="kartenA"', 'bonh unten', 'rR');
-  akteur('bonO', { x: 1300, y: 228, o: 0 }); akteur('bonU', { x: 1300, y: 332, o: 0 });
+  neu('bonU', '<i style="top:22px;width:56px"></i><i style="top:42px;width:72px"></i><u style="top:70px"></u>', '', 'data-frei', 'bonh unten', 'rR');
+  akteur('bonO', { x: 1300, y: 218, o: 0 }); akteur('bonU', { x: 1300, y: 322, o: 0 });
   set(['bonO', 'bonU'], tG - .05, { o: 1 }); set('bon', tG - .05, { o: 0 }); ton(tG - .05, 'kritzeln');
-  tw('bonO', tG - .03, .2, { y: 212, r: -3 }, 'out'); tw('bonU', tG - .03, .2, { y: 350, r: 3 }, 'out');
-  fliegen('bonO', tG + .22, .7, 430, 584, 170, { r: 0 }); fliegen('bonU', tG + .32, .7, 790, 584, 150, { r: 0 }); ton(tG + .22, 'whoosh');
+  tw('bonO', tG - .03, .2, { y: 206, r: -3 }, 'out'); tw('bonU', tG - .03, .2, { y: 326, r: 3 }, 'out');
+  fliegen('bonO', tG + .2, .9, 430, 584, 120, { r: 0 }); fliegen('bonU', tG + .3, .9, 790, 584, 110, { r: 0 }); ton(tG + .22, 'whoosh');
   nicken('jonasR', tG + 1.0, 1); nicken('amirR', tG + 1.1, 1);
   // „Wer einlädt, zahlt aber meistens alles“: Herz auf Jonas' Seite, der ganze Bon wandert zu ihm
   const tW = WI(18, 0), tE = WI(18, 1), tZa = WI(18, 2), tAl = WI(18, 5);
@@ -738,7 +738,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   bild('herzR', 't-herz', 72, 'data-gruppe="kartenJ"', 'rR');
   pop('herzR', tE + .05, { x: 330, y: 596 }, 'ding'); bump('herzR', tE + .6, 1.18);
   froh('jonasR', tE, SE(18) + 1.2);
-  fliegen('bonU', tZa + .05, .7, 442, 572, 130); ton(tZa + .05, 'whoosh'); ton(tZa + .75, 'plopp');
+  fliegen('bonU', tZa + .05, .85, 442, 572, 110); ton(tZa + .05, 'whoosh'); ton(tZa + .75, 'plopp');
   bump('bonO', tAl, 1.12); bump('bonU', tAl + .05, 1.12); ton(tAl, 'muenze');
   froh('amirR', tAl - .1, SE(18) + 1.2); huepfen('jonasR', tAl + .05, 12); nicken('amirR', tAl + .2, 1);
 }
@@ -760,7 +760,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   const tD = WI(21, 3), tNi = WI(22, 2), tRa = WI(22, 3);
   aus('zettel', WI(21, 0), .35);
   neu('blaseD', `<div class="q" id="blaseDq">?</div>${tpl('svgHaken').replace('<svg', '<svg id="blaseDh"')}`, '', '', 'blase gross flieg');
-  pop('blaseD', tD - .1, { x: WP('K', 1090, 0)[0], y: 395 }, 'pop');
+  pop('blaseD', tD - .1, { x: WP('K', 1090, 0)[0], y: 372 }, 'pop');
   akteur('blaseDq', {}, true); akteur('blaseDh', { draw: 0 }, true);
   blick(AMIR, tD, SE(22), -6); blick(JONAS, tD, SE(22), 6);
   wackeln('blaseDq', WI(21, 6), 3, 8);
@@ -793,14 +793,14 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   const GE = [['ge1', 't-uhrs', 300, -200, 640, -40], ['ge2', 't-blumen', 520, 0, 740, 30], ['ge3', 't-hausschuhe', 740, 280, 640, 40]];
   GE.forEach(([id, t, x], k) => { neu(id, `<div class="ic">${kopie(t, id)}</div>`, '', '', 'abz geist', 'rK'); pop(id, tAe - .1 + k * .14, { x, y: 345 }, k ? null : 'pop'); });
   ABZ.forEach(([id], k) => bump(id, tAe - .1 + k * .14, 1.1));
-  GE.forEach(([id], k) => wackeln(id, tV + k * .1, 3, 6));
+  GE.forEach(([id], k) => wackeln(id, tV + k * .1, 3, 3));
   GE.forEach(([id, , x, dx, y, r]) => tw(id, tGa, .6, { x: x + dx, y, r, o: 0, s: .6 }, 'in')); ton(tGa, 'whoosh');
   neu('frage', '?', '', '', 'riesen', 'rK'); pop('frage', WI(24, 8) + .1, { x: 520, y: 470 }, 'pop');
   // „Und wie ist das bei dir?“: Amir tritt auf die Schwelle, „Bei dir?“ hängt rechts
   tw(AMIR, WI(25, 0), .6, { s: 1.35, y: 690 }, 'inout');
   tafel('tB', 'rK', 520, 150, 'Bei dir?', 80);
   tafelEin('tB', WI(25, 3) - .15, [WI(25, 4), WI(25, 5)]);
-  bump('frage', WI(25, 5) + .05, 1.12); ton(WI(25, 5) + .05, 'ding');
+  bump('frage', WI(25, 5) + .05, 1.07); ton(WI(25, 5) + .05, 'ding');
   // Denkpause: Gedankenbläschen füllt sich mit neutralen Symbolen, das Fragezeichen pulsiert, Amir grübelt
   const tP = SE(25) + .1, tEnde = WI(26, 0) - .55;
   neu('denk', `<i style="left:170px;top:292px;width:60px;height:60px"></i><i style="left:150px;top:358px;width:34px;height:34px"></i>
@@ -823,7 +823,7 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   tw('hausL', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('hausR', tZu + .1, 1.1, { x: 0 }, 'inout'); tw('rS', tZu + .1, 1.1, { sx: 0 }, 'inout'); ton(tZu + .1, 'whoosh');
   tw('kLeer', tZu + .2, .5, { o: 0 }); tw('kInhalt', tZu + .5, .7, { y: 0, o: 1 }, 'out');
   kam(tZu + .1, 1.2, 3070, 540, 1.0, 'inout', null);
-  fliegen(AMIR, tZu + .3, .95, ...WP('K', 1250, 430), 120, { s: 1 });
+  fliegen(AMIR, tZu + .3, .95, ...WP('K', 1250, 418), 120, { s: 1 });
   tw(JONAS, tZu + .9, .5, { o: 1, s: 1 }, 'back'); ton(tZu + .9, 'pop'); froh(JONAS, tZu + 1, WI(27, 0));
   // „sag es vorher freundlich“: Tafel
   tafel('tS', 'rK', 760, 140, 'Sag vorher, was du nicht isst');
@@ -844,9 +844,10 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   pop('herzJ', tOk + .75, { x: WP('K', 930, 0)[0], y: 395 }, 'ding'); nicken(JONAS, tOk + .8, 1.1);
   // „wenn ich noch Hunger habe“: die Schüssel kommt aus dem Regal zurück und federt auf den Tisch
   const tH = WI(28, 4);
-  tw('schuessel', tH - .1, .2, { sy: .9 }, 'sinus');
-  fliegen('schuessel', tH + .05, .75, 1090, 515, 170); ton(tH + .05, 'whoosh'); ton(tH + .8, 'plopp');
-  huepfen('schuessel', tH + .9, 14);
+  tw('schuessel', tH - .15, .15, { sy: .88 }, 'sinus');
+  flug('schuessel', tH + .05, .8, 1090, 515, 170, { sy: 1 }); ton(tH + .05, 'whoosh'); ton(tH + .85, 'plopp');
+  tw('schuessel', tH + .85, .08, { sy: .86 }, 'sinus'); tw('schuessel', tH + .93, .4, { sy: 1 }, 'sanft');
+  tw('schuessel', tH + 1.0, .36, { y: 515 }, 'sinus', { bogen: 16 }); tw('schuessel', tH + 1.36, .08, { sy: .92 }, 'sinus'); tw('schuessel', tH + 1.44, .3, { sy: 1 }, 'sanft');
   froh(AMIR, tH + .3, WI(29, 0)); blick(AMIR, tH, tH + 1.0, -5);
   akzent(tH + .85, .04, ...WP('K', 1090, 515));
   nicken(JONAS, WI(28, 6), 1.1);
@@ -857,9 +858,9 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   set(['blumenF', 'pralF'], t9 - .6, { o: 0 });
   uhrAuf(t9 - 1.0, 1138, .3);
   kam(t9 - .45, 1.2, 2210, 520, .62);
-  fliegen(AMIR, t9 - .4, 1.2, 790, 538, 300);
-  uhrAuf(tS7 + .05, 1140, .45, 'back'); bump('uhr', WI(29, 2) + .1, 1.25); ton(WI(29, 2) + .1, 'ding'); akzent(WI(29, 2), .04, 1035, 250);
-  wackeln('klingel', tKl, 4, 12); welle(tKl + .05, 905, 490, 'var(--b500)', 110, .8); welle(tKl + .35, 905, 490, 'var(--b500)', 110, .8); ton(tKl + .05, 'ding');
+  fliegen(AMIR, t9 - .55, 1.4, 790, 538, 300);
+  uhrAuf(tS7 + .05, 1140, .45, 'back'); bump('uhr', WI(29, 2) + .1, 1.16); ton(WI(29, 2) + .1, 'ding'); akzent(WI(29, 2), .04, 1035, 250);
+  wackeln('klingel', tKl, 4, 7); welle(tKl + .05, 905, 490, 'var(--b500)', 110, .8); welle(tKl + .35, 905, 490, 'var(--b500)', 110, .8); ton(tKl + .05, 'ding');
   froh(AMIR, tKl + .2, SE(31) + 3);
   bild('blumen2', 't-blumen', 150, 'data-frei'); el('blumen2').classList.add('flieg');
   akteur('blumen2', { x: 676, y: 580, s: 0, sy: 0 });
@@ -867,13 +868,13 @@ akteur('blumenF', { x: 430, y: 552, o: 0 }); akteur('pralF', { x: 548, y: 564, o
   bump('blumen2', tHa, 1.1);
   // „Jonas freut sich über den Besuch“: Tür auf, Jonas steht im Türrahmen, beide hüpfen; dann gemeinsam an den Tisch
   const tJo = WI(30, 0), tFe = WI(30, 1), tBe = WI(30, 5);
-  tuerAuf(tJo - .3);
-  fliegen(JONAS, tJo - .25, .8, 1035, 470, 240);
+  tuerAuf(tJo - .55);
+  fliegen(JONAS, tJo - .55, 1.25, 1035, 470, 240);
   froh(JONAS, tJo + .4, SE(31) + 3);
   huepfen(AMIR, tFe + .05, 16); huepfen(JONAS, tFe + .15, 16); ton(tFe + .05, 'pop');
-  fliegen(AMIR, tBe - .1, 1.0, ...WP('K', 1250, 430), 220);
-  fliegen(JONAS, tBe, 1.0, ...WP('K', 930, 430), 200);
-  fliegen('blumen2', tBe + .05, 1.0, ...WP('K', 1375, 503), 200, { s: 130 / 150 });
+  fliegen(AMIR, tBe - .25, 1.4, ...WP('K', 1250, 418), 220);
+  fliegen(JONAS, tBe - .1, 1.3, ...WP('K', 930, 418), 200);
+  fliegen('blumen2', tBe - .2, 1.45, ...WP('K', 1375, 503), 200, { s: 130 / 150 });
   tuerZu(tBe + .6);
   // „Du darfst auch fragen“: kleine Fragezeichen-Blase bei Amir, Jonas nickt
   const tDu = WI(31, 0), tFg = WI(31, 3);

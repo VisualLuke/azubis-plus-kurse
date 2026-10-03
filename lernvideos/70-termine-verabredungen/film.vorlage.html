@@ -443,7 +443,7 @@ HOOKS.push(t => {
   const flipWinkel = id => { for (const [ids, t0, d] of FLIPS) if (ids.includes(id)) { const p = clamp((t - t0) / d); return p > 0 ? 118 * E.sinus(p) : 0; } return 0; };
   ['bue1', 'bue2', 'bue3', 'bue4', 'bue5L', 'bue5R', 'bue6'].forEach(id => {
     const e = el(id), a = flipWinkel(id);
-    const ry = id === 'bue5L' ? 9 * buch : id === 'bue5R' ? -9 * buch : 0;
+    const ry = id === 'bue5L' ? 6 * buch : id === 'bue5R' ? -6 * buch : 0;
     if (a > 0 || ry) e.style.transform += ` perspective(3400px) rotateY(${ry.toFixed(2)}deg) rotateX(${a.toFixed(2)}deg)`;
     const sch = e.querySelector(':scope > .k-schatten');
     if (sch) sch.style.opacity = (Math.sin(Math.min(a, 90) * Math.PI / 180) * .9).toFixed(3);
@@ -752,9 +752,9 @@ blaettern('bue4', T45); set('bue4', T45 + 1.06, { o: 0 });
 const AUF = T45 + 1.0;
 BUCH.auf = [AUF, .9];
 tw('bue5L', AUF, .9, { x: KX - 10 }, 'inout'); tw('bue5R', AUF, .9, { x: KX + 610 + 10 }, 'inout'); cue(AUF, 'whoosh');
-kam(T45, .6, { y: 505, s: .97 }); kam(T45 + .65, 1.3, { x: 960, y: 720, s: .85 }, 'inout');
+kam(T45, .6, { y: 505, s: .97 }); kam(T45 + .65, 1.3, { x: 960, y: 700, s: .85 }, 'inout');
 // Mai stellt sich vor den Falz, Ana tritt zur Seite
-flug('mai', T45 + .5, 1.2, 960, 1152, 160); tw('mai', T45 + .5, 1.2, { s: .86 }, 'inout'); landenP('mai', T45 + 1.7);
+flug('mai', T45 + .5, 1.2, 960, 1140, 160); tw('mai', T45 + .5, 1.2, { s: .86 }, 'inout'); landenP('mai', T45 + 1.7);
 tw('ana', T45 + .3, .7, { x: 2200 }, 'inout'); tw('ana', T45 + .7, .3, { o: 0 });
 
 /* ================= 5 · In Deutschland | Bei dir? ================= */

@@ -42,6 +42,10 @@ Abspann: „Spontan oder geplant – Hauptsache, ihr trefft euch.“
 - **Mittagspause** statt „Freitag“ allein, damit die Situation konkret ist; keine Uhrzeiten außer im Bild („18:00“ als Muster).
 - **Keine Marken, keine Apps:** Kalender und Handy ohne Logo; der Verein ist ein Wimpel ohne Wappen.
 - **Weggelassen:** „Komm doch mal vorbei“ als Floskel – steht schon in Lernvideo 36 und soll nicht wiederholt werden.
+- **Umsetzung im Bild (03.10.2026):** Übergänge abwechselnd Blättern (1→2, 3→4, 4→5), Zoom durch den Donnerstag-Zettel (2→3)
+  und Buch aufklappen/zuklappen (5→6). In Szene 2 treten Mai und Ana zur Seite (Platz für das Auffächern), in Szene 4 kommen
+  sie bei „für dich“ / „für die anderen“ zurück. In Szene 6 schwebt Mais Zettel erst neben Ana und landet bei „schlägt
+  Donnerstag vor“ – Anas Antwort „Donnerstag?“ erscheint deshalb erst dort, nicht schon nach Mais Frage.
 
 ## Sprechertext
 

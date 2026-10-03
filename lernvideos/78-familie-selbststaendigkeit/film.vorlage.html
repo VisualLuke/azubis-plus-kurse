@@ -427,7 +427,7 @@ portrait('jonasA', 'Jonas', 200, 'zimA');
 el('zimA').insertAdjacentHTML('beforeend', moebel('t-tisch', 430, 476, 280, 'za'));
 bild('handyA', 't-handy', 84, 'data-frei', '', 'zimA');
 neu('anrufA', tpl('svgHoerer'), '', 'data-frei', 'anruf', 'zimA');
-akteur('zimA', { x: 960, y: 930 - ZM, o: 0, s: .94 });
+akteur('zimA', { x: 960, y: 930 - ZM, o: 0, s: 1.08 });
 akteur('maiA', { x: 300, y: 262 });
 akteur('jonasA', { x: 690, y: 262, o: 0 });
 akteur('handyA', { x: 430, y: 270 });
@@ -500,12 +500,12 @@ neu('wegC', `<svg viewBox="0 0 1920 1080" style="width:1920px;height:1080px"><de
 akteur('wegC', { x: XC + 960, y: 540, o: 0 });
 // Gleis und Zug in einer Maske (der Zug kommt aus der Bühnenkante)
 deko('clipC', '', `left:${XC + 140}px;top:250px;width:1640px;height:760px;overflow:hidden;border-radius:48px`);
-neu('gleisC', '', 'width:1540px', 'data-frei', 'gleis', 'clipC');
+neu('gleisC', '', 'width:1520px', 'data-frei', 'gleis', 'clipC');
 neu('zugC', `<div style="position:absolute;left:0;top:0;width:220px">${kopie('t-zug', 'zug')}</div><div class="wagen" style="position:absolute;left:226px;top:138px"></div>`, 'width:430px;height:210px', 'data-frei', '', 'clipC');
 zimmer('zZug', fenster(300, 60, 140, 140) + moebel('t-laptop', 400, 474, 260, 'zz'), 'data-frei', true);
 el('zugC').appendChild(el('zZug'));
 akteur('gleisC', { x: 820, y: 397, o: 0 });
-akteur('zugC', { x: -400, y: 319 });
+akteur('zugC', { x: -400, y: 319, o: 0 });
 akteur('zZug', { x: 326, y: 138 - ZM, s: .2 });
 dachDa('zZug');
 bild('stadtC', 't-stadt', 190, 'data-frei');
@@ -519,7 +519,7 @@ akteur('zimC', { x: XC + ZCX, y: 930 - ZM, s: .4 });
 akteur('blattC', {}, true); akteur('scheinC', { o: 0 }, true);
 neu('frage5', '?', '', '', 'frage78');
 bild('bundC', 't-bund', 150, 'data-frei');
-bild('keyC', 't-schluessel', 80, 'data-frei');
+bild('keyC', 't-schluessel', 100, 'data-frei');
 portrait('maiC', 'Mai', 170);
 [['Ehrlichkeit', 400], ['Selbstständigkeit', 330], ['Verlässlichkeit', 324]].forEach(([w, b], i) => neu('rang' + (i + 1), `<b>${i + 1}</b>${w}`, `width:${b}px`, 'data-gruppe="rang"', 'rang' + (i === 1 ? ' top' : '')));
 // geteilte Bühne
@@ -532,7 +532,7 @@ neu('frageC', '?', 'font:800 190px/1 Inter;color:var(--b500)', 'data-frei');
 ['dz1', 'dz2', 'dz3'].forEach(id => neu(id, '', 'width:84px;height:62px', 'data-frei', 'leerraum'));
 neu('dzKlein', '', 'width:130px;height:110px', 'data-frei', 'leerraum');
 neu('fkReise', '?', '', 'data-frei', 'frageklein');
-schnur('schnurC', XC, 0, [488, 774], [609, 850], [0, 30]);
+schnur('schnurC', XC, 0, [495, 774], [609, 850], [0, 30]);
 WELT.appendChild(el('maiC'));
 // Gedankenblase
 neu('gedanke', `<svg viewBox="0 0 360 260"><path d="M84 214c-40 4-70-22-62-56-30-14-26-60 10-66 0-36 40-60 74-42 18-34 74-38 96-6 30-22 84-6 86 34 40 4 54 50 26 74 18 34-14 70-54 60-14 30-66 36-90 10-28 20-74 14-86-8Z" fill="var(--surface)" stroke="var(--b200)" stroke-width="6"/></svg>`, 'width:380px;height:274px', 'data-gruppe="denk"', 'gedanke');
@@ -577,22 +577,22 @@ neu('woche', `<div class="tage">${['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'].map(d => 
 
 /* ==================== Zeitleiste ==================== */
 /* ---------- 1 · Situation: Mais Familie fragt ---------- */
-tw('zimA', .05, .7, { o: 1, s: 1 }, 'sanft'); cue(.1, 'whoosh');
+tw('zimA', .05, .7, { o: 1, s: 1.15 }, 'sanft'); cue(.1, 'whoosh');
 // Handy brummt, Anruf-Zeichen
 pop('anrufA', W('Familie', 1) - .1, { x: 440, y: 190 });
 ruetteln('handyA', W('Familie', 1) - .1, W('oft', 1) + .3, 4);
 puls('anrufA', W('Familie', 1) + .4, W('Jonas', 3), .07, 1.8);
-wellen(W('fragt', 1), 960 - 370 + 440, 402 + 190, 120, null);
-wellen(W('oft', 1), 960 - 370 + 440, 402 + 190, 120, null);
+wellen(W('fragt', 1), 1040, 541, 130, null);
+wellen(W('oft', 1), 1040, 541, 130, null);
 // Blase 1 fliegt durch die Wand herein
-akteur('blase1', { x: 380, y: 526, o: 0, s: .7 });
-tw('blase1', W('Warum', 1) - .25, .25, { o: 1 }); tw('blase1', W('Warum', 1) - .25, .75, { x: 738, y: 502, s: 1 }, 'sanft', { bogen: 40 }); cue(W('Warum', 1) - .25, 'whoosh');
-wellen(W('Warum', 1) + .05, 594, 516, 110, 'var(--b200)');
+akteur('blase1', { x: 330, y: 470, o: 0, s: .7 });
+tw('blase1', W('Warum', 1) - .25, .25, { o: 1 }); tw('blase1', W('Warum', 1) - .25, .75, { x: 705, y: 438, s: 1 }, 'sanft', { bogen: 40 }); cue(W('Warum', 1) - .25, 'whoosh');
+wellen(W('Warum', 1) + .05, 540, 452, 110, 'var(--b200)');
 wackeln('blase1', W('allein', 1), 3, 3);
 // Blase 2
-akteur('blase2', { x: 380, y: 456, o: 0, s: .7 });
-tw('blase2', W('warum', 2) - .25, .25, { o: 1 }); tw('blase2', W('warum', 2) - .25, .8, { x: 985, y: 481, s: 1 }, 'sanft', { bogen: 70 }); cue(W('warum', 2) - .25, 'whoosh');
-wellen(W('warum', 2) + .05, 594, 460, 110, 'var(--b200)');
+akteur('blase2', { x: 330, y: 400, o: 0, s: .7 });
+tw('blase2', W('warum', 2) - .25, .25, { o: 1 }); tw('blase2', W('warum', 2) - .25, .8, { x: 989, y: 414, s: 1 }, 'sanft', { bogen: 70 }); cue(W('warum', 2) - .25, 'whoosh');
+wellen(W('warum', 2) + .05, 540, 400, 110, 'var(--b200)');
 wackeln('blase2', W('jeden', 2), 4, 3);
 schweben(['blase1', 'blase2'], 4);
 neigen('maiA', W('jeden', 2) - .2, W('Jonas', 3) - .3, -6);
@@ -605,8 +605,8 @@ nicken('jonasA', W('ganz', 4) - .1, 1.2); froh('jonasA', W('ganz', 4), SE(5) + .
 neigen('maiA', WE('ganz', 4), SE(4) + 1.4, -9);
 tw(['blase1', 'blase2'], WE('ganz', 4) + .1, .6, { s: .82, o: .55 }, 'inout');
 // Er wohnt auch allein … ruft nur ab und zu an
-pop('jHaus', W('allein', 5) - .15, { x: 1268, y: 508 });
-ein('jWoche', W('ruft', 5) - .1, { x: 1446, y: 586 }, { x: 60 }, 'whoosh');
+pop('jHaus', W('allein', 5) - .15, { x: 1314, y: 445 });
+ein('jWoche', W('ruft', 5) - .1, { x: 1545, y: 560 }, { x: 60 }, 'whoosh');
 el('jWoche').querySelectorAll('i').forEach((d, i) => { akteur(d, { s: .5 }, true); tw(d, W('ruft', 5) + .2 + i * .06, .3, { s: 1 }, 'back'); });
 el('jWoche').querySelectorAll('i.an').forEach((d, i) => { tw(d, W('ab', 5) + i * .3, .15, { s: 1.5 }, 'sinus'); tw(d, W('ab', 5) + i * .3 + .15, .35, { s: 1 }, 'sanft'); cue(W('ab', 5) + i * .3, 'klick'); });
 const S1AUS = SE(5) + .1;
@@ -757,7 +757,7 @@ hausLicht('fhC', W('Eltern', 15) - .2);
 schweben('bundC', 5);
 { for (let k = 0; k < 4; k++) tw('bundC', W('Eltern', 15) + .6 + k * .32, .32, { r: (k % 2 ? -1 : 1) * 8 * Math.pow(.55, k) }, 'sinus'); tw('bundC', W('Eltern', 15) + 1.9, .3, { r: 0 }, 'sinus'); }
 // … gibt einen Schlüssel an Mais Tür ab (Klick)
-const KEYZ = [XC + ZCX + (677 - 370) * .4 - 24, 930 - (528 - 339) * .4];
+const KEYZ = [XC + ZCX + (677 - 370) * .4 - 30, 930 - (528 - 339) * .4];
 akteur('keyC', { x: XC + 900, y: 540, o: 0, s: .6 });
 tw('keyC', W('Kinder', 15) - .45, .15, { o: 1 }); flug('keyC', W('Kinder', 15) - .45, .65, KEYZ[0] - 26, KEYZ[1], 80, { s: 1 }); cue(W('Kinder', 15) - .45, 'whoosh');
 tw('keyC', W('Kinder', 15) + .2, .14, { x: KEYZ[0] }, 'in');
@@ -790,21 +790,21 @@ wellen(W('Erziehungszielen', 16) + .05, XC + 1290 + 40, 425, 90);
 aus(['rang1', 'rang2', 'rang3'], W('Und', 17) - .15, .3);
 tw('gleisC', W('Und', 17), .4, { o: 1 });
 pop('stadtC', W('andere', 17) - .2, { x: XC + 1640, y: 640 - 95 + 10 }, 'pop', 'sanft');
-tw('zugC', W('Arbeit', 17) - .3, 3.0, { x: 2150 }, 'inout'); cue(W('Arbeit', 17) - .3, 'whoosh');
+set('zugC', W('Arbeit', 17) - .3, { o: 1 }); tw('zugC', W('Arbeit', 17) - .3, 3.0, { x: 2150 }, 'inout'); cue(W('Arbeit', 17) - .3, 'whoosh');
 for (let k = 0; k < 6; k++) cue(W('Arbeit', 17) + k * .38, 'klick');
 
 /* ---------- 6 · Und bei dir? Die Bühne teilt sich ---------- */
 const T6 = SE(17) + .15;
 textAus('tb5', T6 - .1);
 ausS(['wegC', 'gleisC', 'stadtC', 'zugC'], T6, .4); tw('feldC', T6, .5, { o: 0 }, 'inout');
-tw('fhC', T6, .8, { x: XC + 345, s: .62 }, 'inout');
+tw('fhC', T6, .8, { x: XC + 352, s: .62 }, 'inout');
 tw('zimC', T6, .8, { x: XC + 720, s: .3 }, 'inout'); cue(T6, 'whoosh');
 tw('maiC', T6 + .1, .8, { x: XC + 960, y: 865, s: 1 }, 'inout');
 akteur('teilerC', { x: XC + 960, y: 630, draw: 0 });
 tw('teilerC', T6 + .25, .6, { draw: 1 }, 'inout'); cue(T6 + .25, 'kritzeln');
 tw('rechtsC', T6 + .35, .55, { o: 1, x: 0 }, 'sanft');
-pop('chipDE', T6 + .55, { x: XC + 540, y: 330 });
-pop('chipDu', T6 + .75, { x: XC + 1370, y: 330 });
+pop('chipDE', T6 + .55, { x: XC + 540, y: 338 });
+pop('chipDu', T6 + .75, { x: XC + 1370, y: 338 });
 // gestrichelter Haus-Umriss mit großem Fragezeichen
 const FORM = {
   start: [[1175, 930], [1485, 930], [1485, 650], [1485, 650], [1330, 505], [1175, 650], [1175, 650]],
@@ -901,7 +901,7 @@ tw('hilfe7', W('Telefonseelsorge', 26) - .25, .5, { o: 1, y: 0 }, 'sanft'); cue(
 akteur('hSonne', {}, true); akteur('hMond', { o: 0, r: -30 }, true);
 tw('hSonne', W('Nacht', 26) - .1, .4, { o: 0, r: 40 }, 'inout'); tw('hMond', W('Nacht', 26) - .1, .4, { o: 1, r: 0 }, 'inout');
 // Du darfst dir Hilfe holen
-huepfen('zimD', W('Hilfe', 27) - .1, 10);
+tw('zimD', W('Hilfe', 27) - .1, .3, { s: .77 }, 'sinus'); tw('zimD', W('Hilfe', 27) + .2, .5, { s: .75 }, 'sanft');
 [0, 1, 2].forEach(i => tw('tDs' + i, W('Hilfe', 27) + i * .1, .25, { s: 1.25 }, 'sinus'));
 [0, 1, 2].forEach(i => tw('tDs' + i, W('Hilfe', 27) + .25 + i * .1, .4, { s: 1 }, 'sanft'));
 
