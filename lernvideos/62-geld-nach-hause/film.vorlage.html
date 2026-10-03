@@ -198,9 +198,9 @@
 
   <!-- 1 · Weltkugel: Amir schickt Geld (mittig, ohne Titel) -->
   <div class="a buehne weit" id="bue1"></div>
-  <div class="a" id="globus1" style="width:500px;height:500px"></div>
+  <div class="a" id="globus1" style="width:500px;height:500px" data-gruppe="globus1"></div>
   <svg class="a" id="bogen1" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
-  <div class="a pin" id="pin1" style="width:46px"></div>
+  <div class="a pin" id="pin1" style="width:46px" data-gruppe="globus1"></div>
   <div class="a welle" id="welleH1" style="border-color:var(--error)" data-frei></div>
   <div class="a" id="haus1" style="width:170px" data-gruppe="haus1">{{haus~1}}</div>
   <div class="a" id="herz1" style="width:74px" data-gruppe="haus1">{{herz~1}}</div>
@@ -225,7 +225,7 @@
   <div class="a karte2" id="k2b" data-gruppe="essen"><div class="rot" id="rot2"></div><div class="streifen" id="st2b"></div><div class="ic" id="voll2">{{teller-essen}}</div><div class="ic2" id="leer2">{{teller}}</div><b>Essen</b></div>
   <div class="a karte2" id="k2c" data-gruppe="ticket"><div class="streifen" id="st2c"></div><div class="ic">{{fahrkarte}}</div><b>Ticket</b></div>
   <div class="a karte2" id="k2d" data-gruppe="not"><div class="streifen" id="st2d"></div><div class="ic">{{sparglas}}</div><b>Notgroschen</b></div>
-  <div class="a rueck" id="rueck2"><svg viewBox="0 0 54 40"><path d="M27 6v28L5 20Z M51 6v28L29 20Z" fill="var(--surface)"/></svg></div>
+  <div class="a rueck" id="rueck2" data-dreht><svg viewBox="0 0 54 40"><path d="M27 6v28L5 20Z M51 6v28L29 20Z" fill="var(--surface)"/></svg></div>
 
   <!-- 3 · Stationen: Gebühr und Wechselkurs -->
   <div class="a buehne" id="bue3"></div>
@@ -333,9 +333,9 @@
 
   <!-- 9 · Zurück auf der Weltkugel: alles zusammen -->
   <div class="a buehne" id="bue9"></div>
-  <div class="a" id="globus9" style="width:380px;height:380px"></div>
+  <div class="a" id="globus9" style="width:380px;height:380px" data-gruppe="globus9"></div>
   <svg class="a" id="bogen9" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei></svg>
-  <div class="a pin" id="pin9" style="width:40px"></div>
+  <div class="a pin" id="pin9" style="width:40px" data-gruppe="globus9"></div>
   <div class="a station" id="st9a" data-frei><svg viewBox="0 0 46 46"><rect x="4" y="16" width="20" height="14" rx="4" fill="var(--b500)"/><rect x="26" y="16" width="9" height="14" rx="3" fill="var(--b300)"/><rect x="37" y="16" width="6" height="14" rx="3" fill="var(--success)"/></svg><div class="gr"></div></div>
   <div class="a station" id="st9b" data-frei><svg viewBox="0 0 46 46"><rect x="6" y="24" width="9" height="16" rx="3" fill="var(--b300)"/><rect x="18.5" y="8" width="9" height="32" rx="3" fill="var(--success)"/><rect x="31" y="17" width="9" height="23" rx="3" fill="var(--b300)"/></svg><div class="gr"></div></div>
   <div class="a station" id="st9c" data-frei><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="18" fill="var(--success)"/><path d="M14 23.5l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div class="gr"></div></div>
@@ -532,7 +532,7 @@ HOOKS.push(t => {
   let b = 0; for (const s of SCHNITTE) b = Math.max(b, clamp(1 - Math.abs(t - s.tc) / .2));
   blende.style.opacity = b.toFixed(3);
   // Tiefe: die Bühne bleibt bei der Fahrt etwas zurück
-  for (const [e, i] of BUEHNEN) { const dx = .1 * (wx - K(i)[0]), dy = .1 * (wy - K(i)[1]); if (Math.abs(dx) + Math.abs(dy) < 400) e.style.transform += ` translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`; }
+  for (const [e, i] of BUEHNEN) { const dx = .1 * (wx - K(i)[0]), dy = 0;   /* nur waagrecht */ if (Math.abs(dx) + Math.abs(dy) < 400) e.style.transform += ` translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`; }
 });
 // Fahrt von Szene i nach j (Kamera), optional mit Routen-Strich
 function fahrt(j, t0, d, route = null) {
@@ -648,9 +648,9 @@ const tc1 = SCHNITTE[0].tc;
   // Sonst: Gegenprobe – das Paket nimmt zu viel, der Teller wird leer
   const tG = W('Sonst', 6) - .05, [ex, ey] = P(2, 1216 + 150 * .35, 704);
   set('seg2b', tG, { x: ex, y: ey, s: .3, o: 1 });
-  tw('seg2b', tG, .55, { x: px + 150 * .35, y: py, s: .3 }, 'inout', { bogen: 120 }); tw('seg2b', tG + .45, .12, { o: 0 });
+  tw('seg2b', tG, .75, { x: px + 150 * .35, y: py, s: .3 }, 'sinus', { bogen: 120 }); tw('seg2b', tG + .65, .12, { o: 0 });
   tw('#st2b', tG, .25, { sx: 0 }, 'in'); ton(tG, 'whoosh');
-  tw('reise', tG + .55, .3, { s: 1.22 }, 'back'); ton(tG + .55, 'plopp');
+  tw('reise', tG + .75, .3, { s: 1.22 }, 'back'); ton(tG + .75, 'plopp');
   const tF = W('fehlt', 6);
   tw('#voll2', tF, .2, { o: 0 }); tw('#leer2', tF, .2, { o: 1 });
   [0, .36, .72].forEach(d => { tw('#rot2', tF + d, .14, { o: 1 }); tw('#rot2', tF + d + .2, .14, { o: .35 }); });
@@ -659,25 +659,25 @@ const tc1 = SCHNITTE[0].tc;
   // Zurückspulen: alles läuft rückwärts an seinen Platz
   const tZ = W('Monatsende', 6) + .45;
   popS('rueck2', tZ - .2, 2, 1320, 300, {}, 'klick');
-  tw('rueck2', tZ, .7, { r: -360 }, 'inout'); tw('rueck2', tZ + .75, .25, { s: 0 }, 'in');
-  set('seg2b', tZ, { o: 1 }); tw('seg2b', tZ, .5, { x: ex, y: ey }, 'inout', { bogen: -120 }); tw('seg2b', tZ + .42, .1, { o: 0 });
+  tw('rueck2', tZ, .8, { r: -360 }, 'inout'); tw('rueck2', tZ + .85, .25, { s: 0 }, 'in');
+  set('seg2b', tZ, { o: 1 }); tw('seg2b', tZ, .7, { x: ex, y: ey }, 'sinus', { bogen: -120 }); tw('seg2b', tZ + .62, .1, { o: 0 });
   tw('reise', tZ, .4, { s: 1 }, 'sinus'); ton(tZ, 'scan');
-  tw('#rot2', tZ + .45, .2, { o: 0 }); tw('#leer2', tZ + .45, .2, { o: 0 }); tw('#voll2', tZ + .45, .2, { o: 1 }); tw('#st2b', tZ + .45, .3, { sx: 1 }, 'out');
-  bump('k2b', tZ + .5, 1.06); ton(tZ + .5, 'plopp'); froh('am2', tZ + .5); huepfen('am2', tZ + .55, 12);
+  tw('#rot2', tZ + .65, .2, { o: 0 }); tw('#leer2', tZ + .65, .2, { o: 0 }); tw('#voll2', tZ + .65, .2, { o: 1 }); tw('#st2b', tZ + .65, .3, { sx: 1 }, 'out');
+  bump('k2b', tZ + .7, 1.06); ton(tZ + .7, 'plopp'); froh('am2', tZ + .7); huepfen('am2', tZ + .75, 12);
 }
 
 /* ================= Route 2 → 3 → 4 → 5 (Paket reist), dann der Abweg ================= */
 const F3 = 590;     // Boden der Stationen-Szene
 const R23 = [P(2, 1640, 300), P(2, 2300, 260), P(3, 980, 1300), P(3, 980, F3 - 53.4)];
 const R34 = [P(3, 1640, F3 - 42.75), P(3, 2250, F3 - 42.75), P(4, 985, -200), P(4, 985, 470)];
-const R45 = [P(4, 1360, 830 - 180 - 46.3 * .9), P(4, 2100, 640), P(5, 1150, 1300), P(5, 1150, 520)];
+const R45 = [P(4, 1360, 830 - 180 - 46.3 * .9), P(4, 1950, 620), P(5, 1150, 1150), P(5, 1150, 520)];
 const R56 = [P(5, 1320, 900), P(5, 1560, 1300), P(6, 1080, -220), P(6, 1320, 180)];
 const R67 = [P(6, 1770, 560), P(6, 2250, 560), P(7, 1320, 1400), P(7, 1320, 900)];
 const R78 = [P(7, 1770, 540), P(7, 2250, 540), P(8, 1320, 1400), P(8, 1320, 900)];
 const fort23 = route(R23), fort34 = route(R34), fort45 = route(R45);
 const fort56 = route(R56, 'var(--error)', 'var(--error)'), fort67 = route(R67, 'var(--error)', 'var(--error)'), fort78 = route(R78);
-const T23 = W('Monatsende', 6) + 1.5;
-fahrt(3, T23, 1.3, fort23); bahn('reise', T23, 1.3, R23, 0, 1, 'inout', 14); tw('reise', T23, 1.3, { s: 1.25 }, 'inout');
+const T23 = W('Monatsende', 6) + 1.65;
+fahrt(3, T23, 1.5, fort23); bahn('reise', T23, 1.5, R23, 0, 1, 'inout', 14); tw('reise', T23, 1.5, { s: 1.25 }, 'inout');
 textAus('tb2', T23);
 
 /* ================= 3 · Stationen: Gebühr und Wechselkurs ================= */
@@ -700,7 +700,7 @@ textAus('tb2', T23);
   }));
   // Paket rollt zum ersten Tor
   const F = F3, yP = s => F - 42.75 * s;     // Paket steht auf dem Boden
-  zu('reise', W('kostet', 7) - .2, .8, 3, 1040, yP(1.25), {}, 'inout');
+  zu('reise', T23 + 1.55, .6, 3, 1040, yP(1.25), {}, 'inout');
   zu('reise', W('zuerst', 8) - .2, .7, 3, 1130, yP(1.25), {}, 'inout'); ton(W('zuerst', 8) - .2, 'whoosh');
   // Gebühr: eine Münze springt in die Kasse
   const tG = W('Gebühr', 8) - .05, [gx, gy] = P(3, 1130, yP(1.25));
@@ -733,7 +733,7 @@ textAus('tb2', T23);
 
 /* ================= 4 · Vergleichen: Was kommt an? ================= */
 const T34 = SE(10) + .15;
-fahrt(4, T34, 1.3, fort34); bahn('reise', T34, 1.3, R34, 0, 1, 'inout', 12); tw('reise', T34, 1.3, { s: 1.08 }, 'inout');
+fahrt(4, T34, 1.5, fort34); bahn('reise', T34, 1.5, R34, 0, 1, 'inout', 12); tw('reise', T34, 1.5, { s: 1.08 }, 'inout');
 tw('geist3', T34, .2, { o: 0 });
 textAus('tb3', T34);
 const SP = [1140, 1360, 1580], BASIS = 830, HOCH = [70, 180, 120], PS = [.55, .9, .72];
@@ -811,13 +811,13 @@ const T45 = SE(14) + .15;
   // das Gewinner-Paket reist weiter
   const [bx, by] = P(4, SP[1], yAuf(1, HOCH[1]));
   set('reise', T45, { x: bx, y: by, s: 1.08 * .9, o: 1, r: 0 }); set('p4b', T45, { o: 0 });
-  fahrt(5, T45, 1.3, fort45); bahn('reise', T45, 1.3, R45, 0, 1, 'inout', 12); tw('reise', T45, 1.3, { s: 1 }, 'inout');
+  fahrt(5, T45, 1.6, fort45); bahn('reise', T45, 1.6, R45, 0, 1, 'inout', 12); tw('reise', T45, 1.6, { s: 1 }, 'inout');
   tw('ok4', T45, .2, { o: 0 });
   textAus('tb4', T45);
   titelEin('tb5', W('Nutze', 15) + .3);
   einS('karte5', T45 + .6, 5, 1070, 480, { y: 70 }, 'pop');
   // das Paket gibt sich beim Anbieter ab
-  const tD = T45 + 1.35;
+  const tD = T45 + 1.62;
   zu('reise', tD, .45, 5, 1090, 500, { s: 0 }, 'in'); bump('karte5', tD + .4, 1.05); ton(tD + .4, 'plopp');
   // Erlaubnis: das Siegel schlägt auf
   const N = 18, ST = Array.from({ length: N * 2 }, (_, k) => { const r = k % 2 ? 52 : 60, a = k * Math.PI / N; return `${(64 + r * Math.sin(a)).toFixed(1)},${(62 - r * Math.cos(a)).toFixed(1)}`; }).join(' ');
@@ -825,7 +825,7 @@ const T45 = SE(14) + .15;
     <circle cx="64" cy="62" r="40" fill="none" stroke="var(--surface)" stroke-width="3" opacity=".6"/>
     <path d="M44 56l13 13 27-28" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     <rect x="12" y="84" width="104" height="30" rx="9" fill="var(--success-text)"/><text x="64" y="106" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="19" fill="var(--surface)">Erlaubnis</text></svg>`;
-  const tE = W('Erlaubnis', 15) - .2;
+  const tE = W('Erlaubnis', 15) + .05;
   pos('siegel5', 5, 1170, 396, { o: 0, s: 2.2, r: -3 });
   tw('siegel5', tE, .12, { o: 1 }); tw('siegel5', tE, .3, { s: 1 }, 'in'); landen('siegel5', tE + .3, 1); wackeln('siegel5', tE + .35, 3, 3);
   bump('karte5', tE + .3, 1.04); ton(tE + .3, 'plopp'); ton(tE + .35, 'erfolg'); akzent(tE + .3, .045, 1100, 480);
@@ -847,7 +847,7 @@ const T45 = SE(14) + .15;
   const tDB = W('Datenbank', 17) - .2, [ax, ay] = P(5, 1560, 500);
   ['karte5', 'siegel5', 'amt5', 'pfeil5'].forEach(id => tw(id, tDB - .1, .7, { y: wertBei(id, 'y', tDB) - 100 }, 'inout'));
   akteur('liste5', { x: ax, y: ay, s: .15, o: 0 });
-  tw('liste5', tDB, .12, { o: 1 }); zu('liste5', tDB + .1, .75, 5, 1320, 745, { s: 1 }, 'sanft', { bogen: -40 }); ton(tDB, 'whoosh');
+  tw('liste5', tDB, .12, { o: 1 }); zu('liste5', tDB + .1, .8, 5, 1320, 735, { s: 1 }, 'inout', { bogen: -40 }); ton(tDB, 'whoosh');
   innen('#lband5', { y: 0 });
   innen('#lh5'); innen('#lok5', { s: 0 });
   const tScroll = W('Internet', 17) - .1, tStop = W('Anbieter', 17) - .05;
@@ -855,8 +855,8 @@ const T45 = SE(14) + .15;
   for (let t = tScroll; t < tStop - .1; t += .26) ton(t, 'tipp');
   pos('lupe5', 5, 1700, 840, { o: 0, s: .7 });
   tw('lupe5', W('siehst', 17) - .25, .3, { o: 1, s: 1 }, 'sanft');
-  zu('lupe5', W('siehst', 17) - .25, .7, 5, 1290, 783, {}, 'inout');
-  zu('lupe5', W('du', 17), .6, 5, 1170, 783, {}, 'inout'); zu('lupe5', W('ob', 17) + .1, .6, 5, 1250, 783, {}, 'inout');
+  zu('lupe5', W('siehst', 17) - .25, .7, 5, 1290, 773, {}, 'inout');
+  zu('lupe5', W('du', 17), .6, 5, 1170, 773, {}, 'inout'); zu('lupe5', W('ob', 17) + .1, .6, 5, 1250, 773, {}, 'inout');
   tw('#lh5', tStop, .3, { o: 1 }); tw('#lok5', tStop + .1, .45, { s: 1 }, 'back'); ton(tStop + .1, 'ding');
   bump('liste5', tStop + .1, 1.03);
   tw('lupe5', W('Deutschland', 17) - .1, .3, { o: 0, s: .7 }, 'in');
@@ -873,27 +873,27 @@ const T56 = SE(17) + .12;
   popS('am6', T56 + .9, 6, 1030, 600, {}, 'pop', 'sanft'); froh('am6', T56 + 1.0);
   einS('buendel6', W('Geld', 18) - .2, 6, 1150, 738, { y: 40 }, 'pop');
   // die Tür taucht auf und öffnet sich einen Spalt
-  einS('tuer6', W('Unbekannte', 18) - .2, 6, 1560, 560, { x: 80 }, 'whoosh');
+  einS('tuer6', W('Unbekannte', 18) - .2, 6, 1540, 560, { x: 80 }, 'whoosh');
   innen('#blatt6', { sx: 1 });
   tw('#blatt6', W('Unbekannte', 18) + .45, .7, { sx: .6 }, 'inout'); ton(W('Unbekannte', 18) + .45, 'klick');
   mund('am6', W('Unbekannte', 18) + .3, 'zu');
-  popS('geb6', W('Gebühr', 18) - .1, 6, 1560, 322, {}, 'muenze', 'back');
+  popS('geb6', W('Gebühr', 18) - .1, 6, 1540, 322, {}, 'muenze', 'back');
   tw('#blatt6', W('weiterschicken', 18), .6, { sx: .32 }, 'inout'); ton(W('weiterschicken', 18), 'klick');
   // das Bündel will zur Tür fliegen …
-  const [bx, by] = P(6, 1150, 738), B6 = [[bx, by], P(6, 1230, 470), P(6, 1360, 450), P(6, 1420, 570)];
+  const [bx, by] = P(6, 1150, 738), B6 = [[bx, by], P(6, 1230, 470), P(6, 1350, 450), P(6, 1400, 570)];
   tw('buendel6', W('Erlaubnis', 19) - .2, .3, { y: by - 30 }, 'sinus');
   bahn('buendel6', W('Erlaubnis', 19) + .1, W('verboten', 19) - W('Erlaubnis', 19) - .2, [[bx, by - 30], ...B6.slice(1)], 0, .9, 'inout', 8);
   ton(W('Erlaubnis', 19) + .1, 'whoosh');
   // … verboten: das Schild schlägt davor, das Bündel prallt zurück, die Tür knallt zu
   const tV = W('verboten', 19) - .1;
-  akteur('verbot6', { x: P(6, 1560, 0)[0], y: P(6, 0, 70)[1], o: 0, r: -3 });
+  akteur('verbot6', { x: P(6, 1540, 0)[0], y: P(6, 0, 70)[1], o: 0, r: -3 });
   tw('verbot6', tV, .1, { o: 1 }); tw('verbot6', tV, .28, { y: P(6, 0, 560)[1] }, 'in'); landen('verbot6', tV + .28, 1); wackeln('verbot6', tV + .3, 4, 3);
-  ton(tV + .28, 'plopp'); akzent(tV + .28, .05, 1560, 560);
+  ton(tV + .28, 'plopp'); akzent(tV + .28, .05, 1540, 560);
   const pb = bez(B6, .9);
   tw('buendel6', tV + .3, .8, { x: bx, y: by, r: 0 }, 'inout', { bogen: 120 }); landen('buendel6', tV + 1.1, .7); ton(tV + 1.1, 'plopp');
   tw('#blatt6', tV + .45, .16, { sx: 1.04 }, 'in'); tw('#blatt6', tV + .61, .3, { sx: 1 }, 'sanft'); ton(tV + .55, 'plopp');
-  for (let i = 0; i < 5; i++) tw('tuer6', tV + .6 + i * .07, .07, { x: P(6, 1560 + (i % 2 ? -7 : 7), 0)[0] }, 'sinus');
-  tw('tuer6', tV + .95, .2, { x: P(6, 1560, 0)[0] }, 'sinus');
+  for (let i = 0; i < 5; i++) tw('tuer6', tV + .6 + i * .07, .07, { x: P(6, 1540 + (i % 2 ? -7 : 7), 0)[0] }, 'sinus');
+  tw('tuer6', tV + .95, .2, { x: P(6, 1540, 0)[0] }, 'sinus');
   mund('am6', tV + .3, 'auf'); kopf('am6', tV + .3, .5, 6, 2); froh('am6', tV + 1.2); huepfen('am6', tV + 1.2, 12);
   tw('geb6', tV + .6, .3, { o: 0, s: .7 }, 'in');
 }

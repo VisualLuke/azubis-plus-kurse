@@ -80,6 +80,7 @@ html,body{background:var(--b50)}
 .sl .q{color:var(--b300);font-weight:800}
 .sl .portrait{position:absolute;left:22px;top:24px}
 .lg{display:inline-block;padding:6px 24px;border-radius:999px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;margin-right:16px}
+.chip.gross{height:72px;font-size:36px;line-height:42px}
 .chip{display:flex;align-items:center;justify-content:center;height:58px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
   box-shadow:0 8px 22px rgba(22,19,37,.14)}
 .chip b{font-weight:600;opacity:.85;margin-right:9px}
@@ -99,6 +100,7 @@ html,body{background:var(--b50)}
 .plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)}
 .etikett{padding:10px 24px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 26px/32px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.09)}
 .etikett b{font-weight:800;color:var(--ink)}
+.etikett.gross{padding:12px 30px;font-size:38px;line-height:46px}
 .etikett.klein{padding:7px 18px;font-size:22px;line-height:28px}
 .tipp u{display:inline-block;text-decoration:none;white-space:pre}
 /* kleiner Karton (Vorderseite, Deckel, Klebeband) */
@@ -156,8 +158,8 @@ html,body{background:var(--b50)}
 .monfuss s{position:absolute;left:0;right:0;bottom:0;height:22px;border-radius:11px;background:var(--b600);text-decoration:none}
 .strahl{height:8px;border-radius:4px;background:var(--error);box-shadow:0 0 12px 3px color-mix(in srgb,var(--error) 50%,transparent);transform-origin:0 50%}
 .punkt64{width:26px;height:26px;border-radius:99px;background:var(--b400);box-shadow:0 0 0 7px color-mix(in srgb,var(--b400) 30%,transparent)}
-.balken{width:300px;height:26px;border-radius:5px;background:linear-gradient(var(--warning),var(--warning-text))}
-.balken b{position:absolute;left:110px;top:-10px;padding:2px 14px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300);font:800 26px/34px Inter;color:var(--ink)}
+.balken{width:360px;height:30px;border-radius:5px;background:linear-gradient(var(--warning),var(--warning-text))}
+.balken b{position:absolute;left:130px;top:-14px;padding:3px 18px;border-radius:10px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300);font:800 34px/44px Inter;color:var(--ink)}
 .balken b.ok{box-shadow:inset 0 0 0 4px var(--success);background:var(--success-bg)}
 .fachrahmen{border-radius:6px;border:6px dashed var(--b400);opacity:0}
 .fachrahmen.voll{border:none;background:color-mix(in srgb,var(--success) 30%,transparent);box-shadow:inset 0 0 0 6px var(--success)}
@@ -194,7 +196,7 @@ html,body{background:var(--b50)}
 .pfeil2::before,.pfeil2::after{content:'';position:absolute;top:-12px;width:0;height:0;border:18px solid transparent}
 .pfeil2::before{left:-22px;border-right:22px solid var(--b500);border-left:0}
 .pfeil2::after{right:-22px;border-left:22px solid var(--b500);border-right:0}
-.mast2{width:20px;transform-origin:50% 100%;background:linear-gradient(90deg,var(--n300),var(--n200));border-radius:4px 4px 0 0}
+.mast2{width:24px;transform-origin:50% 100%;background:linear-gradient(90deg,var(--b600),var(--b400));border-radius:4px 4px 0 0}
 .leuchte{width:56px;height:56px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--warning) 85%,transparent) 0,color-mix(in srgb,var(--warning) 0%,transparent) 70%)}
 .hoehe{width:12px;background:var(--b400);border-radius:6px}
 .hoehe::before,.hoehe::after{content:'';position:absolute;left:-14px;width:0;height:0;border:20px solid transparent}
@@ -572,8 +574,8 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   k.ein(P + .25); k.scan(W('Der', 4)); k.wort(W('Sicherheitsschuh', 4)); k.zeile(W('Die', 5));
   const sl = schild(i, 8, 'der', ['sicherheitsschuhe']); sl.ein(SA(8) - .55);
   // Schuh 1 landet, Schuh 2 setzt sich daneben
-  const SB = 270, sk = SB / 160, sy = Y + GY - (132 - 80) * sk;
-  const S1 = X + 1170, S2 = X + 1430;
+  const SB = 380, sk = SB / 160, sy = Y + GY - (132 - 80) * sk;
+  const S1 = X + 1130, S2 = X + 1445;
   for (const [n, sx] of [[1, S1], [2, S2]]) { bild('sh' + n, 't-schuh', SB, `data-gruppe="sh${n}"`); bild('kp' + n, 't-kappe', SB, `data-gruppe="sh${n}"`); }
   const t1 = W('Sicherheitsschuh', 4) - .3;
   akteur('sh1', { x: S1, y: sy - 380, o: 0 }); tw('sh1', t1, .2, { o: 1 }); tw('sh1', t1, .45, { y: sy }, 'in'); landen('sh1', t1 + .45); cue(t1 + .45, 'plopp');
@@ -583,7 +585,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   const tK = W('harte', 6) - .1;
   for (const [n, sx] of [[1, S1], [2, S2]]) { akteur('kp' + n, { x: sx, y: sy, o: 0 }); tw('kp' + n, tK + (n - 1) * .15, .4, { o: 1 }); }
   const kx = (111 - 80) * sk, ky = (101 - 80) * sk;
-  neu('gl2', '', 'width:190px;height:190px', 'data-frei', 'glanz');
+  neu('gl2', '', 'width:250px;height:250px', 'data-frei', 'glanz');
   akteur('gl2', { x: S1 + kx, y: sy + ky, o: 0, s: .6 });
   tw('gl2', tK, .35, { o: 1, s: 1 }, 'out'); tw('gl2', W('Kappe', 6) + .5, .6, { o: 0 }, 'in');
   wellen(W('Kappe', 6), S1 + kx, sy + ky, 'var(--warning)', 150); cue(W('Kappe', 6), 'ding'); akzent(W('Kappe', 6), .04);
@@ -594,20 +596,20 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   tw('ki2', tF - .45, .15, { o: 1 }); tw('ki2', tF - .45, .5, { y: kappeOben - 48, r: 2 }, 'in'); cue(tF + .05, 'plopp');
   tw('sh1', tF + .05, .08, { sy: .95 }, 'sinus'); tw('sh1', tF + .13, .3, { sy: 1 }, 'sanft');
   wellen(tF + .05, S1 + kx, kappeOben, 'var(--warning)', 160);
-  flug('ki2', tF + .07, .6, X + 990, Y + GY - 48, 150, { r: -3 }); landen('ki2', tF + .67); cue(tF + .67, 'plopp');
+  flug('ki2', tF + .07, .6, X + 915, Y + GY - 48, 170, { r: -3 }); landen('ki2', tF + .67); cue(tF + .67, 'plopp');
   wackeln('ki2', tF + .75, 3, 3);
-  haken('ok2', WE('herunterfällt', 7) + .05, S1 + 40, Y + 660);
+  haken('ok2', WE('herunterfällt', 7) + .05, S1 + 60, Y + 600);
   akzent(WE('herunterfällt', 7), .04);
   // Ohne Sicherheitsschuhe gehst du nicht ins Lager: Lagertür mit blauem Gebotszeichen, schwingt auf
-  const TX = X + 1720, TY = Y + 760;
-  tuer('tu2', 200, 400, 'data-gruppe="tu2"');
+  const TX = X + 1748, TY = Y + 720;
+  tuer('tu2', 220, 480, 'data-gruppe="tu2"');
   ein('tu2', SA(8) - .45, { x: TX, y: TY }, { y: 80 }, 'whoosh');
   akteur('tu2b', {}, true);
-  neu('gb2', tpl('svgSchuh'), '', 'data-gruppe="tu2"', 'gebot');
-  pop('gb2', W('Sicherheitsschuhe', 8) - .1, { x: TX, y: TY - 70 }, 'plopp');
+  neu('gb2', tpl('svgSchuh'), '', '', 'gebot');
+  pop('gb2', W('Sicherheitsschuhe', 8) - .1, { x: TX, y: Y + 330, s: 1.35 }, 'plopp');
   bump('sh1', W('Sicherheitsschuhe', 8) + .1, 1.05); bump('kp1', W('Sicherheitsschuhe', 8) + .1, 1.05);
   bump('sh2', W('Sicherheitsschuhe', 8) + .2, 1.05); bump('kp2', W('Sicherheitsschuhe', 8) + .2, 1.05);
-  wellen(W('nicht', 8), TX, TY - 70, 'var(--info)', 200); bump('gb2', W('nicht', 8), 1.1);
+  wellen(W('nicht', 8), TX, Y + 330, 'var(--info)', 260); bump('gb2', W('nicht', 8), 1.1);
   tuerAuf('tu2', W('Lager', 8) - .1, 1.3); akzent(W('Lager', 8), .035);
   sl.aus(SE(8) + .6);
 }
@@ -628,7 +630,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akteur('rt3l', {}, true);
   const tH = W('Hier', 10) - .15;
   tw('rt3l', tH, .7, { sy: .06 }, 'inout'); cue(tH, 'scan');
-  tw('lk3', tH + .35, .2, { o: 1 }); tw('lk3', tH + .35, .9, { s: .95, y: RY + 26 }, 'out'); cue(tH + .4, 'whoosh');
+  tw('lk3', tH + .35, .2, { o: 1 }); tw('lk3', tH + .35, .9, { s: 1.12, y: Y + GY - 68 / 160 * 250 * 1.12 }, 'out'); cue(tH + .4, 'whoosh');
   federn('lk3', tH + 1.25); cue(tH + 1.25, 'plopp');
   // die Ware kommt an: drei Kartons hüpfen vom Lastwagen auf den Boden
   const KX = [X + 1010, X + 1170, X + 1330], KB = 130, KH = 104, ky = Y + GY - KH / 2;
@@ -645,8 +647,8 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   const tL = W('Lieferschein', 11) - .3;
   akteur('kl3', { x: LX - 60, y: LY - 260, o: 0, r: -12 });
   tw('kl3', tL, .2, { o: 1 }); flug('kl3', tL, .55, LX, LY, 60, { r: -2 }); landen('kl3', tL + .55); cue(tL + .55, 'klick');
-  neu('ch3', chipHTML('der', 'Lieferschein'), 'width:320px', '', 'chip der');
-  akteur('ch3', { x: X + 1400, y: Y + 260, o: 0 });
+  neu('ch3', chipHTML('der', 'Lieferschein'), 'width:400px', '', 'chip gross der');
+  akteur('ch3', { x: X + 1430, y: Y + 260, o: 0 });
   tw('ch3', W('Lieferschein', 11), .35, { o: 1 }); tw('ch3', W('Lieferschein', 11), .5, { y: Y + 210 }, 'sanft'); cue(W('Lieferschein', 11), 'pop');
   akzent(W('Lieferschein', 11), .03);
   // Stimmt die Menge? Zähler über den Kartons, die Zeilen haken sich ab
@@ -687,7 +689,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   [[X + 1035, 'pb4'], [X + 1580, 'pc4']].forEach(([x, id], n) => {
     neu(id, stapelHTML(300, 3, 92), 'width:300px;height:218px;opacity:.75', 'data-gruppe="pal4"', 'grp');
     const t = W('Paletten', 16) - .2 + n * .15;
-    ein(id, t, { x, y: Y + GY - 109 - 40 }, { x: n ? 160 : -160 }, 'whoosh');
+    ein(id, t, { x, y: Y + GY - 109 - 70 }, { x: n ? 160 : -160 }, 'whoosh');
   });
   // Hauptpalette gleitet herein, Kartons fallen der Reihe nach darauf
   const PX = X + 1300, PB = 450, py = Y + GY - 17;
@@ -695,21 +697,21 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   const tP = W('Palette', 15) - .35;
   ein('pa4', tP, { x: PX, y: py }, { x: 220 }, 'whoosh');
   const KB = 140, KH = 100, ids = [];
-  for (let r = 0; r < 2; r++) for (let c = 0; c < 3; c++) {
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
     const id = `k4${r}${c}`, x = PX - PB / 2 + 8 + KB / 2 + c * (KB + 9), y = py - 17 - KH / 2 - r * (KH + 16);
     kiste(id, KB, KH, 'data-gruppe="pal4"'); ids.push(id);
-    const t = tP + .55 + (r * 3 + c) * .14;
+    const t = tP + .5 + (r * 3 + c) * .1;
     akteur(id, { x, y: y - 260, o: 0 }); tw(id, t, .12, { o: 1 }); tw(id, t, .32, { y }, 'in'); landen(id, t + .32); cue(t + .32, 'klick');
   }
   // Darauf steht die Ware, gut gestapelt: Welle über den Stapel, Haken
   ids.forEach((id, n) => bump(id, W('Ware', 17) - .1 + n * .07, 1.06));
   const tG = W('gestapelt', 17) - .1;
-  haken('ok4', tG + .2, PX + PB / 2 - 10, py - 290);
-  wellen(tG, PX, py - 120, 'var(--success)', 360); akzent(W('gestapelt', 17), .035);
+  haken('ok4', tG + .2, PX + PB / 2 + 30, py - 400);
+  wellen(tG, PX, py - 180, 'var(--success)', 420); akzent(W('gestapelt', 17), .035);
   // Auf der Palette sind zwanzig Kartons: Zähler zählt bis 20
-  neu('zl4', '<b id="zl4n">0</b> Kartons', '', '', 'etikett');
+  neu('zl4', '<b id="zl4n">0</b> Kartons', '', '', 'etikett gross');
   const tZ = W('Palette', 18) - .1;
-  pop('zl4', tZ - .2, { x: PX - 70, y: py - 330 }, 'pop');
+  pop('zl4', tZ - .2, { x: PX, y: py - 480 }, 'pop');
   zaehler('zl4n', 0, 20, tZ, W('zwanzig', 18) - tZ + .1);
   ids.forEach((id, n) => bump(id, tZ + n * .15, 1.05));
   bump('zl4', W('zwanzig', 18) + .15, 1.12); akzent(W('zwanzig', 18), .04); cue(W('zwanzig', 18) + .15, 'ding');
@@ -748,11 +750,11 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // Fahren nur mit Ausbildung, Fahrausweis und schriftlichem Auftrag: drei Nachweise, je ein Haken
   const DOK = [['dz5', 't-zertifikat', 'Ausbildung', X + 1060, W('Ausbildung', 22)], ['da5', 't-ausweis', 'Fahrausweis', X + 1340, W('Fahrausweis', 22)], ['dv5', 't-vertrag', 'Auftrag', X + 1620, W('Auftrag', 22)]];
   DOK.forEach(([id, t, txt, x, tz], n) => {
-    bild(id, t, 210, `data-gruppe="${id}"`);
+    bild(id, t, 270, `data-gruppe="${id}"`);
     pop(id, tz - .2, { x, y: Y + 230 }, 'pop');
-    neu(id + 'e', txt, '', `data-gruppe="${id}"`, 'etikett klein');
-    pop(id + 'e', tz, { x, y: Y + 380 }, null);
-    haken(id + 'h', W('Betrieb', 22) + .1 + n * .18, x + 72, Y + 160, `data-gruppe="${id}"`, n ? 'klick' : 'ding');
+    neu(id + 'e', txt, '', `data-gruppe="${id}"`, 'etikett');
+    pop(id + 'e', tz, { x, y: Y + 405 }, null);
+    haken(id + 'h', W('Betrieb', 22) + .1 + n * .18, x + 88, Y + 140, `data-gruppe="${id}"`, n ? 'klick' : 'ding');
   });
   tw('dv5', W('schriftlichem', 22) - .1, .7, { draw: 1 }, 'inout'); cue(W('schriftlichem', 22), 'kritzeln');
   akzent(W('Betrieb', 22) + .2, .035);
@@ -768,7 +770,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   pop('yu5', tA - .3, { x: X + 960, y: Y + 810 }, 'pop');
   neu('pf5', '', `width:${ZL - X - 1078}px`, 'data-frei', 'pfeil2');
   akteur('pf5', { x: X + 1064 + (ZL - X - 1078) / 2, y: Y + 810, sx: 0 }); tw('pf5', tA, .5, { sx: 1 }, 'sanft'); cue(tA, 'whoosh');
-  neu('ab5', 'Abstand', '', '', 'etikett klein');
+  neu('ab5', 'Abstand', '', '', 'etikett');
   pop('ab5', W('Abstand', 24), { x: X + 1000, y: Y + 670 }, 'ding'); akzent(W('Abstand', 24), .04);
   nicken('yu5', W('Abstand', 24) + .2, 1);
   sl.aus(SE(24) + .5);
@@ -781,20 +783,20 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   const k = karton(i, { art: 'das', wort: 'Hochregal', zeile: ['Plural', 'die Hochregale'], gr: 96 });
   k.ein(P + .3); k.scan(W('Das', 25)); k.wort(W('Hochregal', 25)); k.zeile(W('Die', 26));
   const sl = schild(i, 28, 'das', ['hochregal']); sl.ein(SA(28) - .55);
-  // Regal mit 2 Feldern × 3 Ebenen: L, M, R = Stützen
-  const RL = 1080, RR = 1480, B = [GY, 780, 600, 420];
-  const ebeneHTML = (b, h) => `<i style="left:0;top:0;bottom:0;width:14px"></i><i style="left:${b / 2 - 7}px;top:0;bottom:0;width:14px"></i><i style="right:0;top:0;bottom:0;width:14px"></i><b style="top:0"></b>`;
-  const regalHTML = (b) => [0, 1, 2].map(e => `<div class="mreg" style="left:0;width:${b}px;top:${(2 - e) * 180}px;height:180px">${ebeneHTML(b, 180)}</div>`).join('');
-  // zwei weitere dahinter (bei „Hochregale“)
-  [['rb6', -150, .8, .55], ['rc6', -270, .64, .35]].reverse().forEach(([id, dx, s, o], n) => {
-    neu(id, regalHTML(400), `width:400px;height:540px;opacity:${o}`, 'data-gruppe="rg6"', 'grp');
-    const t = W('Hochregale', 26) - .2 + (1 - n) * .15;
-    ein(id, t, { x: X + 1280 + dx, y: Y + GY - 270 * s, s }, { x: -140 }, 'whoosh');
+  // Regal mit 2 Feldern × 3 Ebenen
+  const RL = 960, RB = 520, RR = RL + RB, EH = 210, B = [GY, GY - EH, GY - 2 * EH, GY - 3 * EH];
+  const ebeneHTML = b => `<i style="left:0;top:0;bottom:0;width:16px"></i><i style="left:${b / 2 - 8}px;top:0;bottom:0;width:16px"></i><i style="right:0;top:0;bottom:0;width:16px"></i><b style="top:0"></b>`;
+  const regalHTML = b => [0, 1, 2].map(e => `<div class="mreg" style="left:0;width:${b}px;top:${(2 - e) * EH}px;height:${EH}px">${ebeneHTML(b)}</div>`).join('');
+  // zwei weitere dahinter (bei „Hochregale“), kleiner und heller
+  [['rc6', 280, .64, .35, 100], ['rb6', 150, .8, .55, 50]].forEach(([id, dx, s, o, hoch], n) => {
+    neu(id, regalHTML(RB), `width:${RB}px;height:${3 * EH}px;opacity:${o}`, 'data-gruppe="rg6"', 'grp');
+    const t = W('Hochregale', 26) - .2 + n * .15;
+    ein(id, t, { x: X + RL + RB / 2 + dx, y: Y + GY - hoch - 1.5 * EH * s, s }, { y: -120 }, 'whoosh');
   });
   // Hauptregal wächst Ebene für Ebene nach oben
   [0, 1, 2].forEach(e => {
     const id = 'rg6' + e;
-    neu(id, ebeneHTML(400, 180), 'width:400px;height:180px;transform-origin:50% 100%', 'data-gruppe="rg6"', 'mreg');
+    neu(id, ebeneHTML(RB), `width:${RB}px;height:${EH}px;transform-origin:50% 100%`, 'data-gruppe="rg6"', 'mreg');
     const t = W('Hochregal', 25) - .3 + e * .22;
     akteur(id, { x: X + RL, y: Y + B[e + 1], sy: 0 }, true);
     tw(id, t, .45, { sy: 1 }, 'back'); cue(t, 'klick');
@@ -802,37 +804,36 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akzent(W('Hochregal', 25) + .4, .03);
   // sehr hohe Regale für Paletten: Höhenpfeil, Paletten gleiten in die Felder
   neu('ho6', '', `height:${GY - B[3] - 60}px`, 'data-frei', 'hoehe');
-  akteur('ho6', { x: X + RR + 60, y: Y + (GY + B[3]) / 2, sy: 0 }); tw('ho6', W('hohe', 27) - .2, .5, { sy: 1 }, 'sanft'); cue(W('hohe', 27) - .2, 'whoosh');
-  const FE = [[RL + 100, B[0]], [RL + 100, B[1]], [RL + 300, B[1]]];
+  akteur('ho6', { x: X + RL - 60, y: Y + (GY + B[3]) / 2, sy: 0 }); tw('ho6', W('hohe', 27) - .2, .5, { sy: 1 }, 'sanft'); cue(W('hohe', 27) - .2, 'whoosh');
+  const FE = [[RL + RB / 4, B[0]], [RL + RB / 4, B[1]], [RL + 3 * RB / 4, B[1]]];
   FE.forEach(([x, b], n) => {
-    const id = 'lp6' + n; ladung(id, 170);
+    const id = 'lp6' + n; ladung(id, 210);
     const t = W('Paletten', 27) - .3 + n * .15;
     ein(id, t, { x: X + x, y: Y + b - 63 }, { x: 200 }, n ? null : 'whoosh'); cue(t + .35, 'klick');
   });
-  // Die Palette kommt ganz oben ins Hochregal: Stapler hebt sie mit ausfahrendem Hubmast ins oberste Fach
-  const st = stapler('st6', 270, 'data-gruppe="st6"'), kk = st.k;
-  const cx6 = X + 1660 + 42 * kk;                          // Palette (170 breit) liegt rechts neben dem Regal auf der Gabel
-  st.setzen(cx6 + 320, Y + GY, { o: 0 });
-  ladung('lp6x', 170);
-  const gabelOben = Y + GY - 7 * kk;                        // Oberkante der Gabel (Einheit 139)
-  const tS = SA(28) - .6;
-  akteur('lp6x', { x: cx6 + 320 - 42 * kk - 85, y: gabelOben - 63, o: 0 });
+  // Die Palette kommt ganz oben ins Hochregal: Stapler vor dem Regal hebt sie mit ausfahrendem Hubmast ins oberste Fach
+  const st = stapler('st6', 320, 'data-gruppe="rg6"'), kk = st.k;
+  const PR = X + RL + 3 * RB / 4, cx6 = PR + 105 + 42 * kk;
+  st.setzen(cx6 + 360, Y + GY, { o: 0 });
+  ladung('lp6x', 210);
+  const gabelOben = Y + GY - 7 * kk;
+  const tS = SA(28) - .7;
+  akteur('lp6x', { x: PR + 360, y: gabelOben - 63, o: 0 });
   tw([...st.ids, 'lp6x'], tS, .25, { o: 1 });
   st.fahren(tS, cx6, .9, ['lp6x']); st.leuchte(tS, 999);
   aus('ho6', tS, .3);
   const hub = gabelOben - (Y + B[2]);
   const mastH = hub - 74 * kk + 40, mastFuss = Y + GY - 126 * kk + 6;
-  neu('ms6', '', `height:${mastH}px`, 'data-gruppe="st6"', 'mast2');
+  neu('ms6', '', `height:${mastH}px`, 'data-gruppe="rg6"', 'mast2');
   akteur('ms6', { x: cx6 - 27 * kk, y: mastFuss - mastH / 2, sy: 0 });
   const tH = W('ganz', 28) - .45;
   tw('ms6', tH - .15, .45, { sy: 1 }, 'sanft');
-  st.heben(tH, hub, 1.0, ['lp6x']); akzent(W('oben', 28), .03);
-  const tE = W('Hochregal', 28) - .3;
-  tw('lp6x', tE, .5, { x: X + RL + 300 }, 'sanft'); cue(tE, 'whoosh'); cue(tE + .5, 'klick');
-  neu('fr6', '', 'width:186px;height:166px', 'data-frei', 'fachrahmen voll');
-  akteur('fr6', { x: X + RL + 300, y: Y + (B[2] + B[3]) / 2 + 8, o: 0 });
-  tw('fr6', tE + .45, .3, { o: 1 }); haken('ok6', tE + .5, X + RL + 300, Y + B[3] - 60);
-  st.heben(tE + .6, 0, .8); tw('ms6', tE + 1.1, .4, { sy: 0 }, 'in');
+  st.heben(tH, hub, 1.1, ['lp6x']); akzent(W('oben', 28), .03);
+  const tE = W('Hochregal', 28) - .1;
+  neu('fr6', '', `width:${RB / 2 - 14}px;height:${EH - 14}px`, 'data-frei', 'fachrahmen voll');
+  akteur('fr6', { x: PR, y: Y + (B[2] + B[3]) / 2 + 8, o: 0 });
+  tw('fr6', tE, .3, { o: 1 }); haken('ok6', tE + .1, PR, Y + B[3] - 60); cue(tE, 'klick');
+  st.heben(tE + .5, 0, .8); tw('ms6', tE + 1.0, .4, { sy: 0 }, 'in');
   akzent(W('Hochregal', 28), .04);
   sl.aus(SE(28) + .5);
 }
@@ -860,14 +861,14 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akzent(W('Lagerplätze', 30) + .2, .03);
   const ET = {};
   [10, 11, 12, 13].forEach((n, j) => {
-    const id = 'et7' + n; neu(id, `<b>${n}</b>`, '', 'data-gruppe="rg7"', 'etikett');
+    const id = 'et7' + n; neu(id, `<b>${n}</b>`, 'font-size:34px;line-height:40px', 'data-gruppe="rg7"', 'etikett');
     ET[n] = { x: X + FA[n][0], y: Y + FA[n][1] + 9 };
     pop(id, W('hat', 31) - .15 + j * .14, ET[n], 'pop');
   });
   bump('et710', W('Nummer', 31), 1.12); akzent(W('Nummer', 31), .03);
   // So findest du jede Ware schnell: die Lupe fährt die Etiketten ab und bleibt auf 12 stehen
-  bild('lu7', 't-lupe', 150, 'data-frei');
-  const lu = p => ({ x: p.x + 13, y: p.y + 13 });
+  bild('lu7', 't-lupe', 210, 'data-frei');
+  const lu = p => ({ x: p.x + 18, y: p.y + 18 });
   akteur('lu7', { ...lu(ET[10]), x: lu(ET[10]).x - 120, o: 0 });
   const tL = W('findest', 32) - .2;
   tw('lu7', tL, .25, { o: 1 }); tw('lu7', tL, .4, lu(ET[10]), 'sanft'); cue(tL, 'whoosh');
@@ -897,7 +898,7 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   k.ein(P + .15); k.scan(W('Der', 34)); k.wort(W('Skänner', 34)); k.zeile(W('Die', 35));
   const sl = schild(i, 38, 'der', ['skänn']); sl.ein(SA(38) - .55);
   // Handscanner schwebt herein; bei „Die Scanner“ ein zweiter
-  const SX = X + 1580, SY = Y + 420, SB = 280, sk = SB / 160;
+  const SX = X + 1560, SY = Y + 400, SB = 340, sk = SB / 160;
   bild('sc8', 't-scanner', SB, 'data-gruppe="sc8"');
   ein('sc8', W('Skänner', 34) - .4, { x: SX, y: SY, r: -2 }, { y: 110 }, 'whoosh');
   bild('sc8b', 't-scanner', 180, 'data-gruppe="sc8b"');
@@ -906,10 +907,10 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   // Regal-Traverse mit Lagerplatz-Etikett 12, Karton mit Strichcode, Bildschirm
   neu('bk8', '<b id="bk8b">12</b>', '', 'data-gruppe="bk8"', 'balken');
   ein('bk8', W('Skänner', 34) - .1, { x: X + 1110, y: Y + 740 }, { y: 70 });
-  neu('ki8', `<div id="ki8c" style="position:absolute;left:28px;right:28px;top:34px;height:70px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300);padding:8px 12px">${CODE.replace('<svg ', '<svg style="height:54px" ')}</div>`, 'width:220px;height:150px', 'data-gruppe="ki8"', 'kiste');
-  ein('ki8', W('Skänner', 34) + .05, { x: X + 1430, y: Y + GY - 75 }, { y: 70 }, 'plopp');
-  const ZIEL = { code: { x: X + 1430, y: Y + GY - 75 - 6 }, platz: { x: X + 1110 + 135 - 150 + 30, y: Y + 740 } };
-  neu('mo8', `<div class="scr">${[0, 1, 2].map(n => `<div class="z" style="top:${18 + n * 52}px"><i style="width:${[120, 90, 150][n]}px"></i><i style="width:60px;background:var(--b200)"></i></div>`).join('')}<div class="z neu" id="mo8n" style="top:174px"></div></div>`, '', 'data-gruppe="mo8"', 'mon');
+  neu('ki8', `<div id="ki8c" style="position:absolute;left:28px;right:28px;top:34px;height:70px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 3px var(--n300);padding:8px 12px">${CODE.replace('<svg ', '<svg style="height:54px" ')}</div>`, 'width:260px;height:170px', 'data-gruppe="ki8"', 'kiste');
+  ein('ki8', W('Skänner', 34) + .05, { x: X + 1430, y: Y + GY - 85 }, { y: 70 }, 'plopp');
+  const ZIEL = { code: { x: X + 1430, y: Y + GY - 85 - 16 }, platz: { x: X + 1110 - 180 + 130 + 40, y: Y + 740 } };
+  neu('mo8', `<div class="scr">${[0, 1, 2].map(n => `<div class="z" style="top:${18 + n * 52}px"><i style="width:${[120, 90, 150][n]}px"></i><i style="width:60px;background:var(--b200)"></i></div>`).join('')}<div class="z neu" id="mo8n" style="top:174px"><span id="mo8t"></span></div></div>`, '', 'data-gruppe="mo8"', 'mon');
   neu('mf8', '<i></i><s></s>', '', 'data-gruppe="mo8"', 'monfuss');
   ein('mo8', W('Skänner', 35) + .1, { x: X + 1120, y: Y + 300 }, { y: 80 }, 'whoosh'); ein('mf8', W('Skänner', 35) + .15, { x: X + 1120, y: Y + 455 }, { y: 80 });
   // Strahl vom Scanner zu einem Ziel
@@ -933,14 +934,14 @@ const tuerAuf = (id, t, d = 1.2) => { tw(id + 'b', t, .35, { sx: .22 }, 'out'); 
   akteur('pk8', { x: ZIEL.code.x, y: ZIEL.code.y, s: 0 });
   tw('pk8', tS, .2, { s: 1 }, 'back'); flug('pk8', tS + .1, .7, X + 1120, Y + 330, 160); tw('pk8', tS + .75, .2, { s: 0 }, 'in'); cue(tS, 'pop');
   akteur('mo8n', { o: 0, x: -20 }, true); tw('mo8n', tS + .8, .3, { o: 1, x: 0 }, 'sanft');
-  tippen('mo8n', 'Fach 12 · 20 Kartons', tS + .85, .9);
+  tippen('mo8t', 'Fach 12 · 20 Kartons', tS + .85, .9);
   bump('mo8', W('Ware', 37), 1.04); akzent(W('Ware', 37), .03);
   // Scann zuerst den Lagerplatz, dann die Ware: zwei Strahlen, zwei Haken
   const t1 = strahl(W('Lagerplatz', 38) - .15, ZIEL.platz, .8);
   HOOKS.push(t => el('bk8b').classList.toggle('ok', t >= t1));
-  haken('ok8a', t1 + .05, X + 1110 + 120, Y + 660, 'data-frei', null);
+  haken('ok8a', t1 + .05, X + 1110 + 40, Y + 650, 'data-frei', null);
   const t2 = strahl(W('Ware', 38) - .15, ZIEL.code, .8);
-  haken('ok8b', t2 + .05, X + 1430 + 135, Y + GY - 175, 'data-frei', null);
+  haken('ok8b', t2 + .05, X + 1430 + 150, Y + GY - 190, 'data-frei', null);
   akzent(W('Ware', 38), .035);
   sl.aus(SE(38) + .5);
 }
