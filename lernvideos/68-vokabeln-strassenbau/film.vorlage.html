@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Straßenbau</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  /* Bodenarten aus Token-Mischungen */
+  --boden:color-mix(in srgb,var(--warning) 30%,var(--warning-bg));
+  --boden2:color-mix(in srgb,var(--warning-text) 38%,var(--warning-bg));
+  --grube:color-mix(in srgb,var(--warning-text) 55%,var(--warning-bg));
+  --himmel:linear-gradient(var(--b50) 0,var(--bg) 560px);
+}
+html,body{background:var(--b50)}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+#cam,.regler{display:none}
+.d{position:absolute;left:0;top:0}
+/* Welt: Himmel, Geländeband, Tiefe */
+#land{position:absolute;left:-6000px;top:-9000px;width:42000px;height:20000px;background:var(--b50)}
+#land .band{position:absolute;left:0;right:0;top:9000px;height:1080px;background:var(--himmel)}
+#land .tief{position:absolute;left:0;right:0;top:10080px;bottom:0;background:var(--boden2)}
+.gel{position:absolute}
+/* Lücke zwischen zwei Stationen: Leitbake auf Fuß */
+.bake{width:46px;height:210px;border-radius:10px;background:repeating-linear-gradient(-45deg,var(--error) 0 22px,var(--surface) 22px 44px);box-shadow:inset 0 0 0 5px var(--surface),0 6px 14px rgba(22,19,37,.12)}
+.bakefuss{width:120px;height:26px;border-radius:12px 12px 4px 4px;background:var(--b700)}
+
+/* ================= Station = Bühne: Querschnitt durch die Straße ================= */
+.st68{width:1920px;height:1080px;overflow:hidden;border-radius:0;background:var(--himmel)}
+.sch{position:absolute}
+.boden{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--warning-text) 32%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,
+  radial-gradient(circle at 70% 70%,color-mix(in srgb,var(--surface) 55%,transparent) 0 2.5px,transparent 3.5px) 0 0/34px 30px,var(--boden)}
+.boden.tief2{background:radial-gradient(circle at 30% 40%,color-mix(in srgb,var(--warning-text) 40%,transparent) 0 3px,transparent 4px) 0 0/46px 38px,var(--boden2)}
+.grube{background:linear-gradient(var(--grube),color-mix(in srgb,var(--grube) 70%,var(--warning-bg)));box-shadow:inset 0 10px 18px rgba(22,19,37,.18)}
+.altasph{background:radial-gradient(circle,var(--n700) 0 2px,transparent 3px) 0 0/22px 16px,linear-gradient(var(--n500),color-mix(in srgb,var(--n500) 80%,var(--ink)))}
+.altbase{background:radial-gradient(circle,var(--n500) 0 3px,transparent 4px) 0 0/26px 20px,var(--n300)}
+.schotter{background:radial-gradient(circle at 30% 35%,var(--n500) 0 4px,transparent 5px) 0 0/30px 24px,
+  radial-gradient(circle at 75% 70%,var(--surface) 0 3px,transparent 4px) 0 0/22px 26px,var(--n300)}
+.asph{background:radial-gradient(circle,var(--n700) 0 2px,transparent 3px) 0 0/18px 14px,var(--ink)}
+.sand{background:radial-gradient(circle,var(--warning) 0 1.5px,transparent 2.5px) 0 0/12px 10px,var(--warning-bg)}
+.beton{background:radial-gradient(circle,var(--n300) 0 2px,transparent 3px) 0 0/16px 14px,var(--n200)}
+.pflrow{background:repeating-linear-gradient(90deg,transparent 0 4px,var(--b200) 4px 68px,transparent 68px 72px);box-shadow:inset 0 -6px 0 color-mix(in srgb,var(--b300) 60%,transparent)}
+.buckel{background:radial-gradient(circle at 50% 100%,var(--n300) 0 17px,transparent 18px) 0 0/34px 18px repeat-x}
+.riss{position:absolute;height:3px;border-radius:2px;background:var(--n700);transform-origin:0 50%}
+.glimm{border-radius:12px;box-shadow:inset 0 0 0 6px var(--f),0 0 0 6px color-mix(in srgb,var(--f) 35%,transparent);background:color-mix(in srgb,var(--f) 22%,transparent);opacity:0}
+.geist{border:5px dashed var(--b400);border-radius:6px;background:color-mix(in srgb,var(--ink) 18%,transparent);opacity:0}
+.stein{border-radius:6px 6px 3px 3px;background:linear-gradient(var(--b200),var(--b300));box-shadow:inset 0 4px 0 color-mix(in srgb,var(--surface) 45%,transparent)}
+.bord{border-radius:12px 4px 2px 2px;background:linear-gradient(90deg,var(--n200),var(--n300));box-shadow:inset 6px 6px 0 color-mix(in srgb,var(--surface) 55%,transparent),inset -5px 0 0 var(--n300)}
+.fuge{background:var(--warning-bg);transform-origin:50% 100%}
+
+/* ================= Wortkarte = Baustellenschild auf Fuß ================= */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface);--fl:var(--b300)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface);--fl:var(--success)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface);--fl:var(--warning)}
+.tafel{width:640px;height:300px;border-radius:20px;background:var(--warning);padding:34px 46px 30px;display:flex;flex-direction:column;
+  box-shadow:inset 0 0 0 10px var(--warning),inset 0 0 0 16px var(--ink),0 18px 36px rgba(22,19,37,.16)}
+.tafel .kopf{display:flex;align-items:center;gap:16px;height:50px;flex:none}
+.tafel .dot{width:38px;height:38px;border-radius:99px;background:var(--f);box-shadow:0 0 0 5px var(--surface)}
+.tafel .art{font:800 38px/44px Inter;color:var(--ink)}
+.tafel .wort{margin-top:10px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.tafel.ohne .wort{margin:auto 0}
+.tafel .pl{margin-top:auto;display:flex;align-items:baseline;gap:16px;font:600 40px/48px Inter;color:var(--ink);white-space:nowrap}
+.tafel .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 62%,var(--warning))}
+.tafel .bolz{position:absolute;top:22px;width:14px;height:14px;border-radius:99px;background:var(--n300);box-shadow:inset 0 0 0 3px var(--n500)}
+.pfosten{width:26px;border-radius:5px;background:linear-gradient(90deg,var(--n300),var(--n200) 45%,var(--n300));transform-origin:50% 100%}
+.fuss{width:200px;height:34px;border-radius:16px 16px 6px 6px;background:linear-gradient(var(--b600),var(--b700))}
+/* Beispielsatz: Baustellen-Anzeigetafel mit Leuchtschrift */
+.led{width:820px;min-height:140px;padding:22px 32px 24px 142px;border-radius:24px;background:linear-gradient(var(--ink),color-mix(in srgb,var(--ink) 82%,var(--b700)));
+  box-shadow:0 0 0 8px var(--b700),0 18px 38px rgba(22,19,37,.22);font:600 34px/45px Inter;color:var(--warning-bg)}
+.led::before{content:'';position:absolute;inset:0;border-radius:24px;background:radial-gradient(circle,color-mix(in srgb,var(--surface) 8%,transparent) 0 1.4px,transparent 2px) 0 0/7px 7px}
+.led .sw{display:inline-block;white-space:nowrap}
+.led u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.led .sw.lw u{color:var(--fl);font-weight:800}
+.led .q{color:var(--b300);font-weight:800}
+.led .portrait{position:absolute;left:24px;top:22px}
+.lg{display:inline-flex;align-items:center;gap:12px;padding:6px 24px 6px 12px;border-radius:999px;background:var(--surface);color:var(--ink);font:800 34px/44px Inter;margin:0 9px;
+  box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.lg i{width:30px;height:30px;border-radius:99px;background:var(--f)}
+.chip{display:flex;align-items:center;justify-content:center;height:60px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.16)}
+.chip b{font-weight:600;opacity:.85;margin-right:9px}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface);
+  font:800 34px/1 Inter;color:var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)} .plakette.blau{background:var(--info)}
+.plakette.gross{width:118px;height:118px;border-width:7px}
+.plakette.gross svg{width:66px}
+.plakette.weiss{background:var(--surface);border-color:var(--b200)}
+.etikett{padding:10px 26px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 28px/34px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.10)}
+.etikett b{font-weight:800;color:var(--ink)}
+.etikett.gross{padding:12px 30px;font-size:38px;line-height:46px}
+.tipp u{display:inline-block;text-decoration:none;white-space:pre}
+.grp{position:absolute}
+.grp > *{position:absolute}
+.auto .rad{position:absolute}
+/* Scheinwerferkegel */
+.kegel68{position:absolute;width:520px;height:220px;clip-path:polygon(0 46%,100% 0,100% 100%,0 60%);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--warning-bg) 90%,transparent),color-mix(in srgb,var(--warning-bg) 0%,transparent));opacity:0}
+/* Absperrschranke */
+.schranke{width:360px;height:150px}
+.schranke .brett{position:absolute;left:0;right:0;top:0;height:58px;border-radius:10px;background:repeating-linear-gradient(-45deg,var(--error) 0 30px,var(--surface) 30px 60px);
+  box-shadow:inset 0 0 0 5px var(--surface),0 6px 14px rgba(22,19,37,.14)}
+.schranke .bein{position:absolute;top:50px;bottom:12px;width:14px;border-radius:4px;background:var(--b700)}
+.schranke .fs{position:absolute;bottom:0;width:90px;height:16px;border-radius:8px 8px 3px 3px;background:var(--b700)}
+.schranke .lampe{position:absolute;top:-24px;width:30px;height:24px;border-radius:12px 12px 4px 4px;background:var(--warning);box-shadow:0 0 0 0 var(--warning)}
+/* Schwenkbereich und Pfeile */
+.zone{border-radius:50%;border:7px dashed var(--warning);background:color-mix(in srgb,var(--warning) 14%,transparent)}
+.pfeil2{height:12px;background:var(--b500);border-radius:6px}
+.pfeil2::before,.pfeil2::after{content:'';position:absolute;top:-12px;width:0;height:0;border:18px solid transparent}
+.pfeil2::before{left:-22px;border-right:22px solid var(--b500);border-left:0}
+.pfeil2::after{right:-22px;border-left:22px solid var(--b500);border-right:0}
+.druck{width:44px;height:110px}
+.druck::before{content:'';position:absolute;left:14px;top:0;width:16px;height:70px;border-radius:8px;background:var(--b500)}
+.druck::after{content:'';position:absolute;left:0;top:62px;border:22px solid transparent;border-top:40px solid var(--b500);border-bottom:0}
+.latte{height:14px;border-radius:7px;background:linear-gradient(var(--b500),var(--b700));box-shadow:0 6px 12px rgba(22,19,37,.14)}
+/* Lupe */
+.lupe68{border-radius:999px;overflow:hidden;border:10px solid var(--b600);box-shadow:0 0 0 6px var(--surface),0 14px 30px rgba(22,19,37,.18)}
+.lupe68 i{position:absolute;border-radius:40% 46% 38% 50%;background:linear-gradient(140deg,var(--n200),var(--n500));box-shadow:inset 0 -6px 0 color-mix(in srgb,var(--n700) 30%,transparent)}
+/* Thermometer-Etikett, Warnschild „heiß“ */
+.dreieck{width:150px;height:134px}
+/* Draufsicht-Plan (Karte mit Blick von oben) */
+.plan{border-radius:26px;background:var(--surface);box-shadow:0 16px 36px rgba(22,19,37,.14);overflow:hidden}
+.plan .zone2{position:absolute;left:0;right:0}
+.plan .fb{background:var(--ink)}
+.plan .fb i{position:absolute;top:50%;height:8px;width:70px;margin-top:-4px;border-radius:4px;background:var(--surface)}
+.plan .gw{background:var(--b50)}
+.plan .bs{position:absolute;border-radius:4px;background:linear-gradient(var(--n200),var(--n300));box-shadow:inset 0 3px 0 color-mix(in srgb,var(--surface) 60%,transparent)}
+.plan .ps{position:absolute;border-radius:5px;background:linear-gradient(var(--b200),var(--b300))}
+.schnur{height:4px;border-radius:2px;background:var(--warning);transform-origin:0 50%}
+.nagel{width:16px;height:16px;border-radius:99px;background:var(--b700);box-shadow:0 0 0 4px var(--warning)}
+/* Kacheln „Gehweg, Platz, Einfahrt“ (von oben) */
+.kachel{width:230px;height:170px;border-radius:22px;background:var(--surface);box-shadow:0 12px 28px rgba(22,19,37,.12);overflow:hidden}
+.kachel .gr{position:absolute;background:repeating-linear-gradient(90deg,transparent 0 3px,var(--b200) 3px 25px,transparent 25px 28px),var(--warning-bg);
+  -webkit-mask:repeating-linear-gradient(transparent 0 3px,#000 3px 21px,transparent 21px 24px);mask:repeating-linear-gradient(transparent 0 3px,#000 3px 21px,transparent 21px 24px)}
+.kachel .gb{position:absolute;background:var(--warning-bg)}
+/* Rinne mit Rost */
+.rinne{width:84px;height:84px}
+.rinne .k{position:absolute;inset:6px 0 0 0;border-radius:4px 4px 18px 18px;background:var(--n200)}
+.rinne .i{position:absolute;left:12px;right:12px;top:6px;bottom:12px;border-radius:2px 2px 14px 14px;background:var(--n500)}
+.rinne .w{position:absolute;left:12px;right:12px;bottom:12px;height:0;border-radius:2px 2px 14px 14px;background:var(--info)}
+.rinne .rost{position:absolute;left:0;right:0;top:0;height:12px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--b700) 0 8px,transparent 8px 13px),var(--n300)}
+.tropfen{width:26px;height:26px;border-radius:0 50% 50% 50%;background:var(--info);transform-origin:50% 50%}
+.inset{width:430px;height:180px;border-radius:24px;background:var(--surface);box-shadow:0 14px 32px rgba(22,19,37,.14)}
+/* Übersicht: Häuser, Gully, Kanal, Straßenschild */
+.haus{border-radius:10px 10px 0 0;background:linear-gradient(var(--b100),var(--b200))}
+.haus i{position:absolute;width:46px;height:58px;border-radius:6px;background:var(--b50);box-shadow:inset 0 -12px 0 var(--b100)}
+.rohr{border-radius:16px;background:linear-gradient(var(--n300),var(--n200) 40%,var(--n300));box-shadow:inset 0 0 0 4px var(--n500)}
+.rohr .fl{position:absolute;inset:8px;border-radius:10px;background:var(--info);transform-origin:0 50%}
+.gully{height:12px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--b700) 0 8px,var(--n300) 8px 13px)}
+.strschild{width:330px;height:76px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 6px var(--surface),inset 0 0 0 10px var(--ink),0 8px 20px rgba(22,19,37,.12);
+  font:800 38px/76px Inter;color:var(--ink);text-align:center;letter-spacing:-.01em}
+.strom{height:10px;border-radius:5px;background:repeating-linear-gradient(90deg,var(--info) 0 26px,transparent 26px 40px)}
+.regen{width:4px;height:34px;border-radius:2px;background:var(--info)}
+.dampf{width:60px;height:60px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--surface) 85%,transparent) 0,color-mix(in srgb,var(--surface) 0%,transparent) 70%)}
+.staub{width:46px;height:46px;border-radius:99px;background:radial-gradient(circle,color-mix(in srgb,var(--n300) 90%,transparent) 0,color-mix(in srgb,var(--n300) 0%,transparent) 70%)}
+.korn{width:16px;height:14px;border-radius:40% 50% 45% 55%;background:var(--n500)}
+.brocken{width:34px;height:22px;clip-path:polygon(0 30%,40% 0,100% 20%,85% 100%,10% 90%);background:var(--n500)}
+.schnecke{position:absolute;height:34px;border-radius:17px;background:repeating-linear-gradient(60deg,var(--n300) 0 10px,var(--b700) 10px 16px)}
+/* Wischblende: Absperrschranke über dem ganzen Bild */
+#wisch{position:absolute;left:0;top:0;width:2700px;height:1080px;z-index:5;clip-path:polygon(240px 0,100% 0,calc(100% - 240px) 100%,0 100%);
+  background:repeating-linear-gradient(-45deg,var(--error) 0 120px,var(--surface) 120px 240px)}
+#wisch::before,#wisch::after{content:'';position:absolute;left:0;right:0;height:46px;background:var(--b700)}
+#wisch::before{top:0} #wisch::after{bottom:0}
+/* Abspann: Schichten stapeln sich */
+#abspann{position:absolute;inset:0;z-index:6;overflow:hidden;pointer-events:none}
+#abspann .lage{position:absolute;left:0;right:0}
+#abspann .ende{z-index:2}
+#abspann .gross{font:800 112px/120px Inter;letter-spacing:-.03em;text-align:center;color:var(--surface)}
+#abspann .strich{position:absolute;left:50%;top:640px;width:900px;margin-left:-450px;height:16px;background:repeating-linear-gradient(90deg,var(--surface) 0 110px,transparent 110px 170px)}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgBogen"><svg viewBox="0 0 40 110"><path d="M8 10q30 45 0 90" stroke="var(--b400)" stroke-width="8" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgAuge"><svg viewBox="0 0 60 40"><path d="M4 20C12 8 21 4 30 4s18 4 26 16c-8 12-17 16-26 16S12 32 4 20Z" fill="var(--surface)" stroke="var(--b600)" stroke-width="4" stroke-linejoin="round"/><circle cx="30" cy="20" r="9" fill="var(--b500)"/><circle cx="27" cy="17" r="3" fill="var(--surface)"/></svg></template>
+<template id="svgStrasse"><svg viewBox="0 0 60 60"><path d="M22 6h16l14 48H8Z" fill="var(--ink)"/><path d="M30 10v8M30 26v9M30 43v9" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/></svg></template>
+<template id="svgGehweg"><svg viewBox="0 0 60 60"><g fill="var(--b200)"><rect x="6" y="8" width="22" height="13" rx="3"/><rect x="32" y="8" width="22" height="13" rx="3"/><rect x="6" y="24" width="12" height="13" rx="3"/><rect x="21" y="24" width="20" height="13" rx="3"/><rect x="44" y="24" width="10" height="13" rx="3"/><rect x="6" y="40" width="22" height="13" rx="3"/><rect x="32" y="40" width="22" height="13" rx="3"/></g></svg></template>
+<template id="svgPlatz"><svg viewBox="0 0 60 60"><rect x="6" y="6" width="48" height="48" rx="6" fill="var(--b200)"/><path d="M6 22h48M6 38h48M22 6v48M38 6v48" stroke="var(--surface)" stroke-width="3"/><circle cx="30" cy="30" r="11" fill="var(--success)"/></svg></template>
+<template id="svgHeiss"><svg viewBox="0 0 150 134"><path d="M75 8L144 126H6Z" fill="var(--warning)" stroke="var(--ink)" stroke-width="9" stroke-linejoin="round"/><path d="M56 102c-8-10 8-18 0-30M75 102c-8-10 8-18 0-30M94 102c-8-10 8-18 0-30" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgDreh"><svg viewBox="0 0 80 50"><path d="M10 30c10-20 50-20 60 0" stroke="var(--warning)" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M62 16l10 16-18 2Z" fill="var(--warning)"/></svg></template>
+
+<template id="t-weste">{{amir-weste}}</template>
+<template id="t-glanz">{{amir-weste-glanz}}</template>
+<template id="t-gehoer">{{gehoerschutz-ebene}}</template>
+<template id="t-auto">{{auto-blau}}</template>
+<template id="t-rad">{{rad}}</template>
+<template id="t-kegel">{{absperrkegel}}</template>
+<template id="t-bagger">{{bagger}}</template>
+<template id="t-walze">{{walze}}</template>
+<template id="t-trommel">{{walze-trommel}}</template>
+<template id="t-fertiger">{{fertiger}}</template>
+<template id="t-lkw">{{lkw-kipper}}</template>
+<template id="t-mulde">{{kipper-mulde}}</template>
+<template id="t-ruettel">{{ruettelplatte}}</template>
+<template id="t-waage">{{wasserwaage68}}</template>
+<template id="t-thermo">{{thermometer}}</template>
+<template id="t-saeule">{{thermo-saeule}}</template>
+<template id="t-wolke">{{wolke}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Amir">{{figur-amir}}</template>
+<template id="f-Geselle">{{figur-geselle}}</template>
+
+<div id="cam"></div>
+<div id="kamera"><div id="welt">
+  <div id="land"><div class="band"></div><div class="tief"></div></div>
+</div></div>
+<div id="wisch"></div>
+<div id="abspann">
+  <div class="lage boden tief2" id="ab1" style="top:880px;height:200px"></div>
+  <div class="lage schotter" id="ab2" style="top:700px;height:180px"></div>
+  <div class="lage sand" id="ab3" style="top:620px;height:80px"></div>
+  <div class="lage asph" id="ab4" style="top:0;height:1080px"></div>
+  <div class="ende"><div class="gross" id="asTitel">Schicht für Schicht.</div></div>
+  <div class="strich" id="asStrich"></div>
+</div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'sinus', { bogen: h });
+const federn = (id, t) => { tw(id, t, .12, { sy: .96, sx: 1.025 }, 'sinus'); tw(id, t + .12, .4, { sy: 1, sx: 1 }, 'sanft'); };
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '') => { WELT.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+// Deko: wird nicht geprüft (Partikel, Dampf, Regen, Glanz) – liegt in der Welt oder in einer Bühne
+const deko = (id, klasse = '', stil = '', inhalt = '', ziel = WELT) => { el(ziel).insertAdjacentHTML('beforeend', `<div class="d ${klasse}" id="${id}" style="${stil}">${inhalt}</div>`); return id; };
+let WN = 0;
+const wellen = (t, x, y, farbe = null, gr = 160, s = 1) => {
+  const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}${s !== 1 ? ';border-width:' + (5 * s) + 'px' : ''}`, 'data-frei', 'welle');
+  akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, .9, { o: 0, s: 1.6 }, 'weich');
+};
+const plakette = (id, farbe, svg, attr = 'data-frei', extra = '') => neu(id, svg ? tpl(svg) : '', '', attr, 'plakette ' + farbe + ' ' + extra);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+// Rütteln: feste Frequenz, nur die Stärke ändert sich (kein Flackern)
+const RUETTELN = [];
+const ruetteln = (id, t0, t1, a = 3) => RUETTELN.push([id, t0, t1, a]);
+const bild = (id, t, breite, attr = '', stil = '') => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr);
+const haken = (id, t, x, y, attr = 'data-frei', snd = 'ding') => { plakette(id, 'gruen', 'svgHaken', attr); pop(id, t, { x, y }, snd); return id; };
+const zeig = (id, t, d = 1.2, o = 1) => { tw(id, t, .25, { o }); tw(id, t + d, .45, { o: 0 }); };
+// unsichtbarer Regler (Winkel, Füllstand …): Wert über wertBei(id, 'r'|'x'|…, t)
+const regler = (id, basis = {}) => { document.body.insertAdjacentHTML('beforeend', `<div class="regler" id="${id}"></div>`); akteur(id, basis, true); return id; };
+function zaehler(id, von, bis, t0, d, fmt = n => n, klick = 1) {
+  HOOKS.push(t => { const n = Math.round(von + (bis - von) * clamp((t - t0) / d)); el(id).textContent = fmt(n); });
+  for (let n = von + 1; n <= bis; n++) if ((n - von) % klick === 0) cue(t0 + d * (n - von) / (bis - von), 'klick');
+}
+
+/* ---------- Welt: der Querschnitt einer Straße, Station für Station (links Fahrbahn, rechts Gehweg) ---------- */
+const PITCH = 2280;
+const SX = i => (i - 2) * PITCH;               // linke Kante der Station für Szene i (2 … 10)
+const OX = SX(10) + 1920 + 1700;                // Übersicht (Szene 1 und 11)
+const RY = 660, GW = 610;                       // Höhe Fahrbahn, Höhe Gehweg
+// Gelände in den Lücken (nur bei Fahrten zu sehen): Boden, Deckschicht, eine Leitbake
+function gelaende(x0, x1, g, deck = 'altasph', bake = true) {
+  deko('ge' + WN++, 'gel boden tief2', `left:${x0}px;top:${g}px;width:${x1 - x0}px;height:${1080 - g + 40}px`);
+  deko('ge' + WN++, 'gel ' + deck, `left:${x0}px;top:${g}px;width:${x1 - x0}px;height:${deck === 'pflrow' ? 35 : 44}px`);
+  if (bake) { const m = (x0 + x1) / 2;
+    deko('ge' + WN++, 'gel bake', `left:${m - 23}px;top:${g - 236}px`); deko('ge' + WN++, 'gel bakefuss', `left:${m - 60}px;top:${g - 26}px`); }
+}
+gelaende(SX(2) - 3000, SX(2), RY, 'altasph', false);
+for (let i = 2; i < 10; i++) gelaende(SX(i) + 1920, SX(i + 1), i + 1 <= 7 ? RY : GW, i + 1 <= 7 ? 'altasph' : 'pflrow');
+gelaende(SX(10) + 1920, OX, GW, 'pflrow', false);
+gelaende(OX + 1920, OX + 5000, 575, 'pflrow', false);
+
+const BUE = {};
+function station(i, x0) { const id = 'st' + i; WELT.insertAdjacentHTML('beforeend', `<div class="a buehne st68" id="${id}"></div>`); akteur(id, { x: x0 + 960, y: 540 }); BUE[i] = x0; return id; }
+// Schicht in einer Station (Bühnen-Koordinaten); mit id als Akteur animierbar
+const lage = (i, kl, x0, x1, y0, y1, id = '', stil = '') => {
+  el('st' + i).insertAdjacentHTML('beforeend', `<div class="sch ${kl}" ${id ? `id="${id}"` : ''} style="left:${x0}px;top:${y0}px;width:${x1 - x0}px;height:${y1 - y0}px;${stil}"></div>`);
+  if (id) akteur(id, {}, true); return id;
+};
+// Glimmen über einer Fläche (Artikelfarbe)
+const glimm = (i, id, art, x0, x1, y0, y1, stil = '') => { lage(i, 'glimm ' + art, x0, x1, y0, y1, id, stil); akteur(id, { o: 0 }, true); return id; };
+// Risse im alten Asphalt
+const risse = (i, x0, x1, y) => { for (let x = x0 + 60; x < x1 - 60; x += 230) {
+  el('st' + i).insertAdjacentHTML('beforeend', `<div class="riss" style="left:${x}px;top:${y + 10 + (x % 3) * 6}px;width:${34 + (x % 5) * 6}px;transform:rotate(${(x % 2 ? 1 : -1) * (18 + x % 20)}deg)"></div>`); } };
+for (let i = 2; i <= 10; i++) station(i, SX(i));
+station(0, OX);
+
+/* ---------- Kamera: Mitte (x, y) und Zoom (log) als Akteur; Fahrten mit Unschärfe, Zoom-Atmer, Akzente ---------- */
+akteur('cam', { x: OX + 960, y: 540, r: 0 }, true);
+const FAHRTEN = [], AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+function fahrt(t, x, y, z = 1, d = 1, atmen = .07, bogen = 0) { tw('cam', t, d, { x, y, r: Math.log(z) }, 'inout', { bogen }); FAHRTEN.push([t, d, atmen]); cue(t, 'whoosh'); }
+const zuStation = (t, i, d = 1, bogen = 0) => fahrt(t, SX(i) + 960, 540, 1, d, .07, bogen);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+const camAk = AKTEURE.get(el('cam'));
+const camBei = t => ({ x: wert(camAk, 'x', t), y: wert(camAk, 'y', t), z: Math.exp(wert(camAk, 'r', t)) });
+const SPRUENGE = [];
+HOOKS.push(t => {
+  const c = camBei(t), v = camBei(t - 1 / 30);
+  let z = c.z;
+  for (const [t0, d, atmen] of FAHRTEN) if (atmen) z *= 1 - atmen * Math.sin(Math.PI * clamp((t - t0) / d));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...FAHRTEN.filter(f => f[0] + f[1] <= t).map(f => f[0] + f[1]));
+  z *= 1 + .025 * E.inout(clamp((t - letzte) / 11));
+  WELT.style.transform = `translate(${(960 - c.x).toFixed(2)}px,${(540 - c.y).toFixed(2)}px)`;
+  $('#kamera').style.transform = `scale(${z.toFixed(5)})`;
+  const sprung = SPRUENGE.some(s => Math.abs(t - s) < .05);
+  const bx = sprung ? 0 : Math.min(18, Math.abs(c.x - v.x) * c.z * .09), by = sprung ? 0 : Math.min(18, Math.abs(c.y - v.y) * c.z * .09);
+  $('#wischerBlur').setAttribute('stdDeviation', `${(bx / c.z).toFixed(2)} ${(by / c.z).toFixed(2)}`);
+  WELT.style.filter = bx + by > .3 ? 'url(#wischer)' : '';
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen, Nicken, froh; Amir mit Warnweste (Glanz) und Gehörschutz ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [], WESTE = {}, GEHOER = {}, GLANZ = [];
+function portrait(id, wer, gr, attr = '', ziel = null) {
+  const am = wer === 'Amir';
+  const extra = am ? `<div class="ebene weste">${kopie('t-weste', id)}</div><div class="ebene glanz" style="opacity:0">${kopie('t-glanz', id)}</div>` : '';
+  const gh = am ? `<div class="ebene gehoer" style="opacity:0">${kopie('t-gehoer', id)}</div>` : '';
+  const html = `<div class="a portrait" id="${id}" style="width:${gr}px;height:${gr}px" ${attr}><div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${extra}${tpl('gesicht')}${gh}</div></div>`;
+  (ziel ? el(ziel) : WELT).insertAdjacentHTML('beforeend', html);
+  el(id).dataset.sprecher = wer;
+  if (am && !(id in WESTE)) WESTE[id] = -1;
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+    const w = p.querySelector('.weste');
+    if (w) { const t0 = WESTE[p.id] ?? -1, q = E.sanft(clamp((t - t0) / .55)); w.style.transform = `translateY(${(70 * (1 - q)).toFixed(1)}%)`; w.style.opacity = t < t0 ? 0 : 1;
+      const g = p.querySelector('.glanz'); let o = 0;
+      for (const [id, a, b] of GLANZ) if (id === p.id && t >= a && t <= b) o = Math.max(o, Math.sin(Math.PI * (t - a) / (b - a)));
+      g.style.opacity = t < t0 ? 0 : o.toFixed(3); }
+    const h = p.querySelector('.gehoer');
+    if (h) { const t0 = GEHOER[p.id]; if (t0 == null || t < t0) h.style.opacity = 0;
+      else { const q = E.sanft(clamp((t - t0) / .5)); h.style.opacity = 1; h.style.transform = `translateY(${(-60 * (1 - q)).toFixed(1)}%)`; } }
+  });
+  // Rütteln (feste Frequenz)
+  for (const [id, t0, t1, a] of RUETTELN) if (t > t0 && t < t1) { const k = Math.min(1, (t - t0) / .2, (t1 - t) / .2);
+    el(id).style.transform += ` translate(${(a * k * Math.sin(t * 61)).toFixed(2)}px,${(a * .6 * k * Math.sin(t * 47 + 1)).toFixed(2)}px)`; }
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+
+/* ================= Format „Fachvokabeln“: Baustellenschild, Anzeigetafel ================= */
+const GENUS = ['der', 'die', 'das'];
+// Baustellenschild: Fuß fällt auf den Boden, Pfosten fährt aus, Tafel klappt auf
+function tafel(i, o) {
+  const X = SX(i), g = o.boden ?? (i <= 7 ? RY : GW), id = 'tf' + i, G = `data-gruppe="${id}"`;
+  const BX = X + 400, TY = 120, TH = 300;
+  const woerter = o.wort.split(' ');
+  neu(id + 'f', '', '', G, 'fuss');
+  neu(id + 'p', '', `height:${g - 30 - (TY + TH) + 10}px`, G, 'pfosten');
+  neu(id, `<i class="bolz" style="left:300px"></i>
+    <div class="kopf"><i class="dot" id="${id}d"></i><span class="art" id="${id}a">${o.art}</span></div>
+    <div class="wort" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.zeile ? `<div class="pl" id="${id}z"><small>${o.zeile[0]}</small><span>${o.zeile[1]}</span></div>` : ''}`, 'transform-origin:50% 100%', G, `tafel ${o.art}${o.zeile ? '' : ' ohne'}`);
+  akteur(id + 'f', { x: BX, y: g - 17 - 420, o: 0 });
+  const ph = g - 30 - (TY + TH) + 10;
+  akteur(id + 'p', { x: BX, y: TY + TH - 10 + ph / 2, sy: 0 });
+  akteur(id, { x: BX, y: TY + TH / 2, sy: 0, sx: .6 });
+  akteur(id + 'd', { s: 0 }, true); akteur(id + 'a', { o: 0, x: -14 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.zeile) akteur(id + 'z', { o: 0, x: -40 }, true);
+  return {
+    ein: t => {
+      tw(id + 'f', t, .12, { o: 1 }); tw(id + 'f', t, .32, { y: g - 17 }, 'in'); landen(id + 'f', t + .32); cue(t + .32, 'plopp');
+      tw(id + 'p', t + .35, .38, { sy: 1 }, 'sanft'); cue(t + .4, 'klick');
+      tw(id, t + .62, .5, { sy: 1, sx: 1 }, 'back'); pendel(id, t + .9, 2.5, 3, .3); cue(t + .62, 'whoosh');
+    },
+    art: t => { tw(id + 'd', t - .05, .45, { s: 1 }, 'back'); tw(id + 'a', t, .4, { o: 1, x: 0 }, 'sanft'); cue(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); cue(t0, 'klick'); },
+    zeile: t => { tw(id + 'z', t - .05, .35, { o: 1 }); tw(id + 'z', t - .05, .6, { x: 0 }, 'sanft'); cue(t, 'pop'); },
+  };
+}
+// Anzeigetafel mit Beispielsatz: fährt von oben herein, der Satz läuft im Takt der Wortzeiten ein
+const ANZEIGE = {};
+function anzeige(i, ns, art, lern, x0 = 1030, y0 = 56, X = SX(i)) {
+  ns = [].concat(ns);
+  const id = 'led' + i;
+  const teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok: tok.replace(/[\p{L}\p{N}]+/u, m => ANZEIGE[m.toLowerCase()] ?? m), lern: _norm(tok), w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  neu(id, teile.map((p, j) => `<span class="sw${lern.includes(p.lern) ? ' lw' : ''}">${j === 0 ? `<span class="q" id="${id}q1">„</span>` : ''}${[...p.tok].map(c => `<u>${c}</u>`).join('')}${j === teile.length - 1 ? `<span class="q" id="${id}q2">“</span>` : ''}</span>`).join(' '),
+    '', `data-gruppe="${id}"`, `led ${art}`);
+  portrait(id + 'p', satz(ns[0]).sprecher, 96, `data-gruppe="${id}"`, id);
+  const zeiten = [];
+  el(id).querySelectorAll('.sw').forEach((sw, j) => {
+    const w = teile[j].w || teile[j - 1]?.w, us = sw.querySelectorAll('u');
+    const a = A(w.start), d = Math.max(.08, w.ende - w.start);
+    us.forEach((u, c) => zeiten.push([u, a + d * c / us.length]));
+  });
+  zeiten.push([el(id + 'q1'), SA(ns[0]) - .15], [el(id + 'q2'), SE(ns.at(-1))]);
+  el(id + 'q1').style.opacity = 0; el(id + 'q2').style.opacity = 0;
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const p = clamp((t - tc) / .1); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(7 * (1 - p)).toFixed(1)}px)` : ''; } });
+  const x = X + x0, y = y0;
+  akteur(id, { x, y: y - 50, o: 0 }, true);
+  akteur(id + 'p', { s: 0 }, true);
+  return {
+    ein: t => { tw(id, t, .3, { o: 1 }); tw(id, t, .55, { y }, 'sanft'); tw(id, t + .45, .1, { sy: .97 }, 'sinus'); tw(id, t + .55, .3, { sy: 1 }, 'sanft');
+      tw(id + 'p', t + .2, .5, { s: 1 }, 'back'); cue(t, 'whoosh'); cue(t + .45, 'klick'); },
+    aus: t => { tw(id, t, .35, { o: 0, y: y - 40 }, 'in'); },
+  };
+}
+const chipHTML = (art, text) => art ? `<b>${art}</b>${text}` : text;
+
+/* ---------- Maschinen ---------- */
+// Auto (Seitenansicht) mit drehenden Rädern; Mittelpunkt so, dass die Räder bei Bodenhöhe g stehen: y = g - 35·k
+function auto(id, breite, attr = '', kegel = false) {
+  const k = breite / 160, rb = breite * 34 / 124;
+  const rad = n => `<div class="rad" id="${id}r${n}" style="width:${rb}px;left:${((n ? 118 : 42) * k - rb / 2).toFixed(1)}px;top:${((108 - 44) * k - rb / 2).toFixed(1)}px">${kopie('t-rad', id + 'r' + n)}</div>`;
+  neu(id, (kegel ? `<div class="kegel68" id="${id}k" style="left:${(150 * k).toFixed(0)}px;top:${(40 * k - 110).toFixed(0)}px"></div>` : '') + kopie('t-auto', id) + rad(0) + rad(1),
+    `width:${breite}px;height:${(92 * k).toFixed(1)}px`, attr + ' data-dreht', 'auto');
+  el(id).querySelector('svg').setAttribute('viewBox', '0 44 160 92');
+  const R = rb * 62 / 160, raeder = [el(id + 'r0'), el(id + 'r1')];
+  HOOKS.push(t => { const a = AKTEURE.get(el(id)); if (!a) return;
+    const w = (wert(a, 'x', t) - a.basis.x) / R * 57.3;
+    raeder.forEach(r => r.style.transform = `rotate(${w.toFixed(2)}deg)`); });
+  return { k, y: g => g - 35 * k };
+}
+
+/* ================= 1 · Übersicht: eine Straße im Querschnitt – Amir, die Schichten, der · die · das ================= */
+const X0 = OX;
+{
+  const i = 0;
+  // Häuser im Hintergrund (rechts hinter dem Gehweg)
+  [[1250, 250, 250], [1530, 300, 170], [1730, 210, 190]].forEach(([x, y, b], n) => {
+    const fen = []; for (let r = 0; r < 4; r++) for (let c = 0; c < Math.floor(b / 80); c++) if (y + 40 + r * 84 < 520) fen.push(`<i style="left:${24 + c * 80}px;top:${40 + r * 84}px"></i>`);
+    el('st0').insertAdjacentHTML('beforeend', `<div class="sch haus" style="left:${x}px;top:${y}px;width:${b}px;height:${575 - y}px">${fen.join('')}</div>`);
+  });
+  // Fahrbahn
+  lage(i, 'asph', 0, 1110, 610, 652);
+  lage(i, 'schotter', 0, 1110, 652, 740);
+  // Gehweg (leichtes Gefälle zur Straße)
+  lage(i, 'schotter', 1110, 1920, 620, 740);
+  lage(i, 'sand', 1150, 1920, 598, 628, 'gw0s', 'transform-origin:0 0;transform:rotate(-.9deg)');
+  lage(i, 'pflrow', 1152, 1925, 570, 604, 'gw0p', 'transform-origin:0 100%');
+  // Bordstein im Betonbett
+  lage(i, 'beton', 1080, 1190, 640, 760, '', 'border-radius:10px 30px 8px 8px');
+  lage(i, 'bord', 1108, 1160, 566, 720);
+  // Boden, Gully mit Schacht und Kanal
+  lage(i, 'boden', 0, 1920, 740, 1080);
+  lage(i, 'rohr', 1030, 1074, 616, 820, '', 'border-radius:8px');
+  lage(i, 'rohr', 240, 1074, 790, 846, '', '');
+  el('st0').insertAdjacentHTML('beforeend', `<div class="sch gully" style="left:1022px;top:604px;width:60px"></div>`);
+  // Wasser in Schacht und Kanal (für den Regen am Schluss)
+  lage(i, '', 1038, 1066, 620, 820, 'wq0', 'background:var(--info);border-radius:6px;transform-origin:50% 0');
+  lage(i, '', 248, 1066, 798, 838, 'wk0', 'background:var(--info);border-radius:10px;transform-origin:100% 50%');
+  akteur('wq0', { sy: 0 }, true); akteur('wk0', { sx: 0 }, true);
+  // Deckel über dem Untergrund: fällt bei „Straßenbauer“ weg (Schnitt durch die Straße)
+  lage(i, 'boden tief2', 0, 1920, 652, 1080, 'deck0', 'border-top:6px solid var(--b200)');
+  lage(i, 'boden tief2', 1110, 1920, 628, 652, 'deck0b');
+  // Glimmen für Szene 1 und 11
+  glimm(i, 'g0fb', 'der', 30, 1100, 600, 662);
+  glimm(i, 'g0gw', 'der', 1162, 1880, 560, 616);
+  glimm(i, 'g0ts', 'die', 30, 1880, 650, 742, 'clip-path:polygon(0 0,100% 0,100% 100%,0 100%)');
+  glimm(i, 'g0bs', 'der', 1100, 1170, 556, 730);
+  glimm(i, 'g0ps', 'der', 1158, 1880, 560, 612);
+  [...['g0fb', 'g0gw', 'g0ts', 'g0bs', 'g0ps']].forEach(id => el(id).style.borderRadius = '14px');
+
+  // Autos auf der Fahrbahn: vorne nach rechts, hinten (kleiner, blasser) nach links
+  const a1 = auto('au01', 250, 'data-frei'), a2 = auto('au02', 200, 'data-frei');
+  akteur('au02', { x: X0 + 2150, y: a2.y(600), o: .75 }); tw('au02', 1.6, 4.6, { x: X0 - 240 }, 'lin'); cue(1.7, 'whoosh');
+  akteur('au01', { x: X0 - 260, y: a1.y(612) }); tw('au01', .1, 4.4, { x: X0 + 2200 }, 'lin'); cue(.2, 'whoosh');
+  auto('au03', 250, 'data-frei'); akteur('au03', { x: X0 - 260, y: a1.y(612) }); tw('au03', 6.2, 4.4, { x: X0 + 2200 }, 'lin'); cue(6.3, 'whoosh');
+
+  // Das ist Amir: Porträt ploppt in die Mitte, die Warnweste legt sich darüber
+  const tY = W('Amir', 1);
+  portrait('am1', 'Amir', 280, 'data-frei');
+  ein('am1', tY - .45, { x: X0 + 960, y: 270 }, { y: 120 }, 'pop');
+  WESTE.am1 = tY + .35; cue(tY + .35, 'whoosh');
+  nicken('am1', tY + .2, 1); FROH.push(['am1', tY + .9, SA(4)]); akzent(tY, .03);
+  // Straßenbauer: der Untergrund wird aufgeschnitten – Schichten zeigen sich
+  const tS = W('Straßenbauer', 2) - .1;
+  akteur('deck0', {}, true); akteur('deck0b', {}, true);
+  tw(['deck0', 'deck0b'], tS, .55, { y: 90, o: 0 }, 'in'); cue(tS, 'whoosh');
+  bump('am1', W('Ausbildung', 2), 1.05); akzent(W('Straßenbauer', 2) + .2, .04);
+  // Er baut Straßen, Gehwege und Plätze: drei Kacheln unter Amir, die Flächen glimmen
+  const ICON = [['ic1s', 'svgStrasse', W('Straßen', 3), X0 + 790, 'g0fb'], ['ic1g', 'svgGehweg', W('Gehwege', 3), X0 + 960, 'g0gw'], ['ic1p', 'svgPlatz', W('Plätze', 3), X0 + 1130, null]];
+  ICON.forEach(([id, svg, t, x, gl]) => {
+    plakette(id, 'weiss', svg, 'data-frei', 'gross');
+    pop(id, t - .1, { x, y: 475 }, 'pop');
+    if (gl) zeig(gl, t - .05, 1.1);
+    aus(id, SA(4) - .1, .3);
+  });
+  // die Wörter: Farb-Legende der · die · das
+  neu('leg1', GENUS.map((g, k) => `<span class="lg ${g}" id="lg1${k}"><i></i>${g}</span>`).join(''), 'white-space:nowrap', 'data-frei');
+  akteur('leg1', { x: X0 + 960, y: 475 });
+  const tL = [W('Wörter', 4) - .1, W('die', 4) + .05, W('jeden', 4)];
+  GENUS.forEach((g, k) => { akteur('lg1' + k, { s: 0 }, true); tw('lg1' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
+  huepfen('am1', W('Wörter', 4) - .1, 18); akzent(W('Wörter', 4), .04);
+}
+
+/* ---------- Wischblende: eine Absperrschranke zieht über das Bild, dahinter beginnt die Baustelle ---------- */
+const TW1 = SE(4) + .2;
+akteur('wisch', { x: 1940 }, true);
+tw('wisch', TW1, 1.15, { x: -2720 }, 'inout'); cue(TW1, 'whoosh'); cue(TW1 + .5, 'plopp');
+const TJ = TW1 + .575;
+set('cam', TJ, { x: SX(2) + 960, y: 540 }); SPRUENGE.push(TJ); FAHRTEN.push([TJ, 0, 0]);
+/*SZENEN*/
+
+/* ---------- Abspann: die Schichten stapeln sich von unten – zuletzt die Asphaltdecke mit dem Satz ---------- */
+const AB = ENDE_SPRACHE + 3.4;
+[['ab1', 220], ['ab2', 420], ['ab3', 520], ['ab4', 1100]].forEach(([id, h], n) => {
+  akteur(id, { y: h }, true);
+  const t = AB + n * .32;
+  tw(id, t, n === 3 ? .7 : .45, { y: 0 }, n === 3 ? 'inout' : 'sanft'); cue(t + (n === 3 ? .6 : .35), 'plopp');
+});
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + 1.8, .7, { o: 1, y: 0 }, 'weich');
+akteur('asStrich', { sx: 0 }, true); el('asStrich').style.transformOrigin = '0 50%'; tw('asStrich', AB + 2.1, .8, { sx: 1 }, 'inout'); cue(AB + 2.1, 'scan');
+
+start(16);
+</script>
+</body></html>
