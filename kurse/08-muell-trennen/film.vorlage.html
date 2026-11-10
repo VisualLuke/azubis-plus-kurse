@@ -146,7 +146,11 @@
     <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
     <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
     <div class="ebene daumen">{{figur-daumen}}</div></div>
-  <div class="a" id="tuete9" style="width:150px">{{tuete-leer}}</div>
+  <div class="a" id="tuete9" style="width:170px">{{tuete-leer}}</div>
+  <div class="a tonne" id="e0" style="width:100px;height:100px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
+  <div class="a tonne" id="e1" style="width:100px;height:100px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
+  <div class="a tonne" id="e2" style="width:100px;height:100px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
+  <div class="a tonne" id="e3" style="width:100px;height:100px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
   <div class="a" id="haken9" style="width:100px">{{haken}}</div>
 </div></div>
 
@@ -300,7 +304,7 @@ pan2(ZE(9) + .15, 5); const X5 = S(5);
 ein('container', Z(10), { x: X5 + 1440, y: 470 }); cue(Z(10), 'pop');
 ZOOMS.push([W(10, 'Glascontainer'), ZE(11) + .2, .03]);
 const OEFF = [1313, 1440, 1567];
-[['lblW', 0], ['lblGn', 1], ['lblBn', 2]].forEach(([id, i]) => pop(id, W(11, 'Weißes') - .3 + i * .12, { x: X5 + OEFF[i], y: 300 }));
+[['lblW', 0], ['lblGn', 1], ['lblBn', 2]].forEach(([id, i]) => pop(id, W(11, 'Weißes') - .3 + i * .12, { x: X5 + OEFF[i], y: 690 }));
 [['glasW', 250, 'Weißes'], ['glasG', 420, 'grünes'], ['glasB', 590, 'braunes']].forEach(([id, y, wort], i) => {
   pop(id, Z(10) + .4 + i * .15, { x: X5 + 1010, y });
   const t = W(11, wort) - .15, l = wirf(id, t, X5 + OEFF[i], 493, 140 - i * 30, .7);
@@ -352,8 +356,12 @@ textAkteure('tb9'); textEin('tb9', Z(15), { unter: Z(16) }); textAus('tb9', ZE(1
 /* ---------- 10 · Fertig ---------- */
 pan2(ZE(16) + .15, 9); const X9 = S(9);
 figur('mai9', { x: X9 + 1220, y: 400, s: 0 }); tw('mai9', Z(17), .55, { s: 1 }, 'back'); cue(Z(17), 'pop');
-akteur('tuete9', { x: X9 + 1440, y: 560, o: 0 }); tw('tuete9', Z(17) + .1, .3, { o: 1 });
-tw('tuete9', W(17, 'einfach'), .6, { x: X9 + 1620, y: 590 }, 'inout'); stauch('tuete9', W(17, 'einfach') + .6); cue(W(17, 'einfach') + .6, 'plopp');
+['e0', 'e1', 'e2', 'e3'].forEach((id, i) => {
+  akteur($(`#${id} .deckel`), {}, true); ein(id, Z(17) + .3 + i * .1, { x: X9 + 1070 + i * 100, y: 640 }); cue(Z(17) + .3 + i * .1, 'pop');
+  auf(id, W(17, 'Vermieter') + i * .1, -30); zu(id, W(17, 'Vermieter') + i * .1 + .4);
+});
+akteur('tuete9', { x: X9 + 1450, y: 540, o: 0 }); tw('tuete9', Z(17) + .1, .3, { o: 1 });
+tw('tuete9', W(17, 'einfach'), .6, { x: X9 + 1610, y: 590 }, 'inout'); stauch('tuete9', W(17, 'einfach') + .6); cue(W(17, 'einfach') + .6, 'plopp');
 froh('mai9', W(17, 'Vermieter')); tw('#mai9 .daumen', W(17, 'Vermieter'), .5, { y: -36 }, 'back'); cue(W(17, 'Vermieter'), 'erfolg');
 pop('haken9', W(17, 'freut'), { x: X9 + 1560, y: 300 }, 'ding');
 document.querySelectorAll('#tb10 .zeile').forEach((z, i) => {

@@ -62,10 +62,10 @@
 .kalender.mini .seite{top:56px;font-size:34px}
 .kalender.mini .ringe{padding:0 22px}
 
-.ziffern{display:flex;gap:4px;font:700 26px/36px Inter;color:var(--success)}
+.ziffern{display:flex;gap:4px;height:36px;overflow:hidden;font:700 26px/36px Inter;color:var(--success)}
 .ziffern span{width:20px;text-align:center;display:inline-block}
 .marke{width:12px;height:12px;border-radius:3px;background:var(--error)}
-.led{width:11px;height:11px;border-radius:999px;background:var(--error);box-shadow:0 0 10px var(--error)}
+.led{width:15px;height:15px;border-radius:999px;background:var(--error);box-shadow:0 0 10px var(--error)}
 .dampf path{fill:none;stroke:var(--n300);stroke-width:7;stroke-linecap:round}
 .blitz{width:1040px;height:710px;border-radius:44px;background:var(--surface)}
 .sucher{width:174px;height:316px;border-radius:12px;background:var(--ink);overflow:hidden}
@@ -455,7 +455,7 @@ HOOKS.push(t => {
     $('#marke').style.transform = `translate(${ZX + (((t * 70) % 104) - 52)}px,${ZY}px) translate(-50%,-50%)`;
     const v = 4217 + Math.max(0, Math.floor((t - Z(22)) * 1.2));
     $('#ziffern').querySelectorAll('span').forEach((s, i) => { s.textContent = String(v).padStart(5, '0')[i]; });
-    const fr = ((t - Z(22)) * 1.2) % 1; $('#zLetzte').style.transform = `translateY(${fr > .85 ? -(fr - .85) / .15 * 14 : 0}px)`;
+    const fr = ((t - Z(22)) * 1.2) % 1; $('#zLetzte').style.transform = `translateY(${fr > .85 ? -(fr - .85) / .15 * 36 : 0}px)`;
   });
   const HX = X + 1540, HY = 500;
   akteur('handy4', { x: HX, y: 1300 }); tw('handy4', W(22, 'Mach'), .7, { y: HY }, 'back'); cue(W(22, 'Mach'), 'whoosh');
