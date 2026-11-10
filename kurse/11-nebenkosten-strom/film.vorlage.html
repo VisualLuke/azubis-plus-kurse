@@ -48,7 +48,7 @@
   background:var(--b100);color:var(--b700);border:3px solid var(--b200)}
 .stein svg{width:30px;height:30px;flex:none}
 .stein.kalt{background:linear-gradient(135deg,var(--b400),var(--b600));color:var(--surface);border-color:var(--b600)}
-#rahmen0{width:390px;height:440px;border-radius:30px;border:5px dashed var(--b300)}
+#rahmen0{width:390px;height:460px;border-radius:30px;border:5px dashed var(--b300)}
 
 .kalender{width:270px;height:260px;border-radius:26px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px solid var(--border);overflow:hidden}
 .kalender .kopf{height:70px;background:linear-gradient(135deg,var(--b400),var(--b600));color:var(--surface);font:700 26px/70px Inter;text-align:center;letter-spacing:.06em}
@@ -328,8 +328,8 @@ HOOKS.push(t => {
     akteur(id, { x: SX, y: -200, r: i % 2 ? 2 : -2 }); tw(id, t0, .65, { y: YS[i + 1], r: 0 }, 'bounce'); cue(t0 + .28, 'plopp');
     tw('st0', t0 + .3, .08, { sy: .92 }); tw('st0', t0 + .38, .25, { sy: 1 }, 'back');
   });
-  akteur('rahmen0', { x: SX, y: 545, o: 0, s: 1.08 }); tw('rahmen0', W(5, 'Warmmiete') - .1, .45, { o: 1, s: 1 }, 'back');
-  pop('warm0', W(5, 'Warmmiete'), { x: SX, y: 345 }, 'ding');
+  akteur('rahmen0', { x: SX, y: 552, o: 0, s: 1.08 }); tw('rahmen0', W(5, 'Warmmiete') - .1, .45, { o: 1, s: 1 }, 'back');
+  pop('warm0', W(5, 'Warmmiete'), { x: SX, y: 322 }, 'ding');
   akteur('ueb0', { x: X + MX, y: 232 });
   const teile = [...document.querySelectorAll('#ueb0 span')], ab = [W(3, 'Kaltmiete'), W(4, 'Nebenkosten'), W(4, 'Nebenkosten'), W(5, 'Warmmiete'), W(5, 'Warmmiete')];
   teile.forEach((el, i) => { akteur(el, { o: 0, y: 30 }, true); tw(el, ab[i] + (i % 2 ? 0 : .08), .5, { o: 1, y: 0 }, 'back'); });
@@ -359,23 +359,27 @@ HOOKS.push(t => {
   ['wschaleL', 'wschaleR'].forEach(id => akteur(id, { o: 0 })); tw(['wschaleL', 'wschaleR'], Z(11) + .2, .4, { o: 1 });
   tw('wbalken', W(12, 'weniger'), .8, { r: -9 }, 'back'); cue(W(12, 'weniger'), 'klick');
   tw('wbalken', W(13, 'mehr'), .9, { r: 9 }, 'back'); cue(W(13, 'mehr'), 'klick');
-  const balken = AKTEURE.get($('#wbalken'));
+  const balken = AKTEURE.get($('#wbalken')), POS = {};
   const schale = (id, seite) => {
-    const a = AKTEURE.get($('#' + id));
-    HOOKS.push(t => { const r = wert(balken, 'r', t) * Math.PI / 180; a.basis.x = PX + seite * ARM * Math.cos(r); a.basis.y = PY + seite * ARM * Math.sin(r) + HANG; });
+    const el = $('#' + id);
+    HOOKS.push(t => {
+      const r = wert(balken, 'r', t) * Math.PI / 180;
+      POS[id] = { x: PX + seite * ARM * Math.cos(r), y: PY + seite * ARM * Math.sin(r) + HANG };
+      el.style.transform = `translate(${POS[id].x}px,${POS[id].y}px) translate(-50%,-50%)`;
+    });
   };
   schale('wschaleL', -1); schale('wschaleR', 1);
-  // Chips hängen unter den Schalen
-  const chipUnter = (id, sId, t) => {
-    akteur(id, { o: 0 }); tw(id, t, .4, { o: 1 }, 'out'); const a = AKTEURE.get($('#' + id)), s = AKTEURE.get($('#' + sId));
-    HOOKS.push(tt => { a.el.style.transform = `translate(${s.basis.x}px,${s.basis.y + 118}px) translate(-50%,-50%) scale(${wert(a, 's', tt)})`; });
+  // Chips hängen unter den Schalen (etwas nach außen versetzt, frei vom Fuß)
+  const chipUnter = (id, sId, seite, t) => {
+    const a = akteur(id, { o: 0 }); tw(id, t, .4, { o: 1 }, 'out');
     tw(id, t, .15, { s: 1.1 }); tw(id, t + .15, .3, { s: 1 }, 'back');
+    HOOKS.push(tt => { const p = POS[sId]; a.el.style.transform = `translate(${p.x + seite * 40}px,${p.y + 118}px) translate(-50%,-50%) scale(${wert(a, 's', tt)})`; });
   };
-  chipUnter('zurueck', 'wschaleL', W(12, 'weniger')); chipUnter('nach', 'wschaleR', W(13, 'mehr'));
+  chipUnter('zurueck', 'wschaleL', -1, W(12, 'weniger')); chipUnter('nach', 'wschaleR', 1, W(13, 'mehr'));
   // Münze springt aus der linken Schale heraus, eine fällt in die rechte
   const [mz, mn] = muenzen('m1w_', 2);
   HOOKS.push(t => {
-    const L = AKTEURE.get($('#wschaleL')).basis, R = AKTEURE.get($('#wschaleR')).basis;
+    const L = POS.wschaleL, R = POS.wschaleR;
     const z = $('#' + mz), n = $('#' + mn);
     const pz = clamp((t - W(12, 'zurück')) / .9), pn = clamp((t - W(13, 'nachzahlen') + .5) / .6);
     z.style.visibility = pz > 0 && pz < 1 ? 'visible' : 'hidden'; z.style.opacity = 1 - pz;
@@ -394,7 +398,7 @@ HOOKS.push(t => {
   ein('schwein', Z(14) + .1, { x: SX, y: SY }, { y: 90 }); cue(Z(14) + .1, 'pop');
   const ts = [W(14, 'jeden'), W(14, 'Monat'), W(14, 'bisschen'), W(14, 'Geld'), W(14, 'Seite')];
   muenzen('m2_', ts.length).forEach((id, i) => {
-    flug(id, ts[i] - .45, .55, [SX - 6, 230], [SX - 6, SY - 70], 0, 1, .8, 0); cue(ts[i] + .05, 'muenze');
+    flug(id, ts[i] - .45, .55, [SX - 6, 320], [SX - 6, SY - 70], 0, 1, .8, 0); cue(ts[i] + .05, 'muenze');
     tw('schwein', ts[i] + .1, .08, { sy: .95, sx: 1.03 }); tw('schwein', ts[i] + .18, .3, { sy: 1, sx: 1 }, 'back');
   });
   wackeln('schwein', ZE(14) - .1, 4, 3);
@@ -446,9 +450,8 @@ HOOKS.push(t => {
   ein('zaehler', Z(22) + .1, { x: ZX, y: ZY }, { y: 80 }); cue(Z(22) + .1, 'pop');
   akteur('ziffern', { x: ZX, y: ZY - 25 * kz, o: 0 }); tw('ziffern', Z(22) + .4, .3, { o: 1 });
   akteur('marke', { x: ZX, y: ZY, o: 0 }); tw('marke', Z(22) + .4, .3, { o: 1 });
-  const marke = AKTEURE.get($('#marke'));
   HOOKS.push(t => {
-    marke.basis.x = ZX + (((t * 70) % 104) - 52);
+    $('#marke').style.transform = `translate(${ZX + (((t * 70) % 104) - 52)}px,${ZY}px) translate(-50%,-50%)`;
     const v = 4217 + Math.max(0, Math.floor((t - Z(22)) * 1.2));
     $('#ziffern').querySelectorAll('span').forEach((s, i) => { s.textContent = String(v).padStart(5, '0')[i]; });
     const fr = ((t - Z(22)) * 1.2) % 1; $('#zLetzte').style.transform = `translateY(${fr > .85 ? -(fr - .85) / .15 * 14 : 0}px)`;
@@ -462,7 +465,7 @@ HOOKS.push(t => {
   akteur('foto', { x: HX, y: HY, o: 0, s: .6 }); tw('foto', W(22, 'Foto') + .1, .45, { o: 1, s: 1 }, 'back');
   akteur('app', { x: HX, y: HY, o: 0, s: .97 });
   tw('sucher', W(23, 'weiß'), .3, { o: 0 }); tw('app', W(23, 'weiß'), .35, { o: 1 });
-  const rowY = HY + .97 * (-165 + 12 + 14 + 4 + 28 + 2 * 39 + 17);
+  const rowY = HY + 19;
   tw('foto', W(23, 'weiß') + .2, .8, { y: rowY, s: .25, o: 0 }, 'inout'); cue(W(23, 'weiß') + .2, 'whoosh');
   const row = akteur('rowZ', { o: 0, s: .8 }, true); tw('rowZ', W(23, 'weiß') + .9, .4, { o: 1, s: 1 }, 'back');
   HOOKS.push(t => { const an = t > W(23, 'weiß') + .9 && t < ZE(23) + .4; $('#rowZ').style.borderColor = an ? 'var(--b300)' : 'transparent'; });
@@ -480,7 +483,7 @@ HOOKS.push(t => {
   ein('tv', Z(24) + .4, { x: X + 1280, y: Y }); cue(Z(24) + .3, 'pop');
   const kt = 250 / 160; akteur('led', { x: X + 1280 + 52 * kt, y: Y + 38 * kt, o: 0 }); tw('led', Z(24) + .8, .2, { o: 1 });
   ein('topf', Z(24) + .6, { x: X + 1600, y: Y + 30 });
-  akteur('dampf', { x: X + 1600, y: Y - 120, o: 0 }); tw('dampf', Z(24) + 1.0, .4, { o: 1 });
+  akteur('dampf', { x: X + 1600, y: Y - 70, o: 0 }); tw('dampf', Z(24) + 1.0, .4, { o: 1 });
   akteur('topfDeckel', { x: X + 1600, y: Y - 160, r: -3, o: 0 }); tw('topfDeckel', Z(24) + 1.0, .4, { o: 1 });
   // Licht aus
   tw('licht', W(25, 'aus'), .12, { o: 0 }, 'lin'); cue(W(25, 'aus'), 'klick'); wackeln('lampe', W(25, 'aus'), 2, 2);

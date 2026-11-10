@@ -190,7 +190,7 @@
   <div class="a label" id="lblVerm">Vermieter</div>
   <div class="a chip gelb" id="lblFrage">Schimmel?</div>
   <div class="a" id="handy10" style="width:150px">{{handy}}</div>
-  <svg class="a anruf" id="anruf10" viewBox="0 0 200 120" style="width:200px"><path d="M40 60a40 40 0 0 1 0-0"/><path d="M60 30q30 30 0 60"/><path d="M90 14q46 46 0 92"/><path d="M120 0q60 60 0 120" style="opacity:0"/></svg>
+  <svg class="a anruf" id="anruf10" viewBox="0 0 200 120" style="width:200px"><path d="M60 30q30 30 0 60"/><path d="M90 14q46 46 0 92"/><path d="M120 0q60 60 0 120" style="opacity:0"/></svg>
   <div class="a" id="haken10" style="width:96px">{{haken}}</div>
 </div></div>
 
@@ -418,7 +418,7 @@ pan2(ZE(12) + .4, 7); const X7 = S(7);
 akteur('wand8', { x: X7 + 1210, y: 345, o: 0, s: .95 }); tw('wand8', Z(13), .5, { o: 1, s: 1 }, 'back');
 ein('heiz8', Z(13) + .15, { x: X7 + 1210, y: 600 });
 figur('mai8', { x: X7 + 1610, y: 600, s: 0 }); tw('mai8', Z(13) + .3, .5, { s: 1 }, 'back'); cue(Z(13) + .3, 'pop');
-const tWarm = WE(14, 'feucht') + .1;
+const tWarm = W(14, 'feucht') + .25;
 HOOKS.push(t => {
   const kalt = t >= Z(13) + .4 && t < tWarm, warm = t >= tWarm;
   const w = $('#wand8');
@@ -441,10 +441,10 @@ cue(W(14, 'Wände'), 'tipp');
 });
 pop('lblWarm8', tWarm, { x: X7 + 1610, y: 300 }, 'ding');
 froh('mai8', tWarm + .1);
-textAkteure('tb8'); textEin('tb8', Z(13)); textAus('tb8', Z(15) - .2);
+textAkteure('tb8'); textEin('tb8', Z(13)); textAus('tb8', Z(15) + .05);
 
 /* ---------- 9 · Möbel mit Abstand ---------- */
-pan2(Z(15) - .1, 8); const X8 = S(8);
+pan2(Z(15) + .15, 8); const X8 = S(8);
 akteur('boden9', { x: X8 + 1290, y: 690, o: 0 }); tw('boden9', Z(15), .4, { o: 1 });
 akteur('wand9', { x: X8 + 1580, y: 440, o: 0, sy: .6 }); tw('wand9', Z(15), .5, { o: 1, sy: 1 }, 'back');
 akteur('lblWand9', { x: X8 + 1580, y: 170, o: 0 }); tw('lblWand9', Z(15) + .3, .4, { o: 1 });
@@ -463,12 +463,12 @@ pan2(ZE(16) + .4, 9); const X9 = S(9);
 figur('mai10', { x: X9 + 1080, y: 420, s: 0 }); tw('mai10', Z(17) - .1, .5, { s: 1 }, 'back'); cue(Z(17) - .1, 'pop');
 akteur('lblDu', { x: X9 + 1080, y: 560, o: 0 }); tw('lblDu', Z(17) + .2, .4, { o: 1 });
 pop('lblFrage', W(17, 'Schimmel'), { x: X9 + 1080, y: 245 });
-akteur('handy10', { x: X9 + 1230, y: 900, r: 0 }); tw('handy10', Z(18), .6, { y: 560 }, 'back'); cue(Z(18), 'whoosh');
+akteur('handy10', { x: X9 + 1230, y: 760, o: 0 }); tw('handy10', Z(18), .6, { y: 560, o: 1 }, 'back'); cue(Z(18), 'whoosh');
 figur('verm10', { x: X9 + 1560, y: 420, s: 0 }); tw('verm10', Z(18) + .15, .5, { s: 1 }, 'back'); cue(Z(18) + .15, 'pop');
 akteur('lblVerm', { x: X9 + 1560, y: 560, o: 0 }); tw('lblVerm', Z(18) + .4, .4, { o: 1 });
 akteur('anruf10', { x: X9 + 1350, y: 560, o: 0 });
 HOOKS.push(t => $('#anruf10').querySelectorAll('path').forEach((p, i) => {
-  if (i === 0 || i === 3) return;
+  if (i === 2) return;
   p.style.opacity = t < W(18, 'Sag') ? 0 : .35 + .65 * Math.max(0, Math.sin(t * 6 - i * 1.2));
 }));
 tw('anruf10', W(18, 'Sag'), .3, { o: 1 }); cue(W(18, 'Sag'), 'klick');
