@@ -38,8 +38,8 @@ Ein neues Video kommt über den Kurs-Editor in die App (Video, `.vtt` mit demsel
 
 **Kurse 5–13 (10.11.2026)** sind als neun weitere Lektionen angelegt – zusätzlich zu den älteren Lernvideos zum selben Thema,
 direkt dahinter einsortiert (Positionen in `import/lektionen.md`). Import: `import/kurse-05-13.py` (SQL) mit
-`import/ids-05-13.json` (Kurs-IDs, Storage-Pfade). Kurs 5 und 6 (und Kurs 2, 3, Lernvideo 66) hängen außerdem als Video an den
-Ankommen-Aufgaben der Helper-App (`helperapp_backend`, Migration `h_ankommen_videos`). Aufnahme: `werkzeug/stimme.mjs`;
+`import/ids-05-13.json` (Kurs-IDs, Storage-Pfade). 23 Ankommen-Aufgaben der Helper-App verlinken ihre passende Lektion („Video ansehen: …“, ohne Kopie des
+Videos; `helperapp_backend`, Migration `h_ankommen_lektionen`). Aufnahme: `werkzeug/stimme.mjs`;
 die Vorlagen der Kurse 5–13 lesen die Zeiten über `werkzeug/sprache.js` (`Z(i)`, `W(i, 'wort')`, `mund(t, sprecher)`).
 
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine eingebrannten Untertitel (die gibt es als abschaltbare
