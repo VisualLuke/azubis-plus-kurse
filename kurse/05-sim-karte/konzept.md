@@ -5,7 +5,7 @@
 - **Format:** Animationsvideo mit Sprecher (Stimme „Jonas Berger“ wie Kurs 2 und 3), Mai als Figur
 - **Kernbotschaft:** Nicht per Video freischalten, sondern mit Coupon und Reisepass in der Postfiliale.
 - **Einsatz:** Video an der Ankommen-Aufgabe „SIM-Karte holen und freischalten“ (`ak-handy`) in der Helper-App
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 
 ## Recherche (10.11.2026)
 

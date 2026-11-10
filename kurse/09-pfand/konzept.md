@@ -7,7 +7,7 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 - **Format:** Animationsvideo mit Sprecher (Stimme „Jonas Berger“), Mai als Figur
 - **Kernbotschaft:** Pfand ist dein Geld – bring die Flaschen zurück und hol es dir.
 - **Einsatz:** Lektion unter „Lernen“
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 - **Bild:** nur Wasser-, Saft- und Milchflaschen, **keine Bierflaschen** (kein Alkohol).
 
 ## Recherche (10.11.2026)

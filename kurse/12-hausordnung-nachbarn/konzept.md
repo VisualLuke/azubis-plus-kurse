@@ -8,7 +8,7 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 - **Kernbotschaft:** Lies die Hausordnung, halte die Ruhezeiten ein und sprich bei Problemen zuerst freundlich mit den
   Nachbarn.
 - **Einsatz:** Lektion unter „Lernen“
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 
 ## Bilder (Handlung)
 

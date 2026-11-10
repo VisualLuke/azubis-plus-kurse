@@ -5,7 +5,7 @@
 - **Format:** Animationsvideo mit Sprecher (Stimme „Jonas Berger“), Mai als Figur
 - **Kernbotschaft:** Foto in „Meine AOK“ hochladen, Karte kommt per Post, immer mit zum Arzt.
 - **Einsatz:** Video an der Ankommen-Aufgabe „Gesundheitskarte bekommen“ (`ak-gesundheitskarte`)
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 
 ## Recherche (10.11.2026)
 

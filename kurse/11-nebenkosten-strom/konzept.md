@@ -8,7 +8,7 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 - **Kernbotschaft:** Neben der Miete zahlst du Nebenkosten und Strom im Voraus – leg Geld zurück für die
   Abrechnung am Jahresende.
 - **Einsatz:** Lektion unter „Lernen“
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 - **Beträge:** im Text bewusst keine; im Bild nur als Beispiel markiert („Beispiel“).
 
 ## Bilder (Handlung)

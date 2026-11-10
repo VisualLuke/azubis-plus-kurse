@@ -7,7 +7,7 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 - **Format:** Animationsvideo mit Sprecher (Stimme „Jonas Berger“), Mai als Figur
 - **Kernbotschaft:** In Deutschland trennst du den Müll – jede Sorte hat ihre eigene Tonne.
 - **Einsatz:** Lektion unter „Lernen“
-- **Aufnahme:** noch keine – **Entwurf, wartet auf Freigabe**
+- **Aufnahme:** `sprache.mp3` + `sprache.json` (ElevenLabs `eleven_v4` über `werkzeug/stimme.mjs`, 10.11.2026); in der App als Lektion (siehe `import/lektionen.md`)
 
 Die Tonnenfarben werden über Token-Farben dargestellt (keine Fremdfarben); Gelb, Blau und Braun deshalb über die
 Beschriftung und ein Symbol klar machen, nicht nur über die Farbe.
