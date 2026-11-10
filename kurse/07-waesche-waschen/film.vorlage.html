@@ -305,14 +305,14 @@ textAkteure('tb2'); textEin('tb2', Z(2), { unter: Z(3) }); textAus('tb2', ZE(3) 
 
 /* ---------- 3 · Symbole ---------- */
 pan2(ZE(3) + .2, 2); const X2 = S(2);
-pop('sym1', Z(4) - .2, { x: X2 + 1060, y: 380 }); pop('c30', Z(4), { x: X2 + 1060, y: 560 });
-pop('sym2', W(4, 'Hand'), { x: X2 + 1320, y: 380 });
+pop('sym1', Z(4) - .2, { x: X2 + 1060, y: 410 }); pop('c30', Z(4), { x: X2 + 1060, y: 590 });
+pop('sym2', W(4, 'Hand'), { x: X2 + 1320, y: 410 });
 akteur(q('sym2', '.zeichnen'), { draw: 0 }, true); tw(q('sym2', '.zeichnen'), W(4, 'Hand') + .2, .9, { draw: 1 }); cue(W(4, 'Hand') + .2, 'kritzeln');
-pop('cHand', W(4, 'Hand', 2), { x: X2 + 1320, y: 560 });
-pop('sym3', Z(5), { x: X2 + 1580, y: 380 });
+pop('cHand', W(4, 'Hand', 2), { x: X2 + 1320, y: 590 });
+pop('sym3', Z(5), { x: X2 + 1580, y: 410 });
 akteur(q('sym3', '.strich'), { draw: 0 }, true); tw(q('sym3', '.strich'), W(5, 'durchgestrichen'), .4, { draw: 1 }); cue(W(5, 'durchgestrichen'), 'kritzeln');
 wackeln('sym3', W(5, 'durchgestrichen') + .45, 3, 3);
-pop('cNicht', W(5, 'Maschine'), { x: X2 + 1580, y: 560 }, 'plopp');
+pop('cNicht', W(5, 'Maschine'), { x: X2 + 1580, y: 590 }, 'plopp');
 tw(['sym1', 'c30'], W(4, 'Hand'), .4, { o: .4 });
 textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) + .1);
 
@@ -320,20 +320,21 @@ textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) 
 pan2(ZE(5) + .2, 3); const X3 = S(3);
 const KX = { H: X3 + 1060, D: X3 + 1320, R: X3 + 1580 }, KY = 600;
 ['H', 'D', 'R'].forEach((k, i) => ein('korb' + k, Z(6) - .3 + i * .12, { x: KX[k], y: KY }));
-const SORT = [['i1', 'Helles', 0, 'H', -28], ['i2', 'Weißes', 0, 'H', 28], ['i3', 'Dunkles', 0, 'D', -28], ['i4', 'Buntes', 0, 'D', 28]];
-SORT.forEach(([id, w, satz, k, dx]) => {
-  const t0 = W(6, w);
-  akteur(id, { o: 0 }); set(id, t0, { o: 1 });
-  HOOKS.push(t => { if (t < t0) document.getElementById(id).style.transform = 'translate(-999px,0)'; });
-  flug(id, t0, .9, [X3 + 1320, 250], [KX[k] + dx, KY - 10], 90, .9, .75, 3); cue(t0, 'whoosh'); cue(t0 + .85, 'plopp');
+const SORT = [['i1', 'Helles', 1080, 'H', -28], ['i2', 'Weißes', 1240, 'H', 28], ['i3', 'Dunkles', 1400, 'D', -28], ['i4', 'Buntes', 1560, 'D', 28]];
+SORT.forEach(([id, w, x0, k, dx], i) => {
+  const t0 = W(6, w), tp = Z(6) + .1 + i * .14;
+  akteur(id, { x: X3 + x0, y: 260, s: 0 }); tw(id, tp, .45, { s: .9 }, 'back'); cue(tp, 'pop');
+  HOOKS.push(t => { if (t >= t0) document.getElementById(id).style.visibility = 'visible'; });
+  flug(id, t0, .9, [X3 + x0, 260], [KX[k] + dx, KY - 40], 90, .9, .75, 3); cue(t0, 'whoosh'); cue(t0 + .85, 'plopp');
   huepf('korb' + k, t0 + .85);
 });
-akteur('i5', { x: X3 + 1320, y: 270, s: 0 }); tw('i5', W(7, 'rote'), .5, { s: .9 }, 'back'); cue(W(7, 'rote'), 'pop');
-wackeln('i5', W(7, 'rote') + .5, 3, 3);
-HOOKS.push(t => { const t0 = W(7, 'allein') - .2; if (t >= t0) document.getElementById('i5').style.transform = ''; });
-flug('i5', W(7, 'allein') - .2, .8, [X3 + 1320, 270], [KX.R, KY - 10], 110, .9, .75, 3); cue(W(7, 'allein') - .2, 'whoosh');
-huepf('korbR', W(7, 'allein') + .6); cue(W(7, 'allein') + .6, 'ding');
-pop('lH', W(6, 'Helles') + .9, { x: KX.H, y: 470 }); pop('lD', W(6, 'Dunkles') + .9, { x: KX.D, y: 470 }); pop('lR', W(7, 'allein') + .6, { x: KX.R, y: 470 });
+const T_ROT = W(7, 'rote'), T_HOP = W(7, 'besten') - .1;
+akteur('i5', { x: X3 + 1320, y: 260, s: 0 }); tw('i5', T_ROT, .5, { s: .9 }, 'back'); cue(T_ROT, 'pop');
+wackeln('i5', T_ROT + .5, 3, 3);
+HOOKS.push(t => { if (t >= T_HOP) document.getElementById('i5').style.visibility = 'visible'; });
+flug('i5', T_HOP, .8, [X3 + 1320, 260], [KX.R, KY - 40], 110, .9, .75, 3); cue(T_HOP, 'whoosh');
+huepf('korbR', T_HOP + .8); cue(T_HOP + .8, 'ding');
+pop('lH', W(6, 'Helles') + .9, { x: KX.H, y: 470 }); pop('lD', W(6, 'Dunkles') + .9, { x: KX.D, y: 470 }); pop('lR', T_HOP + .8, { x: KX.R, y: 470 });
 textAkteure('tb4'); textEin('tb4', Z(6)); textAus('tb4', ZE(7) + .1);
 
 /* ---------- 5 · Temperatur ---------- */
@@ -366,13 +367,13 @@ FUSS.forEach(([dx, dy], i) => {
   const el = document.createElement('div'); el.className = 'a fussel'; document.getElementById('welt').appendChild(el);
   const t0 = W(11, 'Fusseln') + i * .05;
   akteur(el, { x: X5 + 1530 + dx, y: 430 + dy, s: 0 }); tw(el, t0, .3, { s: 1 }, 'back');
-  tw(el, ZE(11) + .1, .4, { s: 0, y: 430 + dy - 30 }, 'in');
+  tw(el, ZE(11) + .45, .4, { s: 0, y: 430 + dy - 30 }, 'in');
 });
 cue(W(11, 'Fusseln'), 'pop');
-textAkteure('tb6'); textEin('tb6', Z(10)); textAus('tb6', ZE(11) + .5);
+textAkteure('tb6'); textEin('tb6', Z(10)); textAus('tb6', ZE(11) + .8);
 
 /* ---------- 7 · Nicht zu voll ---------- */
-pan2(ZE(11) + .6, 6); const X6 = S(6);
+pan2(ZE(11) + .9, 6); const X6 = S(6);
 ein('wm7', Z(12) - .3, { x: X6 + 1250, y: 450 });
 const LADUNG = [['f1', '.l1'], ['f2', '.l2'], ['f3', '.l3']];
 LADUNG.forEach(([id, l], i) => {
@@ -451,14 +452,14 @@ const T_K = W(18, 'Waschkeller') - .5;
 set('korb10', T_K, { o: 1 });
 STUFEN.slice(1).forEach((p, k) => { flug('korb10', T_K + k * .28, .28, STUFEN[k], p, 22, 1, 1); cue(T_K + k * .28 + .26, 'tipp'); });
 HOOKS.push(t => { if (t < T_K) $('#korb10').style.transform = 'translate(-999px,0)'; });
-ein('plan', W(18, 'Waschkeller'), { x: X9 + 1440, y: 390 });
+ein('plan', W(18, 'Waschkeller'), { x: X9 + 1400, y: 390 });
 figur('mai10', { x: X9 + 1080, y: 590, s: 0 }); tw('mai10', Z(18), .5, { s: 1 }, 'back'); cue(Z(18), 'pop');
 nicken('mai10', W(19, 'Hausordnung'));
-pop('hoChip', W(19, 'Hausordnung'), { x: X9 + 1440, y: 650 });
+pop('hoChip', W(19, 'Hausordnung'), { x: X9 + 1400, y: 650 });
 const NAME = 'Mai', T_NAME = W(19, 'wann');
 HOOKS.push(t => { const n = Math.floor(clamp((t - T_NAME) / .5) * NAME.length + (t >= T_NAME ? .999 : 0)); $('#maiName').textContent = NAME.slice(0, Math.min(NAME.length, n)); $('#zeileMai').classList.toggle('mai', t >= T_NAME + .5); });
 for (let k = 0; k < 3; k++) cue(T_NAME + k * .16, 'tipp');
-pop('haken10', T_NAME + .6, { x: X9 + 1600, y: 405 }, 'erfolg');
+pop('haken10', T_NAME + .6, { x: X9 + 1650, y: 400 }, 'erfolg');
 froh('mai10', T_NAME + .6); tw('#mai10 .daumen', T_NAME + .6, .5, { y: -30 }, 'back');
 textAkteure('tb10'); textEin('tb10', Z(18), { unter: Z(18) + 1.2 });
 

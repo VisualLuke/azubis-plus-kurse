@@ -51,7 +51,8 @@
 .deckelAb{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
 .deckelAb .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
 .reihe{display:flex;gap:18px}
-.reihe div{width:150px}
+.reihe div{width:150px;height:150px;position:relative}
+.reihe i{position:absolute;left:0;top:0;width:100%;display:block}
 </style></head><body>
 
 <div id="kamera"><div id="welt">
@@ -96,7 +97,7 @@
   <div class="a tonne" id="tGr" style="width:260px;height:260px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
   <div class="a tonne" id="tS" style="width:260px;height:260px"><div class="koerper">{{tonne-schwarz}}</div><div class="deckel">{{deckel-schwarz}}</div></div>
   <div class="a chip" id="lblGr">Grau</div>
-  <div class="a chip" id="lblS">oder schwarz</div>
+  <div class="a chip" id="lblS">Schwarz</div>
   <div class="a" id="scherben" style="width:150px">{{scherben}}</div>
   <div class="a" id="beutel" style="width:130px">{{beutel}}</div>
 
@@ -164,7 +165,7 @@
 
 <div class="deckelAb" id="abspann"><div class="ende">
   <div class="reihe a" id="endReihe" style="position:relative">
-    <div>{{tonne-gelb~2}}</div><div>{{tonne-blau~2}}</div><div>{{tonne-braun~2}}</div><div>{{tonne-grau~2}}</div></div>
+    <div>{{tonne-gelb~2}}<i>{{deckel-gelb~2}}</i></div><div>{{tonne-blau~2}}<i>{{deckel-blau~2}}</i></div><div>{{tonne-braun~2}}<i>{{deckel-braun~2}}</i></div><div>{{tonne-grau~2}}<i>{{deckel-grau~2}}</i></div></div>
   <div class="gross a" id="asTitel" style="position:relative">Gut getrennt.</div>
 </div></div>
 
@@ -206,13 +207,13 @@ const tonne = (id, basis) => { akteur(id, basis); akteur($(`#${id} .deckel`), {}
 const auf = (id, t, w = -42) => { tw(`#${id} .deckel`, t, .25, { r: w }, 'back'); cue(t, 'klick'); };
 const zu = (id, t) => { tw(`#${id} .deckel`, t, .35, { r: 0 }, 'bounce'); cue(t + .15, 'klick'); };
 // Wurf im Bogen: x linear, y hoch und runter, wird kleiner und verschwindet im Ziel; gibt die Landezeit zurück
-function wirf(id, t, x1, y1, h = 180, d = .75, dreh = 10) {
+function wirf(id, t, x1, y1, h = 180, d = .75, dreh = 10, bleibt = false) {
   const a = AKTEURE.get($('#' + id)), y0 = wert(a, 'y', t);
   tw(id, t, d, { x: x1 }, 'lin');
   tw(id, t, d / 2, { y: Math.min(y0, y1) - h, r: dreh }, 'out');
   tw(id, t + d / 2, d / 2, { y: y1, r: 0 }, 'in');
-  tw(id, t + d * .55, d * .45, { s: .4 }, 'in');
-  set(id, t + d, { o: 0 });
+  tw(id, t + d * .55, d * .45, { s: bleibt ? .6 : .4 }, 'in');
+  if (!bleibt) set(id, t + d, { o: 0 });
   cue(t, 'whoosh'); cue(t + d, 'plopp');
   return t + d;
 }
@@ -249,7 +250,7 @@ const MUND1 = [X1 + 1520, 410];
   pop(id, W(3, 'Verpackungen') + i * .15, { x: X1 + 1020, y });
   const t = W(3, wort) - .1; wirf(id, t, MUND1[0], MUND1[1], h); stauch('tG', t + .75);
 });
-auf('tG', W(3, 'Plastik') - .4); zu('tG', W(3, 'Getränkekartons') + .9);
+auf('tG', W(3, 'Plastik') - .4); zu('tG', W(3, 'Getränkekartons') + .8);
 textAkteure('tb2'); textEin('tb2', Z(3), { unter: W(3, 'Plastik') }); textAus('tb2', ZE(3) + .05);
 
 /* ---------- 3 · Blau: Papier und Pappe ---------- */
@@ -257,11 +258,11 @@ pan2(ZE(3) + .15, 2); const X2 = S(2);
 tonne('tB', { x: X2 + 1560, y: 470, o: 0 }); ein('tB', Z(4), { x: X2 + 1560, y: 470 }); cue(Z(4), 'pop');
 pop('lblB', W(4, 'blaue'), { x: X2 + 1560, y: 665 });
 pop('zeitung', Z(4) + .3, { x: X2 + 1060, y: 300 });
-auf('tB', W(4, 'Papier') - .35); wirf('zeitung', W(4, 'Papier'), X2 + 1560, 410, 140); stauch('tB', W(4, 'Papier') + .75);
+auf('tB', W(4, 'Papier') - .35); wirf('zeitung', W(4, 'Papier'), X2 + 1560, 410, 140); stauch('tB', W(4, 'Papier') + .75); zu('tB', W(4, 'Papier') + .9);
 pop('karton', W(5, 'Kartons'), { x: X2 + 1110, y: 520 });
 tw('karton', W(5, 'faltest'), .45, { sy: .28, sx: 1.18, y: 575 }, 'back'); cue(W(5, 'faltest'), 'kritzeln');
-const tK = Math.max(WE(5, 'klein') - .1, W(5, 'faltest') + .55);
-wirf('karton', tK, X2 + 1560, 410, 150); stauch('tB', tK + .75); zu('tB', tK + 1.0);
+const tK = Math.max(W(5, 'vorher'), W(5, 'faltest') + .5);
+auf('tB', tK - .3); wirf('karton', tK, X2 + 1560, 410, 150); stauch('tB', tK + .75); zu('tB', tK + .9);
 textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) + .05);
 
 /* ---------- 4 · Braun: Biomüll ---------- */
@@ -297,7 +298,7 @@ textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'Alles') }); textAus('tb5
 /* ---------- 6 · Glas ---------- */
 pan2(ZE(9) + .15, 5); const X5 = S(5);
 ein('container', Z(10), { x: X5 + 1440, y: 470 }); cue(Z(10), 'pop');
-ZOOMS.push([W(10, 'Glascontainer'), ZE(11) + .2, .06]);
+ZOOMS.push([W(10, 'Glascontainer'), ZE(11) + .2, .03]);
 const OEFF = [1313, 1440, 1567];
 [['lblW', 0], ['lblGn', 1], ['lblBn', 2]].forEach(([id, i]) => pop(id, W(11, 'Weißes') - .3 + i * .12, { x: X5 + OEFF[i], y: 300 }));
 [['glasW', 250, 'Weißes'], ['glasG', 420, 'grünes'], ['glasB', 590, 'braunes']].forEach(([id, y, wort], i) => {
@@ -319,7 +320,7 @@ tw('flasche', W(12, 'nicht'), .05, { r: 0 }); stauch('flasche', W(12, 'nicht'));
 pop('lblPfand', W(12, 'Pfand'), { x: X6 + 1300, y: 235 });
 pop('xP', W(12, 'nicht') + .1, { x: X6 + 1020, y: 335 }, 'plopp');
 tw('flasche', W(12, 'Müll'), .35, { sx: -1 }, 'inout'); cue(W(12, 'Müll'), 'whoosh');   // dreht um
-const tF = W(13, 'Supermarkt') - .3, lF = wirf('flasche', tF, X6 + 1595, 470, 110, .8, -8);
+const tF = W(13, 'Supermarkt') - .3, lF = wirf('flasche', tF, X6 + 1600, 485, 110, .8, -8, true);
 tw('wagen', lF, .12, { y: 532, sx: 1.04 }, 'out'); tw('wagen', lF + .12, .4, { y: 520, sx: 1 }, 'back'); cue(lF + .1, 'muenze');
 tw('lblPfand', tF, .8, { x: X6 + 1520 }, 'inout');
 textAkteure('tb7'); textEin('tb7', Z(12), { unter: W(12, 'gehören') }); textAus('tb7', ZE(13) + .05);
