@@ -42,6 +42,13 @@
 - Ist „Druck ihn am besten aus“ richtig? Die Post nimmt den Coupon auch in ihrer App an, ALDI TALK will ihn gedruckt.
 - Sollen weitere Anbieter genannt werden, die den Filial-Weg sicher anbieten (bei Online-Anbietern nachsehen)?
 
+## Schreibweise im Untertitel
+
+Für die Stimme anders geschrieben als im Bild; `werkzeug/untertitel.mjs` setzt im Untertitel die rechte Seite.
+
+- Aldi Talk → ALDI TALK
+- Postident → POSTIDENT
+
 ## Sprechertext
 
 @stimme Erzähler: K8bIZwDsGMHreGKTIVHN

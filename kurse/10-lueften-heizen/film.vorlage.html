@@ -108,7 +108,7 @@
   <div class="a" id="zeiger3" data-gruppe="uhr3" style="width:200px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
   <div class="a chip" id="lblMin">5–10 Min.</div>
   <div class="a chip" id="lblMal">3–4× am Tag</div>
-  <div class="a chip brand gross" id="lblStoss">Stoßlüften</div>
+  <div class="a chip brand gross" id="lblStoss" data-dreht>Stoßlüften</div>
 
   <!-- 4 · Gekippt -->
   <div class="a buehne" id="bue3"></div>
@@ -323,16 +323,16 @@ textAkteure('tb2'); textEin('tb2', Z(3), { unter: W(3, 'vom') }); textAus('tb2',
 pan2(ZE(3) + .4, 2); const X2 = S(2);
 ein('rahmen3', Z(4) + .1, { x: X2 + 1160, y: 420 });
 ein('fluegel3', Z(4) + .1, { x: X2 + 1160, y: 420 });
-akteur('wolke3', { x: X2 + 1430, y: 260, o: 0, s: .8 }); tw('wolke3', Z(4) + .4, .5, { o: 1 });
+akteur('wolke3', { x: X2 + 1430, y: 250, o: 0, s: .8 }); tw('wolke3', Z(4) + .4, .5, { o: 1 });
 const tAuf3 = W(4, 'Fenster');
-tw('fluegel3', tAuf3, .7, { sx: .22 }, 'back'); cue(tAuf3, 'whoosh');
+tw('fluegel3', tAuf3, .7, { sx: .22 }, 'inout'); cue(tAuf3, 'whoosh');
 tw('wolke3', tAuf3 + .3, 1.6, { x: X2 + 1150, y: 400, s: .15, o: 0 }, 'inout');
 ['uhr3', 'zeiger3'].forEach(id => ein(id, W(4, 'fünf') - .3, { x: X2 + 1590, y: 520 }));
 tw('zeiger3', W(4, 'fünf'), Math.max(.6, WE(4, 'Minuten') - W(4, 'fünf')), { r: 180 }, 'inout'); cue(W(4, 'fünf'), 'tipp');
 pop('lblMin', W(4, 'Minuten'), { x: X2 + 1590, y: 680 });
-pop('lblMal', W(4, 'viermal'), { x: X2 + 1590, y: 300 });
-stempel('lblStoss', W(5, 'Stoß'), { x: X2 + 1160, y: 690 });
-textAkteure('tb3'); textEin('tb3', W(5, 'Stoß'), { unter: W(5, 'Stoß') + .4 }); textAus('tb3', ZE(5) + .3);
+pop('lblMal', W(4, 'viermal'), { x: X2 + 1592, y: 332 });
+stempel('lblStoss', W(5, 'Stoß'), { x: X2 + 1160, y: 668 });
+textAkteure('tb3'); textEin('tb3', Z(5) - .2, { unter: Z(5) + .1 }); textAus('tb3', ZE(5) + .3);
 
 /* ---------- 4 · Gekippt ---------- */
 pan2(ZE(5) + .4, 3); const X3 = S(3);
@@ -344,7 +344,7 @@ akteur('wand4', { x: X3 + 1560, y: 430, o: 0 }); tw('wand4', Z(6) + .4, .5, { o:
   for (let k = 0; k < 3; k++) {
     const t0 = W(6, 'gekippt') + i * .35 + k * 1.3;
     set(id, t0, { x: X3 + 1080 + i * 50, y: 470, s: .6 });
-    tw(id, t0, .3, { o: 1 }); tw(id, t0, 1.2, { y: 180 - i * 10, x: X3 + 1130 + (i - 1) * 30, s: 1 }, 'inout'); tw(id, t0 + .9, .3, { o: 0 });
+    tw(id, t0, .3, { o: 1 }); tw(id, t0, 1.2, { y: 235 - i * 10, x: X3 + 1130 + (i - 1) * 30, s: 1 }, 'inout'); tw(id, t0 + .9, .3, { o: 0 });
   }
 });
 ['m41', 'm42'].forEach((id, i) => {
@@ -369,7 +369,7 @@ ein('rahmen5', Z(8) + .25, { x: X4 + 1560, y: 400 });
 ein('fluegel5', Z(8) + .25, { x: X4 + 1560, y: 400 });
 ein('topf5', Z(8) + .4, { x: X4 + 1560, y: 650 });
 const tAuf5 = W(8, 'lüftest');
-tw('fluegel5', tAuf5, .6, { sx: .22 }, 'back'); cue(tAuf5, 'whoosh');
+tw('fluegel5', tAuf5, .6, { sx: .22 }, 'inout'); cue(tAuf5, 'whoosh');
 ['p51', 'p52', 'p53'].forEach((id, i) => dampf(id, tAuf5 + .1 + i * .25, 1.0, [X4 + 1150 + i * 30, 470], [X4 + 1540, 380], .6, .9));
 tw('nebel5', W(8, 'sofort') - .2, 1.0, { o: 0 }); cue(W(8, 'sofort'), 'ding');
 froh('mai5', W(8, 'sofort') + .2);
@@ -390,9 +390,10 @@ const sch6 = scheibe('knopf6');
     el.style.transform = `translate(${X5 + 1080 + i * 90}px,${390 - 70 * p}px) translate(-50%,-50%)`;
   });
 });
-ein('rahmen6', Z(9) + .4, { x: X5 + 1560, y: 600 });
-ein('fluegel6', Z(9) + .4, { x: X5 + 1560, y: 600 });
-tw('fluegel6', W(9, 'Lüften'), .6, { sx: .22 }, 'back'); cue(W(9, 'Lüften'), 'whoosh');
+ein('rahmen6', ZE(8) + .6, { x: X5 + 1560, y: 600 });
+ein('fluegel6', ZE(8) + .6, { x: X5 + 1560, y: 600 });
+const tAuf6 = Math.max(W(9, 'Lüften'), ZE(8) + 1.5);
+tw('fluegel6', tAuf6, .6, { sx: .22 }, 'inout'); cue(tAuf6, 'whoosh');
 stufe(sch6, W(9, 'herunter'), .7, 0); cue(W(9, 'herunter'), 'klick');
 tw('fluegel6', Z(10), .5, { sx: 1 }, 'inout'); cue(Z(10) + .4, 'klick');
 stufe(sch6, W(10, 'hoch'), .7, 3, 'back'); cue(W(10, 'hoch'), 'ding');
@@ -406,10 +407,10 @@ stufe(sch7, W(11, 'Stufe'), 1.0, 5); cue(W(11, 'Stufe'), 'tipp');
 stufe(sch7, W(11, 'Thermostat'), .7, 3, 'back'); cue(W(11, 'Thermostat'), 'klick');
 ['rohr7', 'kugel7'].forEach(id => ein(id, Z(11) + .2, { x: X6 + 1520, y: id === 'rohr7' ? 410 : 590 }));
 [['sk15', 500], ['sk20', 410], ['sk25', 320]].forEach(([id, y]) => { akteur(id, { x: X6 + 1600, y, o: 0 }); tw(id, Z(11) + .5, .4, { o: 1 }); });
-HOOKS.push(t => { $('#rohr7 i').style.height = (8 + 42 * E.out(clamp((t - W(11, 'etwa')) / 1.0))) + '%'; });
+HOOKS.push(t => { $('#rohr7 i').style.height = (8 + 46 * E.out(clamp((t - W(11, 'etwa')) / 1.0))) + '%'; });
 pop('lblGrad', W(11, '20'), { x: X6 + 1330, y: 230 });
-pop('lblWohn', W(12, 'Wohnzimmer'), { x: X6 + 1180, y: 690 });
-pop('lblKueche', W(12, 'Küche'), { x: X6 + 1500, y: 690 });
+pop('lblWohn', W(12, 'Wohnzimmer'), { x: X6 + 1180, y: 672 });
+pop('lblKueche', W(12, 'Küche'), { x: X6 + 1500, y: 672 });
 textAkteure('tb7'); textEin('tb7', Z(11)); textAus('tb7', ZE(12) + .3);
 
 /* ---------- 8 · Kein Raum ganz kalt ---------- */
@@ -440,22 +441,22 @@ cue(W(14, 'Wände'), 'tipp');
 });
 pop('lblWarm8', tWarm, { x: X7 + 1610, y: 300 }, 'ding');
 froh('mai8', tWarm + .1);
-textAkteure('tb8'); textEin('tb8', Z(13)); textAus('tb8', Z(15) + .05);
+textAkteure('tb8'); textEin('tb8', Z(13)); textAus('tb8', ZE(14) + .3);
 
 /* ---------- 9 · Möbel mit Abstand ---------- */
-pan2(Z(15) + .15, 8); const X8 = S(8);
+pan2(ZE(14) + .45, 8); const X8 = S(8);
 akteur('boden9', { x: X8 + 1290, y: 690, o: 0 }); tw('boden9', Z(15), .4, { o: 1 });
 akteur('wand9', { x: X8 + 1580, y: 440, o: 0, sy: .6 }); tw('wand9', Z(15), .5, { o: 1, sy: 1 }, 'back');
-akteur('lblWand9', { x: X8 + 1580, y: 170, o: 0 }); tw('lblWand9', Z(15) + .3, .4, { o: 1 });
+akteur('lblWand9', { x: X8 + 1580, y: 177, o: 0 }); tw('lblWand9', Z(15) + .3, .4, { o: 1 });
 ein('schrank9', Z(15) + .15, { x: X8 + 1410, y: 556 });
 const tRutsch = W(15, 'Stück');
 tw('schrank9', tRutsch, .8, { x: X8 + 1310 }, 'inout'); cue(tRutsch, 'kritzeln');
 tw('schrank9', tRutsch + .1, .12, { r: -2 }); tw('schrank9', tRutsch + .6, .3, { r: 0 }, 'back');
 akteur('luft9', { x: X8 + 1497, y: 440, o: 0 }); tw('luft9', Z(16), .4, { o: 1 }); cue(Z(16), 'whoosh');
 HOOKS.push(t => $('#luft9 path').style.strokeDashoffset = -t * 60);
-pop('lblLuft', W(16, 'Luft'), { x: X8 + 1400, y: 185 });
+pop('lblLuft', W(16, 'Luft'), { x: X8 + 1400, y: 202 });
 pop('haken9', ZE(16) - .1, { x: X8 + 1000, y: 260 }, 'ding');
-textAkteure('tb9'); textEin('tb9', Z(15)); textAus('tb9', ZE(16) + .3);
+textAkteure('tb9'); textEin('tb9', Z(15) + .25); textAus('tb9', ZE(16) + .3);
 
 /* ---------- 10 · Vermieter Bescheid sagen ---------- */
 pan2(ZE(16) + .4, 9); const X9 = S(9);
@@ -478,7 +479,7 @@ HOOKS.push(t => {
   $('#verm10 .figur').style.transform = `rotate(${n * .5}deg) translateY(${Math.max(0, n)}px)`;
 });
 froh('verm10', W(18, 'Vermieter') + .3); froh('mai10', ZE(18));
-pop('haken10', ZE(18) + .1, { x: X9 + 1665, y: 300 }, 'erfolg');
+pop('haken10', ZE(18) + .1, { x: X9 + 1560, y: 245 }, 'erfolg');
 textAkteure('tb10'); textEin('tb10', Z(17));
 
 /* ---------- Abspann ---------- */

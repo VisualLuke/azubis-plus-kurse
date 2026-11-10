@@ -66,7 +66,7 @@
   <div class="a tonne" id="t0b" style="width:170px;height:170px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
   <div class="a tonne" id="t0c" style="width:170px;height:170px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
   <div class="a tonne" id="t0d" style="width:170px;height:170px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
-  <div class="a chip brand gross" id="pflicht">Pflicht</div>
+  <div class="a chip brand gross" id="pflicht" data-dreht>Pflicht</div>
 
   <!-- 2 · Gelb: Verpackungen -->
   <div class="a buehne" id="bue1"></div>
@@ -90,7 +90,7 @@
   <div class="a" id="apfel" style="width:120px">{{apfelrest}}</div>
   <div class="a" id="banane" style="width:130px">{{banane}}</div>
   <div class="a" id="karotte" style="width:120px">{{karotte}}</div>
-  <div class="a chip gruen gross" id="bio">Biomüll</div>
+  <div class="a chip gruen gross" id="bio" data-dreht>Biomüll</div>
 
   <!-- 5 · Restmüll -->
   <div class="a buehne" id="bue4"></div>
@@ -115,9 +115,9 @@
   <div class="a buehne" id="bue6"></div>
   <div class="a tonne" id="tP" style="width:220px;height:220px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
   <div class="a kreuz" id="xP"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
-  <div class="a" id="wagen" style="width:260px">{{wagen}}</div>
+  <div class="a" id="wagen" data-gruppe="wagen" style="width:260px">{{wagen}}</div>
   <div class="a chip klein" id="lblWagen">Supermarkt</div>
-  <div class="a" id="flasche" style="width:150px">{{pfandflasche}}</div>
+  <div class="a" id="flasche" data-gruppe="wagen" style="width:150px">{{pfandflasche}}</div>
   <div class="a chip brand" id="lblPfand">Pfand</div>
 
   <!-- 8 · Batterien -->
@@ -129,11 +129,11 @@
 
   <!-- 9 · In jeder Stadt anders -->
   <div class="a buehne" id="bue8"></div>
-  <div class="a" id="plan" style="width:440px">{{stadtplan}}</div>
-  <div class="a tonne" id="m1" style="width:90px;height:90px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
-  <div class="a tonne" id="m2" style="width:90px;height:90px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
-  <div class="a tonne" id="m3" style="width:90px;height:90px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
-  <div class="a tonne" id="m4" style="width:90px;height:90px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
+  <div class="a" id="plan" data-gruppe="plan" style="width:440px">{{stadtplan}}</div>
+  <div class="a tonne" id="m1" data-gruppe="plan" style="width:90px;height:90px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
+  <div class="a tonne" id="m2" data-gruppe="plan" style="width:90px;height:90px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
+  <div class="a tonne" id="m3" data-gruppe="plan" style="width:90px;height:90px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
+  <div class="a tonne" id="m4" data-gruppe="plan" style="width:90px;height:90px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
   <div class="a portrait" id="vermieter" style="width:200px;height:200px"><div class="figur">
     <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
     <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
@@ -176,6 +176,7 @@
 <script src="../../werkzeug/motor.js"></script>
 <script src="../../werkzeug/sprache.js"></script>
 <script>
+// Sprache beginnt bei VERSATZ = 0.6 (werkzeug/sprache.js) – untertitel.mjs liest den Wert hier
 /* Sätze (sprechtext.json): 0–2 Pflicht · 3 Gelb · 4–5 Blau · 6–7 Braun · 8–9 Rest · 10–11 Glas · 12–13 Pfand · 14 Batterien · 15–16 Stadt · 17 Schluss */
 const MX = 1320, MY = 440;
 kamera.basis.y = 100;
@@ -199,10 +200,10 @@ const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(
 const ein = (id, t, basis, von = { y: 70 }) => {          // Auftritt mit Squash & Stretch
   akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
   tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
-  tw(id, t + .38, .1, { sy: .9, sx: 1.07 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+  tw(id, t + .38, .16, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .54, .4, { sy: 1, sx: 1 }, 'sinus');
 };
 const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
-const stauch = (id, t) => { tw(id, t, .1, { sy: .9, sx: 1.06 }, 'out'); tw(id, t + .1, .35, { sy: 1, sx: 1 }, 'back'); };
+const stauch = (id, t) => { tw(id, t, .16, { sy: .93, sx: 1.04 }, 'sinus'); tw(id, t + .16, .4, { sy: 1, sx: 1 }, 'sinus'); };
 const stempel = (id, t, basis) => {                         // schlägt mit Wackler auf
   akteur(id, { ...basis, s: 1.8, o: 0 }); tw(id, t, .22, { s: 1, o: 1 }, 'in'); cue(t + .2, 'plopp'); wackeln(id, t + .22, 3, 4);
 };
@@ -212,9 +213,9 @@ const zu = (id, t) => { tw(`#${id} .deckel`, t, .35, { r: 0 }, 'bounce'); cue(t 
 // Wurf im Bogen: x linear, y hoch und runter, wird kleiner und verschwindet im Ziel; gibt die Landezeit zurück
 function wirf(id, t, x1, y1, h = 180, d = .75, dreh = 10, bleibt = false) {
   const a = AKTEURE.get($('#' + id)), y0 = wert(a, 'y', t);
-  tw(id, t, d, { x: x1 }, 'lin');
-  tw(id, t, d / 2, { y: Math.min(y0, y1) - h, r: dreh }, 'out');
-  tw(id, t + d / 2, d / 2, { y: y1, r: 0 }, 'in');
+  tw(id, t, d, { x: x1 }, 'sinus');
+  tw(id, t, d / 2, { y: Math.min(y0, y1) - h, r: dreh }, 'sinus');
+  tw(id, t + d / 2, d / 2, { y: y1, r: 0 }, bleibt ? 'sinus' : 'in');
   tw(id, t + d * .55, d * .45, { s: bleibt ? .6 : .4 }, 'in');
   if (!bleibt) set(id, t + d, { o: 0 });
   cue(t, 'whoosh'); cue(t + d, 'plopp');
@@ -276,7 +277,7 @@ auf('tBr', W(6, 'Essensreste') - .35);
 [['apfel', 1010, 'Essensreste'], ['banane', 1150, 'Obst'], ['karotte', 1290, 'Gemüse']].forEach(([id, x, wort], i) => {
   ein(id, Z(6) + .15 + i * .15, { x: X3 + x, y: 600 });
   const t = W(6, wort) - .1;
-  tw(id, t - .3, .15, { y: 570, sy: 1.08, sx: .94 }, 'out'); tw(id, t - .15, .15, { y: 600, sy: .9, sx: 1.08 }, 'in');   // Anlauf-Hüpfer
+  tw(id, t - .36, .18, { y: 570, sy: 1.06, sx: .96 }, 'sinus'); tw(id, t - .18, .18, { y: 600, sy: .94, sx: 1.05 }, 'sinus');   // Anlauf-Hüpfer
   tw(id, t, .1, { sy: 1, sx: 1 }); wirf(id, t, X3 + 1560, 410, 200 - i * 40); stauch('tBr', t + .75);
 });
 zu('tBr', W(6, 'Gemüse') + .9);
@@ -285,17 +286,17 @@ textAkteure('tb4'); textEin('tb4', Z(6), { unter: W(6, 'Essensreste') }); textAu
 
 /* ---------- 5 · Restmüll ---------- */
 pan2(ZE(7) + .15, 4); const X4 = S(4);
-tonne('tGr', { x: X4 + 1380, y: 480, o: 0 }); ein('tGr', Z(8), { x: X4 + 1380, y: 480 }); cue(Z(8), 'pop');
-pop('lblGr', Z(8) + .3, { x: X4 + 1380, y: 665 });
+tonne('tGr', { x: X4 + 1270, y: 480, o: 0 }); ein('tGr', Z(8), { x: X4 + 1270, y: 480 }); cue(Z(8), 'pop');
+pop('lblGr', Z(8) + .3, { x: X4 + 1270, y: 665 });
 pop('scherben', Z(8) + .2, { x: X4 + 1040, y: 300 });
 pop('beutel', Z(8) + .35, { x: X4 + 1030, y: 540 });
 auf('tGr', W(8, 'Alles') - .3);
-wirf('scherben', W(8, 'Alles'), X4 + 1380, 430, 120); stauch('tGr', W(8, 'Alles') + .75);
+wirf('scherben', W(8, 'Alles'), X4 + 1270, 430, 120); stauch('tGr', W(8, 'Alles') + .75);
 const tR = Math.max(W(8, 'Restmüll'), W(8, 'Alles') + .45);
-wirf('beutel', tR, X4 + 1380, 430, 190); stauch('tGr', tR + .75); zu('tGr', tR + 1.0);
-wackeln('tGr', W(9, 'graue'), 3, 4);
-tonne('tS', { x: X4 + 1600, y: 480, o: 0 }); ein('tS', W(9, 'schwarze') - .1, { x: X4 + 1600, y: 480 }); cue(W(9, 'schwarze') - .1, 'pop');
-pop('lblS', W(9, 'schwarze') + .2, { x: X4 + 1600, y: 665 });
+wirf('beutel', tR, X4 + 1270, 430, 190); stauch('tGr', tR + .75); zu('tGr', tR + 1.0);
+for (let k = 0; k < 4; k++) tw('tGr', W(9, 'graue') + k * .15, .15, { r: k === 3 ? 0 : (k % 2 ? 2 : -2) }, 'sinus');
+tonne('tS', { x: X4 + 1530, y: 480, o: 0 }); ein('tS', W(9, 'schwarze') - .1, { x: X4 + 1530, y: 480 }); cue(W(9, 'schwarze') - .1, 'pop');
+pop('lblS', W(9, 'schwarze') + .2, { x: X4 + 1530, y: 665 });
 textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'Alles') }); textAus('tb5', ZE(9) + .05);
 
 /* ---------- 6 · Glas ---------- */
@@ -313,7 +314,7 @@ textAkteure('tb6'); textEin('tb6', Z(10), { unter: Z(11) }); textAus('tb6', ZE(1
 
 /* ---------- 7 · Pfand ---------- */
 pan2(ZE(11) + .15, 6); const X6 = S(6);
-tonne('tP', { x: X6 + 1020, y: 500, o: 0 }); ein('tP', Z(12), { x: X6 + 1020, y: 500 }); cue(Z(12), 'pop');
+tonne('tP', { x: X6 + 1070, y: 500, o: 0 }); ein('tP', Z(12), { x: X6 + 1070, y: 500 }); cue(Z(12), 'pop');
 ein('wagen', Z(12) + .2, { x: X6 + 1590, y: 520 }, { x: 80 });
 pop('lblWagen', Z(12) + .5, { x: X6 + 1590, y: 665 });
 akteur('flasche', { x: X6 + 1450, y: 470, o: 0 }); tw('flasche', Z(12) + .1, .3, { o: 1 });
@@ -321,7 +322,7 @@ tw('flasche', Z(12) + .2, Math.max(.6, W(12, 'nicht') - Z(12) - .2), { x: X6 + 1
 for (let k = 0; k < 4; k++) tw('flasche', Z(12) + .2 + k * .2, .2, { r: k % 2 ? -3 : 3 }, 'inout');
 tw('flasche', W(12, 'nicht'), .05, { r: 0 }); stauch('flasche', W(12, 'nicht'));
 pop('lblPfand', W(12, 'Pfand'), { x: X6 + 1300, y: 235 });
-pop('xP', W(12, 'nicht') + .1, { x: X6 + 1020, y: 335 }, 'plopp');
+pop('xP', W(12, 'nicht') + .1, { x: X6 + 1070, y: 345 }, 'plopp');
 tw('flasche', W(12, 'Müll'), .35, { sx: -1 }, 'inout'); cue(W(12, 'Müll'), 'whoosh');   // dreht um
 const tF = W(13, 'Supermarkt') - .3, lF = wirf('flasche', tF, X6 + 1600, 485, 110, .8, -8, true);
 tw('wagen', lF, .12, { y: 532, sx: 1.04 }, 'out'); tw('wagen', lF + .12, .4, { y: 520, sx: 1 }, 'back'); cue(lF + .1, 'muenze');
