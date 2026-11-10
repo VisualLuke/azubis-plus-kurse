@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Nach der Ausbildung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+.buehne{width:1040px;height:710px}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,31.5px) scale(.9)}
+
+/* Gesprächspartner: Sabine links, Amir rechts */
+.portrait{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+#sabine{left:55px;top:340px}
+#amir{left:auto;right:55px;top:340px}
+.mini{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:6px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.mini .ebene{position:absolute;left:0;top:7%;width:100%;height:100%}
+
+/* Text im Bild oben auf der Bühne */
+.ueber{width:900px;text-align:center}
+.ueber .titel{font:700 44px/54px Inter;letter-spacing:-.01em;color:var(--ink)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:84px;height:84px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:40px}
+.plakette.rot{background:var(--error)} .plakette.gruen{background:var(--success)}
+.plakette.klein{width:64px;height:64px} .plakette.klein svg{width:32px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.blasetext{padding:14px 26px;border-radius:24px 24px 24px 6px;background:var(--b500);color:var(--surface);font:800 30px/36px Inter;white-space:nowrap;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+/* 1 · Kalender mit zwölf Monaten */
+.kal{display:flex;gap:8px}
+.monat{width:56px;height:66px;border-radius:12px;background:var(--surface);box-shadow:0 2px 8px rgba(22,19,37,.08);position:relative;overflow:hidden}
+.monat::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:var(--b100)}
+.monat i{position:absolute;inset:0;background:linear-gradient(var(--b400),var(--b500));transform-origin:0 50%;transform:scaleX(0)}
+
+/* 2 · Zeitstrahl, Vertrag */
+.strahl{width:760px;height:20px;border-radius:999px;background:var(--b200);position:relative}
+.strahl .seg{position:absolute;right:0;top:0;bottom:0;width:50%;border-radius:999px;background:linear-gradient(90deg,var(--b400),var(--b500));transform-origin:100% 50%}
+.strahl .tick{position:absolute;top:-7px;width:4px;height:34px;border-radius:2px;background:var(--b300)}
+.strahl .jetzt{position:absolute;left:-10px;top:-11px;width:40px;height:40px;border-radius:999px;background:var(--b500);border:6px solid var(--surface);box-shadow:0 2px 8px rgba(22,19,37,.15)}
+.dokument{width:300px;padding:24px;border-radius:16px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:12px;border:4px solid transparent}
+.dokument b{font:700 24px/30px Inter;color:var(--b600)}
+.dokument .linie{height:8px;border-radius:4px;background:var(--n200)}
+.klausel{height:44px;border-radius:10px;background:var(--b50);border:3px solid var(--b400);padding:0 12px;font:800 22px/38px Inter;color:var(--ink);white-space:nowrap}
+.dokument .unterschrift{height:56px;position:relative;border-bottom:3px solid var(--n300)}
+.dokument .unterschrift svg{position:absolute;left:10px;bottom:4px;width:150px}
+.dokument.leer{background:transparent;box-shadow:none;border:4px dashed var(--n300)}
+.dokument.leer b{color:var(--n400)}
+.dokument.leer .linie{opacity:.35}
+.siegel{position:absolute;right:22px;bottom:22px;width:56px;height:56px;border-radius:999px;background:var(--b100);border:4px solid var(--b300)}
+
+/* 3 · Aufenthaltstitel */
+.atk{width:400px;height:252px;border-radius:22px;background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 10px 28px rgba(58,37,153,.3);overflow:hidden}
+.atk small{position:absolute;left:24px;top:20px;font:800 16px/20px Inter;letter-spacing:.1em;color:var(--b100)}
+.atk .foto{position:absolute;left:24px;top:56px;width:96px;height:120px;border-radius:10px;background:var(--b100);overflow:hidden}
+.atk .foto .bild{position:absolute;left:-22px;top:4px;width:140px;height:140px}
+.atk .chipk{position:absolute;left:142px;top:60px;width:50px;height:38px;border-radius:8px;background:linear-gradient(var(--warning-bg),var(--warning))}
+.atk .zl{position:absolute;left:24px;height:9px;border-radius:5px;background:var(--b300)}
+.atk .zweck{position:absolute;left:142px;top:112px;width:232px;padding:6px 14px;border-radius:12px;background:var(--b600);border:3px solid transparent}
+.atk .zweck span{display:block;font:600 14px/18px Inter;color:var(--b200);letter-spacing:.06em;text-transform:uppercase}
+.atk .zweck b{display:block;font:800 26px/32px Inter;color:var(--surface);white-space:nowrap}
+.atk .zweck.an{border-color:var(--b200)}
+.atk .zweck.neu{background:var(--success)}
+.atk .zweck.neu span{color:var(--success-bg)}
+.glanz{position:absolute;top:0;bottom:0;width:80px;left:-100px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-12deg)}
+.ablauf{width:300px;height:26px;border-radius:999px;background:var(--b100);overflow:hidden}
+.ablauf i{display:block;height:100%;width:100%;border-radius:999px;background:var(--warning);transform-origin:0 50%}
+
+/* 4 · Handy mit Jobanzeigen, Ring */
+.app{width:195px;height:351px;border-radius:16px;overflow:hidden;background:var(--bg);padding:14px 12px}
+.app small{display:block;font:800 14px/18px Inter;color:var(--b500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.app .fenster{position:absolute;left:12px;right:12px;top:42px;bottom:0;overflow:hidden}
+.app .liste{display:flex;flex-direction:column;gap:8px}
+.anz{height:80px;border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgba(22,19,37,.06);border:2px solid transparent;display:flex;align-items:center;gap:8px;padding:0 8px}
+.anz u{width:34px;height:34px;border-radius:8px;background:var(--b100);flex:none}
+.anz div{flex:1;display:flex;flex-direction:column;gap:6px}
+.anz i{height:7px;border-radius:4px;background:var(--n200)}
+.anz.treffer{border-color:var(--b500);background:var(--b50)}
+.anz.treffer u{background:var(--b500)}
+.ring text{font-family:Inter,sans-serif}
+
+/* 5 · Tage */
+.tag{width:190px;height:220px;border-radius:20px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.tag .kopf{height:48px;background:var(--b500);color:var(--surface);font:800 18px/48px Inter;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.tag .koerper{position:absolute;left:0;right:0;top:48px;bottom:0;display:flex;align-items:center;justify-content:center}
+.tag .mini{position:absolute;left:40px;top:64px;width:110px;height:110px;border-width:5px}
+.tag .werk{position:absolute;left:96px;top:124px;width:100px;transform-origin:23% 50%}
+.pfeil path{fill:none;stroke:var(--b500);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+
+/* 6 · Treppe */
+.stufe{width:250px;border-radius:18px 18px 6px 6px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 6px 20px rgba(58,37,153,.2);transform-origin:50% 100%;
+  color:var(--surface);font:800 23px/28px Inter;text-align:center;padding-top:16px}
+.stufe.hell{background:linear-gradient(var(--b200),var(--b300));color:var(--b700)}
+.stufe.an{box-shadow:0 0 0 6px var(--surface),0 6px 20px rgba(58,37,153,.3)}
+.jahr{width:62px;height:68px;border-radius:12px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.1);overflow:hidden;font:800 26px/1 Inter;color:var(--b600);text-align:center}
+.jahr::before{content:"";display:block;height:16px;background:var(--b500);margin-bottom:10px}
+
+/* 7 · Zettel mit drei Punkten, Licht */
+.liste7{width:430px;padding:24px 26px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:14px}
+.punkt7{display:flex;align-items:center;gap:18px;height:66px}
+.punkt7 .ic{width:66px;height:66px;flex:none;border-radius:16px;background:var(--b50)}
+.punkt7 .txt{flex:1;font:700 28px/34px Inter;color:var(--ink)}
+.punkt7 .kasten{width:52px;height:52px;flex:none;border-radius:14px;border:4px solid var(--b200);background:var(--surface);position:relative}
+.punkt7 .kasten svg{position:absolute;left:-4px;top:-4px;width:52px;height:52px}
+#lampe7{position:absolute;left:420px;top:0;width:200px;transform-origin:50% 0}
+#kegel7{position:absolute;left:220px;top:124px;width:600px;height:586px;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);
+  background:linear-gradient(var(--warning-bg),transparent 85%);opacity:.55}
+#birne7{position:absolute;left:480px;top:96px;width:80px;height:80px;border-radius:999px;background:radial-gradient(var(--warning-bg),transparent 70%)}
+#dunkel7{position:absolute;width:1040px;height:710px;border-radius:48px;background:var(--b700);opacity:0;pointer-events:none}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Werkstatt: in einem Jahr fertig – und dann? -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a ueber" id="u1"><div class="titel">Nach der Ausbildung – und dann?</div></div>
+  <div class="a" id="bank1" style="width:300px" data-gruppe="bank1">{{werkbank}}</div>
+  <div class="a" id="reifen1" style="width:180px">{{reifen}}</div>
+  <div class="a kal" id="kal1" data-gruppe="kal1"></div>
+  <div class="a" id="flagge1" style="width:130px" data-gruppe="kal1">{{flagge}}</div>
+  <div class="a mini" id="mark1" style="width:92px;height:92px;border-width:5px" data-gruppe="kal1"><div class="ebene">{{figur-amir}}</div></div>
+  <div class="a frage" id="frage1">?</div>
+  <div class="a chip brand klein" id="chipJetzt1">jetzt</div>
+
+  <!-- 2 · Übernahme -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a ueber" id="u2"><div class="titel">Übernahme: früh ansprechen</div></div>
+  <div class="a" id="betrieb2" style="width:320px">{{betrieb}}</div>
+  <div class="a mini" id="am2" style="width:140px;height:140px"><div class="ebene">{{figur-amir}}</div></div>
+  <div class="a plakette gruen" id="ok2" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a strahl" id="strahl2" data-gruppe="strahl2"><div class="seg" id="seg2"></div><div class="jetzt"></div></div>
+  <div class="a" id="flagge2" style="width:120px" data-gruppe="strahl2">{{flagge~2}}</div>
+  <div class="a mini" id="mark2" style="width:92px;height:92px;border-width:5px" data-gruppe="strahl2"><div class="ebene">{{figur-amir}}</div></div>
+  <div class="a blasetext" id="blase2">Übernahme?</div>
+  <div class="a chip brand klein" id="chip6M">6 Monate vorher</div>
+  <div class="a mini" id="sab2b" style="width:150px;height:150px"><div class="ebene">{{figur-sabine}}</div></div>
+  <div class="a mini" id="am2b" style="width:150px;height:150px"><div class="ebene">{{figur-amir}}</div></div>
+  <div class="a" id="vertrag2" style="width:240px">{{vertrag}}</div>
+  <div class="a" id="stift2" style="width:90px" data-frei>{{stift}}</div>
+  <div class="a plakette gruen klein" id="ok2b" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 3 · Visum: aus Ausbildung wird Fachkraft -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a ueber" id="u3"><div class="titel">Mit Job: Aufenthalt als Fachkraft</div></div>
+  <div class="a atk" id="atk3"><small>AUFENTHALTSTITEL</small>
+    <div class="foto"><div class="bild">{{figur-amir}}</div></div>
+    <div class="chipk"></div><div class="zl" style="top:196px;width:210px"></div><div class="zl" style="top:214px;width:150px;opacity:.6"></div>
+    <div class="zweck" id="zweck3"><span>Zweck</span><b id="zweckT3">Ausbildung</b></div>
+    <div class="glanz" id="glanz3"></div></div>
+  <div class="a dokument" id="doku3"><b>Arbeitsvertrag</b><div class="linie"></div><div class="linie" style="width:80%"></div>
+    <div class="klausel">Fachkraft</div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div></div>
+  <div class="a" id="amt3" style="width:250px">{{rathaus}}</div>
+  <div class="a chip brand klein" id="chipAmt3">Ausländerbehörde</div>
+  <div class="a" id="antrag3" style="width:130px" data-frei>{{vertrag~3}}</div>
+  <div class="a ablauf" id="ablauf3"><i id="ablaufI3"></i></div>
+  <div class="a chip gelb klein" id="chipAblauf3">Titel läuft ab</div>
+  <div class="a plakette gruen" id="ok3" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 4 · Ohne Job: Zeit zur Jobsuche -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a ueber" id="u4"><div class="titel">Ohne Job: Zeit zur Jobsuche möglich</div></div>
+  <div class="a" id="betrieb4" style="width:320px">{{betrieb~4}}</div>
+  <div class="a plakette rot" id="x4" data-frei><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a frage" id="frage4">?</div>
+  <div class="a dokument" id="zeugnis4" style="width:330px;padding-bottom:70px"><b>Abschluss</b><div class="linie" style="width:60%"></div><div class="linie"></div><div class="linie" style="width:85%"></div><div class="linie" style="width:70%"></div><div class="linie" style="width:90%"></div><div class="siegel"></div></div>
+  <div class="a plakette gruen" id="ok4a" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a atk" id="atk4"><small>AUFENTHALTSTITEL</small>
+    <div class="foto"><div class="bild">{{figur-amir}}</div></div>
+    <div class="chipk"></div><div class="zl" style="top:196px;width:210px"></div><div class="zl" style="top:214px;width:150px;opacity:.6"></div>
+    <div class="zweck neu"><span>Zweck</span><b>Jobsuche</b></div>
+    <div class="glanz" id="glanz4"></div></div>
+  <div class="a" id="handy4" style="width:520px" data-gruppe="handy4">{{handy}}</div>
+  <div class="a app" id="app4" data-gruppe="handy4"><small>Jobs</small><div class="fenster"><div class="liste" id="liste4"></div></div></div>
+  <div class="a" id="lupe4" style="width:150px" data-frei>{{lupe}}</div>
+  <svg class="a ring" id="ring4" viewBox="0 0 260 260" style="width:260px">
+    <circle cx="130" cy="130" r="108" fill="var(--surface)" stroke="var(--b100)" stroke-width="18"/>
+    <path class="zeichnen" pathLength="1" d="M130 22a108 108 0 1 1 -0.1 0" fill="none" stroke="var(--b500)" stroke-width="18" stroke-linecap="round"/>
+    <text id="zahl4" x="130" y="140" text-anchor="middle" font-weight="800" font-size="72" fill="var(--ink)">0</text>
+    <text x="130" y="178" text-anchor="middle" font-weight="700" font-size="24" fill="var(--n500)">Monate</text></svg>
+  <div class="a chip brand klein" id="chip18">bis zu 18 Monate</div>
+  <div class="a" id="amt4" style="width:250px">{{rathaus~4}}</div>
+  <div class="a chip brand klein" id="chipAmt4">Ausländerbehörde</div>
+  <div class="a frage" id="frage4b">?</div>
+  <div class="a" id="haken4" style="width:120px">{{haken}}</div>
+  <div class="a chip gruen klein" id="chipRecht4">rechtzeitig fragen</div>
+
+  <!-- 5 · Einfach weiterarbeiten – besser schriftlich -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a ueber" id="u5"><div class="titel">Besser: schriftlicher Vertrag</div></div>
+  <div class="a tag" id="tag5a"><div class="kopf">Prüfung</div><div class="koerper"><div class="plakette gruen" id="ok5a"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div></div>
+  <div class="a tag" id="tag5b"><div class="kopf">Tag danach</div><div class="mini"><div class="ebene">{{figur-amir}}</div></div><div class="werk" id="werk5">{{schraubenschluessel~5}}</div></div>
+  <div class="a dokument leer" id="doku5"><b>Arbeitsvertrag</b><div class="linie"></div><div class="linie" style="width:80%"></div><div class="linie" style="width:90%"></div><div class="linie" style="width:60%"></div>
+    <div class="unterschrift"><svg viewBox="0 0 150 50"><path id="sig5" pathLength="1" d="M6 38c10-22 18-26 20-12s6 16 14 0 12-12 16-2 8 8 16-4 10-8 14 2 8 6 18-6 14-6 24 0" stroke="var(--b500)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
+  <div class="a frage" id="frage5" data-frei>?</div>
+  <div class="a chip brand klein" id="chipUnbef5">unbefristet</div>
+  <div class="a" id="stift5" style="width:90px" data-frei>{{stift~5}}</div>
+  <div class="a plakette gruen" id="ok5b" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a chip gruen klein" id="chipSchrift5">schriftlich</div>
+  <div class="a atk" id="atk5"><small>AUFENTHALTSTITEL</small>
+    <div class="foto"><div class="bild">{{figur-amir}}</div></div>
+    <div class="chipk"></div><div class="zl" style="top:196px;width:210px"></div><div class="zl" style="top:214px;width:150px;opacity:.6"></div>
+    <div class="zweck neu"><span>Zweck</span><b>Fachkraft</b></div>
+    <div class="glanz" id="glanz5"></div></div>
+  <svg class="a pfeil" id="pfeil5" viewBox="0 0 190 40" style="width:190px"><path class="zeichnen" pathLength="1" d="M8 20h168"/><path id="spitze5" d="M160 6l16 14-16 14"/></svg>
+  <div class="a chip gelb klein" id="chipVorher5">vorher</div>
+  <div class="a plakette gruen klein" id="ok5c" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 6 · Weiterbildung: Treppe -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a ueber" id="u6"><div class="titel" style="font-size:40px">Weiterbildung: Meister · Techniker · Fachwirt</div></div>
+  <div class="a stufe" id="stufe1" style="height:130px" data-gruppe="treppe">Geselle</div>
+  <div class="a stufe" id="stufe2" style="height:270px" data-gruppe="treppe">Meister /<br>Techniker</div>
+  <div class="a stufe hell" id="stufe3" style="height:410px" data-gruppe="treppe">eigener<br>Betrieb?</div>
+  <div class="a mini" id="am6" style="width:110px;height:110px;border-width:5px"><div class="ebene">{{figur-amir}}</div></div>
+  <div class="a" id="stapel6" style="width:150px">{{muenzstapel}}</div>
+  <div class="a" id="m6a" style="width:64px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m6b" style="width:64px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="m6c" style="width:64px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a chip brand klein" id="chipBafoeg6">Aufstiegs-BAföG</div>
+  <div class="a jahr" id="j6a">1</div><div class="a jahr" id="j6b">2</div><div class="a jahr" id="j6c">3</div>
+
+  <!-- 7 · Werkstatt: drei Punkte, Licht aus -->
+  <div class="a buehne" id="bue6"><div id="kegel7"></div><div id="lampe7">{{haengelampe}}</div><div id="birne7"></div></div>
+  <div class="a" id="bank7" style="width:300px" data-gruppe="bank7">{{werkbank~7}}</div>
+  <div class="a liste7" id="liste7"></div>
+  <div class="a" id="stift7" style="width:100px" data-frei>{{stift~7}}</div>
+  <div class="a" id="heft7" style="width:150px" data-gruppe="bank7">{{heft}}</div>
+  <div class="a chip brand klein" id="chipPruef7">Prüfung</div>
+  <div class="a plakette gruen klein" id="ok7" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div id="dunkel7"></div>
+</div></div>
+
+<div class="portrait" id="sabine"><div class="figur">
+  <div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+<div class="portrait" id="amir"><div class="figur">
+  <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Früh planen. Dann läuft's.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Plane früh, was nach der Ausbildung kommt:<br>Job, Aufenthalt und Weiterbildung.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.8;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const N_SAETZE = SPRACHDATEN.saetze.length;
+const ENDE_SPRACHE = SE(N_SAETZE);
+const MX = 1280, MY = 505;
+for (let i = 0; i < 7; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+// Stempel-Aufschlag: groß und durchsichtig → schlägt auf, Wackler
+const schlag = (id, t, basis, snd = 'plopp') => {
+  akteur(id, { ...basis, o: 0, s: 1.7 });
+  tw(id, t - .16, .16, { o: 1, s: basis.s ?? 1 }, 'in'); cue(t, snd); wackeln(id, t + .02, 3, 3);
+};
+// Karte dreht sich um (waagrecht): zu, Inhalt wechseln, auf
+const drehen = (id, t, d = .5) => { tw(id, t, d / 2, { sx: 0 }, 'in'); tw(id, t + d / 2, d / 2, { sx: 1 }, 'out'); cue(t, 'whoosh'); };
+const glanz = (id, t) => HOOKS.push(u => { const d = (u - t) / .8; $('#' + id).style.left = d > 0 && d < 1 ? -100 + E.inout(d) * 600 + 'px' : '-100px'; });
+// Text im Bild: oben auf der Bühne, links oben verankert (zweizeilig wächst nach unten)
+const ueber = (id, X, zeiten, t0) => { titelEin(id, t0 ?? zeiten[0], zeiten); akteur(id, { x: X + 830, y: 212 }, true); };
+const ueberAus = (id, t) => tw(id, t, .3, { o: 0, y: 190 }, 'in');
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const HAKEN_SVG = '<path class="zeichnen" pathLength="1" d="M14 27l8 8 16-17" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Heranfahren, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `translate(-288px,31.5px) scale(${(.9 * z).toFixed(5)})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < 7; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Gesprächspartner: wer spricht, kommt exakt aus sprache.json ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher, nr: s.nr }));
+// Hervorhebung: aufeinanderfolgende Sätze desselben Sprechers als ein Block (kein Pumpen in Satzpausen)
+const BLOECKE = [];
+for (const s of SAETZE) { const l = BLOECKE.at(-1); if (l && l.w === s.w) l.b = s.b; else BLOECKE.push({ a: s.a, b: s.b, w: s.w }); }
+const froehlich = (von, bis) => [SA(von) - .1, SE(bis) + .3];
+const LACHEN = ENDE_SPRACHE + .05;
+const FROH = { Amir: [froehlich(3, 3), froehlich(20, 20), froehlich(25, 25), [LACHEN, 999]], Sabine: [froehlich(24, 24), [LACHEN, 999]] };
+akteur('sabine', { o: 0, y: 60, s: .9 }, true); akteur('amir', { o: 0, y: 60, s: .9 }, true);
+tw('sabine', 0, .7, { o: 1, y: 0 }, 'back'); tw('amir', .12, .7, { o: 1, y: 0 }, 'back');
+const PERSONEN = [['sabine', 'Sabine', 3, .13], ['amir', 'Amir', -3, .61]];
+HOOKS.push(t => {
+  const satzJetzt = SAETZE.find(s => t >= s.a && t <= s.b), wer = satzJetzt && satzJetzt.w;
+  const block = BLOECKE.find(z => t >= z.a - .2 && t <= z.b + .25), redet = block && block.w;
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : (wer ? .6 + .4 * Math.sin(t * 9) : 0);
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const p = document.getElementById(id), aktiv = wer === w;
+    const k = BLOECKE.filter(z => z.w === w).reduce((m, z) => Math.max(m, clamp(Math.min((t - z.a + .2) / .2, (z.b + .25 - t) / .25))), 0);
+    // Lachen am Ende: beide hüpfen ein paar Mal, klingt ab
+    const l = t - LACHEN, lach = l > 0 ? Math.abs(Math.sin(l * 9 + phase)) * 12 * Math.exp(-l * 1.1) : 0;
+    if (t >= .85) { p.style.transform = `scale(${.9 + .1 * k}) translateY(${-6 * k - lach}px)`; p.style.filter = `saturate(${.7 + .3 * k})`; }
+    p.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    // Zuhörer nickt ab und zu, Sprecher bewegt den Kopf mit der Stimme
+    const hoert = redet && redet !== w;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : (hoert ? 1.4 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0);
+    p.querySelector('.figur').style.transform = `rotate(${neig + nick}deg) translateY(${hoert ? 2.5 * Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0}px)`;
+    // Mund nur im eigenen Satz (Satzgrenzen aus sprache.json), kein Nachlauf
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    const froh = !aktiv && FROH[w].some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || froh ? 0 : 1;
+  }
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const z = (t * .27 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  });
+});
+
+/* ---------- 1 · Werkstatt: in einem Jahr fertig ---------- */
+const X0 = S(0);
+ueber('u1', X0, [W('Was', 2) - .1, W('Was', 2), W('Was', 2) + .1, W('dann', 2) - .1, W('dann', 2) + .05, W('dann', 2) + .2]);
+ein('bank1', A(-.7), { x: X0 + 1000, y: 682 }, { y: 50 });
+ein('reifen1', A(-.45), { x: X0 + 1600, y: 700 }, { x: 90 }); cue(A(-.5), 'plopp');
+// Reifen rollt kurz an und bleibt stehen
+HOOKS.push(t => { const d = t - A(-.45); if (d > 0 && d < 1.2) $('#reifen1').style.transform += ` rotate(${-(1 - E.out(clamp(d / 1.1))) * 90}deg)`; });
+$('#kal1').innerHTML = Array.from({ length: 12 }, (_, i) => `<div class="monat"><i id="mo${i}"></i></div>`).join('');
+const KX0 = X0 + 1225 - 380, KZ = i => KX0 + 28 + i * 64, KY1 = 490;
+ein('kal1', W('in', 1) - .3, { x: X0 + 1225, y: KY1 }, { y: 60 }, 'whoosh');
+pop('flagge1', W('Jahr', 1) - .1, { x: X0 + 1652, y: 462 });
+pop('mark1', W('in', 1), { x: KZ(0), y: KY1 - 84 });
+// Marker läuft über die zwölf Monate bis zur Flagge
+const M0 = W('einem', 1), M1 = W('fertig', 1) + .1;
+tw('mark1', M0, M1 - M0, { x: KZ(11) }, 'inout'); cue(M0, 'scan');
+HOOKS.push(t => {
+  const mx = wertBei('mark1', 'x', t);
+  for (let i = 0; i < 12; i++) $('#mo' + i).style.transform = `scaleX(${clamp((mx - KZ(i) + 32) / 32).toFixed(3)})`;
+});
+tw('mark1', M1, .08, { sy: .92, sx: 1.05 }, 'sinus'); tw('mark1', M1 + .08, .3, { sy: 1, sx: 1 }, 'sanft');
+wackeln('flagge1', M1 + .05, 3, 3); cue(M1 + .05, 'ding'); akzent(W('fertig', 1), .04);
+// Was passiert dann? – Fragezeichen hinter der Flagge
+pop('frage1', W('passiert', 2) - .1, { x: X0 + 1680, y: 322 });
+wackeln('frage1', W('eigentlich', 2), 3, 4); bump('frage1', W('mir', 2), 1.12); akzent(W('mir', 2), .04);
+schweben('frage1', 4);
+// Gut, dass du sie jetzt schon stellst: der Marker springt zurück an den Anfang
+flug('mark1', W('jetzt', 3) - .6, .85, KZ(0), KY1 - 84, 70); cue(W('jetzt', 3) - .6, 'whoosh');
+pop('chipJetzt1', W('jetzt', 3), { x: KZ(0) + 22, y: KY1 + 84 });
+huepfen('mark1', W('stellst', 3), 12);
+ueberAus('u1', SE(3) + .1);
+
+/* ---------- 2 · Übernahme: früh ansprechen ---------- */
+pan2(SE(3) + .2, 1); const X1 = S(1);
+ueber('u2', X1, [W('übernehmen', 4) - .1, W('früh', 5) - .1, W('früh', 5) + .1]);
+// Viele Betriebe übernehmen ihre Azubis: Betrieb landet, Amir springt vor die Tür
+akteur('betrieb2', { x: X1 + 1340, y: 300, o: 0, s: .8 });
+tw('betrieb2', W('Viele', 4) - .3, .15, { o: 1 }); tw('betrieb2', W('Viele', 4) - .3, .5, { y: 530, s: 1 }, 'in');
+tw('betrieb2', W('Viele', 4) + .2, .1, { sy: .9, sx: 1.06 }, 'sinus'); tw('betrieb2', W('Viele', 4) + .3, .4, { sy: 1, sx: 1 }, 'sanft'); cue(W('Viele', 4) + .2, 'plopp');
+ein('am2', W('Betriebe', 4), { x: X1 + 950, y: 620 }, { x: -80 });
+flug('am2', W('übernehmen', 4), .7, X1 + 1150, 640, 110); cue(W('übernehmen', 4), 'whoosh');
+bump('betrieb2', W('übernehmen', 4) + .7, 1.06);
+pop('ok2', W('Azubis', 4), { x: X1 + 1510, y: 390 }, 'erfolg'); akzent(W('Azubis', 4), .04);
+aus(['betrieb2', 'am2', 'ok2'], W('Sprich', 5) - .35, .3);
+// Sprich früh mit uns: Zeitstrahl bis zum Ende, Marker mit Sprechblase
+const SX0 = X1 + 1230 - 380, SY2 = 580;
+$('#strahl2').insertAdjacentHTML('beforeend', Array.from({ length: 11 }, (_, i) => `<div class="tick" style="left:${((i + 1) * 760 / 12 - 2).toFixed(1)}px"></div>`).join(''));
+ein('strahl2', W('Sprich', 5) - .1, { x: X1 + 1230, y: SY2 }, { y: 50 }, 'whoosh');
+akteur('seg2', { sx: 0 }, true);
+pop('flagge2', W('Sprich', 5) + .1, { x: X1 + 1648, y: SY2 - 50 });
+pop('mark2', W('früh', 5), { x: SX0 + 10, y: SY2 - 72 });
+pop('blase2', W('darüber', 5) - .15, { x: SX0 + 110, y: SY2 - 150 }); wackeln('blase2', W('darüber', 5) + .3, 3, 2);
+// ungefähr sechs Monate vor dem Ende: der Abschnitt zieht sich auf, Marker und Blase rücken hinein
+const U2 = W('ungefähr', 5);
+tw('mark2', U2, .9, { x: SX0 + 380 }, 'inout'); tw('blase2', U2, .9, { x: SX0 + 480 }, 'inout'); cue(U2, 'whoosh');
+tw('seg2', W('sechs', 5) - .05, .8, { sx: 1 }, 'inout'); cue(W('sechs', 5), 'scan');
+pop('chip6M', W('Monate', 5), { x: SX0 + 570, y: SY2 + 80 }); akzent(W('sechs', 5) + .2, .04);
+wackeln('flagge2', W('Ende', 5), 3, 3); cue(W('Ende', 5), 'ding');
+// Dann können beide Seiten planen: Sabine und Amir rücken zusammen, der neue Vertrag wird unterschrieben
+aus(['strahl2', 'flagge2', 'mark2', 'blase2', 'chip6M'], W('Dann', 6) - .35, .3);
+ein('sab2b', W('Dann', 6) - .05, { x: X1 + 1010, y: 580 }, { x: -90 }, 'whoosh');
+ein('am2b', W('Dann', 6) + .05, { x: X1 + 1550, y: 580 }, { x: 90 });
+huepfen('sab2b', W('beide', 6), 14); huepfen('am2b', W('beide', 6) + .12, 14);
+ein('vertrag2', W('beide', 6) + .1, { x: X1 + 1280, y: 560 }, { y: 80 }, 'plopp');
+akteur(document.querySelector('#vertrag2 svg'), { draw: 0 }, true);
+tw(document.querySelector('#vertrag2 svg'), W('planen', 6), .6, { draw: 1 }, 'inout'); cue(W('planen', 6), 'kritzeln');
+// Stiftspitze (links unten im Motiv) folgt der Unterschriftszeile
+akteur('stift2', { x: X1 + 1330, y: 540, o: 0 });
+tw('stift2', W('Seiten', 6) - .1, .2, { o: 1 }); tw('stift2', W('Seiten', 6) - .1, .4, { x: X1 + 1279, y: 574 }, 'inout');
+tw('stift2', W('planen', 6), .6, { x: X1 + 1336, y: 570 }, 'inout'); tw('stift2', W('planen', 6) + .65, .3, { o: 0, x: X1 + 1400, y: 530 }, 'in');
+pop('ok2b', W('planen', 6) + .7, { x: X1 + 1280, y: 420 }, 'erfolg'); akzent(W('planen', 6) + .7, .04);
+ueberAus('u2', SE(6) + .1);
+
+/* ---------- 3 · Visum: aus „Ausbildung“ wird „Fachkraft“ ---------- */
+pan2(SE(6) + .2, 2); const X2 = S(2);
+ueber('u3', X2, [W('Job', 10) - .1, W('Job', 10) + .05, W('Aufenthaltserlaubnis', 10), W('Arbeiten', 10) - .3, W('Arbeiten', 10) - .15]);
+akteur('atk3', { x: X2 + 1620, y: 340, o: 0, s: .5, r: 3 });
+const K3 = W('Visum', 7) - .45;
+tw('atk3', K3, .2, { o: 1 }); tw('atk3', K3, .9, { x: X2 + 1280, y: 530, s: 1.12 }, 'inout', { bogen: 90 }); tw('atk3', K3, .9, { r: 0 }, 'sinus');
+tw('atk3', K3 + .9, .1, { sy: .93, sx: 1.04 }, 'sinus'); tw('atk3', K3 + 1.0, .4, { sy: 1, sx: 1 }, 'sanft');
+cue(K3, 'whoosh'); cue(K3 + .9, 'plopp'); akzent(W('Visum', 7) + .3);
+glanz('glanz3', K3 + 1.1);
+// Das gilt doch für die Ausbildung: Zweck-Feld leuchtet
+HOOKS.push(t => $('#zweck3').classList.toggle('an', t >= W('Ausbildung', 8) - .1 && t < W('Genau', 9) + .6));
+bump('atk3', W('Ausbildung', 8), 1.05);
+tw('atk3', W('Genau', 9), .45, { y: 530 }, 'sinus', { bogen: 16 }); cue(W('Genau', 9), 'pop');
+// Job als Fachkraft: Vertrag gleitet dazu
+tw('atk3', W('Job', 10) - .3, .7, { x: X2 + 1050, s: 1.02 }, 'inout');
+ein('doku3', W('Fachkraft', 10) - .35, { x: X2 + 1560, y: 560 }, { x: 90 }, 'whoosh');
+bump('doku3', WE('Fachkraft', 10), 1.05);
+// neue Aufenthaltserlaubnis zum Arbeiten: die Karte dreht sich um
+const F3 = W('Aufenthaltserlaubnis', 10) + .1;
+drehen('atk3', F3, .5);
+HOOKS.push(t => { const neu = t >= F3 + .25; $('#zweckT3').textContent = neu ? 'Fachkraft' : 'Ausbildung'; $('#zweck3').classList.toggle('neu', neu); });
+glanz('glanz3', W('Arbeiten', 10));
+cue(F3 + .5, 'ding'); akzent(F3 + .4, .045);
+flug('doku3', W('beantragen', 10), .6, X2 + 1560, 560, 20, { r: -2 }); tw('doku3', W('beantragen', 10) + .6, .4, { r: 0 }, 'sanft');
+// Stell den Antrag, bevor dein jetziger Titel abläuft
+aus('doku3', W('Stell', 11) - .3, .3);
+tw('atk3', W('Stell', 11) - .2, .7, { x: X2 + 1560, y: 460, s: .62 }, 'inout');
+ein('ablauf3', W('Stell', 11), { x: X2 + 1560, y: 600 }, { y: 40 });
+pop('chipAblauf3', W('Stell', 11) + .2, { x: X2 + 1560, y: 670 }, null);
+akteur('ablaufI3', { sx: 1 }, true); tw('ablaufI3', W('Stell', 11) + .2, SE(11) + .8 - W('Stell', 11), { sx: .22 }, 'lin');
+ein('amt3', W('den', 11) - .1, { x: X2 + 1000, y: 500 }, { x: -90 }, 'whoosh');
+pop('chipAmt3', W('Antrag', 11) - .2, { x: X2 + 1000, y: 680 }, null);
+pop('antrag3', W('Antrag', 11) - .05, { x: X2 + 1290, y: 470, r: 2 });
+flug('antrag3', W('bevor', 11), .75, X2 + 1000, 470, 110, { s: .4, r: 0 }); tw('antrag3', W('bevor', 11) + .65, .12, { o: 0 }); cue(W('bevor', 11), 'whoosh');
+bump('amt3', W('bevor', 11) + .75, 1.06); cue(W('bevor', 11) + .75, 'plopp');
+pop('ok3', W('Titel', 11) - .1, { x: X2 + 1150, y: 360 }, 'erfolg'); akzent(W('Titel', 11), .04);
+wackeln('chipAblauf3', W('abläuft', 11), 3, 2);
+ueberAus('u3', SE(11) + .1);
+
+/* ---------- 4 · Ohne Job: Zeit zur Jobsuche ---------- */
+pan2(SE(11) + .2, 3); const X3 = S(3);
+ueber('u4', X3, [W('nicht', 12) - .1, W('nicht', 12) + .05, W('Job', 13) - .2, W('Job', 13) - .05, W('suchen', 13) - .2, W('achtzehn', 14)]);
+ein('betrieb4', W('Und', 12) - .1, { x: X3 + 1250, y: 540 }, { y: 80 }, 'whoosh');
+schlag('x4', W('nicht', 12) + .1, { x: X3 + 1380, y: 470 }); akzent(W('nicht', 12) + .1, .045);
+pop('frage4', W('werde', 12), { x: X3 + 1530, y: 400 }); wackeln('frage4', W('werde', 12) + .4, 3, 4);
+aus(['betrieb4', 'x4', 'frage4'], W('Dann', 13) - .3, .3);
+// nach dem erfolgreichen Abschluss: Zeugnis mit Haken
+ein('zeugnis4', W('erfolgreichen', 13) - .35, { x: X3 + 1030, y: 560 }, { y: 90, r: -3 }, 'whoosh');
+schlag('ok4a', W('Abschluss', 13) + .1, { x: X3 + 1130, y: 450 }); akzent(W('Abschluss', 13), .04);
+// eine Aufenthaltserlaubnis bekommen: Karte „Jobsuche“ fliegt herein
+akteur('atk4', { x: X3 + 1640, y: 330, o: 0, s: .4, r: 3 });
+const K4 = W('Aufenthaltserlaubnis', 13) - .4;
+tw('atk4', K4, .2, { o: 1 }); tw('atk4', K4, .9, { x: X3 + 1500, y: 540, s: .82 }, 'inout', { bogen: 80 }); tw('atk4', K4, .9, { r: 0 }, 'sinus');
+tw('atk4', K4 + .9, .1, { sy: .93, sx: 1.04 }, 'sinus'); tw('atk4', K4 + 1.0, .4, { sy: 1, sx: 1 }, 'sanft'); cue(K4, 'whoosh'); cue(K4 + .9, 'plopp');
+glanz('glanz4', W('bekommen', 13) + .2);
+// um in Deutschland einen Job zu suchen: Handy mit Jobanzeigen, Lupe fährt darüber
+aus(['zeugnis4', 'ok4a'], W('Deutschland', 13) - .3, .3);
+tw('atk4', W('Deutschland', 13) - .3, .6, { o: 0, x: X3 + 1600, s: .6 }, 'in');
+{
+  const leer = w => `<div class="anz"><u></u><div><i style="width:${w}%"></i><i style="width:${w - 25}%"></i></div></div>`;
+  $('#liste4').innerHTML = [leer(90), leer(75), leer(85), leer(70), leer(92), '<div class="anz" id="treffer4">' + leer(80).slice(17), leer(65), leer(88)].join('');
+}
+const H4 = W('Deutschland', 13) - .1;
+['handy4', 'app4'].forEach(id => { akteur(id, { x: X3 + 1060, y: 780, o: 0 }); tw(id, H4, .3, { o: 1 }); tw(id, H4, .8, { y: 540 }, 'sanft'); }); cue(H4, 'whoosh');
+const SC0 = W('Job', 13), SC1 = W('Die', 14) + .2, ZIEL4 = 5 * 88 + 40 - 150;
+HOOKS.push(t => {
+  const p = E.inout(clamp((t - SC0) / (SC1 - SC0)));
+  $('#liste4').style.transform = `translateY(${-(p * ZIEL4)}px)`;
+  $('#treffer4').classList.toggle('treffer', t >= SC1);
+});
+cue(SC0, 'scan'); cue(SC1, 'ding');
+akteur('lupe4', { x: X3 + 1300, y: 780, o: 0, s: .7 });
+tw('lupe4', W('Job', 13) - .3, .6, { x: X3 + 1110, y: 470, o: 1, s: 1 }, 'inout', { bogen: 60 });
+tw('lupe4', W('suchen', 13), .5, { y: 600 }, 'inout', { bogen: 20 }); tw('lupe4', W('suchen', 13) + .5, .5, { y: 520 }, 'inout', { bogen: 20 });
+bump('lupe4', SC1, 1.12);
+// Die gilt bis zu achtzehn Monate: Ring zählt hoch
+akteur('ring4', { x: X3 + 1520 + 90, y: 510, o: 0, draw: 0 }); tw('ring4', W('Die', 14) - .2, .5, { o: 1, x: X3 + 1520 }, 'weich'); cue(W('Die', 14) - .2, 'whoosh');
+const R0 = W('bis', 14), R1 = W('achtzehn', 14) + .35;
+tw('ring4', R0, R1 - R0, { draw: 1 }, 'inout'); cue(R0, 'scan');
+HOOKS.push(t => { $('#zahl4').textContent = Math.round(18 * E.inout(clamp((t - R0) / (R1 - R0)))); });
+bump('ring4', R1, 1.08); cue(R1, 'ding'); akzent(W('achtzehn', 14), .045);
+pop('chip18', W('Monate', 14), { x: X3 + 1520, y: 710 }, null);
+// Frag rechtzeitig bei der Ausländerbehörde nach
+aus(['handy4', 'app4', 'lupe4', 'ring4', 'chip18'], W('Frag', 15) - .3, .3);
+pop('frage4b', W('Frag', 15) + .05, { x: X3 + 1010, y: 510 });
+wackeln('frage4b', W('rechtzeitig', 15) + .1, 3, 3);
+ein('amt4', W('Ausländerbehörde', 15) - .4, { x: X3 + 1480, y: 500 }, { x: 100 }, 'whoosh');
+pop('chipAmt4', W('Ausländerbehörde', 15) + .05, { x: X3 + 1480, y: 680 }, null);
+flug('frage4b', W('Ausländerbehörde', 15) - .05, .7, X3 + 1450, 470, 130, { s: .35 }); tw('frage4b', W('Ausländerbehörde', 15) + .55, .15, { o: 0 });
+bump('amt4', W('Ausländerbehörde', 15) + .65, 1.06); cue(W('Ausländerbehörde', 15) + .65, 'plopp');
+pop('haken4', W('nach', 15) - .1, { x: X3 + 1010, y: 490 }, 'erfolg');
+pop('chipRecht4', W('nach', 15) + .1, { x: X3 + 1010, y: 640 }, null);
+schweben(['amt4'], 3);
+ueberAus('u4', SE(15) + .1);
+
+/* ---------- 5 · Einfach weiterarbeiten – besser schriftlich ---------- */
+pan2(SE(15) + .2, 4); const X4 = S(4);
+ueber('u5', X4, [W('sauberer', 17) - .1, W('schriftlicher', 17) - .1, W('Vertrag', 17) - .1]);
+// nach der Ausbildung: Prüfungstag mit Haken; einfach weiterarbeitest: der Tag danach, Amir schraubt
+ein('tag5a', W('Übrigens', 16) + .1, { x: X4 + 965, y: 520 }, { y: 80 }, 'whoosh');
+akteur('ok5a', { s: 0 }, true); tw('ok5a', W('Ausbildung', 16), .5, { s: 1 }, 'back'); cue(W('Ausbildung', 16), 'ding');
+ein('tag5b', W('einfach', 16) - .2, { x: X4 + 1190, y: 520 }, { x: 70 }, 'whoosh');
+HOOKS.push(t => { const d = t - W('weiterarbeitest', 16); const w = d > 0 && d < 3.2 ? 3 * Math.sin(d * 11) * Math.min(1, d * 3, (3.2 - d) * 3) : 0; $('#werk5').style.transform = `rotate(${w}deg)`; });
+huepfen('tag5b', W('weiterarbeitest', 16) + .3, 10);
+// ohne dass etwas vereinbart ist: leeres Blatt mit Fragezeichen
+ein('doku5', W('ohne', 16) - .1, { x: X4 + 1550, y: 520 }, { y: 60 }, 'plopp');
+pop('frage5', W('vereinbart', 16) - .1, { x: X4 + 1550, y: 548 }); wackeln('frage5', W('vereinbart', 16) + .35, 3, 3);
+// automatisch einen unbefristeten Arbeitsvertrag: das Blatt füllt sich
+const AU5 = W('automatisch', 16);
+tw('frage5', AU5 - .1, .3, { o: 0, s: .5 }, 'in');
+HOOKS.push(t => $('#doku5').classList.toggle('leer', t < AU5 + .2));
+bump('doku5', AU5 + .2, 1.07); cue(AU5 + .2, 'plopp'); akzent(AU5 + .2, .04);
+pop('chipUnbef5', W('unbefristeten', 16), { x: X4 + 1550, y: 695 }, 'pop');
+bump('chipUnbef5', W('Arbeitsvertrag', 16), 1.08);
+// Aber sauberer ist ein schriftlicher Vertrag: Unterschrift, Haken
+const SIG5 = W('schriftlicher', 17) - .1;
+HOOKS.push(t => { const p = $('#sig5'); p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E.inout(clamp((t - SIG5) / .75)); });
+cue(SIG5, 'kritzeln');
+// Unterschriftszeile im Blatt: links ca. X4+1420, rechts X4+1560, Höhe ca. 630
+akteur('stift5', { x: X4 + 1700, y: 700, o: 0 });
+tw('stift5', SIG5 - .5, .2, { o: 1 }); tw('stift5', SIG5 - .5, .5, { x: X4 + 1476, y: 566 }, 'inout');
+tw('stift5', SIG5, .75, { x: X4 + 1612, y: 562 }, 'inout'); tw('stift5', SIG5 + .8, .3, { o: 0, x: X4 + 1680, y: 540 }, 'in');
+schlag('ok5b', W('Vertrag', 17) + .15, { x: X4 + 1680, y: 380 }, 'erfolg');
+tw('chipUnbef5', W('Vertrag', 17) + .2, .4, { o: 0, s: .85 }, 'in');
+pop('chipSchrift5', W('Vertrag', 17) + .45, { x: X4 + 1550, y: 695 }, null); akzent(W('Vertrag', 17), .04);
+// Mit Visum brauchst du aber vorher den neuen Titel
+aus(['tag5a', 'tag5b'], W('Mit', 18) - .35, .3);
+akteur('atk5', { x: X4 + 760, y: 360, o: 0, s: .4, r: -3 });
+const K5 = W('Visum', 18) - .4;
+tw('atk5', K5, .2, { o: 1 }); tw('atk5', K5, .9, { x: X4 + 1040, y: 520, s: .66 }, 'inout', { bogen: 80 }); tw('atk5', K5, .9, { r: 0 }, 'sinus');
+tw('atk5', K5 + .9, .1, { sy: .93, sx: 1.04 }, 'sinus'); tw('atk5', K5 + 1.0, .4, { sy: 1, sx: 1 }, 'sanft'); cue(K5, 'whoosh'); cue(K5 + .9, 'plopp');
+glanz('glanz5', W('brauchst', 18));
+akteur('pfeil5', { x: X4 + 1287, y: 520, draw: 0, o: 0 }); set('pfeil5', W('vorher', 18) - .1, { o: 1 }); tw('pfeil5', W('vorher', 18) - .1, .5, { draw: 1 }, 'inout'); cue(W('vorher', 18) - .1, 'whoosh');
+HOOKS.push(t => { $('#spitze5').style.opacity = t >= W('vorher', 18) + .3 ? 1 : 0; });
+pop('chipVorher5', W('vorher', 18), { x: X4 + 1287, y: 450 }, null);
+pop('ok5c', W('Titel', 18), { x: X4 + 1150, y: 430 }, 'erfolg'); akzent(W('Titel', 18), .04);
+ueberAus('u5', SE(18) + .1);
+
+/* ---------- 6 · Weiterbildung: die Treppe ---------- */
+pan2(SE(18) + .2, 5); const X5 = S(5);
+ueber('u6', X5, [W('lernen', 19) - .1, W('Meister', 21) - .1, null, W('Techniker', 21) - .1, null, W('Fachwirt', 21) - .1]);
+const ST = [[X5 + 1115, 130], [X5 + 1365, 270], [X5 + 1615, 410]], BODEN = 800;
+const stufenTop = i => BODEN - ST[i][1];
+[['stufe1', W('später', 19) - .2], ['stufe2', W('mehr', 19) - .1], ['stufe3', W('lernen', 19)]].forEach(([id, t0], i) => {
+  akteur(id, { x: ST[i][0], y: BODEN - ST[i][1] / 2, sy: 0, o: 0 });
+  tw(id, t0, .1, { o: 1 }); tw(id, t0, .55, { sy: 1 }, 'sanft'); cue(t0, 'pop');
+});
+const AMY = i => stufenTop(i) - 60;
+pop('am6', W('Und', 19) + .2, { x: ST[0][0], y: AMY(0) });
+huepfen('am6', W('jeden', 20), 20); cue(W('jeden', 20), 'pop');
+// Meister, Techniker, Fachwirt: die nächste Stufe leuchtet bei jedem Wort
+HOOKS.push(t => { $('#stufe2').classList.toggle('an', t >= W('Meister', 21) - .1 && t < SE(21) + .4); });
+[W('Meister', 21), W('Techniker', 21), W('Fachwirt', 21)].forEach(t0 => { bump('stufe2', t0 - .05, 1.04); cue(t0, 'klick'); });
+akzent(W('Meister', 21), .035);
+// staatliche Förderung, das Aufstiegs-BAföG: Münzen fallen auf den Stapel
+ein('stapel6', W('Dafür', 22), { x: X5 + 905, y: 700 }, { y: 60 }, 'plopp');
+[['m6a', 0], ['m6b', .2], ['m6c', .4]].forEach(([id, d]) => {
+  const t0 = W('staatliche', 22) + d;
+  akteur(id, { x: X5 + 905, y: 330, o: 0 });
+  tw(id, t0, .1, { o: 1 }); tw(id, t0, .5, { y: 620 }, 'in'); tw(id, t0 + .45, .1, { o: 0 });
+  bump('stapel6', t0 + .5, 1.06); cue(t0 + .5, 'muenze');
+});
+HOOKS.push(t => ['m6a', 'm6b', 'm6c'].forEach((id, i) => { const d = t - (W('staatliche', 22) + i * .2); if (d > 0 && d < .6) $('#' + id).style.transform += ` scaleX(${Math.cos(d * 14)})`; }));
+pop('chipBafoeg6', W('Aufstiegs', 22) - .05, { x: X5 + 960, y: 470 }, 'erfolg'); akzent(W('Aufstiegs', 22) + .2, .045);
+wackeln('chipBafoeg6', W('Aufstiegs', 22) + .6, 3, 2);
+// ein paar Jahren Berufserfahrung: Jahre stapeln sich, dann steigt Amir auf die nächste Stufe
+aus(['stapel6', 'chipBafoeg6'], W('Viele', 23) - .3, .3);
+[['j6a', W('paar', 23) - .1], ['j6b', W('Jahren', 23)], ['j6c', W('Berufserfahrung', 23)]].forEach(([id, t0], i) => pop(id, t0, { x: X5 + 925, y: 720 - i * 80 }, 'pop'));
+[['j6a', 0], ['j6b', 0], ['j6c', 0]].forEach(([id]) => aus(id, W('damit', 23) + .1, .3));
+const K6 = W('damit', 23) - .15;
+flug('am6', K6, .7, ST[1][0], AMY(1), 90); cue(K6, 'whoosh');
+tw('am6', K6 + .7, .08, { sy: .9, sx: 1.06 }, 'sinus'); tw('am6', K6 + .78, .35, { sy: 1, sx: 1 }, 'sanft'); cue(K6 + .7, 'plopp');
+akzent(K6 + .7, .04);
+bump('stufe3', WE('an', 23) + .3, 1.03);
+ueberAus('u6', SE(23) + .1);
+
+/* ---------- 7 · Werkstatt: drei Punkte, Licht aus ---------- */
+pan2(SE(23) + .2, 6); const X6 = S(6);
+ein('bank7', SA(24) - .6, { x: X6 + 1000, y: 682 }, { y: 50 });
+{
+  const ICON = [
+    '<svg viewBox="0 0 66 66"><rect x="17" y="18" width="32" height="34" rx="3" fill="var(--b400)"/><rect x="14" y="14" width="38" height="6" rx="2" fill="var(--b700)"/><g fill="var(--b100)"><rect x="22" y="25" width="6" height="6" rx="1"/><rect x="38" y="25" width="6" height="6" rx="1"/><rect x="22" y="36" width="6" height="6" rx="1"/><rect x="38" y="36" width="6" height="6" rx="1"/></g><rect x="30" y="40" width="6" height="12" rx="2" fill="var(--b700)"/></svg>',
+    '<svg viewBox="0 0 66 66"><rect x="10" y="17" width="46" height="32" rx="5" fill="var(--b500)"/><rect x="15" y="22" width="12" height="16" rx="2" fill="var(--b100)"/><rect x="31" y="24" width="20" height="4" rx="2" fill="var(--b200)"/><rect x="31" y="32" width="14" height="4" rx="2" fill="var(--b200)"/></svg>',
+    '<svg viewBox="0 0 66 66"><rect x="12" y="42" width="14" height="12" rx="2" fill="var(--b300)"/><rect x="26" y="30" width="14" height="24" rx="2" fill="var(--b400)"/><rect x="40" y="18" width="14" height="36" rx="2" fill="var(--b500)"/></svg>'];
+  const TXT = ['Übernahme', 'Aufenthalt', 'Zukunft'];
+  $('#liste7').innerHTML = ICON.map((ic, i) => `<div class="punkt7"><div class="ic">${ic}</div><div class="txt">${TXT[i]}</div><div class="kasten"><svg viewBox="0 0 52 52">${HAKEN_SVG}</svg></div></div>`).join('');
+}
+const LX = X6 + 1450, LY = 520, LH = 3 * 66 + 2 * 14 + 48;
+ein('liste7', SA(24) - .2, { x: LX, y: LY }, { y: 90, r: -3 }, 'whoosh');
+akteur('stift7', { x: X6 + 1720, y: 700, o: 0 });
+const HAKEN7 = [W('Übernahme', 24), W('Aufenthalt', 24), W('Zukunft', 24)];
+const PUNKTE7 = [...document.querySelectorAll('#liste7 .punkt7')];
+const KX7 = LX + 215 - 26 - 26, KY7 = i => LY - LH / 2 + 24 + 33 + i * 80;
+HAKEN7.forEach((a, i) => {
+  const p = PUNKTE7[i].querySelector('.zeichnen');
+  HOOKS.push(t => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E.out(clamp((t - a) / .35)); });
+  // Stiftspitze liegt 36 px links, 31 px unter der Mitte des Stifts
+  tw('stift7', a - .6, .2, { o: 1 }); tw('stift7', a - .65, .6, { x: KX7 + 24, y: KY7(i) - 31 }, 'inout');
+  tw('stift7', a - .05, .25, { x: KX7 + 32, y: KY7(i) - 22 }, 'inout'); tw('stift7', a + .2, .3, { x: KX7 + 48, y: KY7(i) - 39 }, 'inout');
+  cue(a, 'kritzeln');
+  HOOKS.push(t => { const d = t - a - .3; PUNKTE7[i].querySelector('.ic').style.transform = d > 0 && d < .5 ? `scale(${1 + .12 * Math.sin(Math.PI * d / .5)})` : ''; });
+});
+tw('stift7', HAKEN7[2] + .5, .35, { o: 0, x: KX7 + 120, y: KY7(2) - 80 }, 'in');
+bump('liste7', W('Ganz', 25), 1.04); cue(W('Ganz', 25), 'ding');
+// Aber zuerst die Prüfung bestehen! – das Heft landet auf der Werkbank
+akteur('heft7', { x: X6 + 960, y: 440, o: 0, r: -3 });
+const HF = W('Prüfung', 26) - .45;
+tw('heft7', HF, .15, { o: 1 }); tw('heft7', HF, .5, { y: 609, r: 0 }, 'in');
+tw('heft7', HF + .5, .1, { sy: .9, sx: 1.06 }, 'sinus'); tw('heft7', HF + .6, .35, { sy: 1, sx: 1 }, 'sanft'); cue(HF + .5, 'plopp');
+pop('chipPruef7', W('Prüfung', 26) + .1, { x: X6 + 960, y: 492 }, null); akzent(W('Prüfung', 26), .04);
+wackeln('heft7', W('bestehen', 26), 3, 3);
+// Versprochen. – Haken, beide lachen, das Licht geht aus
+pop('ok7', W('Versprochen', 27) + .3, { x: X6 + 1030, y: 574 }, 'erfolg');
+const AUS7 = ENDE_SPRACHE + .9;
+HOOKS.push(t => {
+  const s = Math.sin(t * 1.6) * 2.4;                              // Lampe pendelt leicht (±2,4°)
+  $('#lampe7').style.transform = `rotate(${s.toFixed(2)}deg)`;
+  $('#kegel7').style.transform = `rotate(${s.toFixed(2)}deg)`; $('#kegel7').style.transformOrigin = '50% 0';
+  const flacker = t > AUS7 - .25 && t < AUS7 ? (Math.sin(t * 90) > 0 ? .35 : 1) : 1;
+  const an = t < AUS7 ? flacker : 0;
+  $('#kegel7').style.opacity = (.55 * an).toFixed(3); $('#birne7').style.opacity = an;
+  $('#dunkel7').style.opacity = (.5 * E.out(clamp((t - AUS7) / .5))).toFixed(3);
+});
+$('#dunkel7').style.transform = `translate(${X6 + 760}px,150px)`;
+cue(AUS7, 'klick');
+
+/* ---------- Abspann ---------- */
+const AB = AUS7 + 1.1;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .45, .6, { o: 1, y: 0 }, 'back');
+akteur('asUnter', { o: 0, y: 30 }, true); tw('asUnter', AB + .8, .5, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

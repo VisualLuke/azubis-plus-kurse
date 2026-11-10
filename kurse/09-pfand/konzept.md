@@ -35,3 +35,40 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 
 - „Du musst sie nicht ausspülen“: richtig, aber manche Automaten nehmen zerdrückte Flaschen nicht an – Satz dazu?
 - Jede Szene braucht sichtbares Geld; die Beträge kommen aus der Recherche oben.
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Wirfst du leere Flaschen in den Müll?
+Erzähler: Dann wirfst du Geld weg.
+
+### Szene 2
+Erzähler: Auf viele Flaschen und Dosen zahlst du beim Kauf extra Geld.
+Erzähler: Das heißt Pfand.
+
+### Szene 3
+Erzähler: Auf Einwegflaschen und Dosen sind es 25 Cent.
+Erzähler: Du erkennst sie an diesem Zeichen.
+
+### Szene 4
+Erzähler: Auf Mehrwegflaschen sind es meistens 15 Cent, manchmal 8 Cent.
+
+### Szene 5
+Erzähler: Sammle die leeren Flaschen zu Hause.
+Erzähler: Du musst sie nicht ausspülen, aber sie sollten leer sein.
+
+### Szene 6
+Erzähler: Im Supermarkt steht ein Automat.
+Erzähler: Du steckst die Flaschen nacheinander hinein.
+
+### Szene 7
+Erzähler: Danach drückst du auf den Knopf und bekommst einen Bon.
+
+### Szene 8
+Erzähler: Den Bon gibst du an der Kasse ab.
+Erzähler: Du bekommst Geld zurück oder zahlst weniger für deinen Einkauf.
+
+### Szene 9
+Erzähler: Flaschen ohne Pfand kommen in den Glascontainer oder in die gelbe Tonne.

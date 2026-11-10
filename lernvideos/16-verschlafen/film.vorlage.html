@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? Verschlafen am Berufsschultag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:70px}
+.block.unten{justify-content:flex-start;padding-top:420px}
+.block.gross .titel{font:800 104px/112px Inter;letter-spacing:-.03em}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)} .titel .w.gelb .wi{color:var(--warning-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;font:700 26px/32px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.plakette.gross{width:112px;height:112px;border-width:6px} .plakette.gross svg{width:58px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* ---------- Format „Was würdest du tun?“ ---------- */
+/* Entscheidungs-Bühne: groß und dunkel (Optionen, Countdown), danach hell und klein (Folge) */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden;background:linear-gradient(var(--b50),var(--b100))}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+/* Optionskarte */
+.wkarte{width:380px;height:470px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;padding-top:44px;gap:30px}
+.wkarte .knopf{width:108px;height:108px;flex:none;border-radius:999px;background:var(--b500);color:var(--surface);font:800 62px/108px Inter;text-align:center;
+  box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.wkarte .icon{width:288px;height:240px;flex:none;position:relative}
+.wkarte .icon svg *{transform-box:fill-box;transform-origin:center}
+.wkarte .rahmen{position:absolute;inset:0;border-radius:36px;border:10px solid var(--success)}
+.wkarte .rahmen.gelb{border-color:var(--warning)} .wkarte .rahmen.rot{border-color:var(--error)}
+.wkarte .marke{position:absolute;right:-26px;top:-26px;width:104px;height:104px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  border:7px solid var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.wkarte .marke svg{width:50px}
+.marke.gelb{background:var(--warning)} .marke.rot{background:var(--error)} .marke.gruen{background:var(--success)}
+.glow{width:440px;height:530px;border-radius:48px;background:var(--success);filter:blur(26px);opacity:0}
+/* Countdown-Ring */
+.ring3{width:160px;height:160px}
+.ring3 svg{position:absolute;inset:0;width:160px;height:160px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 74px/1 Inter;color:var(--surface)}
+
+/* Handy-Bildschirme */
+.schirm{border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.sperr{background:linear-gradient(160deg,var(--b500),var(--b700));align-items:center;justify-content:center;gap:2px;color:var(--surface)}
+.sperr small{font:700 12px/14px Inter;color:var(--b100)}
+.sperr b{font:800 27px/30px Inter;letter-spacing:-.02em}
+.chat{background:var(--b50);padding:8px;gap:8px}
+.chat .kopf{height:22px;border-radius:6px;background:var(--b500);color:var(--surface);font:700 11px/22px Inter;padding-left:8px;white-space:nowrap}
+.zu0{position:absolute;inset:0;background:var(--b700)}
+.leer{border:3px dashed var(--b200);border-radius:12px;height:34px}
+.leer.k{width:70%}
+.anruf{position:absolute;inset:0;background:linear-gradient(160deg,var(--b500),var(--b700));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.anruf .av{width:44px;height:44px;border-radius:999px;background:var(--b200);display:flex;align-items:center;justify-content:center}
+.anruf .av svg{width:24px}
+.anruf span{font:700 12px/14px Inter;color:var(--surface);white-space:nowrap}
+.anruf .kn{display:flex;gap:18px;margin-top:8px}
+.anruf .kn i{width:22px;height:22px;border-radius:999px;background:var(--success)} .anruf .kn i+i{background:var(--error)}
+.blase{align-self:flex-end;background:var(--b500);color:var(--surface);font:700 14px/18px Inter;padding:6px 10px;border-radius:12px 12px 3px 12px;white-space:pre;min-height:30px;min-width:24px}
+.haken2{align-self:flex-end;font:800 12px/12px Inter;color:var(--success-text);letter-spacing:-2px}
+/* großes Handy: zwei Chats */
+.chats{background:var(--b50);padding:14px 12px;gap:12px}
+.chats .karte{background:var(--surface);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 6px rgba(22,19,37,.08)}
+.chats .karte b{font:800 15px/18px Inter;color:var(--b600)}
+.chats .bl{align-self:flex-end;width:132px;background:var(--b500);border-radius:14px 14px 4px 14px;padding:10px;display:flex;flex-direction:column;gap:7px}
+.chats .bl i{display:block;height:8px;border-radius:4px;background:var(--b200);transform-origin:left center}
+.chats .bl u{align-self:flex-start;text-decoration:none;font:800 13px/16px Inter;color:var(--b600);background:var(--surface);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.chats .hk{align-self:flex-end;font:800 14px/14px Inter;color:var(--success-text);letter-spacing:-3px;margin-top:-2px}
+
+/* Klassenbuch */
+.buch{width:440px;height:250px;padding:20px 24px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:10px}
+.buch small{font:800 17px/20px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase}
+.buch .zl{height:36px;display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--n200)}
+.buch .zl i{height:10px;width:90px;border-radius:5px;background:var(--n200)}
+.buch .zl em{font:700 22px/26px Inter;font-style:normal;color:var(--ink);width:90px}
+.buch .zl u{margin-left:auto;width:26px;height:26px;border-radius:8px;background:var(--success-bg)}
+.buch .zl span{margin-left:auto;font:700 22px/26px Inter;color:var(--error-text);white-space:nowrap}
+/* Dokumente */
+.doku{width:250px;height:310px;padding:26px 24px;border-radius:20px;background:var(--surface);box-shadow:0 12px 32px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.doku b{font:800 28px/34px Inter;color:var(--error-text);letter-spacing:-.01em}
+.doku .ln{height:10px;border-radius:5px;background:var(--n200)}
+.doku .unt{margin-top:auto;height:26px;width:120px}
+.doku.hart{border-top:14px solid var(--error)}
+.schatten{width:200px;height:200px;border-radius:999px;background:radial-gradient(circle at 50% 45%,var(--b700),var(--b600) 70%,var(--b500));
+  display:flex;align-items:center;justify-content:center;font:800 120px/1 Inter;color:var(--b200);box-shadow:0 12px 40px rgba(22,19,37,.3)}
+.fenster{width:170px;height:140px;border-radius:18px;border:9px solid var(--surface);background:var(--b100);box-shadow:0 6px 18px rgba(22,19,37,.1);overflow:hidden}
+.fenster .nacht{position:absolute;inset:0;background:linear-gradient(var(--b700),var(--b600))}
+.fenster .kreuz{position:absolute;left:50%;top:0;bottom:0;width:7px;margin-left:-3.5px;background:var(--surface)}
+.regal{width:160px;height:16px;border-radius:6px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 6px 12px rgba(22,19,37,.12)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAusruf"><svg viewBox="0 0 40 40"><path d="M20 8v15" stroke="var(--surface)" stroke-width="7" stroke-linecap="round"/><circle cx="20" cy="32" r="4" fill="var(--surface)"/></svg></template>
+<template id="portraitMai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Situation: verschlafen -->
+  <div class="a buehne hell" id="bue0"></div>
+  <div class="a" id="schule0" style="width:200px">{{schule}}</div>
+  <div class="a" id="uhr0" style="width:130px;height:130px"></div>
+  <div class="a" id="bett0h" style="width:520px" data-gruppe="bett">{{bett-hinten}}</div>
+  <div class="a portrait" id="mai0" style="width:220px;height:220px" data-gruppe="bett"></div>
+  <div class="a" id="bett0v" style="width:520px" data-gruppe="bett">{{bett-decke}}</div>
+  <div class="a" id="tisch0" style="width:340px" data-gruppe="tisch">{{nachttisch}}</div>
+  <div class="a welle" id="summ0" style="width:150px;height:150px" data-frei></div>
+  <div class="a" id="handy0" style="width:200px" data-gruppe="tisch">{{handy}}</div>
+  <div class="a schirm sperr" id="schirm0" style="width:73px;height:133px" data-gruppe="tisch"><small>Dienstag</small><b>8:15</b><div class="zu0" id="dunkel0"></div></div>
+  <div class="a" id="wecker0" style="width:130px" data-gruppe="tisch">{{wecker}}</div>
+  <div class="a plakette rot" id="stumm0" data-frei><svg viewBox="0 0 40 40"><path d="M13 26V19a7 7 0 0 1 14 0v7l3 3H10Z" fill="var(--surface)"/><circle cx="20" cy="32" r="3" fill="var(--surface)"/><path d="M9 9l22 22" stroke="var(--surface)" stroke-width="4" stroke-linecap="round"/></svg></div>
+
+  <!-- 1 · Optionen, Countdown, Option A -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a" id="uhrA" style="width:150px;height:150px"></div>
+  <div class="a" id="tuerA" style="width:250px" data-gruppe="tuer">{{haustuer}}</div>
+  <div class="a" id="blattA" style="width:250px;transform-origin:27.5% 50%" data-gruppe="tuer">{{haustuer-blatt}}</div>
+  <div class="a portrait" id="maiA" style="width:150px;height:150px" data-gruppe="tuer"></div>
+  <div class="a welle" id="klingelA" style="width:220px;height:220px" data-frei></div>
+  <div class="a welle" id="klingelA2" style="width:220px;height:220px" data-frei></div>
+  <div class="a" id="handyA" style="width:220px" data-gruppe="handyA">{{handy~a}}</div>
+  <div class="a schirm chat" id="schirmA" style="width:80px;height:146px" data-gruppe="handyA"><div class="kopf"></div><div class="leer"></div><div class="leer k"></div>
+    <div class="anruf" id="anrufA"><div class="av"><svg viewBox="0 0 24 24"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="var(--b600)"/></svg></div><span>Ausbilderin</span><div class="kn"><i></i><i></i></div></div></div>
+  <div class="a plakette rot" id="xA" data-frei></div>
+  <div class="a buch" id="buchA"><small>Klassenbuch</small>
+    <div class="zl"><i></i><u></u></div><div class="zl"><i style="width:70px"></i><u></u></div>
+    <div class="zl"><em>Mai</em><span id="unentA">unentschuldigt</span></div><div class="zl"><i style="width:110px"></i><u></u></div></div>
+  <div class="a" id="stiftA" style="width:110px" data-frei>{{stift}}</div>
+  <div class="a" id="betriebA" style="width:200px">{{betrieb}}</div>
+  <div class="a" id="briefA" style="width:120px" data-frei>{{brief}}</div>
+  <div class="a frage" id="frageA">?</div>
+
+  <!-- 2 · Option C -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a" id="thermoC" style="width:170px" data-gruppe="thermo">{{thermometer}}</div>
+  <div class="a" id="saeuleC" style="width:170px;transform-origin:50% 78.75%" data-gruppe="thermo">{{thermo-saeule}}</div>
+  <div class="a plakette gruen" id="okC" data-frei></div>
+  <div class="a schatten" id="schattenC">?</div>
+  <div class="a" id="sofaCh" style="width:380px" data-gruppe="sofa">{{sofa-hinten}}</div>
+  <div class="a portrait" id="maiC" style="width:180px;height:180px" data-gruppe="sofa"></div>
+  <div class="a" id="sofaCv" style="width:380px" data-gruppe="sofa">{{sofa-vorne}}</div>
+  <div class="a" id="handyC" style="width:240px" data-gruppe="handyC">{{handy~c}}</div>
+  <div class="a schirm chat" id="schirmC" style="width:88px;height:160px" data-gruppe="handyC"><div class="kopf">Betrieb</div>
+    <div class="blase" id="blaseC"><span id="tippC"></span></div><div class="haken2" id="hakC">✓✓</div></div>
+  <div class="a" id="betriebC" style="width:190px">{{betrieb~c}}</div>
+  <div class="a" id="ketteL" style="width:100px;height:70px" data-gruppe="kette"><svg viewBox="0 0 100 70"><rect x="8" y="12" width="84" height="46" rx="23" stroke="var(--b500)" stroke-width="13" fill="none"/></svg></div>
+  <div class="a" id="ketteR" style="width:100px;height:70px" data-gruppe="kette"><svg viewBox="0 0 100 70"><rect x="8" y="12" width="84" height="46" rx="23" stroke="var(--b400)" stroke-width="13" fill="none"/></svg></div>
+  <div class="a doku" id="dokAb"><b>Abmahnung</b><div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:55%"></div>
+    <svg class="unt" viewBox="0 0 120 26"><path d="M4 18c10-14 16-14 18-4s8 8 14-2 10-8 12 2 10 6 20-4" stroke="var(--b400)" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg></div>
+  <div class="a doku hart" id="dokKu"><b>Kündigung</b><div class="ln"></div><div class="ln" style="width:75%"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:60%"></div>
+    <svg class="unt" viewBox="0 0 120 26"><path d="M4 16c8-12 14-12 16-2s10 6 16-4 12-6 14 4 12 4 22-6" stroke="var(--b400)" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg></div>
+
+  <!-- 3 · Option B -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <div class="a" id="handyB" style="width:480px" data-gruppe="handyB">{{handy~b}}</div>
+  <div class="a schirm chats" id="schirmB" style="width:176px;height:320px" data-gruppe="handyB">
+    <div class="karte" id="chat1"><b>Betrieb</b><div class="bl" id="bl1"><i id="z1a"></i><i id="z1b" style="width:70%"></i><u id="min1">30 Min.</u></div><div class="hk" id="hk1">✓✓</div></div>
+    <div class="karte" id="chat2"><b>Schule</b><div class="bl" id="bl2"><i id="z2a"></i><i id="z2b" style="width:70%"></i><u id="min2">30 Min.</u></div><div class="hk" id="hk2">✓✓</div></div></div>
+  <div class="a" id="schuleB" style="width:260px">{{schule~b}}</div>
+  <div class="a" id="bahnB" style="width:300px" data-gruppe="bahn">{{bahn}}</div>
+  <div class="a welle" id="welleB" style="width:240px;height:240px;border-color:var(--success)" data-frei></div>
+  <div class="a portrait" id="maiB" style="width:210px;height:210px" data-gruppe="bahn"></div>
+  <div class="a plakette gruen" id="okB" data-frei></div>
+  <div class="a plakette lila gross" id="ehrlichB"><svg viewBox="0 0 60 60"><path d="M10 14a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H26l-10 9v-9a6 6 0 0 1-6-6Z" fill="var(--surface)"/><path d="M20 24l6 6 12-12" stroke="var(--success)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette lila gross" id="schnellB"><svg viewBox="0 0 60 60"><circle cx="30" cy="34" r="19" fill="var(--surface)"/><rect x="25" y="6" width="10" height="7" rx="2" fill="var(--surface)"/><path d="M30 34V22" stroke="var(--b600)" stroke-width="5" stroke-linecap="round"/><path d="M30 34l7 5" stroke="var(--b600)" stroke-width="4" stroke-linecap="round"/></svg></div>
+
+  <!-- 4 · Auflösung und Tipps -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a fenster" id="fenster4"><div class="nacht" id="nacht4"></div><div class="kreuz"></div>
+    <svg id="mond4" viewBox="0 0 40 40" style="position:absolute;left:22px;top:18px;width:46px"><path d="M26 6a15 15 0 1 0 10 24A13 13 0 0 1 26 6Z" fill="var(--warning-bg)"/></svg></div>
+  <div class="a" id="bett4h" style="width:420px" data-gruppe="bett4">{{bett-hinten~4}}</div>
+  <div class="a" id="bett4v" style="width:420px" data-gruppe="bett4">{{bett-decke~4}}</div>
+  <div class="a" id="tisch4" style="width:240px" data-gruppe="tisch4">{{nachttisch~4}}</div>
+  <div class="a" id="wecker4a" style="width:90px" data-gruppe="tisch4">{{wecker~4a}}</div>
+  <div class="a" id="wecker4b" style="width:90px" data-gruppe="tisch4">{{wecker~4b}}</div>
+  <div class="a regal" id="regal4" data-gruppe="regal"></div>
+  <div class="a" id="tuer4" style="width:200px" data-gruppe="tuer4">{{haustuer~4}}</div>
+  <div class="a" id="blatt4" style="width:200px;transform-origin:27.5% 50%" data-gruppe="tuer4">{{haustuer-blatt~4}}</div>
+  <div class="a" id="tasche4" style="width:130px">{{rucksack}}</div>
+  <svg class="a" id="bahn4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path id="bahn4p" class="zeichnen" pathLength="1" d="" stroke="var(--b300)" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.02 0.025" fill="none"/></svg>
+  <div class="a" id="handy4" style="width:110px" data-frei>{{handy~4}}</div>
+  <div class="a" id="heft4" style="width:90px" data-frei>{{heft}}</div>
+  <div class="a" id="stift4" style="width:80px" data-frei>{{stift~4}}</div>
+</div></div>
+
+<div class="block gross" id="tb0"><div class="titel">Verschlafen!</div></div>
+<div class="block unten" id="tbA"><div class="titel">A: unentschuldigt – schlechter Eindruck</div></div>
+<div class="block unten" id="tbC"><div class="titel">C: Lüge – großes Risiko</div></div>
+<div class="block unten" id="tbB"><div class="titel">B: ehrlich + schnell = richtig</div></div>
+<div class="block unten" id="tb4"><div class="titel">Beste Lösung: B · Tipp: zwei Wecker</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Ehrlich und schnell.</div>
+  <div class="klein" id="asUnter">Wer zu spät kommt, sagt sofort Bescheid, ehrlich und schnell.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const WG = (m, n) => A(satz(n).woerter.find(w => _norm(w.w) === _norm(m)).start);   // genau dieses Wort (A, B, C)
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+// Handy summt: kleines Zittern von t bis t+d
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) $('#' + id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+['xA'].forEach(id => el(id).innerHTML = tpl('svgX'));
+['okC', 'okB'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl('portraitMai'); p.dataset.sprecher = 'Mai'; });
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 5;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Mai: Mund nur in ihren eigenen Sätzen (Sprecher exakt aus sprache.json), blinzeln, schlafen, froh ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], SCHLAF = [];      // [id, von, bis]
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    const schlaeft = SCHLAF.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${schlaeft ? .1 : z < .035 ? .12 : 1})`;
+    // sprechen: leichtes Mitgehen; sonst gelegentliches Nicken; schlafen: ruhiges Atmen
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : schlaeft ? 0 : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const atem = schlaeft ? 3 * Math.sin(t * 2.2) : 0;
+    p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick + atem}px)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Uhr mit rotem Zeitkeil: kurve(t) → Minuten seit 0 Uhr, keil(t) → [ab, deckkraft] ---------- */
+function uhr(id, kurve, keil) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <circle id="${id}k" cx="80" cy="80" r="25" fill="none" stroke="var(--error-bg)" stroke-width="50" pathLength="1" style="stroke-dasharray:0 1"/>
+    <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = kurve(t), [ab, o] = keil(t);
+    $(`#${id}h`).setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+    const k = $(`#${id}k`), f = clamp((m - ab) / 60);
+    k.style.strokeDasharray = `${f.toFixed(4)} 1`; k.setAttribute('transform', `rotate(${(ab % 60) * 6 - 90} 80 80)`); k.style.opacity = o;
+  });
+}
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+
+/* ================= Format „Was würdest du tun?“ ================= */
+// Entscheidungs-Bühne: groß + dunkel (1680×880, Mitte x 960) → ab tK hell + klein (900×720, Mitte x 1320)
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+// Symbole der drei Optionen (spielen, während die Option vorgelesen wird)
+const ICON = {
+  A: id => `<svg viewBox="0 0 240 200">
+    <path d="M42 34h124a22 22 0 0 1 22 22v58a22 22 0 0 1-22 22H96l-34 30v-30H42a22 22 0 0 1-22-22V56a22 22 0 0 1 22-22Z" fill="var(--b100)"/>
+    <circle id="${id}d1" cx="68" cy="85" r="12" fill="var(--b400)"/><circle id="${id}d2" cx="104" cy="85" r="12" fill="var(--b400)"/><circle id="${id}d3" cx="140" cy="85" r="12" fill="var(--b400)"/>
+    <g id="${id}x"><path class="zeichnen" pathLength="1" d="M40 150L168 26" stroke="var(--error)" stroke-width="13" stroke-linecap="round" style="stroke-dasharray:1 1"/></g>
+    <circle cx="196" cy="156" r="32" fill="var(--surface)" stroke="var(--b300)" stroke-width="6"/>
+    <path id="${id}z" d="M196 156v-20" stroke="var(--b600)" stroke-width="6" stroke-linecap="round" style="transform-origin:196px 156px;transform-box:view-box"/>
+    <path d="M196 156h12" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/></svg>`,
+  B: id => `<svg viewBox="0 0 240 200">
+    <rect x="30" y="8" width="104" height="186" rx="18" fill="var(--b700)"/><rect x="39" y="24" width="86" height="156" rx="9" fill="var(--b50)"/>
+    <rect id="${id}b1" x="56" y="44" width="58" height="28" rx="12" fill="var(--b500)"/>
+    <rect id="${id}b2" x="56" y="86" width="58" height="28" rx="12" fill="var(--b500)"/>
+    <path id="${id}h" d="M72 132l7 7 14-14M88 132l7 7 14-14" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <g id="${id}p"><path d="M160 100h58m-20-20 20 20-20 20" stroke="var(--success)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M150 72h26M150 128h26" stroke="var(--b200)" stroke-width="7" stroke-linecap="round"/></g></svg>`,
+  C: id => `<svg viewBox="0 0 240 200">
+    <path d="M24 104l72-60 72 60v84H24Z" fill="var(--b100)"/>
+    <path id="${id}d" d="M12 110l84-70 84 70" stroke="var(--b500)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="78" y="128" width="36" height="60" rx="7" fill="var(--b400)"/>
+    <rect x="190" y="30" width="30" height="130" rx="15" fill="var(--surface)" stroke="var(--n300)" stroke-width="5"/>
+    <circle cx="205" cy="166" r="22" fill="var(--error)"/>
+    <rect id="${id}t" x="199" y="46" width="12" height="118" rx="6" fill="var(--error)" style="transform-origin:205px 164px;transform-box:view-box"/></svg>`,
+};
+const MARKE = { gelb: 'svgAusruf', rot: 'svgX', gruen: 'svgHaken' };
+const KX = [520, 960, 1400], KY = 470;
+// Kartensatz auf der dunklen Bühne von Szene i; marken: bereits besprochene Karten ({A:'gelb'}), neu: Karte, die hier bewertet wird
+function karten(i, marken = {}, neu = null) {
+  const X = S(i);
+  return ['A', 'B', 'C'].map((b, k) => {
+    const id = `k${i}${b}`, m = marken[b] || (neu && neu[0] === b ? neu[1] : null);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a wkarte" id="${id}">
+      ${m ? `<div class="rahmen ${m}" id="${id}r"></div>` : ''}<div class="knopf" id="${id}k">${b}</div><div class="icon">${ICON[b](id)}</div>
+      ${m ? `<div class="marke ${m}" id="${id}m">${tpl(MARKE[m])}</div>` : ''}</div>`);
+    akteur(id, { x: X + KX[k], y: KY });
+    akteur(`${id}k`, {}, true);
+    if (i > 1 && b === 'A') ['d1', 'd2', 'd3'].forEach(d => akteur(id + d, { s: 0 }, true));   // Endzustand des Symbols
+    if (m && !(neu && neu[0] === b)) { akteur(`${id}r`, { o: 1 }, true); akteur(`${id}m`, {}, true); }
+    else if (m) { akteur(`${id}r`, { o: 0 }, true); akteur(`${id}m`, { o: 0, s: 1.6 }, true); }
+    return id;
+  });
+}
+// Die gewählte Karte kommt nach vorn, die anderen treten zurück; ab tK wird sie zur Kachel links oben, die Bühne hell
+function vorn(i, ids, b, tV, tK) {
+  const X = S(i), k = 'ABC'.indexOf(b);
+  ids.forEach((id, j) => {
+    if (j === k) { tw(id, tV, .6, { s: 1.1, y: KY - 16 }, 'sanft'); cue(tV, 'whoosh'); }
+    else { tw(id, tV, .5, { s: .92, o: .45 }, 'inout'); aus(id, tK - .1, .4); }
+  });
+  tw(ids[k], tK, .9, { x: X + 490, y: 250, s: .56 }, 'inout');
+  quiz(i, tK);
+}
+// Bewertung: Marke schlägt auf die Kachel, Rahmen in der Farbe, Kamera-Akzent
+function bewerten(id, t, farbe) {
+  tw(`${id}m`, t, .05, { o: 1 }); tw(`${id}m`, t, .3, { s: 1 }, 'out');
+  tw(`${id}r`, t, .3, { o: 1 }, 'out');
+  wackeln(id, t + .05, 3, 2); akzent(t, .045);
+  cue(t, 'plopp'); if (farbe === 'gruen') cue(t + .05, 'erfolg');
+}
+function titelFarbe(id, t0, zeiten, farbe) { titelEin(id, t0, zeiten); $(`#${id} .w`).classList.add(farbe); }
+
+/* ---------- 0 · Situation: Dienstag, 8:15, verschlafen ---------- */
+akteur('bue0', { x: 1320, y: 540 });
+{
+  const X = S(0), T0 = A(-.6);
+  ein('bett0h', T0, { x: X + 1180, y: 640 }, { y: 60 }); ein('bett0v', T0, { x: X + 1180, y: 640 }, { y: 60 });
+  akteur('mai0', { x: X + 1185, y: 715, o: 0 }); tw('mai0', T0 + .1, .5, { o: 1 }); tw('mai0', T0 + .1, .7, { y: 655 }, 'sanft');
+  SCHLAF.push(['mai0', 0, W('wacht', 3)]);
+  ein('tisch0', T0 + .1, { x: X + 1570, y: 700 }, { y: 60 });
+  ein('handy0', T0 + .2, { x: X + 1515, y: 578 }, { y: 60 }); ein('schirm0', T0 + .2, { x: X + 1515, y: 578 }, { y: 60 });
+  ein('wecker0', T0 + .25, { x: X + 1616, y: 606 }, { y: 60 });
+  cue(T0, 'whoosh');
+  // Dienstag, 8:15: Handy leuchtet auf und summt
+  const tD = W('Dienstag', 1);
+  akteur('dunkel0', { o: 1 }, true); tw('dunkel0', tD - .05, .3, { o: 0 }); summen('handy0', tD, 1.2); summen('schirm0', tD, 1.2);
+  welle('summ0', tD + .1, X + 1515, 578, 1); cue(tD, 'tipp');
+  bump('handy0', W('acht', 1), 1.12); bump('schirm0', W('acht', 1), 1.12); akzent(W('acht', 1), .03);
+  summen('handy0', W('fünfzehn', 1) + .3, .9); summen('schirm0', W('fünfzehn', 1) + .3, .9);
+  // Die Berufsschule hat um acht angefangen: Schule kommt, Uhr zeigt 8:00, dann läuft der Zeiger auf 8:15
+  ein('schule0', W('Berufsschule', 2) - .2, { x: X + 1015, y: 330 }, { y: -60 }, 'whoosh');
+  pop('uhr0', W('um', 2), { x: X + 1185, y: 300 });
+  const tU = W('angefangen', 2);
+  uhr('uhr0', t => rampe(t, tU, 1, 480, 495), t => [480, 1]);
+  cue(tU, 'scan'); bump('schule0', tU + 1, 1.06); akzent(tU + .9, .025);
+  schweben(['schule0', 'uhr0'], 3);
+  // Mai wacht auf: Augen auf, reckt sich aus der Decke
+  const tW = W('wacht', 3);
+  tw('mai0', tW, .5, { y: 630 }, 'sanft'); wackeln('mai0', W('erst', 3), 2, 2);
+  // Oh nein! Mai springt aus dem Bett
+  const tO = W('Oh', 4) - .15;
+  tw('mai0', tO - .12, .12, { sy: .86, sx: 1.08 }, 'sinus');
+  tw('mai0', tO, .6, { x: X + 1290, y: 480 }, 'inout', { bogen: 90 }); tw('mai0', tO, .18, { sy: 1.08, sx: .94 }, 'sinus');
+  landen('mai0', tO + .6); cue(tO, 'whoosh'); akzent(W('nein', 4), .05);
+  titelEin('tb0', W('Oh', 4) - .05);
+  document.querySelectorAll('#tb0 .wi').forEach(w => { AKTEURE.get(w).basis.y = 140; });
+  // Mein Wecker! Wecker wackelt, Zeichen „stumm“
+  const tWe = W('Wecker', 5);
+  wackeln('wecker0', tWe - .1, 4, 3); pop('stumm0', tWe, { x: X + 1650, y: 560 }, 'plopp');
+  wackeln('mai0', W('Mein', 5), 2, 2);
+  textAus('tb0', SE(5) + .15);
+}
+
+/* ---------- 1 · Was würdest du tun? A, B, C – Countdown – Option A ---------- */
+pan2(SE(5) + .35, 1);
+{
+  const X = S(1);
+  const ids = karten(1, {}, ['A', 'gelb']);
+  // Fragezeichen im Ring: Was würdest du tun?
+  WELT.insertAdjacentHTML('beforeend', `<div class="a ring3" id="ring1"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="68" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+    <circle id="lauf1" cx="80" cy="80" r="68" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 80 80)" style="stroke-dasharray:1 1"/></svg><b id="ziffer1">?</b></div>`);
+  pop('ring1', W('Was', 6) + .05, { x: X + 960, y: 830 });
+  bump('ring1', W('tun', 6), 1.12); akzent(W('tun', 6), .03);
+  // Karten fliegen auf „A:“, „B:“, „C:“ herein
+  ids.forEach((id, k) => {
+    const t0 = WG('ABC'[k], 7 + k) - .35;
+    akteur(id, { x: X + KX[k] - 120, y: KY + 380, o: 0, s: .7, r: k === 1 ? 0 : (k ? 3 : -3) });
+    tw(id, t0, .25, { o: 1 }); tw(id, t0, .9, { x: X + KX[k], y: KY, s: 1, r: 0 }, 'inout', { bogen: 90 }); cue(t0, 'whoosh');
+    bump(`${id}k`, t0 + .7, 1.15); cue(t0 + .7, 'pop');
+  });
+  schweben(ids, 3);
+  // A: Nichts sagen, später hingehen – Punkte tippen, verschwinden, Strich; Uhr dreht
+  const a = 'k1A', tA = WG('A', 7);
+  ['d1', 'd2', 'd3'].forEach((d, j) => {
+    akteur(a + d, {}, true);
+    for (let n = 0; n < 3; n++) tw(a + d, tA + .45 + n * .36 + j * .09, .18, { y: -10 }, 'sinus'), tw(a + d, tA + .63 + n * .36 + j * .09, .18, { y: 0 }, 'sinus');
+    tw(a + d, W('Nichts', 7) + j * .06, .3, { s: 0 }, 'in');
+  });
+  akteur(a + 'x', { draw: 0 }, true); tw(a + 'x', W('sagen', 7), .4, { draw: 1 }, 'inout'); cue(W('sagen', 7), 'kritzeln');
+  akteur(a + 'z', { r: 0 }, true); tw(a + 'z', W('später', 7), .9, { r: 360 }, 'inout'); cue(W('später', 7), 'scan');
+  // B: Sofort Bescheid geben, schnell hinfahren – zwei Nachrichten, Häkchen, Pfeil
+  const bb = 'k1B';
+  akteur(bb + 'b1', { sx: 0, o: 0 }, true); tw(bb + 'b1', W('Sofort', 8), .4, { sx: 1, o: 1 }, 'back'); cue(W('Sofort', 8), 'tipp');
+  akteur(bb + 'b2', { sx: 0, o: 0 }, true); tw(bb + 'b2', W('Bescheid', 8), .4, { sx: 1, o: 1 }, 'back'); cue(W('Bescheid', 8), 'tipp');
+  akteur(bb + 'h', { o: 0, s: .5 }, true); tw(bb + 'h', W('geben', 8), .4, { o: 1, s: 1 }, 'back'); cue(W('geben', 8), 'ding');
+  akteur(bb + 'p', { o: 0, x: -30 }, true); tw(bb + 'p', W('schnell', 8) - .1, .3, { o: 1 }); tw(bb + 'p', W('schnell', 8) - .1, .6, { x: 0 }, 'back'); cue(W('schnell', 8), 'whoosh');
+  // C: Zu Hause bleiben, krank sagen – Dach wippt, Thermometer steigt
+  const c = 'k1C';
+  akteur(c + 'd', {}, true); tw(c + 'd', W('Hause', 9), .15, { y: -8 }, 'sinus'); tw(c + 'd', W('Hause', 9) + .15, .4, { y: 0 }, 'sanft');
+  akteur(c + 't', { sy: .2 }, true); tw(c + 't', W('krank', 9) - .1, .8, { sy: 1 }, 'inout'); cue(W('krank', 9), 'scan');
+  // Denkpause: Ziffern 3 – 2 – 1 auf das gesprochene Wort, Ring läuft leer, Karten pulsieren im Wechsel
+  const c0 = W('Drei', 11), c1 = W('Eins', 13) + .9, Z = [W('Drei', 11), W('Zwei', 12), W('Eins', 13)];
+  bump('ring1', W('Was', 10), 1.1);
+  Z.forEach((z, k) => { cue(z, 'klick'); bump(ids[k], z, 1.06); bump(`${ids[k]}k`, z, 1.18); });
+  HOOKS.push(t => {
+    $('#lauf1').style.strokeDashoffset = -clamp((t - c0) / (c1 - c0));
+    const k = Z.filter(z => t >= z - .05).length, f = k ? t - Z[k - 1] : 0, zf = $('#ziffer1');
+    zf.textContent = k ? 4 - k : '?';
+    zf.style.transform = k ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Option A: Karte kommt nach vorn, Bühne wird hell
+  const tV = W('Option', 14), tK = W('Mai', 14) - .3;
+  tw('ring1', tV - .1, .35, { s: 0, o: 0 }, 'in');
+  vorn(1, ids, 'A', tV, tK); bump('k1Ak', WG('A', 14), 1.2);
+  // Mai kommt eine Stunde zu spät: Uhr 8:00 → 9:00, Tür geht auf, Mai kommt herein
+  pop('uhrA', tK + .35, { x: X + 1000, y: 330 }, null);
+  const tS = W('Stunde', 14), tN = W('Nachmittag', 17);
+  uhr('uhrA', t => rampe(t, tS - .1, 1.1, 480, 540) + rampe(t, tN, 1.3, 0, 360), t => [480, 1 - clamp((t - tN) / .5)]);
+  cue(tS - .1, 'scan'); akzent(tS + .5, .03);
+  ein('tuerA', tK + .45, { x: X + 1270, y: 360 }, { y: 70 }, 'whoosh'); ein('blattA', tK + .45, { x: X + 1270, y: 360 }, { y: 70 });
+  const tKo = W('kommt', 14);
+  tw('blattA', tKo, .45, { sx: .18 }, 'inout'); cue(tKo, 'klick');
+  akteur('maiA', { x: X + 1470, y: 400, o: 0, s: .8 });
+  tw('maiA', tKo + .1, .3, { o: 1 }); tw('maiA', tKo + .1, .8, { x: X + 1270, y: 385, s: 1 }, 'inout', { bogen: 30 });
+  for (let n = 0; n < 3; n++) tw('maiA', tKo + .1 + n * .27, .27, { y: lerp(400, 385, (n + 1) / 3) }, 'sinus', { bogen: 10 });
+  // ohne Nachricht: leeres Handy, rotes Kreuz
+  ein('handyA', tK + .55, { x: X + 1610, y: 360 }, { x: 70 }); ein('schirmA', tK + .55, { x: X + 1610, y: 360 }, { x: 70 });
+  akteur('anrufA', { o: 0 }, true);
+  pop('xA', W('Nachricht', 14), { x: X + 1668, y: 270 }, 'plopp'); wackeln('handyA', W('ohne', 14), 3, 3); wackeln('schirmA', W('ohne', 14), 3, 3);
+  // Die Lehrerin trägt sie als unentschuldigt ein: Klassenbuch, der Stift schreibt
+  ein('buchA', W('Die', 15) - .15, { x: X + 1150, y: 700 }, { y: 90 }, 'whoosh');
+  const tU = W('unentschuldigt', 15), SX0 = X + 1181 + 40, SX1 = X + 1346 + 40, SY = 740 - 34;
+  akteur('stiftA', { x: SX0 + 40, y: SY - 140, o: 0, s: .8 });
+  tw('stiftA', W('trägt', 15), .3, { o: 1 }); tw('stiftA', W('trägt', 15), .55, { x: SX0, y: SY, s: 1 }, 'inout', { bogen: 30 });
+  tw('stiftA', tU, .9, { x: SX1 }, 'inout');
+  for (let n = 0; n < 5; n++) tw('stiftA', tU + n * .18, .18, { y: SY }, 'sinus', { bogen: 7 });
+  tw('stiftA', W('ein', 15) + .3, .45, { x: X + 1520, y: SY - 150, o: 0, s: .8 }, 'inout');
+  cue(tU, 'kritzeln');
+  HOOKS.push(t => { $('#unentA').style.clipPath = `inset(0 ${(100 - 100 * E.inout(clamp((t - tU) / .9))).toFixed(1)}% 0 0)`; });
+  // Das kann die Schule dem Betrieb melden: Brief fliegt zum Betrieb
+  ein('betriebA', W('Betrieb', 16) - .2, { x: X + 1610, y: 700 }, { x: 70 }, 'whoosh');
+  akteur('briefA', { x: X + 1280, y: 640, o: 0, s: .4 });
+  tw('briefA', W('Schule', 16), .25, { o: 1 }); tw('briefA', W('Schule', 16), .45, { s: 1, y: 600 }, 'back');
+  const tM = W('melden', 16);
+  flug('briefA', tM - .1, .85, X + 1610, 690, 110, { s: .3 }); tw('briefA', tM + .6, .15, { o: 0 }); cue(tM - .1, 'whoosh');
+  bump('betriebA', tM + .75, 1.1); cue(tM + .75, 'plopp');
+  // Am Nachmittag fragt die Ausbilderin: Uhr läuft weiter, Handy klingelt, Fragezeichen
+  const tAu = W('Ausbilderin', 17);
+  tw('anrufA', tAu - .2, .3, { o: 1 });
+  [0, .7, 1.4].forEach((d, n) => welle(n % 2 ? 'klingelA2' : 'klingelA', tAu + d, X + 1610, 360, .9));
+  for (let n = 0; n < 3; n++) { summen('handyA', tAu + n * .7, .5, 6); summen('schirmA', tAu + n * .7, .5, 6); cue(tAu + n * .7, 'tipp'); }
+  pop('frageA', W('Warum', 17), { x: X + 1610, y: 548 }, 'plopp'); wackeln('frageA', W('nichts', 17), 3, 3);
+  wackeln('maiA', W('Warum', 17) + .1, 4, 3); akzent(W('Warum', 17), .04);
+  // Bewertung: gelb
+  const tB = W('gesagt', 17) - .05;
+  bewerten('k1A', tB, 'gelb');
+  titelFarbe('tbA', W('unentschuldigt', 15) - .2, [W('unentschuldigt', 15) - .2, null, W('fragt', 17) - .1], 'gelb');
+  textAus('tbA', SE(17) + .15);
+}
+
+/* ---------- 2 · Option C: krank melden, obwohl sie nicht krank ist ---------- */
+pan2(SE(17) + .45, 2);
+{
+  const X = S(2);
+  const ids = karten(2, { A: 'gelb' }, ['C', 'rot']);
+  const tV = W('Option', 18), tK = W('Mai', 18) - .3;
+  vorn(2, ids, 'C', tV, tK); bump('k2Ck', WG('C', 18), 1.2);
+  // Mai bleibt zu Hause: Sofa, Mai, Handy
+  ein('sofaCh', tK + .3, { x: X + 1130, y: 640 }, { y: 70 }, 'whoosh'); ein('sofaCv', tK + .3, { x: X + 1130, y: 640 }, { y: 70 });
+  akteur('maiC', { x: X + 1130, y: 700, o: 0 }); tw('maiC', tK + .45, .35, { o: 1 }); tw('maiC', tK + .45, .6, { y: 640 }, 'sanft');
+  ein('handyC', tK + .5, { x: X + 1590, y: 420 }, { x: 70 }); ein('schirmC', tK + .5, { x: X + 1590, y: 420 }, { x: 70 });
+  // sagt, sie ist krank: „Bin krank“ tippt sich, wird gesendet
+  const TXT = 'Bin krank', t1 = W('sagt', 18), t2 = W('krank', 18) + .2;
+  akteur('blaseC', { o: 0, s: .6 }, true); tw('blaseC', t1 - .15, .3, { o: 1, s: 1 }, 'back');
+  HOOKS.push(t => { $('#tippC').textContent = TXT.slice(0, Math.round(TXT.length * clamp((t - t1) / (t2 - t1)))); });
+  for (let n = 0; n < 5; n++) cue(t1 + n * (t2 - t1) / 5, 'tipp');
+  akteur('hakC', { o: 0 }, true); tw('hakC', t2 + .2, .2, { o: 1 }); cue(t2 + .2, 'whoosh'); bump('blaseC', t2 + .15, 1.12);
+  // Aber sie ist nicht krank: Thermometer bleibt normal, Mai lächelt
+  const tTh = W('Aber', 19) - .2;
+  [['thermoC', 1], ['saeuleC', .15]].forEach(([id, sy]) => { akteur(id, { x: X + 1000, y: 420, o: 0, sy }); tw(id, tTh, .4, { o: 1 }); tw(id, tTh, .6, { y: 360 }, 'sanft'); });
+  cue(tTh, 'whoosh');
+  tw('saeuleC', W('nicht', 19) - .2, .7, { sy: .38 }, 'sanft'); cue(W('nicht', 19) - .2, 'scan');
+  pop('okC', W('krank', 19), { x: X + 1070, y: 300 }, 'ding');
+  FROH.push(['maiC', W('nicht', 19), W('herauskommt', 20)]);
+  wackeln('handyC', W('nicht', 19), 3, 2); wackeln('schirmC', W('nicht', 19), 3, 2); akzent(W('nicht', 19), .035);
+  // Wenn das herauskommt: Schatten mit Fragezeichen wächst; Vertrauensbruch: das Band zu Mai und Betrieb reißt
+  const tH = W('herauskommt', 20);
+  akteur('schattenC', { x: X + 1300, y: 345, s: 0, o: 0 });
+  tw('schattenC', tH - .1, .2, { o: .95 }); tw('schattenC', tH - .1, .9, { s: 1 }, 'sanft'); cue(tH, 'whoosh');
+  wackeln('schattenC', tH + .8, 4, 3); wackeln('maiC', tH + .3, 3, 3);
+  ein('betriebC', W('ist', 20) - .1, { x: X + 1620, y: 730 }, { x: 70 });
+  pop('ketteL', W('ein', 20) - .25, { x: X + 1393, y: 722 }, 'klick'); pop('ketteR', W('ein', 20) - .1, { x: X + 1467, y: 722 }, 'klick');
+  const tBr = W('Vertrauensbruch', 20) + .25;
+  tw('ketteL', tBr, .7, { x: X + 1360, y: 790, r: -28, o: 0 }, 'in'); tw('ketteR', tBr, .7, { x: X + 1500, y: 790, r: 28, o: 0 }, 'in');
+  tw('ketteL', tBr - .15, .15, { x: X + 1398 }, 'sinus'); tw('ketteR', tBr - .15, .15, { x: X + 1462 }, 'sinus');
+  cue(tBr, 'plopp'); akzent(tBr, .05);
+  // Abmahnung oder sogar Kündigung: die Bühne leert sich, zwei Papiere fallen herein
+  const tD = W('Das', 21) - .15;
+  aus(['sofaCh', 'sofaCv', 'maiC', 'thermoC', 'saeuleC', 'okC', 'schattenC', 'handyC', 'schirmC', 'betriebC'], tD, .4);
+  const tAb = W('Abmahnung', 21) - .3, tKu = W('Kündigung', 21) - .3;
+  akteur('dokAb', { x: X + 1180, y: 180, o: 0, r: -2 });
+  tw('dokAb', tAb, .12, { o: 1 }); tw('dokAb', tAb, .38, { y: 540 }, 'in'); landen('dokAb', tAb + .38); cue(tAb + .38, 'plopp');
+  akteur('dokKu', { x: X + 1470, y: 200, o: 0, r: 2 });
+  tw('dokKu', tKu, .12, { o: 1 }); tw('dokKu', tKu, .38, { y: 560 }, 'in'); landen('dokKu', tKu + .38); cue(tKu + .38, 'plopp');
+  akzent(tKu + .4, .05); wackeln('dokKu', W('bedeuten', 21), 3, 1.5);
+  // Bewertung: rot
+  bewerten('k2C', W('bedeuten', 21), 'rot');
+  titelFarbe('tbC', W('nicht', 19) - .15, [W('nicht', 19) - .15, null, W('großer', 20) - .1], 'rot');
+  textAus('tbC', SE(21) + .15);
+}
+
+/* ---------- 3 · Option B: sofort Bescheid geben, schnell hinfahren ---------- */
+pan2(SE(21) + .45, 3);
+{
+  const X = S(3);
+  const ids = karten(3, { A: 'gelb', C: 'rot' }, ['B', 'gruen']);
+  const tV = W('Option', 22), tK = W('Mai', 22) - .3;
+  vorn(3, ids, 'B', tV, tK); bump('k3Bk', WG('B', 22), 1.2);
+  // Mai schreibt sofort: Handy mit zwei Chats (Betrieb, Schule)
+  akteur('maiB', { x: X + 1030, y: 450, s: 0 }); tw('maiB', tK + .3, .6, { s: 1 }, 'sanft'); cue(tK + .3, 'pop');
+  ein('handyB', tK + .4, { x: X + 1450, y: 540 }, { x: 90 }, 'whoosh'); ein('schirmB', tK + .4, { x: X + 1450, y: 540 }, { x: 90 });
+  huepfen('maiB', W('schreibt', 22), 12);
+  ['chat1', 'chat2'].forEach((c, k) => { akteur(c, { o: 0, y: 20 }, true); const t = W(k ? 'Schule' : 'Betrieb', 22) - .1; tw(c, t, .45, { o: 1, y: 0 }, 'back'); cue(t, 'pop'); });
+  ['bl1', 'bl2'].forEach(b => akteur(b, { o: 0 }, true));
+  // Mais Nachricht tippt sich (Mai spricht sie), „30 Min.“, gesendet
+  const ZEILEN = [['z1a', W('Ich', 23) - .05, .8], ['z1b', W('es', 23) - .05, .6], ['z2a', W('leid', 23) + .1, .5], ['z2b', W('Ich', 24) + .05, .45]];
+  tw('bl1', W('Ich', 23) - .2, .25, { o: 1 }); tw('bl2', W('leid', 23) - .05, .25, { o: 1 });
+  ZEILEN.forEach(([z, t, d]) => { akteur(z, { sx: 0 }, true); tw(z, t, d, { sx: 1 }, 'inout'); cue(t, 'tipp'); });
+  ['min1', 'min2'].forEach((m, k) => pop(m, W('dreißig', 24) + k * .15, {}, k ? null : 'pop'));
+  ['min1', 'min2'].forEach(m => { AKTEURE.get(el(m)).rel = true; });
+  ['hk1', 'hk2'].forEach((h, k) => { akteur(h, { o: 0 }, true); tw(h, W('da', 24) + .1 + k * .18, .2, { o: 1 }); cue(W('da', 24) + .1 + k * .18, 'ding'); });
+  bump('handyB', W('da', 24) + .3, 1.04); bump('schirmB', W('da', 24) + .3, 1.04);
+  // Sie fährt los: Mai steigt in die Bahn, die Bahn fährt zur Schule
+  const tS = W('Sie', 25), tL = W('los', 25) - .1, BY0 = 730;
+  aus(['handyB', 'schirmB'], tS - .25, .35);
+  ein('bahnB', tS - .2, { x: X + 1060, y: BY0 }, { x: -140 }, 'whoosh');
+  flug('maiB', tS, .6, X + 1060 - 36, BY0 - 36, 80, { s: .42 });
+  tw(['bahnB'], tL, 1.3, { x: X + 1400 }, 'inout'); tw('maiB', tL, 1.3, { x: X + 1400 - 36 }, 'inout');
+  cue(tL, 'whoosh');
+  HOOKS.push(t => { const d = t - tL; if (d > 0 && d < 1.3) for (const id of ['bahnB', 'maiB']) $('#' + id).style.transform += ` translateY(${(-3 * Math.abs(Math.sin(d * 16))).toFixed(2)}px)`; });
+  ein('schuleB', tL + .3, { x: X + 1570, y: 420 }, { y: -60 });
+  // entschuldigt sich bei der Lehrerin: Mai an der Schule, grüner Haken, Nicken
+  const tE = W('entschuldigt', 25);
+  flug('maiB', tE - .3, .7, X + 1320, 430, 90, { s: .8 }); cue(tE - .3, 'whoosh');
+  pop('okB', W('Lehrerin', 25), { x: X + 1420, y: 350 }, 'ding'); bump('schuleB', W('Lehrerin', 25), 1.06);
+  huepfen('maiB', W('Lehrerin', 25) + .15, 10);
+  // Unangenehm? Ja. – Mai windet sich, nickt
+  aus('bahnB', W('Unangenehm', 26) - .2, .4);
+  wackeln('maiB', W('Unangenehm', 26), 4, 3); huepfen('maiB', W('Ja', 27), 8);
+  // Aber ehrlich und schnell: zwei Zeichen
+  pop('ehrlichB', W('ehrlich', 28) - .05, { x: X + 1180, y: 700 }); pop('schnellB', W('schnell', 28) - .05, { x: X + 1440, y: 700 });
+  // Das zeigt Verantwortung: Mai froh, grüne Welle
+  const tVe = W('Verantwortung', 29);
+  FROH.push(['maiB', tVe - .1, 99]);
+  welle('welleB', tVe, X + 1320, 430, 1.1); huepfen('maiB', tVe, 16); bump('ehrlichB', tVe + .1, 1.1); bump('schnellB', tVe + .2, 1.1);
+  bewerten('k3B', tVe + .35, 'gruen');
+  titelFarbe('tbB', W('ehrlich', 28) - .3, [W('ehrlich', 28) - .3, W('ehrlich', 28) - .1, W('schnell', 28) - .15, W('schnell', 28) - .05, tVe - .1, tVe], 'gruen');
+  textAus('tbB', SE(29) + .15);
+}
+
+/* ---------- 4 · Die beste Wahl ist B – Tipps ---------- */
+pan2(SE(29) + .45, 4);
+{
+  const X = S(4);
+  const ids = karten(4, { A: 'gelb', C: 'rot', B: 'gruen' });
+  WELT.insertAdjacentHTML('beforeend', '<div class="a glow" id="glow4" data-frei></div>');
+  WELT.insertBefore(el('glow4'), el('k4A'));
+  akteur('glow4', { x: X + KX[1], y: KY, o: 0 });
+  const tB = W('beste', 30), tK = W('Und', 30) - .1;
+  ['k4A', 'k4C'].forEach(id => tw(id, tB, .5, { o: .4, s: .92 }, 'inout'));
+  tw('k4B', W('Wahl', 30) - .1, .6, { s: 1.12, y: KY - 16 }, 'sanft'); bump('k4Bk', WG('B', 30), 1.25);
+  tw('glow4', W('Wahl', 30) - .1, .6, { o: .75, s: 1.12, y: KY - 16 }, 'sanft');
+  HOOKS.push(t => { const d = t - W('Wahl', 30), g = $('#glow4'); if (d > .5) g.style.opacity = (+g.style.opacity * (.8 + .2 * Math.sin(d * 5))).toFixed(3); });
+  cue(WG('B', 30), 'erfolg'); akzent(WG('B', 30), .05);
+  aus(['k4A', 'k4C'], tK - .1, .4); tw('glow4', tK - .1, .4, { o: 0 });
+  tw('k4B', tK, .9, { x: X + 490, y: 250, s: .56 }, 'inout'); quiz(4, tK);
+  titelEin('tb4', tK + .5, [tK + .5, null, null, null, W('zwei', 30) - .15]);
+  // Zimmer: Fenster, Bett mit Handy, Nachttisch, Regal, Tür
+  const T = tK + .3;
+  ein('fenster4', T, { x: X + 1012, y: 330 }, { y: -50 }); akteur('nacht4', { o: 0 }, true); akteur('mond4', { o: 0, s: .4 }, true);
+  ein('bett4h', T + .05, { x: X + 1110, y: 680 }, { y: 60 }, 'whoosh'); ein('bett4v', T + .05, { x: X + 1110, y: 680 }, { y: 60 });
+  ein('handy4', T + .15, { x: X + 1190, y: 667 }, { y: 60 });
+  ein('tisch4', T + .1, { x: X + 1420, y: 720 }, { y: 60 });
+  ein('regal4', T + .2, { x: X + 1630, y: 400 }, { y: -40 });
+  ein('tuer4', T + .25, { x: X + 1640, y: 650 }, { x: 60 }); ein('blatt4', T + .25, { x: X + 1640, y: 650 }, { x: 60 });
+  // zwei Wecker stellen: zwei Wecker ploppen auf den Nachttisch und klingeln
+  pop('wecker4a', W('zwei', 30) - .1, { x: X + 1385, y: 654 }, 'klick'); pop('wecker4b', W('Wecker', 30) - .05, { x: X + 1455, y: 654 }, 'klick');
+  wackeln('wecker4a', W('stellen', 30), 5, 3); wackeln('wecker4b', W('stellen', 30) + .05, 5, 3); cue(W('stellen', 30), 'ding');
+  // das Handy weit weg vom Bett: Handy fliegt in großem Bogen aufs Regal, Weg gestrichelt
+  const tH = W('weit', 30) - .15, HX = X + 1630, HY = 348;
+  bump('handy4', W('Handy', 30), 1.12);
+  flug('handy4', tH, 1.0, HX, HY, 200); landen('handy4', tH + 1.0); cue(tH, 'whoosh'); cue(tH + 1, 'plopp');
+  $('#bahn4p').setAttribute('d', `M${1190 + 40} ${600} C ${1330} ${300}, ${1500} ${210}, ${1630 - 40} ${290}`);
+  akteur('bahn4', { x: X + 960, y: 540, o: 0, draw: 0 });
+  tw('bahn4', tH, .1, { o: 1 }); tw('bahn4', tH, 1.0, { draw: 1 }, 'inout'); tw('bahn4', W('Abend', 30) - .3, .5, { o: 0 });
+  akzent(tH + .9, .03);
+  // am Abend vorher: das Fenster wird Nacht, der Mond kommt
+  const tAb = W('Abend', 30) - .1;
+  tw('nacht4', tAb, .6, { o: 1 }, 'inout'); tw('mond4', tAb + .2, .5, { o: 1, s: 1 }, 'back'); cue(tAb, 'scan');
+  // die Tasche packen: Rucksack an der Tür, Heft und Stift fliegen hinein
+  ein('tasche4', W('Tasche', 30) - .3, { x: X + 1540, y: 770 }, { y: 60 }, 'pop');
+  [['heft4', 0], ['stift4', .2]].forEach(([id, d]) => {
+    const t0 = W('packen', 30) - .2 + d;
+    akteur(id, { x: X + 1250, y: 420, o: 0, s: .6 });
+    tw(id, t0, .12, { o: 1 }); flug(id, t0, .7, X + 1540, 740, 120, { s: .3 }); tw(id, t0 + .6, .12, { o: 0 });
+    bump('tasche4', t0 + .7, 1.1); cue(t0 + .7, 'plopp');
+  });
+  akzent(W('packen', 30) + .6, .035);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+textAus('tb4', AB);
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mülltrennung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:58px;line-height:68px}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+
+/* Tonnen und Container: Farbe ist Inhalt (currentColor aus Token), dazu ein Schild */
+.tonne,.glasc{aspect-ratio:1;container-type:inline-size}
+.tonne svg,.glasc svg{position:absolute;left:0;top:0;width:100%}
+.tonne .t-deckel{position:absolute;inset:0;transform-origin:81% 22%}
+.t-schild{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);padding:.25em .6em;border-radius:999px;background:var(--surface);
+  color:var(--ink);font:800 12cqw/1.15 Inter;white-space:nowrap;box-shadow:0 2px 6px rgba(22,19,37,.12)}
+.glasc .t-schild{top:68%}
+.gelb{color:var(--warning)} .blau{color:var(--info)} .braun{color:var(--warning-text)} .grau{color:var(--n700)} .neutral{color:var(--n400)}
+.weiss{color:var(--surface)} .gruen-glas{color:var(--success)} .wasser{color:var(--info-bg)}
+
+/* Fenster mit Nachbar */
+.fenster{width:210px;height:190px;border-radius:20px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.fenster .innen{position:absolute;inset:12px;border-radius:12px;overflow:hidden;background:linear-gradient(var(--info-bg),var(--b50))}
+.fenster .portrait{position:absolute;left:50%;top:58%}
+.vorhang{position:absolute;top:0;bottom:0;width:52%;background:repeating-linear-gradient(90deg,var(--b300) 0 14px,var(--b400) 14px 18px)}
+.vorhang.l{left:0;transform-origin:0 50%} .vorhang.r{right:0;transform-origin:100% 50%}
+.fenster .bank{position:absolute;left:-10px;right:-10px;bottom:-8px;height:16px;border-radius:8px;background:var(--n300)}
+
+/* 2 · Becher, Tropfen */
+.rest{width:30px;height:24px;border-radius:50% 50% 45% 45%;background:var(--surface);box-shadow:0 2px 6px rgba(22,19,37,.15)}
+.strich{width:120px;height:12px;border-radius:6px;background:var(--error);transform-origin:center}
+
+/* 3 · flacher Karton */
+.flach{width:220px;height:26px;border-radius:6px;background:linear-gradient(var(--n200),var(--n300));box-shadow:0 4px 10px rgba(22,19,37,.12)}
+.flach::after{content:'';position:absolute;left:44%;top:0;width:32px;height:100%;background:var(--b400)}
+
+/* Müllkalender */
+.mkal{width:230px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.mkal b{display:block;border-radius:18px 18px 0 0;padding:10px 14px;background:var(--b500);color:var(--surface);font:700 20px/24px Inter;white-space:nowrap}
+.mkal .tage{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:14px}
+.mkal .tage span{height:26px;border-radius:7px;background:var(--b50);display:flex;align-items:center;justify-content:center}
+.mkal .tage i{display:block;width:14px;height:14px;border-radius:999px;background:currentColor}
+.mkal .magnet{position:absolute;right:16px;top:-12px;width:26px;height:26px;border-radius:999px;background:var(--error);box-shadow:0 2px 6px rgba(22,19,37,.2)}
+
+/* 6 · Woche */
+.woche{display:flex;gap:8px;padding:14px;border-radius:22px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.woche span{width:64px;height:64px;border-radius:14px;background:var(--b50);display:flex;align-items:center;justify-content:center;font:700 23px/1 Inter;color:var(--n400);position:relative}
+.woche span.an{background:var(--success-bg);color:var(--success-text)}
+.woche span.so{background:var(--error-bg);color:var(--error-text)}
+.woche .x{position:absolute;left:-4px;right:-4px;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:var(--error);transform-origin:left center}
+
+/* 7 · Pfandautomat */
+.automat{width:250px;height:400px;border-radius:26px;background:linear-gradient(var(--surface),var(--n200));box-shadow:0 8px 24px rgba(22,19,37,.12);overflow:hidden}
+.automat .anzeige{position:absolute;left:22px;right:22px;top:22px;height:62px;border-radius:12px;background:var(--b700);color:var(--surface);
+  font:700 24px/62px Inter;text-align:center}
+.automat .loch{position:absolute;left:50%;top:110px;width:100px;height:100px;margin-left:-50px;border-radius:999px;background:var(--ink);box-shadow:inset 0 0 0 10px var(--n300)}
+.automat .schlitz{position:absolute;left:50%;top:262px;width:150px;height:10px;margin-left:-75px;border-radius:5px;background:var(--ink)}
+.automat .bonhalter{position:absolute;left:50%;top:268px;width:124px;height:118px;margin-left:-62px;overflow:hidden}
+.automat .bon{position:absolute;left:0;top:0;width:124px;height:118px;padding:10px 12px;background:var(--surface);border-radius:0 0 8px 8px;
+  box-shadow:0 2px 8px rgba(22,19,37,.12);display:flex;flex-direction:column;gap:7px}
+.bon small{font:800 14px/16px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase}
+.bon i{display:block;height:7px;border-radius:4px;background:var(--n200)}
+.bon em{font:800 22px/24px Inter;font-style:normal;color:var(--success-text)}
+
+/* 8 · Orte */
+.ortk{width:200px;height:170px;border-radius:24px;background:var(--surface);border:2px solid var(--border);box-shadow:0 4px 14px rgba(22,19,37,.08);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ortk .ic{width:84px;height:84px}
+.ortk b{font:700 22px/26px Inter;color:var(--ink);white-space:nowrap}
+
+/* 9 · Ortsschild, Kühlschrank */
+.ort{width:190px;height:96px;border-radius:14px;background:var(--warning);border:6px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.ort div{position:absolute;inset:5px;border:3px solid var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font:800 30px/1 Inter;color:var(--ink)}
+.kuehl{width:250px;height:400px;border-radius:28px;background:linear-gradient(90deg,var(--surface),var(--n200));box-shadow:0 8px 24px rgba(22,19,37,.12)}
+.kuehl .fuge{position:absolute;left:0;right:0;top:128px;height:5px;background:var(--n300)}
+.kuehl .griff{position:absolute;right:20px;width:12px;border-radius:6px;background:var(--b300)}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Welche Tonne? -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a portrait" id="priya1" style="width:220px;height:220px" data-gruppe="p1"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="beutel1" style="width:150px" data-gruppe="p1">{{muellbeutel}}</div>
+  <div class="a frage" id="frage1" data-frei>?</div>
+  <div class="a tonne neutral" id="tAlle" style="width:230px">{{tonne}}<div class="t-deckel">{{tonne-deckel}}</div></div>
+  <div class="a plakette rot" id="nein1" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a tonne gelb" id="t1g" style="width:140px">{{tonne~a}}<div class="t-deckel">{{tonne-deckel~a}}</div><div class="t-schild">Gelb</div></div>
+  <div class="a tonne blau" id="t1b" style="width:140px">{{tonne~b}}<div class="t-deckel">{{tonne-deckel~b}}</div><div class="t-schild">Blau</div></div>
+  <div class="a tonne braun" id="t1br" style="width:140px">{{tonne~c}}<div class="t-deckel">{{tonne-deckel~c}}</div><div class="t-schild">Braun</div></div>
+  <div class="a tonne grau" id="t1gr" style="width:140px">{{tonne~d}}<div class="t-deckel">{{tonne-deckel~d}}</div><div class="t-schild">Grau</div></div>
+  <div class="a fenster" id="fenster1"><div class="bank"></div><div class="innen">
+    <div class="portrait" id="nb1" style="width:130px;height:130px;border-width:5px"><div class="figur">
+      <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+      <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+    <div class="vorhang l" id="vhL1"></div><div class="vorhang r" id="vhR1"></div></div></div>
+  <div class="a welle" id="welle1" style="width:200px;height:200px" data-frei></div>
+
+  <!-- 2 · Gelb: Plastik & Metall -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a tonne gelb" id="tg2" style="width:240px">{{tonne~e}}<div class="t-deckel">{{tonne-deckel~e}}</div><div class="t-schild">Gelb</div></div>
+  <div class="a gelb" id="sack2" style="width:170px">{{sack}}</div>
+  <div class="a chip klein" id="oder2">oder</div>
+  <div class="a chip klein" id="cPlastik">Plastik</div>
+  <div class="a chip klein" id="cMetall">Metall</div>
+  <div class="a" id="becher2" style="width:130px">{{becher}}</div>
+  <div class="a" id="chips2" style="width:130px">{{chipstuete}}</div>
+  <div class="a" id="dose2" style="width:130px">{{dose}}</div>
+  <div class="a" id="becherLeer" style="width:160px" data-dreht>{{becher~2}}</div>
+  <div class="a rest" id="rest2" data-frei></div>
+  <div class="a chip gruen klein" id="cLeer"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>leer</div>
+  <div class="a" id="tropfen2" style="width:70px"><svg viewBox="0 0 70 70"><path d="M35 6C46 22 56 34 56 46a21 21 0 0 1-42 0C14 34 24 22 35 6Z" fill="var(--info)"/><path d="M24 44a11 11 0 0 0 8 12" stroke="var(--info-bg)" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="a strich" id="strich2" data-frei></div>
+  <div class="a chip rot klein" id="cNicht">nicht spülen</div>
+
+  <!-- 3 · Blau: Papier & Karton -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a tonne blau" id="tb3t" style="width:240px">{{tonne~f}}<div class="t-deckel">{{tonne-deckel~f}}</div><div class="t-schild">Blau</div></div>
+  <div class="a chip klein" id="cPapier">Papier</div>
+  <div class="a chip klein" id="cKarton">Karton</div>
+  <div class="a" id="zeitung3" style="width:140px">{{zeitung}}</div>
+  <div class="a" id="karton3" style="width:200px">{{karton}}</div>
+  <div class="a flach" id="flach3a"></div><div class="a flach" id="flach3b"></div><div class="a flach" id="flach3c"></div>
+  <div class="a chip gruen klein" id="cMehr">mehr Platz</div>
+
+  <!-- 4 · Braun: Bioabfall -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a tonne braun" id="tbr4" style="width:240px">{{tonne~g}}<div class="t-deckel">{{tonne-deckel~g}}</div><div class="t-schild">Braun</div></div>
+  <div class="a" id="gemuese4" style="width:140px">{{gemuese}}</div>
+  <div class="a" id="schale4" style="width:140px">{{bananenschale}}</div>
+  <div class="a braun" id="kaffee4" style="width:140px">{{kaffeesatz}}</div>
+  <div class="a" id="tuete4" style="width:170px">{{tuete}}</div>
+  <div class="a plakette rot" id="nein4" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a mkal" id="mkal4"><b>Müllkalender</b><div class="tage"></div></div>
+
+  <!-- 5 · Grau/Schwarz: Restmüll -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a tonne grau" id="tgr5" style="width:240px">{{tonne~h}}<div class="t-deckel">{{tonne-deckel~h}}</div><div class="t-schild" style="font-size:9cqw">Grau/Schwarz</div></div>
+  <div class="a tonne gelb" id="m5g" style="width:110px">{{tonne~i}}<div class="t-deckel">{{tonne-deckel~i}}</div><div class="t-schild" style="font-size:14cqw">Gelb</div></div>
+  <div class="a tonne blau" id="m5b" style="width:110px">{{tonne~j}}<div class="t-deckel">{{tonne-deckel~j}}</div><div class="t-schild" style="font-size:14cqw">Blau</div></div>
+  <div class="a tonne braun" id="m5br" style="width:110px">{{tonne~k}}<div class="t-deckel">{{tonne-deckel~k}}</div><div class="t-schild" style="font-size:14cqw">Braun</div></div>
+  <div class="a" id="ssb5" style="width:130px">{{staubsaugerbeutel}}</div>
+  <div class="a" id="tl5" style="width:150px" data-gruppe="teller">{{teller-links}}</div>
+  <div class="a" id="tr5" style="width:150px" data-gruppe="teller">{{teller-rechts}}</div>
+  <div class="a welle" id="welle5" style="width:160px;height:160px;border-color:var(--n300)" data-frei></div>
+
+  <!-- 6 · Glas: Container – nicht sonntags -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a tonne grau" id="tm6" style="width:170px">{{tonne~l}}<div class="t-deckel">{{tonne-deckel~l}}</div><div class="t-schild">Tonne</div></div>
+  <div class="a gruen-glas" id="fl6" style="width:150px">{{flasche}}</div>
+  <div class="a plakette rot" id="nein6" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a glasc weiss" id="gc1" style="width:200px">{{glascontainer}}<div class="t-schild">Weiß</div></div>
+  <div class="a glasc gruen-glas" id="gc2" style="width:200px">{{glascontainer~2}}<div class="t-schild">Grün</div></div>
+  <div class="a glasc braun" id="gc3" style="width:200px">{{glascontainer~3}}<div class="t-schild">Braun</div></div>
+  <div class="a portrait" id="priya6" style="width:140px;height:140px;border-width:5px" data-gruppe="p6"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a weiss" id="flW6" style="width:120px" data-gruppe="p6">{{flasche~w}}</div>
+  <div class="a braun" id="flB6" style="width:120px" data-gruppe="p6">{{flasche~b}}</div>
+  <div class="a weiss" id="flW6b" style="width:120px" data-gruppe="p6">{{flasche~w2}}</div>
+  <div class="a woche" id="woche6"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span id="so6">So<i class="x" id="x6"></i></span></div>
+  <div class="a" id="sonne6" style="width:90px">{{sonne}}</div>
+  <div class="a welle" id="laut6a" style="width:200px;height:200px;border-color:var(--warning)" data-frei></div>
+  <div class="a welle" id="laut6b" style="width:200px;height:200px;border-color:var(--warning)" data-frei></div>
+  <div class="a chip gelb klein" id="cLaut">zu laut</div>
+
+  <!-- 7 · Pfand = Geld zurück -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a wasser" id="wf7" style="width:230px">{{flasche~p}}</div>
+  <div class="a" id="dose7" style="width:180px">{{getraenkedose}}</div>
+  <div class="a" id="pz7" style="width:52px" data-frei>{{pfandzeichen}}</div>
+  <div class="a" id="pzd7" style="width:40px" data-frei>{{pfandzeichen~2}}</div>
+  <div class="a" id="pzG7" style="width:170px">{{pfandzeichen~3}}</div>
+  <div class="a welle" id="welle7" style="width:180px;height:180px" data-frei></div>
+  <div class="a automat" id="automat7"><div class="anzeige">Pfand</div><div class="loch"></div><div class="schlitz"></div>
+    <div class="bonhalter"><div class="bon" id="bon7"><small>Pfandbon</small><i></i><i style="width:70%"></i><em>€</em></div></div></div>
+  <div class="a chip klein" id="markt7"><svg viewBox="0 0 30 30"><path d="M3 5h4l3 14h14l3-10H9" stroke="var(--b500)" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="24" r="2.5" fill="var(--b500)"/><circle cx="22" cy="24" r="2.5" fill="var(--b500)"/></svg>Supermarkt</div>
+  <div class="a" id="muenze7" style="width:100px" data-dreht>{{muenze}}</div>
+
+  <!-- 8 · Batterien & Elektro: extra -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="bat8" style="width:120px">{{batterie}}</div>
+  <div class="a" id="hy8" style="width:150px">{{handy}}</div>
+  <div class="a" id="wk8" style="width:140px">{{wasserkocher}}</div>
+  <div class="a tonne grau" id="thm8" style="width:200px">{{tonne~m}}<div class="t-deckel">{{tonne-deckel~m}}</div><div class="t-schild" style="font-size:10cqw">Hausmüll</div></div>
+  <div class="a plakette rot" id="nein8" data-frei><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a ortk" id="ort1"><div class="ic">{{sammelbox}}</div><b>Supermarkt</b></div>
+  <div class="a ortk" id="ort2"><div class="ic"><svg viewBox="0 0 84 84"><rect x="22" y="30" width="40" height="30" rx="8" fill="var(--b500)"/><path d="M32 14v16M52 14v16" stroke="var(--b700)" stroke-width="7" stroke-linecap="round"/><path d="M42 60v10c0 6-6 8-12 8" stroke="var(--b400)" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M34 42l6 0-4 8h8" stroke="var(--warning)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><b>Elektrohandel</b></div>
+  <div class="a ortk" id="ort3"><div class="ic"><svg viewBox="0 0 84 84"><path d="M10 34h64l-6 38a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4Z" fill="var(--b500)"/><path d="M6 26h72v10H6Z" fill="var(--b700)"/><path d="M30 56a12 12 0 0 1 22-6M54 60a12 12 0 0 1-22 4" stroke="var(--surface)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 44l4 7-8 1Z M34 70l-4-7 8-1Z" fill="var(--surface)"/></svg></div><b>Wertstoffhof</b></div>
+  <div class="a plakette gruen" id="ok8a" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok8b" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok8c" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 9 · Müllkalender checken -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a ort" id="ort9"><div id="ortText9">Stadt A</div></div>
+  <div class="a tonne gelb" id="t9g" style="width:130px">{{tonne~n}}<div class="t-deckel">{{tonne-deckel~n}}</div><div class="t-schild" style="font-size:14cqw">Gelb</div></div>
+  <div class="a tonne blau" id="t9b" style="width:130px">{{tonne~o}}<div class="t-deckel">{{tonne-deckel~o}}</div><div class="t-schild" style="font-size:14cqw">Blau</div></div>
+  <div class="a tonne braun" id="t9br" style="width:130px">{{tonne~q}}<div class="t-deckel">{{tonne-deckel~q}}</div><div class="t-schild" style="font-size:14cqw">Braun</div></div>
+  <div class="a tonne grau" id="t9gr" style="width:130px">{{tonne~r}}<div class="t-deckel">{{tonne-deckel~r}}</div><div class="t-schild" style="font-size:14cqw">Grau</div></div>
+  <div class="a kuehl" id="kuehl9" data-gruppe="kuehl"><div class="fuge"></div><div class="griff" style="top:40px;height:64px"></div><div class="griff" style="top:160px;height:110px"></div></div>
+  <div class="a mkal" id="mkal9" data-gruppe="kuehl"><div class="magnet"></div><b>Müllkalender</b><div class="tage"></div></div>
+  <div class="a portrait" id="priya9" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 10 · Gelb · Blau · Braun · Grau · Glas -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a tonne gelb" id="t10g" style="width:140px">{{tonne~s}}<div class="t-deckel">{{tonne-deckel~s}}</div><div class="t-schild">Gelb</div></div>
+  <div class="a tonne blau" id="t10b" style="width:140px">{{tonne~t}}<div class="t-deckel">{{tonne-deckel~t}}</div><div class="t-schild">Blau</div></div>
+  <div class="a tonne braun" id="t10br" style="width:140px">{{tonne~u}}<div class="t-deckel">{{tonne-deckel~u}}</div><div class="t-schild">Braun</div></div>
+  <div class="a tonne grau" id="t10gr" style="width:140px">{{tonne~v}}<div class="t-deckel">{{tonne-deckel~v}}</div><div class="t-schild">Grau</div></div>
+  <div class="a glasc gruen-glas" id="gc10" style="width:150px">{{glascontainer~4}}<div class="t-schild">Glas</div></div>
+  <div class="a portrait" id="priya10" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="i10a" style="width:110px">{{becher~3}}</div>
+  <div class="a" id="i10b" style="width:110px">{{zeitung~2}}</div>
+  <div class="a" id="i10c" style="width:110px">{{bananenschale~2}}</div>
+  <div class="a" id="i10d" style="width:110px">{{muellbeutel~2}}</div>
+  <div class="a gruen-glas" id="i10e" style="width:110px">{{flasche~z}}</div>
+  <div class="a fenster" id="fenster10"><div class="bank"></div><div class="innen">
+    <div class="portrait" id="nb10" style="width:130px;height:130px;border-width:5px"><div class="figur">
+      <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+      <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+    <div class="vorhang l" id="vhL10"></div><div class="vorhang r" id="vhR10"></div></div></div>
+  <div class="a welle" id="welle10" style="width:230px;height:230px;border-color:var(--success)" data-frei></div>
+  <div class="a plakette gruen" id="ok10" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Welche Tonne?</div></div>
+<div class="block" id="tb2"><div class="titel">Gelb: Plastik &amp; Metall</div></div>
+<div class="block" id="tb3"><div class="titel">Blau: Papier &amp; Karton</div></div>
+<div class="block" id="tb4"><div class="titel">Braun: Bioabfall</div></div>
+<div class="block" id="tb5"><div class="titel">Grau/Schwarz: Restmüll</div></div>
+<div class="block" id="tb6"><div class="titel">Glas: Container – nicht sonntags</div></div>
+<div class="block" id="tb7"><div class="titel">Pfand = Geld zurück</div></div>
+<div class="block" id="tb8"><div class="titel">Batterien &amp; Elektro: extra</div></div>
+<div class="block" id="tb9"><div class="titel">Müllkalender checken</div></div>
+<div class="block" id="tb10"><div class="titel">Gelb · Blau · Braun · Grau · Glas</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Richtig trennen ist einfach.</div>
+  <div class="klein a" id="asUnter" style="position:relative">In Deutschland kommt nicht alles in eine Tonne. Wer richtig trennt, hat keinen Ärger.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(26);
+const MX = 1320, MY = 540;
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+// Bogenhöhe begrenzt, damit die Kurve im Scheitel nicht ruckt (Beschleunigung ~ 8·h·(3/(30·d))² < 22 px/Frame²)
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: Math.sign(h) * Math.min(Math.abs(h), 230 * d * d) });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const welleNochmal = (id, t, d = .9) => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const plumps = (id, t) => { tw(id, t, .1, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .1, .38, { sy: 1, sx: 1 }, 'sanft'); };
+
+/* ---------- Tonnen: Deckel klappt auf, Gegenstand fliegt hinein ---------- */
+function tonne(id, basis) { akteur(id, basis); akteur($(`#${id} .t-deckel`), {}, true); }
+const deckel = (id, t, auf = true) => tw(`#${id} .t-deckel`, t, auf ? .2 : .4, { r: auf ? 58 : 0 }, auf ? 'out' : 'bounce');
+// einwurf(Gegenstand, Tonne, Start, Dauer, Bogen): landet oben in der Öffnung und verschwindet
+function einwurf(item, ziel, t, d = .7, h = 150, lid = true) {
+  const x = wertBei(ziel, 'x', t + d), y = wertBei(ziel, 'y', t + d), w = el(ziel).offsetWidth * wertBei(ziel, 's', t + d);
+  if (lid) { deckel(ziel, t + d * .3); deckel(ziel, t + d + .12, false); }
+  flug(item, t, d, x - w * .06, y - w * (lid ? .26 : .12), h, { s: .35, r: 8 });
+  tw(item, t + d * .82, d * .18, { o: 0 }, 'lin');
+  plumps(ziel, t + d); cue(t, 'whoosh'); cue(t + d, 'plopp');
+}
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+function figur(id, basis) {
+  akteur(id, basis);
+  for (const k of ['froh', 'auf']) { const f = $(`#${id} .${k}`); if (f) akteur(f, { o: 0 }, true); }
+  akteur($(`#${id} .zu`), {}, true);
+}
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) if ($(`#${id} .${m}`)) set(`#${id} .${m}`, t, { o: m === k ? 1 : 0 }); };
+const froh = (id, t) => mund(id, t, 'froh');
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+// Fenster mit Nachbar: Vorhang auf, Nachbar schaut herein
+function fenster(n, basis) {
+  akteur('fenster' + n, basis);
+  figur('nb' + n, { x: 0, y: 140 });
+  akteur('vhL' + n, {}, true); akteur('vhR' + n, {}, true);
+}
+const vorhangAuf = (n, t) => { tw(['vhL' + n, 'vhR' + n], t, .7, { sx: .2 }, 'sanft'); tw('nb' + n, t + .15, .7, { y: 0 }, 'sanft'); cue(t, 'whoosh'); };
+
+/* ---------- Kamera ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < 10; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+
+// Müllkalender: Tage mit farbigen Punkten
+const KAL_FARBEN = ['gelb', '', 'blau', '', 'braun', '', 'grau', '', 'gelb', '', 'braun', 'blau', '', 'grau', ''];
+document.querySelectorAll('.mkal .tage').forEach(g => { g.innerHTML = KAL_FARBEN.map(f => `<span>${f ? `<i class="${f}"></i>` : ''}</span>`).join(''); });
+const kalPunkte = (id, t, d = .06) => [...document.querySelectorAll(`#${id} .tage i`)].forEach((p, i) => { akteur(p, { s: 0 }, true); tw(p, t + i * d, .4, { s: 1 }, 'back'); });
+
+/* ---------- 1 · Welche Tonne? ---------- */
+const X0 = S(0);
+titelEin('tb1', W('Eine', 1) - .2);
+figur('priya1', { x: X0 + 1035, y: 450, s: 0 }); tw('priya1', A(-.6), .7, { s: 1 }, 'sanft'); cue(A(-.6), 'pop');
+ein('beutel1', A(-.35), { x: X0 + 1160, y: 560 }, { y: 60 });
+// Eine Tonne für alles?
+tonne('tAlle', { x: X0 + 1440, y: 640, o: 0, s: .5 });
+tw('tAlle', W('Tonne', 1) - .25, .15, { o: 1 }); tw('tAlle', W('Tonne', 1) - .25, .6, { s: 1 }, 'sanft'); cue(W('Tonne', 1) - .25, 'pop');
+deckel('tAlle', W('alles', 1) - .1); deckel('tAlle', W('alles', 1) + .3, false); huepfen('tAlle', W('alles', 1) - .05, 14);
+flug('beutel1', W('alles', 1) - .1, .25, X0 + 1170, 548, 0, { r: 3 }); tw('beutel1', W('alles', 1) + .15, .3, { x: X0 + 1160, y: 560, r: 0 }, 'sanft');
+// Nicht in Deutschland: rotes Kreuz, Tonne wackelt, dann teilt sie sich in vier
+pop('nein1', W('Nicht', 2), { x: X0 + 1545, y: 520 }, 'plopp'); wackeln('tAlle', W('Nicht', 2), 4, 3); akzent(W('Nicht', 2));
+aus('nein1', W('Deutschland', 2) + .05, .25);
+tw('tAlle', W('Deutschland', 2) + .05, .3, { s: .3, o: 0 }, 'in');
+const T1 = [['t1g', 1180], ['t1b', 1330], ['t1br', 1480], ['t1gr', 1630]];
+T1.forEach(([id, x], i) => {
+  tonne(id, { x: X0 + 1440, y: 650, s: .3, o: 0 });
+  const t0 = W('Deutschland', 2) + .2 + i * .1;
+  tw(id, t0, .1, { o: 1 }); tw(id, t0, .75, { x: X0 + x, y: 720 }, 'inout', { bogen: 110 }); tw(id, t0, .75, { s: 1 }, 'sanft'); cue(t0, 'pop');
+  plumps(id, t0 + .75);
+});
+// Hier wird der Müll getrennt: Priya staunt, Deckel klappen der Reihe nach
+mund('priya1', W('Hier', 3), 'auf');
+huepfen('beutel1', W('Müll', 3) - .1, 16);
+pop('frage1', W('Müll', 3), { x: X0 + 1190, y: 330 });
+T1.forEach(([id], i) => { const t = W('getrennt', 3) + i * .13; deckel(id, t); deckel(id, t + .32, false); cue(t, 'klick'); });
+// Und die Nachbarn achten darauf: Fenster, Vorhang auf, Nachbar schaut
+fenster(1, { x: X0 + 1600, y: 390, o: 0 });
+tw('fenster1', W('Und', 4) - .2, .4, { o: 1 }); tw('fenster1', W('Und', 4) - .2, .6, { x: X0 + 1600 }, 'weich');
+set('fenster1', 0, { x: X0 + 1680 }); cue(W('Und', 4) - .2, 'whoosh');
+vorhangAuf(1, W('Nachbarn', 4) - .1);
+welle('welle1', W('achten', 4), X0 + 1600, 390, 1.0); akzent(W('achten', 4), .03);
+wackeln('frage1', W('achten', 4) + .1, 4, 3);
+mund('priya1', W('darauf', 4) + .3, 'zu');
+schweben(['frage1'], 4);
+textAus('tb1', SE(4) + .15);
+
+/* ---------- 2 · Gelb: Plastik & Metall ---------- */
+pan2(SE(4) + .3, 1); const X1 = S(1);
+titelEin('tb2', W('Die', 5), [W('gelbe', 5) - .1, W('Plastik', 5) - .1, null, W('Metall', 5) - .1]);
+tonne('tg2', { x: X1 + 1420, y: 620, o: 0 });
+tw('tg2', W('gelbe', 5) - .15, .4, { o: 1 }); tw('tg2', W('gelbe', 5) - .15, .6, { y: 620 }, 'weich'); set('tg2', 0, { y: 700 });
+plumps('tg2', W('gelbe', 5) + .3); cue(W('gelbe', 5) - .15, 'whoosh');
+pop('oder2', W('oder', 5), { x: X1 + 1545, y: 440 });
+ein('sack2', W('Sack', 5) - .2, { x: X1 + 1630, y: 650 }, { x: 90 }, 'whoosh');
+pop('cPlastik', W('Plastik', 5), { x: X1 + 1300, y: 320 });
+pop('cMetall', W('Metall', 5), { x: X1 + 1520, y: 320 });
+aus('oder2', W('Zum', 6), .3);
+// Joghurtbecher, Chipstüten, Konservendosen: erscheinen und fliegen hinein
+[['becher2', 'Joghurtbecher', 380], ['chips2', 'Chipstüten', 540], ['dose2', 'Konservendosen', 700]].forEach(([id, w, y]) => {
+  ein(id, W(w, 6) - .15, { x: X1 + 1030, y }, { x: -70 }, 'pop');
+  einwurf(id, 'tg2', W(w, 6) + .55, .7, 170);
+});
+// leer sein, aber nicht gespült
+ein('becherLeer', W('Verpackungen', 7) - .1, { x: X1 + 1060, y: 480 }, { y: 80 }, 'whoosh');
+tw('becherLeer', W('leer', 7) - .25, .4, { r: -100 }, 'inout'); tw('becherLeer', W('leer', 7) + .55, .45, { r: 0 }, 'sanft');
+akteur('rest2', { x: X1 + 1022, y: 488, o: 0 });
+set('rest2', W('leer', 7) + .1, { o: 1 }); tw('rest2', W('leer', 7) + .1, .4, { y: 640 }, 'in'); tw('rest2', W('leer', 7) + .4, .1, { o: 0 });
+cue(W('leer', 7) + .45, 'plopp');
+pop('cLeer', W('sein', 7), { x: X1 + 1060, y: 650 }, 'ding');
+akteur('tropfen2', { x: X1 + 1210, y: 300, o: 0 });
+tw('tropfen2', W('aber', 7) - .1, .15, { o: 1 }); tw('tropfen2', W('aber', 7) - .1, .45, { y: 470 }, 'in');
+plumps('tropfen2', W('aber', 7) + .35); cue(W('aber', 7) + .35, 'plopp');
+akteur('strich2', { x: X1 + 1210, y: 470, o: 0, r: -35, sx: 0 });
+set('strich2', W('nicht', 7), { o: 1 }); tw('strich2', W('nicht', 7), .3, { sx: 1 }, 'weich'); cue(W('nicht', 7), 'kritzeln');
+pop('cNicht', W('gespült', 7) - .1, { x: X1 + 1190, y: 580 }); akzent(W('gespült', 7));
+schweben(['sack2'], 3);
+textAus('tb2', SE(7) + .2);
+
+/* ---------- 3 · Blau: Papier & Karton ---------- */
+pan2(SE(7) + .3, 2); const X2 = S(2);
+titelEin('tb3', W('Die', 8), [W('blaue', 8) - .1, W('Papier', 8) - .1, null, W('Karton', 8) - .1]);
+tonne('tb3t', { x: X2 + 1500, y: 620, o: 0 });
+tw('tb3t', W('blaue', 8) - .2, .4, { o: 1 }); tw('tb3t', W('blaue', 8) - .2, .6, { y: 620 }, 'weich'); set('tb3t', 0, { y: 700 });
+plumps('tb3t', W('blaue', 8) + .25); cue(W('blaue', 8) - .2, 'whoosh');
+pop('cPapier', W('Papier', 8), { x: X2 + 1400, y: 320 });
+ein('zeitung3', W('Papier', 8) - .35, { x: X2 + 1060, y: 380 }, { x: -70 }, 'pop');
+einwurf('zeitung3', 'tb3t', W('Papier', 8) + .3, .75, 160);
+pop('cKarton', W('Karton', 8), { x: X2 + 1590, y: 320 });
+ein('karton3', W('Karton', 8) - .15, { x: X2 + 1080, y: 620 }, { y: 80 }, 'whoosh');
+// Kartons klein machen: wackelt, wird flach gedrückt
+wackeln('karton3', W('bitte', 9), 3, 3);
+tw('karton3', W('klein', 9), .22, { sy: .18, sx: 1.2, y: 686 }, 'in'); tw('karton3', W('klein', 9) + .2, .12, { o: 0 }, 'lin');
+cue(W('klein', 9) + .2, 'plopp'); akzent(W('klein', 9) + .2, .03);
+akteur('flach3a', { x: X2 + 1080, y: 690, o: 0, sx: .8 });
+set('flach3a', W('klein', 9) + .2, { o: 1 }); tw('flach3a', W('klein', 9) + .2, .4, { sx: 1 }, 'back');
+// damit mehr hineinpasst: flache Kartons gleiten durch den Deckel
+const FLACH = [['flach3a', W('damit', 9) - .05], ['flach3b', W('mehr', 9) + .05], ['flach3c', W('hineinpasst', 9) + .2]];
+FLACH.forEach(([id, t], i) => {
+  if (i) { akteur(id, { x: X2 + 1080, y: 690, s: 0 }); tw(id, t - .45, .4, { s: 1 }, 'back'); cue(t - .45, 'pop'); }
+  tw(id, t, .2, { r: -3 }, 'sinus');
+  einwurf(id, 'tb3t', t + .1, .6, 130);
+});
+pop('cMehr', W('hineinpasst', 9) + .5, { x: X2 + 1500, y: 440 }, 'erfolg');
+textAus('tb3', SE(9) + .2);
+
+/* ---------- 4 · Braun: Bioabfall ---------- */
+pan2(SE(9) + .3, 3); const X3 = S(3);
+titelEin('tb4', W('Die', 10), [W('braune', 10) - .1, W('Bioabfall', 10) - .1]);
+tonne('tbr4', { x: X3 + 1500, y: 620, o: 0 });
+tw('tbr4', W('braune', 10) - .2, .4, { o: 1 }); tw('tbr4', W('braune', 10) - .2, .6, { y: 620 }, 'weich'); set('tbr4', 0, { y: 700 });
+plumps('tbr4', W('braune', 10) + .25); cue(W('braune', 10) - .2, 'whoosh');
+deckel('tbr4', W('Bioabfall', 10)); deckel('tbr4', W('Bioabfall', 10) + .45, false);
+[['gemuese4', 'Gemüsereste', 360], ['schale4', 'Obstschalen', 520], ['kaffee4', 'Kaffeesatz', 680]].forEach(([id, w, y]) => {
+  ein(id, W(w, 10) - .3, { x: X3 + 1060, y }, { x: -70 }, 'pop');
+  einwurf(id, 'tbr4', W(w, 10) + .25, .6, 150);
+});
+// Tüte mit „Bio“ prallt ab
+ein('tuete4', W('Plastiktüten', 11) - .25, { x: X3 + 1090, y: 540 }, { y: 80 }, 'whoosh');
+bump('tuete4', W('Bio', 11) - .45, 1.08);
+tw('tuete4', W('Bio', 11) - .05, .42, { x: X3 + 1420, y: 440, r: 3 }, 'in', { bogen: 60 });
+const PRALL = W('Bio', 11) + .37;
+tw('tuete4', PRALL, .6, { x: X3 + 1110, y: 560, r: 0 }, 'out', { bogen: 90 });
+wackeln('tbr4', PRALL, 4, 3); cue(PRALL, 'plopp'); akzent(PRALL, .04);
+pop('nein4', PRALL + .05, { x: X3 + 1575, y: 470 }, 'klick');
+// Was bei dir gilt, steht im Müllkalender
+ein('mkal4', W('Was', 12) - .1, { x: X3 + 1110, y: 350 }, { y: -60 }, 'whoosh');
+kalPunkte('mkal4', W('gilt', 12) - .1);
+bump('mkal4', W('Müllkalender', 12), 1.08); akzent(W('Müllkalender', 12));
+schweben(['tuete4'], 3);
+textAus('tb4', SE(12) + .2);
+
+/* ---------- 5 · Grau/Schwarz: Restmüll ---------- */
+pan2(SE(12) + .3, 4); const X4 = S(4);
+titelEin('tb5', W('In', 13), [W('graue', 13) - .1, W('Restmüll', 13) - .1]);
+tonne('tgr5', { x: X4 + 1520, y: 620, o: 0 });
+tw('tgr5', W('graue', 13) - .25, .4, { o: 1 }); tw('tgr5', W('graue', 13) - .25, .6, { y: 620 }, 'weich'); set('tgr5', 0, { y: 700 });
+plumps('tgr5', W('graue', 13) + .2); cue(W('graue', 13) - .25, 'whoosh');
+// grau oder schwarz: die Tonne wird kurz dunkel
+HOOKS.push(t => { const d = t - W('schwarze', 13); $('#tgr5').style.color = d > 0 && d < 1.1 ? 'var(--ink)' : 'var(--n700)'; });
+bump('tgr5', W('schwarze', 13), 1.05);
+deckel('tgr5', W('Restmüll', 13)); deckel('tgr5', W('Restmüll', 13) + .5, false); cue(W('Restmüll', 13), 'klick');
+// nirgendwo anders: der Beutel probiert Gelb, Blau, Braun – jede Tonne schüttelt den Kopf
+const M5 = [['m5g', 1000], ['m5b', 1130], ['m5br', 1260]];
+M5.forEach(([id, x], i) => { tonne(id, { x: X4 + x, y: 740, s: 0 }); tw(id, W('Also', 14) + i * .1, .45, { s: 1 }, 'back'); cue(W('Also', 14) + i * .1, 'pop'); });
+ein('ssb5', W('alles', 14) - .2, { x: X4 + 1130, y: 430 }, { y: -60 }, 'whoosh');
+[['nirgendwo', 'm5g', 1000], ['anders', 'm5b', 1130], ['hinpasst', 'm5br', 1260]].forEach(([w, id, x]) => {
+  const t = W(w, 14) - .1;
+  flug('ssb5', t, .35, X4 + x, 590, 60);
+  wackeln(id, t + .35, 3, 4); cue(t + .35, 'klick');
+});
+einwurf('ssb5', 'tgr5', W('Staubsaugerbeutel', 14) - .1, .75, 170);
+// kaputtes Geschirr: Teller fällt, zerbricht, Scherben fliegen hinein
+['tl5', 'tr5'].forEach(id => {
+  akteur(id, { x: X4 + 1150, y: 330, o: 0 });
+  tw(id, W('oder', 14) - .2, .15, { o: 1 }); tw(id, W('kaputtes', 14) - .15, .35, { y: 480 }, 'in');
+});
+const BRUCH = W('kaputtes', 14) + .2;
+tw('tl5', BRUCH, .45, { x: X4 + 1112, r: -3 }, 'weich'); tw('tr5', BRUCH, .45, { x: X4 + 1188, r: 3 }, 'weich');
+welle('welle5', BRUCH, X4 + 1150, 480, .7); cue(BRUCH, 'plopp'); akzent(BRUCH, .04);
+einwurf('tl5', 'tgr5', W('Geschirr', 14) + .1, .65, 150);
+einwurf('tr5', 'tgr5', W('Geschirr', 14) + .25, .65, 150, false);
+textAus('tb5', SE(14) + .3);
+
+/* ---------- 6 · Glas: Container – nicht sonntags ---------- */
+pan2(SE(14) + .45, 5); const X5 = S(5);
+titelEin('tb6', W('Glas', 15) - .1, [W('Glas', 15) - .1, W('Glascontainer', 15) - .1, null, W('nicht', 17) - .1, W('sonntags', 17) - .1]);
+tonne('tm6', { x: X5 + 1150, y: 650, s: 0 }); tw('tm6', W('Glas', 15) - .1, .5, { s: 1 }, 'back');
+ein('fl6', W('Glas', 15) - .2, { x: X5 + 1150, y: 420 }, { y: -60 }, 'pop');
+pop('nein6', W('nicht', 15), { x: X5 + 1225, y: 590 }, 'plopp'); wackeln('tm6', W('nicht', 15), 4, 3); akzent(W('nicht', 15));
+aus(['tm6', 'nein6'], W('sondern', 15), .35);
+tw('fl6', W('sondern', 15), .6, { x: X5 + 1330, y: 360 }, 'inout', { bogen: 40 });
+const GC = [['gc1', 1120], ['gc2', 1330], ['gc3', 1540]];
+GC.forEach(([id, x], i) => ein(id, W('Glascontainer', 15) - .2 + i * .12, { x: X5 + x, y: 560 }, { y: 90 }, 'whoosh'));
+figur('priya6', { x: X5 + 995, y: 745, s: 0 }); tw('priya6', W('Glascontainer', 15) + .2, .5, { s: 1 }, 'back'); cue(W('Glascontainer', 15) + .2, 'pop');
+// Weißes, grünes und braunes Glas: Flaschen fliegen in ihren Container
+const loch = (id, t) => [wertBei(id, 'x', t) - 30, wertBei(id, 'y', t) - 26];
+const wurf = (fl, gc, t, von) => {
+  if (von) { akteur(fl, { x: von[0], y: von[1], s: 0 }); tw(fl, t - .3, .3, { s: 1 }, 'back'); }
+  const [x, y] = loch(gc, t + .6);
+  flug(fl, t, .6, x, y, 130, { s: .45, r: 25 }); tw(fl, t + .48, .12, { o: 0 }, 'lin');
+  plumps(gc, t + .6); cue(t, 'whoosh'); cue(t + .6, 'ding');
+};
+wurf('flW6', 'gc1', W('Weißes', 16) - .1, [X5 + 1060, 690]);
+wurf('fl6', 'gc2', W('grünes', 16) - .15);
+wurf('flB6', 'gc3', W('braunes', 16) - .1, [X5 + 1060, 690]);
+froh('priya6', W('getrennt', 16));
+GC.forEach(([id], i) => huepfen(id, W('getrennt', 16) + i * .12, 12));
+// nur werktags tagsüber, nicht sonntags
+GC.forEach(([id]) => tw(id, W('Und', 17) - .1, .6, { y: 470 }, 'inout'));
+ein('woche6', W('bitte', 17) - .1, { x: X5 + 1360, y: 700 }, { y: 70 }, 'whoosh');
+const TAGE6 = [...document.querySelectorAll('#woche6 span')];
+HOOKS.push(t => TAGE6.forEach((d, i) => {
+  if (i < 6) d.className = t >= W('werktags', 17) + i * .1 ? 'an' : '';
+  else d.className = t >= W('sonntags', 17) - .05 ? 'so' : '';
+}));
+cue(W('werktags', 17), 'scan');
+pop('sonne6', W('tagsüber', 17) - .1, { x: X5 + 1665, y: 700 });
+wurf('flW6b', 'gc1', W('einwerfen', 17) - .1, [X5 + 1060, 690]);
+akteur('x6', { sx: 0 }, true); tw('x6', W('sonntags', 17), .3, { sx: 1 }, 'weich'); cue(W('sonntags', 17), 'kritzeln');
+wackeln('woche6', W('sonntags', 17) + .25, 3, 2); akzent(W('sonntags', 17), .04);
+// sonst ist es zu laut: Schallwellen am Container
+welle('laut6a', W('laut', 17) - .3, X5 + 1330, 470, .9); welleNochmal('laut6a', W('laut', 17) + .3, .9);
+welle('laut6b', W('laut', 17) - .05, X5 + 1330, 470, .9);
+GC.forEach(([id]) => wackeln(id, W('laut', 17) - .2, 4, 2));
+pop('cLaut', W('zu', 17) - .1, { x: X5 + 1330, y: 300 }, 'klick');
+textAus('tb6', SE(17) + .2);
+
+/* ---------- 7 · Pfand = Geld zurück ---------- */
+pan2(SE(17) + .3, 6); const X6 = S(6);
+titelEin('tb7', W('Pfand', 18) - .15, [W('Pfand', 18) - .15, null, W('Geld', 20) - .1, null]);
+ein('wf7', W('Flaschen', 18) - .15, { x: X6 + 1040, y: 560 }, { y: 80 }, 'whoosh');
+ein('dose7', W('Dosen', 18) - .15, { x: X6 + 1170, y: 600 }, { y: 80 }, 'whoosh');
+pop('pz7', W('Pfand', 18), { x: X6 + 1040, y: 593 }, 'klick');
+pop('pzd7', W('Pfand', 18) + .15, { x: X6 + 1170, y: 612 }, null);
+// an diesem Zeichen: das Zeichen wird herangezoomt
+bump('pz7', W('erkennst', 19), 1.3); bump('pzd7', W('erkennst', 19) + .1, 1.3);
+akteur('pzG7', { x: X6 + 1040, y: 593, s: .3, o: 0 });
+tw('pzG7', W('diesem', 19) - .1, .15, { o: 1 }); tw('pzG7', W('diesem', 19) - .1, .7, { x: X6 + 1110, y: 350, s: 1 }, 'sanft'); cue(W('diesem', 19) - .1, 'whoosh');
+welle('welle7', W('Zeichen', 19), X6 + 1110, 350, 1.0); bump('pzG7', W('Zeichen', 19), 1.1); cue(W('Zeichen', 19), 'ding'); akzent(W('Zeichen', 19));
+schweben('pzG7', 3);
+// Bring sie in den Supermarkt zurück
+aus('pzG7', W('Bring', 20) - .1, .3);
+ein('automat7', W('Bring', 20) - .1, { x: X6 + 1560, y: 560 }, { x: 100 }, 'whoosh');
+pop('markt7', W('Supermarkt', 20) - .05, { x: X6 + 1560, y: 300 });
+const LOCH7 = [X6 + 1560, 360 + 160];
+[['wf7', 'pz7', 0], ['dose7', 'pzd7', .35]].forEach(([id, z, d]) => {
+  const t = W('zurück', 20) - .2 + d;
+  flug(id, t, .6, LOCH7[0], LOCH7[1], 120, { s: .3, r: 12 }); tw(id, t + .48, .12, { o: 0 }, 'lin');
+  flug(z, t, .6, LOCH7[0], LOCH7[1], 120, { s: .3 }); tw(z, t + .48, .12, { o: 0 }, 'lin');
+  cue(t, 'whoosh'); cue(t + .6, 'klick'); plumps('automat7', t + .6);
+});
+// du bekommst Geld: Bon kommt heraus, Münze
+akteur('bon7', { y: -118 }, true); tw('bon7', W('bekommst', 20) - .1, .8, { y: 0 }, 'inout');
+for (let i = 0; i < 5; i++) cue(W('bekommst', 20) + i * .14, 'tipp');
+akteur('muenze7', { x: X6 + 1560, y: 690, o: 0, s: .4 });
+tw('muenze7', W('Geld', 20) - .1, .1, { o: 1 }); flug('muenze7', W('Geld', 20) - .1, .7, X6 + 1180, 620, 140, { s: 1 });
+HOOKS.push(t => { const p = t - W('Geld', 20) - .5; if (p > 0 && p < 1.4) $('#muenze7').style.transform += ` scaleX(${Math.cos(p * Math.PI * 3 * (1 - p / 2.8))})`; });
+cue(W('Geld', 20) + .6, 'muenze'); akzent(W('Geld', 20) + .5);
+textAus('tb7', SE(20) + .3);
+
+/* ---------- 8 · Batterien & Elektro: extra ---------- */
+pan2(SE(20) + .45, 7); const X7 = S(7);
+titelEin('tb8', W('Batterien', 21) - .1, [W('Batterien', 21) - .1, null, W('Elektrogeräte', 21) - .1, W('nicht', 21) - .1]);
+ein('bat8', W('Batterien', 21) - .2, { x: X7 + 1120, y: 360 }, { y: -60 }, 'pop');
+ein('hy8', W('Handys', 21) - .2, { x: X7 + 1320, y: 380 }, { y: -60 }, 'pop');
+ein('wk8', W('Elektrogeräte', 21) - .2, { x: X7 + 1520, y: 380 }, { y: -60 }, 'pop');
+ein('thm8', W('gehören', 21) - .3, { x: X7 + 1320, y: 650 }, { y: 90 }, 'whoosh');
+// nicht in den Hausmüll: die Batterie prallt ab
+tw('bat8', W('nicht', 21) - .35, .38, { x: X7 + 1290, y: 540, r: 3 }, 'in', { bogen: 50 });
+const PRALL8 = W('nicht', 21) + .03;
+tw('bat8', PRALL8, .6, { x: X7 + 1120, y: 360, r: 0 }, 'out', { bogen: 60 });
+wackeln('thm8', PRALL8, 4, 3); cue(PRALL8, 'plopp'); akzent(PRALL8, .04);
+pop('nein8', PRALL8 + .05, { x: X7 + 1400, y: 575 }, 'klick');
+bump('nein8', W('Hausmüll', 21), 1.15);
+// Abgabe: großer Supermarkt, Elektrohandel, Wertstoffhof
+aus(['thm8', 'nein8'], W('Die', 22) - .1, .35);
+const ORTE = [['ort1', 'bat8', 'Supermärkten', 1100, 'ok8a'], ['ort2', 'hy8', 'Elektrohandel', 1330, 'ok8b'], ['ort3', 'wk8', 'Wertstoffhof', 1560, 'ok8c']];
+ORTE.forEach(([id, item, w, x, ok]) => {
+  ein(id, W(w, 22) - .3, { x: X7 + x, y: 660 }, { y: 90 }, 'whoosh');
+  const t = W(w, 22) + .25;
+  flug(item, t, .6, X7 + x, 630, 90, { s: .35 }); tw(item, t + .48, .12, { o: 0 }, 'lin');
+  plumps(id, t + .6); cue(t + .6, 'plopp');
+  pop(ok, W('abgeben', 22) - .1 + ORTE.findIndex(o => o[0] === id) * .12, { x: X7 + x + 82, y: 590 }, 'ding');
+});
+akzent(W('abgeben', 22));
+textAus('tb8', SE(22) + .2);
+
+/* ---------- 9 · Müllkalender checken ---------- */
+pan2(SE(22) + .3, 8); const X8 = S(8);
+titelEin('tb9', W('Müllkalender', 24) - .1, [W('Müllkalender', 24) - .1, W('Stadt', 24) - .1]);
+ein('ort9', W('Welche', 23) - .2, { x: X8 + 1320, y: 318 }, { y: -60 }, 'whoosh');
+const T9 = [['t9g', 1095], ['t9b', 1245], ['t9br', 1395], ['t9gr', 1545]];
+T9.forEach(([id, x], i) => { tonne(id, { x: X8 + x, y: 540, s: 0 }); tw(id, W('Farbe', 23) - .1 + i * .1, .45, { s: 1 }, 'back'); cue(W('Farbe', 23) - .1 + i * .1, 'pop'); });
+T9.forEach(([id], i) => { const t = W('Tonne', 23) + i * .12; deckel(id, t); deckel(id, t + .3, false); cue(t, 'klick'); });
+// je nach Stadt: Ortsschild dreht sich, Tonnen tauschen die Plätze
+akteur('ortText9', {}, true);
+tw('ort9', W('Stadt', 23) - .2, .2, { sy: 0 }, 'in'); tw('ort9', W('Stadt', 23), .35, { sy: 1 }, 'back'); cue(W('Stadt', 23) - .2, 'whoosh');
+HOOKS.push(t => { $('#ortText9').textContent = t >= W('Stadt', 23) ? 'Stadt B' : 'Stadt A'; });
+const TAUSCH = W('anders', 23) - .2;
+flug('t9g', TAUSCH, .7, X8 + 1245, 540, 110); flug('t9b', TAUSCH, .7, X8 + 1095, 540, -60);
+flug('t9br', TAUSCH + .15, .7, X8 + 1545, 540, 110); flug('t9gr', TAUSCH + .15, .7, X8 + 1395, 540, -60);
+T9.forEach(([id], i) => plumps(id, TAUSCH + .7 + (i > 1 ? .15 : 0)));
+cue(TAUSCH, 'whoosh'); cue(TAUSCH + .15, 'whoosh'); akzent(TAUSCH + .4);
+// Schau in den Müllkalender: an den Kühlschrank
+aus(['ort9', ...T9.map(x => x[0])], W('Schau', 24) - .3, .35);
+ein('kuehl9', W('Schau', 24) - .05, { x: X8 + 1220, y: 560 }, { y: 90 }, 'whoosh');
+figur('priya9', { x: X8 + 1560, y: 620, s: 0 }); tw('priya9', W('Schau', 24) + .05, .5, { s: 1 }, 'back'); cue(W('Schau', 24) + .05, 'pop');
+akteur('mkal9', { x: X8 + 1560, y: 400, s: 0 }); tw('mkal9', W('besten', 24), .45, { s: 1 }, 'back'); cue(W('besten', 24), 'pop');
+tw('mkal9', W('Müllkalender', 24) - .25, .6, { x: X8 + 1220, y: 470 }, 'inout', { bogen: 60 });
+plumps('mkal9', W('Müllkalender', 24) + .35); wackeln('mkal9', W('Müllkalender', 24) + .35, 3, 2);
+cue(W('Müllkalender', 24) + .35, 'plopp'); akzent(W('Müllkalender', 24) + .35);
+kalPunkte('mkal9', W('deiner', 24) - .1, .05);
+froh('priya9', W('Stadt', 24)); huepfen('priya9', W('Stadt', 24), 12);
+textAus('tb9', SE(24) + .25);
+
+/* ---------- 10 · Gelb · Blau · Braun · Grau · Glas ---------- */
+pan2(SE(24) + .35, 9); const X9 = S(9);
+const R10 = [['t10g', 1040, 'i10a', 'Richtig'], ['t10b', 1185, 'i10b', 'trennen'], ['t10br', 1330, 'i10c', 'ist'], ['t10gr', 1475, 'i10d', 'einfach'], ['gc10', 1625, 'i10e', 'wenn']];
+titelEin('tb10', 0, R10.flatMap(([, , , w], i) => i ? [null, W(w, 25) - .05] : [W(w, 25) - .05]));
+$('#tb10 .titel').querySelectorAll('.w')[5].after(document.createElement('br'));   // Umbruch nach „Braun ·“
+R10.forEach(([id, x], i) => {
+  (id === 'gc10' ? akteur : tonne)(id, { x: X9 + x, y: 720, s: 0 });
+  tw(id, W('Richtig', 25) - .9 + i * .08, .45, { s: 1 }, 'back'); cue(W('Richtig', 25) - .9 + i * .08, 'pop');
+});
+figur('priya10', { x: X9 + 1080, y: 420, s: 0 }); tw('priya10', W('Richtig', 25) - 1.0, .55, { s: 1 }, 'sanft');
+fenster(10, { x: X9 + 1560, y: 410, s: 0 }); tw('fenster10', W('Richtig', 25) - .8, .5, { s: 1 }, 'back');
+vorhangAuf(10, W('Richtig', 25) - .5);
+// der letzte Beutel und die anderen: alles richtig einwerfen
+R10.forEach(([ziel, , item, w]) => {
+  const t = W(w, 25) - .2;
+  akteur(item, { x: X9 + 1245, y: 470, s: 0 }); tw(item, t - .3, .3, { s: 1 }, 'back');
+  if (ziel === 'gc10') {
+    const x = wertBei(ziel, 'x', t + .6) - 22, y = wertBei(ziel, 'y', t + .6) - 20;
+    flug(item, t, .6, x, y, 120, { s: .4, r: 20 }); tw(item, t + .48, .12, { o: 0 }, 'lin'); plumps(ziel, t + .6); cue(t, 'whoosh'); cue(t + .6, 'ding');
+  } else einwurf(item, ziel, t, .6, 120);
+});
+froh('priya10', W('einfach', 25)); huepfen('priya10', W('weiß', 25) - .2, 16);
+// Und die Nachbarn freuen sich
+froh('nb10', W('freuen', 26) - .2);
+huepfen('fenster10', W('freuen', 26) - .1, 12);
+welle('welle10', W('freuen', 26), X9 + 1560, 410, 1.1);
+pop('ok10', W('freuen', 26) + .1, { x: X9 + 1655, y: 335 }, 'erfolg'); akzent(W('freuen', 26), .05);
+R10.forEach(([id], i) => huepfen(id, W('sich', 26) + i * .08, 12));
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

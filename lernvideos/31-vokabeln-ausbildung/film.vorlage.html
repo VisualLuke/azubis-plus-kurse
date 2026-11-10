@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Allgemeine Wörter in der Ausbildung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Bühnen: Wand mit Sockelleiste, Boden */
+.buehne.raum{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne.gross{width:1680px;height:880px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne .boden{position:absolute;left:0;right:0;top:520px;bottom:0;background:linear-gradient(var(--b200),var(--b100))}
+.buehne .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:14px;background:var(--b300);opacity:.55}
+.buehne.gross .boden{top:640px}
+.buehne .himmel{position:absolute;inset:0;opacity:0}
+
+/* ================= Format „Fachvokabeln“ (übernommen aus Lernvideo 26/29) ================= */
+/* Artikel-Farben: der = b500 · die = success · das = warning */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface)}
+.neutral{--f:var(--b300);--ft:var(--b600);--fa:var(--b600)}
+.vk{width:640px;height:340px;border-radius:36px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.10);overflow:hidden;
+  padding:44px 46px 38px;display:flex;flex-direction:column}
+.vk .band{position:absolute;left:0;right:0;top:0;height:14px;background:var(--f)}
+.vk .kopf{display:flex;align-items:center;justify-content:space-between;height:48px;flex:none}
+.vk .art{display:inline-block;padding:4px 22px;border-radius:999px;background:var(--f);color:var(--fa);font:800 32px/40px Inter;white-space:nowrap}
+.vk .punkte{display:flex;gap:9px;align-items:center}
+.vk .punkte i{display:block;width:12px;height:12px;border-radius:99px;background:var(--n200)}
+.vk .punkte i.fertig{background:var(--b200)}
+.vk .punkte i.jetzt{width:40px;background:var(--f);transform-origin:left center}
+.vk .wort{margin-top:22px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.vk.ohne .wort{margin:auto 0}
+.vk .pl{margin-top:auto;display:flex;align-items:baseline;gap:18px;font:600 44px/52px Inter;color:var(--n700);white-space:nowrap}
+.vk .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.sl{width:640px;min-height:152px;padding:26px 32px 28px 148px;border-radius:32px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.09);
+  font:600 34px/45px Inter;color:var(--ink)}
+.sl .sw{display:inline-block;white-space:nowrap}
+.sl u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.sl .sw.lw u{color:var(--ft);font-weight:800}
+.sl .q{color:var(--b300);font-weight:800}
+.lg{display:inline-block;padding:6px 24px;border-radius:999px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;margin-right:16px}
+.chip{display:flex;align-items:center;justify-content:center;height:58px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.chip b{font-weight:600;opacity:.85;margin-right:9px}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.portrait .helm{opacity:0}
+.portrait .hand{transform-origin:80% 92%;opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)}
+.etikett{padding:10px 24px;border-radius:999px;background:var(--surface);color:var(--b600);font:700 26px/32px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.09)}
+.etikett.warm{color:var(--warning-text)}
+/* Intro: Kacheln der Collage */
+.kachel{width:360px;height:440px;border-radius:40px;background:linear-gradient(var(--surface) 62%,var(--b100) 62%);box-shadow:0 16px 40px rgba(22,19,37,.10);
+  border:8px solid var(--surface);overflow:hidden}
+.kachel::after{content:'';position:absolute;left:0;right:0;top:62%;height:8px;background:var(--b200)}
+.kachel.kueche{background:linear-gradient(var(--warning-bg) 62%,var(--b100) 62%)}
+.kachel.pflege{background:linear-gradient(var(--success-bg) 62%,var(--b100) 62%)}
+.kachel.werk{background:linear-gradient(var(--b50) 62%,var(--b100) 62%)}
+.kachel.bau{background:linear-gradient(var(--info-bg) 62%,var(--b100) 62%)}
+.dampf{width:34px;height:34px;border-radius:99px;background:var(--surface);opacity:0}
+/* Vertrag */
+.dok{width:400px;height:560px;border-radius:22px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.13);overflow:hidden;padding:0 0 24px}
+.dok .dkopf{height:82px;background:var(--b500);color:var(--surface);font:800 30px/82px Inter;text-align:center;letter-spacing:-.01em}
+.dok .dz{position:relative;display:flex;align-items:center;gap:18px;height:62px;margin:12px 26px 0;padding:0 18px;border-radius:16px;background:var(--b50)}
+.dok .dz b{width:108px;font:700 26px/32px Inter;color:var(--n700)}
+.dok .dz i{display:block;height:14px;border-radius:8px;background:var(--n200);flex:1;transform-origin:0 50%}
+.dok .dz.hell{background:var(--warning-bg)}
+.dok .dz.hell b{color:var(--warning-text)}
+.dok .sig{position:absolute;left:26px;right:26px;bottom:50px;display:flex;gap:24px}
+.dok .sig > div{flex:1;height:84px;border-bottom:4px solid var(--n300);position:relative}
+.dok .sig .sg{position:absolute;left:4px;top:8px;width:150px}
+.dok .sig span{position:absolute;left:0;bottom:-34px;font:600 20px/24px Inter;color:var(--n500)}
+.dok.leer .dz{background:var(--b50)}
+.dok.leer .dkopf{color:transparent}
+/* Namensschild */
+.namens{display:flex;align-items:center;gap:0;height:78px;border-radius:20px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.15);overflow:hidden;
+  font:800 38px/78px Inter;color:var(--ink);white-space:nowrap;padding-right:28px}
+.namens .band{width:22px;height:100%;background:var(--b500);margin-right:22px}
+.namens u{text-decoration:none;display:inline-block;color:var(--success-text)}
+.linie{width:600px;height:300px}
+/* Stufen */
+.stufe{width:180px;border-radius:18px 18px 6px 6px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 12px 30px rgba(22,19,37,.12),inset 0 10px 0 var(--b200);
+  color:var(--surface);font:800 72px/1 Inter;display:flex;align-items:flex-start;justify-content:center;padding-top:26px;transform-origin:50% 100%}
+.stufe.an{background:var(--warning);box-shadow:0 12px 30px rgba(22,19,37,.12),inset 0 10px 0 var(--warning-bg)}
+.marker{width:40px;height:40px;border-radius:99px;background:var(--b600);border:6px solid var(--surface);box-shadow:0 4px 10px rgba(22,19,37,.2)}
+/* Kammer: Klemmbrett-Liste, Prüfungsbogen, Einladung */
+.liste4{width:92px;display:flex;flex-direction:column;gap:14px}
+.liste4 div{display:flex;align-items:center;gap:8px}
+.liste4 s{display:block;width:22px;height:22px;border-radius:6px;border:3px solid var(--b300);flex:none;text-decoration:none;position:relative;background:var(--surface)}
+.liste4 i{display:block;height:9px;border-radius:5px;background:var(--n200);flex:1}
+.liste4 svg{position:absolute;left:-4px;top:-8px;width:30px}
+.bogen{width:190px;height:240px;border-radius:18px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.13);padding:20px 22px}
+.bogen .bk{height:34px;border-radius:9px;background:var(--b100);margin-bottom:18px}
+.bogen .opt{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bogen .opt b{width:34px;height:34px;border-radius:9px;border:3px solid var(--b300);font:800 18px/28px Inter;color:var(--b600);text-align:center;flex:none}
+.bogen .opt.an b{background:var(--success);border-color:var(--success);color:var(--surface)}
+.bogen .opt i{display:block;height:10px;border-radius:5px;background:var(--n200);flex:1}
+.einl{width:200px;height:170px;border-radius:14px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.12);padding:18px 20px}
+.einl b{display:block;font:800 25px/30px Inter;color:var(--b600);letter-spacing:-.01em;margin-bottom:14px}
+.einl i{display:block;height:10px;border-radius:5px;background:var(--n200);margin-bottom:12px}
+/* Kalender */
+.kal{width:740px;height:520px;border-radius:30px;background:var(--surface);box-shadow:0 18px 44px rgba(22,19,37,.12);overflow:hidden}
+.kal .kk{height:72px;background:var(--b500);display:flex;padding:0 24px;gap:14px}
+.kal .kk span{flex:1;color:var(--surface);font:800 26px/72px Inter;text-align:center}
+.kal .zell{position:absolute;width:127px;height:90px;border-radius:16px;background:var(--b50)}
+.kal .wn{position:absolute;left:0;width:0}
+.schulpunkt{position:absolute;width:70px;height:70px}
+.block{position:absolute;border-radius:20px;background:linear-gradient(135deg,var(--b400),var(--b600));box-shadow:0 10px 24px rgba(22,19,37,.18);transform-origin:0 50%;
+  display:flex;align-items:center;justify-content:center;gap:18px;color:var(--surface);font:800 44px/1 Inter;letter-spacing:-.01em}
+.block .ic{width:110px;height:110px;border-radius:99px;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.block .ic svg{width:88px}
+/* Formular */
+.formular{width:230px;height:290px;border-radius:18px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.13);padding:22px 22px}
+.formular .fk{height:30px;border-radius:9px;background:var(--error-bg);margin-bottom:18px}
+.formular i{display:block;height:10px;border-radius:5px;background:var(--n200);margin-bottom:14px}
+.formular .fs{position:absolute;left:22px;right:22px;bottom:30px;height:70px;border-bottom:4px solid var(--n300)}
+.formular .fs svg{position:absolute;left:0;top:6px;width:150px}
+.schild{width:72px}
+/* Schicht: Wochenleiste */
+.woche{display:flex;gap:12px}
+.woche div{width:84px;height:92px;border-radius:18px;background:var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.09);display:flex;flex-direction:column;align-items:center;
+  font:800 22px/26px Inter;color:var(--b600);padding-top:10px}
+.woche svg{width:44px;margin-top:4px}
+/* Urkunde */
+.urkunde{width:240px;height:170px;border-radius:16px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14),inset 0 0 0 6px var(--b200);padding:26px 28px}
+.urkunde i{display:block;height:11px;border-radius:6px;background:var(--n200);margin-bottom:14px}
+.urkunde i.k{height:16px;width:70%;background:var(--b200);margin-bottom:22px}
+.siegel{width:66px;height:66px;border-radius:99px;background:var(--warning);border:5px solid var(--surface);box-shadow:0 4px 10px rgba(22,19,37,.18)}
+/* Bildfenster im Schlussdialog */
+.fenster{width:600px;height:400px;border-radius:40px;background:linear-gradient(var(--surface) 55%,var(--b50));box-shadow:0 18px 50px rgba(22,19,37,.12)}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgFrage"><svg viewBox="0 0 40 40"><path d="M13 14a7 7 0 1 1 10 6c-2 1-3 3-3 5" stroke="var(--surface)" stroke-width="5.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="33" r="3.4" fill="var(--surface)"/></svg></template>
+<template id="svgSchild"><svg viewBox="0 0 40 40"><path d="M20 5l12 5v9c0 8-5 13-12 16C13 32 8 27 8 19v-9Z" fill="var(--surface)"/><path d="M14 20l4 4 8-8" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgMini"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgSig1"><svg viewBox="0 0 150 60"><path class="zeichnen" pathLength="1" d="M6 44c10-30 18-34 20-20s-6 22 0 18 14-26 22-22-4 22 4 20 10-16 18-14 2 12 10 10 14-10 22-8 10 4 20-2" stroke="var(--b600)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgSig2"><svg viewBox="0 0 150 60"><path class="zeichnen" pathLength="1" d="M8 40c6-4 12-26 18-24s-8 26 0 26 12-22 20-22 0 18 8 18 10-18 18-16 4 14 12 12 16-12 26-10 12 2 26-4" stroke="var(--b700)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+
+<template id="t-topf">{{topf}}</template>
+<template id="t-werkbank">{{werkbank}}</template>
+<template id="t-schluessel">{{schraubenschluessel}}</template>
+<template id="t-mutter">{{mutter}}</template>
+<template id="t-bett">{{bett}}</template>
+<template id="t-decke">{{decke}}</template>
+<template id="t-herz">{{herz}}</template>
+<template id="t-kran">{{kran}}</template>
+<template id="t-gitter">{{gitter}}</template>
+<template id="t-lupe">{{lupe}}</template>
+<template id="t-stift">{{stift}}</template>
+<template id="t-flagge">{{flagge}}</template>
+<template id="t-ihk">{{kammer-ihk}}</template>
+<template id="t-hwk">{{kammer-hwk}}</template>
+<template id="t-klemmbrett">{{klemmbrett}}</template>
+<template id="t-umOffen">{{umschlag-offen}}</template>
+<template id="t-umHinten">{{umschlag-hinten}}</template>
+<template id="t-umVorne">{{umschlag-vorne}}</template>
+<template id="t-umKlappe">{{umschlag-klappe}}</template>
+<template id="t-schule">{{schule}}</template>
+<template id="t-loescher">{{feuerloescher}}</template>
+<template id="t-schaum">{{schaum}}</template>
+<template id="t-sonne">{{sonne}}</template>
+<template id="t-mond">{{mond}}</template>
+<template id="t-uhr">{{uhr}}</template>
+<template id="t-stunde">{{uhr-stunde}}</template>
+<template id="t-minute">{{uhr-zeiger}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Kwame">{{figur-kwame}}</template>
+<template id="f-Sabine">{{figur-sabine}}</template>
+<template id="f-Priya">{{figur-priya}}</template>
+<template id="f-Amir">{{figur-amir}}</template>
+<template id="f-Mai">{{figur-mai}}</template>
+<template id="f-Geselle">{{figur-geselle~p}}</template>
+<template id="f-Gesellin">{{figur-gesellin}}</template>
+<template id="t-helm">{{helm}}</template>
+<template id="t-hand">{{winkhand}}</template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne gross" id="bue0"></div>
+  <div class="a buehne raum" id="bue1"></div>
+  <div class="a buehne raum" id="bue2"></div>
+  <div class="a buehne raum" id="bue3"></div>
+  <div class="a buehne raum" id="bue4"></div>
+  <div class="a buehne raum" id="bue5"></div>
+  <div class="a buehne raum" id="bue6"></div>
+  <div class="a buehne raum" id="bue7"></div>
+  <div class="a buehne raum" id="bue8"></div>
+  <div class="a buehne gross" id="bue9"></div>
+</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">In jedem Beruf.</div>
+  <div class="klein" id="asUnter">Diese Wörter hörst du in jedem Beruf, vom ersten Tag an.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '') => { WELT.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const welle = (id, t, x, y, d = .9) => { if (!el(id)) neu(id, '', 'width:160px;height:160px', 'data-frei', 'welle'); akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich'); };
+let WN = 0;
+const wellen = (t, x, y, farbe = null, gr = 160) => { const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle'); welle(id, t, x, y); };
+const plakette = (id, farbe, svg, attr = 'data-frei') => neu(id, tpl(svg), '', attr, 'plakette ' + farbe);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const summen = (id, t, d = .8, a = 4) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const boden = i => el('bue' + i).insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+// Bildteil als Akteur: Breite in px (SVG 160 × 160)
+const bild = (id, t, breite, attr = '', stil = '') => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr);
+// Punkt einer SVG-Grafik (Koordinaten 0–160) → Welt, wenn die Grafik mit Mitte (x, y) und Breite b steht
+const P = (x, y, b, px, py) => ({ x: x + (px / 160 - .5) * b, y: y + (py / 160 - .5) * b });
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 10;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Nicken, froh, winken ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [], WINK = [];   // [id, von, bis] · [id, t0, dauer] · [id, t0, dauer]
+function portrait(id, wer, gr, attr = '', helm = false) {
+  neu(id, `<div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${helm ? `<div class="ebene helm" style="opacity:1">${kopie('t-helm', id)}</div>` : ''}${tpl('gesicht')}<div class="ebene hand">${kopie('t-hand', id)}</div></div>`,
+    `width:${gr}px;height:${gr}px`, attr, 'portrait');
+  el(id).dataset.sprecher = wer;
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+    // Winken: Hand steigt von unten in den Kreis, schwingt hin und her, sinkt wieder
+    let hy = 60, hr = 0, ho = 0;
+    for (const [id, t0, d] of WINK) {
+      const q = t - t0; if (id !== p.id || q < 0 || q > d) continue;
+      const ein = E.sanft(clamp(q / .35)), weg = E.in(clamp((q - d + .3) / .3));
+      hy = 60 * (1 - ein) + 60 * weg; ho = 1; hr = 16 * Math.sin((q - .2) * 11) * clamp(q / .3) * (1 - weg);
+    }
+    const h = p.querySelector('.hand');
+    h.style.opacity = ho; h.style.transform = `translateY(${hy.toFixed(1)}%) rotate(${hr.toFixed(2)}deg)`;
+  });
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+const winken = (id, t, d = 1.6) => WINK.push([id, t, d]);
+
+/* ================= Format „Fachvokabeln“ ================= */
+const GENUS = ['der', 'die', 'das'];
+const VK_X = 470, VK_Y = 350, SL_X = 150, SL_Y = 578;
+function wortkarte(i, o) {
+  const X = S(i), id = 'vk' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral';
+  const woerter = o.wort.split(' ');
+  neu(id, `<div class="band"></div>
+    <div class="kopf"><span class="art" id="${id}a">${o.chip}</span><span class="punkte">${[1, 2, 3, 4, 5, 6, 7, 8].map(k => `<i class="${k === o.nr ? 'jetzt' : k < o.nr ? 'fertig' : ''}" ${k === o.nr ? `id="${id}d"` : ''}></i>`).join('')}</span></div>
+    <div class="wort" id="${id}wt" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.zeile ? `<div class="pl" id="${id}p" ${o.plgr ? `style="font-size:${o.plgr}px"` : ''}>${o.zeile[0] ? `<small>${o.zeile[0]}</small>` : ''}<span>${o.zeile[1]}</span></div>` : ''}`, '', '', `vk ${kl}${o.zeile ? '' : ' ohne'}`);
+  const y = o.mitte ? 540 : VK_Y;
+  akteur(id, { x: X + VK_X, y: y + 70, o: 0, s: .96 });
+  akteur(id + 'a', { s: 0 }, true); akteur(id + 'd', { sx: .3 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
+  return {
+    ein: t => { tw(id, t, .45, { o: 1 }); tw(id, t, .7, { y, s: 1 }, 'sanft'); cue(t, 'whoosh'); },
+    chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); cue(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); cue(t0, 'klick'); },
+    zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); cue(t, 'pop'); },
+  };
+}
+// Satzleiste: Beispielsatz tippt sich im Takt der Wortzeiten
+function satzleiste(i, ns, art, lern) {
+  ns = [].concat(ns);
+  const X = S(i), id = 'sl' + i, kl = GENUS.includes(art) ? art : 'neutral';
+  const teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok, w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  neu(id, teile.map((p, j) => `<span class="sw${lern.includes(_norm(p.tok)) ? ' lw' : ''}">${j === 0 ? `<span class="q" id="${id}q1">„</span>` : ''}${[...p.tok].map(c => `<u>${c}</u>`).join('')}${j === teile.length - 1 ? `<span class="q" id="${id}q2">“</span>` : ''}</span>`).join(' '),
+    '', `data-gruppe="${id}"`, `sl ${kl}`);
+  portrait(id + 'p', satz(ns[0]).sprecher, 96, `data-gruppe="${id}"`);
+  const zeiten = [];
+  el(id).querySelectorAll('.sw').forEach((sw, j) => {
+    const w = teile[j].w || teile[j - 1]?.w, us = sw.querySelectorAll('u');
+    const a = A(w.start), d = Math.max(.08, w.ende - w.start);
+    us.forEach((u, c) => zeiten.push([u, a + d * c / us.length]));
+  });
+  zeiten.push([el(id + 'q1'), SA(ns[0]) - .15], [el(id + 'q2'), SE(ns.at(-1))]);
+  el(id + 'q1').style.opacity = 0; el(id + 'q2').style.opacity = 0;
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const p = clamp((t - tc) / .1); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(7 * (1 - p)).toFixed(1)}px)` : ''; } });
+  akteur(id, { x: X + SL_X, y: SL_Y + 50, o: 0 }, true);
+  akteur(id + 'p', { x: X + SL_X + 26 + 48, y: SL_Y + 24 + 48, s: 0 });
+  return { ein: t => { tw(id, t, .4, { o: 1 }); tw(id, t, .6, { y: SL_Y }, 'sanft'); tw(id + 'p', t + .15, .5, { s: 1 }, 'back'); cue(t, 'pop'); } };
+}
+function buehne(i) { boden(i); akteur('bue' + i, { x: S(i) + 1320, y: 540 }); }
+const chipHTML = (art, text) => `<b>${art}</b>${text}`;
+// Unterschrift: Stift fährt die Linie entlang, der Pfad zeichnet sich
+function unterschrift(sig, stift, t, d, x0, y0, x1, y1, breite = 110) {
+  tw(sig, t, d, { draw: 1 }, 'inout'); cue(t, 'kritzeln');
+  const o = { x: (58 / 160) * breite, y: -(50 / 160) * breite };     // Stiftmitte relativ zur Spitze
+  tw(stift, t - .7, .25, { o: 1 }); tw(stift, t - .7, .7, { x: x0 + o.x, y: y0 + o.y }, 'inout');
+  const n = 6;
+  for (let k = 0; k < n; k++) tw(stift, t + k * d / n, d / n, { x: lerp(x0, x1, (k + 1) / n) + o.x, y: y0 + o.y + (k % 2 ? 6 : -10) + (y1 - y0) * (k + 1) / n }, 'sinus');
+}
+
+/* ---------- 0 · Intro: Collage Küche · Werkstatt · Pflegeheim · Baustelle ---------- */
+el('bue0').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue0', { x: S(0) + 960, y: 540 });
+{
+  const X = S(0), KY = 440, KX = [375, 765, 1155, 1545].map(x => X + x);
+  const ART = ['kueche', 'werk', 'pflege', 'bau'], WER = ['Priya', 'Amir', 'Mai', 'Kwame'];
+  const tK = [W('Küche', 1) - .15, W('Werkstatt', 1) - .15, W('Pflegeheim', 1) - .15, WE('Pflegeheim', 1) + .05];
+  const PY = KY - 90, OY = KY + 118;
+  KX.forEach((x, n) => {
+    const g = `data-gruppe="k0${n}"`;
+    neu('ka0' + n, '', '', g, 'kachel ' + ART[n]);
+    akteur('ka0' + n, { x, y: KY + 60, o: 0, s: .9, r: n % 2 ? 3 : -3 });
+    tw('ka0' + n, tK[n], .4, { o: 1 }); tw('ka0' + n, tK[n], .7, { y: KY, s: 1, r: 0 }, 'sanft'); cue(tK[n], 'whoosh');
+    portrait('fi0' + n, WER[n], 170, g, n === 3);
+    pop('fi0' + n, tK[n] + .3, { x, y: PY }, 'pop');
+  });
+  // Küche: Topf, Dampf steigt auf, Kochmütze
+  bild('topf0', 't-topf', 190, 'data-gruppe="k00"');
+  ein('topf0', tK[0] + .2, { x: KX[0], y: OY + 10 }, { y: 60 });
+  for (let n = 0; n < 6; n++) {
+    const id = neu('dampf0' + n, '', '', 'data-frei', 'dampf');
+    HOOKS.push(t => { const q = ((t - tK[0] - .7) * .6 + n / 6) % 1; const an = t > tK[0] + .7;
+      el(id).style.opacity = an ? (Math.sin(Math.PI * q) * .85).toFixed(2) : 0;
+      el(id).style.transform = `translate(${(KX[0] - 17 - 30 + (n % 3) * 30 + 10 * Math.sin(q * 6 + n)).toFixed(1)}px,${(OY - 22 - q * 52).toFixed(1)}px) scale(${(.5 + q * .7).toFixed(2)})`; });
+  }
+  // Werkstatt: Werkbank, Schraubenschlüssel wirbelt herein
+  bild('bank0', 't-werkbank', 210, 'data-gruppe="k01"');
+  ein('bank0', tK[1] + .2, { x: KX[1], y: OY }, { y: 60 });
+  bild('sch0', 't-schluessel', 120, 'data-gruppe="k01" data-dreht');
+  akteur('sch0', { x: KX[1] + 150, y: PY - 40, o: 0, r: -200 });
+  tw('sch0', tK[1] + .35, .2, { o: 1 }); flug('sch0', tK[1] + .35, .8, KX[1] + 62, OY + 44, 60, { r: 3 }); landen('sch0', tK[1] + 1.15); cue(tK[1] + 1.15, 'klick');
+  // Pflegeheim: Bett, Decke legt sich darauf, Herz schlägt
+  bild('bett0', 't-bett', 210, 'data-gruppe="k02"');
+  ein('bett0', tK[2] + .2, { x: KX[2], y: OY + 4 }, { y: 60 });
+  bild('decke0', 't-decke', 150, 'data-gruppe="k02"');
+  akteur('decke0', { x: KX[2] + 150, y: OY - 30, o: 0 });
+  tw('decke0', tK[2] + .6, .25, { o: 1 }); tw('decke0', tK[2] + .6, .6, { x: KX[2] + 6, y: OY - 12 }, 'sanft'); landen('decke0', tK[2] + 1.2);
+  bild('herz0', 't-herz', 70, 'data-gruppe="k02"');
+  pop('herz0', tK[2] + .7, { x: KX[2] + 126, y: PY + 62 }, 'plopp');
+  for (let n = 0; n < 5; n++) bump('herz0', tK[2] + 1.3 + n * .7, 1.16);
+  // Baustelle: Kran richtet sich auf, Gitter gleitet herein
+  bild('kran0', 't-kran', 170, 'data-gruppe="k03"', 'transform-origin:34% 92%');
+  akteur('kran0', { x: KX[3] - 30, y: OY - 2, o: 0, r: -8 });
+  tw('kran0', tK[3] + .2, .3, { o: 1 }); tw('kran0', tK[3] + .2, .9, { r: 0 }, 'sanft');
+  bild('gitter0', 't-gitter', 130, 'data-gruppe="k03"');
+  ein('gitter0', tK[3] + .35, { x: KX[3] + 82, y: OY + 42 }, { x: 90 });
+  // Farb-Legende der · die · das
+  neu('leg0', GENUS.map((g, k) => `<span class="lg ${g}" id="lg0${k}">${g}</span>`).join(''), 'white-space:nowrap');
+  akteur('leg0', { x: X + 960 - 170, y: 812 }, true);
+  const tL = [W('Wörter', 1), W('hörst', 1), W('jeder', 1)];
+  GENUS.forEach((g, k) => { akteur('lg0' + k, { s: 0 }, true); tw('lg0' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
+  // in jeder Ausbildung: alle Kacheln wippen der Reihe nach
+  const tA = W('Ausbildung', 1);
+  KX.forEach((x, n) => bump('ka0' + n, tA + n * .1, 1.04)); akzent(tA, .03);
+  // Los geht's: alle winken und hüpfen
+  const tLos = W('Los', 2) - .1;
+  WER.forEach((w, n) => { winken('fi0' + n, tLos + n * .08, 1.7); huepfen('fi0' + n, tLos + .1 + n * .08, 16); FROH.push(['fi0' + n, tLos, 99]); });
+  cue(tLos, 'ding'); akzent(tLos + .2, .04);
+}
+
+/* ---------- 1 · der Ausbildungsvertrag – die Ausbildungsverträge ---------- */
+const P1 = SE(2) + .3; pan2(P1, 1);
+buehne(1);
+{
+  const X = S(1);
+  const k = wortkarte(1, { art: 'der', chip: 'der', wort: 'Ausbildungsvertrag', zeile: ['Plural', 'die Ausbildungsverträge'], nr: 1, gr: 56, plgr: 35 });
+  k.ein(P1 + .55); k.chip(W('Der', 3)); k.wort(W('Ausbildungsvertrag', 3)); k.zeile(W('Die', 4));
+  satzleiste(1, 6, 'der', ['ausbildungsvertrag']).ein(SA(6) - .5);
+  const G = 'data-gruppe="dok1"';
+  const ZEILEN = ['Beruf', 'Dauer', 'Gehalt', 'Urlaub'];
+  const dokHTML = (id, leer) => `<div class="dkopf">Ausbildungsvertrag</div>${ZEILEN.map((z, n) => `<div class="dz" ${leer ? '' : `id="${id}z${n}"`}>${leer ? '<i></i>' : `<b id="${id}b${n}">${z}</b><i id="${id}i${n}"></i>`}</div>`).join('')}
+    ${leer ? '' : `<div class="sig"><div><div class="sg" id="${id}s0">${tpl('svgSig1')}</div><span>Azubi</span></div><div><div class="sg" id="${id}s1">${tpl('svgSig2')}</div><span>Betrieb</span></div></div>`}`;
+  // zwei weitere Verträge liegen dahinter (die Ausbildungsverträge)
+  neu('dokB1', dokHTML('dokB1', true), '', G, 'dok leer'); neu('dokA1', dokHTML('dokA1', true), '', G, 'dok leer');
+  neu('dok1', dokHTML('dok1'), '', G, 'dok');
+  const DX = X + 1250, DY = 545;
+  akteur('dok1', { x: DX, y: DY - 260, o: 0, r: -3 });
+  const tV = W('Ausbildungsvertrag', 3) - .45;
+  tw('dok1', tV, .25, { o: 1 }); tw('dok1', tV, .55, { y: DY, r: 0 }, 'in'); landen('dok1', tV + .55); cue(tV + .55, 'plopp'); akzent(tV + .6, .03);
+  ZEILEN.forEach((z, n) => { akteur(`dok1z${n}`, {}, true); akteur(`dok1b${n}`, { o: 0, x: -24 }, true); akteur(`dok1i${n}`, { sx: 0 }, true); });
+  // Unterschriften: der Stift setzt zwei Namen
+  bild('stift1', 't-stift', 110, 'data-frei');
+  akteur('stift1', { x: X + 1600, y: 300, o: 0, r: 0 });
+  akteur('dok1s0', { draw: 0 }, true); akteur('dok1s1', { draw: 0 }, true);
+  const SY = DY - 280 + 560 - 50 - 84 + 8 + 30;             // Unterschriftenzeile (Mitte der Unterschrift)
+  const sx0 = DX - 200 + 26 + 4, sx1 = DX - 200 + 26 + 164 + 24 + 4;
+  const tU = tV + .9;
+  unterschrift('dok1s0', 'stift1', tU, .8, sx0 + 6, SY, sx0 + 140, SY - 6);
+  unterschrift('dok1s1', 'stift1', tU + 1.1, .8, sx1 + 6, SY, sx1 + 140, SY - 6);
+  tw('stift1', tU + 2.0, .5, { x: X + 1640, y: 300, o: 0 }, 'in');
+  // die Ausbildungsverträge: der Vertrag rückt nach links, zwei weitere fächern sich dahinter auf
+  const tP = W('Ausbildungsverträge', 4);
+  tw('dok1', tP - .1, .6, { x: DX - 80 }, 'sanft');
+  [['dokA1', 70, 2], ['dokB1', 150, 3]].forEach(([id, dx, r], n) => {
+    akteur(id, { x: DX - 80, y: DY, o: 0 });
+    set(id, tP - .05, { o: 1 }); tw(id, tP - .05 + n * .12, .7, { x: DX - 80 + dx, y: DY - 4 - n * 4, r }, 'sanft'); cue(tP + n * .12, 'whoosh');
+  });
+  // Beruf, Dauer, Gehalt, Urlaub: Zeilen ploppen im Takt auf
+  ZEILEN.forEach((z, n) => {
+    const t = W(z, 5) - .08;
+    tw(`dok1b${n}`, t, .3, { o: 1 }); tw(`dok1b${n}`, t, .5, { x: 0 }, 'sanft'); bump(`dok1z${n}`, t + .05, 1.04); tw(`dok1i${n}`, t + .1, .6, { sx: 1 }, 'inout'); cue(t, 'pop');
+  });
+  bump('dok1', W('Wichtige', 5), 1.03);
+  // Lupe gleitet über „Gehalt“ und „Urlaub“
+  const ZY = n => DY - 280 + 82 + 12 + 31 + n * 74;
+  const LX = DX - 80 - 200 + 26 + 18 + 54;                  // über dem Zeilen-Etikett
+  bild('lupe1', 't-lupe', 190, 'data-frei');
+  const lupe = (x, y) => ({ x: x + 14 / 160 * 190, y: y + 14 / 160 * 190 });
+  akteur('lupe1', { ...lupe(LX + 260, ZY(2) + 120), o: 0, s: .7 });
+  const tG = W('Gehalt', 5) - .15;
+  tw('lupe1', tG, .3, { o: 1 }); tw('lupe1', tG, .55, { ...lupe(LX, ZY(2)), s: 1 }, 'sanft'); cue(tG, 'whoosh');
+  tw('lupe1', W('Urlaub', 5) - .2, .45, lupe(LX, ZY(3)), 'inout');
+  const HELL = [[2, W('Gehalt', 5) + .2, W('Urlaub', 5) - .1], [3, W('Urlaub', 5) + .15, SA(6) - .1]];
+  // Lies … genau: die Lupe fährt Zeile für Zeile von oben nach unten
+  const tLi = W('Lies', 6);
+  [0, 1, 2, 3].forEach(n => { tw('lupe1', tLi + n * .5, .45, lupe(LX + 40, ZY(n)), 'inout'); HELL.push([n, tLi + n * .5 + .3, tLi + n * .5 + .75]); });
+  HOOKS.push(t => ZEILEN.forEach((z, n) => el(`dok1z${n}`).classList.toggle('hell', HELL.some(([m, a, b]) => m === n && t >= a && t < b))));
+  tw('lupe1', W('genau', 6) - .1, .5, { ...lupe(LX + 330, ZY(3) + 150), o: 0, s: .8 }, 'in');
+  plakette('ok1', 'gruen', 'svgHaken');
+  pop('ok1', W('genau', 6) + .15, { x: DX + 125, y: DY - 40 }, 'ding'); akzent(W('genau', 6) + .1, .04);
+}
+
+/* ---------- 2 · der Ausbilder – die Ausbilderin ---------- */
+const P2 = SE(6) + .3; pan2(P2, 2);
+buehne(2);
+{
+  const X = S(2);
+  const k = wortkarte(2, { art: 'der', chip: 'der', wort: 'Ausbilder', zeile: ['weiblich', 'die Ausbilderin'], nr: 2, gr: 110 });
+  k.ein(P2 + .55); k.chip(W('Der', 7)); k.wort(W('Ausbilder', 7)); k.zeile(W('Die', 8));
+  satzleiste(2, 10, 'die', ['ausbilderin']).ein(SA(10) - .5);
+  const SX = X + 1170, SYp = 430;
+  portrait('sab2', 'Sabine', 300, 'data-gruppe="sab2"');
+  ein('sab2', P2 + .75, { x: SX, y: SYp }, { y: 90 }, 'pop');
+  // Namensschild „Ausbilder“ fliegt an, bei „Ausbilderin“ tippt sich „in“ dazu, das Band wird grün
+  neu('ns2', `<span class="band" id="ns2b"></span>Ausbilder<u id="ns2u0">i</u><u id="ns2u1">n</u>`, '', 'data-gruppe="sab2"', 'namens');
+  const NY = SYp + 150 + 30;
+  akteur('ns2', { x: X + 1640, y: 260, o: 0, r: -24, s: .7 });
+  const tA = W('Ausbilder', 7) - .35;
+  tw('ns2', tA, .2, { o: 1 }); flug('ns2', tA, .75, SX + 30, NY, 110, { r: -3, s: 1 }); landen('ns2', tA + .75); cue(tA, 'whoosh'); cue(tA + .75, 'klick');
+  tw('ns2', tA + .85, .5, { r: 0 }, 'sanft');
+  const tIn = W('Ausbilderin', 8) + .35;
+  ['ns2u0', 'ns2u1'].forEach((u, n) => { akteur(u, { o: 0, y: 10 }, true); tw(u, tIn + n * .12, .2, { o: 1, y: 0 }, 'out'); cue(tIn + n * .12, 'tipp'); });
+  HOOKS.push(t => { el('ns2b').style.background = t >= tIn + .2 ? 'var(--success)' : ''; });
+  bump('ns2', tIn + .25, 1.08); akzent(tIn + .2, .035); FROH.push(['sab2', tIn + .3, SA(10) - .2]);
+  // Diese Person ist für deine Ausbildung verantwortlich: Linie von Sabine zu Kwame
+  bump('sab2', W('Person', 9), 1.05); wellen(W('Person', 9), SX, SYp, null, 320);
+  const KX = X + 1575, KY = 730;
+  portrait('kw2', 'Kwame', 190);
+  ein('kw2', W('deine', 9) - .1, { x: KX, y: KY }, { y: 70 }, 'pop');
+  const L0 = { x: SX + 150, y: SYp + 60 }, L1 = { x: KX - 90, y: KY - 70 };
+  neu('lin2', `<svg viewBox="0 0 ${L1.x - L0.x} ${L1.y - L0.y}" style="width:${L1.x - L0.x}px;overflow:visible"><path class="zeichnen" pathLength="1" d="M0 0Q${(L1.x - L0.x) * .8} 0 ${L1.x - L0.x} ${L1.y - L0.y}" stroke="var(--b400)" stroke-width="7" stroke-dasharray="0.03 0.03" stroke-linecap="round" fill="none"/></svg>`, '', 'data-frei');
+  akteur('lin2', { x: (L0.x + L1.x) / 2, y: (L0.y + L1.y) / 2, draw: 0 });
+  const tVe = W('verantwortlich', 9) - .1;
+  tw('lin2', tVe, .8, { draw: 1 }, 'inout'); cue(tVe, 'scan');
+  wellen(tVe + .7, KX, KY, 'var(--success)', 210); nicken('kw2', tVe + .6, 1);
+  // Frag deine Ausbilderin …: „?“ steigt über Kwame auf, wandert zu Sabine und wird ein Haken
+  plakette('fr2', 'lila', 'svgFrage');
+  const tF = W('Frag', 10);
+  pop('fr2', tF, { x: KX - 20, y: KY - 150 }, 'plopp'); wackeln('fr2', tF + .45, 3, 6);
+  aus('lin2', tF, .3);
+  flug('fr2', W('Ausbilderin', 10) - .1, .8, SX + 130, SYp - 130, 90); cue(W('Ausbilderin', 10) - .1, 'whoosh');
+  const tV = W('verstehst', 10);
+  wackeln('fr2', tV - .4, 2, 5);
+  tw('fr2', tV, .25, { s: 0 }, 'in');
+  plakette('ok2', 'gruen', 'svgHaken');
+  pop('ok2', tV + .2, { x: SX + 130, y: SYp - 130 }, 'ding'); akzent(tV + .2, .035);
+  nicken('sab2', tV + .1, 1.1); FROH.push(['sab2', tV + .2, 99]); FROH.push(['kw2', SE(10) + .1, 99]);
+}
+
+/* ---------- 3 · das Lehrjahr – die Lehrjahre ---------- */
+const P3 = SE(10) + .3; pan2(P3, 3);
+buehne(3);
+{
+  const X = S(3);
+  const k = wortkarte(3, { art: 'das', chip: 'das', wort: 'Lehrjahr', zeile: ['Plural', 'die Lehrjahre'], nr: 3, gr: 116 });
+  k.ein(P3 + .55); k.chip(W('Das', 11)); k.wort(W('Lehrjahr', 11)); k.zeile(W('Die', 12));
+  satzleiste(3, 14, 'das', ['lehrjahr']).ein(SA(14) - .5);
+  const BOT = 840, SX = n => X + 1190 + n * 180, H = n => 110 * (n + 1);
+  const G = 'data-gruppe="st3"';
+  [0, 1, 2].forEach(n => { neu('st3' + n, `<span id="st3n${n}">${n + 1}</span>`, `height:${H(n)}px`, G, 'stufe'); akteur('st3n' + n, {}, true); });
+  const steig = (n, t) => { akteur('st3' + n, { x: SX(n), y: BOT - H(n) / 2, sy: 0 }); tw('st3' + n, t, .65, { sy: 1 }, 'back'); cue(t, 'pop'); };
+  steig(0, W('Lehrjahr', 11) - .1);
+  steig(1, W('Lehrjahre', 12) - .1); steig(2, W('Lehrjahre', 12) + .15);
+  // Fahne oben auf der dritten Stufe
+  bild('fahne3', 't-flagge', 130, G, 'transform-origin:28% 92%');
+  pop('fahne3', W('Lehrjahre', 12) + .55, { x: SX(2) + 30, y: BOT - H(2) - 56 }, 'plopp');
+  // drei Jahre: Zahlen wippen, ein Marker läuft die Stufen hinauf, die Fahne weht
+  [0, 1, 2].forEach(n => bump('st3n' + n, W('drei', 13) + n * .15, 1.3));
+  neu('mk3', '', '', 'data-frei', 'marker');
+  const MY = n => BOT - H(n) - 26;
+  akteur('mk3', { x: SX(0) - 40, y: MY(0), s: 0 });
+  const tJ = W('Jahre', 13) - .1;
+  tw('mk3', tJ - .2, .3, { s: 1 }, 'back');
+  [0, 1, 2].forEach(n => { tw('mk3', tJ + n * .42, .4, { x: SX(n) - 40, y: MY(n) }, 'inout', { bogen: 40 }); cue(tJ + n * .42 + .35, 'klick'); });
+  pendel('fahne3', tJ + 1.2, 6, 4, .3); akzent(tJ + 1.2, .03);
+  tw('mk3', SA(14) - .3, .3, { s: 0 }, 'in');
+  // Ich bin im ersten Lehrjahr: Kwame springt auf die erste Stufe, sie leuchtet
+  portrait('kw3', 'Kwame', 150);
+  ein('kw3', SA(14) - .45, { x: X + 1000, y: 765 }, { y: 60 }, 'pop');
+  const tE = W('ersten', 14) - .45;
+  flug('kw3', tE, .7, SX(0), BOT - H(0) - 79, 110); landen('kw3', tE + .7); cue(tE, 'whoosh'); cue(tE + .7, 'plopp');
+  HOOKS.push(t => el('st30').classList.toggle('an', t >= tE + .7));
+  bump('st3n0', W('Lehrjahr', 14), 1.3); akzent(W('Lehrjahr', 14), .04); FROH.push(['kw3', tE + .75, 99]);
+  wellen(tE + .75, SX(0), BOT - H(0), 'var(--warning)', 200);
+}
+
+/* ---------- 4 · die Kammer – die Kammern ---------- */
+const P4 = SE(14) + .3; pan2(P4, 4);
+buehne(4);
+{
+  const X = S(4);
+  const k = wortkarte(4, { art: 'die', chip: 'die', wort: 'Kammer', zeile: ['Plural', 'die Kammern'], nr: 4, gr: 110 });
+  k.ein(P4 + .55); k.chip(W('Die', 15)); k.wort(W('Kammer', 15)); k.zeile(W('Die', 16));
+  satzleiste(4, 19, 'die', ['kammer']).ein(SA(19) - .5);
+  // Zwei Gebäude wachsen aus dem Boden
+  const HY = 430, IX = X + 1110, HX = X + 1440;
+  bild('ihk4', 't-ihk', 300, 'data-gruppe="geb4"', 'transform-origin:50% 91%');
+  bild('hwk4', 't-hwk', 300, 'data-gruppe="geb4"', 'transform-origin:50% 91%');
+  akteur('ihk4', { x: IX, y: HY, sy: 0, o: 0 }); akteur('hwk4', { x: HX, y: HY, sy: 0, o: 0 });
+  const wachsen = (id, t) => { set(id, t, { o: 1 }); tw(id, t, .7, { sy: 1 }, 'back'); cue(t, 'plopp'); };
+  wachsen('ihk4', W('Kammer', 15) - .1); wachsen('hwk4', W('Kammern', 16) - .1);
+  // die IHK oder die Handwerkskammer
+  bump('ihk4', W('IHK', 17), 1.07); wellen(W('IHK', 17), IX, HY - 60, null, 260); akzent(W('IHK', 17), .03);
+  bump('hwk4', W('Handwerkskammer', 17) + .1, 1.07); wellen(W('Handwerkskammer', 17) + .1, HX, HY - 60, null, 260);
+  // kontrolliert die Ausbildung: Klemmbrett, Häkchen setzen sich, Lupe fährt darüber
+  const KBX = X + 1010, KBY = 725;
+  bild('kb4', 't-klemmbrett', 210, 'data-gruppe="kb4"');
+  neu('li4', [0, 1, 2].map(n => `<div><s><span id="li4h${n}" style="position:absolute;left:0;top:0">${tpl('svgMini')}</span></s><i></i></div>`).join(''), '', 'data-gruppe="kb4"', 'liste4');
+  const tK = W('kontrolliert', 18) - .2;
+  pop('kb4', tK, { x: KBX, y: KBY }, 'pop'); pop('li4', tK + .1, { x: KBX + 2, y: KBY + 6 }, null);
+  [0, 1, 2].forEach(n => { akteur('li4h' + n, { s: 0 }, true); tw('li4h' + n, tK + .5 + n * .3, .4, { s: 1 }, 'back'); cue(tK + .5 + n * .3, 'klick'); });
+  bild('lupe4', 't-lupe', 130, 'data-frei');
+  akteur('lupe4', { x: KBX + 110, y: KBY - 80, o: 0 });
+  tw('lupe4', tK + .3, .25, { o: 1 }); tw('lupe4', tK + .3, 1.1, { x: KBX + 30, y: KBY + 60 }, 'inout'); tw('lupe4', tK + 1.4, .3, { o: 0 });
+  // macht die Prüfungen: Prüfungsbogen, Antwort B wird angekreuzt
+  neu('bo4', `<div class="bk"></div>${['A', 'B', 'C'].map(b => `<div class="opt" id="bo4${b}"><b>${b}</b><i></i></div>`).join('')}`, '', '', 'bogen');
+  const tPr = W('Prüfungen', 18) - .15;
+  ein('bo4', tPr, { x: X + 1260, y: 712, r: 2 }, { y: 80 }, 'whoosh');
+  HOOKS.push(t => el('bo4B').classList.toggle('an', t >= tPr + .6)); cue(tPr + .6, 'klick');
+  // Die Kammer schickt dir die Einladung zur Prüfung: Brief fliegt von der IHK zu Kwame, öffnet sich
+  aus(['kb4', 'li4', 'bo4'], SA(19) - .35);
+  const KX = X + 1590, KY = 735;
+  portrait('kw4', 'Kwame', 170);
+  ein('kw4', SA(19) - .3, { x: KX, y: KY }, { y: 70 }, 'pop');
+  const UM = ['umO4', 'umH4', 'ein4', 'umV4', 'umK4'], BW = 200, UX = X + 1330, UY = 745;
+  const GU = 'data-gruppe="um4"';
+  bild('umO4', 't-umOffen', BW, GU, 'transform-origin:50% 31.25%'); bild('umH4', 't-umHinten', BW, GU);
+  neu('ein4', '<b>Einladung</b><i></i><i style="width:70%"></i><i style="width:85%"></i>', '', GU, 'einl');
+  bild('umV4', 't-umVorne', BW, GU); bild('umK4', 't-umKlappe', BW, GU, 'transform-origin:50% 31.25%');
+  const tS = W('schickt', 19) - .25;
+  UM.filter(u => u !== 'ein4').forEach(u => { akteur(u, { x: IX, y: HY + 60, o: 0, s: .3 }); tw(u, tS, .15, { o: 1 }); flug(u, tS, .8, UX, UY, 150, { s: 1 }); landen(u, tS + .8); });
+  cue(tS, 'whoosh'); cue(tS + .8, 'plopp');
+  set('umO4', 0, { sy: 0 });
+  const tO = W('Einladung', 19) - .2;
+  tw('umK4', tO, .22, { sy: 0 }, 'in'); set('umK4', tO + .22, { o: 0 }); set('umO4', tO + .22, { sy: 0 }); tw('umO4', tO + .22, .28, { sy: 1 }, 'weich'); cue(tO, 'klick');
+  akteur('ein4', { x: UX, y: UY + 20, o: 0, s: .8 });
+  set('ein4', tO + .3, { o: 1 }); tw('ein4', tO + .3, .6, { y: UY - 82, s: .9 }, 'sanft');
+  plakette('ok4', 'gruen', 'svgHaken');
+  pop('ok4', W('Prüfung', 19) + .1, { x: UX + 112, y: UY - 150 }, 'ding'); akzent(W('Prüfung', 19), .04);
+  nicken('kw4', W('Prüfung', 19), 1.1); FROH.push(['kw4', W('Prüfung', 19) + .1, 99]);
+}
+
+/* ---------- 5 · der Blockunterricht ---------- */
+const P5 = SE(19) + .3; pan2(P5, 5);
+buehne(5);
+{
+  const X = S(5);
+  const k = wortkarte(5, { art: 'der', chip: 'der', wort: 'Blockunterricht', nr: 5, gr: 70 });
+  k.ein(P5 + .55); k.chip(W('Der', 20)); k.wort(W('Blockunterricht', 20));
+  // Kalender: vier Wochen, Mo–Fr
+  const KX = X + 1320, KY = 555, CW = 127, CH = 90, GX = 14, GY = 16, L0 = 24, T0 = 72 + 22;
+  const zx = c => L0 + c * (CW + GX), zy = r => T0 + r * (CH + GY);
+  let zellen = '';
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) zellen += `<div class="zell" style="left:${zx(c)}px;top:${zy(r)}px"></div>`;
+  const punkte = [0, 1, 2, 3].map(r => `<div class="schulpunkt" id="sp5${r}" style="left:${zx(1) + CW / 2 - 35}px;top:${zy(r) + CH / 2 - 35}px">${kopie('t-schule', 'sp5' + r)}</div>`).join('');
+  const block = `<div class="block" id="blk5" style="left:${zx(0)}px;top:${zy(0)}px;width:${zx(4) + CW - zx(0)}px;height:${zy(2) + CH - zy(0)}px"><div class="ic" id="blk5i">${kopie('t-schule', 'bi5')}</div><span id="blk5t">Berufsschule</span></div>`;
+  neu('kal5', `<div class="kk">${['Mo', 'Di', 'Mi', 'Do', 'Fr'].map(d => `<span>${d}</span>`).join('')}</div>${zellen}${block}${punkte}`, '', '', 'kal');
+  ein('kal5', W('Blockunterricht', 20) - .3, { x: KX, y: KY }, { y: 90 }, 'whoosh');
+  akzent(W('Blockunterricht', 20) + .2, .03);
+  // nicht jede Woche Berufsschule: in jeder Woche leuchtet ein Schultag
+  const tW = [W('jede', 21), W('Woche', 21), W('Berufsschule', 21), W('Berufsschule', 21) + .35];
+  [0, 1, 2, 3].forEach(r => { akteur('sp5' + r, { s: 0 }, true); tw('sp5' + r, tW[r] - .05, .45, { s: 1 }, 'back'); cue(tW[r], 'pop'); });
+  // sondern mehrere Wochen am Stück: die Punkte fliegen zusammen, der Block füllt drei Wochen
+  const tS = W('sondern', 21);
+  const mx = zx(0) + (zx(4) + CW - zx(0)) / 2 - 35, my = zy(0) + (zy(2) + CH - zy(0)) / 2 - 35;
+  [0, 1, 2, 3].forEach(r => { const x0 = zx(1) + CW / 2 - 35, y0 = zy(r) + CH / 2 - 35;
+    tw('sp5' + r, tS + r * .08, .6, { x: mx - x0 - 70, y: my - y0, s: .8 }, 'inout', { bogen: 40 }); });
+  cue(tS, 'whoosh');
+  akteur('blk5', { sx: 0, o: 0 }, true);
+  const tB = W('mehrere', 21) - .1;
+  set('blk5', tB, { o: 1 }); tw('blk5', tB, 1.1, { sx: 1 }, 'inout'); cue(tB, 'scan');
+  [0, 1, 2, 3].forEach(r => set('sp5' + r, tB + .15, { o: 0 }));
+  akteur('blk5i', { s: 0 }, true); akteur('blk5t', { o: 0, x: 30 }, true);
+  const tSt = W('Stück', 21) - .1;
+  tw('blk5i', tSt, .5, { s: 1 }, 'back'); tw('blk5t', tSt + .15, .5, { o: 1, x: 0 }, 'sanft'); cue(tSt, 'plopp'); akzent(tSt + .2, .035);
+  // Das heißt Blockunterricht
+  const tBl = W('Blockunterricht', 22);
+  bump('blk5', tBl, 1.04); wackeln('blk5i', tBl + .1, 3, 6);
+  plakette('ok5', 'gruen', 'svgHaken');
+  pop('ok5', tBl + .3, { x: KX + 320, y: KY - 150 }, 'ding'); akzent(tBl + .2, .04);
+}
+
+/* ---------- 6 · die Unterweisung – die Unterweisungen ---------- */
+const P6 = SE(22) + .3; pan2(P6, 6);
+buehne(6);
+{
+  const X = S(6);
+  const k = wortkarte(6, { art: 'die', chip: 'die', wort: 'Unterweisung', zeile: ['Plural', 'die Unterweisungen'], nr: 6, gr: 80, plgr: 40 });
+  k.ein(P6 + .55); k.chip(W('Die', 23)); k.wort(W('Unterweisung', 23)); k.zeile(W('Die', 24));
+  satzleiste(6, 27, 'die', ['unterweisung']).ein(SA(27) - .5);
+  const SX = X + 1070, SYp = 385, FX = X + 1330, FY = 420, FB = 280;
+  portrait('sab6', 'Sabine', 210);
+  bild('fl6', 't-loescher', FB, '', 'transform-origin:50% 90%');
+  const tU = W('Unterweisung', 23) - .3;
+  ein('sab6', tU, { x: SX, y: SYp }, { y: 80 }, 'pop');
+  ein('fl6', tU + .15, { x: FX, y: FY }, { y: 80 }, 'whoosh');
+  // die Unterweisungen: die Gruppe kommt nach vorn
+  const GR = [['Kwame', X + 1000], ['Priya', X + 1165], ['Amir', X + 1330]];
+  GR.forEach(([w, x], n) => { portrait('gr6' + n, w, 150); pop('gr6' + n, W('Unterweisungen', 24) - .1 + n * .15, { x, y: 740 }, 'pop'); });
+  // wie du sicher arbeitest: Schutzschild ploppt
+  plakette('sch6', 'gruen', 'svgSchild', '');
+  el('sch6').style.cssText += ';width:110px;height:110px'; el('sch6').querySelector('svg').style.width = '62px';
+  pop('sch6', W('sicher', 25) - .05, { x: X + 1580, y: 300 }, 'ding'); wackeln('sch6', W('arbeitest', 25), 3, 5); akzent(W('sicher', 25), .03);
+  // gut zuhören: Schallwellen von Sabine, alle nicken
+  const tZ = W('zuhören', 26) - .1;
+  for (let n = 0; n < 3; n++) wellen(tZ - .6 + n * .25, SX, SYp, null, 230);
+  GR.forEach((g, n) => nicken('gr6' + n, tZ + n * .12, 1.1));
+  // oft unterschreiben: Formular gleitet herein, der Stift unterschreibt
+  const FoX = X + 1585, FoY = 690;
+  neu('fo6', `<div class="fk"></div><i></i><i style="width:80%"></i><i style="width:90%"></i><i style="width:60%"></i><div class="fs"><div id="fo6s">${tpl('svgSig1')}</div></div>`, '', 'data-gruppe="fo6"', 'formular');
+  ein('fo6', W('oft', 26) - .45, { x: FoX, y: FoY }, { x: 90 }, 'whoosh');
+  bild('stift6', 't-stift', 100, 'data-frei');
+  akteur('stift6', { x: X + 1690, y: 470, o: 0 });
+  akteur('fo6s', { draw: 0 }, true);
+  const sy = FoY + 145 - 30 - 70 + 6 + 32, sx = FoX - 115 + 22;
+  unterschrift('fo6s', 'stift6', W('unterschreiben', 26) + .1, .85, sx + 4, sy, sx + 140, sy - 6, 100);
+  tw('stift6', W('unterschreiben', 26) + 1.1, .4, { x: X + 1690, y: 470, o: 0 }, 'in');
+  plakette('okf6', 'gruen', 'svgHaken');
+  pop('okf6', W('unterschreiben', 26) + 1.05, { x: FoX + 80, y: FoY - 150 }, 'ding');
+  // Unterweisung zum Brandschutz: der Feuerlöscher sprüht Schaum
+  aus(['okf6', 'sch6'], SA(27) - .3);
+  bump('fl6', W('Unterweisung', 27), 1.05);
+  const tB = W('Brandschutz', 27) - .1, D = P(FX, FY, FB, 136, 50);
+  summen('fl6', tB, .9, 3); cue(tB, 'scan'); akzent(tB + .2, .04);
+  for (let n = 0; n < 7; n++) {
+    const id = bild('sm6' + n, 't-schaum', 70 + (n % 3) * 18, 'data-frei');
+    const t0 = tB + n * .11, ex = D.x + 90 + (n * 37) % 150, ey = D.y - 70 + (n * 53) % 110;
+    akteur(id, { x: D.x + 10, y: D.y, o: 0, s: .3 });
+    set(id, t0, { o: 1 }); tw(id, t0, .7, { x: ex, y: ey, s: 1 }, 'out'); tw(id, t0 + 1.0, .6, { o: 0, s: 1.15 }, 'in');
+  }
+  FROH.push(['sab6', SE(27) + .1, 99]); GR.forEach((g, n) => FROH.push(['gr6' + n, W('Brandschutz', 27) + .5, 99]));
+}
+
+/* ---------- 7 · die Schicht – die Schichten ---------- */
+const P7 = SE(27) + .3; pan2(P7, 7);
+buehne(7);
+{
+  const X = S(7);
+  const k = wortkarte(7, { art: 'die', chip: 'die', wort: 'Schicht', zeile: ['Plural', 'die Schichten'], nr: 7, gr: 118 });
+  k.ein(P7 + .55); k.chip(W('Die', 28)); k.wort(W('Schicht', 28)); k.zeile(W('Die', 29));
+  satzleiste(7, 31, 'die', ['spätschicht']).ein(SA(31) - .5);
+  // Himmel der Bühne: morgens warm, nachmittags violett
+  el('bue7').insertAdjacentHTML('afterbegin', '<div class="himmel" id="hm7a" style="background:linear-gradient(var(--warning-bg),transparent 70%)"></div><div class="himmel" id="hm7b" style="background:linear-gradient(var(--b200),transparent 70%)"></div>');
+  const UX = X + 1320, UY = 440, UB = 300;
+  ['uhr7', 'std7', 'min7'].forEach((id, n) => bild(id, ['t-uhr', 't-stunde', 't-minute'][n], UB, 'data-gruppe="uhr7"' + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''));
+  const tU = W('Schicht', 28) - .3;
+  pop('uhr7', tU, { x: UX, y: UY }, 'pop'); pop('std7', tU, { x: UX, y: UY }, null); pop('min7', tU, { x: UX, y: UY }, null);
+  akteur('std7', { x: UX, y: UY, s: 0, r: 0 }); tw('std7', tU, .5, { s: 1 }, 'back');
+  akteur('min7', { x: UX, y: UY, s: 0, r: 0 }); tw('min7', tU, .5, { s: 1 }, 'back');
+  // die Schichten: Zeiger drehen einmal durch
+  const tS = W('Schichten', 29) - .2;
+  tw('min7', tS, .9, { r: 360 }, 'inout'); cue(tS, 'klick');
+  // Frühschicht … am Morgen: Zeiger auf 6, die Sonne geht auf
+  const tF = W('Frühschicht', 30) - .2;
+  tw('min7', tF, 1.0, { r: 360 * 4 }, 'inout'); tw('std7', tF, 1.0, { r: 180 }, 'inout'); cue(tF, 'scan');
+  bild('sonne7', 't-sonne', 170, '');
+  akteur('sonne7', { x: X + 1060, y: 480, o: 0, s: .6 });
+  tw('sonne7', tF + .3, .4, { o: 1 }); tw('sonne7', tF + .3, .8, { y: 390, s: 1 }, 'sanft'); cue(tF + .3, 'ding');
+  HOOKS.push(t => { const q = t - tF - .3; if (q > 0) el('sonne7').style.transform += ` rotate(${(q * 14).toFixed(1)}deg)`; });
+  neu('ef7', 'Frühschicht', '', '', 'etikett warm');
+  pop('ef7', W('Morgen', 30) - .1, { x: X + 1060, y: 525 }, 'pop');
+  HOOKS.push(t => { el('hm7a').style.opacity = (clamp((t - tF - .3) / .8) * (1 - clamp((t - W('Spätschicht', 30)) / .8))).toFixed(2); });
+  // Spätschicht am Nachmittag: Zeiger auf 2 Uhr nachmittags, der Mond geht auf
+  const tSp = W('Spätschicht', 30) - .2;
+  tw('min7', tSp, 1.1, { r: 360 * 12 }, 'inout'); tw('std7', tSp, 1.1, { r: 420 }, 'inout'); cue(tSp, 'scan');
+  bild('mond7', 't-mond', 150, '');
+  akteur('mond7', { x: X + 1580, y: 480, o: 0, s: .6, r: -20 });
+  tw('mond7', tSp + .3, .4, { o: 1 }); tw('mond7', tSp + .3, .8, { y: 390, s: 1, r: 0 }, 'sanft'); cue(tSp + .3, 'ding');
+  neu('es7', 'Spätschicht', '', '', 'etikett');
+  pop('es7', W('Nachmittag', 30) - .1, { x: X + 1580, y: 525 }, 'pop');
+  HOOKS.push(t => { el('hm7b').style.opacity = clamp((t - tSp - .3) / .8).toFixed(2); });
+  tw('sonne7', tSp + .2, .6, { o: .45, s: .85 }, 'inout');
+  akzent(W('Nachmittag', 30), .03);
+  // Nächste Woche habe ich Spätschicht: Wochenleiste Mo–Fr, in jeden Tag ploppt ein Mond
+  neu('wo7', ['Mo', 'Di', 'Mi', 'Do', 'Fr'].map((d, n) => `<div>${d}<span id="wm7${n}">${kopie('t-mond', 'wm7' + n)}</span></div>`).join(''), '', 'data-gruppe="wo7"', 'woche');
+  ein('wo7', SA(31) - .4, { x: X + 1255, y: 765 }, { y: 70 }, 'whoosh');
+  [0, 1, 2, 3, 4].forEach(n => { akteur('wm7' + n, { s: 0 }, true); el('wm7' + n).style.display = 'block'; });
+  const tWo = W('Spätschicht', 31) - .25;
+  [0, 1, 2, 3, 4].forEach(n => { tw('wm7' + n, tWo + n * .1, .45, { s: 1 }, 'back'); cue(tWo + n * .1, 'pop'); });
+  bump('es7', W('Spätschicht', 31), 1.12); bump('mond7', W('Spätschicht', 31) + .1, 1.1);
+  portrait('kw7', 'Kwame', 150);
+  ein('kw7', SA(31) - .3, { x: X + 1625, y: 765 }, { y: 70 }, 'pop');
+  nicken('kw7', SE(31) - .2, 1.1); FROH.push(['kw7', SE(31) + .1, 99]); akzent(W('Spätschicht', 31) + .2, .035);
+}
+
+/* ---------- 8 · der Geselle – die Gesellin ---------- */
+const P8 = SE(31) + .3; pan2(P8, 8);
+buehne(8);
+{
+  const X = S(8);
+  const k = wortkarte(8, { art: 'der', chip: 'der', wort: 'Geselle', zeile: ['weiblich', 'die Gesellin'], nr: 8, gr: 118 });
+  k.ein(P8 + .55); k.chip(W('Der', 32)); k.wort(W('Geselle', 32)); k.zeile(W('Die', 33));
+  satzleiste(8, 35, 'der', ['gesellen']).ein(SA(35) - .5);
+  const GX = X + 1085, GY = 400, IX = X + 1560, IY = 400;
+  portrait('ge8', 'Geselle', 210); portrait('gi8', 'Gesellin', 210);
+  ein('ge8', W('Geselle', 32) - .3, { x: GX, y: GY }, { y: 80 }, 'pop');
+  ein('gi8', W('Gesellin', 33) - .3, { x: IX, y: IY }, { y: 80 }, 'pop');
+  // im Handwerk: Werkbank mit Mutter, Schraubenschlüssel
+  const BX = X + 1320, BYb = 700, BB = 330;
+  bild('wb8', 't-werkbank', BB, 'data-gruppe="wb8"');
+  ein('wb8', W('Handwerk', 34) - .3, { x: BX, y: BYb }, { y: 80 }, 'whoosh');
+  const MU = { x: BX - 50, y: BYb - 84 };                  // Mutter liegt auf dem blauen Block der Werkbank
+  bild('mu8', 't-mutter', 64, 'data-gruppe="wb8" data-dreht');
+  pop('mu8', W('Handwerk', 34), { ...MU }, 'pop');
+  bild('swr8', 't-schluessel', 190, 'data-gruppe="wb8" data-dreht', 'transform-origin:84% 50%');
+  const SLp = { x: MU.x - 190 * .34, y: MU.y + 2 };
+  akteur('swr8', { x: SLp.x - 120, y: SLp.y - 60, o: 0, r: -30 });
+  WELT.appendChild(el('mu8'));                              // Mutter liegt vor dem Maul des Schlüssels
+  tw('swr8', W('Handwerk', 34) + .2, .3, { o: 1 }); tw('swr8', W('Handwerk', 34) + .2, .6, { ...SLp, r: 0 }, 'sanft'); cue(W('Handwerk', 34) + .2, 'klick');
+  // nach der bestandenen Prüfung: Urkunde mit Siegel und Haken
+  neu('uk8', '<i class="k"></i><i></i><i style="width:80%"></i><i style="width:60%"></i>', '', 'data-gruppe="uk8"', 'urkunde');
+  const UKX = X + 1322, UKY = 395;
+  akteur('uk8', { x: UKX, y: 180 - 120, o: 0, r: -6 });
+  const tB = W('bestandenen', 34) - .3;
+  tw('uk8', tB, .25, { o: 1 }); tw('uk8', tB, .6, { y: UKY, r: 2 }, 'sanft'); landen('uk8', tB + .6); cue(tB, 'whoosh');
+  neu('si8', tpl('svgHaken'), '', 'data-gruppe="uk8"', 'siegel');
+  el('si8').style.cssText += ';display:flex;align-items:center;justify-content:center'; el('si8').querySelector('svg').style.width = '34px';
+  pop('si8', W('Prüfung', 34) - .05, { x: UKX + 95, y: UKY + 55 }, 'ding'); akzent(W('Prüfung', 34), .035);
+  FROH.push(['ge8', W('Prüfung', 34) + .1, SA(35)]); FROH.push(['gi8', W('Prüfung', 34) + .1, 99]); nicken('gi8', W('Prüfung', 34) + .1, 1);
+  // Frag den Gesellen, er zeigt es dir: Kwame kommt dazu, die Gesellin zeigt ihm den Schraubenschlüssel
+  aus(['uk8', 'si8'], SA(35) - .4);
+  tw('ge8', SA(35) - .4, .7, { x: X + 1000, y: 310, s: .7 }, 'inout');
+  portrait('kw8', 'Kwame', 190);
+  ein('kw8', SA(35) - .15, { x: X + 1080, y: 490 }, { y: 70 }, 'pop');
+  plakette('fr8', 'lila', 'svgFrage');
+  pop('fr8', W('Frag', 35), { x: X + 1200, y: 400 }, 'plopp');
+  bump('ge8', W('Gesellen', 35), 1.1); nicken('ge8', W('Gesellen', 35) + .1, 1);
+  const tZ = W('zeigt', 35) - .15;
+  tw('gi8', tZ - .3, .6, { x: IX - 20, y: IY + 40 }, 'sanft');
+  aus('fr8', tZ);
+  for (let n = 0; n < 3; n++) { tw('swr8', tZ + n * .5, .25, { r: -28 }, 'sinus'); tw('swr8', tZ + n * .5 + .25, .25, { r: 0 }, 'sinus'); tw('mu8', tZ + n * .5, .25, { r: -(n + 1) * 30 }, 'sinus'); cue(tZ + n * .5 + .2, 'klick'); }
+  wellen(tZ + .2, MU.x, MU.y, 'var(--warning)', 150);
+  // Zeigepfeil von der Gesellin zur Mutter
+  const Z0 = { x: IX - 130, y: IY + 110 }, Z1 = { x: MU.x + 70, y: MU.y - 30 }, ZW = Z0.x - Z1.x, ZH = Z1.y - Z0.y;
+  neu('zp8', `<svg viewBox="0 0 ${ZW} ${ZH}" style="width:${ZW}px;overflow:visible"><path class="zeichnen" pathLength="1" d="M${ZW} 0Q${ZW * .35} ${-ZH * .25} 0 ${ZH}" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <path d="M-4 ${ZH - 26}L0 ${ZH}L22 ${ZH - 14}" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" id="zp8s" opacity="0"/></svg>`, '', 'data-frei');
+  akteur('zp8', { x: (Z0.x + Z1.x) / 2, y: (Z0.y + Z1.y) / 2, draw: 0 });
+  tw('zp8', tZ - .35, .5, { draw: 1 }, 'inout'); cue(tZ - .35, 'whoosh');
+  HOOKS.push(t => { el('zp8s').setAttribute('opacity', t >= tZ + .1 ? 1 : 0); });
+  nicken('kw8', W('dir', 35), 1.1); FROH.push(['kw8', W('dir', 35) + .2, 99]); akzent(tZ + .3, .035);
+}
+
+/* ---------- 9 · Schlussdialog in der Werkstatt ---------- */
+const P9 = SE(35) + .35; pan2(P9, 9);
+el('bue9').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue9', { x: S(9) + 960, y: 540 });
+{
+  const X = S(9), FX = X + 960, FY = 370;
+  portrait('sab9', 'Sabine', 280); portrait('kw9', 'Kwame', 280);
+  ein('sab9', P9 + .5, { x: X + 330, y: 430 }, { y: 90 }, 'pop');
+  ein('kw9', P9 + .65, { x: X + 1590, y: 430 }, { y: 90 }, 'pop');
+  neu('fenster9', '', '', 'data-gruppe="f9"', 'fenster');
+  ein('fenster9', P9 + .6, { x: FX, y: FY }, { y: 80 }, 'whoosh');
+  const G = 'data-gruppe="f9"';
+  const weg = (ids, t) => aus(ids, t, .3);
+  // a) im ersten Lehrjahr: drei Stufen, Marker auf der ersten
+  const tL = W('Lehrjahr', 36);
+  [0, 1, 2].forEach(n => { neu('fs9' + n, `${n + 1}`, `height:${60 * (n + 1)}px;width:110px;font-size:44px;padding-top:12px`, G, 'stufe'); akteur('fs9' + n, { x: FX - 130 + n * 120, y: FY + 140 - 30 * (n + 1), sy: 0 }); tw('fs9' + n, SA(36) + .9 + n * .12, .55, { sy: 1 }, 'back'); });
+  cue(SA(36) + .9, 'pop');
+  neu('fm9', '', 'width:34px;height:34px', G, 'marker');
+  pop('fm9', W('ersten', 36), { x: FX - 130, y: FY + 60 }, 'plopp');
+  HOOKS.push(t => el('fs90').classList.toggle('an', t >= tL));
+  bump('fm9', tL, 1.3);
+  // b) Hast du deinen Ausbildungsvertrag gut gelesen? Vertrag, Lupe, Haken
+  const tV = W('Ausbildungsvertrag', 37);
+  weg(['fs90', 'fs91', 'fs92', 'fm9'], tV - .45);
+  neu('dk9', `<div class="dkopf">Ausbildungsvertrag</div>${[0, 1, 2, 3].map(() => '<div class="dz"><i></i></div>').join('')}`, 'transform-origin:50% 50%', G, 'dok leer');
+  pop('dk9', tV - .3, { x: FX - 20, y: FY, s: .6 }, 'pop');
+  bild('lp9', 't-lupe', 150, G);
+  akteur('lp9', { x: FX + 200, y: FY + 60, o: 0 });
+  tw('lp9', tV + .1, .3, { o: 1 }); tw('lp9', tV + .1, .9, { x: FX + 20, y: FY - 20 }, 'inout'); tw('lp9', W('gelesen', 37) - .3, .5, { x: FX + 10, y: FY + 60 }, 'inout');
+  plakette('okv9', 'gruen', 'svgHaken', G);
+  // Ja!
+  pop('okv9', W('Ja', 38), { x: FX + 170, y: FY - 120 }, 'ding'); nicken('kw9', W('Ja', 38) - .1, 1);
+  // c) Blockunterricht: kleiner Kalender, der Block füllt sich
+  const tB = W('Blockunterricht', 39);
+  weg(['dk9', 'lp9', 'okv9'], W('nächste', 39));
+  neu('kk9', `<div class="kk">${['Mo', 'Di', 'Mi', 'Do', 'Fr'].map(d => `<span>${d}</span>`).join('')}</div>${[0, 1, 2, 3, 4].map(c => `<div class="zell" style="left:${24 + c * 141}px;top:412px"></div>`).join('')}<div class="block" id="kb9" style="left:24px;top:94px;width:692px;height:302px"><div class="ic">${kopie('t-schule', 'kb9s')}</div><span>Berufsschule</span></div>`, 'transform-origin:50% 50%', G, 'kal');
+  pop('kk9', W('ersten', 39) - .1, { x: FX, y: FY + 10, s: .6 }, 'pop');
+  akteur('kb9', { sx: 0 }, true); tw('kb9', tB - .1, .9, { sx: 1 }, 'inout'); cue(tB, 'scan');
+  // Genau.
+  nicken('sab9', W('Genau', 40), 1); FROH.push(['kw9', W('Genau', 40), SA(43) - .3]);
+  // d) Unterweisung zur Sicherheit: Feuerlöscher, Schutzschild
+  const tU = W('Unterweisung', 41);
+  weg(['kk9'], tU - .5);
+  bild('fl9', 't-loescher', 240, G);
+  pop('fl9', tU - .3, { x: FX - 90, y: FY + 10 }, 'pop');
+  plakette('sch9', 'gruen', 'svgSchild', G);
+  el('sch9').style.cssText += ';width:100px;height:100px'; el('sch9').querySelector('svg').style.width = '56px';
+  pop('sch9', W('Sicherheit', 41), { x: FX + 130, y: FY - 20 }, 'ding'); wackeln('sch9', W('Sicherheit', 41) + .4, 3, 5);
+  // e) in der Frühschicht: Uhr, Sonne geht auf
+  const tF = W('Frühschicht', 42);
+  weg(['fl9', 'sch9'], tF - .5);
+  ['uhr9', 'std9', 'min9'].forEach((id, n) => { bild(id, ['t-uhr', 't-stunde', 't-minute'][n], 230, G + (n ? ' data-dreht' : ''), n ? 'transform-origin:50% 47.5%' : ''); pop(id, tF - .35, { x: FX + 70, y: FY + 10 }, n ? null : 'pop'); });
+  tw('std9', tF, .8, { r: 180 }, 'inout'); tw('min9', tF, .8, { r: 720 }, 'inout');
+  bild('so9', 't-sonne', 130, G);
+  akteur('so9', { x: FX - 150, y: FY + 60, o: 0, s: .6 }); tw('so9', tF + .1, .3, { o: 1 }); tw('so9', tF + .1, .6, { y: FY - 40, s: 1 }, 'sanft'); cue(tF + .1, 'ding');
+  // f) zeigt dir der Geselle alles
+  const tG = W('Geselle', 42);
+  weg(['uhr9', 'std9', 'min9', 'so9'], tG - .5);
+  portrait('ge9', 'Geselle', 230, G);
+  pop('ge9', tG - .25, { x: FX, y: FY }, 'pop'); nicken('ge9', W('alles', 42), 1); FROH.push(['ge9', W('alles', 42), 99]);
+  // g) Und die Kammer macht meine Prüfung, richtig? IHK-Gebäude, Prüfungsbogen, „?“ → Haken
+  const tK = W('Kammer', 43);
+  weg(['ge9'], tK - .45);
+  bild('ihk9', 't-ihk', 250, G, 'transform-origin:50% 91%');
+  akteur('ihk9', { x: FX - 110, y: FY - 10, sy: 0, o: 0 }); set('ihk9', tK - .3, { o: 1 }); tw('ihk9', tK - .3, .6, { sy: 1 }, 'back'); cue(tK - .3, 'plopp');
+  neu('bo9', `<div class="bk"></div>${['A', 'B', 'C'].map(b => `<div class="opt" id="bo9${b}"><b>${b}</b><i></i></div>`).join('')}`, 'transform-origin:50% 50%', G, 'bogen');
+  pop('bo9', W('Prüfung', 43) - .1, { x: FX + 150, y: FY + 10, s: .8, r: 3 }, 'pop');
+  plakette('fr9', 'lila', 'svgFrage', G);
+  pop('fr9', W('richtig', 43), { x: FX + 225, y: FY - 130 }, 'plopp'); wackeln('fr9', W('richtig', 43) + .4, 3, 5);
+  // Richtig!
+  const tR = W('Richtig', 44);
+  tw('fr9', tR - .05, .2, { s: 0 }, 'in');
+  HOOKS.push(t => el('bo9B').classList.toggle('an', t >= tR)); cue(tR, 'klick');
+  plakette('okr9', 'gruen', 'svgHaken', G);
+  pop('okr9', tR + .05, { x: FX + 225, y: FY - 130 }, 'ding'); cue(tR + .1, 'erfolg'); akzent(tR, .045);
+  FROH.push(['sab9', SE(44) + .1, 99]); FROH.push(['kw9', SE(44) + .1, 99]);
+  huepfen('kw9', SE(44) + .2, 18); huepfen('sab9', SE(44) + .35, 14);
+  // Wort-Chips: ploppen beim Sprechen auf, blinken, reihen sich unten in zwei Reihen ein
+  const CHIPS = [['das', 'Lehrjahr', 240, tL], ['der', 'Ausbildungsvertrag', 405, tV], ['der', 'Blockunterricht', 345, tB], ['die', 'Unterweisung', 315, tU],
+                 ['die', 'Frühschicht', 286, tF], ['der', 'Geselle', 225, tG], ['die', 'Kammer', 235, tK]];
+  const GAP = 22;
+  [CHIPS.slice(0, 4), CHIPS.slice(4)].forEach((reihe, ri) => {
+    const summe = reihe.reduce((s, c) => s + c[2], 0) + GAP * (reihe.length - 1);
+    let cx = FX - summe / 2;
+    reihe.forEach(([art, text, w, t], n) => {
+      const id = neu(`chip9${ri}${n}`, chipHTML(art, text), `width:${w}px`, '', 'chip ' + art);
+      const zx = cx + w / 2; cx += w + GAP;
+      akteur(id, { x: zx, y: FY + 272, s: 0 });
+      tw(id, t - .05, .5, { s: 1.15 }, 'back'); cue(t, 'pop');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      const tF2 = t + .6;
+      flug(id, tF2, .65, zx, 800 + ri * 78, 30, { s: 1 }); landen(id, tF2 + .65); cue(tF2, 'whoosh');
+    });
+  });
+  CHIPS.forEach((c, n) => bump(`chip9${n < 4 ? 0 : 1}${n < 4 ? n : n - 4}`, SE(44) + .45 + n * .07, 1.1));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? Bus und Bahn</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --la:var(--info); --lb:var(--warning); --lc:var(--b500);
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+#welt{will-change:transform}
+.p{position:absolute;left:0;top:0;will-change:transform}
+#netz{position:absolute;left:-1000px;top:-1500px;width:11500px;height:6000px;overflow:visible}
+
+/* Stationen: Bühnen im Querformat, Haltestellen-Schild oben, Fahrgast-Tafel unten */
+.buehne{width:1120px;height:620px;border-radius:44px;overflow:hidden;background:linear-gradient(var(--b50),var(--b100));
+  box-shadow:0 0 0 8px var(--surface),0 30px 80px rgba(22,19,37,.16)}
+.buehne .wand{position:absolute;left:0;right:0;top:0;height:58%;background:linear-gradient(var(--b50),var(--b100))}
+.buehne .boden{position:absolute;left:0;right:0;top:58%;bottom:0;background:linear-gradient(var(--b100),var(--b200))}
+.buehne .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:10px;background:var(--b200)}
+.buehne .gleis{position:absolute;left:0;right:0;top:86%;height:7%;
+  background:linear-gradient(var(--b600),var(--b600)) 0 0/100% 7px no-repeat,linear-gradient(var(--b600),var(--b600)) 0 100%/100% 7px no-repeat,
+  repeating-linear-gradient(90deg,var(--b300) 0 16px,transparent 16px 48px)}
+.buehne .kante{position:absolute;left:0;right:0;top:76%;height:8px;background:repeating-linear-gradient(90deg,var(--surface) 0 40px,transparent 40px 64px);opacity:.9}
+.buehne .innen,.innenraum .innen{position:absolute;left:0;right:0;top:0;height:70%;background:linear-gradient(var(--b50),var(--b100))}
+.buehne .stange,.innenraum .stange{position:absolute;left:0;right:0;top:6%;height:12px;background:var(--b300)}
+.buehne .fenster,.innenraum .fenster{position:absolute;top:13%;height:33%;width:22%;border-radius:22px;background:linear-gradient(160deg,var(--surface),var(--info-bg));box-shadow:inset 0 0 0 9px var(--b300)}
+.buehne .unten,.innenraum .unten{position:absolute;left:0;right:0;top:70%;bottom:0;background:linear-gradient(var(--b200),var(--b300))}
+.buehne .unten::before,.innenraum .unten::before{content:'';position:absolute;left:0;right:0;top:0;height:10px;background:var(--b300)}
+.innenraum{width:1120px;height:620px;border-radius:44px;overflow:hidden}
+.innenraum .pfahl{position:absolute;top:6%;bottom:10%;width:16px;border-radius:8px;background:linear-gradient(90deg,var(--b300),var(--b400))}
+.hpill{height:84px;border-radius:42px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);display:flex;align-items:center;gap:18px;padding:0 34px 0 10px;
+  font:800 40px/1 Inter;color:var(--b700);white-space:nowrap;letter-spacing:-.01em}
+.hpill .hk{width:64px;height:64px;border-radius:999px;background:var(--warning);border:5px solid var(--warning-bg);font:800 34px/54px Inter;color:var(--b700);text-align:center;flex:none}
+.hpill.rot{color:var(--error-text)} .hpill.gruen{color:var(--success-text)}
+.tafel{position:absolute;left:-900px;top:-32px;width:1800px;text-align:center}
+.tafel .titel{font:700 54px/64px Inter;letter-spacing:-.02em;white-space:nowrap}
+#schallC svg{transform:scaleX(-1)}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)} .titel .w.hell .wi{color:var(--b500)}
+
+/* Bausteine */
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.rot{border-color:var(--error)} .welle.blau{border-color:var(--info)}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.frage{width:84px;height:84px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 52px/84px Inter;text-align:center;box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.ausruf{width:64px;height:64px;border-radius:999px;background:var(--error);color:var(--surface);font:800 42px/56px Inter;text-align:center;border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.chip{padding:8px 20px;border-radius:999px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.12);font:800 26px/34px Inter;color:var(--b600);white-space:nowrap}
+.zug{width:76px;height:76px;border-radius:999px;background:var(--surface);border:8px solid var(--b700);box-shadow:0 8px 20px rgba(22,19,37,.25);display:flex;align-items:center;justify-content:center;opacity:0}
+.zug svg{width:44px}
+
+/* Porträts im Kreis */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Haltestelle: Wartehäuschen, Fahrplan, Anzeige, Mast mit H, Ticketautomat */
+.wartehaus{width:280px;height:330px}
+.wartehaus > i{position:absolute;display:block}
+.wartehaus .dach{left:-10px;right:-10px;top:0;height:26px;border-radius:12px;background:linear-gradient(var(--b600),var(--b700))}
+.wartehaus .glas{left:14px;right:14px;top:26px;bottom:6px;background:linear-gradient(160deg,var(--surface),var(--b100));opacity:.75;box-shadow:inset 0 0 0 5px var(--b200)}
+.wartehaus .pfosten{top:20px;bottom:0;width:14px;border-radius:4px;background:linear-gradient(90deg,var(--b500),var(--b600))}
+.wartehaus .pfosten.l{left:4px} .wartehaus .pfosten.r{right:4px}
+.wartehaus .bank{left:40px;right:40px;top:236px;height:22px;border-radius:8px;background:linear-gradient(var(--b400),var(--b600))}
+.wartehaus .beine{left:62px;right:62px;top:258px;height:66px;border-left:10px solid var(--b600);border-right:10px solid var(--b600)}
+.fahrplan{width:96px;height:124px;border-radius:10px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12);padding:12px 10px;display:flex;flex-direction:column;gap:9px}
+.fahrplan b{display:block;height:16px;border-radius:5px;background:var(--b500)}
+.fahrplan i{display:block;height:8px;border-radius:4px;background:var(--n300);transform-origin:left center}
+.fahrplan i.an{background:var(--warning)}
+.dfi{width:170px;height:62px;border-radius:12px;background:var(--b700);box-shadow:0 6px 14px rgba(22,19,37,.2);display:flex;align-items:center;gap:12px;padding:0 14px}
+.dfi .linie{width:40px;height:34px;flex:none}
+.dfi .zeit{font:800 28px/1 Inter;color:var(--warning);white-space:nowrap;letter-spacing:.02em}
+.mast{width:100px;height:400px}
+.mast .stange{position:absolute;left:43px;top:40px;width:14px;bottom:0;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))}
+.mast .hschild{position:absolute;left:7px;top:0;width:86px;height:86px;border-radius:999px;background:var(--warning);border:7px solid var(--warning-bg);
+  box-shadow:0 4px 0 var(--b700);font:800 46px/72px Inter;color:var(--b700);text-align:center}
+.uhr{width:120px;height:120px}
+.uhr > *{position:absolute;left:0;top:0;width:100%;height:100%}
+.uhr .zg{transform-origin:50% 47.5%}
+.automat{width:130px;height:310px}
+.automat > *{position:absolute}
+.automat .geh{inset:0;border-radius:18px;background:linear-gradient(var(--b500),var(--b600));box-shadow:inset 0 -10px 0 var(--b700)}
+.automat .kopf3{left:14px;right:14px;top:10px;height:22px;border-radius:6px;background:var(--b700)}
+.automat .kopf3 i{position:absolute;left:12px;top:8px;width:60px;height:6px;border-radius:3px;background:var(--b200)}
+.automat .disp{left:14px;right:14px;top:42px;height:82px;border-radius:10px;background:var(--b700);overflow:hidden}
+.automat .disp > *{position:absolute;inset:0}
+.automat .menue{padding:12px 10px;display:flex;flex-direction:column;gap:8px}
+.automat .menue i{display:block;height:12px;border-radius:4px;background:var(--b300)}
+.automat .kaputt{display:flex;align-items:center;justify-content:center;text-align:center;font:800 16px/19px Inter;color:var(--error);background:var(--error-bg);opacity:0}
+.automat .tasten{left:20px;top:138px;display:grid;grid-template-columns:repeat(3,22px);gap:8px}
+.automat .tasten i{width:22px;height:16px;border-radius:5px;background:var(--b300)}
+.automat .schlitz{left:30px;right:30px;top:198px;height:10px;border-radius:5px;background:var(--b700)}
+.automat .ausgabe{left:22px;right:22px;top:226px;height:40px;border-radius:10px;background:var(--b700);box-shadow:inset 0 6px 0 rgba(22,19,37,.3)}
+.tropfen{width:34px;height:44px}
+
+/* Handy mit App-Bildschirm (Grundgröße 180 × 320, mit s skaliert) */
+.handy{width:180px;height:320px;border-radius:32px;background:linear-gradient(160deg,var(--b600),var(--b700));box-shadow:0 14px 34px rgba(22,19,37,.22)}
+.handy .sch{position:absolute;left:12px;top:14px;right:12px;bottom:14px;border-radius:22px;background:var(--b50);overflow:hidden}
+.handy .sch > *{position:absolute;left:0;right:0}
+.handy .kopf2{top:0;height:46px;background:var(--b500);display:flex;align-items:center;gap:8px;padding-left:14px;font:800 17px/1 Inter;color:var(--surface)}
+.handy .kopf2 i{width:22px;height:22px;border-radius:7px;background:var(--surface);display:block;flex:none}
+.handy .leer{left:22px;right:22px;top:92px;height:118px;border-radius:14px;border:4px dashed var(--n300)}
+.eticket{left:16px!important;right:16px!important;top:62px;height:168px;border-radius:14px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.1);overflow:hidden}
+.eticket .band{position:absolute;left:0;right:0;top:0;height:28px;background:linear-gradient(90deg,var(--b400),var(--b600))}
+.eticket .band i{position:absolute;left:12px;top:10px;width:46px;height:8px;border-radius:4px;background:var(--b100)}
+.eticket .qr{position:absolute;left:21px;top:38px;width:106px;height:106px;display:grid;grid-template-columns:repeat(6,16px);gap:2px}
+.eticket .qr i{width:16px;height:16px;border-radius:3px;background:var(--ink);display:block}
+.eticket .qr i.x{visibility:hidden}
+.handy .ok{left:53px!important;right:auto!important;top:236px;width:50px;height:50px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(31,169,113,.35)}
+.handy .ok svg{width:30px}
+.handy .laut{top:70px;bottom:20px;display:flex;align-items:flex-end;justify-content:center;gap:12px;padding-bottom:30px}
+.handy .laut i{display:block;width:22px;border-radius:7px;background:var(--b400);transform-origin:50% 100%}
+.handy .abf{top:46px;bottom:0;padding:16px 10px;display:flex;flex-direction:column;gap:14px}
+.handy .zeile{height:56px;border-radius:12px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 8px;box-shadow:0 2px 6px rgba(22,19,37,.08);position:relative}
+.handy .zeile .ic{width:28px;height:28px;border-radius:8px;background:var(--b500);flex:none;display:flex;align-items:center;justify-content:center}
+.handy .zeile .ic svg{width:20px}
+.handy .zeile b{font:800 20px/1 Inter;color:var(--ink);letter-spacing:.01em}
+.handy .zeile .spaet{position:absolute;right:4px;top:-13px;padding:4px 7px;border-radius:999px;background:var(--warning);color:var(--surface);font:800 13px/1 Inter;white-space:nowrap}
+.handy .zeile .rahmen5{position:absolute;inset:-5px;border-radius:15px;box-shadow:0 0 0 4px var(--b400);opacity:0}
+.handy .zeile .rahmen5.gruen{box-shadow:0 0 0 4px var(--success)}
+
+/* Bahn von außen (fährt ein), Türen gleiten auf */
+.tram{width:620px;height:300px}
+.tram > *{position:absolute}
+.tram .buegel{left:200px;top:0;width:120px;height:34px}
+.tram .koerper{left:0;top:30px;width:620px;height:228px;border-radius:44px 90px 30px 30px;background:linear-gradient(var(--b400),var(--b600));box-shadow:inset 0 -12px 0 var(--b700)}
+.tram .streifen{left:0;top:186px;width:620px;height:10px;background:var(--warning)}
+.tram .fe{top:66px;width:96px;height:84px;border-radius:16px;background:linear-gradient(160deg,var(--surface),var(--b100))}
+.tram .front{left:552px;top:66px;width:52px;height:84px;border-radius:12px 40px 12px 12px;background:linear-gradient(160deg,var(--surface),var(--b100))}
+.tram .tuer{left:420px;top:52px;width:110px;height:206px;border-radius:12px 12px 0 0;background:var(--b700);overflow:hidden;box-shadow:0 0 0 6px var(--b300)}
+.tram .tuer i{position:absolute;top:0;bottom:0;width:55px;background:linear-gradient(var(--b200),var(--b300));box-shadow:inset 0 0 0 4px var(--b400)}
+.tram .tuer i::after{content:'';position:absolute;left:10px;right:10px;top:16px;height:80px;border-radius:8px;background:linear-gradient(160deg,var(--surface),var(--b100))}
+.tram .tuer .tl{left:0} .tram .tuer .tr{right:0}
+.tram .rad{top:244px;width:46px;height:46px;border-radius:999px;background:var(--ink);box-shadow:inset 0 0 0 14px var(--ink),inset 0 0 0 30px var(--n300)}
+.pfeile{width:220px;height:110px}
+.sitz{width:170px;height:200px}
+.sitz > i{position:absolute;display:block}
+.sitz .lehne{left:24px;right:24px;top:0;height:140px;border-radius:30px 30px 14px 14px;background:linear-gradient(var(--b400),var(--b600))}
+.sitz .polster{left:10px;right:10px;top:126px;height:38px;border-radius:14px;background:linear-gradient(var(--b500),var(--b700))}
+.sitz .fuss{left:74px;width:22px;top:160px;height:40px;background:var(--b700)}
+.leuchte{border-radius:30px;box-shadow:0 0 0 7px var(--info),0 0 40px 10px rgba(59,130,246,.45);opacity:0}
+
+/* Monatskarte, Woche, Betrieb, Papierticket, Entwerter */
+.monat{width:230px;height:156px;border-radius:20px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.2);overflow:hidden}
+.monat > *{position:absolute}
+.monat .kopf4{left:0;right:0;top:0;height:34px;background:linear-gradient(90deg,var(--b500),var(--b600))}
+.monat .tage{left:16px;top:48px;display:grid;grid-template-columns:repeat(7,14px);gap:5px}
+.monat .tage i{width:14px;height:14px;border-radius:4px;background:var(--b100);display:block}
+.monat .tage i.an{background:var(--b400)}
+.monat .torte{left:156px;top:56px;width:58px;height:58px}
+.monat .job{right:10px;top:6px;width:22px;height:22px;border-radius:999px;background:var(--warning);border:3px solid var(--surface)}
+.woche{display:flex;gap:16px}
+.woche .tag{width:110px;height:120px;border-radius:22px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.1);display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:10px;font:800 26px/1 Inter;color:var(--b600)}
+.woche .tag i{width:54px;height:40px;border-radius:12px;background:var(--b100);display:block}
+.woche .tag i.an{background:var(--b500)}
+.swatch{width:46px;height:12px;border-radius:6px}
+.papier{width:250px;height:130px;border-radius:16px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.16);overflow:hidden}
+.papier > *{position:absolute}
+.papier .stub{left:0;top:0;bottom:0;width:58px;background:linear-gradient(var(--b400),var(--b600))}
+.papier .perf{left:64px;top:10px;bottom:10px;border-left:4px dotted var(--n300)}
+.papier .zl{left:84px;height:10px;border-radius:5px;background:var(--n300)}
+.papier .feld{left:150px;top:62px;width:86px;height:54px;border-radius:10px;border:3px dashed var(--n300)}
+.papier .datum{left:146px;top:58px;width:94px;height:62px;border-radius:10px;border:4px solid var(--ink);color:var(--ink);font:800 17px/22px Inter;text-align:center;padding-top:5px}
+.entwerter{width:170px;height:290px}
+.entwerter > *{position:absolute}
+.entwerter .geh{left:0;top:0;width:170px;height:210px;border-radius:24px;background:linear-gradient(var(--b500),var(--b600));box-shadow:inset 0 -10px 0 var(--b700)}
+.entwerter .anz{left:22px;top:20px;width:126px;height:46px;border-radius:10px;background:var(--b700)}
+.entwerter .anz i{position:absolute;left:14px;right:14px;top:18px;height:10px;border-radius:5px;background:var(--b300)}
+.entwerter .schl{left:0;top:104px;width:96px;height:22px;border-radius:0 11px 11px 0;background:var(--b700)}
+.entwerter .pf{left:110px;top:94px;width:44px;height:44px}
+.entwerter .saeule{left:68px;top:206px;width:34px;height:84px;background:linear-gradient(90deg,var(--n300),var(--n400))}
+.stoss{width:120px;height:60px}
+
+/* Weiche: Linien-Schilder A/B/C und Echtzeit-Anzeige */
+.lschild{width:520px;height:270px;border-radius:36px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.18)}
+.lschild > *{position:absolute}
+.lschild .rahmen{inset:0;border-radius:36px;box-shadow:0 0 0 9px var(--b300);opacity:0}
+.lschild .rahmen.rot{box-shadow:0 0 0 9px var(--error)}
+.lschild .rahmen.gruen{box-shadow:0 0 0 9px var(--success),0 0 60px 10px rgba(31,169,113,.45)}
+.lschild .badge{left:34px;top:79px;width:112px;height:112px;border-radius:999px;color:var(--surface);font:800 62px/112px Inter;text-align:center;box-shadow:0 8px 20px rgba(22,19,37,.2)}
+.lschild .sym{left:180px;top:5px;width:300px;height:260px}
+.lschild .sym > svg{width:300px;height:260px;position:absolute;left:0;top:0}
+.lschild .sym > svg *{transform-box:fill-box;transform-origin:center}
+.lschild .marke{left:112px;top:50px;width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(22,19,37,.25);border:4px solid var(--surface)}
+.lschild .marke svg{width:36px}
+.lschild .marke.rot{background:var(--error)} .lschild .marke.gruen{background:var(--success)}
+.dfig{width:360px;height:250px}
+.dfig > *{position:absolute}
+.dfig .tafel2{left:0;top:0;width:360px;height:180px;border-radius:26px;background:var(--b700);box-shadow:0 14px 34px rgba(22,19,37,.25)}
+.dfig .pfo{left:166px;top:176px;width:28px;height:74px;background:linear-gradient(90deg,var(--n300),var(--n400))}
+.dfig .kz{left:24px;top:22px;width:58px;height:48px}
+.dfig .kzt{left:96px;top:30px;width:150px;height:14px;border-radius:7px;background:var(--b500)}
+.dfig .kzt2{left:96px;top:54px;width:100px;height:12px;border-radius:6px;background:var(--b600)}
+.dfig .zahl{right:26px;top:14px;width:96px;height:100px;border-radius:16px;background:var(--ink);font:800 84px/100px Inter;color:var(--warning);text-align:center;overflow:hidden}
+.dfig .leds{left:24px;top:132px;display:flex;gap:9px}
+.dfig .leds i{width:30px;height:24px;border-radius:6px;background:var(--warning);display:block}
+
+/* Zeitstrahl Einsteigen → Kontrolle (Option B) */
+.zstrahl{width:760px;height:230px;border-radius:32px;background:var(--surface);box-shadow:0 14px 34px rgba(22,19,37,.14)}
+.zstrahl > *{position:absolute}
+.zstrahl .linie2{left:150px;top:116px;width:460px;height:10px;border-radius:5px;background:var(--b100)}
+.zstrahl .lauf{left:150px;top:116px;width:460px;height:10px;border-radius:5px;background:var(--lb);transform-origin:0 50%}
+.zstrahl .halt{top:84px;width:74px;height:74px;border-radius:999px;background:var(--b500);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(90,63,230,.3)}
+.zstrahl .halt svg{width:44px}
+.zstrahl .lab{top:170px;width:200px;text-align:center;font:800 26px/34px Inter;color:var(--b700)}
+.zstrahl .slot{top:14px;width:84px;height:54px;border-radius:12px;border:4px dashed var(--b300)}
+.tk{width:84px;height:54px;border-radius:12px;background:var(--success-bg);border:4px solid var(--success);overflow:hidden}
+.tk::before{content:'';position:absolute;left:0;top:0;bottom:0;width:18px;background:var(--success)}
+.tk.rot{background:var(--error-bg);border-color:var(--error)} .tk.rot::before{background:var(--error)}
+.zstrahl .x2{top:2px;width:44px;height:44px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;border:3px solid var(--surface)}
+.zstrahl .x2 svg{width:24px}
+.zettel{width:180px;height:360px;border-radius:14px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16);overflow:hidden}
+.zettel > *{position:absolute}
+.zettel .kz{left:0;right:0;top:0;height:30px;background:var(--error)}
+.zettel .zl{left:22px;height:10px;border-radius:5px;background:var(--n300)}
+.zettel .betrag{left:0;right:0;bottom:22px;text-align:center;font:800 46px/1 Inter;color:var(--error-text);white-space:nowrap}
+.lupek{width:170px;height:220px}
+.lupek > *{position:absolute}
+.lupek .lsvg{left:15px;top:0;width:140px}
+.lupek .chip{left:50%;top:150px;transform:translateX(-50%)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><path d="M13 13l18 18M31 13L13 31" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><path d="M11 23l8 8 15-17" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHerz"><svg viewBox="0 0 40 40"><path d="M20 34C8 26 4 20 4 14a8 8 0 0 1 16-3 8 8 0 0 1 16 3c0 6-4 12-16 20Z" fill="var(--surface)"/></svg></template>
+<template id="svgTram"><svg viewBox="0 0 40 34"><path d="M15 6l4-5h8" stroke="var(--b300)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  <rect x="3" y="7" width="34" height="21" rx="7" fill="var(--b300)"/><rect x="7" y="11" width="8" height="7" rx="2" fill="var(--b700)"/><rect x="18" y="11" width="8" height="7" rx="2" fill="var(--b700)"/>
+  <rect x="28" y="11" width="6" height="7" rx="2" fill="var(--b700)"/><circle cx="11" cy="30" r="3.4" fill="var(--b300)"/><circle cx="29" cy="30" r="3.4" fill="var(--b300)"/></svg></template>
+<template id="svgTramW"><svg viewBox="0 0 40 34"><rect x="3" y="7" width="34" height="21" rx="7" fill="var(--surface)"/><rect x="7" y="11" width="8" height="7" rx="2" fill="var(--b500)"/><rect x="18" y="11" width="8" height="7" rx="2" fill="var(--b500)"/>
+  <rect x="28" y="11" width="6" height="7" rx="2" fill="var(--b500)"/><circle cx="11" cy="30" r="3.4" fill="var(--surface)"/><circle cx="29" cy="30" r="3.4" fill="var(--surface)"/></svg></template>
+<template id="svgTramD"><svg viewBox="0 0 40 34"><path d="M15 6l4-5h8" stroke="var(--b700)" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  <rect x="3" y="7" width="34" height="21" rx="7" fill="var(--b700)"/><rect x="7" y="11" width="8" height="7" rx="2" fill="var(--b100)"/><rect x="18" y="11" width="8" height="7" rx="2" fill="var(--b100)"/>
+  <rect x="28" y="11" width="6" height="7" rx="2" fill="var(--b100)"/><circle cx="11" cy="30" r="3.4" fill="var(--b700)"/><circle cx="29" cy="30" r="3.4" fill="var(--b700)"/></svg></template>
+<template id="svgTuer"><svg viewBox="0 0 44 44"><rect x="8" y="5" width="28" height="36" rx="4" fill="none" stroke="var(--surface)" stroke-width="4"/><path d="M22 7v32" stroke="var(--surface)" stroke-width="3.5"/></svg></template>
+<template id="svgLupe"><svg viewBox="0 0 44 44"><circle cx="19" cy="19" r="11" fill="none" stroke="var(--surface)" stroke-width="5"/><path d="M27 27l9 9" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgTropfen"><svg viewBox="0 0 34 44"><path d="M17 3C12 13 5 20 5 28a12 12 0 0 0 24 0c0-8-7-15-12-25Z" fill="var(--info)"/><path d="M11 28a6 6 0 0 0 5 6" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/></svg></template>
+<template id="svgSumm"><svg viewBox="0 0 140 70"><g stroke="var(--b500)" stroke-width="6" stroke-linecap="round" fill="none"><path d="M8 18l10-8 10 8 10-8 10 8"/><path d="M8 42l10-8 10 8 10-8 10 8 10-8 10 8"/><path d="M8 66l10-8 10 8 10-8 10 8"/></g></svg></template>
+<template id="svgSchall"><svg viewBox="0 0 70 90"><path id="sch1" d="M14 30q12 15 0 30" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none"/><path id="sch2" d="M32 16q22 29 0 58" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none"/><path id="sch3" d="M50 4q30 41 0 82" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none"/></svg></template>
+<template id="tplUhr">{{uhr}}</template>
+<template id="tplStunde">{{uhr-stunde}}</template>
+<template id="tplZeiger">{{uhr-zeiger}}</template>
+<template id="tplMuenze">{{muenze}}</template>
+<template id="portraitKwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="tplEticket"><div class="eticket"><div class="band"><i></i></div><div class="qr"></div></div></template>
+
+<div id="kam" style="display:none"></div>
+<div id="kamera"><div id="welt">
+  <!-- Liniennetz: Gitter, Linien (Pfade werden im Skript gesetzt) -->
+  <svg id="netz" viewBox="-1000 -1500 11500 6000">
+    <defs><pattern id="raster" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="4" fill="var(--b100)"/></pattern></defs>
+    <rect x="-1000" y="-1500" width="11500" height="6000" fill="url(#raster)"/>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <g id="mantel" stroke="var(--surface)" stroke-width="40"></g>
+      <g id="linien" stroke-width="24"></g>
+    </g>
+  </svg>
+  <div class="p zug" id="zug"></div>
+
+  <!-- H · Haltestelle: kurz vor sieben, kein Ticket, Automat kaputt -->
+  <div class="a buehne" id="bueH"><div class="wand"></div><div class="boden"></div><div class="kante"></div><div class="gleis"></div></div>
+  <div class="p hpill" id="pillH"><span class="hk">H</span>Haltestelle</div>
+  <div class="a wartehaus" id="haus0" data-gruppe="h0"><i class="glas"></i><i class="pfosten l"></i><i class="pfosten r"></i><i class="bank"></i><i class="beine"></i><i class="dach"></i></div>
+  <div class="a fahrplan" id="plan0" data-gruppe="h0"><b></b><i></i><i></i><i id="plan0z"></i><i></i><i></i></div>
+  <div class="a dfi" id="dfi0" data-gruppe="h0"><span class="linie" id="dfi0l"></span><span class="zeit" id="dfi0z">2 min</span></div>
+  <div class="a mast" id="mast0" data-gruppe="m0"><i class="stange"></i><b class="hschild" id="h0">H</b></div>
+  <div class="a uhr" id="uhr0" data-gruppe="m0"></div>
+  <div class="a automat" id="aut0" data-gruppe="aut0"><div class="geh"></div><div class="kopf3"><i></i></div><div class="disp"><div class="menue" id="aut0m"><i style="width:80%"></i><i style="width:60%"></i><i style="width:70%"></i></div>
+    <div class="kaputt" id="aut0k">Außer<br>Betrieb</div></div><div class="tasten"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="schlitz"></div><div class="ausgabe"></div></div>
+  <div class="a ausruf" id="warn0" data-gruppe="aut0">!</div>
+  <div class="a portrait kwame" id="kw0" style="width:190px;height:190px"></div>
+  <div class="a handy" id="hy0" data-gruppe="hy0"><div class="sch"><div class="kopf2"><i></i>Tickets</div><div class="leer" id="hy0leer"></div></div></div>
+  <div class="a plakette rot" id="hy0x" data-gruppe="hy0"></div>
+  <div class="a" id="summ0" style="width:100px;height:50px" data-frei></div>
+  <div class="a tropfen" id="tr0a" data-frei></div>
+  <div class="a tropfen" id="tr0b" data-frei></div>
+
+  <!-- Weiche: drei Linien, Echtzeit-Anzeige zählt herunter -->
+  <div class="a portrait kwame" id="kwW" style="width:140px;height:140px"></div>
+  <div class="a frage" id="frageW" data-frei>?</div>
+  <div class="a dfig" id="dfiW"><div class="tafel2"></div><div class="pfo"></div><div class="kz" id="dfiWkz"></div><div class="kzt"></div><div class="kzt2"></div>
+    <div class="zahl"><span id="dfiWz" style="display:inline-block">?</span></div><div class="leds" id="dfiWleds"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+  <!-- A · Endstation „Kontrolle“ -->
+  <div class="a buehne" id="bueA"><div class="innen"></div><div class="stange"></div>
+    <div class="fenster" style="left:5%"></div><div class="fenster" style="left:39%"></div><div class="fenster" style="left:73%"></div><div class="unten"></div></div>
+  <div class="p hpill rot" id="pillA"><span class="hk">H</span>Kontrolle</div>
+  <div class="a sitz" id="sitzA" data-gruppe="kwA"><i class="lehne"></i><i class="polster"></i><i class="fuss"></i></div>
+  <div class="a portrait kwame" id="kwA" style="width:180px;height:180px" data-gruppe="kwA"></div>
+  <div class="a lupek" id="lupeA"><div class="lsvg">{{lupe}}</div><div class="chip">Kontrolle</div></div>
+  <div class="a" id="pmhA" style="width:150px" data-gruppe="pmA">{{portemonnaie-hinten}}</div>
+  <div class="a" id="pmvA" style="width:150px" data-gruppe="pmA">{{portemonnaie-vorne}}</div>
+  <div class="a zettel" id="zettelA"><div class="kz"></div><i class="zl" style="top:56px;width:120px"></i><i class="zl" style="top:82px;width:96px"></i><i class="zl" style="top:108px;width:130px"></i>
+    <i class="zl" style="top:134px;width:80px"></i><i class="zl" style="top:160px;width:116px"></i><i class="zl" style="top:186px;width:100px"></i><i class="zl" style="top:212px;width:124px"></i>
+    <div class="betrag" id="betragA">60 €</div></div>
+
+  <!-- B · Endstation „Zu spät“ -->
+  <div class="a buehne" id="bueB"><div class="innen"></div><div class="stange"></div>
+    <div class="fenster" style="left:5%"></div><div class="fenster" style="left:39%"></div><div class="fenster" style="left:73%"></div><div class="unten"></div></div>
+  <div class="p hpill rot" id="pillB"><span class="hk">H</span>Zu spät</div>
+  <div class="a zstrahl" id="zsB"><div class="linie2"></div><div class="lauf" id="zsBlauf"></div>
+    <div class="slot" id="zsBslot" style="left:71px"></div><div class="tk rot" id="zsBtk" style="left:571px"></div><div class="x2" id="zsBx" style="left:133px"></div>
+    <div class="halt" id="zsBh1" style="left:76px"></div><div class="halt" id="zsBh2" style="left:576px"></div>
+    <div class="lab" style="left:13px">Einsteigen</div><div class="lab" style="left:513px">Kontrolle</div></div>
+  <div class="a sitz" id="sitzB" data-gruppe="kwB"><i class="lehne"></i><i class="polster"></i><i class="fuss"></i></div>
+  <div class="a portrait kwame" id="kwB" style="width:170px;height:170px" data-gruppe="kwB"></div>
+  <div class="a automat" id="autB"><div class="geh"></div><div class="kopf3"><i></i></div><div class="disp"><div class="menue"><i style="width:80%"></i><i style="width:60%"></i><i style="width:70%"></i></div></div>
+    <div class="tasten"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="schlitz"></div><div class="ausgabe"></div></div>
+  <div class="a tk" id="tkB" data-frei></div>
+  <div class="a plakette gruen" id="okB" data-frei></div>
+  <div class="a welle rot" id="wlB" style="width:130px;height:130px" data-frei></div>
+
+  <!-- C · Station „Geschafft“: Ticket in der App, Bahn kommt, Rücksicht -->
+  <div class="a buehne" id="bueC"><div class="wand" style="height:64%"></div><div class="gleis" style="top:64%;height:5%;opacity:.8"></div><div class="boden" style="top:69%"></div><div class="kante" style="top:74%"></div></div>
+  <div class="p hpill gruen" id="pillC"><span class="hk">H</span>Geschafft</div>
+  <div class="a tram" id="tramC" data-gruppe="tramC"><svg class="buegel" viewBox="0 0 120 34"><path d="M20 32L50 6h50" stroke="var(--b700)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div class="koerper"></div><div class="fe" style="left:40px"></div><div class="fe" style="left:156px"></div><div class="fe" style="left:272px"></div><div class="front"></div><div class="streifen"></div>
+    <div class="tuer"><i class="tl" id="tramCl"></i><i class="tr" id="tramCr"></i></div>
+    <i class="rad" style="left:70px"></i><i class="rad" style="left:140px"></i><i class="rad" style="left:440px"></i><i class="rad" style="left:510px"></i></div>
+  <svg class="a pfeile" id="pfeilC" viewBox="0 0 220 110" data-frei><g stroke="var(--success)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path id="pfeilCa" d="M100 10L40 70M40 40v30h30"/><path id="pfeilCb" d="M134 10v74M114 66l20 20 20-20"/></g></svg>
+  <div class="a portrait kwame" id="kwC" style="width:170px;height:170px" data-gruppe="tramC"></div>
+  <div class="a handy" id="hyC" data-gruppe="hyC"><div class="sch"><div class="kopf2"><i></i>Tickets</div></div></div>
+  <div class="a innenraum" id="innenC" data-frei><div class="innen"></div><div class="stange"></div><div class="fenster" style="left:6%"></div><div class="fenster" style="left:38%"></div>
+    <div class="unten"></div><div class="pfahl" style="left:84%"></div></div>
+  <div class="a sitz" id="sitzC1"><i class="lehne"></i><i class="polster"></i><i class="fuss"></i></div>
+  <div class="a sitz" id="sitzC2" data-gruppe="sitzC"><i class="lehne"></i><i class="polster"></i><i class="fuss"></i></div>
+  <div class="a leuchte" id="leuchtC" style="width:130px;height:130px" data-frei></div>
+  <div class="a" id="stockC" style="width:130px">{{gehstock}}</div>
+  <div class="a welle blau" id="wlC" style="width:130px;height:130px" data-frei></div>
+  <div class="a portrait kwame" id="kwC2" style="width:170px;height:170px" data-gruppe="sitzC"></div>
+  <div class="a plakette lila" id="herzC" data-frei></div>
+  <div class="a handy" id="hyC2" data-gruppe="hyC2"><div class="sch"><div class="kopf2"><i></i>Anruf</div><div class="laut" id="lautC"><i style="height:40px"></i><i style="height:70px"></i><i style="height:100px"></i><i style="height:130px"></i></div></div></div>
+  <div class="a" id="schallC" style="width:70px;height:90px" data-frei></div>
+
+  <!-- D · Station „Tickets“: Monatsabo, Jobticket, Papierticket entwerten -->
+  <div class="a buehne" id="bueD"></div>
+  <div class="p hpill" id="pillD"><span class="hk">H</span>Tickets</div>
+  <div class="a woche" id="wocheD"><div class="tag">Mo<i></i></div><div class="tag">Di<i></i></div><div class="tag">Mi<i></i></div><div class="tag">Do<i></i></div><div class="tag">Fr<i></i></div></div>
+  <div class="a" id="karteD" style="width:500px;height:500px" data-gruppe="kD"><div style="position:absolute;inset:0">{{deutschland}}</div>
+    <svg viewBox="0 0 160 160" style="position:absolute;inset:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.4">
+      <path id="rDa" pathLength="1" d="M34 62Q48 50 62 58T88 52" stroke="var(--b700)"/>
+      <path id="rDb" pathLength="1" d="M70 118Q82 108 94 120T122 114" stroke="var(--b400)"/>
+      <path id="rDc" pathLength="1" d="M58 18L70 46L84 74L80 104L92 140" stroke="var(--warning)"/>
+      <path id="rDd" pathLength="1" d="M28 96L58 90L96 100L132 84" stroke="var(--success)"/>
+      <path id="rDe" pathLength="1" d="M104 22L104 58L122 92L112 146" stroke="var(--info)"/></g></svg></div>
+  <div class="a monat" id="monatD" data-gruppe="kD"><div class="kopf4"></div><div class="tage" id="tageD"></div>
+    <svg class="torte" viewBox="0 0 58 58"><circle cx="29" cy="29" r="26" fill="var(--b100)"/><path id="torteD" fill="var(--success)"/></svg><div class="job" id="jobD"></div></div>
+  <div class="a swatch" id="swDa" style="background:var(--b700)"></div><div class="a" id="lgDa" style="width:150px">{{bus}}</div>
+  <div class="a swatch" id="swDb" style="background:var(--b400)"></div><div class="a" id="lgDb" style="width:150px">{{strassenbahn}}</div>
+  <div class="a swatch" id="swDc" style="background:var(--warning)"></div><div class="a" id="lgDc" style="width:150px">{{regionalzug}}</div>
+  <div class="a swatch" id="swDd" style="background:var(--n300)"></div><div class="a" id="lgDd" style="width:150px">{{fernzug}}</div>
+  <div class="a" id="betrD" style="width:300px">{{betrieb}}</div>
+  <div class="a frage" id="frageD" data-frei>?</div>
+  <div class="a" id="muenzeD" style="width:76px" data-frei>{{muenze}}</div>
+  <div class="a papier" id="papierD" data-gruppe="ent"><div class="stub"></div><div class="perf"></div><i class="zl" style="top:26px;width:120px"></i><i class="zl" style="top:46px;width:60px"></i>
+    <div class="feld"></div><div class="datum" id="datumD">12.10.<br>06:58</div></div>
+  <div class="a entwerter" id="entwD" data-gruppe="ent"><div class="saeule"></div><div class="geh"></div><div class="anz"><i id="entwDa"></i></div><div class="schl"></div>
+    <svg class="pf" viewBox="0 0 44 44"><path d="M36 22H10M20 12L10 22l10 10" stroke="var(--warning)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <svg class="a stoss" id="stossD" viewBox="0 0 120 60" data-frei><path d="M20 50L6 30M60 44V14M100 50l14-20" stroke="var(--b500)" stroke-width="7" stroke-linecap="round"/></svg>
+
+  <!-- Z · Ziel „Betrieb“: Ticket vorher, eine Bahn früher -->
+  <div class="a buehne" id="bueZ"><div class="wand"></div><div class="boden"></div></div>
+  <div class="p hpill gruen" id="pillZ"><span class="hk">H</span>Betrieb</div>
+  <div class="a handy" id="hyZ"><div class="sch"><div class="kopf2"><i></i><span>Tickets</span></div><div class="abf" id="abfZ">
+    <div class="zeile"><div class="rahmen5 gruen" id="zZar"></div><span class="ic"></span><b>06:48</b></div>
+    <div class="zeile"><div class="rahmen5" id="zZbr"></div><span class="ic"></span><b>06:58</b><span class="spaet" id="spaetZ">+5 min</span></div>
+    <div class="zeile"><span class="ic"></span><b>07:08</b></div></div></div></div>
+  <div class="a" id="weckZ" style="width:140px;height:140px"><div style="position:absolute;inset:0">{{wecker-leer}}</div>
+    <svg viewBox="0 0 160 160" style="position:absolute;inset:0"><path id="weckZh" d="M80 88V68" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" style="transform-origin:80px 88px"/><path id="weckZm" d="M80 88V60" stroke="var(--b700)" stroke-width="4.5" stroke-linecap="round" style="transform-origin:80px 88px"/><circle cx="80" cy="88" r="4.5" fill="var(--b700)"/></svg></div>
+  <div class="a" id="betrZ" style="width:300px" data-gruppe="bZ">{{betrieb~z}}</div>
+  <div class="a uhr" id="uhrZ" style="width:150px;height:150px"></div>
+  <div class="a portrait kwame" id="kwZ" style="width:150px;height:150px" data-gruppe="bZ"></div>
+  <div class="a plakette gruen" id="okZ" data-frei></div>
+
+  <!-- Tafeln (Text im Bild) unter den Stationen -->
+  <div class="p" id="tafH"><div class="tafel" id="tbH"><div class="titel">Bahn kommt – kein Ticket</div></div></div>
+  <div class="p" id="tafA"><div class="tafel" id="tbA"><div class="titel">ohne Ticket – oft 60 €</div></div></div>
+  <div class="p" id="tafB"><div class="tafel" id="tbB"><div class="titel">Ticket, bevor du fährst</div></div></div>
+  <div class="p" id="tafC"><div class="tafel" id="tbC"><div class="titel">C: Ticket vor der Fahrt</div></div></div>
+  <div class="p" id="tafD"><div class="tafel" id="tbD"><div class="titel">Monatsabo · Jobticket · Papier: entwerten</div></div></div>
+  <div class="p" id="tafZ"><div class="tafel" id="tbZ"><div class="titel">Ticket vorher · eine Bahn früher</div></div></div>
+</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Ticket zuerst.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Kauf dein Ticket vor der Fahrt, nimm Rücksicht und plan genug Zeit ein. Dann kommst du entspannt und pünktlich an.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const WN = (n, k) => A(satz(n).woerter[k].start);              // k-tes Wort in Satz n (für „A“, „B“, „C“)
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const nicken = (id, t, h = 12) => { const y = wertBei(id, 'y', t); tw(id, t, .13, { y: y + h, sy: .96 }, 'sinus'); tw(id, t + .13, .3, { y, sy: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const wellen = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const rel = (id, basis = {}, o = null) => { if (o) el(id).style.transformOrigin = o; akteur(id, basis, true); };
+const beben = (id, t, a = 6, d = .45) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 80) * (1 - p / d)).toFixed(2)}px)`; });
+const kurve = (keys, t, d = .5) => { let v = keys[0][1]; for (const [a, w] of keys.slice(1)) if (t >= a) v = lerp(v, w, E.inout(clamp((t - a) / d))); return v; };
+
+document.querySelectorAll('.portrait.kwame').forEach(p => { p.innerHTML = tpl('portraitKwame'); p.dataset.sprecher = 'Kwame'; });
+['hy0x', 'zsBx'].forEach(id => el(id).innerHTML = tpl('svgX'));
+['okZ', 'okB'].forEach(id => el(id).innerHTML = tpl('svgHaken'));
+el('herzC').innerHTML = tpl('svgHerz');
+el('dfi0l').innerHTML = tpl('svgTram'); el('dfiWkz').innerHTML = tpl('svgTram');
+el('zug').innerHTML = tpl('svgTramD');
+el('summ0').innerHTML = tpl('svgSumm');
+el('schallC').innerHTML = tpl('svgSchall');
+['tr0a', 'tr0b'].forEach(id => el(id).innerHTML = tpl('svgTropfen'));
+el('zsBh1').innerHTML = tpl('svgTuer'); el('zsBh2').innerHTML = tpl('svgLupe');
+document.querySelectorAll('#hyZ .zeile .ic').forEach(i => i.innerHTML = tpl('svgTramW'));
+const QR = '110111101001111011000110110101101101';
+function eticket(handyId) {
+  el(handyId).querySelector('.sch').insertAdjacentHTML('beforeend', tpl('tplEticket') + '<div class="ok"></div>');
+  const qr = el(handyId).querySelector('.qr');
+  qr.innerHTML = [...QR].map(b => `<i class="${b === '1' ? '' : 'x'}"></i>`).join('');
+  const ok = el(handyId).querySelector('.ok'); ok.innerHTML = tpl('svgHaken');
+  const q = [...qr.querySelectorAll('i:not(.x)')];
+  q.forEach(i => { i.style.transformOrigin = '50% 50%'; akteur(i, { s: 0 }, true); });
+  ok.style.transformOrigin = '50% 50%'; akteur(ok, { s: 0 }, true);
+  const tk = el(handyId).querySelector('.eticket'); tk.style.transformOrigin = '50% 50%'; akteur(tk, { s: 0 }, true);
+  return { qr: q, ok, tk };
+}
+
+/* ---------- Porträts: Mund exakt in den eigenen Sätzen (sprache.json), blinzeln, Blickrichtung ---------- */
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.sprecher]);
+const sprecherBei = t => { const ab = SAETZE_Z.find(([a, b]) => t >= a - .03 && t <= b + .06); return ab && ab[2]; };
+const pegelBei = t => window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+const FROH = {}, BLICK = {};
+const froh = (id, a, b) => (FROH[id] ??= []).push([a, b]);
+const blick = (id, a, b, r) => (BLICK[id] ??= []).push([a, b, r]);       // r: −1 links, +1 rechts
+const rampe = (t, a, b, d = .35) => E.inout(clamp((t - a) / d)) * (1 - E.inout(clamp((t - b) / d)));
+HOOKS.push(t => {
+  const wer = sprecherBei(t), pegel = pegelBei(t);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const aktiv = wer && p.dataset.sprecher === wer && getComputedStyle(p).visibility !== 'hidden';
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 3)))) : 0;
+    const f = (FROH[p.id] || []).some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = f && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || f ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    const bl = (BLICK[p.id] || []).reduce((m, [a, b, r]) => m + r * rampe(t, a, b), 0);
+    p.querySelector('.figur').style.transform = `translateX(${(20 * bl).toFixed(2)}px) rotate(${(nick + 9 * bl).toFixed(2)}deg) translateY(${aktiv ? 0 : nick}px)`;
+    p.style.borderColor = aktiv ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Uhren: Zeiger aus Minuten nach 12 Uhr, grüner Bogen (Puffer) ---------- */
+const UHREN = {};
+function uhrBau(id, { minuten = 180 } = {}) {
+  el(id).innerHTML = `${tpl('tplUhr')}<svg viewBox="0 0 160 160"><path id="${id}bg" fill="var(--success)" opacity=".8"/></svg>
+    <div class="zg" id="${id}h">${tpl('tplStunde')}</div><div class="zg" id="${id}m">${tpl('tplZeiger')}</div>`;
+  UHREN[id] = { keys: [[0, minuten]], bogen: null, d: .5 };
+}
+HOOKS.push(t => {
+  for (const [id, u] of Object.entries(UHREN)) {
+    const m = kurve(u.keys, t, u.d);
+    el(id + 'h').style.transform = `rotate(${(m / 2).toFixed(2)}deg)`;
+    el(id + 'm').style.transform = `rotate(${(m * 6).toFixed(2)}deg)`;
+    if (u.bogen) {        // [Start, Dauer, von Minute, Länge in Minuten]
+      const [t0, d, von, len] = u.bogen, p = E.inout(clamp((t - t0) / d)), a0 = von / 60 * 2 * Math.PI, a1 = a0 + len / 60 * 2 * Math.PI * p;
+      const P = a => `${(80 + 44 * Math.sin(a)).toFixed(2)} ${(76 - 44 * Math.cos(a)).toFixed(2)}`;
+      el(id + 'bg').setAttribute('d', p > .001 ? `M80 76L${P(a0)}A44 44 0 0 1 ${P(a1)}Z` : '');
+    }
+  }
+});
+
+/* ================= Liniennetz: Stationen, Linien, Kamerafahrten ================= */
+const ZS = 1.12;                                     // Zoom an den Stationen
+const ST = { H: [960, 540], A: [4900, 240], B: [5200, 1550], C: [5600, 2660], D: [7300, 2660], Z: [9000, 2660] };
+const LY = k => ST[k][1] - 410;                     // Höhe der Linie (Haltestellen-Schild) über der Station
+// Linien als Polygonzüge (45°-Knicke wie auf einem Liniennetzplan)
+const LINIEN = {
+  H: { farbe: 'var(--b700)', pts: [[960, 130], [1600, 130], [2010, 540], [2100, 540]] },
+  A: { farbe: 'var(--la)', pts: [[2100, 540], [2410, 230], [3500, 230], [3900, -170], [4900, -170]] },
+  B: { farbe: 'var(--lb)', pts: [[2100, 540], [3500, 540], [4100, 1140], [5200, 1140]] },
+  C: { farbe: 'var(--lc)', pts: [[2100, 540], [2410, 850], [3400, 850], [4800, 2250], [9000, 2250]] },
+};
+const NS = 'http://www.w3.org/2000/svg';
+for (const [k, L] of Object.entries(LINIEN)) {
+  const d = 'M' + L.pts.map(p => p.join(' ')).join('L');
+  L.seg = []; let s = 0;
+  for (let i = 1; i < L.pts.length; i++) { const [a, b] = [L.pts[i - 1], L.pts[i]], l = Math.hypot(b[0] - a[0], b[1] - a[1]); L.seg.push([s, l, a, b]); s += l; }
+  L.len = s;
+  for (const [g, cls] of [['mantel', 'm'], ['linien', 'l']]) {
+    const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); p.setAttribute('pathLength', '1'); p.id = `pf${cls}${k}`;
+    if (cls === 'l') p.style.stroke = L.farbe;
+    p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1; el(g).appendChild(p);
+  }
+  L.zeich = [[0, 0, 0]];                            // [t0, d, Länge] – gezeichnet bis
+}
+// Glanz- und Wellen-Pfad über Linie C (Auflösung)
+['glanzC', 'welleC'].forEach(id => { const p = document.createElementNS(NS, 'path'); p.id = id; p.setAttribute('d', 'M' + LINIEN.C.pts.map(q => q.join(' ')).join('L')); p.setAttribute('pathLength', '1'); el('linien').appendChild(p); });
+el('glanzC').setAttribute('stroke', 'var(--success)'); el('glanzC').setAttribute('stroke-width', '44'); el('glanzC').style.opacity = 0;
+el('welleC').setAttribute('stroke', 'var(--success-bg)'); el('welleC').setAttribute('stroke-width', '14'); el('welleC').style.strokeDasharray = '.05 .95'; el('welleC').style.opacity = 0;
+el('linien').insertBefore(el('glanzC'), el('linien').firstChild);
+const punkt = (k, l) => { const L = LINIEN[k]; l = Math.max(0, Math.min(L.len, l)); for (const [s, n, a, b] of L.seg) if (l <= s + n + 1e-6) { const u = (l - s) / n; return [lerp(a[0], b[0], u), lerp(a[1], b[1], u)]; } return L.pts.at(-1); };
+const laenge = (k, x, y) => { const L = LINIEN[k]; let best = 0, bd = 1e9; for (let l = 0; l <= L.len; l += 4) { const [px, py] = punkt(k, l), dd = Math.hypot(px - x, py - y); if (dd < bd) { bd = dd; best = l; } } return best; };
+const glatt = (k, l, r = 140) => { let x = 0, y = 0, n = 0; for (let d = -r; d <= r; d += r / 4) { const p = punkt(k, l + d); x += p[0]; y += p[1]; n++; } return [x / n, y / n]; };
+const zeichnen = (k, t0, d, l) => LINIEN[k].zeich.push([t0, d, l]);
+const gezeichnet = (k, t) => { let v = 0; for (const [a, d, l] of LINIEN[k].zeich) if (t >= a) v = lerp(v, l, E.inout(clamp((t - a) / Math.max(d, 1e-4)))); return v; };
+HOOKS.push(t => { for (const [k, L] of Object.entries(LINIEN)) { const g = gezeichnet(k, t), v = 1 - g / L.len, vis = g > 2 ? 'visible' : 'hidden';
+  for (const id of ['pfl' + k, 'pfm' + k]) { el(id).style.strokeDashoffset = v; el(id).style.visibility = vis; } } });
+
+// Kamera: Mittelpunkt (x, y) in der Welt und Zoom z; Fahrten folgen dem Zug auf der Linie
+const KAM = [];
+const kamZu = (t0, d, x, y, z = 1, dip = 0) => KAM.push({ t0, d, ziel: { x, y, z }, dip });
+const ZUG = [];
+// fahrt: Zug fährt auf Linie k von l0 bis l1, die Kamera folgt und landet bei ziel
+function fahrt(k, t0, d, l0, l1, ziel, dip = .12) {
+  KAM.push({ t0, d, k, l0, l1, ziel, dip }); ZUG.push({ k, t0, d, l0, l1 }); zeichnen(k, t0, d, l1); cue(t0, 'whoosh'); cue(t0 + d - .15, 'plopp');
+}
+const KAM0 = { x: 960, y: 540, z: ZS };
+function kamBei(t) {
+  let s = { ...KAM0 };
+  for (const g of KAM) {
+    if (t < g.t0) break;
+    const p = clamp((t - g.t0) / g.d), e = E.inout(p);
+    let x, y;
+    if (g.k) {
+      const [px, py] = glatt(g.k, lerp(g.l0, g.l1, e));
+      const a = E.inout(clamp(p / .3)), b = E.inout(clamp((p - .62) / .38));
+      x = lerp(lerp(s.x, px, a), g.ziel.x, b); y = lerp(lerp(s.y, py, a), g.ziel.y, b);
+    } else { x = lerp(s.x, g.ziel.x, e); y = lerp(s.y, g.ziel.y, e); }
+    const z = lerp(s.z, g.ziel.z, e) * (1 - g.dip * Math.sin(Math.PI * p));
+    s = p >= 1 ? { ...g.ziel } : { x, y, z };
+  }
+  return s;
+}
+const AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute"><filter id="wischer" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur id="wischerBlur" stdDeviation="0 0"/></filter></svg>');
+HOOKS.push(t => {
+  KAM.sort((a, b) => a.t0 - b.t0);
+  const k = kamBei(t), v = kamBei(t - 1 / 30);
+  let z = k.z;
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z *= 1 + h * Math.sin(Math.PI * E.weich(d)); }
+  el('welt').style.transform = `translate(${(960 - k.x).toFixed(2)}px,${(540 - k.y).toFixed(2)}px)`;
+  $('#kamera').style.transform = `scale(${z.toFixed(4)})`;
+  const bx = Math.min(18, Math.abs(k.x - v.x) * z * .08), by = Math.min(18, Math.abs(k.y - v.y) * z * .08);
+  el('wischerBlur').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`);
+  el('welt').style.filter = bx + by > .4 ? 'url(#wischer)' : '';
+  // Zug-Marke auf der Linie
+  const zg = el('zug'); let o = 0, pos = null;
+  for (const f of ZUG) { const p = (t - f.t0) / f.d; if (p > -.15 && p < 1.15) { pos = punkt(f.k, lerp(f.l0, f.l1, E.inout(clamp(p)))); o = clamp(Math.min((p + .15) / .15, (1.15 - p) / .15)); zg.style.borderColor = LINIEN[f.k].farbe; } }
+  zg.style.opacity = o; zg.style.visibility = o > .01 ? 'visible' : 'hidden';
+  if (pos) zg.style.transform = `translate(${pos[0]}px,${pos[1]}px) translate(-50%,-50%) scale(${(.6 + .4 * o).toFixed(3)})`;
+});
+
+// Stationen: Bühne, Schild (oben, auf der Linie), Tafel (unten)
+const STW = {};
+function station(k, tPill, opt = {}) {
+  const [x, y] = ST[k];
+  akteur('bue' + k, { x, y });
+  const pill = el('pill' + k); pill.style.transformOrigin = '50% 50%';
+  STW[k] = pill.offsetWidth;
+  if (tPill == null) akteur(pill, { x, y: LY(k) }); else pop(pill, tPill, { x, y: LY(k) }, 'pop');
+  akteur('taf' + k, { x, y: y + 400 });
+  return [x, y];
+}
+const stop = (lk, k) => laenge(lk, ST[k][0] - STW[k] / 2 - 50, LY(k));
+const P = (k, dx, dy) => ({ x: ST[k][0] + dx, y: ST[k][1] + dy });
+const tafel = (k, zeiten) => titelEin('tb' + k, zeiten[0], zeiten);
+
+/* ---------- H · Haltestelle: kurz vor sieben, kein Ticket, Automat kaputt ---------- */
+{
+  station('H', null);
+  const Q = (dx, dy) => P('H', dx, dy);
+  zeichnen('H', 0, 0, 1);         // Startstück der Linie über dem Schild
+  ein('haus0', A(-.55), Q(-360, 35), { y: -40 }, 'whoosh');
+  ein('plan0', A(-.4), Q(-420, 45), { y: -30 });
+  ein('dfi0', A(-.35), Q(-350, -62), { y: -30 });
+  ein('mast0', A(-.45), Q(-120, 5), { y: -40 });
+  rel('h0', {}, '50% 50%');
+  uhrBau('uhr0', { minuten: 400 });                        // 6:40
+  ein('uhr0', A(-.25), Q(-120, -70), { y: -30 });
+  ein('aut0', A(-.3), Q(420, 45), { y: -40 });
+  rel('aut0m', {}); rel('aut0k', { o: 0 }); rel('dfi0z', { o: 0 }); rel('dfi0l', { x: -60, o: 0 });
+  // „Montag, kurz vor sieben“: die Uhr am Mast springt auf kurz vor sieben
+  const tKu = W('kurz', 1), tSi = W('sieben', 1);
+  UHREN.uhr0.keys.push([tKu - .05, 418]); UHREN.uhr0.d = .55;    // 6:58
+  cue(tKu, 'whoosh'); bump('uhr0', tSi, 1.12); cue(tSi, 'ding'); akzent(tSi, .03);
+  // „Kwame steht an der Haltestelle“: Kwame hüpft herein, das H-Schild wackelt, der Fahrplan leuchtet
+  const tKw = W('Kwame', 2) - .25, K0 = Q(110, 100);
+  akteur('kw0', { x: K0.x + 200, y: K0.y - 40, o: 0, s: .8 });
+  tw('kw0', tKw, .2, { o: 1 }); tw('kw0', tKw, .4, { x: K0.x + 100, y: K0.y }, 'inout', { bogen: 50 }); tw('kw0', tKw, .5, { s: 1 }, 'sanft');
+  tw('kw0', tKw + .4, .4, { x: K0.x, y: K0.y }, 'inout', { bogen: 40 }); cue(tKw, 'pop');
+  landen('kw0', tKw + .8); cue(tKw + .8, 'plopp');
+  const tHa = W('Haltestelle', 2);
+  wackeln('h0', tHa, 4, 7); bump('pillH', tHa, 1.06);
+  rel('plan0z', {}, '0 50%'); tw('plan0z', tHa + .3, .4, { sx: 1.08 }, 'back');
+  HOOKS.push(t => el('plan0z').classList.toggle('an', t >= tHa + .3));
+  bump('plan0', tHa + .3, 1.08); cue(tHa + .3, 'klick');
+  // „Die Straßenbahn kommt in zwei Minuten“: Bahn-Symbol fährt in die Anzeige, „2 min“ blinkt, die Schienen summen
+  const tSt = W('Straßenbahn', 3), tZw = W('zwei', 3), tMi = W('Minuten', 3);
+  tw('dfi0l', tSt, .6, { x: 0, o: 1 }, 'sanft'); bump('dfi0', tSt, 1.06); cue(tSt, 'whoosh');
+  set('dfi0z', tZw - .02, { o: 1 }); cue(tZw, 'ding'); bump('dfi0', tZw, 1.1); akzent(tZw, .035);
+  HOOKS.push(t => { const d = t - tZw; if (d > 0 && d < 1.6) el('dfi0z').style.opacity = Math.floor(d / .27) % 2 ? .25 : 1; });
+  const SU = Q(-330, 200);
+  akteur('summ0', { ...SU, o: 0 });
+  tw('summ0', tMi, .3, { o: 1 }); tw('summ0', SE(3) + .9, .4, { o: 0 });
+  HOOKS.push(t => { const d = t - tMi; if (d > 0 && d < 2.2) el('summ0').style.transform += ` translateX(${(4 * Math.sin(d * 60)).toFixed(2)}px)`; });
+  for (let k = 0; k < 4; k++) cue(tMi + k * .3, 'tipp');
+  // „Aber Kwame hat noch kein Ticket“: Handy mit Ticket-App, das Ticket-Fach ist leer, rotes ✕
+  const tAb = W('Aber', 4), tKe = W('kein', 4), tTi = W('Ticket', 4);
+  nicken('kw0', W('Kwame', 4), 10);
+  const HY = Q(110, -120);
+  akteur('hy0', { x: K0.x, y: K0.y, s: 0, r: -8 });
+  tw('hy0', tAb + .35, .55, { s: .62, x: HY.x, y: HY.y, r: 0 }, 'sanft'); cue(tAb + .35, 'whoosh');
+  rel('hy0leer', {}, '50% 50%'); bump('hy0leer', tKe, 1.08);
+  pop('hy0x', tTi, { x: HY.x + 40, y: HY.y + 20 }, 'plopp'); wackeln('hy0x', tTi + .45, 3, 8);
+  wackeln('hy0', tTi + .1, 3, 3); blick('kw0', tKe - .2, W('Oh', 5) - .1, -1);
+  // Kwame: „Oh nein, der Automat ist kaputt!“ – er schaut zum Automaten, das Display flackert, „Außer Betrieb“
+  const tOh = W('Oh', 5), tAu = W('Automat', 5), tKa = W('kaputt', 5);
+  blick('kw0', tOh, SE(5) + 2, 1);
+  bump('aut0', tAu, 1.05); cue(tAu, 'klick');
+  const FL = [1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1];
+  HOOKS.push(t => {
+    const d = t - tAu - .1;
+    const k = d > 0 && t < tKa ? FL[Math.floor(d / .07) % FL.length] : 1;
+    el('aut0m').style.opacity = t >= tKa ? 0 : k;
+    el('aut0k').style.opacity = t >= tKa ? 1 : (d > 0 ? (1 - k) * .6 : 0);
+  });
+  pop('warn0', tKa, Q(475, -120), 'plopp'); wackeln('warn0', tKa + .45, 4, 8);
+  beben('aut0', tKa, 5, .5); akzent(tKa, .05);
+  tw('kw0', tKa, .1, { sy: .9, sx: 1.06 }, 'sinus'); tw('kw0', tKa + .1, .45, { sy: 1, sx: 1 }, 'sanft'); wackeln('kw0', tKa + .1, 4, 3);
+  [['tr0a', -80, -70, 0], ['tr0b', -58, -104, .2]].forEach(([id, dx, dy, v]) => {
+    akteur(id, { x: K0.x + dx, y: K0.y + dy, s: 0 }); tw(id, tKa + .15 + v, .35, { s: 1 }, 'back');
+    tw(id, tKa + .6 + v, .8, { y: K0.y + dy + 24, o: 0 }, 'in');
+  });
+  cue(tKa + .15, 'pop');
+  // Tafel: „Bahn kommt – kein Ticket“
+  tafel('H', [W('Straßenbahn', 3), W('kommt', 3), W('kommt', 3) + .08, tKe, tTi]);
+  document.querySelectorAll('#tbH .w').forEach((w, k) => { if (k >= 3) w.classList.add('rot'); });
+}
+
+/* ---------- Weiche: Was würdest du tun? Drei Linien zweigen ab, Anzeige zählt herunter ---------- */
+const WM = { x: 2680, y: 540, z: .92 };
+const SCH = { A: [2920, 230], B: [2920, 540], C: [2920, 850] };
+const P1 = SE(5) + .15;
+textAus('tbH', P1 - .2);
+fahrt('H', P1, 1.4, 0, LINIEN.H.len, WM, .1);
+const SYM = {
+  A: p => `<svg viewBox="0 0 300 260"><defs><clipPath id="${p}clip"><rect x="140" y="30" width="126" height="222"/></clipPath></defs>
+    <g id="${p}tu"><rect x="126" y="16" width="154" height="244" rx="18" fill="var(--b500)"/><rect x="140" y="30" width="126" height="222" fill="var(--b700)"/>
+      <g clip-path="url(#${p}clip)"><g id="${p}tl"><rect x="140" y="30" width="63" height="222" fill="var(--b300)"/><rect x="152" y="46" width="39" height="84" rx="7" fill="var(--b100)"/></g>
+      <g id="${p}tr"><rect x="203" y="30" width="63" height="222" fill="var(--b300)"/><rect x="215" y="46" width="39" height="84" rx="7" fill="var(--b100)"/></g></g></g>
+    <g id="${p}sp" stroke="var(--b300)" stroke-width="8" stroke-linecap="round"><path d="M40 60h70M20 94h90M50 128h60"/></g>
+    <g id="${p}ti"><rect x="8" y="168" width="96" height="58" rx="10" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/><rect x="8" y="168" width="24" height="58" rx="8" fill="var(--b400)"/>
+      <path d="M48 186h40M48 200h28M48 212h34" stroke="var(--n300)" stroke-width="5" stroke-linecap="round"/><path d="M2 236L112 160" stroke="var(--error)" stroke-width="10" stroke-linecap="round"/></g></svg>`,
+  B: p => `<svg viewBox="0 0 300 260">
+    <g id="${p}sp" stroke="var(--b300)" stroke-width="8" stroke-linecap="round"><path d="M8 160h36M2 188h42M12 214h32"/></g>
+    <g id="${p}ba"><path d="M120 128l14-16h30" stroke="var(--b700)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <rect x="56" y="128" width="236" height="96" rx="26" fill="var(--b500)"/><rect x="74" y="146" width="44" height="36" rx="8" fill="var(--b100)"/><rect x="130" y="146" width="44" height="36" rx="8" fill="var(--b100)"/>
+      <rect x="186" y="146" width="44" height="36" rx="8" fill="var(--b100)"/><rect x="242" y="146" width="34" height="36" rx="8" fill="var(--b100)"/><rect x="56" y="196" width="236" height="8" fill="var(--warning)"/>
+      <circle cx="96" cy="236" r="14" fill="var(--ink)"/><circle cx="252" cy="236" r="14" fill="var(--ink)"/></g>
+    <g id="${p}lu"><circle cx="236" cy="50" r="30" fill="var(--b50)" stroke="var(--b700)" stroke-width="10"/><path d="M258 72l20 20" stroke="var(--b700)" stroke-width="13" stroke-linecap="round"/></g>
+    <g id="${p}ti"><rect x="40" y="30" width="96" height="58" rx="10" fill="var(--warning-bg)" stroke="var(--b300)" stroke-width="4"/><rect x="40" y="30" width="24" height="58" rx="8" fill="var(--b400)"/>
+      <path d="M80 48h40M80 62h28M80 74h34" stroke="var(--n300)" stroke-width="5" stroke-linecap="round"/></g></svg>`,
+  C: p => `<svg viewBox="0 0 300 260">
+    <g id="${p}ph"><rect x="18" y="14" width="130" height="236" rx="22" fill="var(--b700)"/><rect x="28" y="28" width="110" height="208" rx="12" fill="var(--b50)"/><rect x="28" y="28" width="110" height="28" rx="10" fill="var(--b500)"/></g>
+    <g id="${p}tk"><rect x="38" y="68" width="90" height="118" rx="10" fill="var(--surface)" stroke="var(--b200)" stroke-width="3"/><rect x="38" y="68" width="90" height="20" rx="8" fill="var(--b400)"/></g>
+    ${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(k => `<rect id="${p}q${k}" x="${52 + (k % 3) * 22}" y="${98 + Math.floor(k / 3) * 22}" width="${[0, 2, 6].includes(k) ? 18 : 12}" height="${[0, 2, 6].includes(k) ? 18 : 12}" rx="3" fill="var(--ink)"/>`).join('')}
+    <g id="${p}ok"><circle cx="83" cy="212" r="17" fill="var(--success)"/><path d="M75 212l6 6 11-12" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+    <g id="${p}uh"><circle cx="228" cy="84" r="54" fill="var(--surface)" stroke="var(--b300)" stroke-width="9"/><path d="M228 84v-28" stroke="var(--b700)" stroke-width="7" stroke-linecap="round"/>
+      <path id="${p}zg" d="M228 84h32" stroke="var(--success)" stroke-width="6" stroke-linecap="round" style="transform-box:view-box;transform-origin:228px 84px"/><circle cx="228" cy="84" r="7" fill="var(--b700)"/></g>
+    <g id="${p}nb"><rect x="176" y="164" width="104" height="52" rx="16" fill="var(--b500)"/><rect x="190" y="176" width="22" height="16" rx="4" fill="var(--b100)"/><rect x="218" y="176" width="22" height="16" rx="4" fill="var(--b100)"/>
+      <rect x="246" y="176" width="20" height="16" rx="4" fill="var(--b100)"/><circle cx="200" cy="220" r="7" fill="var(--ink)"/><circle cx="256" cy="220" r="7" fill="var(--ink)"/>
+      <path d="M150 190h18M162 182l8 8-8 8" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
+};
+const FARBE = { A: 'rot', B: 'rot', C: 'gruen' }, LFARBE = { A: 'var(--la)', B: 'var(--lb)', C: 'var(--lc)' };
+WELT.insertAdjacentHTML('beforeend', ['A', 'B', 'C'].map(L => `<div class="a lschild" id="s${L}"><div class="rahmen" id="s${L}r"></div>
+  <div class="badge" id="s${L}b" style="background:${LFARBE[L]}">${L}</div><div class="sym">${SYM[L]('s' + L)}</div>
+  <div class="marke ${FARBE[L]}" id="s${L}m">${L === 'C' ? tpl('svgHaken') : tpl('svgX')}</div></div>`).join(''));
+// Lage der Schilder auf den Linien
+const LS = {};
+['A', 'B', 'C'].forEach(L => { LS[L] = { vor: laenge(L, SCH[L][0] - 260, SCH[L][1]), nach: laenge(L, SCH[L][0] + 260, SCH[L][1]) }; });
+function markeAuf(L, t) {
+  const p = 's' + L;
+  set(`${p}m`, t - .01, { o: 1 }); tw(`${p}m`, t, .45, { s: 1 }, 'back');
+  el(`${p}r`).classList.add(FARBE[L]); tw(`${p}r`, t, .25, { o: 1 });
+  tw(p, t, .08, { sy: .95, sx: 1.03 }, 'sinus'); tw(p, t + .08, .4, { sy: 1, sx: 1 }, 'sanft');
+  wackeln(p, t + .05, 3, 1.5); cue(t, 'plopp'); cue(t + .05, L === 'C' ? 'erfolg' : 'klick'); akzent(t, .04);
+}
+{
+  // Kwame als „Du bist hier“ an der Weiche, Fragezeichen
+  pop('kwW', P1 + .9, { x: 2010, y: 330 }, 'pop'); pop('frageW', W('tun', 6) - .3, { x: 2088, y: 222 }); schweben('frageW', 4);
+  wackeln('frageW', W('tun', 6) + .2, 3, 5);
+  // Echtzeit-Anzeige an der Weiche
+  ein('dfiW', P1 + 1.1, { x: 1960, y: 860 }, { y: 60 });
+  ['A', 'B', 'C'].forEach(L => {
+    const p = 's' + L;
+    ['m', 'b'].forEach(k => el(p + k).style.transformOrigin = '50% 50%');
+    akteur(p + 'm', { s: 0, o: 0 }, true); akteur(p + 'r', { o: 0 }, true); akteur(p + 'b', {}, true);
+  });
+  const symS = (id, b = {}) => akteur(id, { s: 0, ...b }, true);
+  symS('sAtu'); akteur('sAtl', {}, true); akteur('sAtr', {}, true); akteur('sAsp', { o: 0 }, true); symS('sAti');
+  symS('sBba'); akteur('sBsp', { o: 0 }, true); akteur('sBlu', { x: 90, o: 0 }, true); symS('sBti', { y: 70 });
+  ['ph', 'tk', 'ok', 'uh', 'nb'].forEach(k => symS('sC' + k)); for (let k = 0; k < 9; k++) symS('sCq' + k);
+  // Je Option: die Linie zweigt ab und zeichnet sich bis zum Schild, das Schild landet auf der Linie
+  [['A', 7], ['B', 9], ['C', 10]].forEach(([L, n]) => {
+    const t0 = SA(n) - .45, [x, y] = SCH[L];
+    zeichnen(L, t0, .5, LS[L].vor + 40);
+    akteur('s' + L, { x: x - 80, y, o: 0, s: .8 });
+    tw('s' + L, t0 + .25, .25, { o: 1 }); tw('s' + L, t0 + .25, .6, { x, s: 1 }, 'sanft');
+    cue(t0, 'whoosh'); bump('s' + L + 'b', SA(n), 1.25); cue(SA(n), 'pop');
+    zeichnen(L, t0 + .8, .4, LS[L].nach + 160);
+  });
+  // A: „Einfach einsteigen“ – Tür geht auf, das durchgestrichene Ticket hüpft hinein; „kurze Fahrt“ – Tür zu, Fahrtlinien
+  const tEi = W('Einfach', 7), tEs = W('einsteigen', 7), tKz = W('kurze', 8), tFa = W('Fahrt', 8);
+  tw('sAtu', SA(7) + .1, .45, { s: 1 }, 'back');
+  tw('sAti', tEi - .1, .45, { s: 1 }, 'back'); cue(tEi, 'pop'); wackeln('sAti', tEi + .4, 3, 4);
+  tw('sAtl', tEi + .1, .45, { x: -58 }, 'inout'); tw('sAtr', tEi + .1, .45, { x: 58 }, 'inout'); cue(tEi + .1, 'whoosh');
+  tw('sAti', tEs, .6, { x: 150, y: -40, s: .65 }, 'inout', { bogen: 70 }); cue(tEs, 'whoosh');
+  tw('sAti', tEs + .45, .2, { o: 0 });
+  tw(['sAtl', 'sAtr'], tKz - .1, .4, { x: 0 }, 'inout'); cue(tKz, 'klick');
+  tw('sAsp', tFa, .25, { o: 1 }); summen('sAtu', tFa, 1.2, 4);
+  HOOKS.push(t => { const d = t - tFa; if (d > 0) el('sAsp').style.transform += ` translateX(${(-14 * ((d * 2.2) % 1)).toFixed(2)}px)`; });
+  // B: die Bahn fährt; „Kontrolle“ – die Lupe kommt; „kommt“ – das Ticket wird hektisch gezogen
+  const tBE = W('Einsteigen', 9), tKo = W('Kontrolle', 9), tKm = W('kommt', 9);
+  tw('sBba', SA(9) + .1, .45, { s: 1 }, 'back');
+  tw('sBsp', tBE, .25, { o: 1 }); cue(tBE, 'whoosh');
+  HOOKS.push(t => { const d = t - tBE; if (d > 0) { el('sBba').style.transform += ` translateY(${(1.6 * Math.sin(d * 26)).toFixed(2)}px)`; el('sBsp').style.transform += ` translateX(${(-12 * ((d * 2.4) % 1)).toFixed(2)}px)`; } });
+  tw('sBlu', tKo - .1, .55, { x: 0, o: 1 }, 'sanft'); cue(tKo, 'whoosh'); wackeln('sBlu', tKo + .5, 3, 6);
+  tw('sBti', tKm - .05, .35, { s: 1, y: 0 }, 'back'); cue(tKm, 'pop');
+  wackeln('sBti', tKm + .3, 6, 9);
+  // C: Handy, Ticket, Code tippt sich, Haken; „nächste Bahn“ – Uhr läuft weiter
+  const tTk = W('Ticket', 10), tAp = W('App', 10), tCe = W('einsteigen', 10), tNa = W('nächste', 11);
+  tw('sCph', SA(10) + .1, .45, { s: 1 }, 'back');
+  tw('sCtk', tTk - .1, .4, { s: 1 }, 'back'); cue(tTk, 'pop');
+  for (let k = 0; k < 9; k++) { tw('sCq' + k, tAp + k * .1, .3, { s: 1 }, 'back'); if (k % 2 === 0) cue(tAp + k * .1, 'tipp'); }
+  tw('sCok', tCe, .45, { s: 1 }, 'back'); cue(tCe, 'ding');
+  tw('sCuh', SA(11) - .1, .45, { s: 1 }, 'back'); cue(SA(11), 'pop');
+  tw('sCnb', tNa, .45, { s: 1 }, 'back'); cue(tNa, 'pop');
+  HOOKS.push(t => { const d = clamp((t - tNa) / 1.1); el('sCzg').style.transform = `rotate(${(E.inout(d) * 120).toFixed(1)}deg)`; });
+  // Denkpause: die Echtzeit-Anzeige zählt herunter (? → 3 → 2 → 1), die Lichter gehen aus, Lichtrahmen wandert A → B → C
+  const c0 = SE(11) + .3, c1 = WE('Eins', 14) + .25;
+  kamZu(SE(11) + .1, 1, 2720, 560, .9);
+  const ZIF = [[W('Drei', 12), '3'], [W('Zwei', 13), '2'], [W('Eins', 14), '1']];
+  ZIF.forEach(([t]) => { cue(t, 'klick'); bump('dfiW', t, 1.06); });
+  HOOKS.push(t => {
+    let z = '?', seit = 9;
+    for (const [tz, n] of ZIF) if (t >= tz) { z = n; seit = t - tz; }
+    const zf = el('dfiWz'); zf.textContent = z;
+    zf.style.transform = `translateY(${(-100 * (1 - E.out(clamp(seit / .25)))).toFixed(1)}px)`;
+    const leds = el('dfiWleds').children, an = Math.ceil(8 * (1 - clamp((t - c0) / (c1 - c0))));
+    [...leds].forEach((l, i) => l.style.opacity = i < an ? 1 : .18);
+  });
+  const tLicht = SE(11) + .45, dl = (W('Drei', 12) - .2 - tLicht) / 3;
+  ['A', 'B', 'C'].forEach((L, k) => {
+    const t = tLicht + k * dl;
+    tw(`s${L}r`, t, .2, { o: 1 }, 'out'); tw(`s${L}r`, t + dl * .85, .25, { o: 0 }, 'in');
+    bump(`s${L}`, t, 1.05); cue(t, 'tipp');
+  });
+  aus('frageW', c1, .3);
+}
+
+/* ---------- A · Option A: zum Schild, ✕, die Linie entlang bis „Kontrolle“ ---------- */
+const P2 = WE('Eins', 14) + .3;
+{
+  const [x, y] = SCH.A, tMarke = WN(15, 1), tR = tMarke + .3, ziel = { x: ST.A[0], y: ST.A[1], z: ZS };
+  kamZu(P2, .7, x - 120, y + 60, 1.12);
+  bump('sAb', tMarke - .25, 1.2); markeAuf('A', tMarke);
+  station('A', tR + 1.0);
+  fahrt('A', tR, 1.35, LS.A.nach, stop('A', 'A'), ziel, .14);
+  const tK = tR + 1.15, Q = (dx, dy) => P('A', dx, dy);
+  // Wagen innen: Kwame sitzt
+  ein('sitzA', tK, Q(0, 150), { y: 60 });
+  ein('kwA', tK + .1, Q(0, 108), { y: 80 }, 'pop');
+  // „teuer werden“: das Portemonnaie kommt und zittert
+  const tTe = W('teuer', 15);
+  ein('pmhA', tTe - .2, Q(-410, 195), { y: 50 }, 'pop'); ein('pmvA', tTe - .2, Q(-410, 195), { y: 50 });
+  wackeln(['pmhA', 'pmvA'], tTe + .35, 3, 3);
+  // „Bei einer Kontrolle“: die Lupe wandert durch den Wagen und bleibt bei Kwame stehen
+  const tKo = W('Kontrolle', 16), tZa = W('zahlst', 16);
+  akteur('lupeA', { ...Q(-470, -60), o: 0, s: .9 });
+  tw('lupeA', tKo - .3, .25, { o: 1 }); cue(tKo - .3, 'whoosh');
+  tw('lupeA', tKo - .3, .55, Q(-330, -30), 'inout', { bogen: 30 });
+  tw('lupeA', tKo + .25, .55, { ...Q(-205, 10), s: 1 }, 'inout', { bogen: 30 });
+  landen('lupeA', tKo + .8); cue(tKo + .8, 'plopp');
+  wackeln('kwA', tZa, 3, 3); blick('kwA', tKo, SE(16) + .5, -1); akzent(tZa, .03);
+  // „erhöhtes Beförderungsentgelt“: ein langer Zettel rollt aus
+  const tEr = W('erhöhtes', 16), tBf = W('Beförderungsentgelt', 16), tSe = W('sechzig', 16);
+  el('zettelA').style.transformOrigin = '50% 0';
+  akteur('zettelA', { ...Q(300, -50), sy: 0, o: 0 });
+  set('zettelA', tEr, { o: 1 }); tw('zettelA', tEr, .15, { sy: .08 }, 'out');
+  tw('zettelA', tBf, 1.3, { sy: 1 }, 'sanft'); cue(tBf, 'kritzeln');
+  rel('betragA', { s: 0 }, '50% 50%'); tw('betragA', tSe, .45, { s: 1 }, 'back'); cue(tSe, 'ding');
+  // „oft sechzig Euro“: Münzen purzeln aus dem Portemonnaie, Kamera-Akzent
+  [[-280, 228, -12], [-222, 232, 8], [-164, 226, 18]].forEach(([dx, dy, r], k) => {
+    const id = 'mzA' + k;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a" id="${id}" style="width:54px" data-gruppe="pmA">${tpl('tplMuenze')}</div>`);
+    const t0 = tSe + .05 + k * .12, Z = Q(dx, dy);
+    akteur(id, { ...Q(-380, 170), s: 0, r: -20 });
+    tw(id, t0, .25, { s: 1 }, 'back'); flug(id, t0, .6, Z.x, Z.y, 90, { r });
+    landen(id, t0 + .6); cue(t0 + .6, 'muenze');
+  });
+  bump('pmhA', tSe, 1.08); bump('pmvA', tSe, 1.08); akzent(tSe, .055); wackeln('kwA', W('Euro', 16), 3, 2);
+  tafel('A', [tK + .3, tK + .38, tK + .46, W('oft', 16), tSe, tSe + .08]);
+  document.querySelectorAll('#tbA .w').forEach((w, k) => { if (k >= 3) w.classList.add('rot'); });
+  textAus('tbA', SE(16) + .05);
+}
+
+/* ---------- B · Option B: zurück zur Weiche, ✕, die Linie entlang bis „Zu spät“ ---------- */
+{
+  const tZ = SE(16) + .1, [x, y] = SCH.B, tMarke = WN(17, 1), tR = tMarke + .28, ziel = { x: ST.B[0], y: ST.B[1], z: ZS };
+  kamZu(tZ, tMarke - tZ - .15, x - 120, y, 1.08, .3); cue(tZ, 'whoosh');
+  bump('sBb', tMarke - .25, 1.2); markeAuf('B', tMarke);
+  station('B', tR + .95);
+  fahrt('B', tR, 1.3, LS.B.nach, stop('B', 'B'), ziel, .14);
+  const tK = tR + 1.1, Q = (dx, dy) => P('B', dx, dy);
+  ein('sitzB', tK, Q(-330, 145), { y: 60 });
+  ein('kwB', tK + .1, Q(-330, 100), { y: 80 }, 'pop');
+  wackeln('kwB', W('klappt', 17), 3, 4);
+  // „Du brauchst das Ticket, bevor du fährst“: Zeitstrahl Einsteigen → Kontrolle, der Platz fürs Ticket ist vorn
+  const tBr = W('brauchst', 18), tTi = W('Ticket', 18), tBe = W('bevor', 18), tFa = W('fährst', 18);
+  ein('zsB', tBr - .3, Q(80, -125), { y: -50 }, 'whoosh');
+  ['zsBslot', 'zsBtk', 'zsBx', 'zsBh1', 'zsBh2'].forEach(id => el(id).style.transformOrigin = '50% 50%');
+  rel('zsBslot', { s: 0 }); tw('zsBslot', tTi, .45, { s: 1 }, 'back'); cue(tTi, 'pop');
+  rel('zsBh1', {}); bump('zsBh1', tBe, 1.18); cue(tBe, 'klick');
+  HOOKS.push(t => { const d = t - tFa; el('zsBslot').style.borderColor = d > 0 && d < 1.4 && Math.floor(d / .25) % 2 === 0 ? 'var(--b500)' : ''; });
+  rel('zsBlauf', { sx: 0 }); rel('zsBtk', { s: 0 }); rel('zsBx', { s: 0 }); rel('zsBh2', {});
+  // „Gibt es in der Bahn einen Automaten, kaufst du es sofort nach dem Einsteigen“: Automat im Wagen, grünes Ticket springt an den Anfang
+  const tAu = W('Automaten', 19), tSo = W('sofort', 19), tEi = W('Einsteigen', 19);
+  ein('autB', tAu - .25, { ...Q(430, 125), s: .62 }, { x: 60 }, 'whoosh');
+  const slot = Q(80 - 380 + 113, -125 - 115 + 41);
+  akteur('tkB', { ...Q(430, 90), s: 0 });
+  tw('tkB', tSo - .1, .35, { s: .9 }, 'back'); cue(tSo, 'pop');
+  flug('tkB', tEi - .85, .85, slot.x, slot.y, 120, { s: 1 }); cue(tEi - .85, 'whoosh');
+  landen('tkB', tEi); cue(tEi, 'ding'); bump('zsBh1', tEi, 1.15);
+  pop('okB', tEi + .15, { x: slot.x + 46, y: slot.y - 30 }, 'erfolg');
+  aus(['autB', 'okB', 'tkB'], SA(20) - .2, .3);
+  // „Wenn die Kontrolle kommt, ist es zu spät“: die Fahrt läuft, erst bei der Kontrolle landet das Ticket – rot, zu spät
+  const tKo = W('Kontrolle', 20), tKm = W('kommt', 20), tSp = W('spät', 20);
+  tw('zsBlauf', SA(20), tKm + .3 - SA(20), { sx: 1 }, 'inout'); cue(SA(20), 'whoosh');
+  bump('zsBh2', tKo, 1.2); cue(tKo, 'klick');
+  tw('zsBtk', tSp - .25, .4, { s: 1 }, 'back'); cue(tSp - .2, 'plopp');
+  tw('zsBx', tSp, .45, { s: 1 }, 'back'); wackeln('zsBx', tSp + .4, 4, 8); cue(tSp, 'klick');
+  wellen('wlB', [tSp + .05], Q(80 + 230, -125 - 115 + 41).x, Q(0, -199).y, 1);
+  akzent(tSp, .05); wackeln('kwB', tSp + .1, 4, 3);
+  tafel('B', [tTi, tBe, tBe + .08, tFa]);
+  textAus('tbB', SE(20) + .05);
+}
+
+/* ---------- C · Option C: zurück zur Weiche, ✓, die Linie entlang bis „Geschafft“ ---------- */
+{
+  const tZ = SE(20) + .1, [x, y] = SCH.C, tMarke = WN(21, 2), tR = tMarke + .25, ziel = { x: ST.C[0], y: ST.C[1], z: ZS };
+  kamZu(tZ, tMarke - tZ - .15, x - 120, y - 40, 1.08, .3); cue(tZ, 'whoosh');
+  bump('sCb', tMarke - .25, 1.2); markeAuf('C', tMarke);
+  station('C', tR + .95);
+  fahrt('C', tR, 1.3, LS.C.nach, stop('C', 'C'), ziel, .14);
+  const tK = tR + 1.1, Q = (dx, dy) => P('C', dx, dy);
+  // Kwame am Bahnsteig, Handy groß: „Kwame kauft das Ticket in der App“ – der Code tippt sich
+  const KC = Q(360, 160);
+  ein('kwC', tK, KC, { x: 60 }, 'pop');
+  const T = eticket('hyC'), HC = Q(-130, -10);
+  ein('hyC', tK + .15, HC, { y: 80 }, 'whoosh');
+  const tKa = W('kauft', 21), tTi = W('Ticket', 21), tAp = W('App', 21);
+  tw(T.tk, tTi - .1, .45, { s: 1 }, 'back'); cue(tTi, 'pop'); blick('kwC', tKa - .2, SA(22) - .2, -1);
+  T.qr.forEach((q, k) => { const t = tAp - .15 + k * .045; tw(q, t, .25, { s: 1 }, 'back'); if (k % 4 === 0) cue(t, 'tipp'); });
+  // Kwame: „Das Ticket ist da, geschafft!“ – grüner Haken, Kwame hüpft und lächelt
+  const tDa = WN(22, 3), tGe = W('geschafft', 22);
+  tw(T.ok, tDa, .45, { s: 1 }, 'back'); cue(tDa, 'erfolg'); bump('hyC', tDa, 1.06);
+  huepfen('kwC', tGe, 20); akzent(tGe, .04);
+  froh('kwC', SE(22) + .05, SE(26) + 3);
+  // „Die Bahn kommt“: Handy weg, die Bahn fährt ein und bremst
+  const tBa = W('Bahn', 23);
+  tw('hyC', tBa - .55, .4, { x: KC.x - 60, y: KC.y + 20, s: .2, o: 0 }, 'in');
+  const TR = Q(-170, -40);
+  akteur('tramC', { x: TR.x - 420, y: TR.y, o: 0 });
+  tw('tramC', tBa - .3, .3, { o: 1 }); tw('tramC', tBa - .3, 1.1, { x: TR.x + 14 }, 'out'); tw('tramC', tBa + .8, .45, { x: TR.x }, 'sinus');
+  tw('tramC', tBa + .7, .14, { r: 1.2 }, 'sinus'); tw('tramC', tBa + .84, .4, { r: 0 }, 'sanft'); cue(tBa - .3, 'whoosh'); cue(tBa + .75, 'klick');
+  // „lässt zuerst die anderen aussteigen“: Türen gleiten auf, Pfeile zeigen aus der Tür – erst dann springt Kwame hinein
+  const tLa = W('lässt', 24), tAs = W('aussteigen', 24);
+  rel('tramCl', {}); rel('tramCr', {});
+  tw('tramCl', tLa, .5, { x: -52 }, 'inout'); tw('tramCr', tLa, .5, { x: 52 }, 'inout'); cue(tLa, 'whoosh');
+  const PF = Q(-80, 165);
+  akteur('pfeilC', { ...PF, o: 0, s: .7 });
+  tw('pfeilC', tAs - .15, .4, { o: 1, s: 1 }, 'back'); cue(tAs, 'pop');
+  HOOKS.push(t => { const d = t - tAs; if (d > 0 && d < 1.6) { const k = (d * 2.2) % 1; el('pfeilCa').style.transform = `translate(${(-6 * k).toFixed(1)}px,${(6 * k).toFixed(1)}px)`; el('pfeilCb').style.transform = `translateY(${(7 * k).toFixed(1)}px)`; } });
+  tw('pfeilC', tAs + .65, .3, { o: 0 });
+  wackeln('kwC', W('zuerst', 24), 2, 2); nicken('kwC', W('anderen', 24), 8);
+  const tSp = tAs + .45, TU = Q(-170 - 310 + 475, -40 - 150 + 150);
+  flug('kwC', tSp, .65, TU.x, TU.y, 80, { s: .55 }); cue(tSp, 'whoosh'); landen('kwC', tSp + .65);
+  // „Drinnen …“: Kamera taucht in die Bahn – Innenraum, Sitz mit Gehstock-Zeichen leuchtet, Kwame steht auf, Herz
+  const tDr = W('Drinnen', 25), tAe = W('älteren', 25), tPl = W('Platz', 25), tAn = W('an', 25);
+  tw(['tramC', 'kwC'], tSp + .75, .5, { s: 1.6, o: 0 }, 'in');
+  akteur('innenC', { ...Q(0, 0), o: 0, s: 1.15 });
+  tw('innenC', tDr - .1, .5, { o: 1, s: 1 }, 'sanft'); cue(tDr - .1, 'whoosh'); akzent(tDr, .04);
+  ein('sitzC1', tDr + .1, Q(-230, 135), { y: 50 });
+  ein('sitzC2', tDr + .18, Q(70, 135), { y: 50 });
+  ein('kwC2', tDr + .25, Q(70, 92), { y: 60 });
+  froh('kwC2', tDr, SE(26) + 3);
+  ein('stockC', tAe - .5, Q(70, -165), { y: -40 }, 'pop');
+  akteur('leuchtC', { ...Q(70, -165), o: 0 });
+  tw('leuchtC', tAe, .3, { o: 1 }); HOOKS.push(t => { const d = t - tAe; if (d > .3 && d < 3.4) el('leuchtC').style.opacity = .6 + .4 * Math.cos(d * 6); });
+  tw('leuchtC', SA(26) - .3, .3, { o: 0 });
+  wellen('wlC', [tAe, tAe + .5], Q(70, -165).x, Q(70, -165).y, .9); cue(tAe, 'ding'); bump('stockC', W('Frau', 25), 1.12);
+  blick('kwC2', tAe - .1, tPl - .1, -1);
+  tw('kwC2', tPl - .1, .6, Q(330, 70), 'inout', { bogen: 50 }); cue(tPl - .1, 'whoosh');
+  pop('herzC', tAn, Q(70, 30), 'ding'); wackeln('herzC', tAn + .45, 3, 6); akzent(tAn, .035);
+  aus(['herzC', 'stockC'], SA(26) - .25, .3);
+  // „Und am Telefon spricht er leise“: Handy am Ohr, Schallbögen werden klein, der Lautstärke-Balken sinkt
+  const tTe = W('Telefon', 26), tLe = W('leise', 26);
+  akteur('hyC2', { ...Q(170, -80), s: 0 });
+  tw('hyC2', tTe - .2, .45, { s: .62 }, 'back'); cue(tTe, 'pop');
+  const SC = Q(70, -90);
+  akteur('schallC', { ...SC, o: 0 });
+  tw('schallC', tTe + .1, .25, { o: 1 }); tw('schallC', tLe, .6, { s: .55 }, 'sanft');
+  const bars = [...el('lautC').children];
+  bars.forEach((b, k) => { akteur(b, {}, true); if (k >= 1) tw(b, tLe + (3 - k) * .1, .35, { sy: .18, o: .35 }, 'inout'); });
+  cue(tLe, 'tipp'); nicken('kwC2', tLe + .2, 8);
+  tafel('C', [tK + .3, tTi, tAp, tAp + .08, tAp + .16]);
+  document.querySelectorAll('#tbC .w').forEach(w => w.classList.add('gruen'));
+  textAus('tbC', SE(26) + .1);
+}
+
+/* ---------- D · weiter auf Linie C: Monatsabo, ganz Deutschland, Jobticket, entwerten ---------- */
+{
+  const tR = SE(26) + .1, ziel = { x: ST.D[0], y: ST.D[1], z: ZS };
+  station('D', tR + .8);
+  const l0 = stop('C', 'C') + STW.C + 100;
+  zeichnen('C', tR - .3, .3, l0);
+  fahrt('C', tR, 1.05, l0, stop('C', 'D'), ziel, .12);
+  const Q = (dx, dy) => P('D', dx, dy);
+  // „Du fährst jeden Tag?“: Woche Mo–Fr, eine Bahn hüpft von Tag zu Tag
+  const tFa = W('fährst', 27), tJe = W('jeden', 27), tTg = W('Tag', 27);
+  ein('wocheD', tR + .85, Q(0, 0), { y: 50 }, 'whoosh');
+  const tage = [...document.querySelectorAll('#wocheD .tag i')];
+  const TX = k => Q(-252 + k * 126, -18);
+  WELT.insertAdjacentHTML('beforeend', `<div class="a" id="wtramD" style="width:96px" data-frei>${tpl('svgTramD')}</div>`);
+  akteur('wtramD', { ...TX(0), y: TX(0).y - 70, s: 0 });
+  tw('wtramD', tJe - .2, .3, { s: 1 }, 'back');
+  const tH = k => tJe - .1 + k * ((tTg + .7 - tJe) / 4);
+  for (let k = 0; k < 5; k++) {
+    if (k) tw('wtramD', tH(k) - .3, .3, { x: TX(k).x, y: TX(k).y - 70 }, 'sinus', { bogen: 22 });
+    HOOKS.push(t => tage[k].classList.toggle('an', t >= tH(k)));
+    cue(tH(k), 'tipp');
+  }
+  aus(['wocheD', 'wtramD'], W('Dann', 28) - .1, .35);
+  // „Monatsabo … Deutschlandticket“: die Karte erscheint, die Monatskarte landet in der Mitte, alle Tage werden gültig
+  const tMo = W('Monatsabo', 28), tDt = W('Deutschlandticket', 28);
+  ein('karteD', W('Dann', 28), Q(-250, 0), { y: 40 }, 'whoosh');
+  el('tageD').innerHTML = Array.from({ length: 28 }, () => '<i></i>').join('');
+  const tg = [...el('tageD').children];
+  akteur('monatD', { ...Q(-250, -320), o: 0, r: -4 });
+  tw('monatD', tMo - .35, .2, { o: 1 }); tw('monatD', tMo - .35, .55, { ...Q(-250, 10), r: 0 }, 'sanft'); landen('monatD', tMo + .2); cue(tMo + .2, 'plopp');
+  HOOKS.push(t => tg.forEach((g, k) => g.classList.toggle('an', t >= tMo + .3 + k * .025)));
+  bump('monatD', tDt, 1.08); bump('karteD', tDt + .05, 1.03); cue(tDt, 'ding'); akzent(tDt, .03);
+  // „mit Bus und Bahn im Nahverkehr in ganz Deutschland“: Linien laufen über die Karte, der Fernzug bleibt grau
+  const tBu = W('Bus', 29), tBa = W('Bahn', 29), tNv = W('Nahverkehr', 29), tGa = W('ganz', 29), tDe = W('Deutschland', 29);
+  const RD = { rDa: [tBu, .8], rDb: [tBa, .8], rDc: [tNv, .9], rDd: [tGa, .7], rDe: [tDe, .7] };
+  HOOKS.push(t => { for (const [id, [a, d]] of Object.entries(RD)) { const g = E.inout(clamp((t - a) / d)); el(id).style.strokeDashoffset = 1 - g; el(id).style.visibility = g > .01 ? 'visible' : 'hidden'; } });
+  Object.keys(RD).forEach(id => el(id).style.strokeDasharray = '1 1');
+  [['a', tBu, -195], ['b', tBa, -65], ['c', tNv, 65], ['d', tDe + .3, 195]].forEach(([k, t, dy]) => {
+    ein('lg' + 'D' + k, t - .1, Q(330, dy), { x: 50 }, 'pop');
+    pop('sw' + 'D' + k, t + .1, Q(150, dy + 12), null);
+  });
+  bump('karteD', tGa, 1.05); akzent(tDe, .04); cue(tGa, 'whoosh');
+  wackeln('lgDd', tDe + .9, 2, 2);
+  aus(['lgDa', 'lgDb', 'lgDc', 'lgDd', 'swDa', 'swDb', 'swDc', 'swDd'], SA(30) - .3, .35);
+  // „Frag in deinem Betrieb nach einem Jobticket“: Betrieb, Fragezeichen, Job-Plakette an der Karte
+  const tFr = W('Frag', 30), tBe = W('Betrieb', 30), tJo = W('Jobticket', 30);
+  ein('betrD', tBe - .25, Q(320, -10), { x: 60 }, 'whoosh');
+  pop('frageD', tFr, Q(440, -180)); wackeln('frageD', tFr + .4, 3, 5);
+  rel('jobD', { s: 0 }, '50% 50%'); tw('jobD', tJo, .4, { s: 1 }, 'back'); bump('monatD', tJo, 1.08); cue(tJo, 'pop');
+  aus('frageD', SA(31) - .2, .3);
+  // „Oft zahlt der Betrieb dann einen Teil dazu“: eine Münze rollt vom Betrieb zur Karte, ein Viertel wird grün
+  const tZa = W('zahlt', 31), tTe = W('Teil', 31);
+  akteur('muenzeD', { ...Q(320, 40), s: 0 });
+  tw('muenzeD', tZa - .1, .3, { s: 1 }, 'back'); cue(tZa, 'muenze');
+  flug('muenzeD', tZa + .25, .8, Q(-200, 30).x, Q(-200, 30).y, 120, { s: .5 });
+  tw('muenzeD', tZa + 1.0, .15, { o: 0 });
+  HOOKS.push(t => { const p = E.back(clamp((t - tTe) / .5)) * .25, a = p * 2 * Math.PI;
+    el('torteD').setAttribute('d', p > .002 ? `M29 29L29 3A26 26 0 ${p > .5 ? 1 : 0} 1 ${(29 + 26 * Math.sin(a)).toFixed(2)} ${(29 - 26 * Math.cos(a)).toFixed(2)}Z` : ''); });
+  bump('monatD', tTe + .1, 1.06); cue(tTe, 'ding'); bump('betrD', tZa, 1.05);
+  // „Papiertickets … entwerten, also stempeln“: Papierticket fährt in den Entwerter, klack, Datum
+  const tPa = W('Papiertickets', 32), tEn = W('entwerten', 32), tAl = W('also', 32), tSt = W('stempeln', 32);
+  aus(['karteD', 'monatD', 'betrD', 'muenzeD'], tPa - .45, .35);
+  const PA = Q(-230, 10);
+  ein('papierD', tPa - .05, PA, { x: -60 }, 'whoosh');
+  ein('entwD', tPa + .2, Q(260, 10), { y: 60 }, 'pop');
+  rel('datumD', { o: 0, s: 1.6 }, '50% 50%');
+  tw('papierD', tEn - .1, .55, { x: PA.x + 300, s: .9 }, 'inout'); cue(tEn, 'whoosh');
+  tw('entwD', tAl, .08, { sy: .9, sx: 1.05 }, 'sinus'); tw('entwD', tAl + .08, .4, { sy: 1, sx: 1 }, 'sanft'); beben('entwD', tAl, 5, .4); cue(tAl, 'klick'); cue(tAl + .05, 'plopp');
+  HOOKS.push(t => el('entwDa').style.background = t >= tAl && t < tAl + 1.6 ? 'var(--success)' : '');
+  pop('stossD', tAl, Q(260, -175), null); tw('stossD', tAl + .4, .25, { o: 0 });
+  tw('papierD', tSt - .15, .55, { x: PA.x, s: 1 }, 'inout'); cue(tSt, 'whoosh');
+  set('datumD', tSt + .25, { o: 1 }); tw('datumD', tSt + .25, .3, { s: 1, r: -3 }, 'back'); cue(tSt + .3, 'klick'); akzent(tSt + .3, .04);
+  tafel('D', [tMo, tMo + .08, tJo, tJo + .08, tPa, tEn]);
+  document.querySelectorAll('#tbD .w').forEach(w => { if (w.textContent.trim() !== '·') w.classList.add('hell'); });
+  textAus('tbD', SE(32) + .1);
+}
+
+/* ---------- Auflösung: Überblick über das Netz – A und B werden grau, C leuchtet grün; Ziel „Betrieb“ ---------- */
+{
+  const tO = SE(32) + .2, tBe = W('beste', 33), tC = WN(33, 4);
+  kamZu(tO, 1.3, 4980, 1260, .19); cue(tO, 'whoosh');
+  zeichnen('C', tO + .2, 1, LINIEN.C.len);
+  // Stationsschild „Betrieb“ und Ziel-Bühne stehen schon (sichtbar im Überblick)
+  station('Z', tO + .4);
+  HOOKS.push(t => {
+    const g = E.inout(clamp((t - tBe) / .8)), gr = E.inout(clamp((t - tC) / .6));
+    el('pflA').style.stroke = (`color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--la))`);
+    el('pflB').style.stroke = (`color-mix(in srgb, var(--n300) ${(g * 100).toFixed(0)}%, var(--lb))`);
+    el('pflC').style.stroke = (`color-mix(in srgb, var(--success) ${(gr * 100).toFixed(0)}%, var(--lc))`);
+    el('glanzC').style.opacity = (.35 * gr).toFixed(3);
+    const w = t - tC; el('welleC').style.opacity = w > 0 && w < 1.6 ? 1 : 0; el('welleC').style.strokeDashoffset = -clamp(w / 1.5);
+  });
+  tw(['sA', 'sB', 'bueA', 'bueB'], tBe, .6, { o: .4 }, 'inout');
+  markeAuf('C', tC); bump('sC', tC + .3, 1.15); cue(tC + .3, 'whoosh');
+  // dann: Kamera fährt ans Ende der grünen Linie – Ziel „Betrieb“
+  const tIn = tC + .8, Q = (dx, dy) => P('Z', dx, dy);
+  kamZu(tIn, 1.2, ST.Z[0], ST.Z[1], ZS, 0); cue(tIn, 'whoosh');
+  const tK = tIn + .9;
+  // „Kauf dein Ticket immer vor der Fahrt“: Handy mit Ticket und Haken
+  const T = eticket('hyZ'), HZ = Q(-250, -20);
+  el('abfZ').style.opacity = 0;
+  ein('hyZ', tK, { ...HZ, s: 1.15 }, { y: 80 }, 'whoosh');
+  const tTi = W('Ticket', 34), tVo = W('vor', 34);
+  tw(T.tk, tK + .2, .45, { s: 1 }, 'back'); T.qr.forEach(q => tw(q, tK + .3, .3, { s: 1 }, 'back'));
+  tw(T.ok, tVo, .45, { s: 1 }, 'back'); cue(tVo, 'erfolg'); bump('hyZ', tTi, 1.05);
+  // „Schau morgens in der App, ob deine Bahn Verspätung hat“: Wecker klingelt, Abfahrten, „+5 min“ blinkt gelb
+  const tMo = W('morgens', 35), tAp = W('App', 35), tVe = W('Verspätung', 35);
+  ein('weckZ', tMo - .2, Q(-60, 175), { y: 50 }, 'pop');
+  rel('weckZh', {}); rel('weckZm', {});
+  const WK = [[0, 380]];      // 6:20
+  HOOKS.push(t => { const m = kurve(WK, t, .45); el('weckZh').style.transform = `rotate(${(m / 2).toFixed(2)}deg)`; el('weckZm').style.transform = `rotate(${(m * 6).toFixed(2)}deg)`; });
+  summen('weckZ', tMo + .1, .9, 6); cue(tMo + .1, 'ding');
+  HOOKS.push(t => { const a = clamp((t - tAp + .2) / .3); [T.tk, T.ok].forEach(e => e.style.opacity = 1 - a); el('abfZ').style.opacity = a; });
+  cue(tAp, 'klick'); bump('hyZ', tAp, 1.04);
+  rel('zZbr', { o: 0 }); rel('zZar', { o: 0 }); rel('spaetZ', { s: 0 }, '50% 50%');
+  tw('zZbr', tAp + .3, .25, { o: 1 });
+  tw('spaetZ', tVe, .4, { s: 1 }, 'back'); cue(tVe, 'plopp');
+  HOOKS.push(t => { const d = t - tVe; if (d > .4 && d < 2.6) el('spaetZ').style.opacity = Math.floor(d / .3) % 2 ? .35 : 1; });
+  akzent(tVe, .035);
+  // „Und wenn du pünktlich sein musst, fahr lieber eine Bahn früher“: Betrieb mit Uhr, der Wecker springt eine Bahn zurück
+  const tPu = W('pünktlich', 36), tFr = W('früher', 36), tLi = W('lieber', 36);
+  ein('betrZ', tPu - .3, Q(300, -40), { x: 60 }, 'whoosh');
+  uhrBau('uhrZ', { minuten: 435 });      // 7:15
+  ein('uhrZ', tPu, Q(100, -160), { y: -40 }, 'pop');
+  WK.push([tFr - .1, 370]); cue(tFr, 'whoosh'); wackeln('weckZ', tFr, 3, 6);
+  tw('zZbr', tLi, .25, { o: 0 }); tw('zZar', tFr, .3, { o: 1 }); bump('hyZ', tFr + .1, 1.05);
+  // Kwame kommt am Betrieb an – grüner Puffer an der Uhr, Haken
+  const tAn = SE(36) + .15;
+  akteur('kwZ', { ...Q(140, 170), o: 0, s: .7 });
+  tw('kwZ', tLi - .3, .3, { o: 1, s: 1 }, 'back'); cue(tLi - .3, 'pop');
+  flug('kwZ', tAn, .6, Q(300, 160).x, Q(300, 160).y, 70); landen('kwZ', tAn + .6); cue(tAn + .6, 'plopp');
+  UHREN.uhrZ.bogen = [tAn + .5, .7, 15, 15]; bump('uhrZ', tAn + .6, 1.1);
+  pop('okZ', tAn + .8, Q(420, 60), 'erfolg'); froh('kwZ', tAn + .6, tAn + 6); akzent(tAn + .8, .03);
+  tafel('Z', [tK + .2, tK + .28, tK + .36, tLi, tLi + .08, tFr]);
+  document.querySelectorAll('#tbZ .w').forEach(w => w.classList.add('gruen'));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; $('#abspann').style.visibility = p > .001 ? 'visible' : 'hidden'; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.5, AB + 2);
+</script>
+</body></html>

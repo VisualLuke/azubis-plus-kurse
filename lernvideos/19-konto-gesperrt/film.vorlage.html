@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Was würdest du tun? „Ihr Konto wurde gesperrt“</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne.hell{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100))}
+/* Text im Bild */
+.block .titel{font-size:60px;line-height:70px}
+.block.unten{justify-content:flex-start;padding-top:420px}
+.block.gross .titel{font:800 104px/112px Inter;letter-spacing:-.03em}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)} .titel .w.gelb .wi{color:var(--warning-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;font:700 26px/32px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.rot{background:var(--error-bg);color:var(--error-text)}
+.chip svg{width:30px}
+.chip.gr{font-size:36px;line-height:44px;padding:14px 30px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.lila{background:var(--b500)}
+.plakette.gross{width:124px;height:124px;border-width:6px} .plakette.gross svg{width:64px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.rot{border-color:var(--error)} .welle.gruen{border-color:var(--success)}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 60px/96px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* ---------- Format „Was würdest du tun?“ (Layout wie Lernvideo 16) ---------- */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden;background:linear-gradient(var(--b50),var(--b100))}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+.wkarte{width:380px;height:470px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;padding-top:44px;gap:30px}
+.wkarte .knopf{width:108px;height:108px;flex:none;border-radius:999px;background:var(--b500);color:var(--surface);font:800 62px/108px Inter;text-align:center;
+  box-shadow:0 8px 20px rgba(90,63,230,.3)}
+.wkarte .icon{width:288px;height:240px;flex:none;position:relative}
+.wkarte .icon svg *{transform-box:fill-box;transform-origin:center}
+.wkarte .rahmen{position:absolute;inset:0;border-radius:36px;border:10px solid var(--success)}
+.wkarte .rahmen.gelb{border-color:var(--warning)} .wkarte .rahmen.rot{border-color:var(--error)}
+.wkarte .marke{position:absolute;right:-26px;top:-26px;width:104px;height:104px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  border:7px solid var(--surface);box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.wkarte .marke svg{width:50px}
+.marke.gelb{background:var(--warning)} .marke.rot{background:var(--error)} .marke.gruen{background:var(--success)}
+.glow{width:440px;height:530px;border-radius:48px;background:var(--success);filter:blur(26px);opacity:0}
+.ring3{width:160px;height:160px}
+.ring3 svg{position:absolute;inset:0;width:160px;height:160px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 74px/1 Inter;color:var(--surface)}
+
+/* Handy-Bildschirme (Handy-Breite w → Schirm 0,375 w × 0,675 w) */
+.schirm{border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.sms{background:var(--b50);padding:10px;gap:10px}
+.sms .kopf{height:30px;flex:none;border-radius:8px;background:var(--b500);color:var(--surface);font:700 14px/30px Inter;padding-left:10px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.sms .kopf i{width:16px;height:16px;border-radius:5px;background:var(--surface);display:block}
+.sms .bl{background:var(--surface);border-radius:14px 14px 14px 4px;padding:12px 10px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 6px rgba(22,19,37,.08)}
+.sms .bl i{display:block;height:9px;border-radius:5px;background:var(--n300);transform-origin:left center}
+.sms .link{align-self:flex-start;font:700 13px/16px Inter;color:var(--error-text);background:var(--error-bg);border-radius:6px;padding:5px 7px;white-space:nowrap;
+  text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;position:relative}
+.sms .link.klein{font-size:11px;padding:4px 5px}
+.sms .link.grau{color:var(--n500);background:var(--n200)}
+.sms .streich{position:absolute;left:-4px;right:-4px;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:var(--error);transform-origin:left center}
+.app{background:var(--b50);gap:12px;padding:0 0 12px}
+.app .kopf{height:58px;flex:none;background:linear-gradient(160deg,var(--b500),var(--b700));color:var(--surface);font:800 16px/20px Inter;display:flex;align-items:center;gap:8px;padding-left:12px}
+.app .kopf i{width:26px;height:26px;border-radius:8px;background:var(--surface);color:var(--b600);font:800 17px/26px Inter;font-style:normal;text-align:center}
+.app .stand{margin:0 12px;background:var(--surface);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 6px rgba(22,19,37,.08)}
+.app .stand small{font:700 11px/13px Inter;color:var(--n500)}
+.app .spur2{height:14px;border-radius:7px;background:var(--success)}
+.app .ok{margin:6px auto 0;width:74px;height:74px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(31,169,113,.35)}
+.app .ok svg{width:40px}
+.anruf{background:linear-gradient(160deg,var(--b500),var(--b700));align-items:center;justify-content:center;gap:10px}
+.anruf .av{width:62px;height:62px;border-radius:999px;background:var(--b200);display:flex;align-items:center;justify-content:center}
+.anruf .av svg{width:34px}
+.anruf span{font:700 15px/18px Inter;color:var(--surface);white-space:nowrap}
+.anruf .kn{display:flex;gap:26px;margin-top:14px}
+.anruf .kn i{width:34px;height:34px;border-radius:999px;background:var(--success)} .anruf .kn i+i{background:var(--error)}
+.anruf .nr{font:800 26px/30px Inter;color:var(--surface);letter-spacing:.02em;white-space:pre;min-height:30px}
+.wahl{background:var(--b50);align-items:center;justify-content:center;gap:14px}
+.wahl small{font:700 13px/16px Inter;color:var(--n500)}
+.wahl .nr{font:800 30px/36px Inter;color:var(--ink);white-space:pre;min-height:36px;letter-spacing:.01em}
+.wahl .tasten{display:grid;grid-template-columns:repeat(3,22px);gap:10px}
+.wahl .tasten i{width:22px;height:22px;border-radius:999px;background:var(--b100)}
+.wahl .ruf{width:52px;height:52px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.wahl .ruf svg{width:28px}
+
+/* Gefälschte Bank-Seite */
+.browser{width:560px;height:450px;border-radius:26px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.18);overflow:hidden;display:flex;flex-direction:column}
+.browser .leiste{height:58px;flex:none;background:var(--n200);display:flex;align-items:center;gap:8px;padding:0 16px}
+.browser .leiste i{width:12px;height:12px;border-radius:999px;background:var(--n300);flex:none}
+.browser .url{margin-left:10px;flex:1;height:36px;border-radius:999px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 14px;
+  font:600 19px/24px Inter;color:var(--n500);white-space:nowrap;position:relative}
+.browser .url b{font-weight:700}
+.browser .url .warn{width:24px;height:24px;flex:none}
+.browser .inhalt{padding:20px 30px;display:flex;flex-direction:column;gap:10px}
+.browser .logo{display:flex;align-items:center;gap:12px;font:800 26px/32px Inter;color:var(--b600);margin-bottom:6px}
+.browser .logo i{width:40px;height:40px;border-radius:12px;background:var(--b500);color:var(--surface);font:800 24px/40px Inter;font-style:normal;text-align:center}
+.browser label{font:600 16px/18px Inter;color:var(--n500)}
+.browser .feld{height:44px;border-radius:12px;border:3px solid var(--b200);display:flex;align-items:center;padding:0 14px;font:800 22px/24px Inter;color:var(--ink);letter-spacing:.12em;white-space:pre}
+.browser .knopf2{margin-top:8px;height:48px;border-radius:14px;background:var(--b500);color:var(--surface);font:700 20px/48px Inter;text-align:center}
+.paket{width:64px;height:40px;border-radius:12px;background:var(--error);color:var(--surface);font:800 20px/40px Inter;text-align:center;letter-spacing:.1em;box-shadow:0 6px 16px rgba(22,19,37,.2)}
+/* Konto */
+.konto{width:390px;height:236px;border-radius:28px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.14);padding:24px 28px;display:flex;flex-direction:column;gap:14px}
+.konto .k1{display:flex;align-items:center;gap:12px;font:800 26px/30px Inter;color:var(--ink)}
+.konto .k1 i{width:40px;height:40px;border-radius:12px;background:var(--b500);color:var(--surface);font:800 24px/40px Inter;font-style:normal;text-align:center}
+.konto small{font:600 18px/22px Inter;color:var(--n500)}
+.konto .spur3{height:26px;border-radius:13px;background:var(--n200);overflow:hidden}
+.konto .fuell3{height:100%;width:100%;border-radius:13px;background:var(--success);transform-origin:left center}
+.konto .minus{font:800 44px/48px Inter;color:var(--error-text);letter-spacing:-.01em;align-self:flex-end;margin-top:-6px}
+/* Telefon-Betrug */
+.schatten{width:280px;height:280px;border-radius:999px;background:radial-gradient(circle at 50% 45%,var(--b700),var(--b600) 70%,var(--b500));
+  display:flex;align-items:center;justify-content:center;font:800 150px/1 Inter;color:var(--b200);box-shadow:0 12px 40px rgba(22,19,37,.3)}
+.gesicht{width:250px;height:250px}
+.code{display:flex;align-items:center;gap:14px;padding:14px 22px;border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);font:800 26px/32px Inter;color:var(--ink);white-space:nowrap}
+.code u{display:block;width:30px;height:40px;border-radius:9px;background:var(--b100);border-bottom:4px solid var(--b400);text-decoration:none}
+/* Website mit Kontaktnummer */
+.web{width:270px;height:190px;border-radius:20px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);overflow:hidden;display:flex;flex-direction:column}
+.web .leiste{height:34px;flex:none;background:var(--n200);display:flex;align-items:center;gap:6px;padding:0 12px}
+.web .leiste i{width:9px;height:9px;border-radius:999px;background:var(--n300)}
+.web .leiste b{margin-left:6px;flex:1;height:18px;border-radius:9px;background:var(--surface)}
+.web .inh{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.web .inh i{display:block;height:9px;border-radius:5px;background:var(--n200)}
+.web .tel{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:var(--success-bg)}
+.web .tel svg{width:24px;flex:none}
+.web .tel u{display:block;height:10px;flex:1;border-radius:5px;background:var(--success);text-decoration:none}
+.smsmini{display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:18px 18px 18px 5px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.14);font:800 22px/26px Inter;color:var(--b600)}
+.smsmini i{display:block;width:70px;height:9px;border-radius:5px;background:var(--n300)}
+/* Tipps */
+.pinschild{display:flex;align-items:center;gap:22px;padding:22px 40px 22px 26px;border-radius:30px;background:var(--surface);box-shadow:0 16px 40px rgba(22,19,37,.16);
+  font:800 50px/56px Inter;color:var(--ink);white-space:nowrap;border:6px solid var(--b500)}
+.pinschild .sl{width:76px;height:76px;border-radius:22px;background:var(--b500);display:flex;align-items:center;justify-content:center}
+.pinschild .sl svg{width:44px}
+.pinschild em{font-style:normal;color:var(--b600)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 104px/112px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 40 40"><path d="M11 11l18 18M29 11L11 29" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgAusruf"><svg viewBox="0 0 40 40"><path d="M20 8v15" stroke="var(--surface)" stroke-width="7" stroke-linecap="round"/><circle cx="20" cy="32" r="4" fill="var(--surface)"/></svg></template>
+<template id="svgHoerer"><svg viewBox="0 0 24 24"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="var(--b600)"/></svg></template>
+<template id="svgHoererW"><svg viewBox="0 0 24 24"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="var(--surface)"/></svg></template>
+<template id="svgSchloss"><svg viewBox="0 0 40 40"><path d="M13 18v-5a7 7 0 0 1 14 0v5" stroke="var(--surface)" stroke-width="4.5" fill="none"/><rect x="9" y="17" width="22" height="17" rx="5" fill="var(--surface)"/><circle cx="20" cy="25.5" r="3" fill="var(--b600)"/></svg></template>
+<template id="svgZeiger"><svg viewBox="0 0 60 70"><path d="M8 4v46l12-10 9 20 9-4-9-19h16Z" fill="var(--ink)" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round"/></svg></template>
+<template id="portraitKwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 0 · Situation: SMS „Konto gesperrt“ -->
+  <div class="a buehne hell" id="bue0"></div>
+  <div class="a portrait" id="kw0" style="width:240px;height:240px"></div>
+  <div class="a" id="karte0" style="width:280px" data-gruppe="konto">{{karte}}</div>
+  <div class="a" id="muenze0a" style="width:96px" data-gruppe="konto">{{muenze}}</div>
+  <div class="a" id="muenze0b" style="width:96px" data-gruppe="konto">{{muenze~b}}</div>
+  <div class="a" id="schloss0" style="width:140px" data-gruppe="konto">{{schloss}}</div>
+  <div class="a welle" id="summ0" style="width:200px;height:200px" data-frei></div>
+  <div class="a welle rot" id="lwelle0" style="width:200px;height:90px" data-frei></div>
+  <div class="a" id="handy0" style="width:440px" data-gruppe="handy0">{{handy}}</div>
+  <div class="a schirm sms" id="schirm0" style="width:165px;height:297px" data-gruppe="handy0">
+    <div class="kopf" id="kopf0"><i></i>Deine Bank</div>
+    <div class="bl" id="bl0"><i id="z0a"></i><i id="z0b" style="width:80%"></i><i id="z0c"></i><i id="z0d" style="width:60%"></i></div>
+    <div class="link" id="link0">bank-sicher-xyz…</div>
+  </div>
+
+  <!-- 1 · Optionen, Countdown, Option A -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <div class="a browser" id="webA">
+    <div class="leiste"><i></i><i></i><i></i><div class="url" id="urlA"><span id="urlTxtA"><b>bank-sicher-xyz…</b></span></div></div>
+    <div class="inhalt">
+      <div class="logo" id="logoA"><i>€</i>Deine Bank</div>
+      <label>Kontonummer</label><div class="feld"><span id="fA1"></span></div>
+      <label>Passwort</label><div class="feld"><span id="fA2"></span></div>
+      <label>Code</label><div class="feld"><span id="fA3"></span></div>
+    </div>
+  </div>
+  <div class="a" id="warnA" style="width:76px" data-frei>{{warndreieck}}</div>
+  <div class="a paket" id="pA1" data-frei>•••</div>
+  <div class="a paket" id="pA2" data-frei>•••</div>
+  <div class="a paket" id="pA3" data-frei>•••</div>
+  <div class="a portrait" id="kwA" style="width:160px;height:160px"></div>
+  <div class="a" id="uhrA" style="width:200px;height:200px"></div>
+  <div class="a konto" id="kontoA"><div class="k1"><i>€</i>Konto</div><small>Kontostand</small>
+    <div class="spur3"><div class="fuell3" id="fuellA"></div></div><div class="minus" id="minusA">– €</div></div>
+  <div class="a" id="geldA1" style="width:90px" data-frei>{{muenze~a1}}</div>
+  <div class="a" id="geldA2" style="width:130px" data-frei>{{geldschein}}</div>
+  <div class="a" id="geldA3" style="width:90px" data-frei>{{muenze~a3}}</div>
+
+  <!-- 2 · Option B: Anruf -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a portrait" id="kwB" style="width:190px;height:190px"></div>
+  <div class="a welle" id="klingelB" style="width:230px;height:230px" data-frei></div>
+  <div class="a welle" id="klingelB2" style="width:230px;height:230px" data-frei></div>
+  <div class="a" id="handyB" style="width:320px" data-gruppe="handyB">{{handy~b}}</div>
+  <div class="a schirm anruf" id="schirmB" style="width:120px;height:216px" data-gruppe="handyB">
+    <div class="av"></div><span>Deine Bank?</span><div class="kn"><i></i><i></i></div></div>
+  <svg class="a" id="tonB" viewBox="0 0 200 120" style="width:200px;height:120px" data-frei>
+    <g stroke="var(--b300)" stroke-width="8" stroke-linecap="round" fill="none">
+      <path id="tonB1" d="M70 40q-14 20 0 40"/><path id="tonB2" d="M100 24q-24 36 0 72"/><path id="tonB3" d="M130 8q-34 52 0 104"/></g></svg>
+  <div class="a schatten" id="schattenB" data-gruppe="maske">?</div>
+  <div class="a gesicht" id="maskeB" data-gruppe="maske"><svg viewBox="0 0 250 250">
+    <path d="M125 18c62 0 100 30 100 92 0 74-46 124-100 124S25 184 25 110c0-62 38-92 100-92Z" fill="var(--surface)" stroke="var(--b200)" stroke-width="8"/>
+    <path d="M62 102q22-22 44 0v10q-22-14-44 0Z M144 102q22-22 44 0v10q-22-14-44 0Z" fill="var(--b700)"/>
+    <ellipse cx="72" cy="150" rx="18" ry="11" fill="var(--error-bg)"/><ellipse cx="178" cy="150" rx="18" ry="11" fill="var(--error-bg)"/>
+    <path d="M78 160q47 52 94 0" stroke="var(--b500)" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <path d="M25 104H6M225 104h19" stroke="var(--b400)" stroke-width="7" stroke-linecap="round"/></svg></div>
+  <div class="a chip" id="bankB"><span id="bankBi"></span>Bank?</div>
+  <div class="a code" id="codeB">Code <u></u><u></u><u></u><u></u></div>
+  <div class="a" id="warnB" style="width:120px" data-gruppe="maske">{{warndreieck~b}}</div>
+
+  <!-- 3 · Option C: selbst prüfen -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <div class="a portrait" id="kwC" style="width:190px;height:190px"></div>
+  <div class="a web" id="webC"><div class="leiste"><i></i><i></i><i></i><b></b></div>
+    <div class="inh"><i style="width:60%"></i><i></i><div class="tel" id="telC"><span id="telCi"></span><u></u></div><i style="width:75%"></i></div></div>
+  <div class="a welle gruen" id="welleC" style="width:220px;height:220px" data-frei></div>
+  <div class="a welle gruen" id="welleC2" style="width:220px;height:220px" data-frei></div>
+  <div class="a" id="bankC" style="width:230px">{{bank-komplett}}</div>
+  <div class="a" id="handyC" style="width:370px" data-gruppe="handyC">{{handy~c}}</div>
+  <div class="a schirm sms" id="smsC" style="width:139px;height:250px" data-gruppe="handyC">
+    <div class="kopf"><i></i>Deine Bank</div>
+    <div class="bl"><i></i><i style="width:80%"></i><i style="width:60%"></i></div>
+    <div class="link klein" id="linkC">bank-sicher-xyz…<div class="streich" id="streichC"></div></div>
+  </div>
+  <div class="a schirm app" id="appC" style="width:139px;height:250px" data-gruppe="handyC">
+    <div class="kopf"><i>€</i>Deine Bank</div>
+    <div class="stand"><small>Kontostand</small><div class="spur2"></div></div>
+    <div class="ok" id="okC"></div>
+  </div>
+  <div class="a schirm anruf" id="rufC" style="width:139px;height:250px" data-gruppe="handyC">
+    <div class="av"></div><span>Deine Bank</span><div class="kn"><i></i><i></i></div></div>
+  <div class="a" id="zeigerC" style="width:60px" data-frei></div>
+  <div class="a" id="nummerC" style="width:60px;height:60px" data-frei></div>
+  <div class="a smsmini" id="smsMiniC" data-gruppe="smsmini">SMS <i></i></div>
+  <div class="a plakette rot" id="xC" data-gruppe="smsmini"></div>
+  <div class="a" id="eimerC" style="width:140px" data-gruppe="eimer">{{muelleimer}}</div>
+  <div class="a" id="deckelC" style="width:140px;transform-origin:30% 30%" data-gruppe="eimer">{{muelleimer-deckel}}</div>
+
+  <!-- 4 · Auflösung und Tipps -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div></div>
+  <div class="a plakette lila gross" id="kanal1"><svg viewBox="0 0 60 60"><path d="M10 14a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H26l-10 9v-9a6 6 0 0 1-6-6Z" fill="var(--surface)"/><path d="M19 22h22M19 30h14" stroke="var(--b400)" stroke-width="4" stroke-linecap="round"/></svg></div>
+  <div class="a plakette lila gross" id="kanal2"><svg viewBox="0 0 60 60"><rect x="7" y="14" width="46" height="34" rx="6" fill="var(--surface)"/><path d="M9 17l21 16 21-16" stroke="var(--b400)" stroke-width="4" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette lila gross" id="kanal3"><svg viewBox="0 0 24 24" style="width:54px"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="var(--surface)"/></svg></div>
+  <div class="a plakette rot" id="kx1" data-frei></div>
+  <div class="a plakette rot" id="kx2" data-frei></div>
+  <div class="a plakette rot" id="kx3" data-frei></div>
+  <div class="a pinschild" id="pin4"><div class="sl" id="pin4s"></div><span>PIN = <em>geheim</em></span></div>
+  <div class="a chip gr" id="pw4">Passwort</div>
+  <div class="a chip gr" id="codes4">Codes</div>
+  <div class="a chip rot gr" id="klick4">bank-sicher-xyz…</div>
+  <div class="a" id="zeiger4" style="width:56px" data-frei></div>
+  <div class="a plakette rot" id="aus4" data-frei></div>
+  <div class="a welle gruen" id="ruf4w" style="width:240px;height:240px" data-frei></div>
+  <div class="a welle gruen" id="ruf4w2" style="width:240px;height:240px" data-frei></div>
+  <div class="a" id="handy4" style="width:420px" data-gruppe="handy4">{{handy~4}}</div>
+  <div class="a schirm wahl" id="wahl4" style="width:158px;height:284px" data-gruppe="handy4">
+    <small>Sperr-Notruf</small><div class="nr" id="nr4"></div>
+    <div class="tasten"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ruf" id="ruf4"></div></div>
+  <div class="a" id="bank4" style="width:210px">{{bank-komplett~4}}</div>
+  <div class="a chip" id="notruf4"><span id="notruf4i"></span>116 116</div>
+</div></div>
+
+<div class="block gross" id="tb0"><div class="titel">Konto gesperrt?!</div></div>
+<div class="block unten" id="tbA"><div class="titel">A: Betrug – Geld weg</div></div>
+<div class="block unten" id="tbB"><div class="titel">B: auch Betrug</div></div>
+<div class="block unten" id="tbC"><div class="titel">C: selbst prüfen – sicher</div></div>
+<div class="block unten" id="tb4"><div class="titel">Nie PIN teilen · Notfall: 116 116</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Nie PIN teilen.</div>
+  <div class="klein" id="asUnter">Echte Banken fragen nie per SMS oder Telefon nach PIN oder Passwort. Nicht klicken, selbst bei der Bank nachfragen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const WG = (m, n) => A(satz(n).woerter.find(w => _norm(w.w) === _norm(m)).start);   // genau dieses Wort (A, B, C)
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t + .001, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const summen = (id, t, d = .8, a = 5) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) $('#' + id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+// Text tippt sich: txt von t1 bis t2
+const tippen = (id, txt, t1, t2, klang = true) => {
+  HOOKS.push(t => { el(id).textContent = txt.slice(0, Math.round(txt.length * clamp((t - t1) / (t2 - t1)))); });
+  if (klang) for (let n = 0; n < 4; n++) cue(t1 + n * (t2 - t1) / 4, 'tipp');
+};
+['kx1', 'kx2', 'kx3', 'xC'].forEach(id => el(id).innerHTML = tpl('svgX'));
+el('aus4').innerHTML = tpl('svgAusruf');
+el('okC').innerHTML = tpl('svgHaken');
+['zeigerC', 'zeiger4'].forEach(id => el(id).innerHTML = tpl('svgZeiger'));
+document.querySelectorAll('.anruf .av').forEach(a => a.innerHTML = tpl('svgHoerer'));
+['bankBi', 'telCi'].forEach(id => el(id).innerHTML = tpl('svgHoerer'));
+el('pin4s').innerHTML = tpl('svgSchloss');
+el('ruf4').innerHTML = tpl('svgHoererW');
+el('notruf4i').innerHTML = tpl('svgHoerer');
+el('nummerC').innerHTML = `<div class="plakette gruen" style="width:60px;height:60px">${tpl('svgHoererW')}</div>`;
+document.querySelectorAll('.portrait').forEach(p => { p.innerHTML = tpl('portraitKwame'); p.dataset.sprecher = 'Kwame'; });
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 5;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Kwame: Mund nur in seinen eigenen Sätzen (Sprecher exakt aus sprache.json), blinzeln, froh ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [];      // [id, von, bis]
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    const nick = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+    p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+
+/* ---------- Uhr: kurve(t) → Minuten seit 0 Uhr ---------- */
+function uhr(id, kurve) {
+  el(id).innerHTML = `<svg viewBox="0 0 160 160"><circle cx="82" cy="84" r="66" fill="var(--b700)"/><circle cx="80" cy="80" r="66" fill="var(--b500)"/>
+    <circle cx="80" cy="80" r="55" fill="var(--surface)"/>
+    <g stroke="var(--b300)" stroke-width="4" stroke-linecap="round"><path d="M80 31v7M80 122v7M31 80h7M122 80h7"/></g>
+    <path id="${id}h" d="M80 80V54" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+    <path id="${id}m" d="M80 80V38" stroke="var(--b600)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="80" cy="80" r="6.5" fill="var(--b700)"/></svg>`;
+  HOOKS.push(t => {
+    const m = kurve(t);
+    $(`#${id}h`).setAttribute('transform', `rotate(${(m / 60 % 12) * 30} 80 80)`);
+    $(`#${id}m`).setAttribute('transform', `rotate(${(m % 60) * 6} 80 80)`);
+  });
+}
+const rampe = (t, t0, d, a, b, e = 'inout') => lerp(a, b, E[e](clamp((t - t0) / d)));
+
+/* ================= Format „Was würdest du tun?“ (wie Lernvideo 16) ================= */
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+// Symbole der drei Optionen (Grundzustand = Endzustand; in Szene 1 spielen sie auf die Wörter)
+const HOERER = (x, y, s, f) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M7 3l3 5-2 2a11 11 0 0 0 6 6l2-2 5 3-2 4C10 21 3 14 3 5Z" fill="${f}"/></g>`;
+const ICON = {
+  A: id => `<svg viewBox="0 0 240 200">
+    <rect x="18" y="10" width="204" height="180" rx="24" fill="var(--b50)" stroke="var(--b200)" stroke-width="5"/>
+    <rect x="38" y="28" width="164" height="34" rx="17" fill="var(--error-bg)"/><rect id="${id}l" x="54" y="41" width="112" height="8" rx="4" fill="var(--error)"/>
+    <circle id="${id}w" cx="150" cy="45" r="22" fill="none" stroke="var(--error)" stroke-width="5" opacity="0"/>
+    <rect x="38" y="82" width="164" height="38" rx="11" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/>
+    <g id="${id}f1" fill="var(--ink)"><circle cx="62" cy="101" r="6.5"/><circle cx="82" cy="101" r="6.5"/><circle cx="102" cy="101" r="6.5"/><circle cx="122" cy="101" r="6.5"/></g>
+    <rect x="38" y="136" width="164" height="38" rx="11" fill="var(--surface)" stroke="var(--b300)" stroke-width="4"/>
+    <g id="${id}f2" fill="var(--ink)"><circle cx="62" cy="155" r="6.5"/><circle cx="82" cy="155" r="6.5"/><circle cx="102" cy="155" r="6.5"/><circle cx="122" cy="155" r="6.5"/><circle cx="142" cy="155" r="6.5"/></g>
+    <g id="${id}c"><path d="M150 46v44l11-9 8 18 9-4-8-17h15Z" fill="var(--ink)" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round"/></g></svg>`,
+  B: id => `<svg viewBox="0 0 240 200">
+    <g id="${id}h">${HOERER(22, 30, 5.2, 'var(--b500)')}</g>
+    <g id="${id}w" stroke="var(--b300)" stroke-width="9" stroke-linecap="round" fill="none"><path d="M150 44q16 16 0 32"/><path d="M172 30q28 30 0 60"/></g>
+    <rect x="28" y="150" width="184" height="40" rx="20" fill="var(--b100)"/>
+    <g id="${id}n" fill="var(--b600)"><circle cx="58" cy="170" r="6.5"/><circle cx="82" cy="170" r="6.5"/><circle cx="106" cy="170" r="6.5"/><circle cx="134" cy="170" r="6.5"/><circle cx="158" cy="170" r="6.5"/><circle cx="182" cy="170" r="6.5"/></g>
+    <g id="${id}q"><circle cx="196" cy="116" r="26" fill="var(--b500)"/><text x="196" y="127" font-family="Inter,sans-serif" font-weight="800" font-size="32" text-anchor="middle" fill="var(--surface)">?</text></g></svg>`,
+  C: id => `<svg viewBox="0 0 240 200">
+    <rect x="20" y="14" width="200" height="36" rx="18" fill="var(--n200)"/><rect x="38" y="28" width="120" height="8" rx="4" fill="var(--n300)"/>
+    <g id="${id}x"><path class="zeichnen" pathLength="1" d="M30 32H210" stroke="var(--error)" stroke-width="10" stroke-linecap="round" style="stroke-dasharray:1 1"/></g>
+    <g id="${id}a"><rect x="24" y="74" width="110" height="110" rx="28" fill="var(--b500)"/><circle cx="79" cy="129" r="30" fill="var(--success)"/>
+      <path d="M65 130l10 10 20-21" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+    <g id="${id}s"><path d="M184 72l40 14v36c0 28-18 48-40 58-22-10-40-30-40-58V86Z" fill="var(--success-bg)" stroke="var(--success)" stroke-width="6" stroke-linejoin="round"/>
+      ${HOERER(166, 104, 1.6, 'var(--success)')}</g></svg>`,
+};
+const MARKE = { gelb: 'svgAusruf', rot: 'svgX', gruen: 'svgHaken' };
+const KX = [520, 960, 1400], KY = 470;
+function karten(i, marken = {}, neu = null) {
+  const X = S(i);
+  return ['A', 'B', 'C'].map((b, k) => {
+    const id = `k${i}${b}`, m = marken[b] || (neu && neu[0] === b ? neu[1] : null);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a wkarte" id="${id}">
+      ${m ? `<div class="rahmen ${m}" id="${id}r"></div>` : ''}<div class="knopf" id="${id}k">${b}</div><div class="icon">${ICON[b](id)}</div>
+      ${m ? `<div class="marke ${m}" id="${id}m">${tpl(MARKE[m])}</div>` : ''}</div>`);
+    akteur(id, { x: X + KX[k], y: KY });
+    akteur(`${id}k`, {}, true);
+    if (m && !(neu && neu[0] === b)) { akteur(`${id}r`, { o: 1 }, true); akteur(`${id}m`, {}, true); }
+    else if (m) { akteur(`${id}r`, { o: 0 }, true); akteur(`${id}m`, { o: 0, s: 1.6 }, true); }
+    return id;
+  });
+}
+function vorn(i, ids, b, tV, tK) {
+  const X = S(i), k = 'ABC'.indexOf(b);
+  ids.forEach((id, j) => {
+    if (j === k) { tw(id, tV, .6, { s: 1.1, y: KY - 16 }, 'sanft'); cue(tV, 'whoosh'); }
+    else { tw(id, tV, .5, { s: .92, o: .45 }, 'inout'); aus(id, tK - .1, .4); }
+  });
+  tw(ids[k], tK, .9, { x: X + 490, y: 250, s: .56 }, 'inout');
+  quiz(i, tK);
+}
+function bewerten(id, t, farbe) {
+  tw(`${id}m`, t, .05, { o: 1 }); tw(`${id}m`, t, .3, { s: 1 }, 'out');
+  tw(`${id}r`, t, .3, { o: 1 }, 'out');
+  wackeln(id, t + .05, 3, 2); akzent(t, .045);
+  cue(t, 'plopp'); if (farbe === 'gruen') cue(t + .05, 'erfolg');
+}
+function titelFarbe(id, t0, zeiten, farbe) { titelEin(id, t0, zeiten); $(`#${id} .w`).classList.add(farbe); }
+
+/* ---------- 0 · Situation: Kwame bekommt eine SMS ---------- */
+akteur('bue0', { x: 1320, y: 540 });
+{
+  const X = S(0), T0 = A(-.6), HX = X + 1480, HY = 520;
+  // Kwame hüpft herein, das Handy kommt dazu
+  ein('kw0', T0, { x: X + 1060, y: 380 }, { y: 80 }, 'whoosh');
+  ein('handy0', T0 + .15, { x: HX, y: HY }, { x: 90 }); ein('schirm0', T0 + .15, { x: HX, y: HY }, { x: 90 });
+  huepfen('kw0', W('Kwame', 1) + .05, 16);
+  // bekommt eine SMS: Handy summt, Kopfzeile, Nachricht schiebt sich herein
+  const tS = W('bekommt', 1);
+  summen('handy0', tS, 1.1, 6); summen('schirm0', tS, 1.1, 6); welle('summ0', tS + .1, HX, HY, 1); cue(tS, 'tipp'); cue(tS + .35, 'tipp');
+  akteur('kopf0', { o: 0, y: -10 }, true); tw('kopf0', tS + .1, .4, { o: 1, y: 0 }, 'back');
+  akteur('bl0', { o: 0, y: 30, s: .9 }, true); tw('bl0', W('SMS', 1), .5, { o: 1, y: 0, s: 1 }, 'back'); cue(W('SMS', 1), 'pop');
+  bump('handy0', W('SMS', 1), 1.05); bump('schirm0', W('SMS', 1), 1.05); akzent(W('SMS', 1), .03);
+  // die Zeilen tippen sich (Inhalt nur als Platzhalter)
+  [['z0a', W('Ihr', 1), .6], ['z0b', W('gesperrt', 1) - .1, .5], ['z0c', W('Bestätigen', 2), .6], ['z0d', W('Daten', 2) - .1, .45]]
+    .forEach(([z, t, d]) => { akteur(z, { sx: 0 }, true); tw(z, t, d, { sx: 1 }, 'inout'); cue(t, 'tipp'); });
+  // Konto gesperrt: Karte mit Münzen, das Schloss schlägt zu
+  ein('karte0', W('Konto', 1) - .1, { x: X + 1080, y: 720 }, { y: 70 }, 'whoosh');
+  akteur('muenze0a', { x: X + 1010, y: 700, s: 0 }); akteur('muenze0b', { x: X + 1070, y: 690, s: 0 });
+  tw('muenze0a', W('Konto', 1) + .15, .4, { s: 1 }, 'back'); tw('muenze0b', W('Konto', 1) + .25, .4, { s: 1 }, 'back'); cue(W('Konto', 1) + .2, 'muenze');
+  const tG = W('gesperrt', 1);
+  akteur('schloss0', { x: X + 1165, y: 480, o: 0, s: 1.3 });
+  tw('schloss0', tG - .25, .1, { o: 1 }); tw('schloss0', tG - .25, .3, { y: 690, s: 1 }, 'in'); landen('schloss0', tG + .05);
+  cue(tG + .05, 'plopp'); akzent(tG + .05, .05); wackeln('karte0', tG + .1, 3, 2);
+  titelEin('tb0', W('Konto', 1) - .05, [W('Konto', 1) - .05, tG]);
+  document.querySelectorAll('#tb0 .wi').forEach(w => { AKTEURE.get(w).basis.y = 140; });
+  // Darunter ein Link: roter Link pocht, Warn-Welle
+  const tL = W('Link', 3);
+  akteur('link0', { o: 0, s: .5 }, true); tw('link0', W('Darunter', 3) + .2, .45, { o: 1, s: 1 }, 'back'); cue(W('Darunter', 3) + .2, 'pop');
+  for (let n = 0; n < 3; n++) bump('link0', tL + n * .55, 1.14);
+  wellen('lwelle0', [tL, tL + .55, tL + 1.1], HX - 10, HY + 10, .8); akzent(tL, .04);
+  // Kwame: „Gesperrt?“ – erschrickt (Squash & Stretch), wackelt; „Mein Gehalt …“ – Münzen zittern hinter dem Schloss
+  const tK = W('Gesperrt', 4) - .1;
+  tw('kw0', tK - .12, .12, { sy: .86, sx: 1.08 }, 'sinus');
+  tw('kw0', tK, .5, { y: 362 }, 'inout', { bogen: 40 }); tw('kw0', tK, .18, { sy: 1.1, sx: .93 }, 'sinus'); landen('kw0', tK + .5);
+  akzent(tK + .1, .05); cue(tK, 'whoosh');
+  wackeln('kw0', W('Gehalt', 5) - .1, 4, 1.8);
+  ['muenze0a', 'muenze0b'].forEach((m, k) => { bump(m, W('Gehalt', 5) + k * .12, 1.2); wackeln(m, W('drauf', 5) + k * .1, 4, 4); });
+  cue(W('Gehalt', 5), 'muenze');
+  wackeln('schloss0', W('drauf', 5), 3, 3); bump('karte0', W('drauf', 5), 1.05);
+  textAus('tb0', SE(5) + .15);
+}
+
+/* ---------- 1 · Was würdest du tun? A, B, C – Countdown – Option A ---------- */
+pan2(SE(5) + .35, 1);
+{
+  const X = S(1);
+  const ids = karten(1, {}, ['A', 'rot']);
+  WELT.insertAdjacentHTML('beforeend', `<div class="a ring3" id="ring1"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="68" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+    <circle id="lauf1" cx="80" cy="80" r="68" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 80 80)" style="stroke-dasharray:1 1"/></svg><b id="ziffer1">?</b></div>`);
+  pop('ring1', W('Was', 6) + .05, { x: X + 960, y: 830 });
+  bump('ring1', W('tun', 6), 1.12); akzent(W('tun', 6), .03);
+  // Karten fliegen auf „A:“, „B:“, „C:“ herein
+  ids.forEach((id, k) => {
+    const t0 = WG('ABC'[k], 7 + k) - .35;
+    akteur(id, { x: X + KX[k] - 120, y: KY + 380, o: 0, s: .7, r: k === 1 ? 0 : (k ? 3 : -3) });
+    tw(id, t0, .25, { o: 1 }); tw(id, t0, .9, { x: X + KX[k], y: KY, s: 1, r: 0 }, 'inout', { bogen: 90 }); cue(t0, 'whoosh');
+    bump(`${id}k`, t0 + .7, 1.15); cue(t0 + .7, 'pop');
+  });
+  schweben(ids, 3);
+  // A: Link klicken, Daten eingeben – Zeiger fährt zum Link, tippt, Felder füllen sich
+  const a = 'k1A';
+  akteur(a + 'c', { x: 40, y: 60, o: 0 }, true);
+  tw(a + 'c', W('Schnell', 7) - .1, .3, { o: 1 }); tw(a + 'c', W('Schnell', 7) - .1, .7, { x: 0, y: 0 }, 'inout', { bogen: 20 });
+  const tKl = W('klicken', 7);
+  tw(a + 'c', tKl, .08, { s: .82 }, 'sinus'); tw(a + 'c', tKl + .08, .3, { s: 1 }, 'sanft'); cue(tKl, 'klick');
+  akteur(a + 'w', { o: 0, s: .4 }, true); tw(a + 'w', tKl, .05, { o: 1 }); tw(a + 'w', tKl, .6, { s: 1.6, o: 0 }, 'weich');
+  akteur(a + 'l', {}, true); bump(a + 'l', tKl, 1.15);
+  ['f1', 'f2'].forEach((f, j) => {
+    akteur(a + f, { sx: 0 }, true);
+    const t = j ? W('eingeben', 7) : W('Daten', 7) - .05; tw(a + f, t, .45, { sx: 1 }, 'inout'); cue(t, 'tipp');
+  });
+  // B: Nummer aus der SMS anrufen und fragen – Nummer tippt sich, Hörer klingelt, Fragezeichen
+  const bb = 'k1B';
+  akteur(bb + 'n', { sx: 0 }, true); tw(bb + 'n', W('Nummer', 8), .6, { sx: 1 }, 'inout'); cue(W('Nummer', 8), 'tipp');
+  akteur(bb + 'h', {}, true); wackeln(bb + 'h', W('anrufen', 8), 5, 8); cue(W('anrufen', 8), 'tipp'); cue(W('anrufen', 8) + .3, 'tipp');
+  akteur(bb + 'w', { o: 0, x: -14 }, true); tw(bb + 'w', W('anrufen', 8), .4, { o: 1, x: 0 }, 'back');
+  akteur(bb + 'q', { s: 0 }, true); tw(bb + 'q', W('fragen', 8), .5, { s: 1 }, 'back'); cue(W('fragen', 8), 'pop');
+  // C: Nichts anklicken (Link durchgestrichen), App selbst öffnen (Haken), offizielle Nummer (Schild mit Hörer)
+  const c = 'k1C';
+  akteur(c + 'x', { draw: 0 }, true); tw(c + 'x', W('Nichts', 9), .45, { draw: 1 }, 'inout'); cue(W('Nichts', 9), 'kritzeln');
+  akteur(c + 'a', { s: 0 }, true); tw(c + 'a', W('Bank-App', 9), .55, { s: 1 }, 'back'); cue(W('Bank-App', 9), 'pop');
+  bump(c + 'a', W('öffnen', 9), 1.1); cue(W('öffnen', 9), 'ding');
+  akteur(c + 's', { s: 0 }, true); tw(c + 's', W('offizielle', 9), .55, { s: 1 }, 'back'); cue(W('offizielle', 9), 'pop');
+  wackeln(c + 's', W('anrufen', 9), 3, 4);
+  // Denkpause: Ring läuft leer, Karten pulsieren im Wechsel, Ziffern 3 – 2 – 1 auf das gesprochene Wort
+  const c0 = SE(9) + .45, c1 = W('Eins', 12) + .9, Z = [W('Drei', 10), W('Zwei', 11), W('Eins', 12)];
+  bump('ring1', c0, 1.1); cue(c0, 'scan');
+  [0, .6, 1.2].forEach((d, k) => bump(ids[k], c0 + .3 + d, 1.04));
+  Z.forEach((z, k) => { cue(z, 'klick'); bump(ids[k], z, 1.06); bump(`${ids[k]}k`, z, 1.18); });
+  HOOKS.push(t => {
+    $('#lauf1').style.strokeDashoffset = -clamp((t - c0) / (c1 - c0));
+    const k = Z.filter(z => t >= z - .05).length, f = k ? t - Z[k - 1] : 0, zf = $('#ziffer1');
+    zf.textContent = k ? 4 - k : '?';
+    zf.style.transform = k ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Option A: Karte kommt nach vorn, Bühne wird hell
+  const tV = W('Option', 13), tK = W('Die', 13) - .3;
+  tw('ring1', tV - .1, .35, { s: 0, o: 0 }, 'in');
+  vorn(1, ids, 'A', tV, tK); bump('k1Ak', WG('A', 13), 1.2);
+  // Die Seite sieht aus wie die Bank: gefälschte Seite mit Logo
+  const BX0 = X + 1250, BY0 = 520;
+  ein('webA', W('Seite', 13) - .1, { x: BX0, y: BY0 }, { y: 90 }, 'whoosh');
+  akteur('logoA', {}, true); bump('logoA', W('Bank', 13), 1.12); cue(W('Bank', 13), 'pop');
+  // … ist aber gefälscht: Adresse wird rot, Warnzeichen, Seite wackelt
+  const tF = W('gefälscht', 13);
+  HOOKS.push(t => { const p = clamp((t - tF) / .3); $('#urlA').style.background = p > .5 ? 'var(--error-bg)' : ''; $('#urlA').style.color = p > .5 ? 'var(--error-text)' : ''; });
+  pop('warnA', tF, { x: BX0 + 232, y: BY0 - 196 }, 'plopp'); wackeln('webA', tF + .05, 3, 1.5); akzent(tF, .045);
+  // Kwame gibt Kontonummer, Passwort und Code ein
+  ein('kwA', W('Kwame', 14) - .2, { x: X + 1630, y: 330 }, { x: 60 });
+  tippen('fA1', '•••• •••• ••', W('Kontonummer', 14) - .05, WE('Kontonummer', 14) + .1);
+  tippen('fA2', '••••••••', W('Passwort', 14) - .05, WE('Passwort', 14) + .05);
+  tippen('fA3', '••••••', W('Code', 14) - .05, WE('Code', 14) + .1);
+  huepfen('kwA', W('Kontonummer', 14), 8);
+  // … ein: die Daten fliegen als Pakete davon, zum Rand hinaus
+  const tE = W('ein', 14);
+  ['pA1', 'pA2', 'pA3'].forEach((p, j) => {
+    const y0 = BY0 - 58 + j * 76, t0 = tE + j * .12;
+    akteur(p, { x: BX0 - 20, y: y0, o: 0, s: .5 });
+    tw(p, t0, .15, { o: 1 }); tw(p, t0, .25, { s: 1 }, 'back');
+    flug(p, t0 + .15, .8, X + 1700, 230 + j * 20, 60, { s: .5 }); tw(p, t0 + .75, .2, { o: 0 });
+    cue(t0, 'whoosh');
+  });
+  akzent(tE + .3, .03);
+  // Zwei Stunden später: Seite geht, Uhr dreht zwei Stunden weiter
+  const tZ = W('Zwei', 15);
+  aus(['webA', 'warnA'], tZ - .3, .4);
+  pop('uhrA', tZ, { x: X + 1070, y: 480 });
+  uhr('uhrA', t => rampe(t, W('Stunden', 15), 1.2, 600, 720));
+  cue(W('Stunden', 15), 'scan'); akzent(W('später', 15), .03);
+  // Geld von seinem Konto weg: Konto, Münzen und Schein fliegen davon, Balken läuft leer und wird rot, „– €“
+  ein('kontoA', tZ + .2, { x: X + 1420, y: 590 }, { x: 80 }, 'whoosh');
+  akteur('fuellA', {}, true); akteur('minusA', { o: 0, s: .6 }, true);
+  const tGe = W('Geld', 15);
+  [['geldA1', 1330, -40], ['geldA2', 1420, 0], ['geldA3', 1510, 40]].forEach(([g, x, dx], j) => {
+    const t0 = tGe + j * .15;
+    akteur(g, { x: X + x, y: 600, o: 0, s: .4 });
+    tw(g, t0, .15, { o: 1 }); tw(g, t0, .3, { s: 1 }, 'back');
+    flug(g, t0 + .2, .9, X + 1560 + dx, 250, 130, { r: dx / 4, s: .7 }); tw(g, t0 + .85, .25, { o: 0 });
+    cue(t0, 'muenze');
+  });
+  HOOKS.push(t => {
+    const p = E.inout(clamp((t - tGe - .1) / 1.4)), f = $('#fuellA');
+    f.style.width = lerp(100, 6, p) + '%'; f.style.background = p > .6 ? 'var(--error)' : '';
+  });
+  const tW = W('weg', 15);
+  tw('minusA', tW, .45, { o: 1, s: 1 }, 'back'); cue(tW, 'plopp'); wackeln('kontoA', tW + .05, 3, 1.5); akzent(tW, .05);
+  wackeln('kwA', tW + .1, 4, 4);
+  bewerten('k1A', SE(15) + .05, 'rot');
+  titelFarbe('tbA', tK + .5, [tK + .5, tF, W('Geld', 15) - .1, W('Geld', 15), W('weg', 15)], 'rot');
+  textAus('tbA', SE(15) + .6);
+}
+
+/* ---------- 2 · Option B: die freundliche Stimme am Telefon ---------- */
+pan2(SE(15) + .9, 2);
+{
+  const X = S(2);
+  const ids = karten(2, { A: 'rot' }, ['B', 'rot']);
+  const tV = W('Option', 16), tK = W('Am', 16) - .3;
+  vorn(2, ids, 'B', tV, tK); bump('k2Bk', WG('B', 16), 1.2);
+  // Am Telefon: Handy klingelt, Kwame hört zu
+  const HX = X + 1200, HY = 560;
+  ein('kwB', tK + .3, { x: X + 1025, y: 400 }, { y: 70 }, 'whoosh');
+  ein('handyB', tK + .4, { x: HX, y: HY }, { y: 80 }); ein('schirmB', tK + .4, { x: HX, y: HY }, { y: 80 });
+  const tT = W('Telefon', 16);
+  wellen('klingelB', [tT, tT + 1.2], HX, HY, .9); wellen('klingelB2', [tT + .6], HX, HY, .9);
+  for (let n = 0; n < 3; n++) { summen('handyB', tT + n * .6, .45, 6); summen('schirmB', tT + n * .6, .45, 6); cue(tT + n * .6, 'tipp'); }
+  // eine sehr freundliche Person: Schatten, davor eine lächelnde Maske; Töne zum Handy
+  const MX = X + 1545, MY = 470;
+  const tFr = W('freundliche', 16);
+  akteur('schattenB', { x: MX, y: MY, o: 0, s: .6 }); tw('schattenB', tFr - .1, .3, { o: 1 }); tw('schattenB', tFr - .1, .6, { s: 1 }, 'sanft');
+  akteur('maskeB', { x: MX, y: MY - 6, s: 0 });
+  tw('maskeB', tFr - .15, .6, { s: 1 }, 'back'); cue(tFr - .15, 'pop'); bump('maskeB', W('sehr', 16), 1.04);
+  huepfen('maskeB', tFr + .5, 10); akzent(tFr, .03);
+  schweben(['maskeB'], 5);
+  FROH.push(['kwB', tFr, W('Code', 17)]);
+  akteur('tonB', { x: X + 1370, y: 500, o: 0 });
+  tw('tonB', tFr, .3, { o: 1 }); tw('tonB', W('Code', 17) + .4, .3, { o: 0 });
+  HOOKS.push(t => { ['tonB1', 'tonB2', 'tonB3'].forEach((p, k) => { $('#' + p).style.opacity = (.35 + .65 * Math.max(0, Math.sin(t * 6 - k * 1.1))).toFixed(2); }); });
+  // Sie sagt, sie ist von der Bank: Chip „Bank?“
+  pop('bankB', W('Bank', 17) - .1, { x: MX, y: 272 }, 'pop'); wackeln('bankB', W('Bank', 17) + .35, 2, 2);
+  // … und fragt nach einem Code: Code-Feld ploppt, Felder blinken, Kwame zögert
+  const tC = W('Code', 17);
+  pop('codeB', tC - .15, { x: MX, y: 690 }, 'plopp'); akzent(tC, .04);
+  HOOKS.push(t => { const d = t - tC; document.querySelectorAll('#codeB u').forEach((u, k) => { u.style.background = d > 0 && d < 1.6 && Math.floor(d * 5) % 4 === k ? 'var(--b300)' : ''; }); });
+  wackeln('kwB', tC + .1, 4, 3);
+  // Auch das sind Betrüger: die Maske fällt, der Schatten bleibt, Warnzeichen
+  const tBe = W('Betrüger', 18);
+  tw('maskeB', tBe - .2, .7, { y: MY + 260, r: 14, o: 0 }, 'in'); cue(tBe - .2, 'whoosh');
+  bump('schattenB', tBe + .3, 1.08); wackeln('schattenB', tBe + .5, 3, 3);
+  pop('warnB', tBe + .2, { x: MX + 110, y: MY + 110 }, 'plopp');
+  tw('codeB', tBe, .3, { o: .45 }); wackeln('kwB', tBe + .2, 4, 4); akzent(tBe + .1, .05);
+  bewerten('k2B', SE(18) + .05, 'rot');
+  titelFarbe('tbB', tK + .5, [tK + .5, W('Auch', 18) - .05, tBe], 'rot');
+  textAus('tbB', SE(18) + .6);
+}
+
+/* ---------- 3 · Option C: nichts anklicken, selbst prüfen ---------- */
+pan2(SE(18) + .9, 3);
+{
+  const X = S(3);
+  const ids = karten(3, { A: 'rot', B: 'rot' }, ['C', 'gruen']);
+  const tV = W('Option', 19), tK = W('Kwame', 19) - .3;
+  vorn(3, ids, 'C', tV, tK); bump('k3Ck', WG('C', 19), 1.2);
+  const HX = X + 1340, HY = 500;
+  ein('kwC', tK + .3, { x: X + 1030, y: 340 }, { y: 70 }, 'whoosh');
+  ein('handyC', tK + .4, { x: HX, y: HY }, { y: 80 }); ein('smsC', tK + .4, { x: HX, y: HY }, { y: 80 });
+  akteur('appC', { x: HX, y: HY, o: 0, s: .3 }); akteur('rufC', { x: HX, y: HY, o: 0 });
+  // klickt nichts an: der Zeiger kommt zum Link, bleibt stehen, schüttelt „nein“ und geht; Link grau, durchgestrichen
+  const tN = W('nichts', 19);
+  akteur('zeigerC', { x: HX + 180, y: HY + 190, o: 0 });
+  tw('zeigerC', W('klickt', 19) - .2, .3, { o: 1 }); tw('zeigerC', W('klickt', 19) - .2, .6, { x: HX + 26, y: HY + 50 }, 'inout', { bogen: 30 });
+  for (let n = 0; n < 3; n++) tw('zeigerC', tN + n * .14, .14, { x: HX + 26 + (n % 2 ? -12 : 12) }, 'sinus');
+  tw('zeigerC', tN + .42, .14, { x: HX + 26 }, 'sinus');
+  tw('zeigerC', W('an', 19), .5, { x: HX + 190, y: HY + 220, o: 0 }, 'inout');
+  const tX = W('an', 19);
+  HOOKS.push(t => { $('#linkC').classList.toggle('grau', t >= tX); });
+  akteur('streichC', { sx: 0 }, true); tw('streichC', tX, .4, { sx: 1 }, 'inout'); cue(tX, 'kritzeln');
+  akzent(tX, .03);
+  // Er öffnet selbst seine Bank-App: App geht auf; Alles ist normal: grüner Haken, Kwame lächelt
+  const tO = W('öffnet', 20);
+  tw('appC', W('Bank-App', 20) - .2, .45, { o: 1, s: 1 }, 'sanft'); cue(W('Bank-App', 20) - .2, 'whoosh');
+  tw('smsC', W('Bank-App', 20) - .2, .3, { o: 0 });
+  huepfen('kwC', tO, 10);
+  akteur('okC', { s: 0 }, true); tw('okC', W('normal', 20) - .25, .5, { s: 1 }, 'back'); cue(W('normal', 20) - .25, 'ding');
+  bump('handyC', W('Alles', 20), 1.04); bump('appC', W('Alles', 20), 1.04);
+  FROH.push(['kwC', W('Alles', 20), 99]);
+  // Er ruft trotzdem bei der Bank an: Bank erscheint; Nummer von der Website fliegt aufs Handy, Anruf
+  const tR = W('ruft', 21);
+  ein('bankC', tR, { x: X + 1625, y: 420 }, { x: 70 }, 'whoosh');
+  ein('webC', W('mit', 21) - .1, { x: X + 1060, y: 660 }, { y: 70 }, 'whoosh');
+  akteur('telC', {}, true); bump('telC', W('Nummer', 21), 1.12);
+  const tWs = W('Website', 21);
+  akteur('nummerC', { x: X + 1000, y: 668, o: 0, s: .4 });
+  tw('nummerC', tWs - .1, .15, { o: 1 }); tw('nummerC', tWs - .1, .3, { s: 1 }, 'back');
+  flug('nummerC', tWs + .15, .75, HX, HY, 110, { s: .7 }); tw('nummerC', tWs + .8, .15, { o: 0 }); cue(tWs + .15, 'whoosh');
+  tw('appC', tWs + .8, .25, { o: 0 }); tw('rufC', tWs + .8, .3, { o: 1 }); cue(tWs + .85, 'tipp');
+  bump('handyC', tWs + .85, 1.05); bump('rufC', tWs + .85, 1.05);
+  // Die Bank sagt: „Diese SMS ist nicht von uns.“ – Bank spricht (Wellen), die SMS bekommt ein rotes ✕
+  const tB = W('Bank', 22);
+  wellen('welleC', [tB, W('nicht', 22)], X + 1625, 400, .9); wellen('welleC2', [tWs + 1, W('Diese', 22)], HX, HY, .9);
+  bump('bankC', tB, 1.08); bump('bankC', W('sagt', 22) + .25, 1.05);
+  pop('smsMiniC', W('SMS', 22) - .15, { x: X + 1620, y: 690 }, 'pop');
+  pop('xC', W('nicht', 22), { x: X + 1705 - 18, y: 650 }, 'plopp'); wackeln('smsMiniC', W('nicht', 22) + .05, 3, 3); akzent(W('nicht', 22), .045);
+  // Kwame löscht sie: Papierkorb, die SMS fliegt hinein, der Deckel klappt
+  const tL = W('löscht', 23), EX = X + 1480, EY = 790;
+  ein('eimerC', W('Kwame', 23) - .15, { x: EX, y: EY }, { y: 60 }); ein('deckelC', W('Kwame', 23) - .15, { x: EX, y: EY }, { y: 60 });
+  tw('deckelC', tL - .25, .25, { r: -35, y: EY - 14 }, 'out');
+  aus('xC', tL - .1, .25);
+  flug('smsMiniC', tL - .1, .6, EX, EY - 30, 90, { s: .3 }); tw('smsMiniC', tL + .4, .12, { o: 0 }); cue(tL - .1, 'whoosh');
+  tw('deckelC', tL + .5, .25, { r: 0, y: EY }, 'in'); landen('eimerC', tL + .75); cue(tL + .75, 'plopp');
+  huepfen('kwC', tL + .75, 14);
+  tw('rufC', tL + .3, .3, { o: 0 }); tw('appC', tL + .3, .3, { o: 1 });
+  bewerten('k3C', SE(23) + .05, 'gruen');
+  titelFarbe('tbC', tK + .5, [tK + .5, W('selbst', 20), W('öffnet', 20) + .1, W('normal', 20), W('normal', 20) + .1], 'gruen');
+  textAus('tbC', SE(23) + .6);
+}
+
+/* ---------- 4 · Die beste Wahl ist C – Tipps ---------- */
+pan2(SE(23) + .9, 4);
+{
+  const X = S(4);
+  const ids = karten(4, { A: 'rot', B: 'rot', C: 'gruen' });
+  WELT.insertAdjacentHTML('beforeend', '<div class="a glow" id="glow4" data-frei></div>');
+  WELT.insertBefore(el('glow4'), el('k4A'));
+  akteur('glow4', { x: X + KX[2], y: KY, o: 0 });
+  const tB = W('beste', 24), tK = W('Eine', 25) - .1;
+  ['k4A', 'k4B'].forEach(id => tw(id, tB, .5, { o: .4, s: .92 }, 'inout'));
+  tw('k4C', W('Wahl', 24) - .1, .6, { s: 1.12, y: KY - 16 }, 'sanft'); bump('k4Ck', WG('C', 24), 1.25);
+  tw('glow4', W('Wahl', 24) - .1, .6, { o: .75, s: 1.12, y: KY - 16 }, 'sanft');
+  HOOKS.push(t => { const d = t - W('Wahl', 24), g = $('#glow4'); if (d > .5) g.style.opacity = (+g.style.opacity * (.8 + .2 * Math.sin(d * 5))).toFixed(3); });
+  cue(WG('C', 24), 'erfolg'); akzent(WG('C', 24), .05);
+  aus(['k4A', 'k4B'], tK - .1, .4); tw('glow4', tK - .1, .4, { o: 0 });
+  tw('k4C', tK, .9, { x: X + 490, y: 250, s: .56 }, 'inout'); quiz(4, tK);
+  titelEin('tb4', W('nie', 25) - .1, [W('nie', 25) - .1, W('PIN', 25) - .05, W('PIN', 25) + .1, W('Sperr-Notruf', 26) - .1]);
+  // nie per SMS, E-Mail oder Telefon: drei Zeichen ploppen, jedes wird rot durchgestrichen
+  const K = [['kanal1', 'SMS', 1090], ['kanal2', 'E-Mail', 1320], ['kanal3', 'Telefon', 1550]];
+  K.forEach(([k, w, x], j) => {
+    const t = W(w, 25) - .1;
+    pop(k, t, { x: X + x, y: 340 });
+    pop('kx' + (j + 1), t + .4, { x: X + x + 50, y: 290 }, 'plopp');
+    wackeln(k, t + .45, 3, 3);
+  });
+  akzent(W('nie', 25), .035);
+  // nach PIN, Passwort oder Codes: Schild „PIN = geheim“ schlägt auf, zwei Chips
+  const tP = W('PIN', 25) - .15;
+  akteur('pin4', { x: X + 1320, y: 330, o: 0, s: 1.25 });
+  tw('pin4', tP, .08, { o: 1 }); tw('pin4', tP, .3, { y: 560, s: 1 }, 'in'); landen('pin4', tP + .3); wackeln('pin4', tP + .45, 3, 1.2);
+  cue(tP + .3, 'plopp'); akzent(tP + .3, .05);
+  pop('pw4', W('Passwort', 25) - .05, { x: X + 1185, y: 730 }); pop('codes4', W('Codes', 25) - .1, { x: X + 1455, y: 730 });
+  bump('pin4', W('Codes', 25) + .3, 1.05);
+  // Und wenn du doch schon geklickt hast: alles geht; der rote Link, der Zeiger tippt – Warnzeichen
+  const tU = W('Und', 26) - .15;
+  aus(['kanal1', 'kanal2', 'kanal3', 'kx1', 'kx2', 'kx3', 'pin4', 'pw4', 'codes4'], tU, .4);
+  const tGk = W('geklickt', 26);
+  pop('klick4', W('schon', 26) - .2, { x: X + 1320, y: 500 });
+  akteur('zeiger4', { x: X + 1500, y: 660, o: 0 });
+  tw('zeiger4', W('schon', 26) - .1, .25, { o: 1 }); tw('zeiger4', W('schon', 26) - .1, .55, { x: X + 1420, y: 535 }, 'inout', { bogen: 20 });
+  tw('zeiger4', tGk, .08, { s: .8 }, 'sinus'); tw('zeiger4', tGk + .08, .3, { s: 1 }, 'sanft'); cue(tGk, 'klick');
+  pop('aus4', tGk + .2, { x: X + 1480, y: 450 }, 'plopp'); wackeln('klick4', tGk + .25, 3, 2);
+  // Ruf sofort deine Bank an oder den Sperr-Notruf 116 116: Handy mit Tastatur, Bank, Notruf-Chip, Anruf
+  const tRu = W('Ruf', 26);
+  aus(['klick4', 'zeiger4', 'aus4'], tRu - .3, .35);
+  ein('handy4', tRu - .1, { x: X + 1170, y: 530 }, { y: 90 }, 'whoosh'); ein('wahl4', tRu - .1, { x: X + 1170, y: 530 }, { y: 90 });
+  ein('bank4', W('Bank', 26) - .2, { x: X + 1560, y: 400 }, { x: 70 }, 'whoosh');
+  wellen('ruf4w', [W('an', 26), W('an', 26) + .6], X + 1560, 380, .9);
+  const tN = W('Sperr-Notruf', 26);
+  pop('notruf4', tN - .05, { x: X + 1560, y: 680 }); akzent(tN, .035);
+  tippen('nr4', '116 116', W('eins-eins-sechs', 26), SE(26) - .05, true);
+  bump('notruf4', W('eins-eins-sechs', 26), 1.1);
+  const tE = SE(26);
+  akteur('ruf4', {}, true); bump('ruf4', tE - .2, 1.25); cue(tE - .2, 'klick');
+  wellen('ruf4w2', [tE, tE + .7, tE + 1.4], X + 1170, 530, 1);
+  bump('handy4', tE, 1.04); bump('wahl4', tE, 1.04); summen('handy4', tE + .1, 1.2, 4); summen('wahl4', tE + .1, 1.2, 4);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.9;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+textAus('tb4', AB);
+
+start(AB + 4.2, AB + 2);
+</script>
+</body></html>

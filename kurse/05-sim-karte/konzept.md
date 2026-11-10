@@ -41,3 +41,43 @@
 
 - Ist „Druck ihn am besten aus“ richtig? Die Post nimmt den Coupon auch in ihrer App an, ALDI TALK will ihn gedruckt.
 - Sollen weitere Anbieter genannt werden, die den Filial-Weg sicher anbieten (bei Online-Anbietern nachsehen)?
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Neu in Deutschland – aber dein Handy hat noch keine deutsche Nummer.
+
+### Szene 2
+Erzähler: Mit einer deutschen Nummer erreichen dich dein Betrieb, die Berufsschule und die Behörden.
+
+### Szene 3
+Erzähler: Am einfachsten ist eine Prepaid-Karte.
+Erzähler: Die gibt es im Supermarkt, zum Beispiel bei Aldi Talk oder Lidl Connect, oder online.
+
+### Szene 4
+Erzähler: Bevor die Karte funktioniert, musst du zeigen, wer du bist.
+
+### Szene 5
+Erzähler: Viele Anbieter schlagen dir einen Video-Chat vor.
+Erzähler: Aber Vorsicht: Mit einem ausländischen Reisepass klappt das oft nicht.
+
+### Szene 6
+Erzähler: Wähl deshalb beim Freischalten: Identifizierung in der Filiale.
+Erzähler: Das heißt Postident.
+
+### Szene 7
+Erzähler: Du bekommst einen Coupon mit einem Code.
+Erzähler: Druck ihn am besten aus.
+
+### Szene 8
+Erzähler: Dann gehst du mit dem Coupon und deinem Reisepass in eine Postfiliale.
+Erzähler: Das kostet nichts.
+
+### Szene 9
+Erzähler: Ein paar Stunden später ist deine Karte freigeschaltet.
+
+### Szene 10
+Erzähler: Schick deine neue Nummer an deinen Betrieb.
+Erzähler: Dann erreichen dich alle.

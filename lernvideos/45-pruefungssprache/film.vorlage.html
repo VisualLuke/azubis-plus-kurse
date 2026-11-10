@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Prüfungssprache</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --gelb:color-mix(in srgb,var(--warning) 42%,var(--warning-bg));
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:64px;line-height:74px}
+.unter{font-size:42px;line-height:54px}
+#tb7,#tb8{width:620px}
+#tb7 .titel,#tb8 .titel{font-size:58px;line-height:68px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* Operator: gelbe Fläche hinter dem Wort (Markierung auf dem Blatt) */
+.op{display:inline-block;position:relative;z-index:0;transform-origin:50% 60%}
+.op .gelb{position:absolute;left:-.14em;right:-.14em;top:.06em;bottom:.02em;border-radius:.16em;background:var(--gelb);z-index:-1;transform-origin:0 50%}
+.rest .z{white-space:pre-wrap}
+
+/* Prüfungsblatt */
+.pblatt{width:470px;height:560px;border-radius:24px;background:var(--surface);box-shadow:0 16px 44px rgba(58,37,153,.16)}
+.pblatt .kopf{position:absolute;left:34px;right:34px;top:28px;display:flex;justify-content:space-between;align-items:center}
+.pblatt .kopf small{font:800 17px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.pblatt .pkt{padding:5px 14px;border-radius:999px;background:var(--b50);color:var(--b600);font:800 19px/24px Inter;white-space:nowrap}
+.pblatt .aufg{position:absolute;left:34px;right:34px;top:70px;font:800 27px/36px Inter;color:var(--ink)}
+.pblatt .linie{position:absolute;left:34px;right:34px;height:3px;border-radius:2px;background:var(--n200)}
+.pblatt .schrift{position:absolute;left:34px;height:10px;border-radius:5px;background:var(--b300);width:0}
+.pblatt .nr8{position:absolute;left:34px;width:40px;height:40px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 22px/40px Inter;text-align:center}
+.drei{display:inline-block;position:relative;margin:0 .2em}
+.drei svg{position:absolute;left:-9px;top:-6px;width:calc(100% + 18px);height:calc(100% + 12px)}
+
+/* Punkteanzeige */
+.punktring{width:190px;height:190px;border-radius:999px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.16)}
+.punktring svg{position:absolute;inset:0;width:190px;height:190px}
+.punktring .seg{fill:none;stroke-width:15;stroke-linecap:round}
+.punktring .mitte{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.punktring b{font:800 34px/38px Inter;color:var(--ink);white-space:nowrap}
+.punktring small{font:700 17px/22px Inter;color:var(--n500)}
+
+.frage{width:72px;height:72px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 44px/72px Inter;text-align:center;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.welle{border-radius:999px;border:5px solid var(--success);opacity:0}
+.plakette{width:60px;height:60px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:30px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.plakette.rot b{font:800 32px/1 Inter;color:var(--surface)}
+.plakette.gross{width:112px;height:112px;border-width:6px} .plakette.gross svg{width:60px}
+
+/* Aufgabenkarte */
+.aufgabe{width:760px;padding:26px 34px;border-radius:30px;background:var(--surface);box-shadow:0 14px 40px rgba(58,37,153,.16);
+  font:800 38px/48px Inter;color:var(--ink)}
+.aufgabe .tag{position:absolute;left:34px;top:-17px;padding:4px 14px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 16px/22px Inter;letter-spacing:.08em;text-transform:uppercase}
+
+/* Szene 2 */
+.todo{width:360px;padding:26px 30px;border-radius:26px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.14);display:flex;flex-direction:column;gap:18px}
+.todo .r{display:flex;align-items:center;gap:16px}
+.todo .k{width:34px;height:34px;flex:none;border-radius:9px;border:4px solid var(--b300);position:relative}
+.todo .k svg{position:absolute;left:-4px;top:-8px;width:40px}
+.todo .r i{height:12px;border-radius:6px;background:var(--n200)}
+.opsatz{width:700px;display:flex;flex-wrap:wrap;justify-content:center;gap:20px 18px}
+.opchip{padding:14px 26px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 30px/36px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(22,19,37,.1)}
+.opchip.an{background:var(--b500);color:var(--surface)}
+
+/* Szene 3 */
+.liste3{width:520px;height:336px;border-radius:28px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.14);padding:24px 30px;display:flex;flex-direction:column;justify-content:space-between}
+.reihe{height:88px;display:flex;align-items:center;gap:18px;position:relative}
+.reihe + .reihe{border-top:2px solid var(--b50)}
+.reihe .nr{width:46px;height:46px;flex:none;border-radius:999px;background:var(--b100);color:var(--b600);font:800 24px/46px Inter;text-align:center}
+.reihe .ic{width:92px;flex:none}
+.reihe .wort{font:800 32px/40px Inter;color:var(--ink);white-space:nowrap}
+.reihe .platz{position:absolute;left:64px;width:240px;height:14px;border-radius:7px;background:var(--n200)}
+.erkl{width:230px;height:270px;border-radius:24px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.14);padding:24px 24px}
+.erkl small{display:block;font:800 22px/26px Inter;color:var(--b600);margin-bottom:16px}
+.erkl i{display:block;height:11px;border-radius:6px;background:var(--n200);margin-bottom:14px}
+.erkl svg{position:absolute;left:0;top:0;width:230px;height:270px}
+
+/* Szene 4 */
+.schritt{width:164px;height:210px;border-radius:24px;background:var(--surface);box-shadow:0 10px 26px rgba(58,37,153,.15);display:flex;flex-direction:column;align-items:center;padding-top:30px}
+.schritt svg{width:78px;height:78px}
+.schritt b{margin-top:14px;font:800 21px/25px Inter;color:var(--ink);text-align:center;padding:0 10px}
+.schritt .nr{position:absolute;left:-12px;top:-12px;width:46px;height:46px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 24px/46px Inter;text-align:center;box-shadow:0 4px 12px rgba(90,63,230,.3)}
+.weiter{width:30px;height:30px}
+
+/* Szene 5 */
+.warum{padding:18px 40px;border-radius:32px;background:var(--b500);color:var(--surface);font:800 58px/68px Inter;white-space:nowrap;box-shadow:0 10px 28px rgba(90,63,230,.3)}
+.warum::after{content:'';position:absolute;left:50%;bottom:-18px;margin-left:-14px;border:14px solid transparent;border-top:20px solid var(--b500);border-bottom:0}
+.kasten5{width:266px;height:236px;border-radius:26px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.14);display:flex;flex-direction:column;align-items:center;padding-top:26px}
+.kasten5 small{font:800 24px/30px Inter;color:var(--b600)}
+.kasten5 .bild{width:130px;margin-top:12px;position:relative}
+.plus{width:48px;height:48px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 36px/46px Inter;text-align:center}
+.schalter{position:relative;flex:none;width:52px;height:96px;border-radius:999px;background:var(--success);box-shadow:inset 0 3px 6px rgba(22,19,37,.18)}
+.schalter i{position:absolute;left:6px;top:6px;width:40px;height:40px;border-radius:999px;background:var(--surface);box-shadow:0 3px 8px rgba(22,19,37,.25)}
+
+/* Szene 6 */
+.antwort{padding:18px 30px;border-radius:26px;background:var(--surface);box-shadow:0 10px 28px rgba(58,37,153,.16);font:800 38px/46px Inter;color:var(--ink);white-space:nowrap}
+.antwort .mehr{display:inline-block;overflow:hidden;vertical-align:bottom;white-space:pre}
+.weil{padding:14px 24px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:800 28px/34px Inter;white-space:nowrap;display:flex;align-items:center;gap:12px;box-shadow:0 6px 16px rgba(22,19,37,.08)}
+.weil .ok{width:34px;height:34px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.weil .ok svg{width:20px}
+.wahl{border-radius:999px;border:6px solid var(--success);opacity:0}
+
+/* Szene 7 */
+.feld7{width:246px;height:400px;border-radius:28px;background:var(--surface);box-shadow:0 10px 30px rgba(58,37,153,.14);display:flex;flex-direction:column;align-items:center;padding-top:26px}
+.feld7 > small{font:800 25px/30px Inter;color:var(--b600)}
+.waage7{position:relative;width:224px;height:150px;margin-top:40px}
+.waage{position:absolute;left:0;top:0;width:560px;height:360px;transform:scale(.4);transform-origin:0 0}
+.waage>*{position:absolute}
+.w-fuss{left:130px;top:52.5px;width:300px}
+.w-balken{left:80px;top:83px;width:400px;height:14px;border-radius:7px;background:linear-gradient(var(--b500),var(--b700))}
+.w-schale{top:78.75px;width:180px;height:180px}
+.w-schale>svg{position:absolute;inset:0}
+.klotz{position:absolute;left:62px;top:52px;width:56px;height:44px;border-radius:999px;background:var(--b400)}
+.klotz.eckig{border-radius:8px;background:var(--warning)}
+.vgl{display:flex;gap:14px;margin-top:40px}
+.vgl i{font:800 34px/56px Inter;font-style:normal;width:64px;height:56px;border-radius:16px;text-align:center}
+.vgl .gl{background:var(--success-bg);color:var(--success-text)} .vgl .un{background:var(--warning-bg);color:var(--warning)}
+.rechner7{position:relative;width:150px;margin-top:16px}
+.anzeige{position:absolute;left:44px;top:25px;width:61px;height:30px;font:800 13.5px/30px Inter;color:var(--b700);text-align:right;white-space:nowrap}
+.weg{width:190px;margin-top:20px;display:flex;flex-direction:column;gap:12px}
+.weg div{display:flex;align-items:center;gap:10px;height:16px}
+.weg u{font:800 20px/16px Inter;color:var(--b500);text-decoration:none;width:14px}
+.weg i{height:10px;border-radius:5px;background:var(--b200);width:0}
+.weg .erg i{background:var(--success)}
+.meinung{position:relative;margin-top:46px;display:flex;gap:10px;padding:24px 30px;border-radius:26px;background:var(--b500)}
+.meinung::after{content:'';position:absolute;left:28px;bottom:-16px;border:12px solid transparent;border-top:18px solid var(--b500);border-bottom:0;transform:skewX(-20deg)}
+.meinung i{width:16px;height:16px;border-radius:999px;background:var(--surface)}
+.argument{margin-top:40px;display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font:800 23px/28px Inter;white-space:nowrap}
+.argument .ok{width:32px;height:32px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.argument .ok svg{width:18px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 44px/58px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgHakenGruen"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgPunkte"><svg viewBox="0 0 190 190"></svg><div class="mitte"><b>0 von 6</b><small>Punkte</small></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Nur die Hälfte der Punkte (Bühne mittig) -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a pblatt" id="blatt1">
+    <div class="kopf"><small>Aufgabe</small><span class="pkt">6 Punkte</span></div>
+    <div class="aufg"><span class="op" id="op1"><i class="gelb"></i>Erläutern</span> Sie, warum man vor der Arbeit freischalten muss.</div>
+    <div class="linie" style="top:236px"></div><div class="linie" style="top:290px"></div><div class="linie" style="top:344px"></div>
+    <div class="linie" style="top:398px"></div><div class="linie" style="top:452px"></div><div class="linie" style="top:506px"></div>
+    <div class="schrift" id="s1a" style="top:222px"></div><div class="schrift" id="s1b" style="top:276px"></div>
+    <div class="schrift" id="s1c" style="top:330px"></div><div class="schrift" id="s1d" style="top:384px"></div>
+    <div class="a" id="stift1" style="width:92px" data-frei>{{stift}}</div>
+    <div class="a" id="lupe1" style="width:250px" data-frei>{{lupe}}</div>
+  </div>
+  <div class="a punktring" id="ring1" data-f="punkte"></div>
+  <div class="a portrait" id="kw1" data-f="kwame" style="width:196px;height:196px"></div>
+  <div class="a frage" id="frage1">?</div>
+
+  <!-- 2 · Operatoren -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a aufgabe" id="k2"><span class="tag">Aufgabe</span><span class="op" id="op2"><i class="gelb"></i>Erläutern</span><span class="rest" id="rest2"> Sie, warum man vor der Arbeit freischalten muss.</span></div>
+  <div class="a todo" id="todo2">
+    <div class="r"><span class="k" id="k2a"></span><i style="width:220px"></i></div>
+    <div class="r"><span class="k" id="k2b"></span><i style="width:180px"></i></div>
+    <div class="r"><span class="k" id="k2c"></span><i style="width:200px"></i></div>
+  </div>
+  <svg class="a" id="pfeil2" viewBox="0 0 200 140" style="width:200px;height:140px" data-frei>
+    <defs><marker id="spitze2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" id="pf2" pathLength="1" d="M40 10C40 70 90 100 150 112" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/></svg>
+  <div class="a opsatz" id="ops2">
+    <span class="opchip">Nennen</span><span class="opchip">Beschreiben</span><span class="opchip an">Erläutern</span>
+    <span class="opchip">Begründen</span><span class="opchip">Vergleichen</span><span class="opchip">Berechnen</span><span class="opchip">Beurteilen</span>
+  </div>
+
+  <!-- 3 · Nennen -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a aufgabe" id="k3"><span class="tag">Aufgabe</span><span class="op" id="op3"><i class="gelb"></i>Nennen</span><span class="rest" id="rest3"> Sie <span class="drei" id="drei3">drei</span> Werkzeuge.</span></div>
+  <div class="a liste3" id="liste3">
+    <div class="reihe" id="r3a"><i class="nr">1</i><span class="platz" id="p3a"></span><span class="ic" id="i3a">{{zollstock}}</span><b class="wort" id="w3a">Zollstock</b></div>
+    <div class="reihe" id="r3b"><i class="nr">2</i><span class="platz" id="p3b"></span><span class="ic" id="i3b">{{wasserwaage}}</span><b class="wort" id="w3b">Wasserwaage</b></div>
+    <div class="reihe" id="r3c"><i class="nr">3</i><span class="platz" id="p3c"></span><span class="ic" id="i3c">{{bohrmaschine}}</span><b class="wort" id="w3c">Akkuschrauber</b></div>
+  </div>
+  <div class="a erkl" id="erk3"><small>Erklärung</small><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i><i style="width:70%"></i>
+    <svg viewBox="0 0 230 270"><g stroke="var(--error)" stroke-width="12" stroke-linecap="round"><path class="zeichnen" id="x3a" pathLength="1" d="M40 60L190 210"/><path class="zeichnen" id="x3b" pathLength="1" d="M190 60L40 210"/></g></svg></div>
+  <div class="a welle" id="welle3" data-frei></div>
+  <div class="a plakette gruen gross" id="ok3"></div>
+
+  <!-- 4 · Beschreiben -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a aufgabe" id="k4"><span class="tag">Aufgabe</span><span class="op" id="op4"><i class="gelb"></i>Beschreiben</span><span class="rest" id="rest4"> Sie den Ablauf eines Ölwechsels.</span></div>
+  <div class="a" id="kanne4" style="width:230px">{{oelkanne}}</div>
+  <div class="a" id="lupe4" style="width:170px" data-frei>{{lupe~4}}</div>
+  <div class="a schritt" id="st4a"><span class="nr">1</span>
+    <svg viewBox="0 0 64 64"><rect x="8" y="10" width="48" height="16" rx="5" fill="var(--b500)"/><path d="M32 30c5 7 8 11 8 15a8 8 0 0 1-16 0c0-4 3-8 8-15Z" fill="var(--warning)"/><rect x="12" y="52" width="40" height="8" rx="4" fill="var(--b200)"/></svg><b id="l4a">Öl ablassen</b></div>
+  <div class="a schritt" id="st4b"><span class="nr">2</span>
+    <svg viewBox="0 0 64 64"><rect x="18" y="8" width="28" height="48" rx="7" fill="var(--b500)"/><path d="M18 20h28M18 30h28M18 40h28" stroke="var(--b300)" stroke-width="4"/><rect x="24" y="2" width="16" height="8" rx="3" fill="var(--b700)"/></svg><b id="l4b">Filter wechseln</b></div>
+  <div class="a schritt" id="st4c"><span class="nr">3</span>
+    <svg viewBox="0 0 64 64"><rect x="24" y="22" width="32" height="36" rx="7" fill="var(--b500)"/><path d="M30 26L12 10" stroke="var(--b300)" stroke-width="6" stroke-linecap="round"/><path d="M10 22c3 5 5 8 5 10a5 5 0 0 1-10 0c0-2 2-5 5-10Z" fill="var(--warning)"/><rect x="30" y="34" width="20" height="14" rx="3" fill="var(--warning-bg)"/></svg><b id="l4c">Öl einfüllen</b></div>
+  <div class="a schritt" id="st4d"><span class="nr">4</span>
+    <svg viewBox="0 0 64 64"><rect x="28" y="4" width="8" height="56" rx="4" fill="var(--b300)"/><rect x="26" y="4" width="12" height="10" rx="4" fill="var(--b700)"/><rect x="28" y="36" width="8" height="24" rx="4" fill="var(--warning)"/><path d="M42 38h10M42 48h10" stroke="var(--b500)" stroke-width="4" stroke-linecap="round"/></svg><b id="l4d">Ölstand prüfen</b></div>
+  <svg class="a weiter" id="pf4a" viewBox="0 0 30 30" data-frei><path d="M9 5l12 10-12 10" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <svg class="a weiter" id="pf4b" viewBox="0 0 30 30" data-frei><path d="M9 5l12 10-12 10" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <svg class="a weiter" id="pf4c" viewBox="0 0 30 30" data-frei><path d="M9 5l12 10-12 10" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+
+  <!-- 5 · Erklären / Erläutern -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a aufgabe" id="k5"><span class="tag">Aufgabe</span><span class="op" id="op5a"><i class="gelb"></i>Erklären</span><span class="op" id="op5b"><i class="gelb"></i>Erläutern</span><span class="rest" id="rest5"> Sie, warum man vor der Arbeit freischalten muss.</span></div>
+  <div class="a warum" id="warum5">Warum?</div>
+  <div class="a kasten5" id="g5"><small>Grund</small><div class="bild" style="width:124px">{{warndreieck}}</div></div>
+  <div class="a plus" id="plus5">+</div>
+  <div class="a kasten5" id="b5"><small>Beispiel</small><div class="bild" style="width:204px;display:flex;align-items:center;gap:22px"><div style="width:120px;flex:none">{{sicherungskasten}}</div><span class="schalter" id="sch5"><i id="knopf5"></i></span></div></div>
+
+  <!-- 6 · Begründen -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a aufgabe" id="k6"><span class="tag">Aufgabe</span><span class="op" id="op6"><i class="gelb"></i>Begründen</span><span class="rest" id="rest6"> Sie, welches Material Sie wählen.</span></div>
+  <div class="a" id="holz6" style="width:215px">{{holz}}</div>
+  <div class="a" id="metall6" style="width:215px">{{metall}}</div>
+  <div class="a" id="kunst6" style="width:215px">{{kunststoff}}</div>
+  <div class="a wahl" id="wahl6" style="width:210px;height:210px" data-frei></div>
+  <div class="a plakette gruen" id="gut6" data-gruppe="holz"></div>
+  <div class="a antwort" id="ant6" data-gruppe="ant">Holz<span class="mehr" id="mehr6">, weil …</span></div>
+  <div class="a plakette rot" id="rot6" data-gruppe="ant"><b>!</b></div>
+  <div class="a weil" id="weil6a"><span class="ok"></span>weil …</div>
+  <div class="a weil" id="weil6b"><span class="ok"></span>weil …</div>
+  <svg class="a" id="pfeil6" viewBox="0 0 400 110" style="width:400px;height:110px" data-frei>
+    <defs><marker id="spitze6" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <g stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none">
+      <path class="zeichnen" id="pf6a" pathLength="1" d="M190 8C160 40 110 44 80 76" marker-end="url(#spitze6)"/>
+      <path class="zeichnen" id="pf6b" pathLength="1" d="M210 8C240 40 290 44 320 76" marker-end="url(#spitze6)"/></g></svg>
+
+  <!-- 7 · Vergleichen · Berechnen · Beurteilen -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a feld7" id="v7"><small>Vergleichen</small>
+    <div class="waage7"><div class="waage">
+      <div class="w-fuss">{{waage-fuss}}</div>
+      <div class="w-balken" id="balken7"></div>
+      <div class="w-schale" id="schaleL" style="left:0">{{waage-schale}}<i class="klotz" id="kl7"></i></div>
+      <div class="w-schale" id="schaleR" style="left:380px">{{waage-schale~2}}<i class="klotz" id="kr7a"></i><i class="klotz eckig" id="kr7b"></i></div>
+    </div></div>
+    <div class="vgl"><i class="gl" id="gl7">=</i><i class="un" id="un7">≠</i></div>
+  </div>
+  <div class="a feld7" id="r7"><small>Berechnen</small>
+    <div class="rechner7" id="rech7">{{taschenrechner}}<div class="anzeige" id="anz7">2 · 3 = 6</div></div>
+    <div class="weg"><div><u>+</u><i id="w7a"></i></div><div><u>·</u><i id="w7b"></i></div><div class="erg"><u>=</u><i id="w7c"></i></div></div>
+  </div>
+  <div class="a feld7" id="u7"><small>Beurteilen</small>
+    <div class="meinung" id="mein7"><i></i><i></i><i></i></div>
+    <div class="argument" id="arg7"><span class="ok"></span>Argument</div>
+  </div>
+  <div class="a welle" id="welle7" data-frei></div>
+
+  <!-- 8 · Dein Trick -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a pblatt" id="blatt8">
+    <div class="kopf"><small>Aufgabe</small><span class="pkt" id="pk8">6 Punkte</span></div>
+    <div class="aufg"><span class="op" id="op8"><i class="gelb" id="gelb8"></i>Nennen</span> Sie <span class="drei" id="drei8">drei<svg viewBox="0 0 100 50" preserveAspectRatio="none"><ellipse class="zeichnen" id="kreis8" pathLength="1" cx="50" cy="25" rx="47" ry="22" transform="rotate(-2 50 25)" stroke="var(--b500)" stroke-width="4" vector-effect="non-scaling-stroke" fill="none"/></svg></span> Werkzeuge.</div>
+    <div class="nr8" id="n8a" style="top:180px">1</div><div class="nr8" id="n8b" style="top:246px">2</div><div class="nr8" id="n8c" style="top:312px">3</div>
+    <div class="linie" style="top:222px;left:90px"></div><div class="linie" style="top:288px;left:90px"></div><div class="linie" style="top:354px;left:90px"></div>
+    <div class="linie" id="lz8a" style="top:412px"></div><div class="linie" id="lz8b" style="top:466px"></div><div class="linie" id="lz8c" style="top:520px"></div>
+    <div class="schrift" id="s8a" style="top:206px;left:90px"></div><div class="schrift" id="s8b" style="top:272px;left:90px"></div><div class="schrift" id="s8c" style="top:338px;left:90px"></div>
+    <div class="schrift" id="s8d" style="top:398px"></div><div class="schrift" id="s8e" style="top:452px"></div>
+    <div class="a" id="marker8" style="width:96px" data-frei>{{textmarker}}</div>
+  </div>
+  <svg class="a" id="pfeil8" viewBox="0 0 140 90" style="width:140px;height:90px" data-frei>
+    <defs><marker id="spitze8" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" id="pf8" pathLength="1" d="M125 78C100 40 70 22 26 18" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none" marker-end="url(#spitze8)"/></svg>
+  <div class="a welle" id="welle8" data-frei></div>
+  <div class="a punktring" id="ring8" data-f="punkte"></div>
+  <div class="a portrait" id="kw8" data-f="kwame" style="width:196px;height:196px"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Operatoren</div><div class="unter">= Arbeitsanweisungen</div></div>
+<div class="block" id="tb3"><div class="titel">Nennen</div><div class="unter">= aufzählen</div></div>
+<div class="block" id="tb4"><div class="titel">Beschreiben</div><div class="unter">= wie ist es? wie läuft es ab?</div></div>
+<div class="block" id="tb5"><div class="titel">Erklären/Erläutern</div><div class="unter">= warum? + Beispiel</div></div>
+<div class="block" id="tb6"><div class="titel">Begründen</div><div class="unter">= weil …</div></div>
+<div class="block" id="tb7"><div class="titel">Vergleichen · Berechnen · Beurteilen</div></div>
+<div class="block" id="tb8"><div class="titel">Operator markieren · Anzahl · Punkte</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Das erste Wort sagt dir,<br>was du tun sollst.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Wer es versteht, holt mehr Punkte.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const W2 = (m, n) => A(wort(m, wortEnde(m, satz(n).start - .01) + .01));     // zweites Vorkommen im Satz n
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const MX = 1320, MY = 540;
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.punktring').forEach(p => { p.innerHTML = tpl('svgPunkte'); });
+['ok3', 'gut6'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.weil .ok, .argument .ok').forEach(o => { o.innerHTML = tpl('svgHaken'); });
+document.querySelectorAll('.todo .k').forEach(o => { o.innerHTML = tpl('svgHakenGruen'); });
+
+const NB = 8;
+for (let i = 0; i < NB; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const popRel = (id, t, snd = null, e = 'back') => { akteur(id, { s: 0 }, true); tw(id, t, e === 'back' ? .5 : .65, { s: 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const weg = (ids, t, d = .3) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .6 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => { pfad = el(pfad); STRICHE.push([pfad, t0, d, e]); };
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => {
+  const u = E[e](clamp((t - t0) / d)); p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - u;
+  if (p.dataset.spitze ??= p.getAttribute('marker-end') || '') p.setAttribute('marker-end', u > .9 ? p.dataset.spitze : 'none');
+}));
+// Operator: gelbe Fläche wächst von links hinter das Wort
+const gelb = (opId, t, d = .5) => { const g = el(opId).querySelector('.gelb'); akteur(g, { sx: 0 }, true); tw(g, t, d, { sx: 1 }, 'inout'); cue(t, 'scan'); return g; };
+// Text tippt sich Zeichen für Zeichen (Platz bleibt reserviert, nichts springt)
+const TYPEN = [];
+const typen = (id, t0, t1, klick = true) => {
+  const e = el(id), zs = [];
+  const zerlegen = n => [...n.childNodes].forEach(k => {
+    if (k.nodeType === 3) { const f = document.createDocumentFragment(); [...k.textContent].forEach(c => { const s = document.createElement('span'); s.className = 'z'; s.textContent = c; f.appendChild(s); zs.push(s); }); k.replaceWith(f); }
+    else if (k.nodeType === 1 && k.tagName !== 'svg') zerlegen(k);
+  });
+  zerlegen(e);
+  TYPEN.push([zs, t0, t1]);
+  if (klick) for (let t = t0; t < t1; t += .12) cue(t, 'tipp');
+};
+HOOKS.push(t => TYPEN.forEach(([zs, t0, t1]) => { const n = Math.floor(clamp((t - t0) / (t1 - t0)) * zs.length + 1e-6); zs.forEach((z, i) => { z.style.visibility = i < n ? 'visible' : 'hidden'; }); }));
+// Breite eines Balkens (Schrift) in px zu einer Zeit
+const BALKEN = [];
+const balken = (id, t0, d, bis, e = 'lin') => { BALKEN.push([el(id), t0, d, bis, e]); };
+HOOKS.push(t => {
+  const m = new Map();
+  for (const [e, t0, d, bis, ez] of BALKEN) { if (t < t0) { if (!m.has(e)) m.set(e, 0); continue; } const von = m.get(e) ?? 0; m.set(e, lerp(von, bis, E[ez](clamp((t - t0) / d)))); }
+  m.forEach((w, e) => { e.style.width = w.toFixed(1) + 'px'; });
+});
+
+/* ---------- Figuren ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Punkteanzeige: sechs Segmente, Zahl zählt mit ---------- */
+function punktring(id, zeiten, gruenAb = Infinity) {
+  const svg = el(id).querySelector('svg'), R = 80, C = 95, segs = [];
+  for (let i = 0; i < 6; i++) {
+    const a0 = (-90 + i * 60 + 7) * Math.PI / 180, a1 = (-90 + (i + 1) * 60 - 7) * Math.PI / 180;
+    svg.insertAdjacentHTML('beforeend', `<path class="seg" d="M${(C + R * Math.cos(a0)).toFixed(2)} ${(C + R * Math.sin(a0)).toFixed(2)}A${R} ${R} 0 0 1 ${(C + R * Math.cos(a1)).toFixed(2)} ${(C + R * Math.sin(a1)).toFixed(2)}"/>`);
+  }
+  svg.querySelectorAll('.seg').forEach(s => segs.push(s));
+  const zahl = el(id).querySelector('b');
+  zeiten.forEach(t => { if (t > .5) cue(t, 'ding'); });
+  HOOKS.push(t => {
+    let n = 0;
+    segs.forEach((s, i) => {
+      const an = t >= zeiten[i];
+      if (an) n++;
+      s.style.stroke = an ? (t >= gruenAb ? 'var(--success)' : 'var(--b500)') : 'var(--n200)';
+      const p = clamp((t - (zeiten[i] ?? 1e9)) / .25);
+      s.style.strokeWidth = (15 + 7 * Math.sin(Math.PI * p)).toFixed(2);
+    });
+    zahl.textContent = `${n} von 6`;
+    zahl.style.color = t >= gruenAb ? 'var(--success-text)' : 'var(--ink)';
+  });
+}
+
+/* ---------- Kamera ---------- */
+const PANS = [], WECHSEL = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const RUHE = i => i ? -S(i) : -360;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  const wx = wert(kamera, 'x', t);
+  const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  for (let i = 0; i < NB; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE(i))).toFixed(1)}px)`;
+});
+
+/* ================= 1 · Du weißt die Antwort – nur die Hälfte der Punkte (mittig, ohne Titel) ================= */
+const X0 = S(0);
+{
+  ein('blatt1', A(-.55), { x: X0 + 1195, y: 545 }, { y: 90 }, 'whoosh');
+  pop('kw1', A(-.2), { x: X0 + 1605, y: 718 }, 'pop', 'sanft');
+  // Du weißt die Antwort: der Stift schreibt, Kwame freut sich
+  froh('kw1', W('weißt', 1));
+  const L = [['s1a', 400], ['s1b', 372], ['s1c', 396], ['s1d', 236]];
+  const tS = W('weißt', 1) - .05, dz = .86;
+  akteur('stift1', { x: 34 - 13, y: 227 - 75, o: 0 }, true);
+  tw('stift1', tS - .3, .25, { o: 1 });
+  L.forEach(([id, w], i) => {
+    const t0 = tS + i * dz, y = 227 + i * 54;
+    balken(id, t0, dz * .6, w, 'sinus');
+    tw('stift1', t0, dz * .6, { x: 34 + w - 13, y: y - 75 }, 'sinus');
+    if (i < L.length - 1) tw('stift1', t0 + dz * .6, dz * .4, { x: 34 - 13, y: y + 54 - 75 }, 'sinus');
+    for (let k = 0; k < 3; k++) cue(t0 + k * .22, 'tipp');
+  });
+  HOOKS.push(t => { const d = t - tS; if (d > 0 && d < L.length * dz) el('stift1').style.transform += ` rotate(${(3 * Math.sin(d * 26)).toFixed(2)}deg)`; });
+  const tFertig = tS + L.length * dz;
+  tw('stift1', tFertig, .35, { o: 0, x: 34 + 236 + 30, y: 400 - 75 }, 'in');
+  // … nur die Hälfte der Punkte: die Anzeige füllt sich nur bis drei von sechs
+  const tP = W('Hälfte', 2) - .35;
+  pop('ring1', tP, { x: X0 + 1600, y: 338 }, 'pop', 'sanft');
+  const tF = W('Punkte', 2) - .05;
+  punktring('ring1', [tF, tF + .18, tF + .36]);
+  bump('ring1', tF + .7, 1.07);
+  mund('kw1', W('Hälfte', 2), 'zu');
+  // warum? Kwame ist ratlos, Kopf wackelt, Fragezeichen
+  const tW = W('warum', 2) - .1;
+  mund('kw1', tW, 'auf');
+  pop('frage1', tW, { x: X0 + 1545, y: 560 });
+  wackeln('frage1', tW + .45, 4, 7);
+  HOOKS.push(t => { const d = t - tW; if (d > 0 && d < 2.0) el('kw1').style.transform += ` rotate(${(5 * Math.sin(d * 7) * Math.sin(Math.PI * d / 2.0)).toFixed(2)}deg)`; });
+  // Oft liegt es an einem einzigen Wort: die Lupe fährt auf das erste Wort der Aufgabe
+  const tL = W('einzigen', 3) - .35;
+  akteur('lupe1', { x: 0, y: 0, o: 0, s: .7 }, true);
+  const lupe = el('lupe1'); lupe.style.left = '22px'; lupe.style.top = '28px';
+  tw('lupe1', tL, .2, { o: 1 }); tw('lupe1', tL, .7, { s: 1 }, 'sanft'); cue(tL, 'whoosh');
+  HOOKS.push(t => {   // Lupe mittig über dem Operator (Maße erst zur Renderzeit, dann ist Inter geladen)
+    const op = el('op1'), p = E.inout(clamp((t - tL) / .7));
+    const zx = op.offsetLeft + el('blatt1').querySelector('.aufg').offsetLeft + op.offsetWidth / 2 - 66 * 250 / 160;
+    const zy = op.offsetTop + el('blatt1').querySelector('.aufg').offsetTop + op.offsetHeight / 2 - 66 * 250 / 160;
+    lupe.style.left = lerp(300, zx, p).toFixed(1) + 'px'; lupe.style.top = lerp(420, zy, p).toFixed(1) + 'px';
+  });
+  akteur('op1', {}, true);
+  gelb('op1', W('Wort', 3) + .15, .45);
+  bump('op1', W('Wort', 3) - .05, 1.28); cue(W('Wort', 3) - .05, 'ding'); akzent(W('Wort', 3) - .1, .05);
+  mund('kw1', W('Wort', 3), 'zu');
+  aus(['frage1'], W('Oft', 3), .3);
+  bump('blatt1', W('Aufgabe', 3), 1.03);
+}
+
+/* ================= 2 · Operatoren = Arbeitsanweisungen ================= */
+const X1 = S(1);
+pan2(SE(3) + .4, 1);
+{
+  titelEin('tb2', W('Operatoren', 4) - .25, { unter: W('sagen', 5) - .15 });
+  ein('k2', SE(3) + .75, { x: X1 + 1320, y: 322 }, { y: 80 }, 'pop');
+  // Diese Wörter heißen Operatoren: gelbe Fläche hinter dem ersten Wort
+  gelb('op2', W('Wörter', 4) - .05, .6);
+  akteur('op2', {}, true);
+  bump('op2', W('Operatoren', 4), 1.16); akzent(W('Operatoren', 4), .045); cue(W('Operatoren', 4), 'ding');
+  // am Anfang der Aufgabe: der Rest tritt zurück, der Operator springt
+  akteur('rest2', {}, true);
+  tw('rest2', W('Anfang', 5) - .1, .4, { o: .28 });
+  huepfen('op2', W('Anfang', 5), 14);
+  // sagen dir genau, was du tun sollst: Pfeil zur Checkliste, Haken setzen sich
+  akteur('pfeil2', { x: X1 + 1140, y: 456, o: 0 });
+  tw('pfeil2', W('sagen', 5) - .15, .1, { o: 1 }); strich('pf2', W('sagen', 5) - .15, .5); cue(W('sagen', 5) - .15, 'whoosh');
+  ein('todo2', W('sagen', 5) + .1, { x: X1 + 1380, y: 640 }, { y: 60 }, 'pop');
+  [['k2a', W('genau', 5)], ['k2b', W('tun', 5) - .05], ['k2c', W('sollst', 5) + .1]].forEach(([id, t]) => {
+    const h = el(id).querySelector('svg'); akteur(h, { s: 0 }, true); tw(h, t, .45, { s: 1 }, 'back'); cue(t, 'klick');
+  });
+  // Hier sind die wichtigsten: Checkliste geht, sieben Operatoren springen auf
+  const tH = W('Hier', 6) - .3;
+  aus(['todo2'], tH, .3); tw('pfeil2', tH, .3, { o: 0 });
+  tw('rest2', tH, .4, { o: 1 });
+  akteur('ops2', { x: X1 + 1320, y: 640, o: 0 }); set('ops2', tH + .3, { o: 1 });
+  [...el('ops2').children].forEach((c, i) => { akteur(c, { s: 0 }, true); tw(c, tH + .35 + i * .1, .5, { s: 1 }, 'back'); if (i % 2 === 0) cue(tH + .35 + i * .1, 'pop'); });
+  const erl = el('ops2').children[2];
+  bump(erl, W('wichtigsten', 6) + .6, 1.12);
+  textAus('tb2', SE(6) + .2);
+}
+
+/* ================= 3 · Nennen = aufzählen ================= */
+const X2 = S(2);
+pan2(SE(6) + .35, 2);
+{
+  titelEin('tb3', W('Nennen', 7) - .2, { unter: W('zählst', 7) - .1 });
+  ein('k3', SE(6) + .7, { x: X2 + 1320, y: 312 }, { y: 80 }, 'pop');
+  typen('rest3', W('Sie', 9) - .05, WE('Werkzeuge', 9) - .2, true);
+  gelb('op3', W('Nennen', 7) - .05, .5);
+  akteur('op3', {}, true); bump('op3', W('Nennen', 7) + .35, 1.14); akzent(W('Nennen', 7) + .2, .04);
+  // Du zählst nur auf: Liste mit drei Punkten
+  ein('liste3', W('Du', 7) - .1, { x: X2 + 1190, y: 612 }, { y: 70 }, 'whoosh');
+  const R = ['r3a', 'r3b', 'r3c'];
+  R.forEach((id, i) => { const nr = el(id).querySelector('.nr'); akteur(nr, { s: 0 }, true); tw(nr, W('zählst', 7) + i * .22, .45, { s: 1 }, 'back'); cue(W('zählst', 7) + i * .22, 'pop'); });
+  ['p3a', 'p3b', 'p3c'].forEach((id, i) => { akteur(id, { sx: 0 }, true); el(id).style.transformOrigin = '0 50%'; tw(id, W('auf', 7) - .1 + i * .12, .45, { sx: 1 }, 'inout'); });
+  // Kurz, ohne Erklärung: eine Erklär-Karte fliegt herein und wird gestrichen
+  bump('liste3', W('Kurz', 8), 1.04);
+  ein('erk3', W('ohne', 8) - .3, { x: X2 + 1592, y: 612 }, { x: 90 }, 'whoosh');
+  strich('x3a', W('Erklärung', 8) + .2, .22); strich('x3b', W('Erklärung', 8) + .38, .22); cue(W('Erklärung', 8) + .2, 'klick'); cue(W('Erklärung', 8) + .38, 'klick');
+  [8, -6, 4, 0].forEach((d, i) => tw('erk3', W('Erklärung', 8) + .6 + i * .08, .08, { x: X2 + 1592 + d }, 'sinus'));
+  weg('erk3', SE(8) + .3, .35); cue(SE(8) + .3, 'plopp');
+  // Nennen Sie drei Werkzeuge
+  akteur('drei3', {}, true); bump('drei3', W('drei', 9), 1.2);
+  // Antwort: die drei Werkzeuge springen in die Liste, Wörter tippen sich
+  bump('liste3', W('Antwort', 10), 1.04);
+  [['Zollstock', 'i3a', 'w3a', 'p3a'], ['Wasserwaage', 'i3b', 'w3b', 'p3b'], ['Akkuschrauber', 'i3c', 'w3c', 'p3c']].forEach(([w, ic, wo, pl], i) => {
+    const t0 = W(w, 10) - .2;
+    akteur(ic, { s: 0, y: -40 }, true); tw(ic, t0, .5, { s: 1 }, 'back'); tw(ic, t0, .45, { y: 0 }, 'out'); landen(ic, t0 + .45, .6); cue(t0, 'pop');
+    tw(pl, t0, .2, { o: 0 });
+    typen(wo, t0 + .15, WE(w, 10), false); cue(t0 + .2, 'tipp'); cue(t0 + .4, 'tipp');
+  });
+  // fertig: großer Haken
+  const tOk = W('fertig', 10) - .05;
+  pop('ok3', tOk, { x: X2 + 1590, y: 612 }, 'erfolg'); welle('welle3', tOk, X2 + 1590, 612, 1.0, 150); akzent(tOk, .05);
+  R.forEach((id, i) => huepfen(el(id).querySelector('.ic'), tOk + .15 + i * .08, 10));
+  textAus('tb3', SE(10) + .2);
+}
+
+/* ================= 4 · Beschreiben ================= */
+const X3 = S(3);
+pan2(SE(10) + .4, 3);
+{
+  titelEin('tb4', W('Beschreiben', 11) - .25, { unter: W('wie', 11) - .1 });
+  ein('k4', SE(10) + .75, { x: X3 + 1320, y: 312 }, { y: 80 }, 'pop');
+  typen('rest4', W('Sie', 13) - .05, WE('Ölwechsels', 13) - .25);
+  gelb('op4', W('Beschreiben', 11) - .05, .55);
+  akteur('op4', {}, true); bump('op4', W('Beschreiben', 11) + .4, 1.12); akzent(W('Beschreiben', 11) + .25, .04);
+  // wie etwas ist: Ölkanne, die Lupe schaut sie sich an
+  pop('kanne4', W('sagst', 11) - .1, { x: X3 + 1300, y: 618 }, 'pop', 'sanft');
+  schweben('kanne4', 3);
+  const tI = W('ist', 11) - .5;
+  akteur('lupe4', { x: X3 + 1560, y: 760, o: 0, s: .7 });
+  tw('lupe4', tI, .2, { o: 1 }); tw('lupe4', tI, .4, { s: 1 }, 'sanft');
+  tw('lupe4', tI + .1, .55, { x: X3 + 1250, y: 600 }, 'inout'); tw('lupe4', tI + .65, .5, { x: X3 + 1380, y: 640 }, 'inout', { bogen: 30 });
+  cue(tI + .1, 'scan'); bump('kanne4', tI + .7, 1.06);
+  // wie etwas abläuft: Kanne geht, vier Schritte fliegen durcheinander herein
+  const tA = W('abläuft', 11) - .45;
+  tw('lupe4', tA - .1, .3, { o: 0, s: .7 }, 'in'); weg('kanne4', tA, .3);
+  const X = [1020, 1220, 1420, 1620].map(x => X3 + x), Y = 638;
+  const ST = ['st4a', 'st4b', 'st4c', 'st4d'];
+  const START = [[2, 3], [0, -2], [3, 2], [1, -3]];     // [Platz, Drehung] durcheinander
+  ST.forEach((id, i) => {
+    const [p, r] = START[i], t0 = tA + .15 + i * .12;
+    akteur(id, { x: X[p] + (i % 2 ? 40 : -40), y: Y + (i % 2 ? 40 : -30), o: 0, s: .5, r });
+    tw(id, t0, .15, { o: 1 }); tw(id, t0, .55, { s: 1, x: X[p], y: Y + (i % 2 ? 22 : -18) }, 'sanft'); cue(t0, 'pop');
+    const nr = el(id).querySelector('.nr'); akteur(nr, { s: 0 }, true);
+    akteur(el(id).querySelector('b'), { o: 0 }, true);
+  });
+  // In ganzen Sätzen: die Beschriftungen erscheinen
+  ST.forEach((id, i) => { const b = el(id).querySelector('b'); tw(b, W('ganzen', 12) - .1 + i * .12, .35, { o: 1 }); });
+  cue(W('ganzen', 12) - .1, 'tipp'); cue(W('Sätzen', 12), 'tipp');
+  // in der richtigen Reihenfolge: die Karten ordnen sich, Nummern und Pfeile
+  const tR = W('richtigen', 12) - .15;
+  ST.forEach((id, i) => { tw(id, tR + i * .06, .75, { x: X[i], y: Y, r: 0 }, 'inout', { bogen: i % 2 ? -40 : 50 }); });
+  cue(tR, 'whoosh');
+  ST.forEach((id, i) => { const nr = el(id).querySelector('.nr'); tw(nr, W('Reihenfolge', 12) + i * .18, .45, { s: 1 }, 'back'); cue(W('Reihenfolge', 12) + i * .18, 'pop'); });
+  ['pf4a', 'pf4b', 'pf4c'].forEach((id, i) => pop(id, W('Reihenfolge', 12) + .1 + i * .18, { x: X3 + 1120 + i * 200, y: Y }, null));
+  akzent(W('Reihenfolge', 12), .035);
+  // Beschreiben Sie den Ablauf …: die Schritte laufen nacheinander an
+  ST.forEach((id, i) => huepfen(id, W('Ablauf', 13) + i * .16, 14));
+  ST.forEach((id, i) => huepfen(id, W('Ölwechsels', 13) + .5 + i * .1, 8));
+  textAus('tb4', SE(13) + .2);
+}
+
+/* ================= 5 · Erklären / Erläutern ================= */
+const X4 = S(4);
+pan2(SE(13) + .35, 4);
+{
+  titelEin('tb5', W('Erklären', 14) - .25, { unter: W('warum', 14) - .1 });
+  ein('k5', SE(13) + .7, { x: X4 + 1320, y: 312 }, { y: 80 }, 'pop');
+  typen('rest5', W('Sie', 16) - .05, WE('muss', 16) - .2);
+  // Erklären … oder erläutern: das Wort auf der Karte wechselt
+  gelb('op5a', W('Erklären', 14) - .05, .5);
+  const tWx = W('erläutern', 14) - .15;
+  akteur('op5a', {}, true); akteur('op5b', { sy: 0 }, true);
+  tw('op5a', tWx, .15, { sy: 0 }, 'in'); tw('op5b', tWx + .15, .3, { sy: 1 }, 'sanft'); cue(tWx, 'klick');
+  HOOKS.push(t => { el('op5a').style.display = t < tWx + .15 ? '' : 'none'; el('op5b').style.display = t < tWx + .15 ? 'none' : ''; });
+  gelb('op5b', tWx + .2, .45);
+  akzent(W('Erklären', 14) + .2, .035);
+  // warum etwas so ist: großes „Warum?“
+  pop('warum5', W('warum', 14) - .15, { x: X4 + 1320, y: 488 }, 'pop', 'sanft');
+  wackeln('warum5', W('so', 14), 4, 4);
+  // Mit Gründen: Kästchen „Grund“; bei „erläutern“ auch ein Beispiel
+  ein('g5', W('Gründen', 15) - .2, { x: X4 + 1150, y: 716 }, { y: 70 }, 'whoosh');
+  const dreieck = el('g5').querySelector('.bild'); akteur(dreieck, { s: 0 }, true); tw(dreieck, W('Gründen', 15) + .15, .5, { s: 1 }, 'back'); cue(W('Gründen', 15) + .15, 'pop');
+  bump('op5b', W('erläutern', 15), 1.16);
+  pop('plus5', W('auch', 15) - .1, { x: X4 + 1320, y: 716 });
+  ein('b5', W('Beispiel', 15) - .3, { x: X4 + 1490, y: 716 }, { y: 70 }, 'whoosh');
+  const kasten = el('b5').querySelector('.bild'); akteur(kasten, { s: 0 }, true); tw(kasten, W('Beispiel', 15), .5, { s: 1 }, 'back'); cue(W('Beispiel', 15), 'pop');
+  akzent(W('Beispiel', 15), .03);
+  // Erläutern Sie, warum man vor der Arbeit freischalten muss: der Schalter klappt auf „aus“
+  bump('warum5', W('warum', 16), 1.1);
+  const tAus = W('freischalten', 16) + .05;
+  akteur('knopf5', {}, true);
+  akteur('sch5', {}, true);
+  tw('knopf5', tAus, .3, { y: 44 }, 'inout'); bump('sch5', tAus + .25, 1.1); cue(tAus + .25, 'klick');
+  HOOKS.push(t => { const p = clamp((t - tAus - .05) / .25); el('sch5').style.background = `color-mix(in srgb, var(--n300) ${(p * 100).toFixed(0)}%, var(--success))`; });
+  wackeln(dreieck, W('muss', 16), 4, 5);
+  textAus('tb5', SE(16) + .2);
+}
+
+/* ================= 6 · Begründen = weil … ================= */
+const X5 = S(5);
+pan2(SE(16) + .35, 5);
+{
+  titelEin('tb6', W('Begründen', 17) - .25, { unter: W('weil', 19) - .15 });
+  ein('k6', SE(16) + .7, { x: X5 + 1320, y: 312 }, { y: 80 }, 'pop');
+  typen('rest6', W('Sie', 18) - .05, WE('wählen', 18) - .2);
+  gelb('op6', W('Begründen', 17) - .05, .5);
+  akteur('op6', {}, true); bump('op6', W('Begründen', 17) + .4, 1.12); akzent(W('Begründen', 17) + .25, .04);
+  // Argumente für eine Entscheidung: drei Materialien, Holz wird gewählt
+  const M = [['holz6', 1110], ['metall6', 1320], ['kunst6', 1530]];
+  M.forEach(([id, x], i) => pop(id, W('Argumente', 17) - .2 + i * .15, { x: X5 + x, y: 568 }, 'pop', 'sanft'));
+  schweben(['holz6', 'metall6', 'kunst6'], 3);
+  const tE = W('Entscheidung', 17) - .05;
+  M.forEach(([id], i) => bump(id, tE - .4 + i * .15, 1.08));
+  tw(['metall6', 'kunst6'], tE + .35, .4, { o: .32, s: .9 });
+  welle('wahl6', tE + .35, X5 + 1110, 568, .9, 190);
+  pop('gut6', tE + .35, { x: X5 + 1185, y: 510 }, 'ding');
+  bump('holz6', tE + .35, 1.12); akzent(tE + .35, .03);
+  // welches Material Sie wählen
+  bump('holz6', W('Material', 18), 1.06);
+  // Also nicht nur „Holz“: Materialien gehen, Antwort „Holz“ allein – zu wenig
+  const tN = W('Also', 19) - .3;
+  aus(['metall6', 'kunst6', 'gut6'], tN, .3);
+  tw('holz6', tN, .7, { x: X5 + 1030, y: 610, s: .8 }, 'inout', { bogen: 40 }); cue(tN, 'whoosh');
+  const mehr = el('mehr6');
+  pop('ant6', W('Holz', 19) - .15, { x: X5 + 1340, y: 610 }, 'pop');
+  pop('rot6', W('Holz', 19) + .35, { x: X5 + 1410, y: 562 }, 'klick'); wackeln('ant6', W('Holz', 19) + .4, 4, 3);
+  // sondern: „Holz, weil …“ – die Antwort wächst, Pfeile zu zwei Argumenten
+  const tWeil = W2('Holz', 19) + .2;
+  tw('rot6', W('sondern', 19), .3, { s: 0, o: 0 }, 'sinus');
+  HOOKS.push(t => { const p = E.inout(clamp((t - tWeil) / .55)); mehr.style.maxWidth = (p * mehr.scrollWidth).toFixed(1) + 'px'; });
+  cue(tWeil, 'tipp'); cue(tWeil + .2, 'tipp');
+  akteur('pfeil6', { x: X5 + 1340, y: 708, o: 0 });
+  tw('pfeil6', W('weil', 19) + .1, .1, { o: 1 });
+  strich('pf6a', W('weil', 19) + .1, .45); strich('pf6b', W('weil', 19) + .25, .45); cue(W('weil', 19) + .1, 'whoosh');
+  pop('weil6a', W('weil', 19) + .45, { x: X5 + 1200, y: 800 }, 'pop');
+  pop('weil6b', W('weil', 19) + .65, { x: X5 + 1480, y: 800 }, 'pop');
+  const oks = [...document.querySelectorAll('#weil6a .ok, #weil6b .ok')];
+  oks.forEach((o, i) => { akteur(o, { s: 0 }, true); tw(o, SE(19) + .1 + i * .2, .45, { s: 1 }, 'back'); cue(SE(19) + .1 + i * .2, 'ding'); });
+  akzent(SE(19) + .1, .035);
+  huepfen('holz6', SE(19) + .3, 12);
+  textAus('tb6', SE(19) + .85);
+}
+
+/* ================= 7 · Vergleichen · Berechnen · Beurteilen ================= */
+const X6 = S(6);
+pan2(SE(19) + 1.0, 6);
+{
+  titelEin('tb7', W('Vergleichen', 20) - .2, [W('Vergleichen', 20) - .2, W('Berechnen', 21) - .25, W('Berechnen', 21) - .15, W('Beurteilen', 22) - .25, W('Beurteilen', 22) - .15]);
+  // Vergleichen: Waage mit zwei Seiten
+  ein('v7', W('Vergleichen', 20) - .35, { x: X6 + 1050, y: 578 }, { y: 80 }, 'whoosh');
+  akzent(W('Vergleichen', 20), .03);
+  akteur('balken7', { r: 0 }, true);
+  for (const id of ['schaleL', 'schaleR']) akteur(id, {}, true);
+  HOOKS.push(t => {
+    const th = wert(AKTEURE.get(el('balken7')), 'r', t) * Math.PI / 180;
+    [['schaleL', -1], ['schaleR', 1]].forEach(([id, seite]) => {
+      const e = el(id);
+      e.style.transform = `translate(${(seite * 190 * (Math.cos(th) - 1)).toFixed(2)}px,${(seite * 190 * Math.sin(th)).toFixed(2)}px) ` + e.style.transform;
+    });
+  });
+  const faellt = (id, t0) => { akteur(id, { y: -160, o: 0 }, true); tw(id, t0, .1, { o: 1 }); tw(id, t0, .35, { y: 0 }, 'in'); landen(id, t0 + .35, .8); cue(t0 + .35, 'plopp'); };
+  faellt('kl7', W('Gemeinsamkeiten', 20) - .25); faellt('kr7a', W('Gemeinsamkeiten', 20) - .1);
+  popRel('gl7', W('Gemeinsamkeiten', 20) + .5, 'ding');
+  // Unterschiede: rechts liegt etwas anderes, die Waage kippt
+  const tU = W('Unterschiede', 20) - .2;
+  akteur('kr7b', { o: 0, s: .4 }, true);
+  tw('kr7a', tU, .2, { o: 0, s: .5 }, 'in'); tw('kr7b', tU + .1, .4, { o: 1, s: 1 }, 'back'); cue(tU + .1, 'pop');
+  [7, -3, 4].forEach((r, i) => tw('balken7', tU + .25 + i * .3, .3, { r }, 'sinus'));
+  popRel('un7', W('Unterschiede', 20) + .35, 'ding');
+  // Berechnen: Tasten, Anzeige tippt sich, Rechenweg Zeile für Zeile
+  ein('r7', W('Berechnen', 21) - .35, { x: X6 + 1320, y: 578 }, { y: 80 }, 'whoosh');
+  akzent(W('Berechnen', 21), .03);
+  const tR = W('rechnest', 21) - .1;
+  typen('anz7', tR, tR + .7, true);
+  akteur('rech7', {}, true);
+  for (let i = 0; i < 4; i++) tw('rech7', tR + i * .17, .085, { sy: .96, y: 2 }, 'sinus'), tw('rech7', tR + i * .17 + .085, .085, { sy: 1, y: 0 }, 'sinus');
+  const tWg = W('Rechenweg', 21) - .25;
+  balken('w7a', tWg, .3, 140, 'inout'); balken('w7b', tWg + .3, .3, 110, 'inout'); balken('w7c', tWg + .6, .3, 150, 'inout');
+  cue(tWg, 'tipp'); cue(tWg + .3, 'tipp'); cue(tWg + .6, 'ding');
+  // Beurteilen: eigene Meinung (Sprechblase), aber mit Argument (Haken)
+  ein('u7', W('Beurteilen', 22) - .35, { x: X6 + 1590, y: 578 }, { y: 80 }, 'whoosh');
+  akzent(W('Beurteilen', 22), .03);
+  popRel('mein7', W('Meinung', 22) - .25, 'pop'); wackeln('mein7', W('ab', 22), 3, 3);
+  popRel('arg7', W('Argumenten', 22) - .2, 'pop');
+  const ok7 = el('arg7').querySelector('.ok'); akteur(ok7, { s: 0 }, true); tw(ok7, W('Argumenten', 22) + .35, .45, { s: 1 }, 'back'); cue(W('Argumenten', 22) + .35, 'erfolg');
+  welle('welle7', W('Argumenten', 22) + .35, X6 + 1590, 700, 1.0, 190);
+  ['v7', 'r7', 'u7'].forEach((id, i) => huepfen(id, SE(22) + .1 + i * .1, 10));
+  textAus('tb7', SE(22) + .2);
+}
+
+/* ================= 8 · Dein Trick ================= */
+const X7 = S(7);
+pan2(SE(22) + .35, 7);
+{
+  titelEin('tb8', W('Markiere', 23) - .2, [W('Markiere', 23) - .2, W('Operator', 23) - .2, W('viele', 24) - .2, W('viele', 24) - .1, W('Punkte', 26) - .2, W('Punkte', 26) - .1]);
+  const t0 = SE(22) + .7;
+  ein('blatt8', t0, { x: X7 + 1195, y: 545 }, { y: 80 }, 'pop');
+  pop('ring8', t0 + .2, { x: X7 + 1600, y: 338 }, null, 'sanft');
+  pop('kw8', t0 + .3, { x: X7 + 1605, y: 718 }, 'pop', 'sanft');
+  const tV = W('Antwort', 26) - .1;
+  punktring('ring8', [0, 0, 0, tV, tV + .18, tV + .36], tV + .5);
+  // Markiere zuerst den Operator: der Textmarker fährt über „Nennen“, die gelbe Fläche wächst mit
+  const g8 = el('gelb8');
+  const tM = W('Markiere', 23) - .1, dM = W('Operator', 23) + .35 - tM - .5;
+  akteur('marker8', { x: 0, y: 0, o: 0 }, true);
+  tw('marker8', tM - .1, .3, { o: 1 }); tw('marker8', tM + .5 + dM + .05, .35, { o: 0 }); cue(tM + .5, 'scan');
+  HOOKS.push(t => {
+    const op = el('op8'), aufg = el('blatt8').querySelector('.aufg');
+    const x0 = aufg.offsetLeft + op.offsetLeft - 6, y0 = aufg.offsetTop + op.offsetTop + op.offsetHeight * .62;
+    const p = E.inout(clamp((t - tM - .5) / dM)), w = op.offsetWidth + 12;
+    const anflug = E.out(clamp((t - tM + .1) / .6));
+    const x = x0 + p * w + (1 - anflug) * 120, y = y0 + (1 - anflug) * 80;
+    el('marker8').style.left = (x - 13).toFixed(1) + 'px'; el('marker8').style.top = (y - 82).toFixed(1) + 'px';
+    g8.style.transform = `scaleX(${p.toFixed(4)})`;
+  });
+  froh('kw8', W('Markiere', 23));
+  akteur('op8', {}, true); bump('op8', W('Operator', 23) + .45, 1.14); akzent(W('Operator', 23) + .3, .04); cue(W('Operator', 23) + .45, 'ding');
+  // Wie viele Dinge gefragt sind: Kreis um „drei“
+  strich('kreis8', W('viele', 24) - .1, .55); cue(W('viele', 24) - .1, 'kritzeln');
+  akteur('drei8', {}, true); bump('drei8', W('gefragt', 24), 1.15);
+  mund('kw8', W('Dann', 24), 'zu');
+  // „Nennen Sie drei …“ heißt: genau drei – drei Antwortzeilen
+  bump('drei8', W('drei', 25), 1.15);
+  const tG = W2('drei', 25) - .25;
+  ['n8a', 'n8b', 'n8c'].forEach((id, i) => popRel(id, W('genau', 25) + i * .2, 'pop'));
+  [['s8a', 180], ['s8b', 150], ['s8c', 200]].forEach(([id, w], i) => balken(id, W('genau', 25) + .25 + i * .2, .4, w, 'inout'));
+  akzent(tG, .03);
+  // schau auf die Punkte: Pfeil auf „6 Punkte“
+  akteur('pfeil8', { x: X7 + 1488, y: 336, o: 0 });
+  tw('pfeil8', W('schau', 26) - .1, .1, { o: 1 }); strich('pf8', W('schau', 26) - .1, .5); cue(W('schau', 26) - .1, 'whoosh');
+  const pk = el('pk8'); akteur(pk, {}, true);
+  bump(pk, W('Punkte', 26), 1.25); cue(W('Punkte', 26), 'ding');
+  bump(pk, W2('Punkte', 26), 1.25);
+  mund('kw8', W('schau', 26), 'auf');
+  // Viele Punkte bedeuten meistens eine längere Antwort: die Antwort wird länger
+  const tLa = W('längere', 26) - .15;
+  balken('s8a', tLa, .5, 320, 'inout'); balken('s8b', tLa + .1, .5, 300, 'inout'); balken('s8c', tLa + .2, .5, 316, 'inout');
+  balken('s8d', tLa + .35, .5, 398, 'inout'); balken('s8e', tLa + .55, .5, 260, 'inout');
+  for (let k = 0; k < 5; k++) cue(tLa + k * .15, 'tipp');
+  tw('pfeil8', tLa, .3, { o: 0 });
+  // Punkteanzeige springt auf sechs von sechs
+  bump('ring8', tV, 1.1); akzent(tV + .3, .05); cue(tV + .5, 'erfolg');
+  welle('welle8', tV + .5, X7 + 1600, 338, 1.1, 190);
+  froh('kw8', tV + .1); huepfen('kw8', tV + .45, 16);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

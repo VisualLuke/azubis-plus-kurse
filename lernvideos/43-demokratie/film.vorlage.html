@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Wie funktioniert die Demokratie?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:720px;border-radius:48px}
+.titel{font-size:58px;line-height:68px}
+.unter{font-size:38px;line-height:50px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait.klein{border-width:4px;box-shadow:0 3px 10px rgba(22,19,37,.14)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+
+/* allgemein */
+.karteDE .de{fill:var(--b200);stroke:var(--b500);stroke-width:3;stroke-linejoin:round}
+.karteDE .by{fill:var(--b300);stroke:var(--surface);stroke-width:2;stroke-linejoin:round}
+.karteDE.hell .de{fill:var(--b100);stroke:var(--b300)}
+.label{padding:10px 20px;border-radius:999px;background:var(--surface);color:var(--b600);font:800 24px/28px Inter;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(22,19,37,.1)}
+.label.brand{background:var(--b500);color:var(--surface)}
+.label.grau{background:var(--n700);color:var(--surface)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.frage{width:130px;height:130px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 80px/130px Inter;text-align:center;
+  box-shadow:0 10px 26px rgba(90,63,230,.3)}
+.plakette{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface)}
+.plakette svg{width:26px}
+.plakette.gruen{background:var(--success)}
+.plakette.gelb{background:var(--warning);color:var(--surface);font:800 30px/1 Inter}
+.plakette.rot{background:var(--error)}
+.blase{padding:14px 26px;border-radius:28px;background:var(--surface);color:var(--b600);font:800 38px/42px Inter;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(22,19,37,.14)}
+.blase::after{content:'';position:absolute;left:30px;bottom:-16px;border:12px solid transparent;border-top:18px solid var(--surface);border-bottom:0;transform:skewX(-20deg)}
+.blase.rechts::after{left:auto;right:30px;transform:skewX(20deg)}
+.blase.punkte{display:flex;gap:10px;padding:22px 28px;background:var(--b500)}
+.blase.punkte::after{border-top-color:var(--b500);left:24px}
+.blase.punkte i{width:16px;height:16px;border-radius:999px;background:var(--surface)}
+
+/* 1 · Wortkarte */
+.wteil{width:140px;height:74px;background:var(--surface);font:800 40px/74px Inter;color:var(--ink);box-shadow:0 8px 22px rgba(22,19,37,.12);letter-spacing:-.01em}
+#demo0{text-align:right;border-radius:999px 0 0 999px;padding-right:1px}
+#kratie0{text-align:left;border-radius:0 999px 999px 0;padding-left:1px}
+.getrennt#demo0,.getrennt#kratie0{border-radius:999px;text-align:center;padding:0}
+.bedeutung{padding:12px 26px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 6px 18px rgba(90,63,230,.28)}
+
+/* 2 · Wahl */
+.zettelchen{width:40px;height:50px;border-radius:6px;background:var(--surface);box-shadow:0 3px 10px rgba(22,19,37,.2);display:flex;align-items:center;justify-content:center}
+.zettelchen svg{width:24px}
+.dok{width:104px;height:128px;border-radius:12px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.16);padding:18px 16px;display:flex;flex-direction:column;gap:10px}
+.dok i{height:8px;border-radius:4px;background:var(--n200)} .dok i:first-child{background:var(--b300);width:70%}
+.kal{width:190px;height:200px;border-radius:24px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);overflow:hidden}
+.kal .kopf{height:40px;background:var(--b500)}
+.kal .zellen{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.kal .zelle{height:56px;border-radius:12px;background:var(--b50);color:var(--b300);font:800 30px/56px Inter;text-align:center}
+.kal .zelle.an{background:var(--b500);color:var(--surface)}
+.kabine{width:300px;height:400px}
+.kabine .dach{position:absolute;left:-10px;right:-10px;top:0;height:28px;border-radius:10px;background:linear-gradient(var(--b600),var(--b700))}
+.kabine .wand{position:absolute;left:12px;right:12px;top:28px;bottom:0;background:linear-gradient(var(--b100),var(--b200))}
+.kabine .pfosten{position:absolute;top:28px;bottom:0;width:18px;border-radius:0 0 6px 6px;background:linear-gradient(90deg,var(--b400),var(--b500))}
+.kabine .schildk{position:absolute;left:50%;top:-50px;margin-left:-38px;width:76px;height:54px;border-radius:12px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.14);display:flex;align-items:center;justify-content:center}
+.kabine .schildk svg{width:34px}
+.kabine .ablage{position:absolute;left:12px;right:12px;top:330px;height:16px;background:var(--b400);border-radius:3px}
+.stimmzettel{width:130px;height:160px;border-radius:10px;background:var(--surface);box-shadow:0 6px 18px rgba(22,19,37,.16);padding:12px 14px}
+.stimmzettel small{display:block;height:10px;width:70px;border-radius:5px;background:var(--b300);margin-bottom:12px}
+.stimmzettel .z{display:flex;align-items:center;gap:10px;height:28px}
+.stimmzettel .z b{width:20px;height:20px;border-radius:999px;border:3px solid var(--b400);flex:none}
+.stimmzettel .z i{height:9px;flex:1;border-radius:5px;background:var(--n200)}
+.vorhang{width:264px;height:372px;border-radius:0 0 12px 12px;background:repeating-linear-gradient(90deg,var(--b400) 0 23px,var(--b500) 23px 46px);
+  transform-origin:0 50% !important;box-shadow:inset 0 10px 14px rgba(22,19,37,.18)}
+.falt{width:84px;height:58px;border-radius:6px;background:linear-gradient(160deg,var(--surface) 55%,var(--n200) 56%);box-shadow:0 4px 12px rgba(22,19,37,.2)}
+
+/* 3 · Saal */
+.balken{width:600px;height:28px;border-radius:999px;background:var(--n300);overflow:hidden;box-shadow:inset 0 2px 5px rgba(22,19,37,.12)}
+.balken i{position:absolute;right:0;top:0;bottom:0;width:62%;background:var(--b500);border-radius:999px;transform-origin:100% 50%}
+.marke50{width:6px;height:56px;border-radius:3px;background:var(--ink)}
+
+/* 4 · Säulen */
+.macht{width:420px;height:130px;border-radius:22px;background:linear-gradient(135deg,var(--b500),var(--b700));color:var(--surface);font:800 60px/130px Inter;text-align:center;
+  box-shadow:0 12px 30px rgba(58,37,153,.3)}
+.stueck{width:140px;height:130px;background:linear-gradient(135deg,var(--b500),var(--b700));border-radius:10px;box-shadow:0 8px 20px rgba(58,37,153,.25)}
+.schaft{width:110px;height:260px;background:repeating-linear-gradient(90deg,var(--surface) 0 14px,var(--b50) 14px 22px);box-shadow:inset -10px 0 14px rgba(58,37,153,.12),0 6px 16px rgba(22,19,37,.08);
+  transform-origin:50% 100% !important}
+.fuss{width:150px;height:26px;border-radius:6px;background:linear-gradient(var(--b300),var(--b400))}
+.stufe{width:720px;height:30px;border-radius:8px;background:linear-gradient(var(--b200),var(--b300))}
+.slabel{display:flex;flex-direction:column;align-items:center;padding:10px 20px 12px;border-radius:20px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.1);white-space:nowrap}
+.slabel b{font:800 28px/34px Inter;color:var(--ink)}
+.slabel span{font:600 24px/28px Inter;color:var(--b600)}
+.para{width:92px;height:116px;border-radius:12px;background:var(--surface);box-shadow:0 6px 16px rgba(22,19,37,.16);display:flex;flex-direction:column;align-items:center;padding-top:6px}
+.para b{font:800 50px/56px Inter;color:var(--b500)}
+.para i{display:block;height:7px;width:60px;border-radius:4px;background:var(--n200);margin-top:7px;transform-origin:0 50%}
+.waage>div{position:absolute}
+.w-fuss{left:45px;top:0;width:150px}
+.w-balken{left:20px;top:14px;width:200px;height:10px;border-radius:5px;background:linear-gradient(var(--b500),var(--b700))}
+.w-schale{top:0;left:0;width:90px;height:90px}
+.w-schale>svg{position:absolute;inset:0}
+
+/* 5 · Ebenen */
+.ebene5{width:780px;height:180px;border-radius:32px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.1)}
+.ebene5 .text{position:absolute;left:330px;top:26px}
+.ebene5 .eyebrow5{font:700 18px/22px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--b400)}
+.ebene5 .ort{font:800 40px/48px Inter;letter-spacing:-.02em;color:var(--ink);margin-top:2px}
+.chips5{position:absolute;left:330px;top:110px;display:flex;gap:12px}
+.chip5{padding:8px 18px;border-radius:999px;background:var(--b500);color:var(--surface);font:700 22px/26px Inter;white-space:nowrap}
+
+/* 6 · Medien */
+.zeitung{width:250px;height:320px;border-radius:12px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16);padding:18px 18px}
+.zeitung .kopf{height:34px;border-radius:6px;background:var(--b600);margin-bottom:14px}
+.zeitung .zeile{height:14px;border-radius:7px;background:var(--ink);margin-bottom:10px;transform-origin:0 50%}
+.zeitung .bild{float:left;width:96px;height:84px;border-radius:8px;background:linear-gradient(var(--b200),var(--b300));margin:6px 12px 8px 0}
+.zeitung .t{height:8px;border-radius:4px;background:var(--n200);margin:8px 0 0}
+.demoschild{width:130px;height:80px;border-radius:12px;background:var(--surface);border:5px solid var(--b300);box-shadow:0 6px 16px rgba(22,19,37,.12)}
+.demoschild::after{content:'';position:absolute;left:50%;top:100%;width:10px;height:66px;margin-left:-5px;background:var(--b700);border-radius:0 0 5px 5px;z-index:-1}
+
+/* 7 · Mitmachen */
+.wahlkarte{width:620px;height:330px;border-radius:32px;background:var(--surface);box-shadow:0 14px 36px rgba(22,19,37,.14)}
+.wahlkarte .kopf7{position:absolute;left:0;right:0;top:0;height:96px;border-radius:32px 32px 0 0;background:var(--b50)}
+.wahlkarte h3{position:absolute;left:124px;top:24px;font:800 40px/48px Inter;color:var(--ink);white-space:nowrap}
+.zeile7{width:480px;display:flex;align-items:center;gap:18px;font:700 34px/40px Inter;color:var(--ink);white-space:nowrap}
+.zeile7 .ic{width:80px;height:80px;flex:none;margin:-8px}
+.alter{width:64px;height:64px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 26px/64px Inter;text-align:center}
+.miniwahl{width:120px;height:82px;border-radius:12px;background:var(--surface);border:4px dashed var(--n300);box-shadow:0 4px 12px rgba(22,19,37,.1)}
+.miniwahl i{position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:999px;border:3px solid var(--n300)}
+.miniwahl u{position:absolute;left:54px;top:22px;width:46px;height:8px;border-radius:4px;background:var(--n200)}
+.miniwahl u+u{top:40px;width:34px}
+.chip7{display:flex;align-items:center;gap:12px;padding:10px 22px 10px 12px;border-radius:999px;background:var(--surface);color:var(--ink);font:700 26px/32px Inter;white-space:nowrap;
+  box-shadow:0 6px 20px rgba(22,19,37,.1)}
+.chip7 .ic{width:50px;height:50px;flex:none}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 92px/104px Inter;letter-spacing:-.03em;text-align:center;max-width:1500px}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Figuren als Porträt-Vorlagen -->
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-mai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-jonas"><div class="figur"><div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-sabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-priya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-ana"><div class="figur"><div class="ebene">{{figur-ana}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-chefin"><div class="figur"><div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-vermieter"><div class="figur"><div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kuechenchef"><div class="figur"><div class="ebene">{{figur-kuechenchef}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-geselle"><div class="figur"><div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-baeckermeisterin"><div class="figur"><div class="ebene">{{figur-baeckermeisterin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-praxisanleiterin"><div class="figur"><div class="ebene">{{figur-praxisanleiterin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-empfangschefin"><div class="figur"><div class="ebene">{{figur-empfangschefin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kunde"><div class="figur"><div class="ebene">{{figur-kunde}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-lehrerin"><div class="figur"><div class="ebene">{{figur-lehrerin}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-stammgast"><div class="figur"><div class="ebene">{{figur-stammgast}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuzchen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="var(--b600)" stroke-width="3.6" stroke-linecap="round"/></svg></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Das Volk bildet Deutschland (Bühne mittig, ohne Titel) -->
+  <div class="a buehne" id="bue0"></div>
+  <svg class="a karteDE" id="de0" viewBox="0 0 349 465" style="width:436px;height:581px" data-gruppe="volk"><path class="de" pathLength="1" style="fill-opacity:0"/></svg>
+  <div id="volk"></div>
+  <div class="a wteil" id="demo0" data-gruppe="wort0">Demo</div>
+  <div class="a wteil" id="kratie0" data-gruppe="wort0">kratie</div>
+  <svg class="a" id="verb0" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="5" stroke-linecap="round" fill="none"><path pathLength="1" d="M1565 370V392"/><path pathLength="1" d="M1565 600V622"/></g></svg>
+  <div class="a bedeutung" id="volk0">Volk</div>
+  <div class="a bedeutung" id="herr0">herrscht</div>
+  <div class="a welle" id="welle0" data-frei></div>
+  <div class="a frage" id="frage0" data-dreht>?</div>
+
+  <!-- 2 · Wahl -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a portrait" id="w2a" data-f="mai" style="width:104px;height:104px"></div>
+  <div class="a portrait" id="w2b" data-f="yusuf" style="width:104px;height:104px"></div>
+  <div class="a portrait" id="w2c" data-f="lehrerin" style="width:104px;height:104px"></div>
+  <div class="a portrait" id="w2d" data-f="kwame" style="width:104px;height:104px"></div>
+  <div class="a portrait" id="w2e" data-f="baeckermeisterin" style="width:104px;height:104px"></div>
+  <div class="a zettelchen" id="z2a" data-frei></div><div class="a zettelchen" id="z2b" data-frei></div><div class="a zettelchen" id="z2c" data-frei></div>
+  <div class="a zettelchen" id="z2d" data-frei></div><div class="a zettelchen" id="z2e" data-frei></div>
+  <div class="a portrait" id="v2a" data-f="sabine" style="width:132px;height:132px"></div>
+  <div class="a portrait" id="v2b" data-f="jonas" style="width:132px;height:132px"></div>
+  <div class="a dok" id="dok2" data-gruppe="dok2"><i></i><i></i><i></i><i></i></div>
+  <div class="a plakette gruen" id="ok2" data-gruppe="dok2"></div>
+  <svg class="a karteDE hell" id="de2" viewBox="0 0 349 465" style="width:300px;height:400px" data-gruppe="bt2"><path class="de"/></svg>
+  <div class="a" id="parl2" style="width:400px;transform-origin:50% 91%" data-gruppe="bt2">{{parlament}}</div>
+  <div class="a label brand" id="chip2">Bundestag</div>
+  <div class="a kal" id="kal2"><div class="kopf"></div><div class="zellen"><div class="zelle">1</div><div class="zelle">2</div><div class="zelle">3</div><div class="zelle">4</div></div></div>
+  <div class="a kabine" id="kab2" data-gruppe="kab2"><div class="schildk" id="schildk2"></div><div class="wand"></div><div class="ablage"></div><div class="pfosten" style="left:0"></div><div class="pfosten" style="right:0"></div><div class="dach"></div></div>
+  <div class="a portrait" id="kw2" data-f="kwame" data-gruppe="kab2" style="width:112px;height:112px;border-width:5px"></div>
+  <div class="a stimmzettel" id="sz2" data-gruppe="kab2"><small></small>
+    <div class="z"><b></b><i></i></div><div class="z"><b></b><i style="flex:.8"></i></div><div class="z"><b></b><i style="flex:.9"></i></div><div class="z"><b></b><i style="flex:.7"></i></div>
+    <svg class="a" id="kreuz2" data-gruppe="kab2" viewBox="0 0 40 40" style="left:6px;top:58px;width:36px;height:36px"><path pathLength="1" d="M10 10l20 20" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/><path pathLength="1" d="M30 10L10 30" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/></svg></div>
+  <div class="a vorhang" id="vh2" data-gruppe="kab2"></div>
+  <div class="a falt" id="falt2" data-frei></div>
+  <div class="a" id="urne2" style="width:200px">{{wahlurne}}</div>
+  <div class="a welle" id="welle2" style="border-color:var(--success)" data-frei></div>
+  <div class="a" id="auge2" style="width:140px" data-gruppe="auge2">{{auge}}</div>
+  <svg class="a" id="str2" viewBox="0 0 120 120" style="width:140px;height:140px" data-gruppe="auge2"><path class="zeichnen" pathLength="1" d="M22 98L98 22" stroke="var(--error)" stroke-width="10" stroke-linecap="round"/></svg>
+
+  <!-- 3 · Regierung & Opposition -->
+  <div class="a buehne" id="bue2"></div>
+  <svg class="a" id="saal3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei><g id="halo3"></g><g id="sitze3"></g></svg>
+  <div class="a" id="pult3" style="width:120px">{{pult}}</div>
+  <div class="a welle" id="welle3" data-frei></div>
+  <div class="a balken" id="bar3" data-gruppe="bar3"><i id="barf3"></i></div>
+  <div class="a marke50" id="m50" data-gruppe="bar3"></div>
+  <div class="a label grau" id="opp3">Opposition</div>
+  <div class="a label" id="bk3">Bundeskanzler/in</div>
+  <div class="a label brand" id="reg3">Regierung</div>
+  <div class="a blase" id="blase3">?!</div>
+  <div class="a" id="lupe3" style="width:130px" data-frei>{{lupe}}</div>
+
+  <!-- 4 · Gewaltenteilung -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a stufe" id="stufe4" data-gruppe="bau4"></div>
+  <div class="a schaft" id="sa4" data-gruppe="bau4"></div><div class="a schaft" id="sb4" data-gruppe="bau4"></div><div class="a schaft" id="sc4" data-gruppe="bau4"></div>
+  <div class="a fuss" id="fa4" data-gruppe="bau4"></div><div class="a fuss" id="fb4" data-gruppe="bau4"></div><div class="a fuss" id="fc4" data-gruppe="bau4"></div>
+  <svg class="a" id="dach4" viewBox="0 0 740 110" style="width:740px;height:110px" data-gruppe="bau4">
+    <path d="M20 84L370 8l350 76Z" fill="var(--b400)"/><path d="M130 76L370 26l240 50Z" fill="var(--b300)"/>
+    <rect x="0" y="82" width="740" height="26" rx="8" fill="var(--b600)"/></svg>
+  <div class="a macht" id="macht4">Macht</div>
+  <div class="a stueck" id="ta4" data-gruppe="bau4"></div><div class="a stueck" id="tb4s" data-gruppe="bau4"></div><div class="a stueck" id="tc4" data-gruppe="bau4"></div>
+  <div class="a para" id="par4" data-gruppe="bau4"><b>§</b><i></i><i></i><i></i></div>
+  <div class="a para" id="par4b" data-frei><b>§</b><i></i><i></i><i></i></div>
+  <div class="a" id="zahn4" style="width:120px" data-gruppe="bau4" data-dreht>{{zahnrad}}</div>
+  <div class="a waage" id="waage4" style="width:240px;height:145px" data-gruppe="bau4">
+    <div class="w-fuss">{{waage-fuss}}</div><div class="w-balken" id="balken4"></div>
+    <div class="w-schale" id="schL4">{{waage-schale}}</div><div class="w-schale" id="schR4">{{waage-schale~b}}</div></div>
+  <div class="a plakette gruen" id="ok4" data-gruppe="bau4"></div>
+  <svg class="a" id="pfeil4" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="sp4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--b500)"/></marker></defs>
+    <g stroke="var(--b500)" stroke-width="6" stroke-linecap="round" fill="none">
+      <path pathLength="1" d="M1156 615H1244" marker-start="url(#sp4)" marker-end="url(#sp4)"/>
+      <path pathLength="1" d="M1396 615H1484" marker-start="url(#sp4)" marker-end="url(#sp4)"/></g></svg>
+  <div class="a slabel" id="la4"><b>Parlament</b><span>Gesetze</span></div>
+  <div class="a slabel" id="lb4"><b>Regierung</b><span>Umsetzung</span></div>
+  <div class="a slabel" id="lc4"><b>Gerichte</b><span>Kontrolle</span></div>
+
+  <!-- 5 · Bund · Land · Stadt -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a ebene5" id="e5a" data-frei>
+    <svg class="a karteDE" id="k5a" viewBox="0 0 349 465" style="width:105px;height:140px" data-gruppe="e5a"><path class="de"/></svg>
+    <div class="a" id="st5a" style="width:70px" data-gruppe="e5a">{{stecknadel}}</div>
+    <div class="a" id="g5a" style="width:150px;transform-origin:50% 91%">{{parlament~b}}</div>
+    <div class="text"><div class="eyebrow5">Bund</div><div class="ort">Deutschland</div></div>
+    <div class="chips5"><div class="chip5" id="c5a">Bundestag</div></div></div>
+  <div class="a ebene5" id="e5b" data-frei>
+    <svg class="a karteDE hell" id="k5b" viewBox="0 0 349 465" style="width:105px;height:140px"><path class="de"/><path class="by" id="by5"/></svg>
+    <div class="a" id="g5b" style="width:150px;transform-origin:50% 91%">{{landtag}}</div>
+    <div class="text"><div class="eyebrow5">Land</div><div class="ort">Bayern</div></div>
+    <div class="chips5"><div class="chip5" id="c5b">Landtag</div></div></div>
+  <div class="a ebene5" id="e5c" data-frei>
+    <svg class="a karteDE hell" id="k5c" viewBox="0 0 349 465" style="width:105px;height:140px" data-gruppe="e5c"><path class="de"/><path class="by"/></svg>
+    <div class="a" id="st5c" style="width:70px" data-gruppe="e5c">{{stecknadel~b}}</div>
+    <div class="a" id="g5c" style="width:150px;transform-origin:50% 91%">{{rathaus}}</div>
+    <div class="text"><div class="eyebrow5">Stadt</div><div class="ort">Würzburg</div></div>
+    <div class="chips5"><div class="chip5" id="c5c">Stadtrat</div><div class="chip5" id="c5d">Bürgermeister/in</div></div></div>
+
+  <!-- 6 · Freie Medien, Meinung, Demonstration -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a label brand" id="reg6">Regierung</div>
+  <svg class="a" id="pfeil6" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="sp6" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <g stroke="var(--b400)" stroke-width="6" stroke-linecap="round" fill="none">
+      <path pathLength="1" d="M1100 382C1110 330 1150 305 1196 300" marker-end="url(#sp6)"/>
+      <path pathLength="1" d="M1560 442C1560 350 1500 306 1446 300" marker-end="url(#sp6)"/></g></svg>
+  <div class="a zeitung" id="zeit6" data-gruppe="zeit6"><div class="kopf"></div><div class="zeile" id="zz6a"></div><div class="zeile" id="zz6b" style="width:70%"></div>
+    <div class="bild"></div><div class="t"></div><div class="t"></div><div class="t"></div><div class="t" style="width:60%"></div><div class="t" style="clear:both"></div><div class="t"></div><div class="t" style="width:75%"></div></div>
+  <div class="a plakette gelb" id="aus6a" data-gruppe="zeit6">!</div>
+  <div class="a welle" id="welle6a" data-frei></div><div class="a welle" id="welle6b" data-frei></div>
+  <div class="a" id="mikro6" style="width:220px" data-gruppe="mikro6">{{mikrofon}}</div>
+  <div class="a plakette gelb" id="aus6b" data-gruppe="mikro6">!</div>
+  <div class="a" id="rat6" style="width:170px">{{rathaus~b}}</div>
+  <div class="a demoschild" id="ds6a" data-gruppe="d6a"></div><div class="a portrait" id="dp6a" data-f="priya" data-gruppe="d6a" style="width:104px;height:104px"></div>
+  <div class="a demoschild" id="ds6b" data-gruppe="d6b"></div><div class="a portrait" id="dp6b" data-f="vermieter" data-gruppe="d6b" style="width:104px;height:104px"></div>
+  <div class="a demoschild" id="ds6c" data-gruppe="d6c"></div><div class="a portrait" id="dp6c" data-f="ana" data-gruppe="d6c" style="width:104px;height:104px"></div>
+  <div class="a demoschild" id="ds6d" data-gruppe="d6d"></div><div class="a portrait" id="dp6d" data-f="geselle" data-gruppe="d6d" style="width:104px;height:104px"></div>
+  <div class="a demoschild" id="ds6e" data-gruppe="d6e"></div><div class="a portrait" id="dp6e" data-f="empfangschefin" data-gruppe="d6e" style="width:104px;height:104px"></div>
+  <div class="a blase punkte" id="blase6"><i></i><i></i><i></i></div>
+  <div class="a" id="brief6" style="width:90px" data-frei>{{brief}}</div>
+
+  <!-- 7 · Wahlrecht, mitmachen -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a wahlkarte" id="wk7" data-frei><div class="kopf7"></div>
+    <div class="a" id="urn7" style="width:84px">{{wahlurne~b}}</div><h3 id="h7">Bundestagswahl</h3>
+    <div class="a zeile7" id="r7a"><div class="ic">{{pass}}</div>deutsche Staatsbürger</div>
+    <div class="a zeile7" id="r7b"><div class="alter" id="alt7">18+</div>ab 18</div>
+    <div class="a plakette gruen" id="ok7a"></div><div class="a plakette gruen" id="ok7b"></div></div>
+  <svg class="a" id="lin7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <g stroke="var(--b300)" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" fill="none">
+      <path id="l7a" d="M1258 490L1176 390"/><path id="l7b" d="M1382 490L1464 390"/><path id="l7c" d="M1258 630L1176 730"/><path id="l7d" d="M1382 630L1464 730"/></g></svg>
+  <div class="a welle" id="welle7" data-frei></div>
+  <div class="a miniwahl" id="mw7" data-gruppe="mw7"><i></i><u></u><u></u></div>
+  <svg class="a" id="mwx7" viewBox="0 0 120 82" style="width:120px;height:82px" data-gruppe="mw7"><path class="zeichnen" pathLength="1" d="M14 70L106 12" stroke="var(--error)" stroke-width="9" stroke-linecap="round"/></svg>
+  <div class="a portrait" id="fig7" data-f="amir" data-gruppe="fig7" style="width:176px;height:176px"></div>
+  <div class="a" id="hand7" style="width:130px" data-gruppe="fig7">{{hand}}</div>
+  <div class="a chip7" id="c7a"><div class="ic">{{fussball}}</div>Verein</div>
+  <div class="a chip7" id="c7b"><div class="ic">{{betrieb}}</div>Betriebsrat</div>
+  <div class="a chip7" id="c7c"><div class="ic">{{weltkugel}}</div>Integrationsbeirat</div>
+  <div class="a chip7" id="c7d"><div class="ic">{{rathaus~c}}</div>Bürgerversammlung</div>
+
+  <!-- 8 · Gemeinsam entscheiden -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a waage" id="waage8" style="width:240px;height:145px" data-frei>
+    <div class="w-fuss">{{waage-fuss~b}}</div><div class="w-balken" id="balken8"></div>
+    <div class="w-schale" id="schL8">{{waage-schale~c}}</div><div class="w-schale" id="schR8">{{waage-schale~d}}</div></div>
+  <div class="a frage" id="para8" style="width:92px;height:92px;font:800 52px/92px Inter">§</div>
+  <div class="a welle" id="welle8" data-frei></div>
+  <div id="gruppe8"></div>
+</div></div>
+
+<div class="block" id="tb2"><div class="titel">Wahl</div><div class="unter">frei · geheim · alle 4 Jahre</div></div>
+<div class="block" id="tb3"><div class="titel">Regierung &amp; Opposition</div></div>
+<div class="block" id="tb4"><div class="titel">Gewaltenteilung</div><div class="unter">3 Säulen</div></div>
+<div class="block" id="tb5"><div class="titel">Bund · Land · Stadt</div></div>
+<div class="block" id="tb6"><div class="titel">Freie Presse · Meinung · Demonstration</div></div>
+<div class="block" id="tb7"><div class="titel">Mitmachen geht auch ohne Wahlrecht</div></div>
+<div class="block" id="tb8"><div class="titel">Gemeinsam entscheiden</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Die Macht geht vom Volk aus.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Und sie ist geteilt, damit niemand sie missbrauchen kann.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const MX = 1320, MY = 540;
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const tpl = id => document.getElementById(id).innerHTML;
+
+/* ---------- Karten von Deutschland und Bayern (vereinfacht) ---------- */
+const DE_PFAD = 'M51.0 105.0L45.3 87.0L58.5 76.8L83.1 84.0L88.7 93.0L101.9 87.0L100.1 69.0L117.1 66.0L113.3 54.0L103.8 42.0L117.1 33.0L105.7 6.0L135.9 10.2L154.8 15.0L152.9 27.0L162.4 34.8L186.9 40.2L198.2 33.0L202.0 48.0L188.8 60.0L198.2 63.0L213.3 60.0L236.0 49.2L247.3 34.8L268.1 33.0L279.4 22.8L294.5 27.0L288.9 42.0L302.1 54.0L317.2 64.2L322.8 102.0L313.4 129.0L330.4 144.0L334.2 174.0L336.1 204.0L345.5 228.0L339.8 247.8L330.4 244.2L321.0 237.0L317.2 249.0L304.0 255.0L288.9 261.0L270.0 273.0L254.9 276.0L239.8 282.0L236.0 285.0L243.5 294.0L251.1 303.0L249.2 318.0L256.8 333.0L268.1 342.0L285.1 361.8L302.1 373.8L297.2 388.8L287.0 386.4L277.5 402.0L264.3 408.0L260.5 417.0L270.0 429.0L268.1 447.0L260.5 439.8L251.1 441.0L239.8 438.0L217.1 445.2L198.2 456.0L173.7 447.0L164.3 462.0L154.8 447.0L141.6 447.0L126.5 440.4L113.3 438.0L103.8 432.0L96.3 444.0L66.1 445.2L64.2 414.0L73.6 384.0L88.7 361.8L66.1 357.0L43.4 351.0L20.8 332.4L24.5 312.0L9.4 294.0L20.8 280.8L5.7 255.0L7.6 234.0L13.2 213.0L3.8 192.0L35.9 183.0L45.3 165.0L32.1 150.0L45.3 141.0L51.0 120.0Z';
+const BY_PFAD = 'M118.9 294.0L134.0 294.0L145.4 279.0L158.6 267.0L173.7 276.0L188.8 279.0L202.0 273.0L217.1 276.0L228.4 273.0L239.8 282.0L236.0 285.0L243.5 294.0L251.1 303.0L249.2 318.0L256.8 333.0L268.1 342.0L285.1 361.8L302.1 373.8L297.2 388.8L287.0 386.4L277.5 402.0L264.3 408.0L260.5 417.0L270.0 429.0L268.1 447.0L260.5 439.8L251.1 441.0L239.8 438.0L217.1 445.2L198.2 456.0L173.7 447.0L164.3 462.0L154.8 447.0L141.6 447.0L152.9 426.0L160.5 396.0L169.9 375.0L173.7 360.0L160.5 342.0L160.5 327.0L151.0 321.0L137.8 324.0L130.3 318.0L122.7 309.0L120.8 297.0Z';
+document.querySelectorAll('.karteDE .de').forEach(p => p.setAttribute('d', DE_PFAD));
+document.querySelectorAll('.karteDE .by').forEach(p => p.setAttribute('d', BY_PFAD));
+// Punkt der Karte (viewBox 349×465) → Lage bei Mitte (cx, cy) und Breite w
+const kartenPunkt = (cx, cy, w, [x, y]) => { const h = w * 465 / 349; return [cx - w / 2 + x * w / 349, cy - h / 2 + y * h / 465]; };
+const BERLIN = [287, 152], WUERZBURG = [155, 312];
+
+/* ---------- Porträts ---------- */
+const FIG = ['mai', 'kwame', 'sabine', 'amir', 'lehrerin', 'yusuf', 'ana', 'geselle', 'priya', 'chefin', 'jonas', 'empfangschefin',
+  'vermieter', 'praxisanleiterin', 'kunde', 'baeckermeisterin', 'stammgast', 'kuechenchef'];
+// Szene 1: 41 Porträts, die die Form von Deutschland bilden
+const PTS = [[135,64],[235,64],[285,64],[110,107],[160,107],[210,107],[260,107],[85,151],[135,151],[185,151],[235,151],[285,151],[60,194],[110,194],[160,194],[210,194],[260,194],[310,194],[35,238],[85,238],[135,238],[185,238],[235,238],[285,238],[60,281],[110,281],[160,281],[210,281],[35,325],[85,325],[135,325],[185,325],[235,325],[110,368],[160,368],[210,368],[260,368],[85,412],[135,412],[185,412],[235,412]];
+el('volk').insertAdjacentHTML('beforebegin', PTS.map((p, i) => `<div class="a portrait klein" id="p0_${i}" data-f="${FIG[(i * 7) % FIG.length]}" data-gruppe="volk" style="width:60px;height:60px"></div>`).join(''));
+// Szene 8: alle stehen zusammen im Bogen
+const G8 = ['mai', 'kwame', 'sabine', 'amir', 'lehrerin', 'yusuf', 'ana', 'geselle', 'priya'];
+el('gruppe8').insertAdjacentHTML('beforebegin', G8.map((f, i) => `<div class="a portrait" id="g8_${i}" data-f="${f}" data-gruppe="g8" style="width:108px;height:108px;border-width:5px"></div>`).join(''));
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+['ok2', 'ok4', 'ok7a', 'ok7b'].forEach(id => { el(id).innerHTML = tpl('svgHaken'); });
+['z2a', 'z2b', 'z2c', 'z2d', 'z2e', 'schildk2'].forEach(id => { el(id).innerHTML = tpl('svgKreuzchen'); });
+
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+kamera.basis.x = -360;   // ohne Kurstitel: erste Bühne in der Bildmitte, der Schwenk startet von hier
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => [].concat(ids).forEach(id => { const s0 = wertBei(id, 's', t); tw(id, t, d, { o: 0, s: s0 * .85 }, 'in'); });
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const landen = (id, t, k = 1) => { tw(id, t, .08, { sy: 1 - .16 * k, sx: 1 + .1 * k }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const wachsen = (id, t, basis, snd = 'whoosh') => { akteur(id, { ...basis, sy: 0, o: 0 }); tw(id, t, .08, { o: 1 }); tw(id, t, .6, { sy: 1 }, 'sanft'); if (snd) cue(t, snd); };
+const welle = (id, t, x, y, d = .9, g = 200) => { akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px'; set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, zeiten, x, y, d, g) => {
+  akteur(id, { x, y, o: 0, s: .8 }); el(id).style.width = el(id).style.height = g + 'px';
+  zeiten.forEach(t => { set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); });
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const STRICHE = [];
+const strich = (pfad, t0, d, e = 'inout') => STRICHE.push([pfad, t0, d, e]);
+HOOKS.push(t => STRICHE.forEach(([p, t0, d, e]) => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1 - E[e](clamp((t - t0) / d)); }));
+// Waage: Schalen hängen an den Balkenenden
+const waage = (n) => {
+  akteur('balken' + n, { r: 0 }, true);
+  const L = el('schL' + n), R = el('schR' + n);
+  HOOKS.push(t => {
+    const th = wertBei('balken' + n, 'r', t) * Math.PI / 180, c = Math.cos(th) * 100, s = Math.sin(th) * 100;
+    L.style.transform = `translate(${(120 - c - 45).toFixed(1)}px,${(19 - s - 6.75).toFixed(1)}px)`;
+    R.style.transform = `translate(${(120 + c - 45).toFixed(1)}px,${(19 + s - 6.75).toFixed(1)}px)`;
+  });
+};
+const kippen = (n, t, r, d = .6) => tw('balken' + n, t, d, { r }, 'sanft');
+
+/* ---------- Figuren: blinzeln, nicken, Mund ---------- */
+document.querySelectorAll('.portrait').forEach(p => {
+  for (const k of ['froh', 'auf']) { const f = p.querySelector('.' + k); if (f) akteur(f, { o: 0 }, true); }
+  const z = p.querySelector('.zu'); if (z) akteur(z, {}, true);
+});
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) { const e = el(id).querySelector('.' + m); if (e) set(e, t, { o: m === k ? 1 : 0 }); } };
+const froh = (id, t) => mund(id, t, 'froh');
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk, Akzente, Tiefe ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const RUHE = i => i ? -S(i) : -360;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 12));
+  const wx = wert(kamera, 'x', t);
+  const ox = 960 + 360 * clamp((-wx - 360) / (S(1) - 360));
+  $('#kamera').style.transformOrigin = `${ox.toFixed(1)}px 540px`;
+  $('#kamera').style.transform = `scale(${z})`;
+  for (let i = 0; i < 8; i++) $('#bue' + i).style.transform += ` translateX(${(.16 * (wx - RUHE(i))).toFixed(1)}px)`;
+});
+
+/* ================= 1 · Das Volk bildet Deutschland (mittig, ohne Titel) ================= */
+const X0 = S(0);
+{
+  const MCX = X0 + 1150, MCY = 545, MB = 436;
+  akteur('de0', { x: MCX, y: MCY });
+  const pfad = el('de0').querySelector('.de');
+  // viele verschiedene Menschen: verstreut auf der Bühne
+  let saat = 7; const zufall = () => (saat = (saat * 9301 + 49297) % 233280) / 233280;
+  const reihe = PTS.map((_, i) => i).sort(() => zufall() - .5);
+  reihe.forEach((i, k) => {
+    const id = 'p0_' + i;
+    pop(id, .08 + k * .014, { x: X0 + 960 + zufall() * 720, y: 270 + zufall() * 540 }, k % 6 ? null : 'pop');
+  });
+  // „Deutschland“: sie laufen zusammen und bilden die Form des Landes
+  const tD = W('Deutschland', 1) + .1;
+  PTS.forEach((p, i) => {
+    const [x, y] = kartenPunkt(MCX, MCY, MB, p);
+    const t0 = tD + (p[1] / 465) * .5;
+    tw('p0_' + i, t0, .8, { x, y }, 'inout', { bogen: 30 }); landen('p0_' + i, t0 + .8, .5);
+  });
+  cue(tD, 'whoosh'); cue(tD + .9, 'plopp');
+  // „Demokratie“: der Umriss zeichnet sich, das Land füllt sich
+  const tU = W('Demokratie', 1) - .05;
+  strich(pfad, tU, 1.0); cue(tU, 'scan');
+  HOOKS.push(t => { pfad.style.fillOpacity = E.out(clamp((t - tU - .5) / .8)).toFixed(3); });
+  akzent(tU + .4, .03);
+  // Das Wort kommt aus dem Griechischen: „Demo“ + „kratie“
+  const tW = W('Wort', 2) - .15;
+  pop('demo0', tW, { x: X0 + 1495, y: 470 }, 'pop', 'sanft'); pop('kratie0', tW, { x: X0 + 1635, y: 470 }, null, 'sanft');
+  const tG = W('Griechischen', 2) + .05;
+  HOOKS.push(t => { const g = t >= tG + .15; el('demo0').classList.toggle('getrennt', g); el('kratie0').classList.toggle('getrennt', g); });
+  tw('demo0', tG, .7, { x: X0 + 1565, y: 330 }, 'inout', { bogen: 20 }); tw('kratie0', tG, .7, { x: X0 + 1565, y: 560 }, 'inout');
+  cue(tG, 'whoosh'); wackeln('demo0', tG + .7, 2, 3);
+  const V = [...el('verb0').querySelectorAll('path')];
+  akteur('verb0', { x: X0 + 960, y: 540 });
+  // … und heißt: Das Volk herrscht
+  strich(V[0], W('Volk', 2) - .3, .25);
+  pop('volk0', W('Volk', 2) - .1, { x: X0 + 1565, y: 432 });
+  const reiheY = PTS.map((p, i) => [p[0], i]).sort((a, b) => a[0] - b[0]);
+  reiheY.forEach(([x, i]) => { huepfen('p0_' + i, W('Volk', 2) + x / 349 * .5, 10); froh('p0_' + i, W('Volk', 2) + x / 349 * .5); });
+  strich(V[1], W('herrscht', 2) - .3, .25);
+  pop('herr0', W('herrscht', 2) - .1, { x: X0 + 1565, y: 662 }, 'ding');
+  welle('welle0', W('herrscht', 2) + .1, MCX, MCY, 1.2, 480); akzent(W('herrscht', 2) + .1, .03);
+  // Aber was bedeutet das im Alltag?
+  const tA = W('Aber', 3) - .15;
+  aus(['demo0', 'kratie0', 'volk0', 'herr0'], tA, .3); tw('verb0', tA, .3, { o: 0 });
+  pop('frage0', W('was', 3) - .1, { x: X0 + 1565, y: 490 }, 'pop', 'sanft');
+  wackeln('frage0', W('Alltag', 3), 4, 7); cue(W('Alltag', 3), 'klick');
+  PTS.forEach((p, i) => { if (i % 3 === 0) { mund('p0_' + i, W('bedeutet', 3) + (i % 5) * .05, 'zu'); huepfen('p0_' + i, W('Alltag', 3) + (i % 7) * .05, 8); } });
+}
+
+/* ================= 2 · Wahl: frei · geheim · alle 4 Jahre ================= */
+const X1 = S(1);
+pan2(SE(3) + .25, 1);
+{
+  titelEin('tb2', W('wählen', 4) - .2, [W('wählen', 4) - .2, W('frei', 6) - .1, W('frei', 6) + .05, W('geheim', 6) - .1, W('geheim', 6) + .05,
+    W('alle', 5) - .1, W('vier', 5) - .1, W('Jahre', 5) - .1]);
+  // Die Menschen wählen Vertreter
+  const WL = [['w2a', 1000], ['w2b', 1160], ['w2c', 1320], ['w2d', 1480], ['w2e', 1640]];
+  const ZL = ['z2a', 'z2b', 'z2c', 'z2d', 'z2e'];
+  WL.forEach(([id, x], i) => { pop(id, W('Menschen', 4) + i * .07, { x: X1 + x, y: 770 }, i % 2 ? null : 'pop', 'sanft'); froh(id, W('Menschen', 4) + .2); });
+  const VT = [['v2a', 1180], ['v2b', 1460]];
+  WL.forEach(([, x], i) => {
+    const z = ZL[i], t0 = W('wählen', 4) + i * .06;
+    pop(z, t0, { x: X1 + x, y: 680 }, i ? null : 'pop');
+    const [, vx] = VT[i < 2 || (i === 2) ? 0 : 1];
+    const tf = W('Vertreter', 4) + .25 + i * .12;
+    flug(z, tf, .6, X1 + vx + (i % 2 ? 26 : -26), 480, 90, { s: .7 }); tw(z, tf + .5, .15, { o: 0 });
+    cue(tf + .6, 'klick');
+  });
+  VT.forEach(([id, x], i) => { pop(id, W('Vertreter', 4) - .1 + i * .1, { x: X1 + x, y: 410 }, 'pop', 'sanft'); froh(id, W('Vertreter', 4) + .2); });
+  bump('v2a', W('Vertreter', 4) + .9, 1.08); bump('v2b', W('Vertreter', 4) + 1.1, 1.08);
+  // … die für sie Entscheidungen treffen
+  pop('dok2', W('Entscheidungen', 4) - .1, { x: X1 + 1320, y: 330 }, 'whoosh', 'sanft'); wackeln('dok2', W('Entscheidungen', 4) + .4, 2, 3);
+  pop('ok2', W('treffen', 4), { x: X1 + 1364, y: 280 }, 'ding');
+  huepfen('v2a', W('treffen', 4) + .1, 12); huepfen('v2b', W('treffen', 4) + .18, 12);
+  // Für ganz Deutschland … den Bundestag
+  const tF = W('Für', 5) - .15;
+  aus(['w2a', 'w2b', 'w2c', 'w2d', 'w2e', 'v2a', 'v2b', 'dok2', 'ok2'], tF, .3);
+  pop('de2', W('Deutschland', 5) - .1, { x: X1 + 1250, y: 470 }, 'whoosh', 'sanft');
+  wachsen('parl2', W('wählen', 5) - .1, { x: X1 + 1250, y: 570 });
+  bump('parl2', W('Bundestag', 5), 1.05);
+  pop('chip2', W('Bundestag', 5) - .05, { x: X1 + 1250, y: 790 }, 'ding'); akzent(W('Bundestag', 5), .03);
+  // alle vier Jahre: der Kalender zählt 1–4
+  pop('kal2', W('alle', 5) - .3, { x: X1 + 1600, y: 420 }, 'pop', 'sanft');
+  const Z = [...el('kal2').querySelectorAll('.zelle')], tJ0 = W('alle', 5), tJ1 = W('Jahre', 5) + .15;
+  HOOKS.push(t => Z.forEach((z, k) => z.classList.toggle('an', t >= tJ0 + k * (tJ1 - tJ0) / 3)));
+  for (let k = 0; k < 4; k++) cue(tJ0 + k * (tJ1 - tJ0) / 3, 'tipp');
+  bump('kal2', tJ1 + .05, 1.08);
+  // Die Wahl ist frei und geheim: Wahlkabine, Kreuz, Vorhang
+  const tK = W('Die', 6) - .25;
+  aus(['de2', 'chip2', 'kal2'], tK, .3);
+  tw('parl2', tK, .8, { x: X1 + 1590, y: 335, s: .45 }, 'inout'); cue(tK, 'whoosh');
+  ein('kab2', tK + .15, { x: X1 + 1100, y: 590 }, { x: -80 });
+  pop('kw2', W('Wahl', 6) - .3, { x: X1 + 1100, y: 478 }, 'pop', 'sanft'); froh('kw2', W('Wahl', 6));
+  pop('sz2', W('Wahl', 6) - .05, { x: X1 + 1100, y: 636 }, 'pop', 'sanft');
+  const K = [...el('kreuz2').querySelectorAll('path')];
+  strich(K[0], W('frei', 6) - .05, .2); strich(K[1], W('frei', 6) + .15, .2); cue(W('frei', 6) - .05, 'kritzeln');
+  bump('sz2', W('frei', 6) + .4, 1.05);
+  pop('urne2', W('frei', 6) + .3, { x: X1 + 1560, y: 690 }, 'plopp', 'sanft');
+  // geheim: der Vorhang zieht sich zu
+  const tV = W('geheim', 6) - .1;
+  akteur('vh2', { x: X1 + 968, y: 418, sx: .06, o: 0 }, true);
+  tw('vh2', tV, .1, { o: 1 }); tw('vh2', tV, .6, { sx: 1 }, 'weich'); cue(tV, 'whoosh');
+  tw('vh2', tV + .6, .1, { sx: .97 }, 'sinus'); tw('vh2', tV + .7, .3, { sx: 1 }, 'sanft');
+  set(['sz2', 'kw2'], tV + .6, { o: 0 }); mund('kw2', W('frei', 6), 'zu');
+  // Niemand darf sehen: das Auge wird durchgestrichen
+  pop('auge2', W('Niemand', 7) - .1, { x: X1 + 1385, y: 450 }, 'pop', 'sanft');
+  akteur('str2', { x: X1 + 1385, y: 450, o: 0, draw: 0 });
+  tw('str2', W('darf', 7) - .05, .05, { o: 1 }); tw('str2', W('darf', 7) - .05, .35, { draw: 1 }, 'inout'); cue(W('darf', 7), 'klick');
+  wackeln('auge2', W('sehen', 7), 3, 5); wackeln('str2', W('sehen', 7), 3, 5);
+  // … wen du wählst: der gefaltete Zettel kommt aus der Kabine und fällt in die Urne
+  const tZ = W('wen', 7) - .6;
+  akteur('falt2', { x: X1 + 1200, y: 600, o: 0, s: .6 });
+  tw('falt2', tZ, .15, { o: 1 }); tw('falt2', tZ, .3, { x: X1 + 1290, s: 1 }, 'out');
+  flug('falt2', tZ + .3, .6, X1 + 1560, 612, 120); cue(tZ + .3, 'whoosh');
+  tw('falt2', tZ + .9, .25, { y: 680 }, 'in'); tw('falt2', tZ + 1.05, .1, { o: 0 });
+  const tU = tZ + 1.15;
+  landen('urne2', tU, .7); cue(tU, 'plopp'); welle('welle2', tU + .05, X1 + 1560, 700, 1.0, 220); cue(tU + .1, 'erfolg'); akzent(tU, .03);
+  textAus('tb2', SE(7) + .2);
+}
+
+/* ================= 3 · Regierung & Opposition ================= */
+const X2 = S(2);
+pan2(SE(7) + .5, 2);
+{
+  titelEin('tb3', W('Regierung', 9) - .2, [W('Regierung', 9) - .2, W('Opposition', 11) - .3, W('Opposition', 11) - .15]);
+  const CX = X2 + 1320 - (X2 + 960) + 960, CY = 610;   // Mitte des Halbkreises (in der Saal-Grafik)
+  akteur('saal3', { x: X2 + 960, y: 540 });
+  const RADIEN = [150, 185, 220, 255, 290], GRENZEN = [.24, .38, .56, .86, 1];
+  const FARBEN = ['var(--b400)', 'var(--b200)', 'var(--b600)', 'var(--b300)', 'var(--b500)'];
+  const tS0 = W('Bundestag', 8) - .1, tS1 = W('Parteien', 8) + .3;
+  const SITZE = [];
+  RADIEN.forEach((r, ri) => {
+    const n = Math.floor(Math.PI * r / 34);
+    for (let k = 0; k < n; k++) {
+      const f = (k + .5) / n, a = Math.PI * (1 - f);
+      const block = GRENZEN.findIndex(g => f <= g);
+      SITZE.push({ x: CX + r * Math.cos(a), y: CY - r * Math.sin(a), f, block, ri });
+    }
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  SITZE.forEach(s => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', s.x.toFixed(1)); c.setAttribute('cy', s.y.toFixed(1)); c.setAttribute('r', 0); c.setAttribute('fill', FARBEN[s.block]);
+    el('sitze3').appendChild(c); s.c = c;
+    s.t0 = tS0 + (s.block + s.f) / 6 * (tS1 - tS0) + s.ri * .03;
+  });
+  for (let b = 0; b < 5; b++) cue(tS0 + (b + GRENZEN[b] - .1) / 6 * (tS1 - tS0), b % 2 ? 'pop' : 'plopp');
+  // Bänder hinter den Sitzen: Regierung (rechts) und Opposition (links)
+  const bogen = (f0, f1) => { const r = 220, a0 = Math.PI * (1 - f0), a1 = Math.PI * (1 - f1);
+    return `M${(CX + r * Math.cos(a0)).toFixed(1)} ${(CY - r * Math.sin(a0)).toFixed(1)}A${r} ${r} 0 0 1 ${(CX + r * Math.cos(a1)).toFixed(1)} ${(CY - r * Math.sin(a1)).toFixed(1)}`; };
+  el('halo3').innerHTML = `<path id="haloR" pathLength="1" d="${bogen(.385, .995)}" stroke="var(--b200)" stroke-opacity=".55" stroke-width="176" fill="none"/>
+    <path id="haloO" pathLength="1" d="${bogen(.005, .375)}" stroke="var(--n300)" stroke-opacity=".55" stroke-width="176" fill="none"/>`;
+  const tR = W('bilden', 9) - .1, tO = W('anderen', 11) - .1;
+  strich(el('haloR'), tR, .8); strich(el('haloO'), tO, .7);
+  const tWahl = W('wählt', 10) - .05, tKr = W('kritisieren', 12);
+  HOOKS.push(t => SITZE.forEach(s => {
+    let r = 11 * E.back(clamp((t - s.t0) / .35));
+    if (s.block >= 2) r *= 1 + .3 * Math.sin(Math.PI * clamp((t - tR - .3 - s.f * .4) / .35));
+    else r *= 1 + .3 * Math.sin(Math.PI * clamp((t - tO - .3 - s.f * .8) / .35));
+    r *= 1 + .35 * Math.sin(Math.PI * clamp((t - tWahl - (4 - s.ri) * .08) / .3));
+    s.c.setAttribute('r', Math.max(0, r).toFixed(2));
+    const w = s.block >= 2 ? 3 * Math.sin((t - tKr) * 30) * Math.sin(Math.PI * clamp((t - tKr) / .8)) : 0;
+    s.c.setAttribute('transform', w ? `translate(${w.toFixed(2)} 0)` : '');
+  }));
+  // Mehrheit: der Balken füllt sich über die Hälfte
+  pop('bar3', W('mit', 9) - .1, { x: X2 + 1320, y: 780 }, 'pop', 'sanft');
+  pop('m50', W('mit', 9) + .1, { x: X2 + 1320, y: 780 }, null);
+  akteur('barf3', { sx: 0 }, true); tw('barf3', W('Mehrheit', 9) - .1, .9, { sx: 1 }, 'inout'); cue(W('Mehrheit', 9) - .1, 'scan');
+  bump('m50', W('Mehrheit', 9) + .55, 1.2); cue(W('Mehrheit', 9) + .6, 'ding');
+  pop('reg3', W('Regierung', 9) - .1, { x: X2 + 1560, y: 672 }, 'pop'); akzent(W('Regierung', 9), .03);
+  // Der Bundestag wählt: Pult in der Mitte, Bundeskanzler/in
+  pop('pult3', tWahl - .2, { x: X2 + 1320, y: 548 }, 'plopp', 'sanft'); cue(tWahl, 'scan');
+  pop('bk3', W('Bundeskanzler', 10) - .05, { x: X2 + 1320, y: 672 }, 'ding');
+  welle('welle3', W('Bundeskanzler', 10) + .1, X2 + 1320, 560, 1.0, 200);
+  bump('pult3', W('Bundeskanzlerin', 10), 1.08);
+  // Die anderen sind die Opposition
+  pop('opp3', W('Opposition', 11) - .1, { x: X2 + 1080, y: 672 }, 'pop'); akzent(W('Opposition', 11), .03);
+  // Sie kontrollieren und kritisieren die Regierung
+  const tL = W('kontrollieren', 12) - .2;
+  akteur('lupe3', { x: X2 + 1110, y: 420, o: 0, s: .7 });
+  tw('lupe3', tL, .3, { o: 1, s: 1 }, 'sanft'); cue(tL, 'whoosh');
+  tw('lupe3', tL + .3, .5, { x: X2 + 1400, y: 380 }, 'inout', { bogen: 30 });
+  tw('lupe3', tL + .8, .45, { x: X2 + 1530, y: 470 }, 'inout'); cue(tL + .8, 'scan');
+  tw('lupe3', tKr - .05, .3, { o: 0, s: .7 }, 'in');
+  pop('blase3', tKr - .1, { x: X2 + 1060, y: 330 }, 'pop', 'sanft'); wackeln('blase3', tKr + .4, 3, 5);
+  wackeln('reg3', tKr + .1, 3, 4);
+  textAus('tb3', SE(12) + .2);
+}
+
+/* ================= 4 · Gewaltenteilung: 3 Säulen ================= */
+const X3 = S(3);
+pan2(SE(12) + .3, 3);
+{
+  titelEin('tb4', W('Gewaltenteilung', 13) - .15, { unter: W('drei', 14) - .1 });
+  const SX = [1080, 1320, 1560];
+  // Ganz wichtig: ein Block „Macht“ fällt herein
+  const tM = W('wichtig', 13) - .1;
+  akteur('macht4', { x: X3 + 1320, y: 330, o: 0 });
+  tw('macht4', tM, .1, { o: 1 }); tw('macht4', tM, .4, { y: 520 }, 'in'); landen('macht4', tM + .4, .8); cue(tM + .4, 'plopp');
+  bump('macht4', W('Gewaltenteilung', 13) + .2, 1.06);
+  ein('stufe4', tM + .2, { x: X3 + 1320, y: 735 }, { y: 40 });
+  // Die Macht ist auf drei Teile verteilt: der Block zerfällt in drei Stücke
+  wackeln('macht4', W('Macht', 14), 3, 3);
+  const tT = W('drei', 14) - .05;
+  set('macht4', tT, { o: 0 });
+  const ST = ['ta4', 'tb4s', 'tc4'];
+  ST.forEach((id, i) => {
+    akteur(id, { x: X3 + 1180 + i * 140, y: 520, o: 0 });
+    set(id, tT, { o: 1 });
+    tw(id, tT + .02, .35, { x: X3 + 1180 + i * 140 + (i - 1) * 30, r: (i - 1) * 3 }, 'back');
+  });
+  cue(tT, 'klick');
+  // … verteilt: die Stücke fliegen an ihren Platz und werden zu Kapitellen, darunter wachsen die Säulen
+  const tV = W('verteilt', 14) - .15;
+  ST.forEach((id, i) => {
+    const t0 = tV + i * .1;
+    flug(id, t0, .7, X3 + SX[i], 388, 60, { r: 0, sx: 150 / 140, sy: 28 / 130 }); cue(t0, 'whoosh');
+  });
+  ['sa4', 'sb4', 'sc4'].forEach((id, i) => { akteur(id, { x: X3 + SX[i], y: 532, sy: 0, o: 0 }); tw(id, tV + .55 + i * .1, .05, { o: 1 }); tw(id, tV + .55 + i * .1, .6, { sy: 1 }, 'sanft'); });
+  ['fa4', 'fb4', 'fc4'].forEach((id, i) => pop(id, tV + .45 + i * .1, { x: X3 + SX[i], y: 675 }, i ? null : 'plopp'));
+  // Das Parlament macht die Gesetze
+  pop('la4', W('Parlament', 15) - .1, { x: X3 + SX[0], y: 800 }, 'pop');
+  const spA = el('la4').querySelector('span'); akteur(spA, { o: 0, y: 10 }, true); tw(spA, W('Gesetze', 15) - .1, .4, { o: 1, y: 0 }, 'weich');
+  pop('par4', W('macht', 15) - .1, { x: X3 + SX[0], y: 520 }, 'pop', 'sanft');
+  [...el('par4').querySelectorAll('i')].forEach((z, k) => { akteur(z, { sx: 0 }, true); tw(z, W('Gesetze', 15) + k * .15, .35, { sx: 1 }, 'weich'); cue(W('Gesetze', 15) + k * .15, 'tipp'); });
+  // Die Regierung setzt sie um: das Gesetz fliegt zur zweiten Säule, das Zahnrad dreht sich
+  pop('lb4', W('Regierung', 16) - .1, { x: X3 + SX[1], y: 800 }, 'pop');
+  const spB = el('lb4').querySelector('span'); akteur(spB, { o: 0, y: 10 }, true); tw(spB, W('um', 16) - .1, .4, { o: 1, y: 0 }, 'weich');
+  pop('zahn4', W('Regierung', 16) + .1, { x: X3 + SX[1], y: 520 }, null, 'sanft');
+  const tP = W('setzt', 16) - .2;
+  [...el('par4b').querySelectorAll('i')].forEach(z => { z.style.transform = 'none'; });
+  akteur('par4b', { x: X3 + SX[0], y: 520, o: 0 });
+  set('par4b', tP, { o: 1 }); flug('par4b', tP, .6, X3 + SX[1], 520, 90, { s: .5 }); tw('par4b', tP + .5, .12, { o: 0 }); cue(tP, 'whoosh');
+  const tDreh = tP + .6;
+  HOOKS.push(t => { const d = Math.max(0, t - tDreh); el('zahn4').style.transform += ` rotate(${(d < 1.2 ? 160 * d * d / 2.4 : 160 * (d - .6)).toFixed(1)}deg)`; });
+  bump('zahn4', tDreh, 1.1); cue(tDreh, 'klick');
+  // Und die Gerichte kontrollieren, ob alles rechtmäßig ist: die Waage pendelt ein
+  pop('lc4', W('Gerichte', 17) - .1, { x: X3 + SX[2], y: 800 }, 'pop');
+  const spC = el('lc4').querySelector('span'); akteur(spC, { o: 0, y: 10 }, true); tw(spC, W('kontrollieren', 17) - .1, .4, { o: 1, y: 0 }, 'weich');
+  waage(4);
+  pop('waage4', W('Gerichte', 17) + .1, { x: X3 + SX[2], y: 545, s: .78 }, null, 'sanft');
+  kippen(4, W('kontrollieren', 17), -12, .5); kippen(4, W('ob', 17) - .1, 10, .55); kippen(4, W('alles', 17) + .05, -5, .45); kippen(4, W('rechtmäßig', 17) + .1, 0, .6);
+  pop('ok4', W('rechtmäßig', 17) + .6, { x: X3 + SX[2] + 50, y: 460 }, 'erfolg');
+  // So kann niemand allein alle Macht haben: Pfeile verbinden die Säulen, das Dach setzt auf
+  akteur('pfeil4', { x: X3 + 960, y: 540, o: 0 }); set('pfeil4', W('niemand', 18) - .1, { o: 1 });
+  const PF = [...el('pfeil4').querySelectorAll('path[pathLength]')];
+  strich(PF[0], W('niemand', 18) - .1, .45); strich(PF[1], W('niemand', 18) + .15, .45); cue(W('niemand', 18) - .1, 'scan');
+  const tD = W('allein', 18) - .1;
+  akteur('dach4', { x: X3 + 1320, y: 190, o: 0 });
+  tw('dach4', tD, .1, { o: 1 }); tw('dach4', tD, .45, { y: 324 }, 'in'); landen('dach4', tD + .45, .6); cue(tD + .45, 'plopp'); akzent(tD + .45, .04);
+  ['par4', 'zahn4', 'waage4'].forEach((id, i) => huepfen(id, W('haben', 18) + i * .08, 10));
+  textAus('tb4', SE(18) + .2);
+}
+
+/* ================= 5 · Bund · Land · Stadt ================= */
+const X4 = S(4);
+pan2(SE(18) + .3, 4);
+{
+  titelEin('tb5', W('Demokratie', 19) - .1, [W('Demokratie', 19) - .1, W('Bundesland', 20) - .15, W('Bundesland', 20), W('Stadt', 21) - .15, W('Stadt', 21)]);
+  const Y = [335, 540, 745];
+  const ebene = (id, t, y) => ein(id, t, { x: X4 + 1320, y }, { x: 90 }, 'whoosh');
+  // innere Lage: Karte, Gebäude, Chips relativ zur Karte (800×180)
+  const chipEin = (id, t, snd = null) => { akteur(id, { s: 0 }, true); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+  const innen = (ids) => ids.forEach(([id, x, y]) => akteur(id, { x, y }));
+  // Bund: Deutschland, Stecknadel Berlin, Bundestag
+  ebene('e5a', W('Demokratie', 19) - .2, Y[0]);
+  innen([['k5a', 90, 90]]);
+  wachsen('g5a', W('gibt', 19) - .1, { x: 215, y: 90 });
+  const [bx, by] = kartenPunkt(90, 90, 105, BERLIN);
+  akteur('st5a', { x: bx, y: by - 30 - 60, o: 0 });
+  const tB = W('Berlin', 19) - .2;
+  tw('st5a', tB, .1, { o: 1 }); tw('st5a', tB, .35, { y: by - 30 }, 'in'); landen('st5a', tB + .35); cue(tB + .35, 'plopp'); akzent(tB + .35, .03);
+  chipEin('c5a', tB + .5);
+  // Land: Bayern leuchtet, Landtag
+  ebene('e5b', W('Jedes', 20) - .2, Y[1]);
+  innen([['k5b', 90, 90]]);
+  const by5 = el('by5');
+  const tBy = W('Bayern', 20) - .05;
+  HOOKS.push(t => { const p = clamp((t - tBy) / .4); by5.style.fill = p > 0 ? `color-mix(in srgb, var(--b500) ${(p * 100).toFixed(0)}%, var(--b300))` : ''; });
+  bump('k5b', tBy, 1.12); cue(tBy, 'ding');
+  wachsen('g5b', W('Parlament', 20) - .1, { x: 215, y: 90 });
+  chipEin('c5b', W('Landtag', 20) - .05, 'pop'); akzent(W('Landtag', 20), .03);
+  // Stadt: Würzburg, Rathaus, Stadtrat und Bürgermeister/in
+  ebene('e5c', W('Und', 21) - .2, Y[2]);
+  innen([['k5c', 90, 90]]);
+  const [wx, wy] = kartenPunkt(90, 90, 105, WUERZBURG);
+  akteur('st5c', { x: wx, y: wy - 30 - 60, o: 0 });
+  const tS = W('Stadt', 21) - .2;
+  tw('st5c', tS, .1, { o: 1 }); tw('st5c', tS, .35, { y: wy - 30 }, 'in'); landen('st5c', tS + .35); cue(tS + .35, 'plopp');
+  wachsen('g5c', W('hat', 21) - .1, { x: 215, y: 90 });
+  chipEin('c5c', W('Stadtrat', 21) - .05, 'pop');
+  chipEin('c5d', W('Bürgermeister', 21) - .05, 'pop'); akzent(W('Bürgermeister', 21), .03);
+  // alle drei Ebenen nicken zusammen
+  ['e5a', 'e5b', 'e5c'].forEach((id, i) => bump(id, SE(21) - .2 + i * .12, 1.03));
+  textAus('tb5', SE(21) + .2);
+}
+
+/* ================= 6 · Freie Presse · Meinung · Demonstration ================= */
+const X5 = S(5);
+pan2(SE(21) + .3, 5);
+{
+  titelEin('tb6', W('freie', 22) - .15, [W('freie', 22) - .15, W('Medien', 22) - .1, W('Meinung', 24) - .15, W('Meinung', 24) - .1, W('demonstrieren', 24) - .2, W('demonstrieren', 24) - .1]);
+  // Zeitung und Mikrofon
+  ein('zeit6', W('Demokratie', 22), { x: X5 + 1080, y: 580 }, { x: -60, y: 40, r: -8 }, 'whoosh');
+  const ZZ = ['zz6a', 'zz6b'].map(id => { akteur(id, { sx: 0 }, true); return id; });
+  tw(ZZ[0], W('Zeitungen', 23) - .1, .5, { sx: 1 }, 'weich'); tw(ZZ[1], W('Zeitungen', 23) + .3, .4, { sx: 1 }, 'weich'); cue(W('Zeitungen', 23), 'tipp'); cue(W('Zeitungen', 23) + .3, 'tipp');
+  bump('zeit6', W('Zeitungen', 23) + .75, 1.05);
+  ein('mikro6', W('Medien', 22) - .1, { x: X5 + 1560, y: 600 }, { x: 60 }, 'whoosh');
+  wellen('welle6a', [W('Sender', 23) - .1, W('Sender', 23) + .5, W('dürfen', 23) + .4], X5 + 1560, 520, 1.0, 120); cue(W('Sender', 23), 'ding');
+  bump('mikro6', W('Sender', 23) - .1, 1.06);
+  // … über die Regierung berichten
+  pop('reg6', W('Regierung', 23) - .15, { x: X5 + 1320, y: 300 }, 'pop');
+  akteur('pfeil6', { x: X5 + 960, y: 540, o: 0 }); set('pfeil6', W('berichten', 23) - .1, { o: 1 });
+  const P6 = [...el('pfeil6').querySelectorAll('path[pathLength]')];
+  strich(P6[0], W('berichten', 23) - .1, .5); strich(P6[1], W('berichten', 23) + .1, .5); cue(W('berichten', 23), 'scan');
+  // … und sie kritisieren
+  const tK = W('kritisieren', 23) - .05;
+  pop('aus6a', tK, { x: X5 + 1190, y: 440 }, 'klick'); pop('aus6b', tK + .15, { x: X5 + 1630, y: 470 }, 'klick');
+  wackeln('reg6', tK + .25, 4, 5); akzent(tK + .2, .03);
+  // Und jeder darf seine Meinung sagen
+  const tJ = W('Und', 24) - .2;
+  aus(['zeit6', 'aus6a', 'mikro6', 'aus6b', 'reg6'], tJ, .3); tw('pfeil6', tJ, .3, { o: 0 });
+  const D = [['ds6a', 'dp6a', 1000], ['ds6b', 'dp6b', 1160], ['ds6c', 'dp6c', 1320], ['ds6d', 'dp6d', 1480], ['ds6e', 'dp6e', 1640]];
+  // Ana (Mitte) sagt ihre Meinung
+  pop('dp6c', W('jeder', 24) - .1, { x: X5 + 1320, y: 480, s: 1.35 }, 'pop', 'sanft'); mund('dp6c', W('Meinung', 24) - .2, 'auf');
+  pop('blase6', W('Meinung', 24) - .1, { x: X5 + 1440, y: 345 }, 'pop', 'sanft');
+  const PKT = [...el('blase6').querySelectorAll('i')];
+  HOOKS.push(t => PKT.forEach((p, k) => { p.style.transform = `translateY(${(-5 * Math.max(0, Math.sin(t * 7 - k * .9))).toFixed(1)}px)`; }));
+  // friedlich demonstrieren: die anderen ziehen mit leeren Schildern herein, Ana reiht sich ein
+  const tD = W('friedlich', 24) - .2;
+  aus('blase6', tD, .25); froh('dp6c', tD + .1);
+  tw('dp6c', tD, .6, { y: 680, s: 1 }, 'inout');
+  akteur('ds6c', { x: X5 + 1320, y: 544, o: 0, sy: 0 }); tw('ds6c', tD + .45, .1, { o: 1 }); tw('ds6c', tD + .45, .45, { sy: 1 }, 'back');
+  D.forEach(([s, p, x], i) => {
+    if (i === 2) return;
+    const t0 = tD + .1 + Math.abs(i - 2) * .08, dx = i < 2 ? -140 : 140;
+    ein(p, t0, { x: X5 + x, y: 680 }, { x: dx }, i === 0 ? 'whoosh' : null);
+    ein(s, t0 + .05, { x: X5 + x, y: 544 }, { x: dx });
+    froh(p, t0 + .2);
+  });
+  const tLauf = tD + .9;
+  HOOKS.push(t => { if (t < tLauf) return; const d = t - tLauf;
+    const k = E.sinus(clamp(d / .8));
+    D.forEach(([s, p], i) => { const b = k * 5 * (1 - Math.cos(d * 5.2 + i * 1.3));
+      el(s).style.transform += ` translateY(${(-b).toFixed(1)}px) rotate(${(k * 2 * Math.sin(d * 2.6 + i)).toFixed(2)}deg)`;
+      el(p).style.transform += ` translateY(${(-b * .4).toFixed(1)}px)`; }); });
+  // … und sich beschweren: ein Brief fliegt ins Rathaus
+  pop('rat6', W('sich', 24) - .2, { x: X5 + 1600, y: 360 }, 'pop', 'sanft');
+  const tBr = W('beschweren', 24) - .2;
+  akteur('brief6', { x: X5 + 1480, y: 630, o: 0, s: .5 });
+  tw('brief6', tBr, .12, { o: 1 }); tw('brief6', tBr, .25, { s: 1 }, 'back');
+  flug('brief6', tBr + .25, .7, X5 + 1600, 380, 110, { s: .55 }); tw('brief6', tBr + .85, .12, { o: 0 }); cue(tBr + .25, 'whoosh');
+  bump('rat6', tBr + .95, 1.08); cue(tBr + .95, 'ding');
+  textAus('tb6', SE(24) + .2);
+}
+
+/* ================= 7 · Mitmachen geht auch ohne Wahlrecht ================= */
+const X6 = S(6);
+pan2(SE(24) + .3, 6);
+{
+  titelEin('tb7', W('Aber', 26) - .1);
+  // Wählen dürfen bei der Bundestagswahl …
+  ein('wk7', W('Wählen', 25) - .1, { x: X6 + 1320, y: 500 }, { y: 80 }, 'whoosh');
+  akteur('urn7', { x: 64, y: 48 }); bump('urn7', W('Bundestagswahl', 25), 1.12); cue(W('Bundestagswahl', 25), 'plopp');
+  const h7 = el('h7'); akteur(h7, { o: 0, x: -20 }, true); tw(h7, W('Bundestagswahl', 25) - .15, .45, { o: 1, x: 0 }, 'weich');
+  [['r7a', 166, 'deutsche'], ['r7b', 260, 'ab']].forEach(([id, y, w], i) => {
+    akteur(id, { x: 280, y, o: 0 }); tw(id, W('dürfen', 25) + i * .12, .4, { o: .3 });
+    tw(id, W(w, 25) - .1, .3, { o: 1 }); bump(id, W(w, 25) - .05, 1.06); cue(W(w, 25) - .05, 'pop');
+  });
+  akteur('alt7', {}, true); bump('alt7', W('achtzehn', 25), 1.15);
+  pop('ok7a', W('Staatsbürger', 25) + .2, { x: 564, y: 166 }, 'ding');
+  pop('ok7b', W('achtzehn', 25) + .25, { x: 564, y: 260 }, 'ding');
+  // Aber auch ohne Wahlrecht …: Amir hat keine Wahlkarte
+  const tA = W('Aber', 26) - .2;
+  aus('wk7', tA, .35);
+  pop('fig7', W('auch', 26) - .1, { x: X6 + 1320, y: 560 }, 'pop', 'sanft');
+  pop('mw7', W('ohne', 26) - .1, { x: X6 + 1120, y: 560 }, 'pop', 'sanft');
+  akteur('mwx7', { x: X6 + 1120, y: 560, o: 0, draw: 0 });
+  tw('mwx7', W('Wahlrecht', 26), .05, { o: 1 }); tw('mwx7', W('Wahlrecht', 26), .35, { draw: 1 }, 'inout'); cue(W('Wahlrecht', 26), 'klick');
+  wackeln('mw7', W('Wahlrecht', 26) + .3, 3, 4);
+  aus(['mw7', 'mwx7'], W('mitmachen', 26) - .2, .3);
+  // … kannst du mitmachen: Hand hoch
+  const tH = W('mitmachen', 26) - .15;
+  akteur('hand7', { x: X6 + 1455, y: 630, o: 0, r: 0 });
+  tw('hand7', tH, .15, { o: 1 }); tw('hand7', tH, .5, { y: 560 }, 'back'); cue(tH, 'whoosh');
+  for (let i = 0; i < 4; i++) tw('hand7', tH + .5 + i * .16, .16, { r: i % 2 ? -3 : 3 }, 'sinus');
+  tw('hand7', tH + 1.14, .2, { r: 0 }, 'sinus');
+  froh('fig7', tH + .1); welle('welle7', tH + .2, X6 + 1320, 560, 1.0, 200); akzent(tH + .2, .03);
+  // in Vereinen, im Betriebsrat, in Integrationsbeiräten, bei Bürgerversammlungen
+  const C = [['c7a', 'Vereinen', 1120, 350, 'l7a'], ['c7b', 'Betriebsrat', 1520, 350, 'l7b'], ['c7c', 'Integrationsbeiräten', 1120, 770, 'l7c'], ['c7d', 'Bürgerversammlungen', 1520, 770, 'l7d']];
+  akteur('lin7', { x: X6 + 960, y: 540 });
+  C.forEach(([id, w, x, y, l]) => {
+    const t = W(w, 26) - .1;
+    const p = el(l); akteur(p, { o: 0 }, true); tw(p, t - .1, .3, { o: 1 });
+    pop(id, t, { x: X6 + x, y }, 'pop', 'sanft');
+    bump('hand7', t + .1, 1.08);
+  });
+  huepfen('fig7', W('Bürgerversammlungen', 26) + .6, 14); cue(W('Bürgerversammlungen', 26) + .6, 'erfolg');
+  textAus('tb7', SE(26) + .2);
+}
+
+/* ================= 8 · Gemeinsam entscheiden ================= */
+const X7 = S(7);
+pan2(SE(26) + .3, 7);
+{
+  titelEin('tb8', W('entscheiden', 27) - .2);
+  // Waage im Hintergrund
+  waage(8);
+  pop('waage8', W('Demokratie', 27) - .1, { x: X7 + 1320, y: 470, s: 1.6 }, 'whoosh', 'sanft');
+  pop('para8', W('heißt', 27) - .1, { x: X7 + 1320, y: 300 }, 'pop', 'sanft');
+  kippen(8, W('heißt', 27) + .2, -7, .7);
+  // Viele Menschen: alle stehen zusammen im Bogen
+  const n = G8.length, tV = W('Viele', 27) - .15, tM = W('Menschen', 27) + .3;
+  G8.forEach((_, i) => {
+    const f = i / (n - 1), x = 1000 + 640 * f, y = 700 + 80 * Math.sin(Math.PI * f);
+    pop('g8_' + i, tV + (tM - tV) * f, { x: X7 + x, y }, i % 3 ? null : 'pop', 'sanft');
+  });
+  // entscheiden gemeinsam: alle hüpfen, eine Welle läuft durch die Gruppe
+  G8.forEach((_, i) => { huepfen('g8_' + i, W('entscheiden', 27) + i * .05, 14); froh('g8_' + i, W('gemeinsam', 27) + i * .03); });
+  cue(W('gemeinsam', 27), 'erfolg'); kippen(8, W('gemeinsam', 27), 0, .8); akzent(W('gemeinsam', 27), .03);
+  // und niemand steht über dem Gesetz: einer steigt auf, das § hält ihn, die Waage pendelt ein
+  const m = 4, tN = W('niemand', 27) - .1;
+  tw('g8_' + m, tN, .6, { y: 560, s: 1.1 }, 'inout'); cue(tN, 'whoosh'); kippen(8, tN + .1, 8, .6);
+  bump('para8', W('über', 27) - .1, 1.2); wackeln('para8', W('über', 27), 3, 5); cue(W('über', 27), 'klick');
+  tw('g8_' + m, W('Gesetz', 27) - .3, .6, { y: 780, s: 1 }, 'inout');
+  landen('g8_' + m, W('Gesetz', 27) + .3, .6);
+  kippen(8, W('Gesetz', 27), 0, .8);
+  welle('welle8', W('Gesetz', 27) + .1, X7 + 1320, 300, 1.1, 150); cue(W('Gesetz', 27) + .2, 'ding'); akzent(W('Gesetz', 27) + .1, .04);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.4;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

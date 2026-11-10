@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mythos oder Wahrheit: Fahrrad fahren</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+}
+#kamera{position:absolute;inset:0;transform-origin:960px 640px}
+#himmel{position:absolute;left:-200px;top:-200px;width:2320px;height:1480px;background:linear-gradient(var(--b50),var(--b100) 60%)}
+#vorne{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#mond{position:absolute;left:0;top:0}
+/* Landschaft */
+.lage{position:absolute;left:0;top:0}
+.band{position:absolute;left:-400px}
+.band.fahr{top:690px;height:140px;background:var(--n700)}
+.band.fahr::before,.band.fahr::after{content:'';position:absolute;left:0;right:0;height:6px;background:var(--surface);opacity:.5}
+.band.fahr::before{top:8px} .band.fahr::after{bottom:8px}
+.band.rad{top:830px;height:70px;background:var(--b200)}
+.band.geh{top:900px;height:90px;background:var(--n200);background-image:repeating-linear-gradient(90deg,transparent 0 86px,var(--n300) 86px 90px)}
+.band.wiese{top:990px;height:300px;background:var(--b100)}
+#nacht{position:absolute;left:-400px;top:-300px;height:1700px;background:linear-gradient(170deg,var(--b700),var(--ink));opacity:0}
+.buehne.rahmen{width:1920px;height:1080px;background:none;border-radius:0}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.chip svg{width:34px;height:34px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gross{font-size:34px;line-height:40px;padding:14px 30px 14px 18px}
+.chip.gross svg{width:44px;height:44px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.gelb{border-color:var(--warning)} .welle.rot{border-color:var(--error)} .welle.weiss{border-color:var(--surface)}
+.plakette{width:84px;height:84px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:44px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)}
+.glanz{background:var(--success);opacity:0}
+.glanz.rot{background:var(--error)}
+
+/* Stationsschild am Wegrand: Tafel auf zwei Pfosten, Vorderseite Behauptung, Rückseite Ergebnis */
+.tafel{width:720px;height:540px}
+.tafel .pf{position:absolute;top:300px;width:22px;height:240px;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))}
+.tafel .flaeche{position:absolute;left:0;top:0;width:720px;height:330px;border-radius:30px;background:var(--surface);border:10px solid var(--b500);
+  box-shadow:0 18px 40px rgba(22,19,37,.22)}
+.tafel .flaeche::before,.tafel .flaeche::after{content:'';position:absolute;top:14px;width:14px;height:14px;border-radius:999px;background:var(--n300)}
+.tafel .flaeche::before{left:16px} .tafel .flaeche::after{right:16px}
+.tafel .seite{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 44px}
+.tafel .titel{font:700 46px/56px Inter;letter-spacing:-.02em;text-align:center;color:var(--ink)}
+.tafel .hinten .titel{font-size:52px;line-height:62px}
+.tafel.tipp .flaeche{background:var(--b500);border-color:var(--b700)}
+.tafel.tipp .titel{color:var(--surface);font-size:54px;line-height:64px}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+.kchip{display:flex;align-items:center;gap:10px;padding:8px 20px 8px 14px;border-radius:999px;background:var(--b50);
+  color:var(--b600);font:800 20px/26px Inter;letter-spacing:.1em;text-transform:uppercase}
+.kchip svg{width:26px;height:26px}
+.abdruck{position:absolute;right:26px;bottom:-44px;width:270px;height:88px;border-radius:18px;border:7px solid var(--error);
+  background:var(--error-bg);color:var(--error-text);display:flex;align-items:center;justify-content:center;
+  font:800 44px/1 Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 8px 20px rgba(22,19,37,.14)}
+.abdruck.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.abdruck.gross{position:absolute;right:auto;bottom:auto;width:300px;height:96px;font-size:50px}
+.tinte{border-radius:30px;border:6px solid var(--error);opacity:0}
+.tinte.stimmt{border-color:var(--success)}
+/* Schranke mit Anzeige (Countdown) */
+.schranke{width:300px;height:300px}
+.schranke .post{position:absolute;left:258px;top:60px;width:24px;height:240px;border-radius:8px;background:linear-gradient(90deg,var(--n300),var(--n400))}
+.schranke .arm{position:absolute;left:20px;top:253px;width:262px;height:26px;border-radius:13px;transform-origin:250px 13px;
+  background:repeating-linear-gradient(90deg,var(--error) 0 34px,var(--surface) 34px 68px);box-shadow:0 4px 10px rgba(22,19,37,.2)}
+.schranke .arm::after{content:'';position:absolute;right:6px;top:3px;width:20px;height:20px;border-radius:999px;background:var(--n400)}
+.anzeige{width:130px;height:130px;border-radius:999px;background:var(--b700);box-shadow:0 8px 22px rgba(22,19,37,.3);border:6px solid var(--surface)}
+.anzeige.rot{background:var(--error)} .anzeige.gruen{background:var(--success)}
+.anzeige svg.ring{position:absolute;inset:4px;width:110px;height:110px}
+.anzeige b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 60px/1 Inter;color:var(--surface)}
+.anzeige .erg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.anzeige .erg svg{width:70px}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+/* Fahrrad mit Fahrer: Kopf (Porträt + Helm) über dem Sattel */
+.fahrer{width:300px;height:300px}
+.fahrer>svg{position:absolute;left:0;top:0;width:300px;height:300px}
+.fahrer .kopf{position:absolute;left:66px;top:28px;width:120px;height:120px}
+.fahrer .kopf .portrait{position:absolute;inset:0;border-width:6px}
+.fahrer .helm{position:absolute;left:26px;top:-8px;width:68px}
+.fahrer .akkul{position:absolute;left:183px;top:103px;width:58px}
+
+/* 1 · Gesetzbuch */
+.gbuch{width:540px;height:340px}
+.gseite{position:absolute;top:0;width:270px;height:340px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.14);
+  padding:32px 30px;display:flex;flex-direction:column;gap:14px}
+.gseite.l{left:0;border-radius:22px 4px 4px 22px;transform-origin:100% 50%} .gseite.r{left:270px;border-radius:4px 22px 22px 4px}
+.gseite i{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.gseite .para{font:800 44px/48px Inter;color:var(--b500)}
+.gseite b{font:800 40px/46px Inter;color:var(--ink)}
+.gseite .leer{flex:1;border-radius:14px;border:3px dashed var(--n300)}
+.gseite .xp{position:absolute;left:93px;top:170px}
+.gdeckel{position:absolute;left:270px;top:0;width:270px;height:340px;border-radius:4px 22px 22px 4px;transform-origin:0 50%;
+  background:linear-gradient(155deg,var(--b500),var(--b700));display:flex;align-items:center;justify-content:center;
+  font:800 130px/1 Inter;color:var(--b200);box-shadow:0 12px 30px rgba(22,19,37,.18)}
+/* 2 · Akku */
+.akku{display:flex;align-items:center;gap:16px;padding:14px 30px 14px 20px;border-radius:999px;background:var(--surface);
+  font:800 36px/42px Inter;color:var(--ink);white-space:nowrap;box-shadow:0 8px 24px rgba(22,19,37,.25)}
+.batt{position:relative;width:86px;height:44px;border:5px solid var(--ink);border-radius:10px;padding:3px;display:flex;gap:3px}
+.batt::after{content:'';position:absolute;right:-12px;top:8px;width:7px;height:12px;border-radius:0 4px 4px 0;background:var(--ink)}
+.batt i{flex:1;border-radius:3px;background:var(--success)}
+/* 3 · Handy */
+.handy{width:80px;height:140px;border-radius:18px;background:linear-gradient(155deg,var(--b600),var(--b700));padding:8px 7px;
+  box-shadow:0 8px 20px rgba(22,19,37,.25)}
+.handy .schirm{position:relative;width:100%;height:100%;border-radius:11px;background:var(--b100);overflow:hidden}
+.handy .schirm .gruen{position:absolute;inset:0;background:var(--success-bg)}
+.handy .sym{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.handy .sym svg{width:48px}
+/* 7 · Notizzettel */
+.zettel{width:540px;padding:26px 30px 28px;border-radius:24px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.16);display:flex;flex-direction:column;gap:16px}
+.zettel .zeile{font:800 44px/52px Inter;color:var(--ink);white-space:pre;min-height:42px}
+.zettel .zeile .cursor{display:inline-block;width:4px;height:34px;margin-left:3px;vertical-align:-5px;background:var(--b500)}
+.zettel .platz{display:flex;gap:10px}
+.zettel .platz i{width:50px;height:18px;border-radius:9px;background:var(--n200)}
+/* 8 · Streckenkarte */
+#karte{position:absolute;inset:0;background:linear-gradient(150deg,var(--b500),var(--b700));clip-path:inset(0 0 0 100%)}
+#karte svg.route{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.halt{position:absolute;left:0;top:0;width:76px;height:76px;border-radius:999px;background:var(--surface);border:7px solid var(--b300);
+  display:flex;align-items:center;justify-content:center;font:800 32px/1 Inter;color:var(--b600);box-shadow:0 8px 22px rgba(22,19,37,.3)}
+.halt.mythos{border-color:var(--error)} .halt.stimmt{border-color:var(--success)}
+.hname{position:absolute;left:0;top:0;font:800 32px/38px Inter;color:var(--surface);white-space:nowrap}
+.hstempel{position:absolute;left:0;top:0;width:170px;height:54px;border-radius:12px;border:5px solid var(--error);background:var(--error-bg);
+  color:var(--error-text);display:flex;align-items:center;justify-content:center;font:800 26px/1 Inter;letter-spacing:.1em;text-transform:uppercase}
+.hstempel.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.stand{position:absolute;left:0;top:0;display:flex;align-items:center;gap:14px;padding:14px 30px 14px 16px;border-radius:999px;background:var(--surface);font:800 38px/44px Inter;white-space:nowrap;
+  box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.stand svg{width:46px;height:46px}
+.stand.mythos{color:var(--error-text)} .stand.stimmt{color:var(--success-text)}
+.mini-kopf{position:absolute;left:0;top:0;width:84px;height:84px;margin:-42px 0 0 -42px}
+.mini-kopf .portrait{position:absolute;inset:0;border-width:5px}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--error)"/><path d="M15 15l14 14M29 15L15 29" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--success)"/><path d="M13 23l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgZitat"><svg viewBox="0 0 26 26"><path d="M4 16c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6H7a3 3 0 0 1-3-2Zm11 0c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6h-3a3 3 0 0 1-3-2Z" fill="var(--b500)"/></svg></template>
+<template id="svgHakenW"><svg viewBox="0 0 32 32"><path d="M8 17l6 6 11-13" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgXW"><svg viewBox="0 0 32 32"><path d="M10 10l12 12M22 10L10 22" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round"/></svg></template>
+<template id="svgChat"><svg viewBox="0 0 46 40"><path d="M6 4h34a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H18l-9 7v-7H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" fill="var(--surface)"/><circle cx="14" cy="17" r="3" fill="var(--b500)"/><circle cx="23" cy="17" r="3" fill="var(--b500)"/><circle cx="32" cy="17" r="3" fill="var(--b500)"/></svg></template>
+<template id="svgHoerer"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="var(--b500)"/><path d="M15 12c2-1 4 0 5 2l1 3c1 2 0 3-1 4l-1 1c1 3 3 5 6 6l1-1c1-1 2-2 4-1l3 1c2 1 3 3 2 5-1 3-4 4-7 3-7-2-12-7-14-14-1-3 0-6 1-9Z" fill="var(--surface)"/></svg></template>
+<template id="svgHakenG"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="var(--success)"/><path d="M13 24l7 7 13-15" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgPruef"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="var(--b50)" stroke="var(--b500)" stroke-width="3"/><path d="M8 15q3-4 6 0t6 0 6 0 6 0" stroke="var(--b500)" stroke-width="3" fill="none" stroke-linecap="round"/><text x="20" y="32" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="14" fill="var(--b600)">K</text></svg></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+<template id="tplHelm">{{titelbild-fahrradhelm~k}}</template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<!-- Hilfsgrößen (unsichtbar): Kurbel-Extradrehung -->
+<div id="kurbelY" style="display:none"></div>
+
+<div id="kamera">
+<div id="himmel"></div>
+<div id="welt">
+  <svg class="lage" id="huegel"></svg>
+  <svg class="lage" id="hinten"></svg>
+  <div class="band fahr" id="bandF"></div><div class="band rad" id="bandR"></div><div class="band geh" id="bandG"></div><div class="band wiese" id="bandW"></div>
+  <div id="nacht"></div>
+  <svg class="lage" id="lampen"></svg>
+</div>
+<div id="mond" style="width:120px">{{mond}}</div>
+<div id="vorne">
+  <svg class="a" id="kegel" viewBox="0 0 380 210" style="width:380px;height:210px;transform-origin:0 10px">
+    <defs><linearGradient id="kegelG" x2="1"><stop offset="0" stop-color="var(--surface)" stop-opacity=".8"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></linearGradient></defs>
+    <path d="M0 4L380 112V206L0 16Z" fill="url(#kegelG)"/></svg>
+  <div class="a" id="auto6" style="width:380px">{{auto}}</div>
+  <div class="a" id="warn6" style="width:110px">{{warndreieck}}</div>
+  <div class="a fahrer" id="rk"><div class="kopf" id="kopfK"><div class="portrait" id="pk" data-f="kwame"></div></div></div>
+  <div class="a fahrer" id="ry"><div class="kopf" id="kopfY"><div class="portrait" id="py" data-f="yusuf"></div><div class="helm" id="helmY"></div></div>
+    <div class="akkul" id="akkuY">{{lampe-rad~y}}</div></div>
+  <div class="a welle gelb" id="wkY" style="width:100px;height:100px"></div>
+  <div class="a welle gelb" id="wkK" style="width:100px;height:100px"></div>
+  <div class="a welle gruen" id="schutz" style="width:300px;height:300px"></div>
+  <div class="a welle weiss" id="wLv" style="width:110px;height:110px"></div>
+  <div class="a welle rot" id="wLh" style="width:110px;height:110px"></div>
+  <svg class="a" id="linie3" viewBox="0 0 100 100" style="width:100px;height:100px"><path d="M84 10L16 90" stroke="var(--error)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10" fill="none"/></svg>
+  <div class="a welle" id="wH3" style="width:170px;height:170px"></div>
+  <div class="a handy" id="handy3"><div class="schirm"><div class="gruen" id="hg3"></div>
+    <div class="sym" id="hs3a"></div><div class="sym" id="hs3b"></div><div class="sym" id="hs3c"></div></div></div>
+  <div class="a plakette rot" id="x3"></div>
+  <div class="a" id="buegel7" style="width:150px">{{buegelschloss}}</div>
+  <div class="a" id="schluessel7" style="width:76px;transform-origin:30% 50%">{{schluessel}}</div>
+</div>
+</div>
+
+<div id="karte"><svg class="route" viewBox="0 0 1920 1080"><path id="routeP" d="M200 700C420 700 460 520 660 520S900 720 1120 720S1380 520 1560 520S1700 600 1760 620" stroke="var(--b300)" stroke-width="12" stroke-dasharray="2 26" stroke-linecap="round" fill="none"/></svg>
+  <div class="stand mythos" id="standM"></div><div class="stand stimmt" id="standS"></div>
+  <div class="mini-kopf" id="miniY"><div class="portrait" data-f="yusuf"></div></div>
+</div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Klare Regeln, sichere Fahrt.</div>
+  <div class="klein" id="asUnter">Auf dem Rad gelten klare Regeln.<br>Wer sie kennt, fährt sicher und spart sich Ärger.</div>
+</div></div>
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt'), VORNE = document.getElementById('vorne');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const wellen = (id, liste) => { if (!AKTEURE.has(el(id))) akteur(id, { x: liste[0][1], y: liste[0][2], o: 0, s: .8 });
+  liste.forEach(([t, x, y, d = .9]) => { set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const welle = (id, t, x, y, d = .9) => wellen(id, [[t, x, y, d]]);
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const neu = (html, wo = WELT) => wo.insertAdjacentHTML('beforeend', html);
+const klasse = (id, k, t, an = true) => HOOKS.push(tt => el(id).classList.toggle(k, an ? tt >= t : tt < t));
+
+/* ---------- Strecke: Stationen, Kamera fährt mit ---------- */
+const CAM = [0, 2000, 4000, 6000, 8800, 10800, 12800, 15400];
+const WB = 19000;
+const BODEN = { fern: 718, nah: 815, rad: 878, geh: 962 };
+const SY = 1.15;                                         // Größe von Yusufs Rad
+const yRad = (b, s = SY) => BODEN[b] - 135 * s;            // Mittelpunkt des Fahrer-Containers
+const camX = t => -wert(kamera, 'x', t);
+const PANS = [], AKZENTE = [];
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+function reise(t0, d, ziel) { tw('welt', t0, d, { x: -ziel }, 'inout'); cue(t0 + .05, 'whoosh'); PANS.push([t0, d]); }
+// langsame Fahrt (anfahren, rollen, bremsen)
+function rollen(t0, t1, tempo, dIn = .7, dOut = .8) {
+  const x0 = -wertBei('welt', 'x', t0), x1 = x0 + tempo * dIn / 3, x2 = x1 + tempo * (t1 - t0 - dIn), x3 = x2 + tempo * dOut / 3;
+  tw('welt', t0, dIn, { x: -x1 }, 'in'); tw('welt', t0 + dIn, t1 - t0 - dIn, { x: -x2 }, 'lin'); tw('welt', t1, dOut, { x: -x3 }, 'out');
+  return x3;
+}
+bewegungsunschaerfe(.08);
+HOOKS.push(t => {
+  let z = 1;
+  for (const [p, d] of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / d));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  $('#kamera').style.transform = `scale(${z})`;
+  // Hügel ziehen langsamer vorbei (Tiefe)
+  el('huegel').style.transform = `translateX(${(camX(t) * .55).toFixed(1)}px)`;
+});
+// Rahmen je Station (für die Kantenprüfung: 50 px zum Bildrand)
+CAM.forEach((c, k) => { neu(`<div class="a buehne rahmen" id="rahmen${k}"></div>`); akteur('rahmen' + k, { x: c + 960, y: 540 }); });
+
+/* ---------- Landschaft: Hügel, Bäume, Laternen, Straße mit Radweg und Gehweg ---------- */
+{
+  ['bandF', 'bandR', 'bandG', 'bandW', 'nacht'].forEach(id => { el(id).style.width = (WB + 800) + 'px'; });
+  const H = el('huegel'), HB = WB * .5 + 2400;
+  H.setAttribute('viewBox', `0 0 ${HB} 1080`); H.style.width = HB + 'px'; H.style.height = '1080px';
+  let d1 = 'M-200 1080V600', d2 = 'M-200 1080V650';
+  for (let x = -200; x < HB + 400; x += 400) { d1 += `Q${x + 200} ${520 + (x / 400 % 3) * 25} ${x + 400} 600`; d2 += `Q${x + 260} ${600 + (x / 400 % 2) * 30} ${x + 400} 650`; }
+  H.innerHTML = `<path d="${d1}V1080Z" fill="var(--b100)"/><path d="${d2}V1080Z" fill="var(--b200)" opacity=".7"/>`;
+  // Bäume und Laternen am hinteren Straßenrand (Boden 690)
+  const HI = el('hinten'), L = el('lampen');
+  [HI, L].forEach(s => { s.setAttribute('viewBox', `0 0 ${WB} 1080`); s.style.width = WB + 'px'; s.style.height = '1080px'; });
+  const baum = (x, s) => `<g transform="translate(${x} 692) scale(${s})"><rect x="-9" y="-120" width="18" height="120" rx="6" fill="var(--b300)"/>
+    <circle cx="0" cy="-150" r="62" fill="var(--b200)"/><circle cx="-34" cy="-118" r="40" fill="var(--b200)"/><circle cx="36" cy="-122" r="42" fill="var(--b200)"/>
+    <path d="M-30 -178q14-20 40-18" stroke="var(--b100)" stroke-width="10" stroke-linecap="round" fill="none"/></g>`;
+  const LAMPEN = [], BAEUME = [];
+  CAM.forEach((c, k) => { LAMPEN.push(c + 170, c - 820); BAEUME.push([c + 390, .8], [c - 260, 1], [c - 1050, .9]); });
+  const laterne = x => `<g transform="translate(${x} 692)"><rect x="-6" y="-300" width="12" height="300" rx="5" fill="var(--n400)"/>
+    <path d="M0 -296q0-24 34-24h20" stroke="var(--n400)" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M34 -326h44l-8 18h-28Z" fill="var(--b700)"/></g>`;
+  HI.innerHTML = BAEUME.map(([x, s]) => baum(x, s)).join('') + LAMPEN.map(laterne).join('');
+  L.innerHTML = `<defs><radialGradient id="lgl"><stop offset="0" stop-color="var(--warning-bg)"/><stop offset=".35" stop-color="var(--warning-bg)" stop-opacity=".7"/><stop offset="1" stop-color="var(--warning-bg)" stop-opacity="0"/></radialGradient></defs>` +
+    LAMPEN.map((x, k) => `<g class="lgl" data-k="${k}"><ellipse cx="${x + 56}" cy="${692 - 300}" rx="80" ry="80" fill="url(#lgl)"/><path d="M${x + 42} ${692 - 308}h28l18 210h-64Z" fill="var(--warning-bg)" opacity=".12"/><rect x="${x + 42}" y="${692 - 310}" width="28" height="6" rx="3" fill="var(--warning-bg)"/></g>`).join('');
+}
+
+/* ---------- Fahrrad: gezeichnet in Ebenen (Räder, Kurbel, Ständer, Klingel, Licht) ---------- */
+function radSVG(p, o = {}) {
+  const F = o.farbe || 'var(--b500)';
+  const sp = cx => [0, 45, 90, 135].map(a => { const r = a * Math.PI / 180, dx = 26 * Math.cos(r), dy = 26 * Math.sin(r);
+    return `M${(cx - dx).toFixed(1)} ${(110 - dy).toFixed(1)}L${(cx + dx).toFixed(1)} ${(110 + dy).toFixed(1)}`; }).join('');
+  const rad = (n, cx) => `<g id="${p}-${n}"><circle cx="${cx}" cy="110" r="34" fill="none" stroke="var(--ink)" stroke-width="8"/>
+    <circle cx="${cx}" cy="110" r="27" fill="none" stroke="var(--n300)" stroke-width="2"/><path class="speiche" d="${sp(cx)}" stroke="var(--n300)" stroke-width="1.6" stroke-linecap="round"/>
+    <circle class="schleier" cx="${cx}" cy="110" r="26" fill="var(--n300)" opacity="0"/>
+    <circle cx="${cx}" cy="110" r="5.5" fill="var(--n300)"/><circle cx="${cx}" cy="110" r="2.4" fill="var(--b700)"/></g>`;
+  const pedal = n => `<g id="${p}-${n}"><rect x="-8" y="-3" width="16" height="6" rx="2.5" fill="var(--ink)"/><rect id="${p}-${n}r" x="-4" y="-1.6" width="8" height="3.2" rx="1.4" fill="var(--warning)"/></g>`;
+  return `<svg viewBox="0 -80 240 240">
+    <defs><radialGradient id="${p}-gv"><stop offset="0" stop-color="var(--surface)"/><stop offset="1" stop-color="var(--surface)" stop-opacity="0"/></radialGradient>
+    <radialGradient id="${p}-gh"><stop offset="0" stop-color="var(--error)"/><stop offset="1" stop-color="var(--error)" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="120" cy="149" rx="102" ry="5" fill="var(--b700)" opacity=".16"/>
+    <path id="${p}-st" d="M100 112v35" stroke="var(--b700)" stroke-width="5" stroke-linecap="round" style="transform-origin:100px 112px"/>
+    ${pedal('pb')}
+    ${o.ohneHR ? '' : rad('hr', 58)}${o.ohneVR ? '' : rad('vr', 182)}
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M58 110L104 62M58 110H114L104 62M104 62H168M114 110L168 62M168 62L182 110" stroke="${F}" stroke-width="8"/>
+      <path d="M104 62l-4-12M168 62l-4-20" stroke="var(--b700)" stroke-width="6"/>
+      <path d="M156 40h22" stroke="var(--b700)" stroke-width="7"/>
+      <path d="M50 66L58 104" stroke="var(--b700)" stroke-width="3"/>
+    </g>
+    <rect x="84" y="42" width="34" height="10" rx="5" fill="var(--b700)"/>
+    <rect x="40" y="62" width="34" height="6" rx="3" fill="var(--b700)"/>
+    <circle id="${p}-glh" cx="37" cy="61" r="22" fill="url(#${p}-gh)" opacity="0"/>
+    <rect id="${p}-lh" x="32" y="56.5" width="10" height="9" rx="2.5" fill="var(--error)"/>
+    <g id="${p}-kl" style="transform-origin:160px 39px"><rect x="158.5" y="34" width="3" height="6" fill="var(--b700)"/><path d="M153.5 36a6.5 6.5 0 0 1 13 0Z" fill="var(--warning)"/></g>
+    <circle id="${p}-glv" cx="188" cy="57" r="24" fill="url(#${p}-gv)" opacity="0"/>
+    <rect x="168" y="51" width="15" height="12" rx="4" fill="var(--b700)"/>
+    <circle id="${p}-lv" cx="183" cy="57" r="4.6" fill="var(--n300)"/>
+    <circle cx="114" cy="110" r="11" fill="var(--n300)" stroke="var(--b700)" stroke-width="2.5"/>
+    <path id="${p}-arm" d="M100 110h28" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="114" cy="110" r="3" fill="var(--b700)"/>
+    ${pedal('pa')}
+  </svg>`;
+}
+const RAEDER = [];
+// Rad einsetzen. vorne: Rad liegt in der Ebene über der Welt (Bildschirm-Koordinaten), die Kamera zählt als Fahrt.
+function rad(id, basis, o = {}) {
+  el(id).insertAdjacentHTML('afterbegin', radSVG(id, o));
+  akteur(id, basis);
+  akteur(id + '-st', { r: o.staender ? 13 : 90 }, true);
+  akteur(id + '-kl', {}, true);
+  RAEDER.push({ id, vorne: !!o.vorne, kurbel: o.kurbel, k: 1.25 * (basis.s ?? 1), vr: !o.ohneVR, hr: !o.ohneHR,
+    sp: [...el(id).querySelectorAll('.speiche')], sl: [...el(id).querySelectorAll('.schleier')] });
+}
+const strecke = (R, t) => wertBei(R.id, 'x', t) + (R.vorne ? camX(t) : 0);
+HOOKS.push(t => RAEDER.forEach(R => {
+  const x = strecke(R, t), v = Math.abs(x - strecke(R, t - 1 / 30));
+  const a = x / (34 * R.k) * 180 / Math.PI;
+  if (R.hr) el(R.id + '-hr').setAttribute('transform', `rotate(${a.toFixed(1)} 58 110)`);
+  if (R.vr) el(R.id + '-vr').setAttribute('transform', `rotate(${a.toFixed(1)} 182 110)`);
+  // schnelle Fahrt: Speichen verschwimmen (sonst laufen sie scheinbar rückwärts)
+  const f = clamp((v - 8) / 14);
+  R.sp.forEach(s => s.setAttribute('opacity', (1 - f).toFixed(2))); R.sl.forEach(s => s.setAttribute('opacity', (.45 * f).toFixed(2)));
+  const ka = a * .55 + (R.kurbel ? wertBei(R.kurbel, 'x', t) : 0), k = ka * Math.PI / 180, c = 14 * Math.cos(k), s = 14 * Math.sin(k);
+  el(R.id + '-arm').setAttribute('transform', `rotate(${ka.toFixed(1)} 114 110)`);
+  el(R.id + '-pa').setAttribute('transform', `translate(${(114 + c).toFixed(1)} ${(110 + s).toFixed(1)})`);
+  el(R.id + '-pb').setAttribute('transform', `translate(${(114 - c).toFixed(1)} ${(110 - s).toFixed(1)})`);
+}));
+// Punkt im Fahrrad (SVG-Einheiten) → Koordinaten der Ebene des Rads
+const radPunkt = (id, ux, uy, t) => { const s = wertBei(id, 's', t);
+  return [wertBei(id, 'x', t) + (ux * 1.25 - 150) * s, wertBei(id, 'y', t) + ((uy + 80) * 1.25 - 150) * s]; };
+function klingel(id, t, w) {
+  wackeln(id + '-kl', t, 4, 14);
+  const [x, y] = radPunkt(id, 160, 32, t);
+  if (w) wellen(w, [[t, x, y, .7]]);
+  cue(t, 'ding'); cue(t + .16, 'ding');
+}
+// Bremsen: nach vorn nicken, federn
+const bremsen = (id, t) => { tw(id, t, .18, { r: 2.5 }, 'sinus'); tw(id, t + .18, .5, { r: 0 }, 'sanft'); tw(id, t + .1, .1, { sy: .96, sx: 1.02 }, 'sinus'); tw(id, t + .2, .4, { sy: 1, sx: 1 }, 'sanft'); };
+// Licht an/aus (vorne: Linse + Schein, hinten: Schein)
+const LICHT = [];
+const licht = (id, seite, t, an) => LICHT.push({ id, seite, t, an });
+HOOKS.push(t => {
+  const st = {};
+  for (const L of LICHT) { const k = L.id + L.seite; st[k] ??= { id: L.id, seite: L.seite, v: 0 };
+    if (t >= L.t) st[k].v = L.an ? clamp((t - L.t) / .15) : 1 - clamp((t - L.t) / .15); }
+  for (const { id, seite, v } of Object.values(st)) {
+    if (seite === 'v') { el(id + '-glv').setAttribute('opacity', v.toFixed(2)); el(id + '-lv').setAttribute('fill', v > .5 ? 'var(--surface)' : 'var(--n300)'); }
+    else el(id + '-glh').setAttribute('opacity', (v * (.85 + .15 * Math.sin(t * 6))).toFixed(2));
+  }
+});
+
+/* ---------- Figuren: blinzeln, nicken, lachen ---------- */
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.portrait').forEach(p => { akteur(p.querySelector('.froh'), { o: 0 }, true); akteur(p.querySelector('.zu'), {}, true); });
+const froh = (id, t, an = true) => { const p = el(id); set(p.querySelector('.froh'), t, { o: an ? 1 : 0 }); set(p.querySelector('.zu'), t, { o: an ? 0 : 1 }); };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+['x3'].forEach(id => { el(id).innerHTML = tpl('svgXW'); });
+el('helmY').innerHTML = tpl('tplHelm');
+
+/* ---------- Nacht: Himmel dunkel, Laternen an, Mond ---------- */
+const NACHT = [];                                    // [t, Zielwert, Dauer]
+HOOKS.push(t => {
+  let n = 0;
+  for (const [t0, z, d] of NACHT) if (t >= t0) n = lerp(n, z, E.inout(clamp((t - t0) / d)));
+  el('nacht').style.opacity = n.toFixed(3);
+  el('lampen').querySelectorAll('.lgl').forEach(g => { const k = +g.dataset.k;
+    const an = n > .55 + (k % 3) * .06 ? 1 : 0, fl = an && n < .75 ? .6 + .4 * Math.sin(t * 40 + k) : 1;
+    g.style.opacity = (an * fl).toFixed(2); });
+});
+
+/* ================= Station: Schild am Wegrand, Schranke mit Countdown, Stempel ================= */
+const STATIONEN = [];
+function station(k, { c, v, u, titel, boden = 'rad' }) {
+  const X = CAM[k], cs = [].concat(c), cl = cs.at(-1), rot = u === 'mythos';
+  const text = cs.map(n => satz(n).text).join(' ').replace(/[„“"]/g, '');
+  const TX = X + 1420, TY = 430, PX = X + 960, PB = boden === 'rad' ? 835 : 762;
+  neu(`<div class="a tafel" id="tafel${k}" style="transform-origin:50% 100%" data-gruppe="tafel${k}">
+      <div class="pf" style="left:100px"></div><div class="pf" style="right:100px"></div>
+      <div class="flaeche" id="tf${k}">
+        <div class="seite vorne" id="tv${k}"><div class="kchip" id="kc${k}">${tpl('svgZitat')}Behauptung</div><div id="kt${k}"><div class="titel">${text}</div></div></div>
+        <div class="seite hinten" id="th${k}"><div id="tt${k}"><div class="titel">${titel}</div></div></div>
+        <div class="abdruck ${u}" id="abd${k}">${rot ? 'Mythos' : 'Stimmt'}</div></div></div>
+    <div class="a schranke" id="sch${k}" data-gruppe="sch${k}"><div class="post"></div><div class="arm" id="arm${k}"></div></div>
+    <div class="a anzeige" id="anz${k}" data-gruppe="sch${k}"><svg class="ring" viewBox="0 0 110 110"><circle cx="55" cy="55" r="46" stroke="var(--b400)" stroke-width="9" fill="none" opacity=".5"/>
+      <circle id="lauf${k}" cx="55" cy="55" r="46" stroke="var(--surface)" stroke-width="9" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 55 55)" style="stroke-dasharray:1 1;stroke-dashoffset:1"/></svg>
+      <b id="zif${k}">?</b><div class="erg" id="erg${k}">${tpl(rot ? 'svgXW' : 'svgHakenW')}</div></div>
+    <div class="a tinte ${u}" id="tinte${k}" style="width:310px;height:126px" data-frei></div>
+    <div class="a" id="stempel${k}" style="width:330px" data-frei>${tpl(rot ? 'tplRot' : 'tplGruen')}</div>`);
+  const tIn = A(satz(cs[0]).start) - .5;
+  // Schild wächst aus dem Boden, die Behauptung steigt Wort für Wort aus der Maske
+  akteur(`tafel${k}`, { x: TX, y: TY, sy: 0, o: 0 });
+  set(`tafel${k}`, tIn - .05, { o: 1 }); tw(`tafel${k}`, tIn - .05, .6, { sy: 1 }, 'back'); cue(tIn, 'pop');
+  akteur(`tf${k}`, {}, true); akteur(`tv${k}`, {}, true); akteur(`th${k}`, { o: 0 }, true);
+  akteur(`kc${k}`, { s: 0 }, true); tw(`kc${k}`, tIn + .3, .45, { s: 1 }, 'back');
+  const wz = cs.flatMap(n => satz(n).woerter).map(w => A(w.start) - .12);
+  titelEin(`kt${k}`, wz[0], wz);
+  // Schranke steht schon da (geschlossen), Anzeige zeigt „?“
+  akteur(`sch${k}`, { x: PX - 120, y: PB - 150 }); akteur(`arm${k}`, {}, true);
+  akteur(`anz${k}`, { x: PX, y: PB - 300 });
+  // Denkpause: Ring läuft voll, Ziffern 3 – 2 – 1
+  const c0 = SE(cl) + .15, c1 = A(satz(v).start) - .1, dt = (c1 - c0) / 3;
+  const tV = A(satz(v).woerter.at(-1).start), tF = SE(v) + .1;
+  for (let i = 0; i < 3; i++) { cue(c0 + i * dt, 'klick'); }
+  bump(`anz${k}`, c0, 1.1); bump(`anz${k}`, c0 + dt, 1.1); bump(`anz${k}`, c0 + 2 * dt, 1.1);
+  akteur(`erg${k}`, { s: 0 }, true);
+  HOOKS.push(t => {
+    const p = clamp((t - c0) / (c1 - c0));
+    el(`lauf${k}`).style.strokeDashoffset = 1 - p;
+    const i = Math.min(2, Math.floor((t - c0) / dt)), f = t - c0 - Math.max(0, i) * dt, z = el(`zif${k}`);
+    z.textContent = t < c0 ? '?' : 3 - Math.max(0, i);
+    z.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+    z.style.opacity = t >= tV - .05 ? 0 : 1;
+    el(`anz${k}`).querySelector('.ring').style.opacity = t >= tV - .05 ? 0 : 1;
+  });
+  // Urteil: Stempel schlägt auf das Schild, die Anzeige wird rot/grün
+  const IX = TX + 360 - 26 - 135, IY = TY - 270 + 330 + 44 - 44, SY = IY - 84;
+  akteur(`stempel${k}`, { x: IX, y: SY - 320, o: 0, r: -3 });
+  tw(`stempel${k}`, tV - .6, .2, { o: 1 }); tw(`stempel${k}`, tV - .6, .4, { y: SY - 140 }, 'sanft');
+  tw(`stempel${k}`, tV - .16, .16, { y: SY }, 'in');
+  tw(`stempel${k}`, tV, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(`stempel${k}`, tV + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(`stempel${k}`, tV + .2, .55, { y: SY - 260 }, 'inout'); tw(`stempel${k}`, tV + .45, .3, { o: 0 });
+  akteur(`abd${k}`, { o: 0, s: 1.4, r: -3 }, true);
+  tw(`abd${k}`, tV, .04, { o: 1 }); tw(`abd${k}`, tV, .22, { s: 1 }, 'out');
+  welle(`tinte${k}`, tV, IX, IY, .8); AKTEURE.get(el(`tinte${k}`)).basis.r = -3;
+  cue(tV, 'plopp'); if (!rot) cue(tV + .05, 'erfolg');
+  akzent(tV, .05);
+  wackeln(`tafel${k}`, tV + .05, 3, 1.2);
+  klasse(`anz${k}`, rot ? 'rot' : 'gruen', tV);
+  tw(`erg${k}`, tV, .45, { s: 1 }, 'back'); bump(`anz${k}`, tV, 1.15);
+  // Ergebnis: das Schild dreht sich um – hinten steht, was gilt; die Schranke geht auf
+  tw(`tf${k}`, tF, .2, { sx: 0 }, 'in'); set(`tv${k}`, tF + .2, { o: 0 }); set(`th${k}`, tF + .2, { o: 1 });
+  tw(`tf${k}`, tF + .2, .3, { sx: 1 }, 'out'); cue(tF, 'whoosh');
+  titelEin(`tt${k}`, tF + .3); $(`#tt${k} .w`).classList.add(rot ? 'rot' : 'gruen');
+  const tS = tF + .45;
+  tw(`arm${k}`, tS, .55, { r: 86 }, 'back'); cue(tS, 'klick');
+  tw(`arm${k}`, tS + .55, .12, { r: 82 }, 'sinus'); tw(`arm${k}`, tS + .67, .25, { r: 86 }, 'sanft');
+  STATIONEN[k] = { X, tV, tF, tS };
+  return STATIONEN[k];
+}
+
+/* ================= Ablauf ================= */
+const Y = 'ry';
+rad(Y, { x: -420, y: yRad('rad'), s: SY }, { vorne: true, kurbel: 'kurbelY' });
+akteur('kurbelY', { x: 0 });
+akteur('kopfY', { x: -230, y: 70, s: 0 }, true);
+akteur('helmY', { o: 0 }, true);
+akteur('akkuY', { o: 0 }, true);
+// Spur wechseln: das Rad lenkt (kleiner Bogen) auf eine andere Spur
+const spur = (t, b, x, d = .6) => { tw(Y, t, d, { y: yRad(b), ...(x != null ? { x } : {}) }, 'inout'); };
+
+/* ---------- 0 · Start: Yusuf rollt herein, Klingel, die Dinge kreisen ---------- */
+{
+  const MX = 960, MY = 470;
+  const tR = .15, tA = tR + 1.15;
+  tw(Y, tR, 1.15, { x: MX }, 'out'); cue(tR + .1, 'whoosh'); bremsen(Y, tA - .2);
+  // Yusuf hüpft auf den Sattel
+  const tY = W('Yusuf', 1) - .05;
+  tw('kopfY', tY, .4, { s: 1 }, 'back'); cue(tY, 'pop');
+  tw('kopfY', W('fährt', 1), .55, { x: 0, y: 0 }, 'inout', { bogen: 110 }); cue(W('fährt', 1), 'whoosh');
+  const tL = W('fährt', 1) + .55;
+  landen(Y, tL); cue(tL, 'plopp'); froh('py', tL);
+  klingel(Y, W('Rad', 1) - .05, 'wkY'); akzent(W('Rad', 1), .03);
+  // Helm, Lampe, Schloss, Handy ploppen auf und kreisen
+  neu(`<div class="a" id="d0a" style="width:160px">{{titelbild-fahrradhelm}}</div><div class="a" id="d0b" style="width:150px">{{lampe-rad}}</div>
+    <div class="a" id="d0c" style="width:160px">{{buegelschloss~b}}</div><div class="a" id="d0d" style="width:160px">{{handy}}</div>
+    <div class="a tinte" id="ti0a" style="width:340px;height:136px" data-frei></div><div class="a tinte stimmt" id="ti0b" style="width:340px;height:136px" data-frei></div>
+    <div class="a abdruck gross" id="ab0a">Mythos</div><div class="a abdruck gross stimmt" id="ab0b">Stimmt</div>`);
+  const DINGE = [['d0a', 205], ['d0b', 335], ['d0c', 25], ['d0d', 155]];
+  const RX = 560, RY = 210, tD = W('Arbeit', 1) - .2, tE = W('Aber', 2) + .2, tWeg = SE(3) + .1;
+  DINGE.forEach(([id, wkl], i) => {
+    const a = wkl * Math.PI / 180, x = MX + RX * Math.cos(a), y = MY + RY * Math.sin(a), t0 = tD + i * .2;
+    pop(id, t0, { x, y }, i % 2 ? 'pop' : 'plopp');
+    HOOKS.push(t => {
+      if (t < t0) return;
+      const p = E.inout(clamp((t - t0) / (tE - t0))), b = a - 1.1 * (1 - p);
+      el(id).style.transform = `translate(${(MX + RX * Math.cos(b) - x).toFixed(1)}px,${(MY + RY * Math.sin(b) - y).toFixed(1)}px) ` + el(id).style.transform;
+    });
+  });
+  huepfen('d0a', W('welche', 2), 18); huepfen('d0b', W('Regeln', 2), 18); huepfen('d0c', W('gelten', 2), 18); huepfen('d0d', W('wirklich', 2), 18);
+  [['ab0a', 'ti0a', MX - 200, W('Teste', 3)], ['ab0b', 'ti0b', MX + 200, W('Wissen', 3)]].forEach(([ab, ti, x, t]) => {
+    akteur(ab, { x, y: 190, o: 0, s: 1.5, r: -3 });
+    tw(ab, t, .05, { o: 1 }); tw(ab, t, .24, { s: 1 }, 'out');
+    welle(ti, t, x, 190, .8); AKTEURE.get(el(ti)).basis.r = -3;
+    cue(t, 'plopp'); akzent(t, .03);
+  });
+  // Los geht's: die Dinge fliegen weg, Yusuf fährt los
+  DINGE.forEach(([id], i) => tw(id, tWeg + i * .06, .45, { o: 0, s: .6, y: wertBei(id, 'y', tWeg) - 80 }, 'in'));
+  aus(['ab0a', 'ab0b'], tWeg + .1, .4);
+}
+
+/* ---------- 1 · Helm – Mythos ---------- */
+{
+  const tAb = SE(3) + .15, tAn = A(satz(4).start) - .15;
+  reise(tAb, tAn - tAb, CAM[1]); tw(Y, tAb, tAn - tAb, { x: 560 }, 'inout'); bremsen(Y, tAn - .1);
+  const { X, tF } = station(1, { c: 4, v: 5, u: 'mythos', titel: 'MYTHOS – keine Pflicht, aber klug' });
+  // Das Gesetzbuch kommt, klappt auf: die Seite „Helm“ ist leer
+  neu(`<div class="a gbuch" id="buch1"><div class="gseite r"><b>Helm</b><div class="leer"></div><div class="plakette rot xp" id="xp1">${tpl('svgXW')}</div></div>
+      <div class="gseite l" id="seiteL1"><div class="para">§</div><i style="width:90%"></i><i></i><i style="width:75%"></i><i></i><i style="width:60%"></i><i style="width:85%"></i></div>
+      <div class="gdeckel" id="deckel1">§</div></div>
+    <div class="a" id="lupe1" style="width:150px" data-frei>{{lupe}}</div>
+    <svg class="a" id="stoss1" viewBox="0 0 120 40" style="width:120px;height:40px" data-frei><path d="M110 20H22" stroke="var(--error)" stroke-width="8" stroke-linecap="round"/><path d="M30 6L10 20l20 14" stroke="var(--error)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div class="a plakette gruen" id="ok1">${tpl('svgHakenW')}</div>`);
+  const BX = X + 600, BY = 330;
+  ein('buch1', tF + .2, { x: BX, y: BY }, { y: 80 }, 'whoosh');
+  akteur('deckel1', {}, true); akteur('seiteL1', { sx: 0, o: 0 }, true);
+  const tAuf = W('Es', 6) - .05;
+  tw('deckel1', tAuf, .28, { sx: 0 }, 'in'); set('deckel1', tAuf + .28, { o: 0 });
+  set('seiteL1', tAuf + .28, { o: 1 }); tw('seiteL1', tAuf + .28, .32, { sx: 1 }, 'out'); cue(tAuf, 'whoosh');
+  // keine Helmpflicht: die Lupe sucht auf der Seite – nichts
+  const tL = W('keine', 6) - .1, LX = BX + 140, LY = BY + 10;
+  akteur('lupe1', { x: LX + 160, y: LY + 60, o: 0, s: .7 });
+  tw('lupe1', tL, .2, { o: 1 }); tw('lupe1', tL, .45, { x: LX - 40, y: LY - 40, s: 1 }, 'sanft'); cue(tL, 'scan');
+  tw('lupe1', tL + .45, .45, { x: LX + 40, y: LY + 20 }, 'inout'); tw('lupe1', tL + .9, .45, { x: LX - 30, y: LY + 60 }, 'inout');
+  tw('lupe1', tL + 1.35, .4, { x: LX + 30, y: LY + 30 }, 'inout');
+  const tN = W('Fahrrad', 6);
+  akteur('xp1', { s: 0 }, true); tw('xp1', tN, .5, { s: 1 }, 'back'); cue(tN, 'plopp'); akzent(tN, .03);
+  wackeln('lupe1', tN - .1, 3, 6);
+  // Aber ein Helm schützt deinen Kopf: Buch rückt weg, Yusufs Kopf wird groß, der Helm fliegt herein
+  const tA = W('Aber', 7) - .3;
+  aus('lupe1', tA - .1, .3);
+  tw('buch1', tA, .6, { x: X + 300, y: 250, s: .5 }, 'inout');
+  tw('kopfY', tA + .1, .6, { s: 1.8 }, 'sanft');
+  const tH = W('Helm', 7) - .35;
+  akteur('helmY', { x: 420, y: -330, o: 0, s: .8 }, true);
+  tw('helmY', tH, .15, { o: 1 }); flug('helmY', tH, .5, 0, 0, 120, { s: 1 }); cue(tH, 'whoosh');
+  landen('helmY', tH + .5); cue(tH + .5, 'plopp');
+  // schützt: ein Stoß prallt am Helm ab, der Schutzring pulsiert
+  const tS = W('schützt', 7) - .1, KX = 532, KY = 622;
+  akteur('stoss1', { x: X + KX + 320, y: KY - 90, o: 0 });
+  tw('stoss1', tS, .1, { o: 1 }); tw('stoss1', tS, .25, { x: X + KX + 110, y: KY - 40 }, 'in');
+  tw('stoss1', tS + .25, .45, { x: X + KX + 300, y: KY - 140, r: -20 }, 'out'); tw('stoss1', tS + .45, .3, { o: 0 });
+  cue(tS + .25, 'klick'); wackeln('helmY', tS + .25, 3, 3); akzent(tS + .25, .045);
+  wellen('schutz', [[tS + .28, KX, KY + 40, 1], [tS + .7, KX, KY + 40, 1]]);
+  froh('py', W('Kopf', 7) - .1);
+  // gute Idee: Haken
+  const tG = W('gute', 8) - .1;
+  pop('ok1', tG, { x: X + 700, y: 440 }, 'erfolg'); bump('helmY', tG + .1, 1.08);
+  tw('kopfY', SE(8) - .1, .5, { s: 1 }, 'sanft');
+}
+
+/* ---------- 2 · Licht – Stimmt ---------- */
+{
+  const tAb = SE(8) + .2, tAn = A(satz(9).start) - .15;
+  reise(tAb, tAn - tAb, CAM[2]); bremsen(Y, tAn - .1);
+  const { X, tF } = station(2, { c: 9, v: 10, u: 'stimmt', titel: 'STIMMT – vorne weiß, hinten rot' });
+  // Bei Dämmerung und Dunkelheit: es wird Nacht, die Laternen gehen an, der Mond geht auf
+  const tD = W('Dämmerung', 11) - .1, tDu = W('Dunkelheit', 11) - .1;
+  NACHT.push([tD, .5, .6], [tDu, .88, .6]);
+  akteur('mond', { x: 240, y: 330, o: 0, s: .7 });
+  tw('mond', tDu, .3, { o: 1 }); tw('mond', tDu, 1.2, { y: 190, s: 1 }, 'sanft');
+  // vorne weiß: der Scheinwerfer geht an, der Lichtkegel tastet die Straße ab
+  const tV = W('vorne', 11) - .05;
+  licht(Y, 'v', tV, true); cue(tV, 'klick'); akzent(tV, .035);
+  const [lx, ly] = radPunkt(Y, 188, 57, tV);
+  welle('wLv', tV, lx - 5, ly, .8);
+  akteur('kegel', { x: lx + 190, y: ly - 10 + 105, o: 0, r: -6 });
+  tw('kegel', tV, .3, { o: 1 }); tw('kegel', tV, .7, { r: 5 }, 'inout'); tw('kegel', tV + .7, .8, { r: 0 }, 'sanft');
+  // hinten rot: das Rücklicht glimmt
+  const tH = W('hinten', 11) + .1;
+  licht(Y, 'h', tH, true); cue(tH, 'klick');
+  const [hx, hy] = radPunkt(Y, 37, 61, tH);
+  welle('wLh', tH, hx, hy, .8); akzent(tH, .03);
+  // die Pedale drehen, die gelben Reflektoren blitzen
+  const tP = WE('hinten', 11) + .45;
+  tw('kurbelY', tP, 1.6, { x: -540 }, 'inout'); cue(tP, 'scan');
+  HOOKS.push(t => { const v = t > tP && t < tP + 1.8 ? .35 + .65 * Math.abs(Math.sin(t * 9)) : 1;
+    ['pa', 'pb'].forEach(n => el(`${Y}-${n}r`).setAttribute('opacity', v.toFixed(2))); });
+  // Auch Lampen mit Akku: eine Akku-Lampe steckt am Lenker ein, der Ladebalken füllt sich – mit Prüfzeichen
+  neu(`<div class="a akku" id="akku2"><span class="batt"><i></i><i></i><i></i><i></i></span>Akku</div>
+    <div class="a chip gross" id="pruef2">${tpl('svgPruef')}Prüfzeichen</div>
+    <div class="a plakette gruen" id="ok2">${tpl('svgHakenW')}</div>
+    <div class="a" id="zettel2" style="width:200px">{{strafzettel}}</div>`);
+  const tAk = W('Akku', 12) - .4;
+  akteur('akkuY', { x: 260, y: -260, o: 0, s: 1.3 }, true);
+  tw('akkuY', tAk, .15, { o: 1 }); flug('akkuY', tAk, .5, 0, 0, 60, { s: 1 }); cue(tAk, 'whoosh');
+  landen('akkuY', tAk + .5); cue(tAk + .5, 'klick');
+  pop('akku2', tAk + .4, { x: X + 760, y: 300 }, 'pop');
+  const BARS = [...el('akku2').querySelectorAll('i')], tB0 = tAk + .55, tB1 = W('erlaubt', 12);
+  HOOKS.push(t => BARS.forEach((b, i) => { b.style.opacity = t >= tB0 + i * (tB1 - tB0) / 4 ? 1 : 0; }));
+  BARS.forEach((b, i) => cue(tB0 + i * (tB1 - tB0) / 4, 'tipp'));
+  const tPr = W('Prüfzeichen', 12) - .1;
+  pop('pruef2', tPr, { x: X + 760, y: 410 }, 'pop'); akzent(tPr + .1, .03);
+  pop('ok2', W('haben', 12), { x: X + 960, y: 300 }, 'erfolg');
+  // Ohne Licht: alles aus – Bußgeld: ein Strafzettel fällt und wackelt
+  const tO = W('Ohne', 13) + .05;
+  licht(Y, 'v', tO, false); licht(Y, 'h', tO, false); tw('kegel', tO, .2, { o: 0 }); cue(tO, 'klick');
+  aus(['akku2', 'pruef2', 'ok2'], tO - .1, .3);
+  const tZ = W('Bußgeld', 13) - .4;
+  akteur('zettel2', { x: X + 760, y: -300, o: 0, r: -3 });
+  tw('zettel2', tZ, .1, { o: 1 }); tw('zettel2', tZ, .42, { y: 360 }, 'in'); landen('zettel2', tZ + .42); cue(tZ + .42, 'plopp');
+  wackeln('zettel2', tZ + .5, 4, 3); akzent(tZ + .45, .045);
+  froh('py', tZ + .4, false);
+  // weiter geht's – mit Licht
+  const tWeiter = SE(13) - .4;
+  licht(Y, 'v', tWeiter, true); licht(Y, 'h', tWeiter, true); froh('py', tWeiter + .2); cue(tWeiter, 'klick');
+}
+
+/* ---------- 3 · Handy – Stimmt (Yusuf fährt weiter, mit dem Handy in der Hand) ---------- */
+{
+  const tAb = SE(13) + .1, tAn = A(satz(14).start) - .15;
+  reise(tAb, tAn - tAb, CAM[3]); bremsen(Y, tAn - .1);
+  const { X, tS } = station(3, { c: 14, v: 15, u: 'stimmt', titel: 'STIMMT – erst anhalten' });
+  // Beim Fahren …: die Schranke ist offen, Yusuf fährt langsam weiter
+  const tStop = W('halt', 18) - .1;
+  const camEnde = rollen(W('Fahren', 16) - .3, tStop, 110, .7, .7);
+  CAM[3.5] = camEnde;
+  aus(['sch3', 'anz3'], W('Fahren', 16) + .3, .4);           // Schranke bleibt zurück (sonst läuft sie durchs Handy)
+  HOOKS.push(t => { const v = t > W('Fahren', 16) && t < tStop ? 1 : 0; if (v) el(Y).style.transform += ` translateY(${(1.5 * Math.sin(t * 9)).toFixed(1)}px)`; });
+  // das Handy in der Hand vibriert
+  const HX = 705, HY = 590;
+  const tHa = W('Handy', 16) - .15;
+  ein('handy3', tHa, { x: HX, y: HY }, { y: 40 }, 'pop');
+  const VIB = [W('Handy', 16) + .1, W('kurz', 16) - .1, W('schreiben', 17), W('telefonieren', 17)];
+  wellen('wH3', VIB.map(t => [t, HX, HY, .7]));
+  HOOKS.push(t => { if (VIB.some(v => t > v && t < v + .45)) el('handy3').style.transform += ` translate(${(3 * Math.sin(t * 90)).toFixed(1)}px,0) rotate(${(2 * Math.sin(t * 70)).toFixed(1)}deg)`; });
+  VIB.forEach(v => cue(v, 'tipp'));
+  // nicht in der Hand: rote Linie zwischen Handy und Lenker, rotes ✕, das Rad schlingert
+  const tN = W('nicht', 16) - .05;
+  const [gx, gy] = radPunkt(Y, 172, 40, tN);
+  akteur('linie3', { x: (gx + HX) / 2 - 4, y: (gy + HY + 70) / 2, o: 0 });
+  tw('linie3', tN, .3, { o: 1 }); cue(tN, 'kritzeln');
+  pop('x3', W('Hand', 16) + .1, { x: HX + 100, y: HY - 40 }, 'plopp'); akzent(W('halten', 16), .035);
+  wackeln('x3', W('kurz', 16), 3, 4);
+  HOOKS.push(t => {
+    const st = clamp((t - tN) / .6) * (1 - clamp((t - tStop + .3) / .6));
+    if (st > 0) { const w = ` rotate(${(2.6 * st * Math.sin(t * 5.2)).toFixed(2)}deg) translateX(${(9 * st * Math.sin(t * 2.6)).toFixed(1)}px)`;
+      el(Y).style.transform += w; el('handy3').style.transform += ` translateX(${(9 * st * Math.sin(t * 2.6)).toFixed(1)}px)`; }
+  });
+  // schreiben – telefonieren
+  el('hs3a').innerHTML = tpl('svgChat'); el('hs3b').innerHTML = tpl('svgHoerer'); el('hs3c').innerHTML = tpl('svgHakenG');
+  akteur('hs3a', { s: 0 }, true); akteur('hs3b', { s: 0 }, true); akteur('hs3c', { s: 0 }, true); akteur('hg3', { o: 0 }, true);
+  const tSc = W('schreiben', 17) - .1, tTe = W('telefonieren', 17) - .1;
+  tw('hs3a', tSc, .4, { s: 1 }, 'back'); tw('hs3a', tTe - .1, .2, { s: 0 }, 'in');
+  tw('hs3b', tTe, .4, { s: 1 }, 'back'); tw('hs3b', tStop, .2, { s: 0 }, 'in');
+  // Dann halt an: bremsen, der Ständer klappt aus – erst jetzt wird das Handy grün
+  const tAnH = W('an', 18) - .05;
+  tw(`${Y}-st`, tAnH, .35, { r: 13 }, 'back'); cue(tAnH + .05, 'klick'); bremsen(Y, tStop + .1);
+  tw('linie3', tStop, .25, { o: 0 }); aus('x3', tStop, .25);
+  const tOk = tAnH + .25;
+  tw('hg3', tOk, .2, { o: 1 }); tw('hs3c', tOk, .45, { s: 1 }, 'back'); cue(tOk, 'erfolg');
+  bump('handy3', tOk, 1.12); akzent(tOk, .04); froh('py', tOk);
+  // weiter: Handy weg, Ständer hoch
+  const tW = SE(18) + .45;
+  aus('handy3', tW, .3); tw(`${Y}-st`, tW, .3, { r: 90 }, 'inout');
+}
+
+/* ---------- 4 · Gehweg – Mythos (neuer Morgen) ---------- */
+{
+  const tAb = SE(18) + .6, tAn = A(satz(19).start) - .15;
+  reise(tAb, tAn - tAb, CAM[4]); bremsen(Y, tAn - .1);
+  NACHT.push([tAb, 0, tAn - tAb]); tw('mond', tAb, .45, { y: 300, o: 0 }, 'in');
+  licht(Y, 'v', tAb + .6, false); licht(Y, 'h', tAb + .6, false);
+  const { X, tF } = station(4, { c: [19, 20], v: 21, u: 'mythos', titel: 'MYTHOS – Straße oder Radweg' });
+  neu(`<div class="a glanz" id="gl4f" style="width:1900px;height:140px" data-frei></div>
+    <div class="a glanz" id="gl4r" style="width:1900px;height:70px" data-frei></div>
+    <div class="a glanz rot" id="gl4g" style="width:1900px;height:90px" data-frei></div>
+    <div class="a glanz" id="gl4z" style="width:700px;height:90px;border-radius:18px" data-frei></div>
+    <svg class="a" id="spuren4" viewBox="0 0 700 90" style="width:700px;height:90px" data-frei></svg>
+    <div class="a" id="zs4" style="width:260px;height:330px" data-frei><div style="position:absolute;left:123px;top:90px;width:14px;height:240px;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))"></div>
+      <div id="zsp4" style="position:absolute;left:0;top:0;width:260px;transform-origin:50% 30%">{{zusatzschild}}</div></div>
+    <div class="a plakette rot" id="x4">${tpl('svgXW')}</div>`);
+  [['gl4f', 760], ['gl4r', 865], ['gl4g', 945]].forEach(([id, y]) => akteur(id, { x: X + 960, y, o: 0 }));
+  // Fußspuren auf dem Gehweg
+  const SP = Array.from({ length: 9 }, (_, i) => [30 + i * 80, i % 2 ? 58 : 30, i % 2 ? 1 : -1]);
+  el('spuren4').innerHTML = SP.map(([x, y, s]) => `<g class="spur" transform="translate(${x} ${y}) rotate(${s * 3})"><ellipse cx="0" cy="-5" rx="10" ry="14" fill="var(--n400)"/><ellipse cx="0" cy="15" rx="7.5" ry="7.5" fill="var(--n400)"/></g>`).join('');
+  akteur('spuren4', { x: X + 760, y: 944, o: 0 }); tw('spuren4', tF + .2, .5, { o: 1 });
+  // Du fährst auf der Straße – oder auf dem Radweg
+  const tSt = W('Straße', 22) - .3;
+  spur(tSt, 'nah', 600); cue(tSt, 'whoosh');
+  tw('gl4f', tSt + .25, .3, { o: .25 }); tw('gl4f', tSt + 1.1, .4, { o: 0 }); cue(tSt + .3, 'ding');
+  const tRw = W('Radweg', 22) - .3;
+  spur(tRw, 'rad', 620); cue(tRw, 'whoosh');
+  tw('gl4r', tRw + .25, .3, { o: .45 }); tw('gl4r', tRw + 1.1, .4, { o: 0 }); cue(tRw + .3, 'ding'); akzent(tRw + .3, .03);
+  // nicht auf dem Gehweg: Yusuf rollt hinunter – die Fußspuren pochen, rotes ✕, zurück
+  const tG = W('nicht', 22) - .3;
+  spur(tG, 'geh', 680, .5);
+  const tP = tG + .45;
+  const SPUREN = [...el('spuren4').querySelectorAll('.spur')];
+  HOOKS.push(t => { const p = t > tP && t < tP + 1.1 ? Math.max(0, Math.sin((t - tP) * 2 * Math.PI * 2.5)) : 0;
+    SPUREN.forEach(s => s.setAttribute('opacity', (1 - .55 * p).toFixed(2))); });
+  tw('gl4g', tP, .25, { o: .3 }); tw('gl4g', tP + .8, .4, { o: 0 });
+  pop('x4', tP + .05, { x: X + 560, y: 560 }, 'plopp'); wackeln('x4', tP + .5, 3, 4); akzent(tP + .05, .045);
+  spur(WE('Gehweg', 22) + .15, 'rad', 560, .55);
+  aus('x4', WE('Gehweg', 22) + .2, .3);
+  // Auf dem Gehweg nur mit Schild: „Radverkehr frei“ klappt herunter – im Schritttempo auf den Gehweg
+  const tSch = W('Schild', 23) - .5;
+  akteur('zs4', { x: X + 1150, y: 985 - 165, o: 0, sy: 0 }); AKTEURE.get(el('zs4')).el.style.transformOrigin = '50% 100%';
+  set('zs4', tSch, { o: 1 }); tw('zs4', tSch, .45, { sy: 1 }, 'back'); cue(tSch, 'pop');
+  akteur('zsp4', { sy: 0 }, true); tw('zsp4', tSch + .35, .45, { sy: 1 }, 'back'); cue(tSch + .4, 'klick');
+  bump('zsp4', W('Radfahren', 23), 1.08);
+  const tEr = W('erlaubt', 23) - .1;
+  akteur('gl4z', { x: X + 960, y: 945, o: 0 }); tw('gl4z', tEr, .3, { o: .35 }); cue(tEr, 'erfolg'); akzent(tEr, .035);
+  spur(tEr, 'geh', 620, .6);
+  tw(Y, tEr + .6, SE(23) + .2 - tEr - .6, { x: 760 }, 'sinus');
+}
+
+/* ---------- 5 · Radweg-Pflicht – Mythos ---------- */
+{
+  const tAb = SE(23) + .2, tAn = A(satz(24).start) - .15;
+  reise(tAb, tAn - tAb, CAM[5]); spur(tAb + .1, 'rad', 560, tAn - tAb - .1); bremsen(Y, tAn - .1);
+  const { X, tF } = station(5, { c: 24, v: 25, u: 'mythos', titel: 'MYTHOS – nur mit blauem Schild' });
+  neu(`<div class="a" id="schild5" style="width:240px;height:420px;transform-origin:50% 100%" data-frei><div style="position:absolute;left:113px;top:165px;width:14px;height:255px;border-radius:6px;background:linear-gradient(90deg,var(--n300),var(--n400))"></div>
+      <div style="position:absolute;left:0;top:0;width:240px">{{schild-radweg}}</div></div>
+    <div class="a chip brand gross" id="pflicht5">Pflicht</div>
+    <svg class="a" id="pfeile5" viewBox="0 0 560 200" style="width:560px;height:200px" data-frei>
+      <g id="pz5" stroke="var(--b500)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pz5p" pathLength="1" d="M10 150H500"/><path id="pz5k" d="M478 124l30 26-30 26"/></g>
+      <g id="pa5" stroke="var(--surface)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pa5p" pathLength="1" d="M10 150H500"/><path id="pa5k" d="M478 124l30 26-30 26"/></g>
+      <g id="pb5" stroke="var(--surface)" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path id="pb5p" pathLength="1" d="M10 150C200 150 230 50 500 50"/><path id="pb5k" d="M478 24l30 26-30 26"/></g>
+    </svg>
+    <div class="a glanz" id="gl5f" style="width:1900px;height:140px" data-frei></div>
+    <div class="a plakette gruen" id="ok5">${tpl('svgHakenW')}</div>`);
+  // Pflicht ist der Radweg: der Radweg leuchtet kurz
+  akteur('gl5f', { x: X + 960, y: 760, o: 0 });
+  // blaues, rundes Schild: es wächst aus dem Boden am Wegrand
+  const tB = W('blaues', 26) - .15;
+  akteur('schild5', { x: X + 800, y: 985 - 210, o: 0, sy: 0 });
+  set('schild5', tB, { o: 1 }); tw('schild5', tB, .7, { sy: 1 }, 'back'); cue(tB, 'pop');
+  bump('schild5', W('Schild', 26) - .05, 1.08); akzent(W('Schild', 26), .035);
+  // mit Fahrrad: ein Pfeil zeigt – du musst auf dem Radweg bleiben; Chip „Pflicht“
+  akteur('pfeile5', { x: X + 700 + 270, y: 862 - 150 + 100 });
+  const zeichne = (g, t0, d = .5) => HOOKS.push(t => {
+    const p = E.inout(clamp((t - t0) / d)), pf = el(g + 'p'), kk = el(g + 'k');
+    pf.style.strokeDasharray = '1 1'; pf.style.strokeDashoffset = 1 - p; kk.setAttribute('opacity', p > .95 ? 1 : 0);
+  });
+  const tP = W('Fahrrad', 26) - .2, tSo = W('Sonst', 27) - .25;
+  HOOKS.push(t => { el('pz5').setAttribute('opacity', t > tP && t < tSo ? 1 : 0); });
+  zeichne('pz5', tP); cue(tP, 'scan');
+  pop('pflicht5', tP + .3, { x: X + 640, y: 470 }, 'plopp'); akzent(tP + .3, .03);
+  wackeln('schild5', W('steht', 26), 2, 2);
+  // Sonst: das Schild kippt weg, zwei Pfeile – beide grün, Yusuf nimmt die Straße
+  tw('schild5', tSo, .5, { r: 80, o: 0 }, 'in'); cue(tSo, 'whoosh'); aus('pflicht5', tSo, .3);
+  const tA = tSo + .4;
+  HOOKS.push(t => { ['pa5', 'pb5'].forEach(g => el(g).setAttribute('opacity', t > tA ? 1 : 0)); });
+  zeichne('pa5', tA, .45); zeichne('pb5', tA + .1, .45); cue(tA, 'scan');
+  const tD = W('darfst', 27) - .05;
+  HOOKS.push(t => { const f = t >= tD ? 'var(--success)' : 'var(--surface)'; ['pa5', 'pb5'].forEach(g => el(g).setAttribute('stroke', f)); });
+  cue(tD, 'ding'); cue(tD + .12, 'ding'); akzent(tD, .03);
+  const tSt = W('Straße', 27) - .25;
+  spur(tSt, 'nah', 760, .9); cue(tSt, 'whoosh');
+  tw('gl5f', tSt + .3, .3, { o: .22 }); tw('gl5f', tSt + 1.3, .4, { o: 0 });
+  HOOKS.push(t => { ['pa5', 'pb5'].forEach(g => el(g).style.opacity = t > tSt + .5 ? (1 - clamp((t - tSt - .5) / .4)).toFixed(2) : ''); });
+  pop('ok5', tSt + .9, { x: X + 780, y: 470 }, 'erfolg');
+}
+
+/* ---------- 6 · Zu zweit nebeneinander – Stimmt ---------- */
+{
+  const tAb = SE(27) + .2, tAn = A(satz(28).start) - .15;
+  reise(tAb, tAn - tAb, CAM[6]); tw(Y, tAb, tAn - tAb, { x: 600 }, 'inout'); bremsen(Y, tAn - .1);
+  const { X, tF } = station(6, { c: 28, v: 29, u: 'stimmt', titel: 'STIMMT – wenn niemand behindert wird', boden: 'nah' });
+  // Zu zweit: Kwame kommt auf der äußeren Spur dazu
+  const SK = 1;
+  rad('rk', { x: -300, y: yRad('fern', SK), s: SK }, { vorne: true, farbe: 'var(--b300)' });
+  const tKw = W('zweit', 28) - .4;
+  tw('rk', tKw, 1.1, { x: 700 }, 'out'); cue(tKw, 'whoosh'); bremsen('rk', tKw + .95);
+  klingel('rk', tKw + 1.1, 'wkK'); froh('pk', tKw + 1.1);
+  // Die Schranke ist offen: beide fahren langsam weiter, die Klingeln klingeln im Takt
+  const t0 = tF + .5, tEnde = SE(31) + .2;
+  CAM[6.5] = rollen(t0, tEnde, 120, .7, .7);
+  HOOKS.push(t => { if (t > t0 && t < tEnde + .5) { el('rk').style.transform += ` translateY(${(1.3 * Math.sin(t * 9 + 1)).toFixed(1)}px)`; el(Y).style.transform += ` translateY(${(1.3 * Math.sin(t * 9)).toFixed(1)}px)`; } });
+  const tKl = W('Aber', 30) - .1;
+  klingel(Y, tKl, 'wkY'); klingel('rk', tKl + .32, 'wkK'); klingel(Y, tKl + .64, null); klingel('rk', tKl + .96, null);
+  froh('py', tKl);
+  // behindert: von hinten kommt ein Auto und muss bremsen, Warn-Dreieck
+  const CY = BODEN.fern - 44 * 380 / 160, tC = W('niemanden', 30) - .4, CX = 390;
+  akteur('auto6', { x: -400, y: CY });
+  tw('auto6', tC, 1, { x: CX }, 'out'); cue(tC, 'whoosh');
+  tw('auto6', tC + .85, .1, { r: 2 }, 'sinus'); tw('auto6', tC + .95, .35, { r: 0 }, 'sanft');
+  const tW = W('behindert', 30);
+  pop('warn6', tW, { x: CX - 20, y: CY - 150 }, 'plopp'); wackeln('warn6', tW + .5, 4, 3); akzent(tW, .045);
+  froh('pk', tW, false); froh('py', tW, false);
+  // hintereinander: Kwame lässt sich zurückfallen und reiht sich hinter Yusuf ein, das Auto überholt mit Abstand
+  const tH = W('Sonst', 31);
+  tw(Y, tH, 1.1, { x: 820 }, 'inout');
+  tw('rk', tH, 1.3, { x: 440, y: yRad('nah', SK), s: SK }, 'inout'); cue(tH, 'whoosh');
+  tw('auto6', tH, .4, { x: CX - 60 }, 'out');
+  const tU = W('hintereinander', 31) + .45;
+  aus('warn6', tU - .2, .3);
+  tw('auto6', tU, 1.4, { x: 2350 }, 'in'); cue(tU + .2, 'whoosh');
+  froh('pk', tU + .3); froh('py', tU + .4);
+  neu(`<div class="a plakette gruen" id="ok6">${tpl('svgHakenW')}</div>`, VORNE);
+  pop('ok6', tU + .9, { x: 330, y: 420 }, 'erfolg'); akzent(tU + .9, .035);
+  aus('ok6', SE(31) + .5, .3);
+}
+
+/* ---------- 7 · Ziel: der Betrieb – Tipp: Rahmen anschließen ---------- */
+{
+  const tAb = SE(31) + .5, tAn = A(satz(32).start) - .3;
+  reise(tAb, tAn - tAb, CAM[7]);
+  tw('rk', tAb, .9, { x: -400 }, 'in');                    // Kwame biegt ab
+  spur(tAb, 'rad', 560, tAn - tAb); bremsen(Y, tAn - .1);
+  const X = CAM[7];
+  neu(`<div class="a" id="betrieb7" style="width:420px">{{betrieb}}</div>
+    <div class="a tafel tipp" id="tafel7" style="transform-origin:50% 100%"><div class="pf" style="left:100px"></div><div class="pf" style="right:100px"></div>
+      <div class="flaeche"><div class="seite"><div id="tt7"><div class="titel">Tipp: Rahmen anschließen</div></div></div></div></div>
+    <div class="a" id="stand7a" style="width:260px" data-gruppe="rad7a">{{fahrradstaender}}</div>
+    <div class="a" id="stand7b" style="width:260px" data-gruppe="rad7b">{{fahrradstaender~b}}</div>
+    <div class="a fahrer" id="r7b" data-gruppe="rad7b"></div>
+    <svg class="a" id="vr7b" viewBox="0 0 80 80" style="width:85px;height:85px" data-gruppe="rad7b"></svg>
+    <div class="a" id="kleinschloss7" style="width:60px" data-gruppe="rad7b">{{schloss}}</div>
+    <div class="a welle" id="welle7" style="width:220px;height:220px" data-frei></div>
+    <div class="a plakette rot" id="x7">${tpl('svgXW')}</div>
+    <div class="a plakette gruen" id="ok7a">${tpl('svgHakenW')}</div>
+    <div class="a zettel" id="zettel7"><div class="zeile" id="tipp7"></div><div class="platz" id="platz7"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="a" id="stift7" style="width:100px" data-frei>{{stift}}</div>
+    <div class="a plakette gruen" id="ok7b" data-frei>${tpl('svgHakenW')}</div>`);
+  // Der Betrieb und das Tipp-Schild
+  akteur('betrieb7', { x: X + 330, y: 690 - 58 * 420 / 160 });
+  const tT = A(satz(32).start) - .4;
+  akteur('tafel7', { x: X + 1420, y: 430, sy: 0, o: 0 }); set('tafel7', tT - .1, { o: 1 }); tw('tafel7', tT - .1, .6, { sy: 1 }, 'back'); cue(tT, 'pop');
+  titelEin('tt7', tT + .2);
+  // zwei Fahrradständer auf dem Gehweg, rechts steht ein Rad – nur das Vorderrad ist abgeschlossen
+  const G = 975, SA = 760, SB = 1240, SYs = G - 107;
+  ein('stand7a', tT, { x: X + SA, y: SYs }, { y: 60 }); ein('stand7b', tT + .1, { x: X + SB, y: SYs }, { y: 60 });
+  rad('r7b', { x: X + SB - 15, y: G - 135 * SY, s: SY }, { ohneVR: true, staender: true, farbe: 'var(--b400)' });
+  ein('r7b', tT + .15, { x: X + SB - 15, y: G - 135 * SY, s: SY }, { y: 60 });
+  const [vx, vy] = radPunkt('r7b', 182, 110, tT + 2);
+  el('vr7b').innerHTML = `<circle cx="40" cy="40" r="34" fill="none" stroke="var(--ink)" stroke-width="8"/><circle cx="40" cy="40" r="27" fill="none" stroke="var(--n300)" stroke-width="2"/>
+    <path d="M14 40H66M40 14V66M21.6 21.6L58.4 58.4M58.4 21.6L21.6 58.4" stroke="var(--n300)" stroke-width="1.6"/><circle cx="40" cy="40" r="5.5" fill="var(--n300)"/>`;
+  ein('vr7b', tT + .15, { x: vx, y: vy, s: 1.25 * SY * 80 / 85 }, { y: 60 });
+  ein('kleinschloss7', tT + .25, { x: vx + 4, y: vy - 30 }, { y: 60 });
+  // Schließ dein Rad: Yusuf steigt ab und schiebt das Rad an den Ständer
+  const tR = W('Schließ', 32) - .35;
+  tw('kopfY', tR, .5, { x: -150, y: 80 }, 'inout', { bogen: 60 }); cue(tR, 'pop');
+  tw(Y, tR + .4, .9, { x: SA - 15, y: G - 135 * SY }, 'inout'); cue(tR + .4, 'whoosh');
+  tw(`${Y}-st`, tR + 1.2, .35, { r: 13 }, 'back'); cue(tR + 1.3, 'klick');
+  // Rahmen: das Bügelschloss legt sich um Rahmen und Ständer und schnappt zu, der Schlüssel dreht sich
+  const tRa = W('Rahmen', 32) - .3, [bx, by] = radPunkt(Y, 128, 96, tR + 2);
+  akteur('buegel7', { x: bx, y: by - 260, o: 0, s: .9 });
+  tw('buegel7', tRa, .15, { o: 1 }); tw('buegel7', tRa, .4, { y: by, s: 1 }, 'in'); landen('buegel7', tRa + .4);
+  cue(tRa + .4, 'klick'); cue(tRa + .48, 'plopp'); akzent(tRa + .4, .05);
+  akteur('schluessel7', { x: bx + 50, y: by + 26, o: 0, s: .6 });
+  tw('schluessel7', tRa + .55, .2, { o: 1, s: 1 }, 'back');
+  tw('schluessel7', tRa + .8, .3, { r: 55 }, 'inout'); cue(tRa + 1.05, 'klick');
+  tw('schluessel7', tRa + 1.2, .3, { r: 0 }, 'inout'); tw('schluessel7', tRa + 1.55, .35, { o: 0, x: bx + 110 }, 'in');
+  // an etwas Festem – zum Beispiel an einem Fahrradständer
+  bump('stand7a', W('Festem', 32), 1.05);
+  welle('welle7', W('Fahrradständer', 32), X + SA, SYs - 30, 1); cue(W('Fahrradständer', 32), 'ding');
+  bump('stand7b', W('Fahrradständer', 32) + .12, 1.06);
+  // Nimm ein gutes Schloss: das rechte Rad hebt ab und schwebt weg – nur das Vorderrad bleibt, rotes ✕
+  const tN = W('Nimm', 33) - .25;
+  tw('r7b', tN, .3, { y: G - 135 * SY - 30 }, 'out'); tw('r7b', tN + .3, 1.1, { x: X + SB + 360, y: G - 520, o: 0, r: 3 }, 'in'); cue(tN, 'whoosh');
+  pop('x7', W('gutes', 33) - .05, { x: X + SB, y: SYs - 165 }, 'plopp'); wackeln('x7', W('gutes', 33) + .4, 3, 4);
+  froh('py', W('gutes', 33), false);
+  const tS = W('Schloss', 33) - .1;
+  bump('buegel7', tS, 1.15); pop('ok7a', tS + .1, { x: X + SA + 90, y: SYs - 140 }, 'erfolg'); akzent(tS, .04); froh('py', tS + .1);
+  // Rahmennummer: auf dem Zettel tippt sich „Rahmennummer:“, der Stift schreibt, Haken
+  const tZ = W('schreib', 34) - .35;
+  ein('zettel7', tZ, { x: X + 760, y: 300 }, { y: -50 }, 'whoosh');
+  const TEXT = 'Rahmennummer:', z0 = W('Rahmennummer', 34) - .05, z1 = WE('Rahmennummer', 34) + .1;
+  for (let i = 0; i < TEXT.length; i += 2) cue(z0 + i * (z1 - z0) / TEXT.length, 'tipp');
+  HOOKS.push(t => { const n = Math.round(clamp((t - z0) / (z1 - z0)) * TEXT.length);
+    el('tipp7').innerHTML = TEXT.slice(0, n) + `<span class="cursor" style="opacity:${t > tZ + .3 && Math.floor(t * 2.5) % 2 === 0 ? 1 : 0}"></span>`; });
+  const PL = [...el('platz7').querySelectorAll('i')];
+  HOOKS.push(t => PL.forEach((p, i) => { p.style.opacity = t > z1 + .1 + i * .1 ? 1 : 0; }));
+  akteur('stift7', { x: X + 920, y: 470, o: 0, s: .8 });
+  tw('stift7', z1 - .2, .2, { o: 1 }); tw('stift7', z1 - .2, .4, { x: X + 620, y: 350, s: 1 }, 'inout', { bogen: 30 });
+  tw('stift7', z1 + .2, .6, { x: X + 860 }, 'sinus'); cue(z1 + .2, 'kritzeln');
+  tw('stift7', z1 + .8, .5, { x: X + 960, y: 470, o: 0, s: .8 }, 'sinus');
+  pop('ok7b', z1 + .9, { x: X + 1010, y: 380 }, 'erfolg'); bump('zettel7', z1 + .9, 1.05);
+}
+
+/* ---------- 8 · Die Strecke: Wie viele hattest du richtig? ---------- */
+{
+  const tW = SE(34) + .1;
+  HOOKS.push(t => { const p = E.inout(clamp((t - tW) / .7)); el('karte').style.clipPath = `inset(0 0 0 ${(100 - 100 * p).toFixed(2)}%)`; });
+  cue(tW, 'whoosh');
+  const K = el('karte'), pfad = el('routeP'), L = pfad.getTotalLength();
+  const HALTE = [['Helm', 'mythos'], ['Licht', 'stimmt'], ['Handy', 'stimmt'], ['Gehweg', 'mythos'], ['Radweg', 'mythos'], ['Zu zweit', 'stimmt']];
+  el('standM').innerHTML = `${tpl('svgX')}<span><span id="zM">0</span> × Mythos</span>`;
+  el('standS').innerHTML = `${tpl('svgHaken')}<span><span id="zS">0</span> × Stimmt</span>`;
+  pop('standM', tW + .4, { x: 760, y: 200 }, null); pop('standS', tW + .5, { x: 1160, y: 200 }, null);
+  // Linie zeichnet sich, Yusuf fährt sie ab, an jedem Halt schlägt ein Stempel auf
+  const tL0 = tW + .5, tL1 = W('richtig', 35) + 1.1, U = HALTE.map((_, i) => .06 + i * .16);
+  const LAND = [];
+  HALTE.forEach(([name, u], i) => {
+    const pt = pfad.getPointAtLength(U[i] * L), tH = tL0 + (tL1 - tL0) * U[i] / U.at(-1) * .95;
+    K.insertAdjacentHTML('beforeend', `<div class="halt" id="halt${i}">${i + 1}</div><div class="hname" id="hn${i}">${name}</div><div class="hstempel ${u}" id="hs${i}">${u === 'mythos' ? 'Mythos' : 'Stimmt'}</div>`);
+    akteur('halt' + i, { x: pt.x, y: pt.y, s: 0 }); tw('halt' + i, tH - .3, .45, { s: 1 }, 'back');
+    akteur('hn' + i, { x: pt.x, y: pt.y + 66, o: 0 }); tw('hn' + i, tH - .2, .4, { o: 1 });
+    akteur('hs' + i, { x: pt.x, y: pt.y - 92, o: 0, s: 1.5, r: -3 }); tw('hs' + i, tH, .05, { o: 1 }); tw('hs' + i, tH, .22, { s: 1 }, 'out');
+    cue(tH, 'plopp'); LAND.push([tH, u]);
+    klasse('halt' + i, u, tH);
+    bump(u === 'mythos' ? 'standM' : 'standS', tH, 1.08);
+  });
+  HOOKS.push(t => {
+    el('zM').textContent = LAND.filter(([z, u]) => u === 'mythos' && t >= z).length;
+    el('zS').textContent = LAND.filter(([z, u]) => u === 'stimmt' && t >= z).length;
+  });
+  // Yusuf (klein) fährt die Strecke ab
+  const tY0 = tL0 - .2, tY1 = LAND.at(-1)[0] + .6;
+  akteur('miniY', { s: 0 }, true); tw('miniY', tY0, .4, { s: 1 }, 'back');
+  HOOKS.push(t => { const p = E.inout(clamp((t - tY0) / (tY1 - tY0))), pt = pfad.getPointAtLength((.02 + p * .96) * L);
+    el('miniY').style.left = pt.x + 'px'; el('miniY').style.top = (pt.y - 4) + 'px'; });
+  const tE = LAND.at(-1)[0] + .5;
+  huepfen('standM', tE, 16); huepfen('standS', tE + .12, 16); cue(tE, 'erfolg');
+  froh(el('miniY').querySelector('.portrait'), tE);
+}
+
+/* ---------- Abspann ---------- */
+const AB = Math.max(ENDE_SPRACHE, 0) + 2.6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

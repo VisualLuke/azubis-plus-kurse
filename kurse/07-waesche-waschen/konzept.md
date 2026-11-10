@@ -27,3 +27,47 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 ## Zu prüfen vor der Aufnahme
 
 - Temperaturen (30/40 °C, 60 °C für Handtücher und Bettwäsche) als Faustregel in Ordnung?
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Dein weißes T-Shirt ist nach dem Waschen rosa?
+Erzähler: Das muss nicht sein.
+
+### Szene 2
+Erzähler: Schau zuerst auf das kleine Etikett in deiner Kleidung.
+Erzähler: Die Zahl im Bottich zeigt dir, wie heiß du waschen darfst.
+
+### Szene 3
+Erzähler: Eine Hand im Bottich heißt: nur mit der Hand waschen.
+Erzähler: Ist der Bottich durchgestrichen, gehört das Teil nicht in die Maschine.
+
+### Szene 4
+Erzähler: Dann trennst du die Wäsche: Helles und Weißes zusammen, Dunkles und Buntes zusammen.
+Erzähler: Neue rote Sachen wäschst du am besten allein.
+
+### Szene 5
+Erzähler: Die meisten Sachen wäschst du bei 30 oder 40 Grad.
+Erzähler: Handtücher und Bettwäsche bei 60 Grad.
+
+### Szene 6
+Erzähler: Leere vorher alle Taschen.
+Erzähler: Ein Taschentuch in der Hose – und alles ist voller Fusseln.
+
+### Szene 7
+Erzähler: Füll die Maschine nicht zu voll.
+Erzähler: Oben sollte noch eine Hand Platz haben.
+
+### Szene 8
+Erzähler: Nimm so viel Waschmittel, wie auf der Packung steht.
+Erzähler: Mehr macht die Wäsche nicht sauberer.
+
+### Szene 9
+Erzähler: Nach dem Waschen hängst du alles gleich auf.
+Erzähler: Trocknet die Wäsche in der Wohnung, lüfte gut.
+
+### Szene 10
+Erzähler: Wohnst du in einem Haus mit Waschkeller?
+Erzähler: Dann schau in die Hausordnung, wann du waschen darfst.

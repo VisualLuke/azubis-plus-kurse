@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Fachvokabeln: Kfz-Werkstatt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Bühnen: Wand, Boden */
+.buehne.raum{width:900px;height:720px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne.gross{width:1680px;height:880px;border-radius:48px;background:linear-gradient(var(--b50),var(--b100));overflow:hidden}
+.buehne .boden{position:absolute;left:0;right:0;top:520px;bottom:0;background:linear-gradient(var(--b200),var(--b100))}
+.buehne .boden::before{content:'';position:absolute;left:0;right:0;top:0;height:14px;background:var(--b300);opacity:.55}
+.buehne.gross .boden{top:640px}
+
+/* ================= Format „Fachvokabeln“ (übernommen aus Lernvideo 31) ================= */
+/* Artikel-Farben: der = b500 · die = success · das = warning */
+.der{--f:var(--b500);--ft:var(--b600);--fa:var(--surface)}
+.die{--f:var(--success);--ft:var(--success-text);--fa:var(--surface)}
+.das{--f:var(--warning);--ft:var(--warning-text);--fa:var(--surface)}
+.neutral{--f:var(--b300);--ft:var(--b600);--fa:var(--b600)}
+.vk{width:640px;height:340px;border-radius:36px;background:var(--surface);box-shadow:0 18px 50px rgba(22,19,37,.10);overflow:hidden;
+  padding:44px 46px 38px;display:flex;flex-direction:column}
+.vk .band{position:absolute;left:0;right:0;top:0;height:14px;background:var(--f)}
+.vk .kopf{display:flex;align-items:center;justify-content:space-between;height:48px;flex:none}
+.vk .art{display:inline-block;padding:4px 22px;border-radius:999px;background:var(--f);color:var(--fa);font:800 32px/40px Inter;white-space:nowrap}
+.vk .punkte{display:flex;gap:9px;align-items:center}
+.vk .punkte i{display:block;width:12px;height:12px;border-radius:99px;background:var(--n200)}
+.vk .punkte i.fertig{background:var(--b200)}
+.vk .punkte i.jetzt{width:40px;background:var(--f);transform-origin:left center}
+.vk .wort{margin-top:22px;font-weight:800;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.vk.ohne .wort{margin:auto 0}
+.vk .pl{margin-top:auto;display:flex;align-items:baseline;gap:18px;font:600 44px/52px Inter;color:var(--n700);white-space:nowrap}
+.vk .pl small{font:700 21px/26px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.vk .pl u{text-decoration:none;display:inline-block}
+.sl{width:640px;min-height:152px;padding:26px 32px 28px 148px;border-radius:32px;background:var(--surface);box-shadow:0 14px 40px rgba(22,19,37,.09);
+  font:600 34px/45px Inter;color:var(--ink)}
+.sl .sw{display:inline-block;white-space:nowrap}
+.sl u{display:inline-block;text-decoration:none;opacity:0;white-space:pre}
+.sl .sw.lw u{color:var(--ft);font-weight:800}
+.sl .q{color:var(--b300);font-weight:800}
+.lg{display:inline-block;padding:6px 24px;border-radius:999px;background:var(--f);color:var(--fa);font:800 34px/44px Inter;margin-right:16px}
+.chip{display:flex;align-items:center;justify-content:center;height:58px;padding:0 26px;border-radius:999px;background:var(--f);color:var(--fa);font:800 28px/34px Inter;white-space:nowrap;
+  box-shadow:0 8px 22px rgba(22,19,37,.14)}
+.chip b{font-weight:600;opacity:.85;margin-right:9px}
+
+/* Bausteine */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 54%}
+.portrait .zu{transform-origin:50% 56%}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:5px solid var(--surface)}
+.plakette svg{width:34px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.gelb{background:var(--warning)} .plakette.lila{background:var(--b400)} .plakette.blau{background:var(--info)}
+.plakette.gross{width:112px;height:112px} .plakette.gross svg{width:56px}
+.nr{width:60px;height:60px;border-radius:99px;background:var(--b500);color:var(--surface);font:800 32px/60px Inter;text-align:center;box-shadow:0 4px 12px rgba(22,19,37,.18);border:4px solid var(--surface);line-height:52px}
+/* Auto (Karosserie + Räder) */
+.auto .rad{position:absolute}
+/* Intro: Werkstatt-Tore */
+.tor{width:520px;height:430px;border-radius:30px 30px 0 0;border:16px solid var(--b300);border-bottom:0;background:linear-gradient(var(--b100),var(--b200));overflow:hidden}
+.tor::before{content:'';position:absolute;left:0;right:0;top:0;height:70px;background:repeating-linear-gradient(var(--b300) 0 7px,var(--b200) 7px 18px)}
+.tor::after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--b300);opacity:.6}
+/* Auftrag (Klemmbrett) */
+.auftrag{width:380px;height:500px;border-radius:28px;background:linear-gradient(135deg,var(--b600),var(--b700));box-shadow:0 18px 44px rgba(22,19,37,.16);padding:52px 22px 22px}
+.auftrag .kl{position:absolute;left:115px;top:-16px;width:150px;height:48px;border-radius:14px;background:var(--n300)}
+.auftrag .kl::after{content:'';position:absolute;left:24px;right:24px;top:12px;height:18px;border-radius:8px;background:var(--surface)}
+.auftrag .bl{height:100%;border-radius:14px;background:var(--surface);padding:18px 18px}
+.auftrag .ak{display:flex;align-items:center;justify-content:space-between;font:800 27px/34px Inter;color:var(--b600);letter-spacing:-.01em;height:60px;border-bottom:3px solid var(--b100);margin-bottom:16px}
+.auftrag .ak .mini{width:70px;height:41px}
+.auftrag .az{position:relative;display:flex;align-items:center;gap:14px;height:62px;padding:0 12px;border-radius:14px;font:600 25px/30px Inter;color:var(--n700);white-space:nowrap}
+.auftrag .az s{display:block;width:30px;height:30px;border-radius:8px;border:3.5px solid var(--b300);flex:none;background:var(--surface)}
+.auftrag .az.hell{background:var(--warning-bg)}
+.auftrag .zl{display:block;height:14px;border-radius:7px;background:var(--n200);margin:26px 12px 0}
+/* Hebebühne */
+.saeule{width:58px;border-radius:16px 16px 6px 6px;background:linear-gradient(90deg,var(--b400),var(--b600));box-shadow:0 10px 24px rgba(22,19,37,.14),inset 0 14px 0 var(--b300);transform-origin:50% 100%}
+.saeule.hell{background:linear-gradient(90deg,var(--b200),var(--b300));box-shadow:inset 0 10px 0 var(--b100)}
+.fuss{width:120px;height:16px;border-radius:6px;background:var(--b700)}
+.fuss.hell{background:var(--b300)}
+.arm{height:22px;border-radius:11px;background:linear-gradient(var(--b600),var(--b700))}
+/* Bremsbeläge */
+.belag{width:240px;display:flex;flex-direction:column;align-items:center}
+.belag .pt{width:240px;height:24px;border-radius:8px;background:linear-gradient(var(--n200),var(--n300));box-shadow:0 4px 10px rgba(22,19,37,.12)}
+.belag .ms{width:206px;border-radius:0 0 14px 14px;background:linear-gradient(var(--b600),var(--b700))}
+.belag.rot .ms{background:var(--error)}
+/* Ölwechsel */
+.wanne{width:250px;height:90px;border-radius:10px 10px 32px 32px;background:linear-gradient(var(--n200),var(--n300));overflow:hidden;box-shadow:0 10px 24px rgba(22,19,37,.12)}
+.wanne .oel{position:absolute;left:12px;right:12px;bottom:12px;height:58px;border-radius:6px 6px 24px 24px;background:var(--b700);transform-origin:50% 100%}
+.strahl{width:14px;border-radius:7px;transform-origin:50% 0}
+.strahl.alt{background:var(--b700)} .strahl.neu{background:var(--warning)}
+.stopfen{width:22px;height:16px;border-radius:4px;background:var(--b700)}
+/* Diagnose */
+.diag{width:340px;height:250px;border-radius:26px;background:linear-gradient(135deg,var(--b600),var(--b700));padding:14px;box-shadow:0 16px 40px rgba(22,19,37,.16)}
+.diag .scr{height:100%;border-radius:14px;background:var(--surface);padding:16px 18px;overflow:hidden}
+.diag .dk{font:800 24px/30px Inter;color:var(--b600);letter-spacing:-.01em}
+.diag .bar{height:14px;border-radius:7px;background:var(--b100);margin:12px 0 14px;overflow:hidden}
+.diag .bar i{display:block;height:100%;width:100%;background:var(--b500);transform-origin:0 50%}
+.diag .fs{font:700 18px/24px Inter;color:var(--n500);letter-spacing:.06em;text-transform:uppercase}
+.diag .code{margin-top:8px;display:flex;align-items:center;gap:12px;height:62px;padding:0 16px;border-radius:14px;background:var(--warning-bg);font:800 32px/40px Inter;color:var(--warning-text);letter-spacing:.03em}
+.diag .code svg{width:36px;flex:none}
+.diag.leer .scr{background:var(--b50)}
+.armatur{width:380px;height:150px;border-radius:34px 34px 20px 20px;background:linear-gradient(var(--b600),var(--b700));box-shadow:0 14px 30px rgba(22,19,37,.14)}
+.armatur i{position:absolute;top:28px;width:84px;height:84px;border-radius:99px;background:var(--surface);box-shadow:inset 0 0 0 8px var(--b300)}
+.buchse{width:86px;height:50px;border-radius:10px 10px 20px 20px;background:radial-gradient(circle,var(--n300) 3px,transparent 3.6px) 8px 6px/14px 18px,var(--ink);box-shadow:0 0 0 6px var(--b200)}
+.stecker{width:62px;height:34px;border-radius:8px;background:linear-gradient(var(--b400),var(--b600));box-shadow:0 4px 10px rgba(22,19,37,.2)}
+/* HU */
+.kennz{width:300px;height:96px;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 5px var(--ink),0 6px 16px rgba(22,19,37,.15);display:flex;align-items:center;padding-left:94px;
+  font:800 29px/1 Inter;color:var(--ink);letter-spacing:.02em;white-space:nowrap}
+.plak{width:80px;height:80px;border-radius:99px;background:var(--warning);box-shadow:0 0 0 4px var(--surface),0 4px 12px rgba(22,19,37,.25)}
+.plak svg{position:absolute;left:0;top:0;width:100%}
+.plak b{position:absolute;left:0;right:0;top:0;font:800 22px/80px Inter;color:var(--ink);text-align:center}
+.blase{padding:12px 40px;border-radius:32px;background:var(--surface);font:800 52px/60px Inter;color:var(--b600);box-shadow:0 10px 28px rgba(22,19,37,.12);white-space:nowrap}
+.blase::after{content:'';position:absolute;left:50%;bottom:-12px;width:26px;height:26px;margin-left:-13px;background:var(--surface);transform:rotate(45deg);border-radius:4px}
+.zs{width:640px;height:96px}
+.zs .li{position:absolute;left:40px;right:40px;top:16px;height:8px;border-radius:4px;background:var(--b200);transform-origin:0 50%}
+.zs .pk{position:absolute;top:6px;width:28px;height:28px;margin-left:-14px;border-radius:99px;background:var(--surface);box-shadow:inset 0 0 0 6px var(--b400)}
+.zs .pk.an{box-shadow:inset 0 0 0 14px var(--success)}
+.zs span{position:absolute;top:50px;width:160px;margin-left:-80px;font:700 25px/32px Inter;color:var(--b600);text-align:center;white-space:nowrap}
+.pruef{width:118px;height:118px;border-radius:99px;background:var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.10);display:flex;align-items:center;justify-content:center}
+.pruef > svg{width:84px}
+.pruef .ok{position:absolute;right:-8px;bottom:-8px;width:46px;height:46px;border-radius:99px;background:var(--success);border:4px solid var(--surface);display:flex;align-items:center;justify-content:center}
+.pruef .ok svg{width:24px}
+/* Bildfenster im Schlussdialog */
+.fenster{width:600px;height:400px;border-radius:40px;background:linear-gradient(var(--surface) 55%,var(--b50));box-shadow:0 18px 50px rgba(22,19,37,.12)}
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<template id="svgHaken"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgKreuz"><svg viewBox="0 0 40 40"><path d="M12 12l16 16M28 12L12 28" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" fill="none"/></svg></template>
+<template id="svgAusruf"><svg viewBox="0 0 40 40"><path d="M20 9v15" stroke="var(--surface)" stroke-width="6.5" stroke-linecap="round"/><circle cx="20" cy="32" r="3.8" fill="var(--surface)"/></svg></template>
+<template id="svgTausch"><svg viewBox="0 0 40 40"><path d="M9 17a11 11 0 0 1 20-5M31 23a11 11 0 0 1-20 5" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" fill="none"/><path d="M30 5v8h-8M10 35v-8h8" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgWarn"><svg viewBox="0 0 40 40"><path d="M20 4L37 34H3Z" fill="var(--warning)" stroke="var(--warning)" stroke-width="4" stroke-linejoin="round"/><path d="M20 15v9" stroke="var(--surface)" stroke-width="4" stroke-linecap="round"/><circle cx="20" cy="29" r="2.4" fill="var(--surface)"/></svg></template>
+
+<template id="t-auto">{{auto-blau}}</template>
+<template id="t-autoV">{{auto}}</template>
+<template id="t-heck">{{auto-heck}}</template>
+<template id="t-rad">{{rad}}</template>
+<template id="t-felge">{{felge}}</template>
+<template id="t-dreh">{{drehmoment}}</template>
+<template id="t-skala">{{skala}}</template>
+<template id="t-zeiger">{{skala-zeiger}}</template>
+<template id="t-scheibe">{{bremsscheibe}}</template>
+<template id="t-sattel">{{bremssattel}}</template>
+<template id="t-motor">{{motor}}</template>
+<template id="t-kanne">{{oelkanne}}</template>
+<template id="t-lenkrad">{{lenkrad}}</template>
+<template id="t-klemm">{{klemmbrett}}</template>
+<template id="t-tablet">{{tablet}}</template>
+<template id="t-lupe">{{lupe}}</template>
+<template id="t-schluessel">{{schraubenschluessel}}</template>
+<template id="t-sonne">{{sonne}}</template>
+<template id="t-flocke">{{schneeflocke}}</template>
+<template id="t-bluete">{{bluete}}</template>
+<template id="t-blatt">{{blatt}}</template>
+<template id="t-licht">{{scheinwerfer}}</template>
+
+<template id="gesicht"><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></template>
+<template id="f-Amir">{{figur-amir}}</template>
+<template id="f-Sabine">{{figur-sabine}}</template>
+<template id="t-blaumann">{{blaumann}}</template>
+
+<div id="kamera"><div id="welt">
+  <div class="a buehne gross" id="bue0"></div>
+  <div class="a buehne raum" id="bue1"></div>
+  <div class="a buehne raum" id="bue2"></div>
+  <div class="a buehne raum" id="bue3"></div>
+  <div class="a buehne raum" id="bue4"></div>
+  <div class="a buehne raum" id="bue5"></div>
+  <div class="a buehne raum" id="bue6"></div>
+  <div class="a buehne raum" id="bue7"></div>
+  <div class="a buehne raum" id="bue8"></div>
+  <div class="a buehne gross" id="bue9"></div>
+</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Sofort verstehen.</div>
+  <div class="klein" id="asUnter">In der Werkstatt musst du Teile, Werkzeuge und Aufträge sofort verstehen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SA = n => A(satz(n).start);
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const landen = (id, t) => { tw(id, t, .08, { sy: .86, sx: 1.08 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const kopie = (id, p) => tpl(id).replace(/id="([^"]+)"/g, `id="$1_${p}"`).replace(/url\(#([^)]+)\)/g, `url(#$1_${p})`);
+const neu = (id, inhalt, stil = '', attr = '', klasse = '') => { WELT.insertAdjacentHTML('beforeend', `<div class="a ${klasse}" id="${id}" style="${stil}" ${attr}>${inhalt}</div>`); return id; };
+const welle = (id, t, x, y, d = .9) => { if (!el(id)) neu(id, '', 'width:160px;height:160px', 'data-frei', 'welle'); akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.6 }, 'weich'); };
+let WN = 0;
+const wellen = (t, x, y, farbe = null, gr = 160) => { const id = 'wl' + WN++; neu(id, '', `width:${gr}px;height:${gr}px${farbe ? ';border-color:' + farbe : ''}`, 'data-frei', 'welle'); welle(id, t, x, y); };
+const plakette = (id, farbe, svg, attr = 'data-frei') => neu(id, tpl(svg), '', attr, 'plakette ' + farbe);
+const pendel = (id, t, a = 12, n = 5, d = .34) => { for (let k = 0; k < n; k++) tw(id, t + k * d, d, { r: (k % 2 ? -1 : 1) * a * Math.pow(.55, k) }, 'sinus'); tw(id, t + n * d, d, { r: 0 }, 'sinus'); };
+const summen = (id, t, d = .8, a = 4) => HOOKS.push(z => { const p = z - t; if (p > 0 && p < d) el(id).style.transform += ` translateX(${(a * Math.sin(p * 70) * (1 - p / d)).toFixed(2)}px)`; });
+const boden = i => el('bue' + i).insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+// Bildteil als Akteur: Breite in px (SVG 160 × 160)
+const bild = (id, t, breite, attr = '', stil = '') => neu(id, kopie(t, id), `width:${breite}px;${stil}`, attr);
+// Punkt einer SVG-Grafik (Koordinaten 0–160) → Welt, wenn die Grafik mit Mitte (x, y) und Breite b steht
+const P = (x, y, b, px, py) => ({ x: x + (px / 160 - .5) * b, y: y + (py / 160 - .5) * b });
+// Rad rollt: Weg und Drehung passen zusammen (R = Radius in px)
+const rollen = (id, t, d, x, R, e = 'out', extra = {}) => { const x0 = wertBei(id, 'x', t), r0 = wertBei(id, 'r', t); tw(id, t, d, { x, r: r0 + (x - x0) / R * 57.3, ...extra }, e); };
+const RAD_R = b => b * 62 / 160;                               // Reifenradius eines Rads (bild t-rad) der Breite b
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 10;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Figuren: Mund nur in den eigenen Sätzen (Sprecher exakt aus sprache.json), Nicken, froh ---------- */
+const SAETZE = SPRACHDATEN.saetze.map(s => ({ a: A(s.start), b: A(s.ende), w: s.sprecher }));
+const FROH = [], KOPF = [];   // [id, von, bis] · [id, t0, dauer]
+function portrait(id, wer, gr, attr = '') {
+  // Amir trägt in der Werkstatt den Blaumann (kursspezifische Ebene über der Figur)
+  neu(id, `<div class="figur"><div class="ebene">${kopie('f-' + wer, id)}</div>${wer === 'Amir' ? `<div class="ebene">${kopie('t-blaumann', id)}</div>` : ''}${tpl('gesicht')}</div>`,
+    `width:${gr}px;height:${gr}px`, attr, 'portrait');
+  el(id).dataset.sprecher = wer;
+  return id;
+}
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .7 + .3 * Math.sin(t * 9);
+  document.querySelectorAll('.portrait').forEach((p, i) => {
+    const spricht = SAETZE.some(s => s.w === p.dataset.sprecher && t >= s.a && t <= s.b);
+    const auf = spricht ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + i * 7)))) : 0;
+    const froh = !spricht && FROH.some(([id, a, b]) => id === p.id && t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || (froh && auf <= .12) ? 0 : 1;
+    const z = (t * .29 + i * .37) % 1;
+    p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+    let r = spricht ? 1.6 * Math.sin(t * 3.1) * pegel : 1.4 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10, y = r;
+    for (const [id, t0, d] of KOPF) {
+      const q = (t - t0) / d; if (id !== p.id || q < 0 || q > 1) continue;
+      y += 9 * Math.abs(Math.sin(q * Math.PI * 2)) * Math.sin(Math.PI * q);
+    }
+    p.querySelector('.figur').style.transform = `translate(0px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`;
+    p.style.borderColor = spricht ? 'var(--b300)' : '';
+  });
+});
+const nicken = (id, t, d = 1.1) => KOPF.push([id, t, d]);
+
+/* ---------- Auto von der Seite: Karosserie + Räder, die Räder drehen sich mit dem Weg (x und „draw“ = Weg ohne Versatz) ---------- */
+// Box = sichtbarer Teil der Grafik (viewBox 0 44 160 92): Mitte = Grafikpunkt (80, 90). Räder: hinten 42/108, vorn 118/108.
+function auto(id, breite, attr = '', vorne = true) {
+  const k = breite / 160, rb = breite * 34 / 124;
+  const rad = n => `<div class="rad" id="${id}r${n}" style="width:${rb}px;left:${((n ? 118 : 42) * k - rb / 2).toFixed(1)}px;top:${((108 - 44) * k - rb / 2).toFixed(1)}px">${kopie('t-rad', id + 'r' + n)}</div>`;
+  neu(id, kopie('t-auto', id) + rad(0) + (vorne ? rad(1) : ''), `width:${breite}px;height:${(92 * k).toFixed(1)}px`, attr + ' data-dreht', 'auto');
+  el(id).querySelector('svg').setAttribute('viewBox', '0 44 160 92');
+  const R = RAD_R(rb), raeder = [el(id + 'r0'), el(id + 'r1')].filter(Boolean);
+  HOOKS.push(t => { const a = AKTEURE.get(el(id)); if (!a) return;
+    const w = (wert(a, 'x', t) - a.basis.x + wert(a, 'draw', t)) / R * 57.3;
+    raeder.forEach(r => r.style.transform = `rotate(${w.toFixed(2)}deg)`); });
+  return { rb, k, vorn: { dx: 38 * k, dy: 18 * k }, hinten: { dx: -38 * k, dy: 18 * k }, unten: 35 * k };
+}
+// Auto fährt: Karosserie senkt sich beim Bremsen kurz nach vorn
+const bremsen = (id, t) => { tw(id, t, .14, { r: 1.6 }, 'sinus'); tw(id, t + .14, .55, { r: 0 }, 'sanft'); };
+
+/* ================= Format „Fachvokabeln“ ================= */
+const GENUS = ['der', 'die', 'das'];
+const VK_X = 470, VK_Y = 350, SL_X = 150, SL_Y = 578;
+function wortkarte(i, o) {
+  const X = S(i), id = 'vk' + i, kl = GENUS.includes(o.art) ? o.art : 'neutral';
+  const woerter = o.wort.split(' ');
+  neu(id, `<div class="band"></div>
+    <div class="kopf"><span class="art" id="${id}a">${o.chip}</span><span class="punkte">${[1, 2, 3, 4, 5, 6, 7, 8].map(k => `<i class="${k === o.nr ? 'jetzt' : k < o.nr ? 'fertig' : ''}" ${k === o.nr ? `id="${id}d"` : ''}></i>`).join('')}</span></div>
+    <div class="wort" id="${id}wt" style="font-size:${o.gr}px;line-height:${Math.round(o.gr * 1.1)}px">${woerter.map((w, k) => `<span class="w maske"><span class="m"><span class="wi" id="${id}w${k}">${w}</span></span></span>`).join(' ')}</div>
+    ${o.zeile ? `<div class="pl" id="${id}p" ${o.plgr ? `style="font-size:${o.plgr}px"` : ''}>${o.zeile[0] ? `<small>${o.zeile[0]}</small>` : ''}<span>${o.zeile[1]}</span></div>` : ''}`, '', '', `vk ${kl}${o.zeile ? '' : ' ohne'}`);
+  const y = VK_Y;
+  akteur(id, { x: X + VK_X, y: y + 70, o: 0, s: .96 });
+  akteur(id + 'a', { s: 0 }, true); akteur(id + 'd', { sx: .3 }, true);
+  woerter.forEach((w, k) => akteur(`${id}w${k}`, { y: o.gr * 1.3 }, true));
+  if (o.zeile) akteur(id + 'p', { o: 0, x: -40 }, true);
+  return {
+    ein: t => { tw(id, t, .45, { o: 1 }); tw(id, t, .7, { y, s: 1 }, 'sanft'); cue(t, 'whoosh'); },
+    chip: t => { tw(id + 'a', t, .5, { s: 1 }, 'back'); tw(id + 'd', t, .6, { sx: 1 }, 'sanft'); cue(t, 'pop'); },
+    wort: zeiten => { [].concat(zeiten).forEach((t, k) => tw(`${id}w${k}`, t - .05, .7, { y: 0 }, 'weich')); const t0 = [].concat(zeiten)[0]; akzent(t0 + .1, .03); cue(t0, 'klick'); },
+    zeile: t => { tw(id + 'p', t - .05, .35, { o: 1 }); tw(id + 'p', t - .05, .6, { x: 0 }, 'sanft'); cue(t, 'pop'); },
+  };
+}
+// Satzleiste: Beispielsatz tippt sich im Takt der Wortzeiten
+function satzleiste(i, ns, art, lern) {
+  ns = [].concat(ns);
+  const X = S(i), id = 'sl' + i, kl = GENUS.includes(art) ? art : 'neutral';
+  const teile = ns.flatMap(n => { const s = satz(n); let k = 0; return s.text.split(/\s+/).map(tok => ({ tok, w: /[\p{L}\p{N}]/u.test(tok) ? s.woerter[k++] : null })); });
+  neu(id, teile.map((p, j) => `<span class="sw${lern.includes(_norm(p.tok)) ? ' lw' : ''}">${j === 0 ? `<span class="q" id="${id}q1">„</span>` : ''}${[...p.tok].map(c => `<u>${c}</u>`).join('')}${j === teile.length - 1 ? `<span class="q" id="${id}q2">“</span>` : ''}</span>`).join(' '),
+    '', `data-gruppe="${id}"`, `sl ${kl}`);
+  portrait(id + 'p', satz(ns[0]).sprecher, 96, `data-gruppe="${id}"`);
+  const zeiten = [];
+  el(id).querySelectorAll('.sw').forEach((sw, j) => {
+    const w = teile[j].w || teile[j - 1]?.w, us = sw.querySelectorAll('u');
+    const a = A(w.start), d = Math.max(.08, w.ende - w.start);
+    us.forEach((u, c) => zeiten.push([u, a + d * c / us.length]));
+  });
+  zeiten.push([el(id + 'q1'), SA(ns[0]) - .15], [el(id + 'q2'), SE(ns.at(-1))]);
+  el(id + 'q1').style.opacity = 0; el(id + 'q2').style.opacity = 0;
+  HOOKS.push(t => { for (const [u, tc] of zeiten) { const p = clamp((t - tc) / .1); u.style.opacity = p; u.style.transform = p < 1 ? `translateY(${(7 * (1 - p)).toFixed(1)}px)` : ''; } });
+  akteur(id, { x: X + SL_X, y: SL_Y + 50, o: 0 }, true);
+  akteur(id + 'p', { x: X + SL_X + 26 + 48, y: SL_Y + 24 + 48, s: 0 });
+  return { ein: t => { tw(id, t, .4, { o: 1 }); tw(id, t, .6, { y: SL_Y }, 'sanft'); tw(id + 'p', t + .15, .5, { s: 1 }, 'back'); cue(t, 'pop'); } };
+}
+function buehne(i) { boden(i); akteur('bue' + i, { x: S(i) + 1320, y: 540 }); }
+const chipHTML = (art, text) => `<b>${art}</b>${text}`;
+// Breite der Wort-Chips im Schlussdialog (gemessen mit Inter 800/600, 28 px, plus Innenabstand)
+const CHIPW = { 'der Auftrag': 214, 'der Ölwechsel': 256, 'die Bremsbeläge': 288, 'die HU': 146, 'die Hebebühne': 266, 'das Diagnosegerät': 314,
+  'der Fehlerspeicher': 318, 'der Drehmomentschlüssel': 424 };
+// Zusatzwort als Chip auf der Bühne (zweites Wort aus „Text im Bild“)
+const zusatz = (id, art, text, t, x, y, attr = '') => { neu(id, chipHTML(art, text), '', attr, 'chip ' + art); pop(id, t, { x, y }, 'pop'); akzent(t + .1, .03); };
+
+/* ---------- Bausteine, die in Szene und Schlussdialog vorkommen ---------- */
+const ZEILEN2 = ['Ölwechsel', 'Bremsbeläge vorne', 'Fehlerspeicher', 'HU'];
+const auftragHTML = (id, leer) => `<div class="kl"></div><div class="bl">${leer ? '<i class="zl"></i><i class="zl"></i><i class="zl" style="width:70%"></i><i class="zl"></i>'
+  : `<div class="ak">Werkstattauftrag<span class="mini" id="${id}m"></span></div>${ZEILEN2.map((z, n) => `<div class="az" id="${id}z${n}"><s></s><span>${z}</span></div>`).join('')}`}</div>`;
+const belagHTML = (id, dicke) => `<div class="pt"></div><div class="ms" id="${id}m" style="height:${dicke}px"></div>`;
+const diagHTML = id => `<div class="scr"><div class="dk">Diagnose</div><div class="bar"><i id="${id}b"></i></div><div class="fs" id="${id}f">Fehlercode</div><div class="code" id="${id}c">${tpl('svgWarn')}<span>P0000</span></div></div>`;
+const plakHTML = () => `<svg viewBox="0 0 80 80">${Array.from({ length: 12 }, (_, k) => { const a = k * Math.PI / 6; return `<path d="M${(40 + 29 * Math.sin(a)).toFixed(1)} ${(40 - 29 * Math.cos(a)).toFixed(1)}L${(40 + 35 * Math.sin(a)).toFixed(1)} ${(40 - 35 * Math.cos(a)).toFixed(1)}" stroke="var(--b700)" stroke-width="3" stroke-linecap="round"/>`; }).join('')}<circle cx="40" cy="40" r="22" fill="var(--surface)"/></svg><b>HU</b>`;
+// Hebebühne: zwei Säulen, Füße, zwei Arme (bewegen sich mit dem Auto)
+function hebebuehne(p, cx, unten, abstand, hoehe, g) {
+  const L = cx - abstand / 2, R = cx + abstand / 2;
+  [['l', L], ['r', R]].forEach(([s, x]) => {
+    neu(`${p}f${s}`, '', '', g, 'fuss'); akteur(`${p}f${s}`, { x, y: unten + 4, s: 0 });
+    neu(`${p}s${s}`, '', `height:${hoehe}px`, g, 'saeule'); akteur(`${p}s${s}`, { x, y: unten - hoehe / 2, sy: 0 });
+  });
+  return { L, R };
+}
+
+/* ---------- 0 · Intro: Werkstatt, das blaue Auto rollt herein, Amir im Blaumann ---------- */
+el('bue0').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue0', { x: S(0) + 960, y: 540 });
+{
+  const X = S(0), FLOOR = 765;
+  // Tore
+  neu('toA0', '', '', 'data-gruppe="ta"', 'tor'); neu('toB0', '', '', 'data-gruppe="tb"', 'tor');
+  ein('toA0', .15, { x: X + 510, y: 740 - 215 }, { y: 60 }, 'whoosh'); ein('toB0', .3, { x: X + 1410, y: 740 - 215 }, { y: 60 });
+  // violettes Auto steht im rechten Tor
+  bild('av0', 't-autoV', 440, 'data-gruppe="tb"');
+  ein('av0', .5, { x: X + 1410, y: 640 }, { y: 50 }, 'plopp');
+  // Amir im Blaumann
+  portrait('am0', 'Amir', 300, 'data-gruppe="am"');
+  pop('am0', W('Amir', 1) - .15, { x: X + 960, y: 455 }, 'pop');
+  // das blaue Auto rollt ins linke Tor und federt ein
+  const a0 = auto('ab0', 470, 'data-gruppe="ta"');
+  const AY = FLOOR - a0.unten, tA = W('macht', 1) - .2;
+  akteur('ab0', { x: X + 350, y: AY, o: 0, s: .94 });
+  tw('ab0', tA, .35, { o: 1 }); tw('ab0', tA, 1.3, { x: X + 510, s: 1 }, 'out'); cue(tA, 'whoosh');
+  bremsen('ab0', tA + 1.0); landen('ab0', tA + 1.1);
+  // Kfz-Mechatroniker: der Schraubenschlüssel wirbelt herein
+  bild('sw0', 't-schluessel', 150, 'data-gruppe="am" data-dreht');
+  akteur('sw0', { x: X + 1180, y: 220, o: 0, r: -260 });
+  const tK = W('Kfz-Mechatroniker', 1) - .1;
+  tw('sw0', tK, .2, { o: 1 }); flug('sw0', tK, .85, X + 1075, 590, 70, { r: -20 }); landen('sw0', tK + .85); cue(tK + .85, 'klick');
+  wellen(tK + .85, X + 960, 455, null, 320); akzent(tK + .6, .03);
+  // Wörter: Farb-Legende der · die · das
+  neu('leg0', GENUS.map((g, k) => `<span class="lg ${g}" id="lg0${k}">${g}</span>`).join(''), 'white-space:nowrap');
+  akteur('leg0', { x: X + 960 - 170, y: 848 }, true);
+  const tL = [W('Wörter', 2), W('die', 2) + .45, W('er', 2)];
+  GENUS.forEach((g, k) => { akteur('lg0' + k, { s: 0 }, true); tw('lg0' + k, tL[k], .5, { s: 1 }, 'back'); cue(tL[k], 'pop'); });
+  // jeden Tag: Klemmbrett, Reifen, Drehmomentschlüssel, Diagnosegerät ploppen in einer Reihe
+  const WZ = [['wz00', 't-klemm', X + 330], ['wz01', 't-rad', X + 500], ['wz02', 't-dreh', X + 1420], ['wz03', 't-tablet', X + 1590]];
+  const tJ = W('jeden', 2) - .1;
+  WZ.forEach(([id, t, x], n) => { bild(id, t, id === 'wz02' ? 150 : 118, n === 1 ? 'data-dreht' : ''); pop(id, tJ + n * .13, { x, y: 866, r: n === 2 ? -3 : 0 }, 'pop'); });
+  tw('wz01', tJ + .13, 1.2, { r: 360 }, 'inout');
+  nicken('am0', W('braucht', 2) - .1, 1.1); FROH.push(['am0', WE('braucht', 2), 99]); akzent(W('Tag', 2), .03);
+}
+
+/* ---------- 1 · der Auftrag – die Aufträge ---------- */
+const P1 = SE(2) + .3; pan2(P1, 1);
+buehne(1);
+{
+  const X = S(1);
+  const k = wortkarte(1, { art: 'der', chip: 'der', wort: 'Auftrag', zeile: ['Plural', 'die Aufträge'], nr: 1, gr: 116 });
+  k.ein(P1 + .55); k.chip(W('Der', 3)); k.wort(W('Auftrag', 3)); k.zeile(W('Die', 4));
+  satzleiste(1, 6, 'der', ['auftrag']).ein(SA(6) - .5);
+  const G = 'data-gruppe="auf1"', CX = X + 1230, CY = 548;
+  neu('auC1', auftragHTML('auC1', true), '', G, 'auftrag'); neu('auB1', auftragHTML('auB1', true), '', G, 'auftrag');
+  neu('au1', auftragHTML('au1'), '', G, 'auftrag');
+  // das Klemmbrett landet
+  akteur('au1', { x: CX, y: CY - 260, o: 0, r: -3 });
+  const tV = W('Auftrag', 3) - .45;
+  tw('au1', tV, .25, { o: 1 }); tw('au1', tV, .55, { y: CY, r: 0 }, 'in'); landen('au1', tV + .55); cue(tV + .55, 'plopp');
+  // die Aufträge: zwei weitere fächern sich dahinter auf
+  const tP = W('Aufträge', 4);
+  [['auB1', 80, 2.5], ['auC1', 160, 5]].forEach(([id, dx, r], n) => {
+    akteur(id, { x: CX, y: CY, o: 0 });
+    set(id, tP - .05, { o: 1 }); tw(id, tP - .05 + n * .12, .7, { x: CX + dx, y: CY - 6 - n * 6, r }, 'sanft'); cue(tP + n * .12, 'whoosh');
+  });
+  // Hier steht …: bei „Auto“ fährt ein kleines Auto in den Kopf, die Zeilen ploppen auf
+  bump('au1', W('Hier', 5), 1.03);
+  el('au1m').innerHTML = kopie('t-auto', 'au1m'); el('au1m').querySelector('svg').setAttribute('viewBox', '0 44 160 92');
+  akteur('au1m', { o: 0, x: 60 }, true);
+  const tAu = W('Auto', 5) - .15;
+  tw('au1m', tAu, .3, { o: 1 }); tw('au1m', tAu, .6, { x: 0 }, 'sanft'); cue(tAu, 'whoosh');
+  const tZ = [W('gemacht', 5), W('werden', 5), W('soll', 5), WE('soll', 5)].map(t => t - .12);
+  ZEILEN2.forEach((z, n) => { akteur(`au1z${n}`, { o: 0, x: -30 }, true); tw(`au1z${n}`, tZ[n], .3, { o: 1 }); tw(`au1z${n}`, tZ[n], .5, { x: 0 }, 'sanft'); cue(tZ[n], 'pop'); });
+  // Lies zuerst den Auftrag: „1“ ploppt, die Lupe fährt Zeile für Zeile
+  neu('nr1', '1', '', G, 'nr');
+  pop('nr1', W('zuerst', 6) - .05, { x: CX - 172, y: CY - 238 }, 'plopp'); akzent(W('zuerst', 6), .035);
+  const ZY = n => CY - 250 + 52 + 18 + 60 + 3 + 16 + 31 + n * 62, LX = CX - 190 + 22 + 18 + 12 + 90;
+  bild('lupe1', 't-lupe', 150, 'data-frei');
+  const lupe = (x, y) => ({ x: x + 13, y: y + 13 });
+  akteur('lupe1', { ...lupe(LX + 200, ZY(0) + 90), o: 0, s: .7 });
+  const tLi = W('Lies', 6) - .1;
+  tw('lupe1', tLi, .3, { o: 1 }); tw('lupe1', tLi, .45, { ...lupe(LX, ZY(0)), s: 1 }, 'sanft'); cue(tLi, 'whoosh');
+  const HELL = [];
+  [0, 1, 2, 3].forEach(n => { const t = tLi + .3 + n * .38; if (n) tw('lupe1', t, .34, lupe(LX + (n % 2) * 30, ZY(n)), 'inout'); HELL.push([n, t + .1, t + .5]); });
+  HOOKS.push(t => ZEILEN2.forEach((z, n) => el(`au1z${n}`).classList.toggle('hell', HELL.some(([m, a, b]) => m === n && t >= a && t < b))));
+  const tE = WE('Auftrag', 6);
+  tw('lupe1', tE - .15, .45, { ...lupe(LX + 260, ZY(3) + 130), o: 0, s: .8 }, 'in');
+  plakette('ok1', 'gruen', 'svgHaken');
+  pop('ok1', tE + .05, { x: CX + 175, y: CY - 238 }, 'ding'); akzent(tE, .04);
+}
+
+/* ---------- 2 · die Hebebühne – die Hebebühnen ---------- */
+const P2 = SE(6) + .3; pan2(P2, 2);
+buehne(2);
+{
+  const X = S(2);
+  const k = wortkarte(2, { art: 'die', chip: 'die', wort: 'Hebebühne', zeile: ['Plural', 'die Hebebühnen'], nr: 2, gr: 96 });
+  k.ein(P2 + .55); k.chip(W('Die', 7)); k.wort(W('Hebebühne', 7)); k.zeile(W('Die', 8));
+  satzleiste(2, 9, 'die', ['hebebühne']).ein(SA(9) - .5);
+  const G = 'data-gruppe="hb2"', CX = X + 1320, BOT = 800, HUB = 240;
+  // die Hebebühnen: zwei hellere Hebebühnen weiter hinten (im DOM zuerst)
+  const tPl = W('Hebebühnen', 8) - .1;
+  [[CX - 130, 0], [CX + 130, 1]].forEach(([cx, n]) => {
+    const t = tPl + n * .2;
+    ['l', 'r'].forEach((sd, m) => {
+      const id = `hg2${n}${sd}`, x = cx + (m ? 75 : -75);
+      neu(id + 'f', '', 'width:70px;height:12px', G, 'fuss hell'); akteur(id + 'f', { x, y: 704, s: 0 });
+      neu(id, '', 'height:210px;width:34px', G, 'saeule hell'); akteur(id, { x, y: 700 - 105, sy: 0 });
+      tw(id + 'f', t + m * .06, .4, { s: 1 }, 'back'); tw(id, t + .05 + m * .06, .6, { sy: 1 }, 'back');
+    });
+    neu(`hg2${n}a`, '', 'width:116px;height:14px;background:var(--b300)', G, 'arm'); akteur(`hg2${n}a`, { x: cx, y: 648, sx: 0 });
+    tw(`hg2${n}a`, t + .45, .4, { sx: 1 }, 'sanft');
+  });
+  cue(tPl, 'pop'); cue(tPl + .2, 'pop'); akzent(tPl + .2, .03);
+  // die Hebebühne: Säulen wachsen aus dem Boden, die Arme klappen ein
+  const hb = hebebuehne('hb2', CX, BOT, 560, 430, G);
+  const tH = W('Hebebühne', 7) - .25;
+  ['l', 'r'].forEach((s, m) => { tw(`hb2f${s}`, tH + m * .1, .4, { s: 1 }, 'back'); tw(`hb2s${s}`, tH + .05 + m * .1, .7, { sy: 1 }, 'back'); cue(tH + m * .1, 'plopp'); });
+  const AY = BOT - 40;
+  neu('arL2', '', 'width:190px;transform-origin:0 50%', G, 'arm'); neu('arR2', '', 'width:190px;transform-origin:100% 50%', G, 'arm');
+  akteur('arL2', { x: hb.L + 29 + 95, y: AY, sx: 0 }); akteur('arR2', { x: hb.R - 29 - 95, y: AY, sx: 0 });   // Arme beginnen am Säulenrand
+  tw('arL2', tH + .75, .5, { sx: 1 }, 'sanft'); tw('arR2', tH + .85, .5, { sx: 1 }, 'sanft'); cue(tH + .75, 'klick');
+  // Fahr das Auto auf die Hebebühne: das blaue Auto rollt aus der Tiefe herein, bremst, die Bühne hebt es an
+  const a = auto('au2', 440, G);
+  const CY0 = BOT - a.unten, tF = W('Fahr', 9) - .25;
+  akteur('au2', { x: CX, y: CY0 - 60, o: 0, s: .7 });
+  tw('au2', tF, .35, { o: 1 }); tw('au2', tF, 1.2, { y: CY0, s: 1, draw: 420 }, 'out'); cue(tF, 'whoosh');
+  bremsen('au2', tF + .9); landen('au2', tF + 1.0);
+  const tUp = W('Hebebühne', 9) - .05;
+  tw('au2', tUp, 1.3, { y: CY0 - HUB }, 'inout'); tw(['arL2', 'arR2'], tUp, 1.3, { y: AY - HUB }, 'inout'); cue(tUp, 'scan');
+  landen('au2', tUp + 1.3); akzent(tUp + .6, .04);
+  wellen(tUp + 1.3, CX, CY0 - HUB, 'var(--success)', 300);
+}
+
+/* ---------- 3 · der Reifen – die Reifen · der Reifenwechsel ---------- */
+const P3 = SE(9) + .3; pan2(P3, 3);
+buehne(3);
+{
+  const X = S(3);
+  const k = wortkarte(3, { art: 'der', chip: 'der', wort: 'Reifen', zeile: ['Plural', 'die Reifen'], nr: 3, gr: 118 });
+  k.ein(P3 + .55); k.chip(W('Der', 10)); k.wort(W('Reifen', 10)); k.zeile(W('Die', 11));
+  const RB = 220, RR = RAD_R(RB), RY = 800 - RR;
+  // der Reifen: ein Reifen rollt herein
+  ['rf30', 'rf31', 'rf32'].forEach(id => bild(id, 't-rad', RB, 'data-gruppe="rf3" data-dreht'));
+  const t1 = W('Reifen', 10) - .5;
+  akteur('rf30', { x: X + 1600, y: RY, o: 0 });
+  tw('rf30', t1, .3, { o: 1 }); rollen('rf30', t1, 1.0, X + 1320, RR); landen('rf30', t1 + 1.0); cue(t1, 'whoosh');
+  // die Reifen: der erste rollt nach links, zwei weitere kommen dazu
+  const t2 = W('Reifen', 11) - .45;
+  rollen('rf30', t2, .9, X + 1080, RR);
+  [['rf31', X + 1320], ['rf32', X + 1560]].forEach(([id, x], n) => {
+    akteur(id, { x: x + 170, y: RY, o: 0 });
+    tw(id, t2 + n * .15, .3, { o: 1 }); rollen(id, t2 + n * .15, .9, x, RR); landen(id, t2 + .9 + n * .15); cue(t2 + n * .15, 'whoosh');
+  });
+  // Im Frühling und Herbst: Blüte und Blatt; die Reifen rollen weg
+  bild('bl3', 't-bluete', 140, ''); bild('lb3', 't-blatt', 130, '');
+  pop('bl3', W('Frühling', 12) - .05, { x: X + 1005, y: 310 }, 'plopp'); pendel('bl3', W('Frühling', 12) + .4, 6, 3, .3);
+  pop('lb3', W('Herbst', 12) - .05, { x: X + 1635, y: 310, r: -8 }, 'plopp'); pendel('lb3', W('Herbst', 12) + .4, 8, 3, .3);
+  const tW = W('Frühling', 12) - .2;
+  ['rf30', 'rf31', 'rf32'].forEach((id, n) => { rollen(id, tW + n * .08, .5, wertBei(id, 'x', tW) - 170, RR, 'in'); tw(id, tW + n * .08 + .1, .35, { o: 0 }); });
+  // ist Reifenwechsel: Chip steigt auf, das blaue Auto rollt herein
+  zusatz('ch3', 'der', 'Reifenwechsel', W('Reifenwechsel', 12), X + 1320, 300);
+  const a = auto('au3', 460, 'data-gruppe="au3"', false), AX = X + 1300, AY = 800 - a.unten;
+  const RBv = a.rb, RRv = RAD_R(RBv), VX = AX + a.vorn.dx, VY = AY + a.vorn.dy;
+  bild('vr3', 't-rad', RBv, 'data-gruppe="au3" data-dreht');
+  const tA = W('Herbst', 12) + .1;
+  akteur('au3', { x: AX + 200, y: AY, o: 0 }); akteur('vr3', { x: VX + 200, y: VY, o: 0 });
+  tw(['au3', 'vr3'], tA, .3, { o: 1 }); tw('au3', tA, 1.0, { x: AX }, 'out'); rollen('vr3', tA, 1.0, VX, RRv); cue(tA, 'whoosh');
+  bremsen('au3', tA + .8);
+  // Sommerreifen runter: Rad mit Sonne rollt weg
+  plakette('so3', 'gelb', 'svgHaken'); el('so3').innerHTML = kopie('t-sonne', 'so3'); el('so3').style.cssText += ';width:66px;height:66px;background:var(--warning-bg)'; el('so3').querySelector('svg').style.width = '46px';
+  pop('so3', W('Sommerreifen', 12) - .15, { x: VX, y: VY }, 'pop');
+  const tR = W('runter', 12) - .15;
+  rollen('vr3', tR, .8, VX + 250, RRv, 'in'); tw('vr3', tR + .45, .35, { o: 0 }); tw('so3', tR, .8, { x: VX + 250 }, 'in'); tw('so3', tR + .45, .35, { o: 0 }); cue(tR, 'whoosh');
+  // Winterreifen drauf: Rad mit Schneeflocke rollt heran und sitzt
+  bild('wr3', 't-rad', RBv, 'data-gruppe="au3" data-dreht');
+  plakette('sf3', 'blau', 'svgHaken'); el('sf3').innerHTML = kopie('t-flocke', 'sf3'); el('sf3').style.cssText += ';width:66px;height:66px;background:var(--info-bg)'; el('sf3').querySelector('svg').style.width = '46px';
+  const tD = W('Winterreifen', 12) - .15;
+  akteur('wr3', { x: VX + 250, y: VY, o: 0 }); akteur('sf3', { x: VX + 250, y: VY, o: 0 });
+  tw(['wr3', 'sf3'], tD, .3, { o: 1 }); rollen('wr3', tD, .9, VX, RRv); tw('sf3', tD, .9, { x: VX }, 'out'); cue(tD, 'whoosh');
+  const tDr = W('drauf', 12);
+  landen('wr3', tDr); bump('sf3', tDr, 1.2); cue(tDr, 'klick'); wellen(tDr, VX, VY, 'var(--info)', 170); akzent(tDr, .035);
+  // oder umgekehrt: Tauschpfeil dreht sich, Schneeflocke wird wieder zur Sonne
+  plakette('tu3', 'lila', 'svgTausch'); el('tu3').classList.add('gross');
+  const tU = W('umgekehrt', 12) - .1;
+  pop('tu3', tU, { x: AX, y: 470 }, 'pop'); tw('tu3', tU + .2, 1.0, { r: 360 }, 'inout'); cue(tU + .3, 'scan');
+  el('tu3').setAttribute('data-dreht', '');
+  plakette('so3b', 'gelb', 'svgHaken'); el('so3b').innerHTML = kopie('t-sonne', 'so3b'); el('so3b').style.cssText += ';width:66px;height:66px;background:var(--warning-bg)'; el('so3b').querySelector('svg').style.width = '46px';
+  const tS = tU + .7;
+  tw('sf3', tS, .18, { sx: 0 }, 'in'); set('sf3', tS + .18, { o: 0 });
+  akteur('so3b', { x: VX, y: VY, sx: 0, o: 0 }); set('so3b', tS + .18, { o: 1 }); tw('so3b', tS + .18, .35, { sx: 1 }, 'back'); cue(tS + .18, 'klick');
+  el('sf3').setAttribute('data-dreht', ''); el('so3b').setAttribute('data-dreht', '');
+}
+
+/* ---------- 4 · der Drehmomentschlüssel ---------- */
+const P4 = SE(12) + .3; pan2(P4, 4);
+buehne(4);
+{
+  const X = S(4);
+  const k = wortkarte(4, { art: 'der', chip: 'der', wort: 'Drehmomentschlüssel', nr: 4, gr: 50 });
+  k.ein(P4 + .55); k.chip(W('Der', 13)); k.wort(W('Drehmomentschlüssel', 13));
+  // großes Rad mit Radmuttern, der Schlüssel setzt oben an
+  const FX = X + 1170, FY = 615, FB = 400, M = P(FX, FY, FB, 80, 54);
+  bild('fg4', 't-felge', FB, 'data-gruppe="rad4"');
+  ein('fg4', P4 + .75, { x: FX, y: FY }, { y: 80 }, 'whoosh');
+  const DB = 470, DX = M.x - (20 / 160 - .5) * DB;
+  bild('dm4', 't-dreh', DB, 'data-gruppe="rad4" data-dreht', 'transform-origin:12.5% 50%');
+  akteur('dm4', { x: DX + 160, y: M.y - 200, o: 0, r: -18 });
+  const tD = W('Drehmomentschlüssel', 13) - .35;
+  tw('dm4', tD, .25, { o: 1 }); flug('dm4', tD, .8, DX, M.y, 60, { r: 0 }); landen('dm4', tD + .8); cue(tD + .8, 'klick'); akzent(tD + .9, .03);
+  // Skala mit Zeiger
+  const SX = X + 1490, SY = 340, SB = 280;
+  bild('sk4', 't-skala', SB, 'data-gruppe="sk4"'); bild('zg4', 't-zeiger', SB, 'data-gruppe="sk4" data-dreht', 'transform-origin:50% 66.25%');
+  const tS = W('Damit', 14) - .2;
+  pop('sk4', tS, { x: SX, y: SY }, 'pop'); akteur('zg4', { x: SX, y: SY, s: 0, r: -80 }); tw('zg4', tS, .5, { s: 1 }, 'back');
+  // ziehst … fest: der Schlüssel zieht an, der Zeiger steigt, bei „genau“ steht er im grünen Feld
+  const tZ = W('ziehst', 14) - .1;
+  tw('dm4', tZ, 1.1, { r: 7 }, 'inout'); tw('zg4', tZ, 1.1, { r: -30 }, 'inout'); cue(tZ, 'scan');
+  const tG = W('genau', 14) - .05;
+  tw('zg4', tG, .6, { r: 0 }, 'sanft'); tw('dm4', tG, .6, { r: 9 }, 'sanft');
+  const tF = W('fest', 14);
+  bump('sk4', tF, 1.07); cue(tF, 'klick'); wellen(tF, SX, SY + 10, 'var(--success)', 300); akzent(tF, .035);
+  tw('dm4', tF + .15, .5, { r: 0 }, 'sanft');
+  plakette('ok4', 'gruen', 'svgHaken');
+  pop('ok4', W('muss', 14), { x: SX + 135, y: 272 }, 'ding');
+  // Nicht zu locker: Zeiger fällt ins gelbe Feld, Kreuz
+  const tL = W('locker', 15) - .25;
+  aus('ok4', tL - .2, .3);
+  tw('zg4', tL, .5, { r: -66 }, 'sanft'); tw('dm4', tL, .5, { r: 3 }, 'sanft');
+  plakette('x4a', 'rot', 'svgKreuz');
+  pop('x4a', tL + .25, { x: SX - 92, y: SY + 98 }, 'plopp'); wackeln('x4a', tL + .6, 3, 6);
+  // nicht zu fest: Zeiger schlägt ins rote Feld, Kreuz
+  const tF2 = W('fest', 15) - .25;
+  tw('zg4', tF2, .5, { r: 66 }, 'sanft'); tw('dm4', tF2, .5, { r: 16 }, 'sanft');
+  plakette('x4b', 'rot', 'svgKreuz');
+  pop('x4b', tF2 + .25, { x: SX + 92, y: SY + 98 }, 'plopp'); wackeln('x4b', tF2 + .6, 3, 6); akzent(tF2 + .3, .03);
+  // zurück in die Mitte: grüner Haken
+  const tM = WE('fest', 15) + .1;
+  aus(['x4a', 'x4b'], tM, .3);
+  tw('zg4', tM + .1, .7, { r: 0 }, 'sanft'); tw('dm4', tM + .1, .7, { r: 8 }, 'sanft'); cue(tM + .1, 'scan');
+  plakette('ok4b', 'gruen', 'svgHaken');
+  pop('ok4b', tM + .6, { x: SX + 135, y: 272 }, 'ding'); bump('sk4', tM + .6, 1.06); akzent(tM + .6, .035);
+}
+
+/* ---------- 5 · die Bremse – die Bremsen · die Bremsbeläge ---------- */
+const P5 = SE(15) + 1.2; pan2(P5, 5);
+buehne(5);
+{
+  const X = S(5);
+  const k = wortkarte(5, { art: 'die', chip: 'die', wort: 'Bremse', zeile: ['Plural', 'die Bremsen'], nr: 5, gr: 118 });
+  k.ein(P5 + .55); k.chip(W('Die', 16)); k.wort(W('Bremse', 16)); k.zeile(W('Die', 17));
+  satzleiste(5, 19, 'die', ['bremsbeläge']).ein(SA(19) - .5);
+  const G = 'data-gruppe="bs5"', BX = X + 1100, BY = 420, BB = 300;
+  // die Bremsen: zwei weitere Scheiben dahinter (im DOM zuerst)
+  bild('bs5c', 't-scheibe', BB, G + ' data-dreht'); bild('bs5b', 't-scheibe', BB, G + ' data-dreht');
+  // die Bremse: Scheibe dreht sich herein, der Sattel setzt sich darauf
+  bild('bs5', 't-scheibe', BB, G + ' data-dreht'); bild('sa5', 't-sattel', BB, G);
+  const tB = W('Bremse', 16) - .35;
+  akteur('bs5', { x: BX, y: BY, s: 0, r: -200 }); tw('bs5', tB, .6, { s: 1 }, 'back'); tw('bs5', tB, 1.2, { r: 0 }, 'out'); cue(tB, 'pop');
+  akteur('sa5', { x: BX, y: BY - 140, o: 0 }); tw('sa5', tB + .6, .2, { o: 1 }); tw('sa5', tB + .6, .45, { y: BY }, 'in'); landen('sa5', tB + 1.05); cue(tB + 1.05, 'klick');
+  const tP = W('Bremsen', 17) - .1;
+  [['bs5b', 105, -8, .86], ['bs5c', 195, -16, .74]].forEach(([id, dx, dy, s], n) => {
+    akteur(id, { x: BX, y: BY, o: 0, s: .8, r: -90 }); set(id, tP + n * .12, { o: 1 });
+    tw(id, tP + n * .12, .7, { x: BX + dx, y: BY + dy, s, r: 0 }, 'sanft'); cue(tP + n * .12, 'whoosh');
+  });
+  // die Bremsbeläge: neuer (dick) und alter (dünn) Belag gleiten heraus
+  const PX = X + 1560, NY = 330, AY = 470, tBl = W('Bremsbeläge', 18) - .2;
+  neu('bn5', belagHTML('bn5', 46), '', 'data-gruppe="bl5"', 'belag'); neu('ba5', belagHTML('ba5', 10), '', 'data-gruppe="bl5b"', 'belag');
+  ein('bn5', tBl, { x: PX, y: NY }, { x: -140 }, 'whoosh'); ein('ba5', tBl + .15, { x: PX, y: AY }, { x: -140 });
+  zusatz('ch5', 'die', 'Bremsbeläge', tBl + .35, PX, 610);
+  // Die Bremsbeläge vorne sind abgefahren: kleines Auto, vorne leuchtet es; der alte Belag wird rot, Ausrufezeichen
+  const a = auto('au5', 290, 'data-gruppe="au5"'), CX = X + 1130, CY = 800 - a.unten;
+  ein('au5', SA(19) - .45, { x: CX, y: CY }, { x: -60 }, 'whoosh');
+  bump('ba5', W('Bremsbeläge', 19), 1.08); bump('bn5', W('Bremsbeläge', 19) + .1, 1.05);
+  const tV = W('vorne', 19);
+  for (let n = 0; n < 2; n++) wellen(tV - .1 + n * .3, CX + a.vorn.dx, CY + a.vorn.dy, 'var(--warning)', 140);
+  bump('au5', tV, 1.04); akzent(tV, .03);
+  const tAb = W('abgefahren', 19);
+  HOOKS.push(t => el('ba5').classList.toggle('rot', t >= tAb));
+  wackeln('ba5', tAb, 3, 3); cue(tAb, 'plopp');
+  plakette('ax5', 'rot', 'svgAusruf');
+  pop('ax5', tAb + .1, { x: PX - 150, y: AY + 6 }, 'plopp'); akzent(tAb + .1, .04);
+  plakette('ok5', 'gruen', 'svgHaken');
+  pop('ok5', WE('abgefahren', 19) + .1, { x: PX - 150, y: NY + 10 }, 'ding');
+  FROH.push(['sl5p', SE(19) + .1, 99]);
+}
+
+/* ---------- 6 · der Ölwechsel ---------- */
+const P6 = SE(19) + .3; pan2(P6, 6);
+buehne(6);
+{
+  const X = S(6);
+  const k = wortkarte(6, { art: 'der', chip: 'der', wort: 'Ölwechsel', nr: 6, gr: 104 });
+  k.ein(P6 + .55); k.chip(W('Der', 20)); k.wort(W('Ölwechsel', 20));
+  satzleiste(6, 21, 'der', ['ölwechsel']).ein(SA(21) - .5);
+  const MX = X + 1250, MY = 520, MB = 340, G = 'data-gruppe="mo6"';
+  bild('mo6', 't-motor', MB, G);
+  ein('mo6', P6 + .75, { x: MX, y: MY }, { y: 80 }, 'whoosh');
+  const D = P(MX, MY, MB, 104, 136), F = P(MX, MY, MB, 56, 22);
+  // Ablassschraube dreht sich heraus, Altöl läuft in die Wanne
+  neu('ab6', '', '', G, 'stopfen'); akteur('ab6', { x: D.x, y: D.y + 4 });
+  neu('wa6', '<div class="oel" id="wo6"></div>', '', '', 'wanne');
+  ein('wa6', W('Ölwechsel', 20) - .5, { x: D.x, y: 800 }, { y: 50 }, 'pop');
+  akteur('wo6', { sy: 0 }, true);
+  const tO = W('Ölwechsel', 20) + .1;
+  wackeln('ab6', tO, 3, 18); tw('ab6', tO + .35, .5, { y: D.y + 60, r: 120, o: 0 }, 'in'); cue(tO + .35, 'klick');
+  neu('st6', '', `height:${800 - 45 - D.y - 6}px`, 'data-frei', 'strahl alt');
+  akteur('st6', { x: D.x, y: (D.y + 6 + 755) / 2, sy: 0 });
+  el('st6').style.transformOrigin = '50% 0';
+  const tFl = tO + .45;
+  tw('st6', tFl, .35, { sy: 1 }, 'in'); tw('wo6', tFl + .3, 1.7, { sy: 1 }, 'inout'); cue(tFl, 'scan');
+  tw('st6', tFl + 1.7, .4, { o: 0 }, 'out');
+  // Ölkanne kippt über dem Einfüllstutzen, neues Öl läuft ein
+  const KB = 190, KX = F.x + 93, KY = F.y - 47;
+  bild('ok6', 't-kanne', KB, 'data-gruppe="mo6"');
+  const tK = SA(21) - .3;
+  akteur('ok6', { x: KX + 160, y: KY - 60, o: 0, r: 10 });
+  tw('ok6', tK - .3, .3, { o: 1 }); flug('ok6', tK - .3, .7, KX, KY, 50, { r: 0 }); cue(tK - .3, 'whoosh');
+  const tKi = W('machst', 21) - .25;
+  tw('ok6', tKi, .5, { r: -40 }, 'sanft'); cue(tKi, 'klick');
+  neu('sn6', '', `height:${F.y - (KY + 7) + 4}px`, 'data-frei', 'strahl neu');
+  akteur('sn6', { x: F.x, y: (KY + 7 + F.y + 4) / 2, sy: 0 });
+  tw('sn6', tKi + .45, .25, { sy: 1 }, 'in');
+  const tEnd = W('Ölwechsel', 21) + .2;
+  tw('sn6', tEnd, .3, { o: 0 }); tw('ok6', tEnd + .1, .5, { r: 0 }, 'sanft');
+  bump('mo6', tEnd + .3, 1.04);
+  // drei Ölwechsel: drei kleine Autos mit 1, 2, 3
+  const tDr = W('drei', 21) - .1;
+  [0, 1, 2].forEach(n => {
+    const y = 420 + n * 145;
+    auto('ac6' + n, 160, `data-gruppe="ac6${n}"`);
+    neu('nr6' + n, String(n + 1), '', `data-gruppe="ac6${n}"`, 'nr');
+    pop('ac6' + n, tDr + n * .16, { x: X + 1620, y }, 'pop'); pop('nr6' + n, tDr + n * .16 + .1, { x: X + 1500, y }, null);
+    plakette('ok6' + n, 'gruen', 'svgHaken');
+    el('ok6' + n).style.cssText += ';width:50px;height:50px;border-width:4px'; el('ok6' + n).querySelector('svg').style.width = '26px';
+    pop('ok6' + n, tEnd + .1 + n * .15, { x: X + 1690, y: y - 40 }, 'ding');
+  });
+  akzent(tDr, .03);
+  FROH.push(['sl6p', SE(21) + .1, 99]);
+}
+
+/* ---------- 7 · das Diagnosegerät – die Diagnosegeräte · der Fehlerspeicher ---------- */
+const P7 = SE(21) + .3; pan2(P7, 7);
+buehne(7);
+{
+  const X = S(7);
+  const k = wortkarte(7, { art: 'das', chip: 'das', wort: 'Diagnosegerät', zeile: ['Plural', 'die Diagnosegeräte'], nr: 7, gr: 76, plgr: 40 });
+  k.ein(P7 + .55); k.chip(W('Das', 22)); k.wort(W('Diagnosegerät', 22)); k.zeile(W('Die', 23));
+  satzleiste(7, 25, 'das', ['diagnosegerät']).ein(SA(25) - .5);
+  // Cockpit: Armaturenbrett, Lenkrad, darunter die Buchse
+  const G = 'data-gruppe="ck7"', AX = X + 1135;
+  neu('ar7', '<i style="left:62px"></i><i style="right:62px"></i>', '', G, 'armatur');
+  bild('lr7', 't-lenkrad', 290, G);
+  neu('bu7', '', '', G, 'buchse');
+  ein('ar7', P7 + .7, { x: AX, y: 330 }, { y: -60 }, 'whoosh'); ein('lr7', P7 + .85, { x: AX, y: 430 }, { y: 70 });
+  pop('bu7', P7 + 1.1, { x: AX - 70, y: 650 }, 'pop');
+  // Tablet (Diagnosegerät) mit zwei weiteren dahinter
+  const TX = X + 1530, TY = 490, GT = 'data-gruppe="dg7"';
+  neu('dgG7b', '<div class="scr"></div>', '', GT, 'diag leer'); neu('dgG7a', '<div class="scr"></div>', '', GT, 'diag leer');
+  neu('dg7', diagHTML('dg7'), '', GT, 'diag');
+  pop('dg7', W('Diagnosegerät', 22) - .2, { x: TX, y: TY }, 'pop');
+  const tP = W('Diagnosegeräte', 23) - .1;
+  [['dgG7a', -30, .93], ['dgG7b', -60, .86]].forEach(([id, dy, s], n) => {
+    akteur(id, { x: TX, y: TY, o: 0, s: .9 }); set(id, tP + n * .12, { o: 1 });
+    tw(id, tP + n * .12, .6, { y: TY + dy, s }, 'sanft'); cue(tP + n * .12, 'whoosh');
+  });
+  // Es liest den Fehlerspeicher aus: Kabel zieht sich zur Buchse, Stecker sitzt, Daten laufen, Balken füllt sich, Fehlercode erscheint
+  akteur('dg7b', { sx: 0 }, true); akteur('dg7f', { o: 0 }, true); akteur('dg7c', { o: 0, s: .8 }, true);
+  const BX0 = X + 1040, BY0 = 590, BW = 360, BH = 210, SKX = AX - 70, SKY = 684;
+  const pfad = `M${TX - 160 - BX0} ${600 - BY0}C${TX - 200 - BX0} ${800 - BY0} ${SKX + 10 - BX0} ${790 - BY0} ${SKX - BX0} ${SKY + 17 - BY0}`;
+  neu('kb7', `<svg viewBox="0 0 ${BW} ${BH}" style="width:${BW}px;overflow:visible"><path id="kb7p" class="zeichnen" pathLength="1" d="${pfad}" stroke="var(--ink)" stroke-width="9" stroke-linecap="round" fill="none"/>${[0, 1, 2].map(n => `<circle id="kb7d${n}" r="8" fill="var(--warning)" opacity="0"/>`).join('')}</svg>`, '', 'data-frei data-dreht');
+  akteur('kb7', { x: BX0 + BW / 2, y: BY0 + BH / 2, draw: 0 });
+  WELT.insertBefore(el('kb7'), el('dgG7b'));
+  const tL = W('liest', 24) - .25;
+  tw('kb7', tL, .8, { draw: 1 }, 'inout'); cue(tL, 'scan');
+  neu('sk7', '', '', G, 'stecker');
+  pop('sk7', tL + .7, { x: SKX, y: SKY }, 'klick'); wellen(tL + .8, SKX, SKY - 30, 'var(--b400)', 150);
+  const tFs = W('Fehlerspeicher', 24) - .1, tAus = W('aus', 24);
+  zusatz('ch7', 'der', 'Fehlerspeicher', tFs, TX, 272);
+  tw('dg7b', tFs, tAus - tFs, { sx: 1 }, 'inout'); tw('dg7f', tFs + .2, .3, { o: 1 });
+  tw('dg7c', tAus - .05, .45, { o: 1, s: 1 }, 'back'); cue(tAus, 'plopp'); akzent(tAus, .035);
+  // Datenpunkte laufen von der Buchse zum Tablet
+  const pf = el('kb7p'), DATEN = [[tFs, tAus + .1]];
+  const tSl = W('lies', 25) - .1, tAus2 = W('aus', 25);
+  DATEN.push([tSl, tAus2]);
+  HOOKS.push(t => {
+    const L = pf.getTotalLength();
+    [0, 1, 2].forEach(n => {
+      const d = el('kb7d' + n), ab = DATEN.find(([a, b]) => t >= a && t < b);
+      if (!ab) { d.setAttribute('opacity', 0); return; }
+      const q = ((t - ab[0]) * 1.1 + n / 3) % 1, p = pf.getPointAtLength(L * (1 - q));
+      d.setAttribute('cx', p.x.toFixed(1)); d.setAttribute('cy', p.y.toFixed(1)); d.setAttribute('opacity', (Math.sin(Math.PI * q) * .95).toFixed(2));
+    });
+  });
+  // Schließ das Diagnosegerät an und lies den Fehlerspeicher aus
+  const tSc = W('Schließ', 25);
+  bump('sk7', tSc, 1.2); wellen(tSc, SKX, SKY - 30, 'var(--b400)', 150); cue(tSc, 'klick');
+  bump('dg7', W('Diagnosegerät', 25), 1.04);
+  bump('dg7c', W('Fehlerspeicher', 25), 1.08);
+  plakette('ok7', 'gruen', 'svgHaken');
+  pop('ok7', tAus2 + .05, { x: TX + 150, y: TY + 40 }, 'ding'); akzent(tAus2, .035);
+  FROH.push(['sl7p', SE(25) + .1, 99]);
+}
+
+/* ---------- 8 · die Hauptuntersuchung (HU / TÜV) ---------- */
+const P8 = SE(25) + .3; pan2(P8, 8);
+buehne(8);
+{
+  const X = S(8);
+  const k = wortkarte(8, { art: 'die', chip: 'die', wort: 'Hauptuntersuchung', zeile: ['kurz', 'HU <u id="vk8t">/ TÜV</u>'], nr: 8, gr: 58 });
+  k.ein(P8 + .55); k.chip(W('Die', 26)); k.wort(W('Hauptuntersuchung', 26)); k.zeile(W('HU', 26) - .1);
+  akteur('vk8t', { o: 0, y: 12 }, true); tw('vk8t', W('TÜV', 27) - .05, .4, { o: 1, y: 0 }, 'sanft');
+  // Heck des blauen Autos mit Nummernschild (Platzhalter)
+  const CX = X + 1320, CY = 580, CB = 600, G = 'data-gruppe="ah8"';
+  bild('ah8', 't-heck', CB, G);
+  const PL = P(CX, CY, CB, 80, 101);
+  neu('kz8', 'XX · XX 000', '', G, 'kennz');
+  const tA = W('Hauptuntersuchung', 26) - .3;
+  ein('ah8', tA, { x: CX, y: CY }, { y: 90 }, 'whoosh'); ein('kz8', tA + .1, { x: PL.x, y: PL.y }, { y: 90 });
+  bremsen('ah8', tA + .5);
+  // kurz HU: Platz für die Plakette pulsiert
+  const PKX = PL.x - 150 + 50, PKY = PL.y;
+  neu('ps8', '', 'width:80px;height:80px;border-radius:99px;border:5px dashed var(--b300)', G);
+  pop('ps8', W('HU', 26) - .1, { x: PKX, y: PKY }, 'pop');
+  for (let n = 0; n < 2; n++) bump('ps8', W('HU', 26) + .4 + n * .45, 1.15);
+  // Viele sagen einfach „TÜV“
+  neu('tv8', 'TÜV', '', '', 'blase');
+  const tT = W('TÜV', 27) - .1;
+  pop('tv8', tT, { x: CX, y: 318 }, 'plopp'); wackeln('tv8', tT + .45, 3, 4); akzent(tT, .035);
+  // Meistens alle zwei Jahre: Zeitstrahl, der Marker läuft
+  const tM = W('Meistens', 28) - .2;
+  aus('tv8', tM - .1, .3);
+  const ZX = [40, 320, 600], ZL = ['heute', '1 Jahr', '2 Jahre'];
+  neu('zs8', `<div class="li" id="zs8l"></div>${ZX.map((x, n) => `<div class="pk" id="zs8p${n}" style="left:${x}px"></div><span id="zs8s${n}" style="left:${x}px">${ZL[n]}</span>`).join('')}`, '', 'data-gruppe="zs8"', 'zs');
+  akteur('zs8', { x: CX, y: 300, o: 0 }); tw('zs8', tM, .3, { o: 1 });
+  akteur('zs8l', { sx: 0 }, true); tw('zs8l', tM, .8, { sx: 1 }, 'inout'); cue(tM, 'scan');
+  ZX.forEach((x, n) => { akteur('zs8p' + n, { s: 0 }, true); tw('zs8p' + n, tM + .2 + n * .25, .4, { s: 1 }, 'back'); akteur('zs8s' + n, { o: 0 }, true); tw('zs8s' + n, tM + .3 + n * .25, .3, { o: 1 }); });
+  const ZX0 = CX - 320;
+  neu('mk8', '', 'width:40px;height:40px;border-radius:99px;background:var(--b600);border:6px solid var(--surface);box-shadow:0 4px 10px rgba(22,19,37,.2)', 'data-gruppe="zs8"');
+  akteur('mk8', { x: ZX0 + ZX[0], y: 300 - 48 + 20, s: 0 });
+  const tZw = W('zwei', 28) - .15;
+  tw('mk8', tZw - .3, .35, { s: 1 }, 'back');
+  tw('mk8', tZw, .45, { x: ZX0 + ZX[1] }, 'inout', { bogen: 30 }); cue(tZw + .4, 'klick');
+  tw('mk8', tZw + .45, .45, { x: ZX0 + ZX[2] }, 'inout', { bogen: 30 }); cue(tZw + .85, 'klick');
+  HOOKS.push(t => el('zs8p2').classList.toggle('an', t >= tZw + .9));
+  bump('zs8p2', tZw + .9, 1.4); akzent(tZw + .9, .03);
+  // wird geprüft: Licht, Bremse, Reifen werden abgehakt
+  const tG = W('geprüft', 28) - .35;
+  aus(['zs8', 'mk8'], tG - .1, .3);
+  [['t-licht', CX - 210], ['t-scheibe', CX], ['t-rad', CX + 210]].forEach(([t, x], n) => {
+    neu('pr8' + n, `${kopie(t, 'pr8' + n)}<span class="ok" id="pr8o${n}">${tpl('svgHaken')}</span>`, '', '', 'pruef');
+    pop('pr8' + n, tG + n * .14, { x, y: 318 }, 'pop');
+    akteur('pr8o' + n, { s: 0 }, true); tw('pr8o' + n, tG + .45 + n * .22, .4, { s: 1 }, 'back'); cue(tG + .45 + n * .22, 'klick');
+  });
+  // sicher: die Prüfplakette schlägt mit Wackler aufs Schild
+  neu('pk8', plakHTML(), '', G, 'plak');
+  const tS = W('sicher', 28) - .3;
+  akteur('pk8', { x: PKX + 120, y: PKY - 260, o: 0, s: 1.8, r: -30 });
+  tw('pk8', tS, .2, { o: 1 }); tw('pk8', tS, .4, { x: PKX, y: PKY, s: 1, r: 0 }, 'in');
+  set('ps8', tS + .4, { o: 0 });
+  wackeln('pk8', tS + .4, 4, 7); tw('ah8', tS + .4, .1, { y: CY + 5 }, 'sinus'); tw('ah8', tS + .5, .35, { y: CY }, 'sanft');
+  tw('kz8', tS + .4, .1, { y: PL.y + 5 }, 'sinus'); tw('kz8', tS + .5, .35, { y: PL.y }, 'sanft');
+  cue(tS + .4, 'plopp'); cue(tS + .5, 'ding'); akzent(tS + .4, .045); wellen(tS + .4, PKX, PKY, 'var(--warning)', 180);
+}
+
+/* ---------- 9 · Schlussdialog in der Werkstatt ---------- */
+const P9 = SE(28) + .35; pan2(P9, 9);
+el('bue9').insertAdjacentHTML('afterbegin', '<div class="boden"></div>');
+akteur('bue9', { x: S(9) + 960, y: 540 });
+{
+  const X = S(9), FX = X + 960, FY = 370;
+  portrait('sab9', 'Sabine', 280); portrait('am9', 'Amir', 280);
+  ein('sab9', P9 + .5, { x: X + 330, y: 430 }, { y: 90 }, 'pop');
+  ein('am9', P9 + .65, { x: X + 1590, y: 430 }, { y: 90 }, 'pop');
+  neu('fenster9', '', '', 'data-gruppe="f9"', 'fenster');
+  ein('fenster9', P9 + .6, { x: FX, y: FY }, { y: 80 }, 'whoosh');
+  const G = 'data-gruppe="f9"';
+  const weg = (ids, t) => aus(ids, t, .3);
+  // a) den Auftrag … für den blauen Golf: Klemmbrett, das blaue Auto rollt herein
+  const tA = W('Auftrag', 29);
+  neu('au9', auftragHTML('au9'), 'transform-origin:50% 50%', G, 'auftrag');
+  el('au9m').innerHTML = kopie('t-auto', 'au9m'); el('au9m').querySelector('svg').setAttribute('viewBox', '0 44 160 92');
+  pop('au9', tA - .3, { x: FX - 150, y: FY, s: .55 }, 'pop');
+  const a = auto('ab9', 250, G), ABY = FY + 175 - a.unten;
+  const tG = W('blauen', 29) - .15;
+  akteur('ab9', { x: FX + 230, y: ABY, o: 0 });
+  tw('ab9', tG, .3, { o: 1 }); tw('ab9', tG, .9, { x: FX + 120 }, 'out'); bremsen('ab9', tG + .7); cue(tG, 'whoosh');
+  // Ja.
+  plakette('okA9', 'gruen', 'svgHaken', G);
+  pop('okA9', W('Ja', 30), { x: FX - 45, y: FY - 130 }, 'ding'); nicken('am9', W('Ja', 30) - .1, 1); FROH.push(['sab9', W('Ja', 30), SA(33)]);
+  // b) Ölwechsel: Ölkanne kippt, Öl läuft
+  const tO = W('Ölwechsel', 31);
+  weg(['au9', 'ab9', 'okA9'], tO - .45);
+  bild('ok9', 't-kanne', 200, G);
+  pop('ok9', tO - .25, { x: FX - 100, y: FY - 20 }, 'pop');
+  tw('ok9', tO + .15, .45, { r: -40 }, 'sanft');
+  neu('sn9', '', 'height:130px', G, 'strahl neu');
+  akteur('sn9', { x: FX - 198, y: FY - 20 + 7 + 65, sy: 0 }); tw('sn9', tO + .55, .25, { sy: 1 }, 'in');
+  // Bremsbeläge vorne: neuer und alter Belag, der alte wird rot
+  const tB = W('Bremsbeläge', 31);
+  tw('sn9', tB - .35, .3, { o: 0 }); tw('ok9', tB - .3, .4, { r: 0 }, 'sanft');
+  neu('bn9', belagHTML('bn9', 46), 'transform-origin:50% 50%', G, 'belag'); neu('ba9', belagHTML('ba9', 10), 'transform-origin:50% 50%', G, 'belag');
+  pop('bn9', tB - .1, { x: FX + 150, y: FY - 60, s: .85 }, 'pop'); pop('ba9', tB + .05, { x: FX + 150, y: FY + 70, s: .85 }, null);
+  const tV = W('vorne', 31);
+  HOOKS.push(t => el('ba9').classList.toggle('rot', t >= tV));
+  plakette('ax9', 'rot', 'svgAusruf', G);
+  pop('ax9', tV, { x: FX + 25, y: FY + 72 }, 'plopp'); wackeln('ba9', tV, 3, 3);
+  // c) nächste Woche zur HU: Nummernschild, die Plakette schlägt auf
+  const tH = W('HU', 32);
+  weg(['ok9', 'bn9', 'ba9', 'ax9'], W('nächste', 32) - .2);
+  neu('kz9', 'XX · XX 000', '', G, 'kennz');
+  pop('kz9', W('Woche', 32) - .1, { x: FX, y: FY + 20, s: 1.3 }, 'pop');
+  neu('pk9', plakHTML(), '', G, 'plak');
+  akteur('pk9', { x: FX + 40, y: FY - 170, o: 0, s: 1.7, r: -30 });
+  tw('pk9', tH - .3, .2, { o: 1 }); tw('pk9', tH - .3, .38, { x: FX + (-150 + 50) * 1.3, y: FY + 20, s: 1.3, r: 0 }, 'in');
+  wackeln('pk9', tH + .08, 4, 7); cue(tH + .08, 'plopp'); akzent(tH + .08, .035);
+  // Gut.
+  nicken('sab9', W('Gut', 33), 1); FROH.push(['am9', W('Gut', 33), SA(37) - .3]);
+  // d) Fahr ihn auf die Hebebühne: Mini-Hebebühne hebt das Auto
+  const tHb = W('Hebebühne', 34);
+  weg(['kz9', 'pk9'], W('Fahr', 34) - .2);
+  const BOT = FY + 175, hb = hebebuehne('hb9', FX, BOT, 360, 270, G);
+  ['l', 'r'].forEach((s, m) => { tw(`hb9f${s}`, W('Fahr', 34) + m * .08, .4, { s: 1 }, 'back'); tw(`hb9s${s}`, W('Fahr', 34) + .05 + m * .08, .6, { sy: 1 }, 'back'); });
+  cue(W('Fahr', 34), 'pop');
+  neu('ar9l', '', 'width:110px', G, 'arm'); neu('ar9r', '', 'width:110px', G, 'arm');
+  const ARY = BOT - 26;
+  pop('ar9l', W('ihn', 34), { x: hb.L + 29 + 55, y: ARY }, null); pop('ar9r', W('ihn', 34), { x: hb.R - 29 - 55, y: ARY }, null);
+  const a2 = auto('ah9', 250, G), AHY = BOT - a2.unten;
+  akteur('ah9', { x: FX, y: AHY - 40, o: 0, s: .7 });
+  tw('ah9', W('auf', 34) - .3, .3, { o: 1 }); tw('ah9', W('auf', 34) - .3, .7, { y: AHY, s: 1, draw: 200 }, 'out');
+  tw('ah9', tHb, .9, { y: AHY - 110 }, 'inout'); tw(['ar9l', 'ar9r'], tHb, .9, { y: ARY - 110 }, 'inout'); cue(tHb, 'scan'); landen('ah9', tHb + .9);
+  // e) Lies vorher mit dem Diagnosegerät den Fehlerspeicher aus: Tablet, Code, Haken
+  const tD = W('Diagnosegerät', 35);
+  weg(['hb9fl', 'hb9fr', 'hb9sl', 'hb9sr', 'ar9l', 'ar9r', 'ah9'], W('vorher', 35) - .1);
+  neu('dg9', diagHTML('dg9'), 'transform-origin:50% 50%', G, 'diag');
+  pop('dg9', tD - .25, { x: FX, y: FY }, 'pop');
+  akteur('dg9b', { sx: 0 }, true); akteur('dg9f', { o: 0 }, true); akteur('dg9c', { o: 0, s: .8 }, true);
+  const tF = W('Fehlerspeicher', 35);
+  tw('dg9b', tD + .2, tF - tD, { sx: 1 }, 'inout'); tw('dg9f', tF - .2, .3, { o: 1 }); tw('dg9c', tF - .05, .45, { o: 1, s: 1 }, 'back'); cue(tF, 'plopp');
+  plakette('okD9', 'gruen', 'svgHaken', G);
+  pop('okD9', W('aus', 35), { x: FX + 170, y: FY + 38 }, 'ding');
+  // f) Radmuttern mit dem Drehmomentschlüssel anziehen
+  const tR = W('Radmuttern', 36);
+  weg(['dg9', 'okD9'], tR - .45);
+  const FGX = FX - 90, FGY = FY + 30, M = P(FGX, FGY, 250, 80, 54);
+  bild('fg9', 't-felge', 250, G);
+  pop('fg9', tR - .25, { x: FGX, y: FGY }, 'pop');
+  for (let n = 0; n < 2; n++) wellen(tR + .1 + n * .3, M.x, M.y, 'var(--warning)', 90);
+  const DB = 300, DX = M.x - (20 / 160 - .5) * DB;
+  bild('dm9', 't-dreh', DB, G + ' data-dreht', 'transform-origin:12.5% 50%');
+  const tDm = W('Drehmomentschlüssel', 36);
+  akteur('dm9', { x: DX + 50, y: M.y - 60, o: 0, r: -12 });
+  tw('dm9', tDm - .35, .2, { o: 1 }); flug('dm9', tDm - .35, .6, DX, M.y, 40, { r: 0 }); landen('dm9', tDm + .25); cue(tDm + .25, 'klick');
+  const tAn = W('anziehen', 36);
+  tw('dm9', tAn - .1, .5, { r: 9 }, 'inout'); tw('dm9', tAn + .45, .4, { r: 0 }, 'sanft'); cue(tAn + .35, 'klick');
+  // g) Mach ich!
+  const tM = W('Mach', 37);
+  weg(['fg9', 'dm9'], tM - .25);
+  plakette('okE9', 'gruen', 'svgHaken', G); el('okE9').classList.add('gross');
+  pop('okE9', tM, { x: FX, y: FY }, 'ding'); cue(tM + .1, 'erfolg'); akzent(tM, .045);
+  nicken('sab9', tM + .1, 1.1); FROH.push(['sab9', tM, 99]); FROH.push(['am9', SE(37) + .05, 99]);
+  huepfen('am9', SE(37) + .15, 18); huepfen('sab9', SE(37) + .3, 14);
+  // Wort-Chips: ploppen beim Sprechen auf, blinken, reihen sich unten in zwei Reihen ein
+  const CHIPS = [['der', 'Auftrag', tA], ['der', 'Ölwechsel', tO], ['die', 'Bremsbeläge', tB], ['die', 'HU', tH],
+                 ['die', 'Hebebühne', tHb], ['das', 'Diagnosegerät', tD], ['der', 'Fehlerspeicher', tF], ['der', 'Drehmomentschlüssel', tDm]];
+  const GAP = 22, BREITE = CHIPS.map(([art, text]) => CHIPW[art + ' ' + text]);
+  [CHIPS.slice(0, 4), CHIPS.slice(4)].forEach((reihe, ri) => {
+    const bb = BREITE.slice(ri * 4, ri * 4 + 4), summe = bb.reduce((s, w) => s + w, 0) + GAP * (reihe.length - 1);
+    let cx = FX - summe / 2;
+    reihe.forEach(([art, text, t], n) => {
+      const w = bb[n], id = neu(`chip9${ri}${n}`, chipHTML(art, text), `width:${w}px`, '', 'chip ' + art);
+      const zx = cx + w / 2; cx += w + GAP;
+      akteur(id, { x: zx, y: FY + 272, s: 0 });
+      tw(id, t - .05, .5, { s: 1.15 }, 'back'); cue(t, 'pop');
+      HOOKS.push(z => { const d = z - t; const e = el(id); if (d > 0 && d < 1) { const k = Math.abs(Math.sin(d * Math.PI * 2)) * (1 - d); e.style.boxShadow = `0 0 0 ${(14 * k).toFixed(1)}px color-mix(in srgb, var(--f) ${Math.round(45 * k)}%, transparent), 0 8px 22px rgba(22,19,37,.14)`; } else e.style.boxShadow = ''; });
+      const tF2 = t + .6;
+      flug(id, tF2, .65, zx, 800 + ri * 78, 30, { s: 1 }); landen(id, tF2 + .65); cue(tF2, 'whoosh');
+    });
+  });
+  CHIPS.forEach((c, n) => bump(`chip9${n < 4 ? 0 : 1}${n % 4}`, SE(37) + .45 + n * .07, 1.1));
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.0;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

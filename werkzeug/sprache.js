@@ -1,30 +1,28 @@
-// Zeiten aus der Sprachaufnahme (sprache.js von werkzeug/sprechen.mjs). Nach motor.js einbinden:
-//   <script src="sprache.js"></script><script src="../../werkzeug/motor.js"></script><script src="../../werkzeug/sprache.js"></script>
-// A(s)      Sekunde der Aufnahme → Filmzeit
-// Z(i)      Beginn von Satz i (0-basiert, Reihenfolge wie in sprechtext.json), ZE(i) sein Ende
+// Satz-Zugriff auf die Aufnahme für Vorlagen, die Animationen an Satz und Wort hängen.
+// Nach motor.js einbinden: <script src="../../werkzeug/motor.js"></script><script src="../../werkzeug/sprache.js"></script>
+// Quelle: sprache.json von werkzeug/stimme.mjs (rendern.mjs legt sie als window.SPRACHDATEN vor motor.js in die Seite).
+// A(s)      Sekunde der Aufnahme → Filmzeit (Sprache beginnt bei VERSATZ)
+// Z(i)      Beginn von Satz i (0-basiert, Reihenfolge wie im Sprechertext), ZE(i) sein Ende
 // W(i, w)   Beginn des Wortes w in Satz i (Groß/Klein und Satzzeichen egal, Anfang genügt: 'Postfil' trifft „Postfiliale“),
 //           W(i, w, 2) das zweite Vorkommen; WE(i, w) Ende des Wortes
 // SAETZE    [[start, ende, text, sprecher], …] in Filmzeit; ABSCHNITTE [[start, ende, sprecher], …] für Gespräche
-// ENDE_SPRACHE  Ende der Aufnahme in Filmzeit
-const SD = window.SPRACHDATEN;
-if (!SD) throw new Error('sprache.js fehlt – erst node werkzeug/sprechen.mjs <ordner> [--probe]');
+// ENDE_SPRACHE  Ende der Aufnahme in Filmzeit; mund(t, sprecher) Mundöffnung 0…1 nur in eigenen Sätzen
+if (!SPRACHDATEN.saetze.length) throw new Error('sprache.json fehlt – erst node werkzeug/stimme.mjs <ordner>');
 const VERSATZ = 0.6;
-if (!SD.probe) window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
 const A = s => s + VERSATZ;
-const SAETZE = SD.saetze.map(s => [A(s.start), A(s.ende), s.text, s.sprecher]);
+const SAETZE = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), s.text, s.sprecher]);
 const ABSCHNITTE = SAETZE.map(([a, b, , w]) => [a, b, w]);
-const ENDE_SPRACHE = A(SD.dauer);
-const _norm = w => w.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
-const _satz = i => { const s = SD.saetze[i]; if (!s) throw new Error('Satz ' + i + ' gibt es nicht'); return s; };
-const Z = i => A(_satz(i).start), ZE = i => A(_satz(i).ende);
-function _wort(i, wort, n) {
+const ENDE_SPRACHE = A(SPRACHDATEN.dauer);
+const _satzI = i => SPRACHDATEN.saetze[i] || (() => { throw new Error('Satz ' + i + ' gibt es nicht'); })();
+const Z = i => A(_satzI(i).start), ZE = i => A(_satzI(i).ende);
+function _wortI(i, wort, n) {
   const z = _norm(wort); let k = 0;
-  for (const w of _satz(i).woerter) if (_norm(w[0]).startsWith(z) && ++k === n) return w;
-  throw new Error(`Wort „${wort}“ (${n}.) nicht in Satz ${i}: ${_satz(i).text}`);
+  for (const w of _satzI(i).woerter) if (_norm(w.w).startsWith(z) && ++k === n) return w;
+  throw new Error(`Wort „${wort}“ (${n}.) nicht in Satz ${i}: ${_satzI(i).text}`);
 }
-const W = (i, wort, n = 1) => A(_wort(i, wort, n)[1]);
-const WE = (i, wort, n = 1) => A(_wort(i, wort, n)[2]);
-// Mundöffnung eines Sprechers zur Zeit t (0…1): nur in seinen eigenen Sätzen, aus dem Pegel der Aufnahme
+const W = (i, wort, n = 1) => A(_wortI(i, wort, n).start);
+const WE = (i, wort, n = 1) => A(_wortI(i, wort, n).ende);
 function mund(t, wer, phase = 0) {
   const ab = ABSCHNITTE.find(([a, b, w]) => w === wer && t >= a - .03 && t <= b + .05);
   if (!ab) return 0;

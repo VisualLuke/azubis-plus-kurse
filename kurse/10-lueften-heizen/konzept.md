@@ -27,3 +27,46 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 ## Zu prüfen vor der Aufnahme
 
 - Faustregeln (3–4× am Tag, 5–10 Minuten, Stufe 3 ≈ 20 °C) so übernehmen?
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Schwarze Flecken in der Ecke?
+Erzähler: Das ist Schimmel.
+Erzähler: Er ist schlecht für deine Gesundheit.
+
+### Szene 2
+Erzähler: Schimmel kommt von feuchter Luft: vom Duschen, Kochen, Wäsche trocknen – und sogar vom Atmen.
+
+### Szene 3
+Erzähler: Deshalb lüftest du drei- bis viermal am Tag: Fenster ganz auf, fünf bis zehn Minuten.
+Erzähler: Das heißt Stoßlüften.
+
+### Szene 4
+Erzähler: Ein gekipptes Fenster den ganzen Tag bringt wenig.
+Erzähler: Die Wand wird kalt, und die Heizung arbeitet für draußen.
+
+### Szene 5
+Erzähler: Nach dem Duschen und Kochen lüftest du sofort.
+
+### Szene 6
+Erzähler: Dreh beim Lüften die Heizung herunter.
+Erzähler: Danach wieder hoch.
+
+### Szene 7
+Erzähler: Stufe 3 am Thermostat sind etwa 20 Grad.
+Erzähler: Das reicht für Wohnzimmer und Küche.
+
+### Szene 8
+Erzähler: Lass keinen Raum ganz kalt werden.
+Erzähler: Kalte Wände werden schneller feucht.
+
+### Szene 9
+Erzähler: Stell große Möbel ein Stück weg von der Wand.
+Erzähler: Dann kommt Luft dahinter.
+
+### Szene 10
+Erzähler: Siehst du doch Schimmel?
+Erzähler: Sag es gleich deinem Vermieter.

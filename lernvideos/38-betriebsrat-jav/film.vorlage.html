@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Betriebsrat, JAV &amp; Gewerkschaft</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+.buehne{width:1040px;height:710px;border-radius:44px}
+#kamera{position:absolute;inset:0;transform-origin:960px 540px;transform:translate(-288px,31.5px) scale(.9)}
+
+/* Gesprächspartner */
+.sprecher{position:absolute;width:400px;height:400px;border-radius:999px;overflow:hidden;
+  background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.sprecher .ebene,.mini .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.sprecher .figur{position:absolute;left:0;top:14px;width:100%;height:100%;transform-origin:50% 100%}
+.sprecher .augen,.mini .augen{transform-origin:50% 45%}
+.sprecher .auf{transform-origin:50% 53%}
+#jonas{left:55px;top:340px}
+#mai{left:auto;right:55px;top:340px}
+
+/* Text im Bild: oben auf der Bühne, Wörter steigen aus einer Maske */
+.kopf{width:920px;text-align:center}
+.kopf .titel{font:700 40px/50px Inter;letter-spacing:-.01em;color:var(--ink)}
+.kopf .w.hell{color:var(--b500)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:36px}
+.plakette.gruen{background:var(--success)}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.frage{width:110px;height:110px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 68px/110px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.frage.klein{width:56px;height:56px;font-size:34px;line-height:56px;box-shadow:0 4px 12px rgba(90,63,230,.25)}
+.mini{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:5px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.14)}
+.mini .figur{position:absolute;left:0;top:8%;width:100%;height:100%}
+.mini.gewaehlt{border-color:var(--b500)}
+
+/* Café */
+.tisch{width:820px;height:28px;border-radius:14px;background:linear-gradient(var(--b200),var(--b300))}
+.bein{width:22px;height:50px;border-radius:0 0 8px 8px;background:linear-gradient(var(--b300),var(--b400))}
+.dampf path{fill:none;stroke:var(--b200);stroke-width:5;stroke-linecap:round}
+.gedanke{width:300px;height:210px;border-radius:48px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12)}
+.gedanke small{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:700 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.wanduhr .zg{position:absolute;left:0;top:0;width:100%}
+.wanduhr .std,.wanduhr .min{transform-origin:80px 76px}
+.punkt-g{border-radius:999px;background:var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.12)}
+.brett{width:74px;height:92px;border-radius:10px;background:var(--warning-bg);border:4px solid var(--b200)}
+/* Flyer „Wähl deine JAV!“ */
+.flyer{width:190px;height:250px;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,var(--b500),var(--b700));
+  box-shadow:0 10px 26px rgba(58,37,153,.3);padding:26px 18px 0;display:flex;flex-direction:column;align-items:center}
+.flyer .band{position:absolute;left:0;right:0;top:0;height:12px;background:var(--warning)}
+.flyer .klein{font:700 22px/26px Inter;color:var(--b100);white-space:nowrap}
+.flyer .gross{font:800 56px/62px Inter;letter-spacing:-.02em;color:var(--warning-bg);white-space:nowrap}
+.flyer .kreuz{margin-top:10px;width:58px;height:58px;border-radius:12px;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.flyer .kreuz svg{width:40px}
+.flyer .streifen{position:absolute;left:0;right:0;bottom:0;height:16px;display:flex}
+.flyer .streifen i{flex:1}
+
+/* Wahl */
+.zettel{width:46px;height:58px;border-radius:6px;background:var(--surface);box-shadow:0 4px 10px rgba(22,19,37,.18);padding:8px 7px;display:flex;flex-direction:column;gap:6px}
+.zettel b{width:14px;height:14px;border-radius:3px;border:2.5px solid var(--b500);position:relative}
+.zettel b::after{content:"";position:absolute;left:1px;top:-3px;width:5px;height:10px;border:solid var(--b500);border-width:0 3px 3px 0;transform:rotate(40deg)}
+.zettel i{height:5px;border-radius:3px;background:var(--n200)}
+
+/* Karten auf dem Tisch */
+.thema{width:224px;height:146px;border-radius:22px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.thema svg{width:64px;height:64px}
+.thema b{font:700 22px/26px Inter;color:var(--ink);white-space:nowrap}
+.sprechb{width:86px;height:56px;border-radius:22px;background:var(--surface);box-shadow:0 4px 14px rgba(22,19,37,.12);display:flex;align-items:center;justify-content:center;gap:8px}
+.sprechb i{width:11px;height:11px;border-radius:999px;background:var(--b400)}
+.sprechb::after{content:"";position:absolute;bottom:-12px;border:8px solid transparent;border-top:12px solid var(--surface)}
+.sprechb.l::after{left:18px}
+.sprechb.r::after{right:18px}
+.sprechb.frag i{display:none}
+.sprechb.frag b{font:800 32px/1 Inter;color:var(--b500)}
+
+/* Betrieb mit/ohne Betriebsrat */
+.zaehler{height:58px;padding:0 22px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 32px/58px Inter;white-space:nowrap;
+  box-shadow:0 6px 18px rgba(90,63,230,.3)}
+.brschild{width:190px;height:96px}
+.brschild .pendel{position:absolute;left:0;top:0;width:190px;height:96px;transform-origin:50% 0}
+.brschild .seil{position:absolute;top:0;width:4px;height:26px;background:var(--b700);border-radius:2px}
+.brschild .brett2{position:absolute;left:0;top:24px;width:190px;height:66px;border-radius:16px;background:var(--surface);border:4px solid var(--b500);
+  box-shadow:0 6px 16px rgba(22,19,37,.14);font:800 24px/58px Inter;color:var(--b600);text-align:center;white-space:nowrap}
+.leerschild{width:100px;height:40px;border-radius:12px;border:3px dashed var(--n400);background:color-mix(in srgb,var(--surface) 60%,transparent)}
+.leerschild::before,.leerschild::after{content:"";position:absolute;top:100%;width:4px;height:12px;border-radius:2px;background:var(--n400)}
+.leerschild::before{left:22px}.leerschild::after{right:22px}
+
+/* JAV */
+.buchst{width:150px;height:150px;border-radius:34px;background:var(--b500);color:var(--surface);font:800 96px/150px Inter;text-align:center;
+  box-shadow:0 8px 22px rgba(90,63,230,.3)}
+.teilwort{padding:9px 20px;border-radius:16px;background:var(--surface);box-shadow:0 4px 14px rgba(22,19,37,.1);font:700 30px/36px Inter;color:var(--ink);white-space:nowrap;min-height:54px}
+.teilwort b{color:var(--b500)}
+.raum{width:500px;height:400px;border-radius:40px;border:4px dashed var(--b300);background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.schloss{width:96px;height:120px}
+.schloss .buegel{position:absolute;left:0;top:0;width:96px}
+.schloss .koerper{position:absolute;left:0;top:0;width:96px}
+
+/* Gewerkschaft */
+.rahmen{width:320px;height:320px;border-radius:40px;border:4px dashed var(--b300)}
+.doku{width:220px;height:272px;border-radius:18px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);padding:22px 22px 0;display:flex;flex-direction:column;gap:12px}
+.doku small{font:800 19px/24px Inter;letter-spacing:.07em;text-transform:uppercase;color:var(--b600);text-align:center;margin-bottom:4px}
+.doku i{height:8px;border-radius:4px;background:var(--n200)}
+.doku svg{position:absolute;left:24px;bottom:30px;width:110px}
+.doku .linie{position:absolute;left:24px;bottom:28px;width:120px;height:2px;background:var(--n400)}
+.abdruck{width:74px;height:74px;border-radius:999px;border:5px solid var(--success);display:flex;align-items:center;justify-content:center;opacity:.92}
+.abdruck svg{width:36px}
+.org{width:420px;height:104px;border-radius:24px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);display:flex;align-items:center;gap:18px;padding:0 22px}
+.org .ik{width:60px;height:60px;border-radius:999px;background:var(--b50);display:flex;align-items:center;justify-content:center;flex:none}
+.org .ik svg{width:38px}
+.org small{display:block;font:600 17px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.org b{display:block;font:800 34px/40px Inter;color:var(--ink);white-space:nowrap;min-height:38px}
+
+/* Mitgliedschaft */
+.mkarte{width:340px;height:212px;border-radius:22px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);overflow:hidden}
+.mkarte .kopfband{height:52px;background:linear-gradient(135deg,var(--b500),var(--b700));color:var(--surface);font:800 22px/52px Inter;letter-spacing:.08em;text-transform:uppercase;padding-left:24px}
+.mkarte .bild{position:absolute;left:24px;top:72px;width:84px;height:84px;border-width:4px}
+.mkarte .zeilen{position:absolute;left:128px;top:80px;width:180px;display:flex;flex-direction:column;gap:12px}
+.mkarte .zeilen i{height:9px;border-radius:5px;background:var(--n200)}
+.mkarte .frei{position:absolute;left:128px;top:128px;display:flex;align-items:center;gap:10px;font:700 20px/24px Inter;color:var(--success-text)}
+.mkarte .mbox{width:34px;height:34px;border-radius:9px;border:3px solid var(--success);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.mkarte .mbox svg{width:24px}
+.nachteil{width:96px;height:56px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 88px/100px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:28px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<!-- Figuren-Vorrat: Porträts werden per Skript in die .mini-Kreise (data-fig) gesetzt -->
+<div hidden>
+  <template id="t-mai">{{figur-mai}}</template><template id="t-jonas">{{figur-jonas}}</template>
+  <template id="t-kwame">{{figur-kwame}}</template><template id="t-priya">{{figur-priya}}</template>
+  <template id="t-amir">{{figur-amir}}</template><template id="t-ana">{{figur-ana}}</template>
+  <template id="t-yusuf">{{figur-yusuf}}</template><template id="t-sabine">{{figur-sabine}}</template>
+  <template id="t-chefin">{{figur-chefin}}</template><template id="t-kunde">{{figur-kunde}}</template>
+  <template id="t-augen">{{figur-augen}}</template><template id="t-zu">{{figur-mund-zu}}</template><template id="t-froh">{{figur-mund-froh}}</template>
+</div>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Café nach der Schicht -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="fenster0" style="width:360px" data-gruppe="cafe0">{{fenster}}</div>
+  <div class="a bein" id="bein0a" data-gruppe="cafe0"></div><div class="a bein" id="bein0b" data-gruppe="cafe0"></div>
+  <div class="a mini" id="jonas0" data-fig="jonas" style="width:170px;height:170px" data-gruppe="cafe0"></div>
+  <div class="a mini" id="mai0" data-fig="mai" style="width:170px;height:170px" data-gruppe="cafe0"></div>
+  <div class="a tisch" id="tisch0" data-gruppe="cafe0"></div>
+  <div class="a" id="tasse0a" style="width:160px" data-gruppe="cafe0">{{tasse}}</div>
+  <div class="a" id="tasse0b" style="width:160px" data-gruppe="cafe0">{{tasse}}</div>
+  <svg class="a dampf" id="dampf0a" viewBox="0 0 60 70" style="width:50px" data-gruppe="cafe0"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg>
+  <svg class="a dampf" id="dampf0b" viewBox="0 0 60 70" style="width:50px" data-gruppe="cafe0"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg>
+  <div class="a wanduhr" id="uhr0" style="width:120px" data-gruppe="cafe0">{{uhr}}<svg class="zg" viewBox="0 0 160 160"><path class="std" d="M80 76V56" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><path class="min" d="M80 76V46" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="76" r="5" fill="var(--b700)"/></svg></div>
+  <div class="a punkt-g" id="gp0a" style="width:22px;height:22px" data-gruppe="cafe0"></div>
+  <div class="a punkt-g" id="gp0b" style="width:34px;height:34px" data-gruppe="cafe0"></div>
+  <div class="a gedanke" id="gedanke0" data-gruppe="cafe0"><small>Pflegeheim</small></div>
+  <div class="a" id="heim0" style="width:150px" data-gruppe="cafe0">{{pflegeheim}}</div>
+  <div class="a brett" id="brett0" data-gruppe="cafe0"></div>
+  <div class="a flyer" id="flyer0" data-gruppe="cafe0"><div class="band"></div><div class="klein">Wähl deine</div><div class="gross">JAV!</div>
+    <div class="kreuz"><svg viewBox="0 0 40 40"><path class="zeichnen" pathLength="1" d="M8 21l8 8 17-18" stroke="var(--success)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    <div class="streifen"><i style="background:var(--success)"></i><i style="background:var(--warning)"></i><i style="background:var(--info)"></i><i style="background:var(--error)"></i></div></div>
+  <div class="a frage" id="frage0" data-frei>?</div>
+
+  <!-- 2 · Betriebsrat: gewählte Vertretung -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a kopf" id="kopf1"><div id="tb1"><div class="titel">Betriebsrat = gewählte Vertretung</div></div></div>
+  <div class="a" id="urne1" style="width:240px">{{wahlurne}}</div>
+  <div id="kol1"></div>
+  <div class="a tisch" id="tisch1" style="width:760px" data-gruppe="br1"></div>
+  <div class="a mini" id="chef1" data-fig="chefin" style="width:140px;height:140px" data-gruppe="br1"></div>
+  <div class="a chip brand klein" id="chipBr1">Betriebsrat</div>
+  <div class="a chip klein" id="chipGf1">Geschäftsführung</div>
+  <div class="a thema" id="kt1a"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="var(--surface)" stroke="var(--b500)" stroke-width="5"/><path id="zeiger1" d="M30 30V14" stroke="var(--b600)" stroke-width="5" stroke-linecap="round"/><path d="M30 30h10" stroke="var(--b400)" stroke-width="5" stroke-linecap="round"/><circle cx="30" cy="30" r="4" fill="var(--b700)"/></svg><b>Arbeitszeiten</b></div>
+  <div class="a thema" id="kt1b"><svg viewBox="0 0 60 60"><rect x="4" y="8" width="52" height="46" rx="8" fill="var(--b50)" stroke="var(--b300)" stroke-width="3"/><rect x="4" y="8" width="52" height="12" rx="6" fill="var(--b500)"/>
+    <g id="plan1"><rect x="11" y="25" width="10" height="9" rx="2" fill="var(--b500)"/><rect x="25" y="25" width="10" height="9" rx="2" fill="var(--b200)"/><rect x="39" y="25" width="10" height="9" rx="2" fill="var(--b500)"/>
+    <rect x="11" y="38" width="10" height="9" rx="2" fill="var(--b200)"/><rect x="25" y="38" width="10" height="9" rx="2" fill="var(--b500)"/><rect x="39" y="38" width="10" height="9" rx="2" fill="var(--b200)"/></g></svg><b>Dienstpläne</b></div>
+  <div class="a thema" id="kt1c"><svg viewBox="0 0 60 60"><rect x="4" y="8" width="52" height="46" rx="8" fill="var(--b50)" stroke="var(--b300)" stroke-width="3"/><rect x="4" y="8" width="52" height="12" rx="6" fill="var(--b500)"/>
+    <g id="sonne1"><circle cx="30" cy="37" r="8" fill="var(--warning)"/><path d="M30 23v4M30 47v4M16 37h4M40 37h4M20 27l3 3M37 44l3 3M40 27l-3 3M23 44l-3 3" stroke="var(--warning)" stroke-width="3" stroke-linecap="round"/></g></svg><b>Urlaubsplanung</b></div>
+  <div class="a sprechb l" id="sb1a" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb r" id="sb1b" data-frei><i></i><i></i><i></i></div>
+  <div class="a plakette gruen" id="ok1" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 3 · Nicht jeder Betrieb hat einen -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a kopf" id="kopf2"><div id="tb2"><div class="titel">Nicht jeder Betrieb hat einen</div></div></div>
+  <div class="a" id="firma2" style="width:320px" data-gruppe="firma2">{{firma}}</div>
+  <div class="a brschild" id="schild2" data-gruppe="firma2"><div class="pendel" id="pendel2"><div class="seil" style="left:40px"></div><div class="seil" style="right:40px"></div><div class="brett2">Betriebsrat</div></div></div>
+  <div class="a" id="laden2a" style="width:200px" data-gruppe="laeden2">{{laden}}</div>
+  <div class="a" id="laden2b" style="width:180px" data-gruppe="laeden2">{{laden}}</div>
+  <div class="a" id="laden2c" style="width:180px" data-gruppe="laeden2">{{laden}}</div>
+  <div class="a leerschild" id="leer2a" data-gruppe="laeden2"></div><div class="a leerschild" id="leer2b" data-gruppe="laeden2"></div><div class="a leerschild" id="leer2c" data-gruppe="laeden2"></div>
+  <div class="a frage" id="frage2">?</div>
+  <div id="kol2"></div>
+  <div class="a zaehler" id="zaehler2">ab 1</div>
+  <div class="a" id="urne2" style="width:160px">{{wahlurne~2}}</div>
+
+  <!-- 4 · JAV: Vertretung für Azubis, vertraulich -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a kopf" id="kopf3"><div id="tb3"><div class="titel" style="font-size:36px">JAV = Vertretung für Azubis · vertraulich</div></div></div>
+  <div class="a raum" id="raum3" data-gruppe="raum3"></div>
+  <div class="a buchst" id="bj3" data-gruppe="raum3">J</div><div class="a buchst" id="ba3" data-gruppe="raum3">A</div><div class="a buchst" id="bv3" data-gruppe="raum3">V</div>
+  <div class="a teilwort" id="tw3j"><b>J</b><span id="tx3j"></span></div>
+  <div class="a teilwort" id="tw3a"><b>A</b><span id="tx3a"></span></div>
+  <div class="a teilwort" id="tw3v"><b>v</b><span id="tx3v"></span></div>
+  <div class="a mini" id="jung3a" data-fig="kwame" style="width:120px;height:120px" data-gruppe="raum3"></div>
+  <div class="a mini" id="jung3b" data-fig="priya" style="width:120px;height:120px" data-gruppe="raum3"></div>
+  <div class="a mini" id="jung3c" data-fig="yusuf" style="width:120px;height:120px" data-gruppe="raum3"></div>
+  <div class="a mini" id="mai3" data-fig="mai" style="width:130px;height:130px" data-gruppe="raum3"></div>
+  <div class="a" id="wolke3" style="width:160px" data-frei>{{wolke}}</div>
+  <div class="a schloss" id="schloss3" data-gruppe="raum3">
+    <div class="buegel" id="buegel3"><svg viewBox="0 0 96 120"><path d="M26 64V40a22 22 0 0 1 44 0v24" stroke="var(--n400)" stroke-width="12" fill="none"/></svg></div>
+    <div class="koerper"><svg viewBox="0 0 96 120"><rect x="10" y="58" width="80" height="60" rx="14" fill="var(--b700)"/><rect x="8" y="55" width="80" height="60" rx="14" fill="var(--b500)"/>
+      <circle cx="48" cy="80" r="8" fill="var(--b700)"/><path d="M44 84h8l2 14H42Z" fill="var(--b700)"/></svg></div></div>
+  <div class="a" id="urne3" style="width:150px">{{wahlurne~3}}</div>
+  <div class="a mini" id="chef3" data-fig="chefin" style="width:130px;height:130px"></div>
+  <div class="a frage klein" id="frage3a" data-frei>?</div>
+  <div class="a frage klein" id="frage3b" data-frei>?</div>
+  <div class="a plakette gruen" id="ok3" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a" id="schluessel3" style="width:160px" data-gruppe="raum3">{{schluessel}}</div>
+
+  <!-- 5 · Gewerkschaft → Tarifvertrag -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a kopf" id="kopf4"><div id="tb4"><div class="titel">Gewerkschaft → Tarifvertrag</div></div></div>
+  <div class="a frage" id="frage4">?</div>
+  <div class="a" id="verband4" style="width:360px">{{verband}}</div>
+  <div class="a rahmen" id="rahmen4" data-gruppe="betrieb4"></div>
+  <div class="a" id="betrieb4" style="width:240px" data-gruppe="betrieb4">{{betrieb}}</div>
+  <div class="a chip brand klein" id="chipGw4">Gewerkschaft</div>
+  <div class="a tisch" id="tisch4" style="width:760px" data-gruppe="tisch4"></div>
+  <div class="a mini" id="gw4a" data-fig="sabine" style="width:130px;height:130px" data-gruppe="tisch4"></div>
+  <div class="a mini" id="gw4b" data-fig="amir" style="width:130px;height:130px" data-gruppe="tisch4"></div>
+  <div class="a mini" id="chef4" data-fig="chefin" style="width:140px;height:140px" data-gruppe="tisch4"></div>
+  <div class="a chip klein" id="chipAg4">Arbeitgeber</div>
+  <div class="a sprechb l" id="sb4a" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb r" id="sb4b" data-frei><i></i><i></i><i></i></div>
+  <div class="a chip klein" id="chipGeh4"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--warning)"/><text x="15" y="21" font-family="Inter,sans-serif" font-weight="800" font-size="16" text-anchor="middle" fill="var(--warning-bg)">€</text></svg>Gehalt</div>
+  <div class="a chip klein" id="chipArb4"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="var(--surface)" stroke="var(--b500)" stroke-width="3.5"/><path d="M15 15V8M15 15h5" stroke="var(--b600)" stroke-width="3" stroke-linecap="round"/></svg>Arbeitsbedingungen</div>
+  <div class="a doku" id="doku4" data-gruppe="doku4"><small>Tarifvertrag</small><i></i><i style="width:80%"></i><i></i><i style="width:64%"></i><i style="width:88%"></i>
+    <div class="linie"></div><svg viewBox="0 0 110 30"><path class="zeichnen" pathLength="1" d="M4 22c6-14 12-16 14-8s4 9 10-2 8-7 12-1 6 4 12-3 8-4 12 2 8 3 14-4" stroke="var(--b500)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a abdruck" id="abdruck4" data-gruppe="doku4"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a org" id="org4a"><div class="ik"><svg viewBox="0 0 40 40"><path d="M20 34L6 20a8 8 0 0 1 14-9a8 8 0 0 1 14 9Z" fill="var(--error)"/></svg></div><div><small>Pflege</small><b id="on4a"></b></div></div>
+  <div class="a org" id="org4b"><div class="ik"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" fill="none" stroke="var(--n500)" stroke-width="7" stroke-dasharray="5.5 4.7"/><circle cx="20" cy="20" r="11" fill="var(--n500)"/><circle cx="20" cy="20" r="4.5" fill="var(--b50)"/></svg></div><div><small>Metall</small><b id="on4b"></b></div></div>
+  <div class="a org" id="org4c"><div class="ik"><svg viewBox="0 0 40 40"><path d="M7 27a13 13 0 0 1 26 0Z" fill="var(--b500)"/><rect x="4" y="27" width="32" height="5" rx="2.5" fill="var(--b700)"/><circle cx="20" cy="12" r="3" fill="var(--b500)"/></svg></div><div><small>Gastronomie</small><b id="on4c"></b></div></div>
+
+  <!-- 6 · Mitglied: freiwillig, kleine Kosten, Beratung -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a kopf" id="kopf5"><div id="tb5"><div class="titel">Freiwillig · kleine Kosten · Beratung</div></div></div>
+  <div class="a mkarte" id="mkarte5"><div class="kopfband">Mitglied</div><div class="mini bild" data-fig="mai"></div>
+    <div class="zeilen"><i></i><i style="width:70%"></i></div>
+    <div class="frei"><div class="mbox"><svg viewBox="0 0 40 40"><path id="haken5" class="zeichnen" pathLength="1" d="M8 21l8 8 17-18" stroke="var(--success)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>freiwillig</div></div>
+  <div class="a" id="muenze5" style="width:170px">{{muenze}}</div>
+  <div class="a chip gruen klein" id="chipAz5"><svg viewBox="0 0 30 30"><path d="M15 5v18M7 16l8 8 8-8" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>Azubis</div>
+  <div class="a tisch" id="tisch5" style="width:380px" data-gruppe="berat5"></div>
+  <div class="a mini" id="mai5" data-fig="mai" style="width:140px;height:140px" data-gruppe="berat5"></div>
+  <div class="a mini" id="berat5" data-fig="kunde" style="width:140px;height:140px" data-gruppe="berat5"></div>
+  <div class="a sprechb r" id="sb5a" data-frei><i></i><i></i><i></i></div>
+  <div class="a sprechb l" id="sb5b" data-frei><i></i><i></i><i></i></div>
+  <div class="a" id="schild5" style="width:270px">{{schutzschild}}</div>
+  <div class="a welle" id="welle5" style="width:300px;height:300px" data-frei></div>
+  <div class="a" id="betrieb5" style="width:230px">{{betrieb~5}}</div>
+  <div class="a nachteil" id="pfeil5" data-frei><svg viewBox="0 0 96 56"><path d="M90 28H26" stroke="var(--error)" stroke-width="12" stroke-linecap="round"/><path d="M34 8L10 28l24 20" stroke="var(--error)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen" id="ok5" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+
+  <!-- 7 · Zurück im Café -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a kopf" id="kopf6"><div id="tb6"><div class="titel">Du bist nicht allein im Betrieb</div></div></div>
+  <div class="a" id="fenster6" style="width:360px" data-gruppe="cafe6">{{fenster~6}}</div>
+  <div class="a bein" id="bein6a" data-gruppe="cafe6"></div><div class="a bein" id="bein6b" data-gruppe="cafe6"></div>
+  <div class="a mini" id="jonas6" data-fig="jonas" style="width:170px;height:170px" data-gruppe="cafe6"></div>
+  <div class="a mini" id="mai6" data-fig="mai" style="width:170px;height:170px" data-gruppe="cafe6"></div>
+  <div class="a tisch" id="tisch6" data-gruppe="cafe6"></div>
+  <div class="a" id="tasse6a" style="width:160px" data-gruppe="cafe6">{{tasse~6a}}</div>
+  <div class="a" id="tasse6b" style="width:160px" data-gruppe="cafe6">{{tasse~6b}}</div>
+  <svg class="a dampf" id="dampf6a" viewBox="0 0 60 70" style="width:50px" data-gruppe="cafe6"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg>
+  <svg class="a dampf" id="dampf6b" viewBox="0 0 60 70" style="width:50px" data-gruppe="cafe6"><path d="M20 64c-8-10 8-18 0-30s8-20 0-30"/><path d="M40 64c-8-10 8-18 0-30s8-20 0-30"/></svg>
+  <div class="a wanduhr" id="uhr6" style="width:120px" data-gruppe="cafe6">{{uhr~6}}<svg class="zg" viewBox="0 0 160 160"><path class="std" d="M80 76V56" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/><path class="min" d="M80 76V46" stroke="var(--b700)" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="76" r="5" fill="var(--b700)"/></svg></div>
+  <div class="a" id="tasche6" style="width:120px" data-gruppe="cafe6">{{tasche}}</div>
+  <div class="a flyer" id="flyer6" data-gruppe="cafe6"><div class="band"></div><div class="klein">Wähl deine</div><div class="gross">JAV!</div>
+    <div class="kreuz"><svg viewBox="0 0 40 40"><path class="zeichnen" pathLength="1" d="M8 21l8 8 17-18" stroke="var(--success)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+    <div class="streifen"><i style="background:var(--success)"></i><i style="background:var(--warning)"></i><i style="background:var(--info)"></i><i style="background:var(--error)"></i></div></div>
+  <div class="a sprechb frag r" id="sb6" data-frei><b>?</b></div>
+</div></div>
+
+<div class="sprecher" id="jonas"><div class="figur">
+  <div class="ebene">{{figur-jonas}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+<div class="sprecher" id="mai"><div class="figur">
+  <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+  <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Du musst Probleme<br>nicht allein lösen.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Betriebsrat, JAV und Gewerkschaft sind für dich da.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Porträts in die Kreise setzen ---------- */
+const TPL = n => document.getElementById('t-' + n).innerHTML;
+const figurHtml = f => `<div class="figur"><div class="ebene">${TPL(f)}</div><div class="ebene augen">${TPL('augen')}</div><div class="ebene zu">${TPL('zu')}</div><div class="ebene froh">${TPL('froh')}</div></div>`;
+// Kolleginnen und Kollegen (Szene 2 und 3) und Stimmzettel
+const KOL = ['kwame', 'priya', 'amir', 'ana', 'yusuf'];
+KOL.forEach((f, i) => {
+  document.getElementById('kol1').insertAdjacentHTML('beforebegin', `<div class="a mini" id="k1_${i}" data-fig="${f}" style="width:130px;height:130px;z-index:${i === 0 || i === 4 ? 0 : 2}" data-gruppe="br1"></div>`);
+  document.getElementById('kol2').insertAdjacentHTML('beforebegin', `<div class="a mini" id="k2_${i}" data-fig="${f}" style="width:80px;height:80px;border-width:4px"></div>`);
+});
+KOL.forEach((f, i) => {
+  document.getElementById('kol1').insertAdjacentHTML('beforebegin', `<div class="a zettel" id="z1_${i}" data-frei style="z-index:3"><b></b><i></i><i style="width:70%"></i></div>`);
+  document.getElementById('kol2').insertAdjacentHTML('beforebegin', `<div class="a zettel" id="z2_${i}" data-frei style="z-index:3"><b></b><i></i><i style="width:70%"></i></div>`);
+});
+document.getElementById('urne3').insertAdjacentHTML('afterend', `<div class="a zettel" id="z3" data-frei style="z-index:3"><b></b><i></i><i style="width:70%"></i></div>`);
+document.getElementById('kol1').remove(); document.getElementById('kol2').remove();
+document.querySelectorAll('[data-fig]').forEach(m => { m.innerHTML = figurHtml(m.dataset.fig); });
+
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.8;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const SA = n => A(satz(n).start);
+const N = SPRACHDATEN.saetze.length;
+const ENDE_SPRACHE = SE(N);
+const MX = 1280, MY = 505, BUEHNEN = 7;
+for (let i = 0; i < BUEHNEN; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { ...basis, s: 0 }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { const r0 = wertBei(id, 'r', t); for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: r0 + (i % 2 ? w : -w) }, 'sinus'); tw(id, t + n * .1, .25, { r: r0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { if (!AKTEURE.get(el(id))) akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8, x, y }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+// Aufschlag von oben: fällt, staucht, federt
+const aufschlag = (id, t, basis, h = 220, snd = 'plopp') => {
+  akteur(id, { ...basis, y: basis.y - h, o: 0 });
+  tw(id, t - .32, .1, { o: 1 }); tw(id, t - .32, .32, { y: basis.y }, 'in');
+  tw(id, t, .09, { sy: .8, sx: 1.12 }, 'out'); tw(id, t + .09, .5, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+// Text tippt sich im Takt eines Worts
+const tippen = (id, text, a, b) => {
+  HOOKS.push(t => { el(id).textContent = t < a ? '' : text.slice(0, Math.max(1, Math.ceil(clamp((t - a) / (b - a)) * text.length))); });
+  for (let i = 0; i < 5; i++) cue(a + i * (b - a) / 5, 'tipp');
+};
+// Text im Bild: Kopfzeile der Bühne, Wörter aus der Maske, einzelne Wörter in Markenfarbe
+function kopf(i, t0, zeiten, hell = []) {
+  akteur('kopf' + i, { x: S(i) + MX - 460, y: 204 }, true);
+  titelEin('tb' + i, t0, zeiten);
+  const w = document.querySelectorAll(`#tb${i} .w`); hell.forEach(k => w[k].classList.add('hell'));
+}
+const kopfAus = (i, t) => tw('kopf' + i, t, .3, { o: 0, y: 184 }, 'in');
+// Stimmzettel: springt beim Wähler auf, fliegt im Bogen zum Schlitz der Urne und verschwindet darin
+const waehlen = (id, t0, vx, vy, ux, uy, urne, d = .6) => {
+  akteur(id, { x: vx, y: vy, s: 0, r: -3 });
+  tw(id, t0, .25, { s: 1 }, 'back');
+  tw(id, t0 + .15, d, { x: ux, y: uy - 34, r: 3 }, 'inout', { bogen: 110 });
+  const te = t0 + .15 + d;
+  tw(id, te, .22, { y: uy + 6, sy: .6 }, 'in'); tw(id, te + .07, .1, { o: 0 });
+  bump(urne, te + .2, 1.06); cue(te + .2, 'klick');
+};
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `translate(-288px,31.5px) scale(${(.9 * z).toFixed(5)})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < BUEHNEN; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.14 * (wx + S(i))).toFixed(1)}px)`; }
+});
+// Dampf über den Tassen
+HOOKS.push(t => document.querySelectorAll('.dampf path').forEach((p, i) => {
+  p.style.strokeDasharray = '26 18'; p.style.strokeDashoffset = (t * 40 + i * 13) % 44; p.style.opacity = .5 + .3 * Math.sin(t * 2 + i);
+}));
+// Wanduhr: kurz nach fünf, Feierabend – der Minutenzeiger läuft
+HOOKS.push(t => document.querySelectorAll('.wanduhr').forEach(u => { u.querySelector('.std').style.transform = `rotate(${150 + t / 6}deg)`; u.querySelector('.min').style.transform = `rotate(${t * 2}deg)`; }));
+// Punkte in den Sprechblasen „reden“
+HOOKS.push(t => document.querySelectorAll('.sprechb i').forEach((p, i) => { p.style.transform = `translateY(${(-4 * Math.max(0, Math.sin(t * 7 - (i % 3) * .9))).toFixed(1)}px)`; }));
+
+/* ---------- Gesprächspartner: Sprecher exakt aus sprache.json ---------- */
+const KURZ_ = { Jonas: 'J', Mai: 'M' };
+const SAETZE_Z = SPRACHDATEN.saetze.map(s => [A(s.start), A(s.ende), KURZ_[s.sprecher]]);
+const ABSCHNITTE = [];
+for (const [a, b, w] of SAETZE_Z) { const l = ABSCHNITTE.at(-1); if (l && l[2] === w) l[1] = b; else ABSCHNITTE.push([a, b, w]); }
+const FROH = {
+  J: [[W('Wähl', 1), SE(2) + .2], [W('Chefin', 17), SE(17) + .1], [W('JAV', 27), SE(28) + .3]],
+  M: [[W('Gute', 3), W('Da', 4)], [W('junge', 14), SE(14) + .2], [W('Genau', 18), SE(18) + .3], [W('Azubis', 24), SE(24) + .2], [W('behandeln', 26), SE(26) + .3], [SE(29) + .02, 999]],
+};
+akteur('jonas', { o: 0, y: 60, s: .9 }, true); akteur('mai', { o: 0, y: 60, s: .9 }, true);
+tw('jonas', 0, .7, { o: 1, y: 0 }, 'back'); tw('mai', .12, .7, { o: 1, y: 0 }, 'back');
+const PERSONEN = [['jonas', 'J', 3, .13], ['mai', 'M', -3, .61]];
+HOOKS.push(t => {
+  const pegel = window.PEGEL ? (window.PEGEL[Math.round((t - VERSATZ) * 30)] || 0) : .6 + .4 * Math.sin(t * 9);
+  const wer = SAETZE_Z.find(([a, b]) => t >= a && t <= b)?.[2];
+  for (const [id, w, neig, phase] of PERSONEN) {
+    const p = document.getElementById(id), aktiv = wer === w;
+    const k = ABSCHNITTE.filter(z => z[2] === w).reduce((m, [a, b]) => Math.max(m, clamp(Math.min((t - a + .25) / .25, (b + .2 - t) / .2))), 0);
+    if (t >= .85) { p.style.transform = `scale(${.9 + .1 * k}) translateY(${-6 * k}px)`; p.style.filter = `saturate(${.7 + .3 * k})`; }
+    p.style.borderColor = k > .5 ? 'var(--b300)' : '';
+    // Zuhörer nickt ab und zu, Sprecher bewegt den Kopf mit der Stimme
+    const zuh = wer && !aktiv ? Math.max(0, Math.sin(t * 1.3 + phase * 5)) ** 8 : 0;
+    const nick = aktiv ? 1.8 * Math.sin(t * 3.1) * pegel : 1.4 * zuh;
+    p.querySelector('.figur').style.transform = `rotate(${neig + nick}deg) translateY(${2 * zuh}px)`;
+    const auf = aktiv ? clamp(pegel * (.55 + .45 * Math.abs(Math.sin(t * 13 + phase * 7)))) : 0;
+    const froh = !aktiv && FROH[w].some(([a, b]) => t >= a && t < b);
+    p.querySelector('.auf').style.transform = `scaleY(${Math.max(.05, auf)})`;
+    p.querySelector('.auf').style.opacity = auf > .12 ? 1 : 0;
+    p.querySelector('.froh').style.opacity = froh && auf <= .12 ? 1 : 0;
+    p.querySelector('.zu').style.opacity = auf > .12 || froh ? 0 : 1;
+  }
+  document.querySelectorAll('.sprecher,.mini').forEach((p, i) => {
+    const z = (t * .27 + i * .37) % 1; const a = p.querySelector(':scope > .figur > .augen'); if (a) a.style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  });
+});
+// Mini-Figuren: froh schauen
+const miniFroh = (id, t, an = true) => {
+  if (!AKTEURE.get($(`#${id} .froh`))) { akteur(`#${id} .froh`, { o: 0 }, true); akteur(`#${id} .zu`, {}, true); }
+  set(`#${id} .froh`, t, { o: an ? 1 : 0 }); set(`#${id} .zu`, t, { o: an ? 0 : 1 });
+};
+
+/* ---------- 1 · Café nach der Schicht ---------- */
+const X0 = S(0);
+const CAFE = (X, n, t0) => {           // Café-Grundbild (Szene 1 mit Auftritt, Szene 7 steht schon)
+  const setzen = t0 == null ? (id, t, basis) => akteur(id, basis) : (id, t, basis, von, snd) => ein(id, t0 + t, basis, von, snd);
+  setzen('fenster' + n, 0, { x: X + 1060, y: 450 }, { y: -40 }, 'whoosh');
+  setzen('bein' + n + 'a', .1, { x: X + 1010, y: 778 }, { y: 30 }); setzen('bein' + n + 'b', .1, { x: X + 1550, y: 778 }, { y: 30 });
+  setzen('tisch' + n, .05, { x: X + 1280, y: 742 }, { y: 40 });
+  setzen('tasse' + n + 'a', .35, { x: X + 1128, y: 668 }, { x: -90, y: 0 }, 'plopp');
+  setzen('uhr' + n, .6, { x: X + 1650, y: 330 }, { y: -50 });
+  setzen('tasse' + n + 'b', .5, { x: X + 1432, y: 668 }, { x: 90, y: 0 }, 'plopp');
+  akteur('dampf' + n + 'a', { x: X + 1120, y: 592, o: t0 == null ? 1 : 0 }); akteur('dampf' + n + 'b', { x: X + 1424, y: 592, o: t0 == null ? 1 : 0 });
+  if (t0 != null) tw(['dampf' + n + 'a', 'dampf' + n + 'b'], t0 + .9, .8, { o: 1 });
+};
+CAFE(X0, 0, .05);
+pop('jonas0', .3, { x: X0 + 990, y: 632 }, null);
+pop('mai0', .42, { x: X0 + 1570, y: 632 });
+// Pflegeheim: Gedankenblase steigt bei Mai auf, der Zettel hängt am Brett
+const GX = X0 + 1430, GY = 380;
+pop('gp0a', W('Pflegeheim', 1) - .5, { x: X0 + 1545, y: 528 }, null);
+pop('gp0b', W('Pflegeheim', 1) - .38, { x: X0 + 1515, y: 500 }, null);
+pop('gedanke0', W('Pflegeheim', 1) - .25, { x: GX, y: GY }, 'pop');
+pop('heim0', W('Pflegeheim', 1) - .1, { x: GX - 50, y: GY - 16 }, null);
+pop('brett0', W('hängt', 1) - .05, { x: GX + 85, y: GY - 12 }, null);
+akteur('flyer0', { x: GX + 85, y: GY - 10, s: 0, r: 2 });
+tw('flyer0', W('Zettel', 1) - .15, .4, { s: .3 }, 'back'); cue(W('Zettel', 1) - .15, 'pop');
+tw('flyer0', 0, 0, { draw: 0 });
+wackeln('flyer0', W('Zettel', 1) + .3, 3, 4);
+// „Wähl deine JAV!“: der Flyer fliegt aus der Blase und schlägt auf den Tisch
+const FLX = X0 + 1280, FLY = 632;
+{ const t0 = W('Wähl', 1) - .15, d = .8;
+  tw('flyer0', t0, d, { x: FLX, y: FLY, s: 1, r: -3 }, 'inout', { bogen: 90 }); cue(t0, 'whoosh');
+  tw('flyer0', t0 + d, .09, { sy: .9, sx: 1.06 }, 'out'); tw('flyer0', t0 + d + .09, .45, { sy: 1, sx: 1 }, 'sanft'); cue(t0 + d, 'plopp');
+  aus(['gedanke0', 'heim0', 'brett0'], t0 + .3, .3); aus(['gp0a', 'gp0b'], t0 + .4, .25);
+  bump('tisch0', t0 + d, 1.01); akzent(t0 + d, .03);
+  huepfen('tasse0a', t0 + d + .02, 10); huepfen('tasse0b', t0 + d + .06, 10);
+  bump('flyer0', W('JAV', 1) + .25, 1.06); }
+// Was ist das? – Fragezeichen
+pop('frage0', W('Was', 2) - .05, { x: X0 + 1405, y: 415 });
+wackeln('frage0', W('das', 2), 4, 6);
+// Gute Frage. – Jonas nickt, Fragezeichen springt
+huepfen('jonas0', W('Gute', 3), 14); miniFroh('jonas0', W('Gute', 3));
+bump('frage0', W('Frage', 3), 1.15);
+// Da muss ich kurz ausholen: Fragezeichen geht, der Flyer hebt sich zur Kamera
+aus('frage0', W('kurz', 4) - .1, .3);
+tw('flyer0', W('ausholen', 4) - .15, .7, { y: FLY - 70, s: 1.14, r: 0 }, 'inout'); cue(W('ausholen', 4) - .15, 'whoosh');
+akzent(W('ausholen', 4), .04);
+schweben(['frage0'], 3);
+
+/* ---------- 2 · Betriebsrat = gewählte Vertretung ---------- */
+pan2(SE(4) + .35, 1); const X1 = S(1);
+kopf(1, 0, [W('Betriebsrat', 5) - .1, W('gewählt', 6) - .25, W('gewählt', 6) - .1, W('vertreten', 7) - .1], [0]);
+const UX1 = X1 + 1280, UY1 = 410, SLOT1 = UY1 - 120 + 53 * 240 / 160;
+aufschlag('urne1', W('Betriebsrat', 5) + .15, { x: UX1, y: UY1 }, 100);
+// Das sind Beschäftigte: fünf Kolleginnen und Kollegen in einer Reihe
+const K1X = i => X1 + 1280 + (i - 2) * 172, K1Y = 688;
+KOL.forEach((_, i) => pop('k1_' + i, W('Beschäftigte', 6) - .1 + i * .1, { x: K1X(i), y: K1Y }, i % 2 ? null : 'pop'));
+KOL.forEach((_, i) => huepfen('k1_' + i, W('Kollegen', 6) + i * .07, 14));
+// … gewählt werden: Stimmzettel fliegen in die Urne
+KOL.forEach((_, i) => waehlen('z1_' + i, W('gewählt', 6) - .7 + i * .1, K1X(i), K1Y - 60, UX1, SLOT1, 'urne1', .85));
+cue(W('gewählt', 6) - .4, 'whoosh');
+// drei werden gewählt: steigen auf, Rand in Markenfarbe
+const GEW = [1, 2, 3];
+{ const t = W('werden', 6) + .1;
+  GEW.forEach((k, i) => { tw('k1_' + k, t + i * .08, .45, { y: K1Y - 26 }, 'back'); HOOKS.push(tt => el('k1_' + k).classList.toggle('gewaehlt', tt >= t + i * .08)); });
+  cue(t, 'ding'); wackeln('urne1', t - .1, 3, 3); }
+// Sie vertreten alle gegenüber der Geschäftsführung: Tisch, links der Betriebsrat, rechts die Geschäftsführung
+aus('urne1', W('Sie', 7) - .1, .3);
+const BRX = [X1 + 950, X1 + 1075, X1 + 1200], BRY = 610;
+GEW.forEach((k, i) => tw('k1_' + k, W('vertreten', 7) - .1 + i * .06, .7, { x: BRX[i], y: BRY, s: 120 / 130 }, 'inout'));
+cue(W('vertreten', 7) - .1, 'whoosh');
+pop('chipBr1', W('vertreten', 7) + .3, { x: X1 + 1075, y: 772 });
+// alle: die anderen stehen dahinter
+[[0, X1 + 1012], [4, X1 + 1138]].forEach(([k, x], i) => tw('k1_' + k, W('alle', 7) - .15 + i * .08, .7, { x, y: 530, s: .78 }, 'inout'));
+ein('tisch1', W('gegenüber', 7) - .25, { x: X1 + 1280, y: 700 }, { y: 40 });
+ein('chef1', W('Geschäftsführung', 7) - .15, { x: X1 + 1600, y: 602 }, { x: 110, y: 0 }, 'whoosh');
+pop('chipGf1', W('Geschäftsführung', 7) + .35, { x: X1 + 1600, y: 772 });
+// zum Beispiel bei Arbeitszeiten, Dienstplänen oder Urlaubsplanung: Karten schlagen auf dem Tisch auf
+const KTY = 382;
+aufschlag('kt1a', W('Arbeitszeiten', 7), { x: X1 + 1036, y: KTY }, 60);
+aufschlag('kt1b', W('Dienstplänen', 7), { x: X1 + 1280, y: KTY }, 60);
+aufschlag('kt1c', W('Urlaubsplanung', 7), { x: X1 + 1524, y: KTY }, 60);
+{ const t1 = W('Arbeitszeiten', 7);
+  HOOKS.push(t => { const d = Math.max(0, t - t1); el('zeiger1').style.transform = `rotate(${(d * 160).toFixed(1)}deg)`; el('zeiger1').style.transformOrigin = '30px 30px';
+    el('sonne1').style.transform = `rotate(${(Math.max(0, t - W('Urlaubsplanung', 7)) * 40).toFixed(1)}deg)`; el('sonne1').style.transformOrigin = '30px 37px'; });
+  const zellen = [...document.querySelectorAll('#plan1 rect')];
+  zellen.forEach((z, i) => { akteur(z, { s: 0 }, true); z.style.transformOrigin = 'center'; z.style.transformBox = 'fill-box'; tw(z, W('Dienstplänen', 7) + .1 + i * .07, .3, { s: 1 }, 'back'); }); }
+// Da reden sie mit: Sprechblasen hin und her, Haken
+pop('sb1a', W('reden', 8) - .1, { x: X1 + 1300, y: 512 });
+pop('sb1b', W('sie', 8) - .05, { x: X1 + 1480, y: 500 }, null);
+['kt1a', 'kt1b', 'kt1c'].forEach((id, i) => bump(id, W('mit', 8) + i * .08, 1.08));
+pop('ok1', W('mit', 8) + .1, { x: X1 + 1390, y: 618 }, 'erfolg');
+schweben(['sb1a', 'sb1b'], 3);
+kopfAus(1, SE(8) + .25);
+
+/* ---------- 3 · Nicht jeder Betrieb hat einen ---------- */
+pan2(SE(8) + .35, 2); const X2 = S(2);
+kopf(2, 0, [W('Nein', 10) - .05], [0]);
+// Hat jeder Betrieb einen? – großer und kleiner Betrieb, Fragezeichen
+ein('firma2', W('Hat', 9) - .25, { x: X2 + 985, y: 580 }, { x: -110, y: 0 }, 'whoosh');
+ein('laden2a', W('jeder', 9) - .1, { x: X2 + 1560, y: 625 }, { x: 110, y: 0 }, 'whoosh');
+bump('firma2', W('Betrieb', 9), 1.04); bump('laden2a', W('Betrieb', 9) + .1, 1.06);
+pop('frage2', W('einen', 9) - .1, { x: X2 + 1300, y: 430 });
+// Nein. – Fragezeichen wackelt und geht
+wackeln('frage2', W('Nein', 10) - .05, 4, 4); aus('frage2', W('Nein', 10) + .45, .3);
+// ab fünf Beschäftigten: Porträts zählen sich ab
+const K2X = i => X2 + 1118 + i * 86, K2Y = 398;
+KOL.forEach((_, i) => pop('k2_' + i, W('ab', 11) - .05 + i * .1, { x: K2X(i), y: K2Y }, 'klick'));
+pop('zaehler2', W('ab', 11) - .15, { x: X2 + 1610, y: K2Y }, null);
+{ const T = KOL.map((_, i) => W('ab', 11) - .05 + i * .1);
+  HOOKS.push(t => { el('zaehler2').textContent = 'ab ' + Math.max(1, T.filter(x => t >= x).length); });
+  bump('zaehler2', W('fünf', 11) + .05, 1.18); cue(W('fünf', 11) + .05, 'ding'); akzent(W('fünf', 11), .03); }
+bump('firma2', W('Beschäftigten', 11) + .1, 1.03);
+// aber nur, wenn die Beschäftigten ihn wählen: Stimmzettel in die Urne, Schild „Betriebsrat“ schwingt an den großen Betrieb
+const UX2 = X2 + 1300, UY2 = 592, SLOT2 = UY2 - 80 + 53;
+pop('urne2', W('nur', 11) - .1, { x: UX2, y: UY2 });
+KOL.forEach((_, i) => { huepfen('k2_' + i, W('Beschäftigten', 11) + 1.1 + i * .06, 10); });
+KOL.forEach((_, i) => waehlen('z2_' + i, W('wählen', 11) - .45 + i * .08, K2X(i), K2Y + 30, UX2, SLOT2, 'urne2'));
+cue(W('wählen', 11) - .3, 'whoosh');
+{ const t = W('wählen', 11) + .75;
+  aufschlag('schild2', t, { x: X2 + 985, y: 500 }, 160);
+  HOOKS.push(tt => { const d = tt - t; const r = d > 0 ? 7 * Math.exp(-d / .7) * Math.sin(d * 7) : 0; el('pendel2').style.transform = `rotate(${r.toFixed(2)}deg)`; });
+  bump('firma2', t + .05, 1.03); akzent(t, .03); }
+// Viele kleine Betriebe haben keinen: kleine Läden mit leerem Schild
+{ const t = W('Viele', 12) - .2;
+  KOL.forEach((_, i) => aus('k2_' + i, t + i * .04, .3)); aus(['zaehler2', 'urne2'], t, .3);
+  tw('laden2a', W('kleine', 12) - .2, .6, { x: X2 + 1520, s: .9 }, 'inout');
+  ein('laden2b', W('kleine', 12) - .05, { x: X2 + 1370, y: 625 }, { y: 70 }, 'whoosh');
+  ein('laden2c', W('Betriebe', 12) - .1, { x: X2 + 1670, y: 625 }, { y: 70 });
+  [['leer2b', 1370], ['leer2a', 1520], ['leer2c', 1670]].forEach(([id, x], i) => {
+    pop(id, W('keinen', 12) - .1 + i * .1, { x: X2 + x, y: 562 }, i ? null : 'plopp'); wackeln(id, W('keinen', 12) + .35 + i * .08, 3, 5); });
+  akzent(W('keinen', 12), .035); }
+kopfAus(2, SE(12) + .25);
+
+/* ---------- 4 · JAV = Vertretung für Azubis · vertraulich ---------- */
+pan2(SE(12) + .35, 3); const X3 = S(3);
+kopf(3, 0, [W('JAV', 13) - .1, W('JAV', 13) + .05, WE('Auszubildendenvertretung', 13) - .5, W('für', 14) - .05, W('Azubis', 14) - .1, W('vertraulich', 15) - .2, W('vertraulich', 15) - .1], [0, 6]);
+// J · A · V fallen herein, darunter tippen sich die Wortteile
+const BX3 = [X3 + 1030, X3 + 1280, X3 + 1530], BY3 = 430;
+['bj3', 'ba3', 'bv3'].forEach((id, i) => aufschlag(id, W('JAV', 13) + .05 + i * .26, { x: BX3[i], y: BY3 }, 100, i ? 'klick' : 'plopp'));
+akzent(W('JAV', 13) + .6, .03);
+const TA = W('Auszubildendenvertretung', 13), TE = WE('Auszubildendenvertretung', 13), TM = TA + (TE - TA) * .56;
+[['tw3j', 'tx3j', 'ugend-', W('Jugend', 13), WE('Jugend', 13), 'bj3'], ['tw3a', 'tx3a', 'uszubildenden-', TA, TM, 'ba3'], ['tw3v', 'tx3v', 'ertretung', TM, TE, 'bv3']].forEach(([id, tx, text, a, b, bu], i) => {
+  pop(id, a - .15, { x: BX3[i], y: 580 }, null);
+  tippen(tx, text, a, b); bump(bu, a - .1, 1.1);
+});
+// Sie ist speziell für junge Leute und Azubis da: Buchstaben werden zum Schild über dem Raum der JAV
+const RX = X3 + 1070, RY = 580;
+{ const t = W('Sie', 14) - .15;
+  aus(['tw3j', 'tw3a', 'tw3v'], t, .3);
+  ['bj3', 'ba3', 'bv3'].forEach((id, i) => tw(id, t + .1 + i * .06, .75, { x: RX + (i - 1) * 70, y: RY - 200, s: .44 }, 'inout'));
+  cue(t + .1, 'whoosh');
+  akteur('raum3', { x: RX, y: RY, o: 0, s: .9 }); tw('raum3', W('speziell', 14) - .1, .6, { o: 1, s: 1 }, 'back'); }
+const JX = [RX - 135, RX, RX + 135], JY = RY - 60;
+['jung3a', 'jung3b', 'jung3c'].forEach((id, i) => pop(id, W('junge', 14) - .1 + i * .15, { x: JX[i], y: JY }, i ? null : 'pop'));
+['jung3a', 'jung3b', 'jung3c'].forEach((id, i) => huepfen(id, W('Azubis', 14) + i * .08, 14));
+['jung3a', 'jung3b', 'jung3c'].forEach(id => miniFroh(id, W('Azubis', 14) + .1));
+// Wenn es Probleme in der Ausbildung gibt: Mai mit Gewitterwolke
+const M3X = X3 + 1600, M3Y = 625;
+ein('mai3', W('Wenn', 15) - .15, { x: M3X, y: M3Y }, { x: 90, y: 0 }, 'whoosh');
+pop('wolke3', W('Probleme', 15) - .1, { x: M3X, y: M3Y - 145 }, 'plopp');
+wackeln('wolke3', W('Ausbildung', 15), 4, 4); bump('wolke3', W('gibt', 15), 1.1);
+// kannst du dort vertraulich hingehen: Mai hüpft in den Raum, das Schloss fällt und rastet ein
+const MIX = RX + 150, MIY = RY + 112;
+{ const t0 = W('kannst', 15) - .1, t1 = W('vertraulich', 15) + .05;
+  tw('mai3', t0, t1 - t0, { x: MIX, y: MIY }, 'inout', { bogen: 90 }); cue(t0, 'whoosh');
+  tw('mai3', t1, .08, { sy: .9, sx: 1.08 }, 'out'); tw('mai3', t1 + .08, .35, { sy: 1, sx: 1 }, 'sanft');
+  tw('wolke3', t0 + .1, .3, { y: M3Y - 160 }, 'out');
+  tw('wolke3', t1 - .1, .35, { s: .2, o: 0 }, 'in'); cue(t1, 'pop');
+  miniFroh('mai3', t1 + .2); }
+const LX = RX + 250, LY = RY - 20;
+aufschlag('schloss3', W('vertraulich', 15) + .15, { x: LX, y: LY }, 220);
+akteur('buegel3', { y: -22 }, true); tw('buegel3', WE('vertraulich', 15), .18, { y: 0 }, 'in'); cue(WE('vertraulich', 15) + .18, 'klick');
+akzent(WE('vertraulich', 15), .04);
+{ const t = WE('vertraulich', 15) + .18;   // der Raum schließt sich: Rand wird durchgehend
+  HOOKS.push(tt => { const r = el('raum3'); r.style.borderStyle = tt >= t ? 'solid' : 'dashed'; r.style.borderColor = tt >= t ? 'var(--b400)' : ''; }); }
+huepfen('mai3', W('hingehen', 15) + .2, 10);
+// Und du darfst sie mitwählen: Mais Stimmzettel fliegt in die Urne
+const UX3 = X3 + 1610, UY3 = 640, SLOT3 = UY3 - 75 + 53 * 150 / 160;
+pop('urne3', W('Und', 16) - .1, { x: UX3, y: UY3 });
+waehlen('z3', W('mitwählen', 16) - .2, MIX, MIY - 40, UX3, SLOT3, 'urne3');
+cue(W('mitwählen', 16), 'whoosh');
+aus('urne3', W('Vertraulich', 17) - .2, .3);
+// Vertraulich heißt, meine Chefin erfährt es nicht? – Chefin draußen, Fragezeichen
+bump('schloss3', W('Vertraulich', 17) + .1, 1.1);
+ein('chef3', W('Chefin', 17) - .25, { x: X3 + 1610, y: 625 }, { x: 110, y: 0 }, 'whoosh');
+pop('frage3a', W('erfährt', 17) - .05, { x: X3 + 1565, y: 505 });
+pop('frage3b', W('nicht', 17) - .05, { x: X3 + 1662, y: 482 }, null);
+wackeln('schloss3', W('nicht', 17), 3, 4);
+// Genau, nur wenn du das willst: Haken am Schloss, der Schlüssel liegt bei Mai
+pop('ok3', W('Genau', 18) - .05, { x: LX + 44, y: LY - 62 }, 'erfolg');
+aus(['frage3a', 'frage3b'], W('Genau', 18) + .2, .3);
+pop('schluessel3', W('du', 18) - .15, { x: MIX - 150, y: MIY + 38, r: -3 });
+bump('schluessel3', W('willst', 18), 1.2); cue(W('willst', 18), 'ding');
+huepfen('mai3', W('willst', 18) + .1, 12);
+schweben(['frage3a', 'frage3b'], 3);
+kopfAus(3, SE(18) + .25);
+
+/* ---------- 5 · Gewerkschaft → Tarifvertrag ---------- */
+pan2(SE(18) + .35, 4); const X4 = S(4);
+kopf(4, 0, [W('Gewerkschaft', 20) - .1, W('Tarifvertrag', 22) - .35, W('Tarifvertrag', 22) - .2], [2]);
+// Und was ist eine Gewerkschaft?
+pop('frage4', W('was', 19) - .1, { x: X4 + 1280, y: 500, s: 1.4 });
+wackeln('frage4', W('Gewerkschaft', 19), 4, 4);
+aus('frage4', W('Gewerkschaft', 20) - .1, .3);
+// eine große Organisation: Gebäude wächst
+akteur('verband4', { x: X4 + 1010, y: 530, s: 0 });
+tw('verband4', W('große', 20) - .15, .75, { s: 1 }, 'sanft'); cue(W('große', 20) - .15, 'whoosh');
+bump('verband4', W('Organisation', 20) + .2, 1.05);
+pop('chipGw4', W('Organisation', 20) + .1, { x: X4 + 1010, y: 760 });
+// außerhalb des Betriebs: Betrieb im gestrichelten Rahmen
+ein('betrieb4', W('außerhalb', 20) - .3, { x: X4 + 1560, y: 555 }, { x: 90, y: 0 }, 'whoosh');
+akteur('rahmen4', { x: X4 + 1560, y: 560, o: 0, s: 1.25 }); tw('rahmen4', W('außerhalb', 20), .5, { o: 1, s: 1 }, 'out');
+bump('betrieb4', W('Betriebs', 20), 1.08); huepfen('verband4', W('Betriebs', 20) + .1, 12);
+// Sie verhandelt mit den Arbeitgebern: Verhandlungstisch
+{ const t = W('Sie', 21) - .15;
+  aus(['verband4', 'betrieb4', 'rahmen4'], t, .35);
+  tw('chipGw4', t + .1, .7, { x: X4 + 1000, y: 772 }, 'inout', { bogen: 30 }); }
+ein('tisch4', W('verhandelt', 21) - .2, { x: X4 + 1280, y: 700 }, { y: 40 });
+pop('gw4a', W('verhandelt', 21) - .05, { x: X4 + 935, y: 610 });
+pop('gw4b', W('verhandelt', 21) + .08, { x: X4 + 1075, y: 610 }, null);
+ein('chef4', W('Arbeitgebern', 21) - .2, { x: X4 + 1590, y: 606 }, { x: 110, y: 0 }, 'whoosh');
+pop('chipAg4', W('Arbeitgebern', 21) + .25, { x: X4 + 1590, y: 772 });
+pop('sb4a', W('mit', 21) - .05, { x: X4 + 1190, y: 505 });
+pop('sb4b', W('Arbeitgebern', 21) + .45, { x: X4 + 1470, y: 495 }, null);
+aufschlag('chipGeh4', W('Gehalt', 21), { x: X4 + 1280, y: 330 }, 40);
+aufschlag('chipArb4', W('Arbeitsbedingungen', 21), { x: X4 + 1280, y: 412 }, 60);
+bump('sb4a', W('Gehalt', 21) + .4, 1.12); bump('sb4b', W('Arbeitsbedingungen', 21) + .5, 1.12);
+// Das Ergebnis ist ein Tarifvertrag: die Chips fliegen zusammen, der Vertrag steigt auf, Unterschrift und Stempel
+const DX = X4 + 1280, DY = 470;
+{ const t = W('Ergebnis', 22) - .1;
+  aus(['sb4a', 'sb4b'], t, .3);
+  tw(['chipGeh4', 'chipArb4'], t, .55, { x: DX, y: DY, s: .4 }, 'inout'); tw(['chipGeh4', 'chipArb4'], t + .45, .12, { o: 0 });
+  cue(t, 'whoosh');
+  akteur('doku4', { x: DX, y: DY + 60, o: 0, s: .3 });
+  tw('doku4', t + .5, .15, { o: 1 }); tw('doku4', t + .5, .6, { y: DY, s: 1 }, 'back'); cue(t + .5, 'pop');
+  tw('doku4', 0, 0, { draw: 0 }); tw('doku4', W('Tarifvertrag', 22) + .1, .8, { draw: 1 }, 'inout'); cue(W('Tarifvertrag', 22) + .1, 'kritzeln');
+  const TS = WE('Tarifvertrag', 22) + .15;
+  akteur('abdruck4', { x: DX + 58, y: DY + 78, o: 0, s: 1.4, r: -8 });
+  set('abdruck4', TS, { o: 1 }); tw('abdruck4', TS, .25, { s: 1 }, 'out'); cue(TS, 'plopp');
+  tw('doku4', TS, .08, { sy: .97 }, 'out'); tw('doku4', TS + .08, .35, { sy: 1 }, 'sanft');
+  akzent(TS, .035);
+  ['gw4a', 'gw4b', 'chef4'].forEach(id => miniFroh(id, TS + .1)); }
+// Für die Pflege ist das zum Beispiel ver.di, für Metall die IG Metall, für die Gastronomie die NGG
+{ const t = W('Für', 23) - .1;
+  aus(['tisch4', 'gw4a', 'gw4b', 'chef4', 'chipGw4', 'chipAg4'], t, .35);
+  const dx = -290;
+  tw('doku4', t + .05, .75, { x: DX + dx, y: DY + 40, s: .86 }, 'inout');
+  tw('abdruck4', t + .05, .75, { x: DX + dx + 58 * .86, y: DY + 40 + 78 * .86, s: .86 }, 'inout');
+  cue(t + .05, 'whoosh'); }
+[['org4a', 'on4a', 'ver.di', 'Pflege', 'Verdi', 372], ['org4b', 'on4b', 'IG Metall', 'Metall', 'Ih', 512], ['org4c', 'on4c', 'NGG', 'Gastronomie', 'NGG', 652]].forEach(([id, tx, name, feld, wn, y], i) => {
+  ein(id, W(feld, 23) - .15, { x: X4 + 1490, y }, { x: 80, y: 0 }, 'whoosh');
+  tippen(tx, name, W(wn, 23), WE(wn, 23));
+  bump('doku4', W(wn, 23), 1.05);
+});
+kopfAus(4, SE(23) + .25);
+
+/* ---------- 6 · Freiwillig · kleine Kosten · Beratung ---------- */
+pan2(SE(23) + .35, 5); const X5 = S(5);
+kopf(5, 0, [W('freiwillig', 24) - .1, W('kleinen', 24) - .2, W('kleinen', 24) - .1, W('Beitrag', 24) - .1, W('Beratung', 25) - .2, W('Beratung', 25) - .1], [0, 5]);
+// Mitglied zu sein: Mitgliedskarte fliegt herein
+ein('mkarte5', W('Mitglied', 24) - .25, { x: X5 + 1070, y: 500, r: -2, s: 1.15 }, { x: -120, y: 30, r: -9 }, 'whoosh');
+tw('mkarte5', 0, 0, { draw: 0 }); tw('mkarte5', W('freiwillig', 24) + .05, .45, { draw: 1 }, 'inout'); cue(W('freiwillig', 24) + .05, 'ding');
+bump('mkarte5', W('freiwillig', 24) + .4, 1.04);
+// kostet einen kleinen Beitrag, für Azubis oft weniger: Münze fällt und schrumpft
+aufschlag('muenze5', W('kostet', 24) + .1, { x: X5 + 1500, y: 470 }, 90, 'muenze');
+tw('muenze5', W('kleinen', 24), .45, { s: .84 }, 'back');
+tw('muenze5', W('Azubis', 24), .45, { s: .66 }, 'back'); cue(W('Azubis', 24), 'pop');
+pop('chipAz5', W('Azubis', 24) + .1, { x: X5 + 1500, y: 600 }, null);
+bump('chipAz5', W('weniger', 24), 1.12); huepfen('muenze5', W('weniger', 24) + .1, 12);
+schweben('muenze5', 3);
+// Dafür bekommst du Beratung: Beratungsgespräch
+{ const t = W('Dafür', 25) - .15;
+  aus(['mkarte5', 'muenze5', 'chipAz5'], t, .35); }
+ein('tisch5', W('bekommst', 25) - .2, { x: X5 + 1010, y: 672 }, { y: 30 });
+pop('mai5', W('bekommst', 25) - .1, { x: X5 + 920, y: 578 });
+pop('berat5', W('Beratung', 25) - .25, { x: X5 + 1100, y: 578 }, null);
+pop('sb5b', W('Beratung', 25), { x: X5 + 1140, y: 448 });
+pop('sb5a', W('Beratung', 25) + .45, { x: X5 + 880, y: 458 }, null);
+bump('sb5b', W('und', 25), 1.12);
+// wenn nötig, Hilfe vor Gericht: Paragraphenzeichen mit Schutzschild steigt auf
+const SX5 = X5 + 1380, SY5 = 588;
+ein('schild5', W('Hilfe', 25) - .25, { x: SX5, y: SY5 }, { y: 120 }, 'whoosh');
+bump('schild5', W('Gericht', 25), 1.08); akzent(W('Gericht', 25), .035); cue(W('Gericht', 25), 'ding');
+welle('welle5', W('Gericht', 25) + .05, SX5, SY5 - 10, 1);
+schweben('schild5', 2);
+// Und dein Betrieb darf dich deshalb nicht schlechter behandeln: Nachteil prallt am Schild ab
+aus(['sb5a', 'sb5b'], W('Und', 26) - .1, .3);
+ein('betrieb5', W('Betrieb', 26) - .25, { x: X5 + 1640, y: 598 }, { x: 100, y: 0 }, 'whoosh');
+{ const t0 = W('schlechter', 26) - .35, tHit = W('schlechter', 26) + .05;
+  akteur('pfeil5', { x: X5 + 1560, y: 568, s: 0 });
+  tw('pfeil5', t0, .2, { s: 1 }, 'back'); tw('pfeil5', t0 + .1, tHit - t0 - .1, { x: SX5 + 130, y: 568 }, 'in');
+  tw('pfeil5', tHit, .5, { x: SX5 + 250, y: 498, r: 50 }, 'out'); tw('pfeil5', tHit + .3, .2, { o: 0 });
+  cue(tHit, 'plopp'); wackeln('schild5', tHit, 4, 4); welle('welle5', tHit, SX5, SY5 - 10, .9); akzent(tHit, .04);
+  bump('betrieb5', W('darf', 26), 1.05); }
+pop('ok5', W('behandeln', 26), { x: SX5 + 2, y: SY5 - 138 }, 'erfolg');
+miniFroh('mai5', W('behandeln', 26) + .1); miniFroh('berat5', W('behandeln', 26) + .15);
+kopfAus(5, SE(26) + .25);
+
+/* ---------- 7 · Zurück im Café ---------- */
+pan2(SE(26) + .35, 6); const X6 = S(6);
+CAFE(X6, 6, null);
+akteur('jonas6', { x: X6 + 990, y: 632 }); akteur('mai6', { x: X6 + 1570, y: 632 });
+akteur('tasche6', { x: X6 + 1702, y: 700 });
+akteur('flyer6', { x: X6 + 1280, y: FLY, r: -3 });
+tw('flyer6', 0, 0, { draw: 0 });
+// Dann gehe ich zur JAV-Wahl: Flyer springt, Haken im Kästchen
+huepfen('mai6', W('gehe', 27) - .1, 12);
+bump('flyer6', W('JAV', 27) - .1, 1.08);
+tw('flyer6', W('JAV', 27) + .15, .45, { draw: 1 }, 'inout'); cue(W('JAV', 27) + .15, 'ding');
+// Und frage mal, was die so machen
+pop('sb6', W('frage', 28) - .1, { x: X6 + 1575, y: 478 });
+wackeln('sb6', W('machen', 28), 3, 5);
+// Sehr gute Idee! – Jonas freut sich, Mai steckt den Flyer ein
+huepfen('jonas6', W('Sehr', 29) - .05, 14); miniFroh('jonas6', W('Sehr', 29));
+aus('sb6', W('gute', 29) - .1, .25);
+{ const t0 = W('Idee', 29) - .15;
+  tw('flyer6', t0, .25, { sy: .55, r: 0 }, 'inout');
+  flug('flyer6', t0 + .25, .7, X6 + 1702, 662, 110, { s: .3 }); tw('flyer6', t0 + .8, .15, { o: 0 }); cue(t0 + .25, 'whoosh');
+  bump('tasche6', t0 + .95, 1.12); cue(t0 + .95, 'pop');
+  miniFroh('mai6', t0 + .9); huepfen('mai6', t0 + .95, 12);
+  huepfen('tasse6a', t0 + 1.1, 12); huepfen('tasse6b', t0 + 1.18, 12); }
+kopf(6, W('Idee', 29) + .5, null, [3, 4]);
+akzent(W('Idee', 29) + .6, .03);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 2.6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>

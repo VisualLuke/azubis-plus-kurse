@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Mythos oder Wahrheit: Feiertage &amp; Traditionen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+/* Text im Bild: links unter der Behauptungs-Kachel */
+.block{justify-content:flex-start;padding-top:420px}
+.block .titel{font-size:60px;line-height:70px}
+.block.mitte{justify-content:center;padding-top:0}
+.titel .w.rot .wi{color:var(--error-text)} .titel .w.gruen .wi{color:var(--success-text)}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px 9px 12px}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.gruen{border-color:var(--success)} .welle.gelb{border-color:var(--warning)}
+
+/* ---------- Mythos-Format ---------- */
+.buehne.quiz{width:1680px;height:880px;border-radius:48px;overflow:hidden}
+.buehne.quiz .dunkel{position:absolute;inset:0;background:linear-gradient(155deg,var(--b500),var(--b700))}
+.buehne .nacht{position:absolute;inset:0;background:linear-gradient(170deg,var(--b600),var(--b700));opacity:0}
+.karte{width:1180px;height:300px;border-radius:36px;background:var(--surface);box-shadow:0 22px 60px rgba(22,19,37,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 80px}
+.kchip{display:flex;align-items:center;gap:10px;padding:8px 20px 8px 14px;border-radius:999px;background:var(--b50);
+  color:var(--b600);font:800 20px/26px Inter;letter-spacing:.1em;text-transform:uppercase}
+.kchip svg{width:26px;height:26px}
+.karte .titel{font:700 56px/66px Inter;letter-spacing:-.02em;text-align:center;color:var(--ink)}
+.abdruck{position:absolute;right:36px;bottom:-52px;width:300px;height:96px;border-radius:18px;border:7px solid var(--error);
+  background:var(--error-bg);color:var(--error-text);display:flex;align-items:center;justify-content:center;
+  font:800 50px/1 Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 8px 20px rgba(22,19,37,.12)}
+.abdruck.stimmt{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.abdruck.gross{right:auto;bottom:auto}
+.zusatz{position:absolute;right:360px;bottom:-34px;padding:10px 24px;border-radius:999px;background:var(--warning);color:var(--surface);
+  font:800 34px/40px Inter;box-shadow:0 8px 20px rgba(22,19,37,.14);white-space:nowrap}
+.tinte{border-radius:30px;border:6px solid var(--error);opacity:0}
+.tinte.stimmt{border-color:var(--success)}
+.ring3{width:170px;height:170px}
+.ring3 svg{position:absolute;inset:0;width:170px;height:170px}
+.ring3 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 78px/1 Inter;color:var(--surface)}
+.pille{display:flex;align-items:center;gap:14px;padding:16px 30px 16px 18px;border-radius:999px;background:var(--surface);
+  font:800 34px/40px Inter;white-space:nowrap;box-shadow:0 10px 30px rgba(22,19,37,.25)}
+.pille svg{width:44px;height:44px;flex:none}
+.pille.mythos{color:var(--error-text)} .pille.stimmt{color:var(--success-text)}
+
+/* Abspann */
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:circle(0% at 50% 50%)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+
+/* Plaketten */
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)} .plakette.rot{background:var(--error)} .plakette.brand{background:var(--b500)}
+
+/* Porträts */
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+
+/* 2 · Karte */
+.karteDE path{stroke:var(--surface);stroke-width:2.5;stroke-linejoin:round}
+.minikal{width:34px;height:34px;filter:drop-shadow(0 2px 3px rgba(22,19,37,.25))}
+.minikal svg{width:34px;height:34px}
+
+/* 3 · Kalenderblätter */
+.kal{width:112px;height:130px;border-radius:18px;background:var(--surface);box-shadow:0 10px 26px rgba(22,19,37,.14);overflow:hidden;display:flex;flex-direction:column}
+.kal .kopf{height:36px;background:var(--b500);color:var(--surface);font:800 18px/36px Inter;text-align:center;letter-spacing:.08em;text-transform:uppercase}
+.kal b{flex:1;display:flex;align-items:center;justify-content:center;font:800 54px/1 Inter;color:var(--ink)}
+.kal.an .kopf{background:var(--warning)} .kal.fei .kopf{background:var(--success)}
+.fenster{width:200px;height:165px;border-radius:22px;background:linear-gradient(170deg,var(--b600),var(--b700));border:8px solid var(--surface);box-shadow:0 8px 22px rgba(22,19,37,.12)}
+.fenster::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:var(--surface)}
+
+/* 4 · Einladung, Tisch */
+.blatt{width:300px;padding:22px 24px 24px;border-radius:22px;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.14);display:flex;flex-direction:column;gap:12px}
+.blatt small{font:800 18px/24px Inter;color:var(--b600);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.blatt .l{height:10px;border-radius:5px;background:var(--n200)}
+.blatt .gross{font:800 36px/44px Inter;color:var(--ink);white-space:nowrap}
+.knoepfe{display:flex;gap:14px;margin-top:6px}
+.knopf{flex:1;height:60px;border-radius:14px;border:3px solid var(--b200);display:flex;align-items:center;justify-content:center;font:800 24px/1 Inter;color:var(--b600);background:var(--surface)}
+.knopf.ok{border-color:var(--success);color:var(--success-text)}
+.knopf.gewaehlt{background:var(--success);border-color:var(--success);color:var(--surface)}
+.blatt .zeile{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px;background:var(--b50)}
+.blatt .zeile .l{flex:1;background:var(--b200)}
+.blatt .zeile svg{width:30px;flex:none}
+.blatt .check{width:40px;height:40px;border-radius:10px;border:3px solid var(--b200);background:var(--surface);position:relative;flex:none}
+.blatt .check svg{position:absolute;left:2px;top:2px;width:30px}
+.tisch{width:720px;height:18px;border-radius:9px;background:var(--b200)}
+
+/* 7 · Festkarten */
+.fest{width:240px;height:290px;border-radius:30px;background:var(--surface);box-shadow:0 12px 30px rgba(22,19,37,.12)}
+.fest .bild{position:absolute;left:25px;top:20px;width:190px;height:190px}
+.fest .bild > div{position:absolute;inset:0}
+.fest .name{position:absolute;left:0;right:0;bottom:22px;text-align:center;font:800 26px/32px Inter;color:var(--b600)}
+</style></head><body>
+
+<template id="svgX"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--error)"/><path d="M15 15l14 14M29 15L15 29" stroke="var(--surface)" stroke-width="5" stroke-linecap="round"/></svg></template>
+<template id="svgHaken"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="var(--success)"/><path d="M13 23l6 6 12-13" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgZitat"><svg viewBox="0 0 26 26"><path d="M4 16c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6H7a3 3 0 0 1-3-2Zm11 0c0-5 2-8 6-10l1 2c-2 1-3 3-3 4h2a3 3 0 0 1 0 6h-3a3 3 0 0 1-3-2Z" fill="var(--b500)"/></svg></template>
+<template id="svgKal"><svg viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="24" rx="5" fill="var(--surface)"/><path d="M3 10a5 5 0 0 1 5-5h16a5 5 0 0 1 5 5v4H3Z" fill="var(--error)"/><rect x="9" y="2" width="3.5" height="7" rx="1.75" fill="var(--b700)"/><rect x="19.5" y="2" width="3.5" height="7" rx="1.75" fill="var(--b700)"/><g fill="var(--b200)"><rect x="8" y="17" width="5" height="4" rx="1"/><rect x="14" y="17" width="5" height="4" rx="1"/><rect x="20" y="17" width="5" height="4" rx="1"/><rect x="8" y="23" width="5" height="3.5" rx="1"/></g><rect x="3" y="5" width="26" height="24" rx="5" fill="none" stroke="var(--b300)" stroke-width="1.5"/></svg></template>
+<template id="svgHakenW"><svg viewBox="0 0 32 32"><path d="M8 17l6 6 11-13" stroke="var(--surface)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></template>
+<template id="svgPause"><svg viewBox="0 0 32 32"><rect x="9" y="8" width="5" height="16" rx="2" fill="var(--surface)"/><rect x="18" y="8" width="5" height="16" rx="2" fill="var(--surface)"/></svg></template>
+<template id="svgStumm"><svg viewBox="0 0 32 32" style="width:44px"><path d="M6 12h5l7-6v20l-7-6H6Z" fill="var(--surface)"/><path d="M4 28L28 4" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round"/></svg></template>
+<template id="tplRot">{{stempel-rot}}</template>
+<template id="tplGruen">{{stempel-gruen}}</template>
+<template id="tplNote">{{note}}</template>
+<template id="f-kwame"><div class="figur"><div class="ebene">{{figur-kwame}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-priya"><div class="figur"><div class="ebene">{{figur-priya}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-geselle"><div class="figur"><div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-sabine"><div class="figur"><div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-mai"><div class="figur"><div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-amir"><div class="figur"><div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+<template id="f-yusuf"><div class="figur"><div class="ebene">{{figur-yusuf}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></template>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Intro: Tannenbaum, Osterei, Feuerwerk, Festzelt -->
+  <div class="a buehne quiz" id="bue0"><div class="dunkel"></div></div>
+  <div class="a" id="baum0" style="width:310px" data-gruppe="baum0">{{tannenbaum}}</div>
+  <div class="a" id="licht0" style="width:310px" data-gruppe="baum0">{{baumlichter}}</div>
+  <div class="a" id="ei0" style="width:280px">{{osterei}}</div>
+  <div class="a" id="rak0" style="width:170px" data-frei>{{rakete}}</div>
+  <svg class="a feuerwerk" id="fw0" viewBox="-100 -100 200 200" style="width:340px" data-frei></svg>
+  <div class="a" id="zelt0" style="width:330px;transform-origin:50% 91%">{{festzelt}}</div>
+  <div class="a tinte" id="ti0a" style="width:340px;height:136px" data-frei></div>
+  <div class="a tinte stimmt" id="ti0b" style="width:340px;height:136px" data-frei></div>
+  <div class="a abdruck gross" id="ab0a">Mythos</div>
+  <div class="a abdruck gross stimmt" id="ab0b">Stimmt</div>
+
+  <!-- 2 · Feiertage überall gleich? – Mythos -->
+  <div class="a buehne quiz" id="bue1"><div class="dunkel"></div></div>
+  <svg class="a karteDE" id="de1" viewBox="0 0 349 465" style="width:419px;height:558px" data-gruppe="karte1">
+    <path id="dePfad" d="M51.0 105.0L45.3 87.0L58.5 76.8L83.1 84.0L88.7 93.0L101.9 87.0L100.1 69.0L117.1 66.0L113.3 54.0L103.8 42.0L117.1 33.0L105.7 6.0L135.9 10.2L154.8 15.0L152.9 27.0L162.4 34.8L186.9 40.2L198.2 33.0L202.0 48.0L188.8 60.0L198.2 63.0L213.3 60.0L236.0 49.2L247.3 34.8L268.1 33.0L279.4 22.8L294.5 27.0L288.9 42.0L302.1 54.0L317.2 64.2L322.8 102.0L313.4 129.0L330.4 144.0L334.2 174.0L336.1 204.0L345.5 228.0L339.8 247.8L330.4 244.2L321.0 237.0L317.2 249.0L304.0 255.0L288.9 261.0L270.0 273.0L254.9 276.0L239.8 282.0L236.0 285.0L243.5 294.0L251.1 303.0L249.2 318.0L256.8 333.0L268.1 342.0L285.1 361.8L302.1 373.8L297.2 388.8L287.0 386.4L277.5 402.0L264.3 408.0L260.5 417.0L270.0 429.0L268.1 447.0L260.5 439.8L251.1 441.0L239.8 438.0L217.1 445.2L198.2 456.0L173.7 447.0L164.3 462.0L154.8 447.0L141.6 447.0L126.5 440.4L113.3 438.0L103.8 432.0L96.3 444.0L66.1 445.2L64.2 414.0L73.6 384.0L88.7 361.8L66.1 357.0L43.4 351.0L20.8 332.4L24.5 312.0L9.4 294.0L20.8 280.8L5.7 255.0L7.6 234.0L13.2 213.0L3.8 192.0L35.9 183.0L45.3 165.0L32.1 150.0L45.3 141.0L51.0 120.0Z" fill="var(--b200)"/>
+  </svg>
+  <svg class="a karteDE" id="by1" viewBox="0 0 349 465" style="width:419px;height:558px;transform-origin:59% 79%" data-gruppe="karte1">
+    <path id="byPfad" d="M118.9 294.0L134.0 294.0L145.4 279.0L158.6 267.0L173.7 276.0L188.8 279.0L202.0 273.0L217.1 276.0L228.4 273.0L239.8 282.0L236.0 285.0L243.5 294.0L251.1 303.0L249.2 318.0L256.8 333.0L268.1 342.0L285.1 361.8L302.1 373.8L297.2 388.8L287.0 386.4L277.5 402.0L264.3 408.0L260.5 417.0L270.0 429.0L268.1 447.0L260.5 439.8L251.1 441.0L239.8 438.0L217.1 445.2L198.2 456.0L173.7 447.0L164.3 462.0L154.8 447.0L141.6 447.0L152.9 426.0L160.5 396.0L169.9 375.0L173.7 360.0L160.5 342.0L160.5 327.0L151.0 321.0L137.8 324.0L130.3 318.0L122.7 309.0L120.8 297.0Z" fill="var(--b300)"/>
+  </svg>
+  <div class="a" id="kal1" style="width:130px" data-frei>{{kalender}}</div>
+  <div class="a welle" id="welle1" style="width:360px;height:360px" data-frei></div>
+  <div class="a welle gelb" id="welle1b" style="width:220px;height:220px" data-frei></div>
+  <div class="a chip brand klein" id="chipBy">Bayern</div>
+  <div class="a chip klein" id="chipHdk"><span class="ic"></span>Heilige Drei Könige</div>
+  <div class="a chip klein" id="chipFl"><span class="ic"></span>Fronleichnam</div>
+
+  <!-- 3 · Heiligabend – Stimmt -->
+  <div class="a buehne quiz" id="bue2"><div class="dunkel"></div></div>
+  <div class="a fenster" id="fenster2" data-gruppe="fenster2"></div>
+  <div class="a" id="mond2" style="width:80px" data-gruppe="fenster2">{{mond}}</div>
+  <div class="a" id="baum2" style="width:320px" data-gruppe="baum2">{{tannenbaum~b}}</div>
+  <div class="a" id="licht2" style="width:320px" data-gruppe="baum2">{{baumlichter~b}}</div>
+  <div class="a" id="gA2" style="width:150px" data-gruppe="gA2">{{geschenk}}</div>
+  <div class="a" id="dA2" style="width:150px" data-gruppe="gA2">{{geschenk-deckel}}</div>
+  <div class="a" id="gB2" style="width:130px" data-gruppe="gB2">{{geschenk~b}}</div>
+  <div class="a" id="dB2" style="width:130px" data-gruppe="gB2">{{geschenk-deckel~b}}</div>
+  <div class="a" id="herz2" style="width:90px">{{herz}}</div>
+  <div class="a kal" id="k24"><div class="kopf">Dez.</div><b>24</b></div>
+  <div class="a kal" id="k25"><div class="kopf">Dez.</div><b>25</b></div>
+  <div class="a kal" id="k26"><div class="kopf">Dez.</div><b>26</b></div>
+  <div class="a chip gelb klein" id="chipHa">Heiligabend</div>
+  <div class="a chip gruen klein" id="chipFt">Feiertage</div>
+  <div class="a welle gelb" id="welle2" style="width:200px;height:200px" data-frei></div>
+
+  <!-- 4 · Weihnachtsfeier – Mythos -->
+  <div class="a buehne quiz" id="bue3"><div class="dunkel"></div></div>
+  <svg class="a" id="kette3" viewBox="0 0 780 100" style="width:780px;height:100px" data-frei></svg>
+  <div class="a blatt" id="einl3" style="width:420px;padding:30px 34px 32px;gap:16px"><small>Einladung</small><div class="gross">Weihnachtsfeier</div><div class="l" style="width:80%"></div>
+    <div class="knoepfe"><span class="knopf" id="kJa">Ja</span><span class="knopf" id="kNein">Nein</span></div></div>
+  <div class="a chip gruen" id="chipFrei"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>freiwillig</div>
+  <div class="a portrait" id="p3a" data-f="kwame" style="width:166px;height:166px"></div>
+  <div class="a portrait" id="p3b" data-f="priya" style="width:166px;height:166px"></div>
+  <div class="a portrait" id="p3c" data-f="geselle" style="width:166px;height:166px"></div>
+  <div class="a portrait" id="p3d" data-f="sabine" style="width:166px;height:166px"></div>
+  <div class="a tisch" id="tisch3" data-gruppe="tisch3"></div>
+  <div class="a" id="t3a" style="width:130px" data-gruppe="tisch3">{{tasse}}</div>
+  <div class="a" id="t3b" style="width:130px" data-gruppe="tisch3">{{tasse}}</div>
+  <div class="a" id="t3c" style="width:130px" data-gruppe="tisch3">{{tasse}}</div>
+  <div class="a welle gruen" id="welle3" style="width:200px;height:200px" data-frei></div>
+
+  <!-- 5 · Karfreitag – Stimmt -->
+  <div class="a buehne quiz" id="bue4"><div class="dunkel"></div><div class="nacht" id="nacht4"></div></div>
+  <div class="a" id="mond4" style="width:110px">{{mond~b}}</div>
+  <svg class="a" id="strahlen4" viewBox="-200 -200 400 400" style="width:300px;height:300px" data-frei data-dreht></svg>
+  <div class="a" id="kugel4" style="width:260px;transform-origin:50% 4%">{{discokugel}}</div>
+  <div class="a plakette brand" id="pause4" style="width:84px;height:84px" data-frei></div>
+  <div class="a" id="haus4a" style="width:200px" data-gruppe="haus4a">{{haus}}</div>
+  <div class="a" id="haus4b" style="width:200px" data-gruppe="haus4b">{{haus~b}}</div>
+  <div class="a" id="lautspr4" style="width:220px">{{lautsprecher}}</div>
+  <div class="a plakette rot" id="stumm4" style="width:84px;height:84px" data-frei></div>
+  <div class="a chip klein" id="chipKf"><span class="ic"></span>Karfreitag</div>
+
+  <!-- 6 · Silvester – Stimmt, fast -->
+  <div class="a buehne quiz" id="bue5"><div class="dunkel"></div><div class="nacht" id="nacht5"></div></div>
+  <div class="a" id="alt5" style="width:250px">{{altstadt}}</div>
+  <svg class="a" id="zone5" viewBox="0 0 300 300" style="width:300px;height:300px" data-frei>
+    <rect x="4" y="4" width="292" height="292" rx="40" fill="none" stroke="var(--error)" stroke-width="6" stroke-dasharray="18 14" pathLength="1000"/></svg>
+  <div class="a" id="schild5" style="width:130px">{{verbotsschild}}</div>
+  <div class="a chip rot klein" id="chipVerbot">Feuerwerksverbot</div>
+  <div class="a chip klein" id="chipSil"><span class="ic"></span>Silvester</div>
+  <div class="a chip klein" id="chipNj"><span class="ic"></span>Neujahr</div>
+
+  <!-- 7 · Religionsfreiheit – Stimmt -->
+  <div class="a buehne quiz" id="bue6"><div class="dunkel"></div></div>
+  <div class="a fest" id="fest6a"><div class="bild">{{tannenbaum~c}}</div><div class="name" id="n6a">Weihnachten</div></div>
+  <div class="a fest" id="fest6b"><div class="bild" id="bild6b">{{halbmond}}</div><div class="name" id="n6b">Eid</div></div>
+  <div class="a fest" id="fest6c"><div class="bild"><div>{{diyas}}</div><div id="flamme6">{{flammen}}</div></div><div class="name" id="n6c">Diwali</div></div>
+  <div class="a welle gruen" id="welle6" style="width:760px;height:300px;border-radius:60px" data-frei></div>
+  <div class="a blatt" id="antrag6" style="width:380px"><small>Urlaubsantrag</small>
+    <div class="zeile"><span class="ic"></span><div class="l"></div><div class="check"><svg id="ck6" viewBox="0 0 30 30"><path class="zeichnen" pathLength="1" d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div></div>
+  <div class="a" id="stift6" style="width:110px" data-frei>{{stift}}</div>
+
+  <!-- 8 · Kerwa -->
+  <div class="a buehne" id="bue7" style="width:900px;height:720px"></div>
+  <div class="a" id="dorf7" style="width:260px">{{altstadt~b}}</div>
+  <div class="a" id="baum7" style="width:280px;transform-origin:50% 94%">{{kerwabaum}}</div>
+  <div class="a" id="zelt7" style="width:300px;transform-origin:50% 91%">{{festzelt~b}}</div>
+  <div class="a" id="kal7" style="width:120px">{{kalender~b}}</div>
+  <div class="a" id="pin7" style="width:100px" data-frei>{{pin}}</div>
+  <div class="a" id="trompete7" style="width:180px">{{trompete}}</div>
+  <div class="a" id="wurst7" style="width:160px">{{bratwurst}}</div>
+  <div class="a" id="limo7" style="width:130px">{{limo}}</div>
+  <div class="a portrait" id="p7a" data-f="mai" style="width:150px;height:150px"></div>
+  <div class="a portrait" id="p7b" data-f="amir" style="width:150px;height:150px"></div>
+  <div class="a portrait" id="p7c" data-f="yusuf" style="width:150px;height:150px"></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">MYTHOS – jedes Bundesland ist anders</div></div>
+<div class="block" id="tb2"><div class="titel">STIMMT – Heiligabend am 24.</div></div>
+<div class="block" id="tb3"><div class="titel">MYTHOS – freiwillig, aber schön</div></div>
+<div class="block" id="tb4"><div class="titel">STIMMT – stiller Feiertag</div></div>
+<div class="block" id="tb5"><div class="titel">STIMMT – aber nicht überall</div></div>
+<div class="block" id="tb6"><div class="titel">STIMMT – Religionsfreiheit</div></div>
+<div class="block mitte" id="tb7"><div class="titel">Tipp: die Kerwa besuchen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross" id="asTitel">Du darfst mitfeiern.</div>
+  <div class="klein" id="asUnter">Aber du musst nicht.<br>Feiertage sind in Deutschland unterschiedlich.</div>
+</div></div>
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));          // Filmzeit des Worts im Satz n (oder danach)
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(SPRACHDATEN.saetze.length);
+const WELT = document.getElementById('welt');
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .6, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'sanft');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+const wellen = (id, liste) => { akteur(id, { x: liste[0][1], y: liste[0][2], o: 0, s: .8 }); liste.forEach(([t, x, y, d = .9]) => { set(id, t, { x, y, o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); }); };
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+const lerp = (a, b, p) => a + (b - a) * p;
+const tpl = id => document.getElementById(id).innerHTML;
+const landen = (id, t) => { tw(id, t, .08, { sy: .84, sx: 1.1 }, 'sinus'); tw(id, t + .08, .45, { sy: 1, sx: 1 }, 'sanft'); };
+const klasse = (id, k, t, an = true) => HOOKS.push(tt => el(id).classList.toggle(k, an ? tt >= t : tt < t));
+document.querySelectorAll('.ic').forEach(e => { e.outerHTML = tpl('svgKal'); });
+
+/* ---------- Figuren: blinzeln, nicken, lachen ---------- */
+document.querySelectorAll('.portrait[data-f]').forEach(p => { p.innerHTML = tpl('f-' + p.dataset.f); });
+document.querySelectorAll('.portrait').forEach(p => { akteur(p.querySelector('.froh'), { o: 0 }, true); akteur(p.querySelector('.zu'), {}, true); });
+const froh = (id, t) => { const p = el(id); set(p.querySelector('.froh'), t, { o: 1 }); set(p.querySelector('.zu'), t, { o: 0 }); };
+const PORTRAITS = [...document.querySelectorAll('.portrait')];
+HOOKS.push(t => PORTRAITS.forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera: Schwenk mit Unschärfe, Zoom-Atmer, Akzente auf Schlüsselwörtern ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+const N = 8;
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < N; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+
+/* ---------- Feuerwerk: Strahlen schießen aus der Mitte, laufen nach außen und verglühen ---------- */
+const FARBEN = ['var(--warning)', 'var(--error)', 'var(--b200)', 'var(--success)', 'var(--warning-bg)', 'var(--info)'];
+function feuerwerkBauen(id, n = 12, f0 = 0) {
+  el(id).innerHTML = Array.from({ length: n }, (_, k) => {
+    const a = (k / n) * 2 * Math.PI - Math.PI / 2, c = Math.cos(a), s = Math.sin(a), r1 = k % 2 ? 26 : 20, r2 = k % 2 ? 78 : 92;
+    return `<path class="strahl" pathLength="1" d="M${(c * r1).toFixed(1)} ${(s * r1).toFixed(1)}L${(c * r2).toFixed(1)} ${(s * r2).toFixed(1)}" stroke="${FARBEN[(k + f0) % FARBEN.length]}" stroke-width="${k % 2 ? 6 : 8}" stroke-linecap="round" fill="none"/>`;
+  }).join('');
+}
+const FW = new Map();
+// feuerwerk(id, Start, Dauer, bleibt stehen?)
+function feuerwerk(id, t0, d = 1.4, bleib = false) {
+  if (!FW.has(id)) FW.set(id, []);
+  FW.get(id).push({ t0, d, bleib }); cue(t0, 'plopp');
+}
+HOOKS.push(t => FW.forEach((liste, id) => {
+  const b = liste.filter(x => x.t0 <= t).at(-1), s = [...el(id).querySelectorAll('.strahl')];
+  let kopf = 0, schwanz = 0, o = 0;
+  if (b) {
+    const p = (t - b.t0) / b.d;
+    kopf = E.out(clamp(p / .45)); schwanz = b.bleib ? 0 : .92 * E.inout(clamp((p - .2) / .8));
+    o = b.bleib ? 1 : 1 - clamp((p - .75) / .25);
+  }
+  s.forEach(e => { e.style.strokeDasharray = `${Math.max(.0001, kopf - schwanz)} 3`; e.style.strokeDashoffset = -schwanz; });
+  const f = el(id), o0 = +f.style.opacity || 0; f.style.opacity = o0 * o; f.style.visibility = o0 * o < .01 || !b ? 'hidden' : 'visible';
+}));
+// Rakete steigt auf und zerplatzt bei tB
+function rakete(id, tB, x0, y0, x1, y1, d = .6) {
+  if (!AKTEURE.has(el(id))) akteur(id, { x: x0, y: y0, o: 0, s: .9 });
+  set(id, tB - d - .01, { x: x0, y: y0 });
+  tw(id, tB - d, .15, { o: 1 }); tw(id, tB - d, d, { x: x1, y: y1 }, 'in'); tw(id, tB - .04, .08, { o: 0 });
+  cue(tB - d, 'whoosh');
+}
+
+/* ================= Mythos-Format ================= */
+const QUIZ = [];
+function quiz(i, tK = null) {
+  akteur('bue' + i, { x: S(i) + 960, y: 540 });
+  if (tK != null) tw('bue' + i, tK, .9, { x: S(i) + 1320 }, 'inout');
+  QUIZ.push([i, tK]);
+}
+HOOKS.push(t => QUIZ.forEach(([i, tK]) => {
+  const p = tK == null ? 0 : E.inout(clamp((t - tK) / .9)), b = $('#bue' + i);
+  b.style.width = lerp(1680, 900, p) + 'px'; b.style.height = lerp(880, 720, p) + 'px';
+  b.firstElementChild.style.opacity = 1 - p;
+}));
+function titelUrteil(id, t0, u) {
+  titelEin(id, t0);
+  $(`#${id} .w`).classList.add(u === 'mythos' ? 'rot' : 'gruen');
+}
+// Eine Behauptung: Karte – Denkpause mit Countdown – Stempel – Karte wandert als Kachel nach links oben.
+// c: Satz der Behauptung, v: Satz mit „Mythos!“/„Stimmt!“; text: Anzeige (gleiche Wortzahl wie gesprochen); zusatz: [Text, Wort]
+function mythos({ i, c, v, u, tb, text, zusatz }) {
+  const X = S(i), CX = X + 960, CY = 440, RY = 790;
+  text ??= satz(c).text.replace(/[„“"]/g, '');
+  const rot = u === 'mythos';
+  WELT.insertAdjacentHTML('beforeend', `
+    <div class="a pille mythos" id="pm${i}">${tpl('svgX')}Mythos?</div>
+    <div class="a ring3" id="ring${i}"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" stroke="var(--b300)" stroke-width="12" fill="none" opacity=".45"/>
+      <circle id="lauf${i}" cx="85" cy="85" r="72" stroke="var(--surface)" stroke-width="12" stroke-linecap="round" fill="none" pathLength="1" transform="rotate(-90 85 85)" style="stroke-dasharray:1 1"/></svg><b id="ziffer${i}">3</b></div>
+    <div class="a pille stimmt" id="ps${i}">${tpl('svgHaken')}Stimmt?</div>
+    <div class="a karte" id="karte${i}"><div class="kchip" id="kc${i}">${tpl('svgZitat')}Behauptung</div>
+      <div id="kt${i}"><div class="titel">${text}</div></div>
+      <div class="abdruck ${u}" id="abd${i}">${rot ? 'Mythos' : 'Stimmt'}</div>${zusatz ? `<div class="zusatz" id="zus${i}">${zusatz[0]}</div>` : ''}</div>
+    <div class="a tinte ${u}" id="tinte${i}" style="width:340px;height:136px" data-frei></div>
+    <div class="a" id="stempel${i}" style="width:360px" data-frei>${tpl(rot ? 'tplRot' : 'tplGruen')}</div>`);
+  const tIn = A(satz(c).start) - .5;
+  const c0 = SE(c) + .15, c1 = A(satz(v).start) - .1, dt = (c1 - c0) / 3;
+  const tV = A(satz(v).woerter[0].start), tK = SE(v) + .05;
+  quiz(i, tK);
+  akteur(`karte${i}`, { x: CX, y: CY + 260, o: 0, s: .82 });
+  tw(`karte${i}`, tIn, .3, { o: 1 }); tw(`karte${i}`, tIn, .75, { y: CY, s: 1 }, 'sanft', { bogen: 60 }); cue(tIn, 'whoosh');
+  akteur(`kc${i}`, { s: 0 }, true); tw(`kc${i}`, tIn + .35, .45, { s: 1 }, 'back');
+  const wz = satz(c).woerter.map(w => A(w.start) - .12);
+  titelEin(`kt${i}`, wz[0], wz);
+  // Denkpause: Ring läuft leer, Ziffern 3 – 2 – 1, die Antworten pulsieren im Wechsel
+  pop(`ring${i}`, c0 - .35, { x: CX, y: RY });
+  ein(`pm${i}`, c0 - .3, { x: CX - 330, y: RY }, { x: 60 }); ein(`ps${i}`, c0 - .3, { x: CX + 330, y: RY }, { x: -60 });
+  for (let k = 0; k < 3; k++) { cue(c0 + k * dt, 'klick'); bump(k % 2 ? `ps${i}` : `pm${i}`, c0 + k * dt + .05, 1.08); }
+  HOOKS.push(t => {
+    const p = clamp((t - c0) / (c1 - c0));
+    $(`#lauf${i}`).style.strokeDashoffset = -p;
+    const k = Math.min(2, Math.floor((t - c0) / dt)), f = t - c0 - Math.max(0, k) * dt;
+    const z = $(`#ziffer${i}`);
+    z.textContent = 3 - Math.max(0, k);
+    z.style.transform = t > c0 ? `scale(${1 + .45 * (1 - E.out(clamp(f / .3)))})` : '';
+  });
+  // Urteil: Stempel fällt, schlägt auf, Abdruck + Tinte, Karte wackelt, Kamera-Akzent
+  const IX = CX + 404, IY = CY + 154, SY = IY - 91;
+  akteur(`stempel${i}`, { x: IX, y: SY - 330, o: 0, r: -3 });
+  tw(`stempel${i}`, tV - .6, .2, { o: 1 }); tw(`stempel${i}`, tV - .6, .4, { y: SY - 150 }, 'sanft');
+  tw(`stempel${i}`, tV - .16, .16, { y: SY }, 'in');
+  tw(`stempel${i}`, tV, .07, { sy: .88, sx: 1.05 }, 'sinus'); tw(`stempel${i}`, tV + .07, .2, { sy: 1, sx: 1 }, 'sanft');
+  tw(`stempel${i}`, tV + .2, .55, { y: SY - 260 }, 'inout'); tw(`stempel${i}`, tV + .45, .3, { o: 0 });
+  akteur(`abd${i}`, { o: 0, s: 1.4, r: -3 }, true);
+  tw(`abd${i}`, tV, .04, { o: 1 }); tw(`abd${i}`, tV, .22, { s: 1 }, 'out');
+  welle(`tinte${i}`, tV, IX, IY, .8); AKTEURE.get(el(`tinte${i}`)).basis.r = -3;
+  cue(tV, 'plopp'); if (!rot) cue(tV + .05, 'erfolg');
+  akzent(tV, .05);
+  tw(`karte${i}`, tV, .07, { y: CY + 10 }, 'sinus'); tw(`karte${i}`, tV + .07, .4, { y: CY }, 'sanft');
+  wackeln(`karte${i}`, tV + .05, 3, 1.2);
+  tw(`ring${i}`, tV - .05, .3, { s: 0, o: 0 }, 'in');
+  huepfen(rot ? `pm${i}` : `ps${i}`, tV + .1, 20); tw(rot ? `ps${i}` : `pm${i}`, tV + .05, .3, { o: .35 });
+  // Zusatz („fast!“) springt neben den Abdruck
+  if (zusatz) {
+    const tz = W(zusatz[1], v) - .05;
+    akteur(`zus${i}`, { s: 0, r: 3 }, true); tw(`zus${i}`, tz, .5, { s: 1 }, 'back'); cue(tz, 'pop');
+    wackeln(`zus${i}`, tz + .45, 3, 3); akzent(tz + .05, .03);
+  }
+  // Erklärung: Karte wird Kachel links oben, Bühne hell und klein, Text im Bild darunter
+  aus([`pm${i}`, `ps${i}`], tK - .15, .3);
+  tw(`karte${i}`, tK, .9, { x: X + 490, y: 250, s: .55 }, 'inout');
+  titelUrteil(tb, tK + .4, u);
+  return { X, tV, tK };
+}
+// Schwenk kurz vor der nächsten Behauptung
+const panVor = (c, i) => pan2(A(satz(c).start) - .65, i);
+el('pause4').innerHTML = tpl('svgPause');
+el('stumm4').innerHTML = tpl('svgStumm');
+
+/* ---------- 1 · Intro: Tannenbaum, Osterei, Feuerwerk, Festzelt – dann Mythos / Stimmt ---------- */
+{
+  quiz(0);
+  const Y = 480;
+  // Weihnachten: der Tannenbaum fällt herein und landet, die Lichter funkeln
+  const tW = W('Weihnachten', 1);
+  akteur('baum0', { x: 420, y: -420, o: 0 }); akteur('licht0', { x: 420, y: -420, o: 0 });
+  ['baum0', 'licht0'].forEach(id => { tw(id, tW - .5, .05, { o: 1 }); tw(id, tW - .5, .45, { y: Y }, 'in'); landen(id, tW - .05); });
+  cue(tW - .5, 'whoosh'); cue(tW - .05, 'plopp');
+  // Ostern: das Ei ploppt aus dem Boden und wackelt
+  const tO = W('Ostern', 1);
+  akteur('ei0', { x: 780, y: Y + 10, s: 0 }); tw('ei0', tO - .12, .55, { s: 1 }, 'back'); cue(tO - .12, 'pop');
+  wackeln('ei0', tO + .4, 4, 3);
+  // Silvester: eine Rakete steigt auf und zerplatzt
+  const tS = W('Silvester', 1);
+  feuerwerkBauen('fw0');
+  akteur('fw0', { x: 1140, y: 430 });
+  rakete('rak0', tS + .05, 1140, 880, 1140, 450, .6);
+  feuerwerk('fw0', tS + .05, 1.2, true); akzent(tS + .1, .03);
+  // Kerwa: das Festzelt wächst aus dem Boden
+  const tKe = W('Kerwa', 1);
+  akteur('zelt0', { x: 1500, y: Y, o: 0, sy: 0 });
+  tw('zelt0', tKe - .15, .1, { o: 1 }); tw('zelt0', tKe - .15, .6, { sy: 1 }, 'back'); cue(tKe - .15, 'pop');
+  wackeln('zelt0', tKe + .5, 2, 2);
+  // Was stimmt wirklich …? – die vier hüpfen nacheinander, dann schlagen „Mythos“ und „Stimmt“ auf
+  huepfen('baum0', W('Was', 2), 16); huepfen('licht0', W('Was', 2), 16);
+  huepfen('ei0', W('stimmt', 2), 16); bump('fw0', W('wirklich', 2), 1.1); huepfen('zelt0', W('über', 2), 16);
+  [['ab0a', 'ti0a', 700, W('Feiertage', 2) + .1], ['ab0b', 'ti0b', 1220, W('Deutschland', 2) + .1]].forEach(([ab, ti, x, t]) => {
+    akteur(ab, { x, y: 790, o: 0, s: 1.5, r: -3 });
+    tw(ab, t, .05, { o: 1 }); tw(ab, t, .24, { s: 1 }, 'out');
+    welle(ti, t, x, 790, .8); AKTEURE.get(el(ti)).basis.r = -3;
+    cue(t, 'plopp'); akzent(t, .03);
+  });
+  huepfen('ab0a', SE(2) + .3, 20); huepfen('ab0b', SE(2) + .45, 20); cue(SE(2) + .35, 'erfolg');
+  // Lichter funkeln
+  const L0 = [...el('licht0').querySelectorAll('circle')], L2 = [...el('licht2').querySelectorAll('circle')];
+  HOOKS.push(t => [L0, L2].forEach(L => L.forEach((c, k) => { c.style.opacity = .35 + .65 * Math.max(0, Math.sin(t * 3.1 + k * 1.7)); })));
+}
+
+/* ---------- 2 · „Die Feiertage sind überall gleich“ – Mythos ---------- */
+panVor(3, 1);
+{
+  const { X, tK } = mythos({ i: 1, c: 3, v: 4, u: 'mythos', tb: 'tb1' });
+  const MX = X + 1145, MY = 560, OX = MX - 209.5, OY = MY - 279;
+  const P = ([x, y]) => [OX + 1.2 * x, OY + 1.2 * y];
+  ['de1', 'by1'].forEach(id => ein(id, tK + .25, { x: MX, y: MY }, { y: 80 }, id === 'de1' ? 'whoosh' : null));
+  // Manche Feiertage gelten überall: ein Kalender landet mitten auf der Karte, eine Welle läuft über das ganze Land
+  const tF = W('Feiertage', 5) - .2;
+  akteur('kal1', { x: MX - 10, y: MY - 420, o: 0 });
+  tw('kal1', tF, .1, { o: 1 }); tw('kal1', tF, .45, { y: MY - 60 }, 'in'); landen('kal1', tF + .45); cue(tF + .45, 'plopp');
+  const tU = W('überall', 5);
+  welle('welle1', tU, MX, MY - 20, 1.1); akzent(tU, .03);
+  HOOKS.push(t => { const p = Math.sin(Math.PI * clamp((t - tU) / .9)); $('#dePfad').style.fill = p > 0 ? `color-mix(in srgb, var(--b300) ${(p * 100).toFixed(0)}%, var(--b200))` : ''; });
+  aus('kal1', W('jedes', 5) - .45, .3);
+  // aber jedes Bundesland hat auch eigene: in jedem Land ploppt ein kleiner Kalender auf
+  const LAENDER = [[162, 41], [157, 87], [210, 82], [111, 115], [147, 158], [285, 149], [218, 172], [35, 226], [196, 241], [298, 237], [90, 295], [43, 346], [126, 373]];
+  const tJ = W('jedes', 5), tE = W('eigene', 5) + .2;
+  LAENDER.forEach((p, k) => {
+    const id = 'mk1' + k, [x, y] = P(p);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a minikal" id="${id}" data-gruppe="karte1">${tpl('svgKal')}</div>`);
+    pop(id, tJ + k * (tE - tJ) / LAENDER.length, { x, y }, k % 3 ? null : 'pop');
+  });
+  // Bayern hat besonders viele: Bayern leuchtet auf, viele Kalender drängen sich
+  const tB = W('Bayern', 6) - .05;
+  HOOKS.push(t => { $('#byPfad').style.fill = t >= tB ? 'var(--b500)' : ''; });
+  bump('by1', tB, 1.06); wellen('welle1b', [[tB, ...P([212, 368])]]); cue(tB, 'ding'); akzent(tB + .1, .04);
+  pop('chipBy', tB + .1, { x: X + 1525, y: 450 }, null);
+  const BY = [[170, 310], [210, 300], [195, 345], [235, 345], [265, 375], [200, 385], [240, 402], [205, 430]];
+  const tV = W('besonders', 6) - .1, tV2 = W('zum', 6);
+  BY.forEach((p, k) => {
+    const id = 'mb1' + k, [x, y] = P(p);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a minikal" id="${id}" data-gruppe="karte1">${tpl('svgKal')}</div>`);
+    pop(id, tV + k * (tV2 - tV) / BY.length, { x, y }, k % 2 ? null : 'pop');
+  });
+  // zum Beispiel Heilige Drei Könige oder Fronleichnam: zwei Kalender fliegen aus Bayern heraus und werden Chips
+  [['chipHdk', 'Heilige', 560], ['chipFl', 'Fronleichnam', 660]].forEach(([id, w, y]) => {
+    const t = W(w, 6) - .25, [bx, byy] = P([212, 368]);
+    akteur(id, { x: bx, y: byy, o: 0, s: .3 });
+    tw(id, t, .15, { o: 1 }); flug(id, t, .75, X + 1525, y, 90, { s: 1 }); cue(t, 'whoosh');
+    tw(id, t + .72, .08, { sy: .9, sx: 1.05 }, 'sinus'); tw(id, t + .8, .3, { sy: 1, sx: 1 }, 'sanft');
+  });
+  bump('by1', W('Fronleichnam', 6) + .6, 1.05); huepfen('chipBy', SE(6) - .2, 12);
+  textAus('tb1', SE(6) + .15);
+}
+
+/* ---------- 3 · „Der 24. Dezember ist der wichtigste Abend“ – Stimmt ---------- */
+panVor(7, 2);
+{
+  const { X, tK } = mythos({ i: 2, c: 7, v: 8, u: 'stimmt', tb: 'tb2', text: 'An Weihnachten ist der 24. Dezember der wichtigste Abend.' });
+  const BX = X + 1080, BY = 540;
+  ein('fenster2', tK + .2, { x: X + 1300, y: 330 }, { y: -60 });
+  ein('mond2', tK + .3, { x: X + 1345, y: 310 }, { y: -60 });
+  ['baum2', 'licht2'].forEach(id => ein(id, tK + .3, { x: BX, y: BY }, { y: 80 }, id === 'baum2' ? 'whoosh' : null));
+  [['gA2', 'dA2', X + 1000, 760], ['gB2', 'dB2', X + 1175, 770]].forEach(([g, d, x, y], k) => {
+    [g, d].forEach(id => ein(id, tK + .45 + k * .12, { x, y }, { y: 60 }));
+  });
+  const KX = [X + 1420, X + 1538, X + 1656], KY = 520;
+  ['k24', 'k25', 'k26'].forEach((id, k) => ein(id, tK + .5 + k * .1, { x: KX[k], y: KY }, { y: -60 }));
+  // Am Heiligabend: der 24. leuchtet
+  const tH = W('Heiligabend', 9) - .05;
+  klasse('k24', 'an', tH); bump('k24', tH, 1.15); cue(tH, 'ding'); welle('welle2', tH, KX[0], KY, 1);
+  pop('chipHa', tH + .15, { x: KX[0], y: 640 }, null); akzent(tH + .1, .035);
+  // feiern viele mit der Familie: ein Herz ploppt über dem Baum
+  const tFa = W('Familie', 9) - .1;
+  pop('herz2', tFa, { x: X + 1275, y: 540 }); huepfen('herz2', tFa + .55, 14);
+  // und packen Geschenke aus: die Deckel springen auf
+  const tG = W('Geschenke', 9) - .15;
+  [['dA2', 'gA2', 0, -2], ['dB2', 'gB2', .3, 2]].forEach(([d, g, v, r]) => {
+    const x = wertBei(d, 'x', tG + 2), y = wertBei(d, 'y', tG + 2);
+    tw(d, tG + v, .8, { y: y - 170, r: r * 1.5 }, 'out'); tw(d, tG + v + .4, .4, { o: 0 }); cue(tG + v, 'plopp');
+    huepfen(g, tG + v + .05, 12);
+  });
+  // Der 25. und 26. Dezember sind Feiertage
+  const t25 = W('fünfundzwanzigste', 10), t26 = W('sechsundzwanzigste', 10);
+  klasse('k25', 'fei', t25); bump('k25', t25, 1.15); cue(t25, 'klick');
+  klasse('k26', 'fei', t26); bump('k26', t26, 1.15); cue(t26, 'klick');
+  const tFt = W('Feiertage', 10) - .1;
+  pop('chipFt', tFt, { x: (KX[1] + KX[2]) / 2, y: 712 }, 'erfolg'); akzent(tFt + .1, .03);
+  huepfen('k25', tFt + .2, 12); huepfen('k26', tFt + .32, 12);
+  textAus('tb2', SE(10) + .15);
+}
+
+/* ---------- 4 · „Zur Weihnachtsfeier muss ich gehen“ – Mythos ---------- */
+panVor(11, 3);
+{
+  const { X, tK } = mythos({ i: 3, c: 11, v: 12, u: 'mythos', tb: 'tb3' });
+  // Lichterkette spannt sich über die Bühne
+  const kette = el('kette3');
+  const pfad = 'M10 14Q205 96 390 20Q585 96 770 14';
+  kette.innerHTML = `<path id="draht3" d="${pfad}" pathLength="1" stroke="var(--b700)" stroke-width="4" fill="none" stroke-linecap="round"/>` +
+    Array.from({ length: 13 }, (_, k) => { const u = (k + .5) / 13; return `<g class="birne" data-u="${u}"><rect x="-5" y="-12" width="10" height="9" rx="2" fill="var(--b700)"/><ellipse cy="6" rx="9" ry="12" fill="${['var(--warning)', 'var(--error)', 'var(--b300)', 'var(--success)'][k % 4]}"/></g>`; }).join('');
+  const draht = el('draht3'), L = draht.getTotalLength();
+  const BIRNEN = [...kette.querySelectorAll('.birne')];
+  BIRNEN.forEach(b => { const p = draht.getPointAtLength(+b.dataset.u * L); b.setAttribute('transform', `translate(${p.x} ${p.y + 12})`); });
+  akteur('kette3', { x: X + 1320, y: 300, o: 0 });
+  const tKe = tK + .3;
+  set('kette3', tKe, { o: 1 }); cue(tKe, 'scan');
+  HOOKS.push(t => {
+    const p = E.inout(clamp((t - tKe) / .8));
+    draht.style.strokeDasharray = '1 1'; draht.style.strokeDashoffset = 1 - p;
+    BIRNEN.forEach((b, k) => { const an = p >= +b.dataset.u; b.style.opacity = an ? 1 : 0; b.lastChild.style.opacity = .5 + .5 * Math.max(0, Math.sin(t * 3.4 + k * 2.2)); });
+  });
+  // Einladung fliegt herein
+  ein('einl3', tK + .1, { x: X + 1320, y: 540 }, { y: 80 }, 'whoosh');
+  // Sie ist freiwillig: „Ja“ und „Nein“ sind beide in Ordnung
+  const tFr = W('freiwillig', 13) - .1;
+  klasse('kJa', 'ok', tFr); klasse('kNein', 'ok', tFr + .15);
+  cue(tFr, 'ding'); cue(tFr + .15, 'ding');
+  pop('chipFrei', tFr + .25, { x: X + 1320, y: 745 }, null); akzent(tFr + .2, .035);
+  // Aber gute Chance: „Ja“ wird gedrückt, die Einladung fliegt weg, die Kollegen kommen
+  const tJa = W('gute', 14) - .1;
+  klasse('kJa', 'gewaehlt', tJa); cue(tJa, 'klick');
+  HOOKS.push(t => { el('kJa').style.transform = t >= tJa && t < tJa + .25 ? 'scale(.92)' : ''; });
+  aus('chipFrei', tJa, .3);
+  tw('einl3', tJa + .3, .6, { x: X + 1800, y: 380, s: .4, o: 0 }, 'in', { bogen: 60 }); cue(tJa + .3, 'whoosh');
+  ein('tisch3', tJa + .55, { x: X + 1320, y: 800 }, { y: 40 });
+  [['t3a', 1140], ['t3b', 1320], ['t3c', 1500]].forEach(([id, x], k) => ein(id, tJa + .6 + k * .08, { x: X + x, y: 744 }, { y: 50 }));
+  const tKo = W('Kollegen', 14) - .25;
+  [['p3a', 1025], ['p3b', 1222], ['p3c', 1418], ['p3d', 1615]].forEach(([id, x], k) => pop(id, tKo + k * .12, { x: X + x, y: 540 }, k % 2 ? null : 'pop', 'sanft'));
+  // besser kennenzulernen: alle lachen zusammen, die Tassen stoßen an
+  const tL = W('kennenzulernen', 14) - .1;
+  ['p3a', 'p3b', 'p3c', 'p3d'].forEach((id, k) => { froh(id, tL + k * .06); huepfen(id, tL + .1 + (k % 2) * .18, 16); huepfen(id, tL + .75 + (k % 2) * .18, 10); });
+  ['t3a', 't3b', 't3c'].forEach((id, k) => bump(id, tL + .3 + k * .05, 1.12)); cue(tL + .3, 'ding');
+  welle('welle3', tL + .15, X + 1320, 560, 1); akzent(tL + .1, .04);
+  textAus('tb3', SE(14) + .15);
+}
+
+/* ---------- 5 · „Am Karfreitag nicht tanzen“ – Stimmt ---------- */
+panVor(15, 4);
+{
+  const { X, tK } = mythos({ i: 4, c: 15, v: 16, u: 'stimmt', tb: 'tb4' });
+  const KX = X + 1090, KY = 400, LX = X + 1580, LY = 560;
+  // Partyzeit: Discokugel mit Lichtstrahlen, Lautsprecher mit Noten
+  el('strahlen4').innerHTML = Array.from({ length: 8 }, (_, k) => {
+    const a = k / 8 * 360;
+    return `<path d="M0 0L-26 175A176 176 0 0 0 26 175Z" transform="rotate(${a})" fill="${['var(--warning)', 'var(--b300)', 'var(--error)', 'var(--info)'][k % 4]}" opacity=".3"/>`;
+  }).join('');
+  akteur('strahlen4', { x: KX, y: KY + 13, o: 0 });
+  akteur('kugel4', { x: KX, y: KY - 380, o: 0 });
+  tw('kugel4', tK + .25, .1, { o: 1 }); tw('kugel4', tK + .25, .7, { y: KY }, 'sanft'); cue(tK + .25, 'whoosh');
+  ein('lautspr4', tK + .4, { x: LX, y: LY }, { x: 80 });
+  ein('haus4a', tK + .5, { x: X + 1060, y: 740 }, { y: 60 }); ein('haus4b', tK + .6, { x: X + 1265, y: 740 }, { y: 60 });
+  const tStill = W('stiller', 17) - .1;
+  tw('strahlen4', tK + .35, .4, { o: 1 }); tw('strahlen4', tStill, .5, { o: 0 }, 'in');
+  const tDreh0 = tK + .35;
+  HOOKS.push(t => {
+    const dreh = t < tStill ? (t - tDreh0) * 40 : (tStill - tDreh0) * 40 + 40 * .25 * (1 - Math.exp(-(t - tStill) * 4));
+    el('strahlen4').style.transform += ` rotate(${Math.max(0, dreh).toFixed(1)}deg)`;
+  });
+  // Noten hüpfen aus dem Lautsprecher, solange Party ist
+  const NOTEN = [];
+  for (let k = 0; k < 7; k++) {
+    const id = 'no4' + k, t0 = tK + .5 + k * ((tStill - tK - .6) / 7);
+    WELT.insertAdjacentHTML('beforeend', `<div class="a" id="${id}" style="width:64px" data-frei>${tpl('tplNote')}</div>`);
+    akteur(id, { x: LX - 30, y: LY - 60, o: 0, s: .5 });
+    tw(id, t0, .12, { o: 1 }); tw(id, t0, 1.1, { x: LX - 150 - (k % 3) * 60, y: LY - 190 - (k % 2) * 40, s: 1 }, 'out', { bogen: 40 }); tw(id, t0 + .75, .35, { o: 0 }); cue(t0, 'tipp');
+    tw(id, tStill, .3, { o: 0 });
+    NOTEN.push(t0);
+  }
+  HOOKS.push(t => { if (t > tK + .5 && t < tStill) el('lautspr4').style.transform += ` scale(${1 + .035 * Math.max(0, Math.sin(2 * Math.PI * t * 2.2))})`; });
+  // Karfreitag: Kalender-Chip
+  const tKf = W('Karfreitag', 17) - .1;
+  pop('chipKf', tKf, { x: X + 1560, y: 300 }); akzent(tKf + .1, .025);
+  // ein stiller Feiertag: die Kugel hält an (Pause), es wird Nacht und still, der Mond geht auf
+  pop('pause4', tStill + .1, { x: KX, y: KY + 13 }, 'plopp'); akzent(tStill + .1, .045);
+  HOOKS.push(t => { el('nacht4').style.opacity = .92 * E.inout(clamp((t - tStill) / .9)); });
+  akteur('mond4', { x: X + 1330, y: 420, o: 0, s: .7 });
+  tw('mond4', tStill + .2, .3, { o: 1 }); tw('mond4', tStill + .2, 1.1, { y: 330, s: 1 }, 'sanft'); schweben('mond4', 3);
+  // Laute Partys und Tanzveranstaltungen … verboten: der Lautsprecher zuckt noch einmal, dann Ton aus
+  wackeln('lautspr4', W('Laute', 18), 3, 3); cue(W('Laute', 18), 'klick');
+  wackeln('kugel4', W('Tanzveranstaltungen', 18), 3, 2);
+  const tVb = W('verboten', 18) - .05;
+  pop('stumm4', tVb, { x: LX, y: LY - 20 }, 'plopp'); wackeln('stumm4', tVb + .4, 3, 3); akzent(tVb, .045);
+  huepfen('chipKf', SE(18) - .1, 12);
+  textAus('tb4', SE(18) + .15);
+}
+
+/* ---------- 6 · „An Silvester überall Feuerwerk“ – Stimmt, fast ---------- */
+panVor(19, 5);
+{
+  const { X, tK } = mythos({ i: 5, c: 19, v: 20, u: 'stimmt', tb: 'tb5', zusatz: ['fast!', 'fast'] });
+  HOOKS.push(t => { el('nacht5').style.opacity = .95 * E.inout(clamp((t - tK) / .45)); });
+  // Feuerwerk am Nachthimmel: Raketen steigen auf und zerplatzen
+  const HIMMEL = [[1030, 380, .05], [1250, 350, .9], [1110, 490, 1.6]];
+  for (let k = 0; k < 3; k++) {
+    WELT.insertAdjacentHTML('beforeend', `<svg class="a feuerwerk" id="fw5${k}" viewBox="-100 -100 200 200" style="width:${k === 1 ? 240 : 200}px" data-frei></svg>
+      <div class="a" id="rak5${k}" style="width:150px" data-frei>${el('rak0').innerHTML.replaceAll('il-rakete-g', `il-rakete-${k}-g`)}</div>`);
+    feuerwerkBauen('fw5' + k, 12, k * 2);
+    akteur('fw5' + k, { x: X + HIMMEL[k][0], y: HIMMEL[k][1] });
+  }
+  const knall = (k, tB) => { rakete('rak5' + k, tB, X + HIMMEL[k][0] + 30, 720, X + HIMMEL[k][0], HIMMEL[k][1] + 10, .55); feuerwerk('fw5' + k, tB, 1.5); };
+  knall(0, tK + .9); knall(1, W('Feuerwerk', 21)); knall(2, W('Silvester', 21) + .1); knall(0, W('Neujahr', 21) + .1); knall(1, W('erlaubt', 21) + .2); knall(2, W('Zonen', 22) + .2);
+  // nur an Silvester und Neujahr erlaubt: zwei Kalender-Chips, bei „erlaubt“ werden sie grün
+  pop('chipSil', W('Silvester', 21) - .1, { x: X + 1050, y: 790 }, null);
+  pop('chipNj', W('Neujahr', 21) - .1, { x: X + 1250, y: 790 }, null);
+  const tEr = W('erlaubt', 21) - .05;
+  klasse('chipSil', 'gruen', tEr); klasse('chipNj', 'gruen', tEr + .12);
+  bump('chipSil', tEr, 1.12); bump('chipNj', tEr + .12, 1.12); cue(tEr, 'erfolg'); akzent(tEr + .1, .035);
+  // Manche Städte verbieten es aber in bestimmten Zonen: Altstadt, Verbotsschild, die Zone zeichnet sich
+  const AX = X + 1560, AY = 530;
+  ein('alt5', W('Manche', 22) - .2, { x: AX, y: AY }, { x: 90 }, 'whoosh');
+  const tVb = W('verbieten', 22) - .15;
+  akteur('schild5', { x: AX, y: 400, o: 0 });
+  tw('schild5', tVb, .1, { o: 1 }); tw('schild5', tVb, .4, { y: 770 }, 'in'); landen('schild5', tVb + .4); cue(tVb + .4, 'plopp');
+  wackeln('schild5', tVb + .55, 3, 3); akzent(tVb + .4, .04);
+  pop('chipVerbot', tVb + .5, { x: AX, y: 372 }, null);
+  const tZ = W('bestimmten', 22) - .1;
+  akteur('zone5', { x: AX, y: AY, o: 0 });
+  set('zone5', tZ, { o: 1 }); cue(tZ, 'kritzeln');
+  const rz = el('zone5').querySelector('rect');
+  HOOKS.push(t => { const p = E.inout(clamp((t - tZ) / 1)); rz.style.strokeDashoffset = (1 - p) * 1000; rz.style.strokeDasharray = p < 1 ? `${(p * 1000).toFixed(0)} 1000` : '18 14'; });
+  bump('alt5', W('Zonen', 22), 1.05);
+  textAus('tb5', SE(22) + .15);
+}
+
+/* ---------- 7 · „Wer nicht christlich ist, muss nicht mitfeiern“ – Stimmt ---------- */
+panVor(23, 6);
+{
+  const { X, tK } = mythos({ i: 6, c: 23, v: 24, u: 'stimmt', tb: 'tb6' });
+  const FY = 460, FX = [X + 1060, X + 1320, X + 1580];
+  // zuerst nur der Tannenbaum in der Mitte
+  ein('fest6a', tK + .3, { x: FX[1], y: FY }, { y: 70 }, 'whoosh');
+  // Religionsfreiheit: der Baum rückt zur Seite, Halbmond mit Laternen und Diyas stellen sich gleichwertig daneben
+  const tR = W('Religionsfreiheit', 25) - .35;
+  tw('fest6a', tR, .6, { x: FX[0] }, 'inout');
+  ein('fest6b', tR + .2, { x: FX[1], y: FY }, { y: 70 }, 'pop'); ein('fest6c', tR + .35, { x: FX[2], y: FY }, { y: 70 }, 'pop');
+  welle('welle6', tR + .95, X + 1320, FY, 1.1); cue(tR + .95, 'erfolg'); akzent(tR + 1, .04);
+  // Eid: die Laternen leuchten; Diwali: die Flammen flackern auf
+  akteur('n6b', { o: 0, y: 16 }, true); akteur('n6c', { o: 0, y: 16 }, true);
+  const tEid = W('Iid', 26) - .1, tDi = W('Diwali', 26) - .1;
+  tw('n6b', tEid, .4, { o: 1, y: 0 }, 'back'); bump('fest6b', tEid, 1.08); cue(tEid, 'ding');
+  tw('n6c', tDi, .4, { o: 1, y: 0 }, 'back'); bump('fest6c', tDi, 1.08); cue(tDi, 'ding');
+  bump('fest6a', W('eigenen', 26), 1.05);
+  const FL = el('flamme6');
+  HOOKS.push(t => {
+    const hoch = 1 + .25 * Math.exp(-Math.max(0, t - tDi) * 2.5) * (t > tDi ? 1 : 0);
+    FL.style.transformOrigin = '50% 70%'; FL.style.transform = `scaleY(${(hoch * (1 + .06 * Math.sin(t * 13) + .04 * Math.sin(t * 7.3))).toFixed(3)})`;
+    const lat = el('bild6b'); lat.style.filter = t > tEid ? `drop-shadow(0 0 ${(6 + 4 * Math.sin(t * 4)).toFixed(1)}px var(--warning))` : '';
+  });
+  // kannst du rechtzeitig Urlaub beantragen: der Antrag kommt, der Stift füllt ihn aus, Haken
+  const tU = W('rechtzeitig', 26) - .2;
+  ein('antrag6', tU, { x: X + 1320, y: 755 }, { y: 70 }, 'whoosh');
+  akteur('ck6', { draw: 0 }, true);
+  const tS = tU + .35, tB = tS + 1.25;
+  akteur('stift6', { x: X + 1650, y: 620, o: 0, s: .8 });
+  tw('stift6', tS, .2, { o: 1 }); tw('stift6', tS, .5, { x: X + 1360, y: 715, s: 1 }, 'inout', { bogen: 30 });
+  HOOKS.push(t => { const p = t - tS - .55; if (p > 0 && p < .6) { const h = Math.sin(Math.PI * p / .6); el('stift6').style.transform += ` translate(${(18 * h * Math.sin(p * 22)).toFixed(1)}px,${(3 * h * Math.sin(p * 31)).toFixed(1)}px)`; } });
+  cue(tS + .55, 'kritzeln');
+  tw('stift6', tB, .45, { x: X + 1650, y: 620, o: 0, s: .8 }, 'inout');
+  tw('ck6', tB + .1, .4, { draw: 1 }, 'inout'); cue(tB + .1, 'ding');
+  bump('antrag6', tB + .5, 1.06); akzent(tB + .4, .03);
+  textAus('tb6', SE(26) + .15);
+}
+
+/* ---------- 8 · Kerwa in Franken ---------- */
+pan2(A(satz(27).start) - 1.2, 7);
+{
+  const X = S(7);
+  akteur('bue7', { x: X + 1320, y: 540 });
+  titelEin('tb7', A(satz(27).start) - .5);
+  // Und in Franken: das Dorf mit Kirchturm
+  ein('dorf7', W('Franken', 27) - .25, { x: X + 1560, y: 400 }, { y: 70 }, 'whoosh');
+  // die Kerwa: der Kerwabaum wird aufgestellt
+  const tK = W('Kerwa', 27) - .15;
+  akteur('baum7', { x: X + 1040, y: 510, o: 0, sy: 0 });
+  tw('baum7', tK, .1, { o: 1 }); tw('baum7', tK, .7, { sy: 1 }, 'back'); cue(tK, 'pop'); akzent(tK + .2, .03);
+  wackeln('baum7', tK + .7, 3, 2);
+  // ein Dorffest: das Festzelt geht auf
+  const tD = W('Dorffest', 27) - .15;
+  akteur('zelt7', { x: X + 1275, y: 500, o: 0, sy: 0 });
+  tw('zelt7', tD, .1, { o: 1 }); tw('zelt7', tD, .6, { sy: 1 }, 'back'); cue(tD, 'pop');
+  // die Gäste: Porträts ploppen vor dem Zelt auf
+  [['p7a', 1010], ['p7b', 1175], ['p7c', 1340]].forEach(([id, x], k) => pop(id, tD + .35 + k * .12, { x: X + x, y: 765 }, k ? null : 'pop', 'sanft'));
+  // mit Musik: die Trompete spielt, Noten fliegen
+  const tM = W('Musik', 27) - .15;
+  ein('trompete7', tM, { x: X + 1490, y: 640 }, { x: 80 }, 'whoosh');
+  const tEnde = SE(29) + 1.4;
+  const NOTEN = [];
+  for (let k = 0; k < 9; k++) {
+    const id = 'no7' + k, t0 = tM + .5 + k * (tEnde - tM - 1.2) / 9;
+    WELT.insertAdjacentHTML('beforeend', `<div class="a" id="${id}" style="width:54px" data-frei>${tpl('tplNote')}</div>`);
+    akteur(id, { x: X + 1570, y: 615, o: 0, s: .5 });
+    tw(id, t0, .12, { o: 1 }); tw(id, t0, 1, { x: X + 1580 + (k % 3) * 40, y: 480 - (k % 2) * 40, s: 1 }, 'out', { bogen: 30 }); tw(id, t0 + .65, .35, { o: 0 });
+    NOTEN.push(t0);
+  }
+  HOOKS.push(t => { if (t > tM + .5 && t < tEnde) el('trompete7').style.transform += ` scale(${1 + .03 * Math.max(0, Math.sin(2 * Math.PI * t * 2))})`; });
+  // Bier (nur gesprochen) und Bratwurst: Bratwurst und Limo kommen auf den Tisch
+  const tBw = W('Bratwurst', 27) - .2;
+  ein('wurst7', tBw, { x: X + 1500, y: 790 }, { y: 60 }, 'pop'); ein('limo7', tBw + .15, { x: X + 1650, y: 770 }, { y: 60 });
+  // Die Gäste feiern im Takt der Musik
+  ['p7a', 'p7b', 'p7c'].forEach((id, k) => {
+    froh(id, W('Musik', 27) + k * .1);
+    for (let n = 0; n < 5; n++) huepfen(id, W('Musik', 27) + .2 + n * 1.25 + (k % 2) * .4, 10);
+  });
+  // Fast jeder Ort feiert sie einmal im Jahr: Kalender, ein Tag leuchtet
+  const tE = W('einmal', 28) - .3;
+  pop('kal7', tE, { x: X + 1275, y: 290 });
+  const tag = el('kal7').querySelectorAll('rect')[6];
+  HOOKS.push(t => { if (tag) tag.style.fill = t >= W('Jahr', 28) - .05 ? 'var(--warning)' : ''; });
+  bump('kal7', W('Jahr', 28) - .05, 1.15); cue(W('Jahr', 28) - .05, 'ding');
+  wackeln('dorf7', W('Ort', 28), 2, 2);
+  // Geh mal hin!: der Pin fällt auf das Fest, alle jubeln
+  const tG = W('Geh', 29) - .2;
+  aus('kal7', tG - .3, .3);
+  akteur('pin7', { x: X + 1275, y: -300, o: 0 });
+  tw('pin7', tG, .1, { o: 1 }); tw('pin7', tG, .45, { y: 300 }, 'in'); landen('pin7', tG + .45); cue(tG + .45, 'plopp');
+  akzent(tG + .45, .05); huepfen('zelt7', tG + .5, 12);
+  ['p7a', 'p7b', 'p7c'].forEach((id, k) => huepfen(id, W('hin', 29) + k * .08, 22));
+  cue(W('hin', 29) + .1, 'erfolg');
+}
+
+/* ---------- Abspann ---------- */
+const AB = Math.max(ENDE_SPRACHE, 0) + 2.2;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 50% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.8, AB + 2);
+</script>
+</body></html>

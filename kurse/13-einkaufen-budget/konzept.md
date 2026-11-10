@@ -28,3 +28,47 @@ Reihe **Alleine wohnen** (Kurse 7–13).
 ## Zu prüfen vor der Aufnahme
 
 - Discounter mit Namen nennen (ALDI, Lidl, Penny, Netto) oder neutral lassen? Entwurf: neutral.
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Mitte des Monats – und das Geld ist schon fast weg?
+Erzähler: So planst du besser.
+
+### Szene 2
+Erzähler: Zieh zuerst die festen Kosten ab: Miete, Handy, Ticket.
+Erzähler: Den Rest teilst du durch die Wochen.
+
+### Szene 3
+Erzähler: Plan deine Mahlzeiten für die Woche und schreib eine Einkaufsliste.
+Erzähler: Dann kaufst du nur, was du brauchst.
+
+### Szene 4
+Erzähler: Geh nicht hungrig einkaufen.
+Erzähler: Dann landet viel mehr im Wagen.
+
+### Szene 5
+Erzähler: Discounter und Eigenmarken sind oft billiger.
+Erzähler: Die Qualität ist meistens gleich gut.
+
+### Szene 6
+Erzähler: Schau auf den Grundpreis.
+Erzähler: Der steht klein auf dem Preisschild: Preis pro Kilo oder Liter.
+Erzähler: So vergleichst du richtig.
+
+### Szene 7
+Erzähler: „Mindestens haltbar bis“ heißt nicht: danach wegwerfen.
+Erzähler: Schau, riech und probier.
+Erzähler: Nur bei „zu verbrauchen bis“, zum Beispiel bei Hackfleisch, musst du dich an das Datum halten.
+
+### Szene 8
+Erzähler: Reste kannst du einfrieren oder am nächsten Tag essen.
+
+### Szene 9
+Erzähler: Leg jeden Monat ein bisschen Geld zur Seite.
+Erzähler: Auch kleine Beträge helfen.
+
+### Szene 10
+Erzähler: So reicht dein Geld bis zum Monatsende.

@@ -30,3 +30,38 @@
 ## Zu prüfen vor der Aufnahme
 
 - „Bescheinigung, bis die Karte da ist“ stammt aus dem bisherigen Aufgabentext des Teams – bei der AOK bestätigen.
+
+## Sprechertext
+
+@stimme Erzähler: K8bIZwDsGMHreGKTIVHN
+
+### Szene 1
+Erzähler: Du bist krank und musst zum Arzt.
+Erzähler: Was brauchst du dafür?
+
+### Szene 2
+Erzähler: Deine Gesundheitskarte.
+Erzähler: Die bekommst du von deiner Krankenkasse.
+
+### Szene 3
+Erzähler: Bist du über Azubis Plus gekommen?
+Erzähler: Dann bist du schon bei der AOK versichert.
+
+### Szene 4
+Erzähler: Für die Karte braucht die AOK ein Foto von dir.
+Erzähler: Darauf soll man dein Gesicht gut sehen.
+
+### Szene 5
+Erzähler: Lad das Foto in „Meine AOK“ hoch, in der App oder auf der Website.
+Erzähler: Dafür brauchst du deine Sozialversicherungsnummer.
+
+### Szene 6
+Erzähler: Danach kommt deine Karte per Post.
+
+### Szene 7
+Erzähler: Nimm sie immer mit, wenn du zum Arzt gehst.
+Erzähler: Ist sie noch nicht da?
+Erzähler: Dann hilft dir die AOK mit einer Bescheinigung.
+
+### Szene 8
+Erzähler: Tipp: Mach ein Foto von deiner Karte und leg es in der Helper-App unter „Dokumente“ ab.

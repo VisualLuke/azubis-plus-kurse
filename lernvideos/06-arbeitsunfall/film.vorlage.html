@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Arbeitsunfall und Wegeunfall</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --n400:var(--7bda698f-465c-49f5-afd3-31fe7cd36aff,#9A93AD);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:58px;line-height:68px}
+
+/* Bausteine */
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:999px;font:700 28px/34px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:30px;height:30px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.plakette{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.plakette svg{width:32px}
+.plakette.gruen{background:var(--success)}
+.plakette.klein{width:48px;height:48px}.plakette.klein svg{width:24px}
+.nr{width:72px;height:72px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 38px/72px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:7px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.frage{width:104px;height:104px;border-radius:999px;background:var(--b500);color:var(--surface);font:800 64px/104px Inter;text-align:center;
+  box-shadow:0 6px 20px rgba(90,63,230,.3)}
+.ring{border-radius:999px;border:6px solid var(--success);opacity:0}
+.welle{border-radius:999px;border:5px solid var(--b300);opacity:0}
+.welle.rot{border-color:var(--error)}
+.puls{position:absolute;left:0;top:0;visibility:hidden}
+.welle.gruen{border-color:var(--success)}
+.welle.lila{border-color:var(--b400)}
+
+/* 1 · Werkstatt */
+.regal{width:250px;height:16px;border-radius:8px;background:linear-gradient(var(--b300),var(--b400));box-shadow:0 6px 14px rgba(22,19,37,.12)}
+
+/* 2 · Schutzschild */
+.schutz svg{width:100%;height:100%}
+
+/* 3/4 · Karte */
+.karte{width:790px;height:550px}
+.ort b{display:block}
+
+/* 5 · Handy mit 112 */
+.anruf{width:172px;height:310px;border-radius:18px;overflow:hidden;background:var(--bg);padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.anruf .nummer{height:52px;font:800 40px/52px Inter;letter-spacing:.06em;color:var(--ink);white-space:pre}
+.anruf .tasten{display:grid;grid-template-columns:repeat(3,38px);gap:8px 12px}
+.anruf .tasten span{height:30px;border-radius:999px;background:var(--surface);font:700 16px/30px Inter;color:var(--b600);text-align:center;box-shadow:0 1px 2px rgba(22,19,37,.06)}
+.anruf .tasten span.an{background:var(--b500);color:var(--surface)}
+.anruf .hoerer{margin-top:auto;width:52px;height:52px;border-radius:999px;background:var(--success);display:flex;align-items:center;justify-content:center}
+.anruf .hoerer svg{width:28px}
+
+/* 6 · Verbandbuch */
+.buch{width:460px;height:280px}
+.seite{position:absolute;top:0;width:230px;height:280px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);padding:22px 22px}
+.seite.links{left:0;border-radius:18px 4px 4px 18px;transform-origin:right center;background:linear-gradient(90deg,var(--surface) 85%,var(--n200))}
+.seite.rechts{left:230px;border-radius:4px 18px 18px 4px;background:linear-gradient(90deg,var(--n200),var(--surface) 15%)}
+.seite small{display:block;font:800 15px/18px Inter;color:var(--b600);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.seite .alt{height:8px;border-radius:4px;background:var(--n200);margin:0 0 16px}
+.seite .feld{font:600 16px/20px Inter;color:var(--n500);white-space:nowrap}
+.seite .schrift{display:block;width:186px;height:24px;margin:2px 0 12px}
+.buchdeckel{position:absolute;left:230px;top:0;width:230px;height:280px;border-radius:6px 18px 18px 6px;transform-origin:left center;
+  background:linear-gradient(135deg,var(--b500),var(--b700));box-shadow:0 8px 24px rgba(58,37,153,.28);display:flex;align-items:center;justify-content:center}
+.buchdeckel b{padding:10px 16px;border-radius:10px;background:var(--surface);font:800 22px/26px Inter;color:var(--b600)}
+.kal{width:130px;height:140px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden}
+.kal .kopf{height:38px;background:var(--b500)}
+.kal .blatt{position:absolute;left:0;right:0;top:38px;bottom:0;background:var(--surface);transform-origin:50% 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px}
+.kal .blatt span{height:14px;border-radius:4px;background:var(--b100)}
+
+/* 7 · Praxis */
+.praxisschild{width:226px;height:40px;border-radius:9px;background:var(--surface);border:3px solid var(--b200);font:800 23px/34px Inter;color:var(--b600);text-align:center;white-space:nowrap}
+.praxisschild.an{background:var(--b500);border-color:var(--b500);color:var(--surface)}
+.blase{padding:16px 22px;border-radius:26px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);font:700 26px/32px Inter;color:var(--ink);width:250px;min-height:96px}
+.blase:after{content:"";position:absolute;left:58px;bottom:-16px;border:10px solid transparent;border-top:16px solid var(--surface);border-bottom:0}
+.cursor{display:inline-block;width:3px;height:26px;background:var(--b500);vertical-align:-4px;margin-left:2px}
+.ortsmarke{width:70px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 96px/106px Inter;letter-spacing:-.03em;text-align:center}
+.deckel .klein{font:400 40px/54px Inter;color:var(--b100);margin-top:24px;text-align:center;max-width:1300px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Unfall in der Werkstatt -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="werkbank1" style="width:280px" data-frei>{{werkbank}}</div>
+  <div class="a" id="reifen1" style="width:170px">{{reifen}}</div>
+  <div class="a regal" id="regal1" data-gruppe="regal"></div>
+  <div class="a" id="mutterR1" style="width:64px" data-gruppe="regal">{{mutter}}</div>
+  <div class="a" id="schluessel1" style="width:200px" data-gruppe="regal">{{schraubenschluessel}}</div>
+  <div class="a portrait" id="amir1" style="width:280px;height:280px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="puls welle rot" id="schmerz1a" style="width:170px;height:170px" data-frei></div>
+  <div class="puls welle rot" id="schmerz1b" style="width:170px;height:170px" data-frei></div>
+  <div class="a" id="hand1" style="width:220px">{{hand}}</div>
+  <div class="a frage" id="frage1">?</div>
+
+  <!-- 2 · Unfallversichert -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="betrieb2" style="width:300px" data-gruppe="bg">{{betrieb}}</div>
+  <div class="a welle" id="welle2" style="width:420px;height:420px" data-frei></div>
+  <svg class="a schutz" id="schutz2" viewBox="0 0 380 420" style="width:380px;height:420px" data-gruppe="bg">
+    <path d="M190 14c44 24 92 34 160 34v110c0 120-70 190-160 248C100 348 30 278 30 158V48c68 0 116-10 160-34Z" fill="var(--b300)" id="schutzFlaeche2" fill-opacity=".16" stroke="var(--b500)" stroke-width="12" stroke-linejoin="round"/>
+  </svg>
+  <div class="a chip klein" id="chipGUV2">gesetzliche Unfallversicherung</div>
+  <div class="a chip brand" id="chipBG2">Berufsgenossenschaft</div>
+  <div class="a" id="muenze2a" style="width:78px" data-dreht data-frei>{{muenze}}</div>
+  <div class="a" id="muenze2b" style="width:78px" data-dreht data-frei>{{muenze~b}}</div>
+  <div class="a portrait" id="amir2" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="schildMini2" style="width:84px" data-frei>{{schild}}</div>
+  <div class="a chip gruen" id="chipNull2"><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>0 € für dich</div>
+
+  <!-- 3/4 · Karte: direkter Weg und Umweg -->
+  <div class="a buehne" id="bue2"></div>
+  <svg class="a karte" id="karte3" viewBox="0 0 790 550" data-frei>
+    <rect x="0" y="0" width="790" height="550" rx="34" fill="var(--surface)" opacity=".55"/>
+        <rect x="610" y="470" width="150" height="54" rx="16" fill="var(--success-bg)"/>
+    <g stroke="var(--b100)" stroke-width="30" stroke-linecap="round" fill="none">
+      <path d="M30 420H760"/><path d="M30 190H760"/><path d="M250 20V530"/><path d="M520 20V530"/><path d="M250 190L520 420"/>
+    </g>
+    <g stroke="var(--surface)" stroke-width="3" stroke-dasharray="14 14" fill="none" opacity=".9">
+      <path d="M30 420H760"/><path d="M30 190H760"/><path d="M250 20V530"/><path d="M520 20V530"/>
+    </g>
+  </svg>
+  <svg class="a" id="wege3" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <path id="glowR1" d="M1085 655C1230 655 1300 430 1555 420" stroke="var(--b300)" stroke-width="30" stroke-linecap="round" fill="none" opacity="0"/>
+    <path id="glowR2" d="M1090 700C1250 712 1420 690 1545 685" stroke="var(--b300)" stroke-width="30" stroke-linecap="round" fill="none" opacity="0"/>
+    <path id="umweg1" class="umweg" d="" stroke="var(--b500)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path id="umweg2" class="umweg" d="" stroke="var(--b500)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path id="R1" d="M1085 655C1230 655 1300 430 1555 420" stroke="var(--b500)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path id="R2" d="M1090 700C1250 712 1420 690 1545 685" stroke="var(--b500)" stroke-width="10" stroke-linecap="round" fill="none"/>
+  </svg>
+  <div class="a" id="haus3" style="width:150px" data-gruppe="wohnung">{{haus}}</div>
+  <div class="a chip klein" id="chipWohnung3" data-gruppe="wohnung">Wohnung</div>
+  <div class="a" id="betrieb3" style="width:160px">{{betrieb~3}}</div>
+  <div class="a" id="schule3" style="width:160px" data-gruppe="schule">{{schule}}</div>
+  <div class="a chip klein" id="chipSchule3" data-gruppe="schule">Berufsschule</div>
+  <div class="a plakette gruen klein" id="okB3" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a plakette gruen klein" id="okS3" data-frei><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16" stroke="var(--surface)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+  <div class="a" id="schildR1" style="width:76px" data-frei>{{schild~r1}}</div>
+  <div class="a" id="schildR2" style="width:76px" data-frei>{{schild~r2}}</div>
+  <div class="a chip brand" id="chipWegeunfall3">Wegeunfall</div>
+  <div class="a" id="markt4" style="width:140px" data-gruppe="markt">{{supermarkt}}</div>
+  <div class="a chip gelb klein" id="chipEinkaufen4" data-gruppe="markt">Einkaufen</div>
+  <div class="a" id="freunde4" style="width:130px" data-gruppe="freunde">{{haus~f}}</div>
+  <div class="a chip gelb klein" id="chipFreunde4" data-gruppe="freunde">Freunde</div>
+  <div class="a" id="grau4a" style="width:90px" data-frei>{{schild-grau}}</div>
+  <div class="a" id="grau4b" style="width:90px" data-frei>{{schild-grau~b}}</div>
+  <div class="a portrait" id="pin3" style="width:84px;height:84px;border-width:4px" data-frei><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div><div class="ebene zu">{{figur-mund-zu}}</div></div></div>
+  <div class="a chip gelb" id="chipAchtung4">Achtung!</div>
+
+  <!-- 5 · Erste Hilfe, 112 -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a nr" id="nr5">1</div>
+  <div class="a portrait" id="amir5" style="width:230px;height:230px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="puls welle rot" id="schmerz5" style="width:180px;height:180px" data-frei></div>
+  <div class="a" id="hand5" style="width:220px" data-gruppe="hand5">{{hand}}</div>
+  <div class="a" id="pflaster5" style="width:122px" data-gruppe="hand5">{{pflaster}}</div>
+  <div class="a welle gruen" id="heil5" style="width:180px;height:180px" data-frei></div>
+  <div class="a portrait" id="kollege5" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-geselle}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="kasten5" style="width:200px">{{erste-hilfe}}</div>
+  <div class="puls welle lila" id="ruf5a" style="width:300px;height:300px" data-frei></div>
+  <div class="puls welle lila" id="ruf5b" style="width:300px;height:300px" data-frei></div>
+  <div class="a" id="handy5" style="width:460px" data-gruppe="handy">{{handy}}</div>
+  <div class="a anruf" id="anruf5" data-gruppe="handy"><div class="nummer" id="nummer5"></div>
+    <div class="tasten" id="tasten5"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>*</span><span>0</span><span>#</span></div>
+    <div class="hoerer" id="hoerer5"><svg viewBox="0 0 30 30"><path d="M9 4c1.4 0 2.3.8 2.8 2l1.6 3.8c.4 1-.1 2.2-1 2.8l-1.8 1.2c1.2 2.6 3.2 4.6 5.8 5.8l1.2-1.8c.6-.9 1.8-1.4 2.8-1l3.8 1.6c1.2.5 2 1.4 2 2.8v2.4c0 1.8-1.4 3.2-3.2 3.1C12.600 25.9 4.100 17.400 3.800 7.200 3.700 5.400 5.200 4 7 4Z" fill="var(--surface)"/></svg></div></div>
+
+  <!-- 6 · Bescheid geben, Verbandbuch -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a nr" id="nr6">2</div>
+  <div class="a portrait" id="amir6" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="sabine6" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-sabine}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="hand6" style="width:190px" data-gruppe="hand6">{{hand}}</div>
+  <div class="a" id="pflaster6" style="width:106px" data-gruppe="hand6">{{pflaster~6}}</div>
+  <div class="a buch" id="buch6" data-gruppe="buch">
+    <div class="seite links" id="links6"><small>Verbandbuch</small><div class="alt"></div><div class="alt" style="width:80%"></div><div class="alt" style="width:90%"></div><div class="alt" style="width:60%"></div><div class="alt" style="width:85%"></div><div class="alt" style="width:70%"></div></div>
+    <div class="seite rechts"><div class="feld">Datum</div><svg class="schrift" viewBox="0 0 200 26"><path id="schrift6a" pathLength="1" d="M4 16c8-10 12 6 20-2s12-8 18 0 10 6 18-2 12-6 18 2 8 4 16-4" stroke="var(--b600)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+      <div class="feld">Was ist passiert?</div><svg class="schrift" viewBox="0 0 200 26"><path id="schrift6b" pathLength="1" d="M4 16c8-10 12 6 20-2s12-8 18 0 10 6 18-2 12-6 18 2 8 4 16-4 12-8 18 0 10 6 18-2 12-4 18 2 10 2 16-4 10-6 16 0" stroke="var(--b600)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+      <div class="feld">Erste Hilfe</div><svg class="schrift" viewBox="0 0 200 26"><path id="schrift6c" pathLength="1" d="M4 16c8-10 12 6 20-2s12-8 18 0 10 6 18-2 12-6 18 2 8 4 16-4 12-8 18 0 10 6 18-2" stroke="var(--b600)" stroke-width="3" stroke-linecap="round" fill="none"/></svg></div>
+    <div class="buchdeckel" id="deckel6"><b>Verbandbuch</b></div>
+  </div>
+  <div class="a" id="stift6" style="width:120px" data-gruppe="buch">{{stift}}</div>
+  <div class="a kal" id="kal6"><div class="kopf"></div>
+    <div class="blatt" id="kb4"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb2"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="blatt" id="kb1"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="a chip gruen klein" id="chipArbeit6" data-frei><svg viewBox="0 0 30 30"><path d="M7 15l6 6 11-12" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>bei der Arbeit passiert</div>
+
+  <!-- 7 · Beim Arzt: Durchgangsarzt -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a nr" id="nr7">3</div>
+  <div class="a" id="praxis7" style="width:360px" data-gruppe="praxis">{{praxis}}</div>
+  <div class="a praxisschild" id="schild7" data-gruppe="praxis">Durchgangsarzt</div>
+  <div class="a ring" id="glow7" style="width:270px;height:78px;border-radius:20px;border-color:var(--b400)" data-frei></div>
+  <div class="a portrait" id="amir7" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a blase" id="blase7"><span id="blasetext7"></span></div>
+  <div class="a" id="betrieb7" style="width:150px">{{betrieb~7}}</div>
+  <svg class="a" id="bahn7" viewBox="0 0 1920 1080" style="width:1920px;height:1080px" data-frei>
+    <defs><marker id="spitze7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1215 745C1260 770 1300 720 1322 682" stroke="var(--b400)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 1" fill="none" marker-end="url(#spitze7)"/>
+  </svg>
+  <svg class="a ortsmarke" id="marke7" viewBox="0 0 70 90" data-frei><path d="M35 86C18 62 6 48 6 32a29 29 0 0 1 58 0c0 16-12 30-29 54Z" fill="var(--b500)"/><circle cx="35" cy="32" r="12" fill="var(--surface)"/></svg>
+
+  <!-- 8 · Helfen, Melden, Arzt informieren – Schutzkleidung -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a ring" id="ring8" style="width:310px;height:310px;border-width:10px" data-frei></div>
+  <div class="a welle gruen" id="welle8" style="width:310px;height:310px" data-frei></div>
+  <div class="a portrait" id="amir8" style="width:280px;height:280px"><div class="figur">
+    <div class="ebene">{{figur-amir}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div>
+    <div class="ebene brille">{{schutzbrille}}</div></div></div>
+  <div class="a" id="hand8" style="width:190px" data-gruppe="werkzeug8">{{hand}}</div>
+  <div class="a" id="handschuh8" style="width:190px" data-gruppe="werkzeug8">{{handschuh}}</div>
+  <div class="a" id="schluessel8" style="width:220px;transform-origin:75% 50%" data-gruppe="werkzeug8">{{schraubenschluessel~8}}</div>
+  <div class="a" id="mutter8" style="width:100px" data-gruppe="werkzeug8" data-dreht>{{mutter~8}}</div>
+  <div class="a chip" id="s8a"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">1</text></svg>Helfen</div>
+  <div class="a chip" id="s8b"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">2</text></svg>Melden</div>
+  <div class="a chip" id="s8c"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="var(--b500)"/><text x="15" y="20.5" text-anchor="middle" font-family="Inter" font-weight="800" font-size="15" fill="var(--surface)">3</text></svg>Arzt informieren</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Unfall bei der Arbeit – was jetzt?</div></div>
+<div class="block" id="tb2"><div class="titel">Unfallversichert – kostenlos für dich</div></div>
+<div class="block" id="tb3"><div class="titel">Arbeit · Berufsschule · direkter Weg</div></div>
+<div class="block" id="tb4"><div class="titel">Umweg = meistens nicht versichert</div></div>
+<div class="block" id="tb5"><div class="titel">1. Erste Hilfe · schwer verletzt: 112</div></div>
+<div class="block" id="tb6"><div class="titel">2. Bescheid geben · Verbandbuch</div></div>
+<div class="block" id="tb7"><div class="titel">3. Beim Arzt sagen: Arbeitsunfall</div></div>
+<div class="block" id="tb8"><div class="titel">Helfen · Melden · Arzt informieren</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="gross a" id="asTitel" style="position:relative">Melde jeden Unfall sofort.</div>
+  <div class="klein a" id="asUnter" style="position:relative">Bei der Arbeit und auf dem direkten Weg zur Arbeit bist du versichert.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script>
+/* ---------- Aufnahme: Satz- und Wortzeiten aus sprache.json ---------- */
+const VERSATZ = 0.7;
+window.SPRACHE = { datei: 'sprache.mp3', versatz: VERSATZ };
+const A = s => s + VERSATZ;
+const W = (m, n) => A(wort(m, satz(n).start - .01));
+const WE = (m, n) => A(wortEnde(m, satz(n).start - .01));
+const SE = n => A(satz(n).ende);
+const ENDE_SPRACHE = SE(18);
+const MX = 1320, MY = 540, NB = 7;
+for (let i = 0; i < NB; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+
+const el = id => typeof id === 'string' ? (id.startsWith('#') ? $(id) : document.getElementById(id)) : id;
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(el), ...r);
+const _ak = akteur; akteur = (id, ...r) => _ak(el(id), ...r);
+const wertBei = (id, p, t) => wert(AKTEURE.get(el(id)), p, t);
+const pop = (id, t, basis, snd = 'pop', e = 'back') => { akteur(id, { s: 0, ...basis }); tw(id, t, e === 'back' ? .5 : .65, { s: basis.s ?? 1 }, e); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }, snd = null) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .5, { o: 1 }, 'out'); tw(id, t, .55, { x: basis.x, y: basis.y, r: basis.r || 0 }, 'weich');
+  tw(id, t + .3, .12, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .42, .4, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const aus = (ids, t, d = .35) => tw(ids, t, d, { o: 0, s: .85 }, 'in');
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .25, { r: 0 }, 'sinus'); };
+const huepfen = (id, t, h = 18) => {
+  const y = wertBei(id, 'y', t);
+  tw(id, t, .08, { sy: .94, sx: 1.04 }, 'sinus');
+  tw(id, t + .08, .36, { y }, 'sinus', { bogen: h }); tw(id, t + .08, .14, { sy: 1.04, sx: .97 }, 'sinus');
+  tw(id, t + .44, .08, { sy: .95, sx: 1.04 }, 'sinus'); tw(id, t + .52, .3, { sy: 1, sx: 1 }, 'sanft');
+};
+const bump = (id, t, s = 1.1) => { const s0 = wertBei(id, 's', t); tw(id, t, .12, { s: s0 * s }, 'sinus'); tw(id, t + .12, .4, { s: s0 }, 'sanft'); };
+const flug = (id, t0, d, x, y, h = 120, extra = {}) => tw(id, t0, d, { x, y, ...extra }, 'inout', { bogen: h });
+const welle = (id, t, x, y, d = .9) => { akteur(id, { x, y, o: 0, s: .8 }); set(id, t, { o: .9, s: .8 }); tw(id, t, d, { o: 0, s: 1.5 }, 'weich'); };
+// Pulsierende Wellen (Schmerz, Anruf): Elemente ohne Akteur, im Hook gesteuert
+const pulse = (ids, x, y, t0, t1, periode = .9) => HOOKS.push(t => ids.forEach((id, i) => {
+  const e = $('#' + id), d = t - t0 - i * periode / ids.length, an = t > t0 && t < t1 && d > 0;
+  const z = ((d / periode) % 1 + 1) % 1;
+  e.style.opacity = an ? ((1 - z) * .85).toFixed(3) : 0; e.style.visibility = an ? 'visible' : 'hidden';
+  e.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${(.55 + z * .9).toFixed(3)})`;
+}));
+
+/* ---------- Figuren ---------- */
+function figur(id, basis) {
+  akteur(id, basis);
+  for (const k of ['froh', 'auf']) { const f = $(`#${id} .${k}`); if (f) akteur(f, { o: 0 }, true); }
+  akteur($(`#${id} .zu`), {}, true);
+}
+const mund = (id, t, k) => { for (const m of ['zu', 'froh', 'auf']) if ($(`#${id} .${m}`)) set(`#${id} .${m}`, t, { o: m === k ? 1 : 0 }); };
+const froh = (id, t) => mund(id, t, 'froh');
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .29 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const nick = 1.6 * Math.max(0, Math.sin(t * 1.4 + i * 2.1)) ** 10;
+  p.querySelector('.figur').style.transform = `rotate(${nick}deg) translateY(${nick}px)`;
+}));
+
+/* ---------- Kamera ---------- */
+const PANS = [], AKZENTE = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+const akzent = (t, z = .035) => AKZENTE.push([t, z]);
+bewegungsunschaerfe(.1);
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .07 * Math.sin(Math.PI * clamp((t - p) / .9));
+  for (const [a, h] of AKZENTE) { const d = (t - a) / 1.1; if (d > 0 && d < 1) z += h * Math.sin(Math.PI * E.weich(d)); }
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 11));
+  $('#kamera').style.transform = `scale(${z})`;
+  const wx = wert(kamera, 'x', t);
+  for (let i = 0; i < NB; i++) { const b = $('#bue' + i); b.style.transform += ` translateX(${(.16 * (wx + S(i))).toFixed(1)}px)`; }
+});
+const schweben = (ids, a = 4) => [].concat(ids).forEach(id => { AKTEURE.get(el(id)).basis.schweben = a; });
+
+/* ---------- 1 · Unfall bei der Arbeit – was jetzt? ---------- */
+const X0 = S(0);
+titelEin('tb1', 0, [W('passiert', 1) + .15, null, null, null, null, W('Was', 2) - .1, null]);
+ein('werkbank1', A(-.65), { x: X0 + 1040, y: 700 }, { y: 80 }, 'whoosh');
+ein('reifen1', A(-.5), { x: X0 + 1640, y: 740 }, { x: 90 });
+ein('regal1', A(-.55), { x: X0 + 1110, y: 330 }, { y: -50 });
+ein('mutterR1', A(-.45), { x: X0 + 1020, y: 302 }, { y: -50 });
+ein('schluessel1', A(-.4), { x: X0 + 1125, y: 292 }, { y: -50 });
+figur('amir1', { x: X0 + 1440, y: 440, s: 0 }); tw('amir1', A(-.55), .7, { s: 1 }, 'sanft'); cue(A(-.55), 'pop');
+ein('hand1', A(-.3), { x: X0 + 1250, y: 650 }, { y: 90 });
+// Amir arbeitet: die Hand dreht rhythmisch; „nicht aufgepasst“: er schaut weg
+HOOKS.push(t => { const d = t - A(.2), e = W('passiert', 1) - .3; if (d > 0 && t < e) $('#hand1').style.transform += ` rotate(${(2.5 * Math.sin(d * 7) * Math.min(1, d, e - t)).toFixed(2)}deg)`; });
+tw('amir1', W('nicht', 1) - .1, .45, { r: -3, x: X0 + 1460 }, 'inout');
+// der Schraubenschlüssel rutscht ans Regalende …
+tw('schluessel1', W('aufgepasst', 1), 1.0, { x: X0 + 1235, r: 3 }, 'inout'); cue(W('aufgepasst', 1), 'kritzeln');
+wackeln('regal1', W('schon', 1) - .1, 3, 2);
+// … und fällt auf die Hand
+const T1 = W('passiert', 1);
+tw('schluessel1', T1 - .45, .42, { x: X0 + 1250, y: 545, r: 26 }, 'in');
+tw('hand1', T1 - .03, .08, { sy: .86, sx: 1.08, y: 670 }, 'out'); tw('hand1', T1 + .05, .45, { sy: 1, sx: 1, y: 650 }, 'sanft');
+cue(T1 - .03, 'plopp'); akzent(T1, .05);
+flug('schluessel1', T1, .7, X0 + 1440, 785, 110, { r: 2 }); cue(T1 + .7, 'klick');
+tw('schluessel1', T1 + .7, .1, { sy: .9 }, 'sinus'); tw('schluessel1', T1 + .8, .3, { sy: 1, r: 0 }, 'sanft');
+wackeln('hand1', T1 + .05, 5, 3);
+mund('amir1', T1 - .02, 'auf'); tw('amir1', T1 - .02, .35, { r: 0, x: X0 + 1440 }, 'out'); HOOKS.push(t => { const d = t - T1 - .05; if (d > 0 && d < 1) $('#amir1').style.transform += ` translateX(${(4 * Math.sin(d * 2 * Math.PI * 7) * (1 - d)).toFixed(2)}px)`; });
+// „verletzt“: Amir hält sich die Hand, die Stelle pocht
+tw('hand1', W('Du', 1) - .1, .6, { x: X0 + 1270, y: 685, s: .95 }, 'inout');
+pulse(['schmerz1a', 'schmerz1b'], X0 + 1268, 690, T1 + .1, SE(2) + .6, 1.0);
+HOOKS.push(t => { const d = t - W('verletzt', 1); if (d > 0 && d < 1.2) $('#hand1').style.transform += ` translateX(${(4 * Math.sin(d * 40) * (1 - d / 1.2)).toFixed(2)}px)`; });
+// Was jetzt?
+pop('frage1', W('Was', 2) - .05, { x: X0 + 1650, y: 330 }); wackeln('frage1', W('jetzt', 2) + .2, 4, 3);
+mund('amir1', W('Was', 2) - .1, 'zu');
+schweben(['frage1', 'reifen1'], 4);
+textAus('tb1', SE(2) + .25);
+
+/* ---------- 2 · Unfallversichert – kostenlos für dich ---------- */
+pan2(SE(2) + .35, 1); const X1 = S(1);
+titelEin('tb2', 0, [W('unfallversichert', 3) - .1, null, W('kostenlos', 5) - .1, null, null]);
+figur('amir2', { x: X1 + 1590, y: 420, s: 0 }); tw('amir2', W('Keine', 3) - .1, .55, { s: 1 }, 'sanft'); cue(W('Keine', 3) - .1, 'pop');
+mund('amir2', W('Keine', 3) - .1, 'auf'); mund('amir2', W('Sorge', 3) + .3, 'zu');
+ein('betrieb2', W('Deutschland', 3) - .15, { x: X1 + 1180, y: 560 }, { y: 90 }, 'whoosh');
+// der Schild legt sich über den Betrieb
+const T2 = W('unfallversichert', 3);
+akteur('schutz2', { x: X1 + 1180, y: 380, o: 0, s: 1.35 });
+tw('schutz2', T2 - .5, .25, { o: 1 }); tw('schutz2', T2 - .5, .55, { y: 540, s: 1 }, 'in');
+tw('schutz2', T2 + .05, .1, { sy: .94, sx: 1.04 }, 'sinus'); tw('schutz2', T2 + .15, .45, { sy: 1, sx: 1 }, 'sanft');
+huepfen('betrieb2', T2 + .05, 10);
+welle('welle2', T2 + .05, X1 + 1180, 540, 1.1); cue(T2 + .05, 'erfolg'); akzent(T2 + .05, .045);
+froh('amir2', T2 + .2);
+// gesetzliche Unfallversicherung – meistens die Berufsgenossenschaft
+pop('chipGUV2', W('gesetzliche', 4), { x: X1 + 1180, y: 290 });
+pop('chipBG2', W('Berufsgenossenschaft', 4) - .1, { x: X1 + 1180, y: 790 }); akzent(W('Berufsgenossenschaft', 4));
+bump('schutz2', W('Berufsgenossenschaft', 4), 1.05);
+// Dein Betrieb bezahlt sie: Münzen fliegen vom Betrieb in den Schild, der Schild füllt sich
+huepfen('betrieb2', W('Betrieb', 5) - .1, 14);
+[['muenze2a', 0], ['muenze2b', .3]].forEach(([id, d]) => {
+  const t0 = W('bezahlt', 5) - .15 + d;
+  akteur(id, { x: X1 + 1180, y: 560, o: 0, s: .5 });
+  tw(id, t0, .12, { o: 1 }); flug(id, t0, .7, X1 + 1180 + (d ? 60 : -60), 410, 80, { s: 1 }); cue(t0, 'muenze');
+  tw(id, t0 + .6, .25, { o: 0, s: .6 });
+  bump('schutz2', t0 + .72, 1.04);
+});
+HOOKS.push(t => { const p = E.inout(clamp((t - W('bezahlt', 5) - .5) / .8)); $('#schutzFlaeche2').setAttribute('fill-opacity', (.16 + .22 * p).toFixed(3)); });
+HOOKS.push(t => ['muenze2a', 'muenze2b'].forEach((id, i) => { const p = t - W('bezahlt', 5) + .15 - i * .3; if (p > 0 && p < .9) $('#' + id).style.transform += ` scaleX(${Math.cos(p * Math.PI * 4).toFixed(3)})`; }));
+// für dich ist sie kostenlos
+akteur('schildMini2', { x: X1 + 1180, y: 520, o: 0, s: .4 });
+tw('schildMini2', W('dich', 5), .1, { o: 1 }); flug('schildMini2', W('dich', 5), .75, X1 + 1665, 500, 120, { s: 1 }); cue(W('dich', 5), 'whoosh');
+huepfen('amir2', W('dich', 5) + .75, 12); cue(W('dich', 5) + .75, 'plopp');
+pop('chipNull2', W('kostenlos', 5), { x: X1 + 1580, y: 610 }, 'erfolg'); akzent(W('kostenlos', 5));
+schweben(['chipGUV2', 'schildMini2'], 3);
+textAus('tb2', SE(5) + .25);
+
+/* ---------- 3 · Arbeit · Berufsschule · direkter Weg ---------- */
+pan2(SE(5) + .35, 2); const X2 = S(2);
+titelEin('tb3', 0, [W('Arbeit', 6) - .1, null, W('Berufsschule', 6) - .1, null, W('direkten', 6) - .1, null]);
+akteur('karte3', { x: X2 + 1320, y: 540, o: 0, s: .92 }); tw('karte3', SE(5) + .5, .7, { o: 1, s: 1 }, 'sanft');
+ein('haus3', W('Versichert', 6) - .1, { x: X2 + 1010, y: 640 }, { y: 60 }, 'pop');
+pop('chipWohnung3', W('bist', 6), { x: X2 + 1010, y: 752 }, null);
+ein('betrieb3', W('Arbeit', 6) - .15, { x: X2 + 1620, y: 380 }, { y: 60 }, 'pop');
+pop('okB3', W('Arbeit', 6) + .35, { x: X2 + 1682, y: 318 }, 'ding');
+ein('schule3', W('Berufsschule', 6) - .15, { x: X2 + 1600, y: 668 }, { y: 60 }, 'pop');
+pop('chipSchule3', W('Berufsschule', 6) + .15, { x: X2 + 1600, y: 772 }, null);
+pop('okS3', W('Berufsschule', 6) + .45, { x: X2 + 1668, y: 612 }, 'ding');
+// direkter Weg: Linien zeichnen sich und leuchten
+akteur('wege3', { x: X2 + 960, y: 540 });
+const WEG = id => { const p = $('#' + id); return { p, L: p.getTotalLength() }; };
+const R1 = WEG('R1'), R2 = WEG('R2');
+const zeichne = (id, t0, d) => HOOKS.push(t => { const p = $('#' + id), L = p.getTotalLength(), u = E.inout(clamp((t - t0) / d));
+  p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = (L * (1 - u)).toFixed(1); p.style.visibility = u > .002 ? 'visible' : 'hidden'; });
+const TW3 = W('direkten', 6) - .2;
+zeichne('R1', TW3, .8); zeichne('R2', TW3 + .25, .8); cue(TW3, 'scan');
+HOOKS.push(t => {
+  const an = clamp((t - W('Weg', 6) - .2) / .5), puls = .35 + .2 * Math.sin((t - W('Weg', 6)) * 4);
+  ['glowR1', 'glowR2'].forEach(id => $('#' + id).setAttribute('opacity', (an * (t > W('Wegeunfall', 7) - .2 ? .55 + .25 * Math.sin((t - W('Wegeunfall', 7)) * 5) : puls)).toFixed(3)));
+});
+const P1 = R1.p.getPointAtLength(R1.L * .8), P2 = R2.p.getPointAtLength(R2.L * .5);
+pop('schildR1', W('Weg', 6) + .1, { x: X2 + P1.x, y: P1.y - 34 }, 'pop');
+pop('schildR2', W('Weg', 6) + .3, { x: X2 + P2.x, y: P2.y - 4 }, null);
+schweben(['schildR1', 'schildR2'], 3);
+// Amir fährt als Marker: dorthin und zurück
+const FAHRTEN = [];   // [pfad, von, bis, t0, t1]
+FAHRTEN.push(['R1', 0, 1, W('dorthin', 6) - .1, W('zurück', 6) - .05]);
+FAHRTEN.push(['R1', 1, 0, W('zurück', 6), W('zurück', 6) + 1.1]);
+figur('pin3', { x: 0, y: 0, s: 0 }); tw('pin3', W('direkten', 6), .45, { s: 1 }, 'back'); cue(W('direkten', 6), 'pop');
+// Wegeunfall
+pop('chipWegeunfall3', W('Wegeunfall', 7) - .1, { x: X2 + 1320, y: 790 }, 'erfolg'); akzent(W('Wegeunfall', 7), .045);
+bump('schildR1', W('Wegeunfall', 7) + .1, 1.15); bump('schildR2', W('Wegeunfall', 7) + .2, 1.15);
+textAus('tb3', SE(7) + .2);
+
+/* ---------- 4 · Umweg = meistens nicht versichert ---------- */
+titelEin('tb4', 0, [W('Umweg', 8) - .1, null, W('meistens', 8) - .1, null, null]);
+aus('chipWegeunfall3', W('Achtung', 8) - .3, .3);
+pop('chipAchtung4', W('Achtung', 8), { x: X2 + 1320, y: 790 }); wackeln('chipAchtung4', W('Achtung', 8) + .45, 4, 3); akzent(W('Achtung', 8));
+aus('chipAchtung4', W('Umweg', 8) + .2, .3);
+// Umwege: vom direkten Weg abzweigen
+const Q1 = R1.p.getPointAtLength(R1.L * .32), Q2 = R1.p.getPointAtLength(R1.L * .62);
+const U1 = { x: 1080, y: 400 }, U2 = { x: 1335, y: 392 };
+$('#umweg1').setAttribute('d', `M${Q1.x.toFixed(1)} ${Q1.y.toFixed(1)}C${(Q1.x - 20).toFixed(1)} ${(Q1.y - 120).toFixed(1)} ${U1.x + 90} ${U1.y + 60} ${U1.x} ${U1.y}`);
+$('#umweg2').setAttribute('d', `M${Q2.x.toFixed(1)} ${Q2.y.toFixed(1)}C${(Q2.x + 10).toFixed(1)} ${(Q2.y - 50).toFixed(1)} ${U2.x + 40} ${U2.y + 40} ${U2.x} ${U2.y}`);
+ein('markt4', W('Beispiel', 8) - .2, { x: X2 + 1030, y: 358 }, { y: -50 }, 'pop');
+pop('chipEinkaufen4', W('Einkaufen', 8), { x: X2 + 1030, y: 462 }, null);
+ein('freunde4', W('oder', 8) - .1, { x: X2 + 1340, y: 330 }, { y: -50 }, 'pop');
+pop('chipFreunde4', W('Freunden', 8), { x: X2 + 1190, y: 318 }, null);
+const TU1 = W('Einkaufen', 8) - .4, TU2 = TU1 + 1.6;
+zeichne('umweg1', TU1, .6); zeichne('umweg2', TU2, .5);
+FAHRTEN.push(['R1', 0, .32, W('Umweg', 8) - .2, TU1]);
+FAHRTEN.push(['umweg1', 0, 1, TU1, TU1 + .6]);
+FAHRTEN.push(['umweg1', 1, 0, TU1 + .65, TU1 + 1.15]);
+FAHRTEN.push(['R1', .32, .62, TU1 + 1.15, TU2]);
+FAHRTEN.push(['umweg2', 0, 1, TU2, TU2 + .5]);
+// auf diesem Umweg meistens nicht versichert: Umwege werden grau, grauer Schild
+const TG = W('diesem', 8);
+HOOKS.push(t => {
+  const g = E.inout(clamp((t - TG) / .5));
+  document.querySelectorAll('.umweg').forEach(p => { p.style.stroke = g > .5 ? 'var(--n300)' : 'var(--b500)'; p.style.opacity = (1 - .35 * Math.sin(Math.PI * Math.min(g, .5))).toFixed(3); });
+  $('#pin3').style.filter = `grayscale(${g.toFixed(2)})`;
+});
+cue(TG, 'scan');
+const M1 = $('#umweg1').getPointAtLength($('#umweg1').getTotalLength() * .5), M2 = $('#umweg2').getPointAtLength($('#umweg2').getTotalLength() * .45);
+pop('grau4a', W('meistens', 8) - .1, { x: X2 + M1.x + 50, y: M1.y });
+pop('grau4b', W('nicht', 8) - .1, { x: X2 + M2.x - 46, y: M2.y + 4 });
+wackeln('grau4a', W('versichert', 8) + .1, 3, 3); wackeln('grau4b', W('versichert', 8) + .2, 3, 3);
+akzent(W('nicht', 8), .045);
+// Marker folgt den Fahrten
+HOOKS.push(t => {
+  let pfad = 'R1', u = 0;
+  for (const [p, a, b, t0, t1] of FAHRTEN) { if (t < t0) break; pfad = p; u = a + (b - a) * E.inout(clamp((t - t0) / (t1 - t0))); }
+  const pe = $('#' + pfad), pt = pe.getPointAtLength(pe.getTotalLength() * u);
+  const s = wertBei('pin3', 's', t), o = wertBei('pin3', 'o', t);
+  $('#pin3').style.transform = `translate(${X2 + pt.x}px,${pt.y - 48}px) translate(-50%,-50%) scale(${s})`;
+  $('#pin3').style.opacity = o;
+});
+tw('pin3', SE(8) + .2, .3, { o: 0 });
+textAus('tb4', SE(8) + .25);
+
+/* ---------- 5 · Erste Hilfe, bei schweren Verletzungen 112 ---------- */
+pan2(SE(8) + .35, 3); const X3 = S(3);
+titelEin('tb5', 0, [W('Zuerst', 9) - .1, null, null, W('schweren', 10) - .1, null, null, W('112', 10) - .1]);
+figur('amir5', { x: X3 + 1060, y: 430, s: 0 }); tw('amir5', W('Nach', 9) - .2, .55, { s: 1 }, 'sanft'); cue(W('Nach', 9) - .2, 'pop');
+mund('amir5', W('Nach', 9), 'auf');
+ein('hand5', W('Nach', 9), { x: X3 + 1110, y: 680 }, { y: 90 });
+pulse(['schmerz5'], X3 + 1110, 690, W('Unfall', 9), W('Hilfe', 9) + .5, .9);
+pop('nr5', W('gilt', 9) - .1, { x: X3 + 1330, y: 300 }); akzent(W('gilt', 9), .03);
+// Zuerst Erste Hilfe: der Kollege holt den Kasten
+figur('kollege5', { x: X3 + 1780, y: 400, o: 0 });
+tw('kollege5', W('Zuerst', 9) - .2, .3, { o: 1 }); tw('kollege5', W('Zuerst', 9) - .2, .7, { x: X3 + 1590 }, 'sanft'); cue(W('Zuerst', 9) - .2, 'whoosh');
+froh('kollege5', W('Erste', 9));
+akteur('kasten5', { x: X3 + 1600, y: 690, o: 0, s: .6 });
+tw('kasten5', W('Erste', 9) - .35, .2, { o: 1 }); tw('kasten5', W('Erste', 9) - .35, .5, { s: 1 }, 'back'); cue(W('Erste', 9) - .35, 'pop');
+flug('kasten5', W('Erste', 9) + .1, .7, X3 + 1385, 670, 60); cue(W('Erste', 9) + .75, 'plopp');
+tw('kasten5', W('Erste', 9) + .8, .08, { sy: .9, sx: 1.06 }, 'sinus'); tw('kasten5', W('Erste', 9) + .88, .35, { sy: 1, sx: 1 }, 'sanft');
+// Pflaster fliegt aus dem Kasten auf die Hand
+const TP = W('Hilfe', 9) + .35;
+akteur('pflaster5', { x: X3 + 1385, y: 640, o: 0, s: .4 });
+tw('pflaster5', TP - .1, .1, { o: 1 }); flug('pflaster5', TP - .1, .6, X3 + 1110, 690, 120, { s: 1 }); cue(TP - .1, 'whoosh');
+tw('pflaster5', TP + .5, .08, { sy: .75, sx: 1.12 }, 'out'); tw('pflaster5', TP + .58, .4, { sy: 1, sx: 1 }, 'sanft'); cue(TP + .5, 'plopp');
+huepfen('hand5', TP + .52, 8);
+welle('heil5', TP + .55, X3 + 1110, 690, 1.0); cue(TP + .6, 'erfolg');
+mund('amir5', TP + .5, 'froh');
+// Bei schweren Verletzungen: Handy, 112
+aus(['kollege5', 'kasten5'], W('Bei', 10) - .1, .35);
+ein('handy5', W('schweren', 10) - .1, { x: X3 + 1560, y: 560 }, { y: 110 }, 'whoosh');
+ein('anruf5', W('schweren', 10) - .1, { x: X3 + 1560, y: 560 }, { y: 110 });
+mund('amir5', W('Verletzungen', 10), 'zu');
+const T112 = W('112', 10), T112e = WE('112', 10), ZIFFERN = [0, 0, 1];   // Tasten 1, 1, 2
+const TASTEN = [...document.querySelectorAll('#tasten5 span')];
+const zifferZeit = i => T112 + (T112e - T112) * i / 3;
+HOOKS.push(t => {
+  const n = [0, 1, 2].filter(i => t >= zifferZeit(i)).length;
+  $('#nummer5').textContent = '112'.slice(0, n);
+  TASTEN.forEach((k, j) => k.classList.toggle('an', [0, 1, 2].some(i => t >= zifferZeit(i) && t < zifferZeit(i) + .22 && ZIFFERN[i] === j)));
+});
+for (let i = 0; i < 3; i++) cue(zifferZeit(i), 'tipp');
+akzent(T112, .04);
+// rufen: Hörer gedrückt, Anruf-Wellen
+akteur('hoerer5', {}, true);
+tw('hoerer5', W('rufen', 10) - .08, .1, { s: .85 }, 'in'); tw('hoerer5', W('rufen', 10) + .02, .35, { s: 1 }, 'back'); cue(W('rufen', 10), 'klick');
+pulse(['ruf5a', 'ruf5b'], X3 + 1560, 560, W('rufen', 10) + .1, SE(10) + 1.1, 1.0);
+cue(W('rufen', 10) + .15, 'ding');
+HOOKS.push(t => { const d = t - W('rufen', 10); if (d > 0 && d < 1.2) { const w = 2 * Math.sin(d * 30) * (1 - d / 1.2); $('#handy5').style.transform += ` rotate(${w.toFixed(2)}deg)`; $('#anruf5').style.transform += ` rotate(${w.toFixed(2)}deg)`; } });
+textAus('tb5', SE(10) + .3);
+
+/* ---------- 6 · Bescheid geben, Verbandbuch ---------- */
+pan2(SE(10) + .4, 4); const X4 = S(4);
+titelEin('tb6', 0, [W('Dann', 11) - .1, W('Bescheid', 11) - .1, null, W('Verbandbuch', 12) - .2, null]);
+pop('nr6', W('Dann', 11), { x: X4 + 1320, y: 300 });
+figur('amir6', { x: X4 + 1040, y: 420, s: 0 }); tw('amir6', W('Dann', 11) - .3, .55, { s: 1 }, 'sanft'); cue(W('Dann', 11) - .3, 'pop');
+ein('hand6', W('Dann', 11) - .1, { x: X4 + 1080, y: 640 }, { y: 80 });
+ein('pflaster6', W('Dann', 11) - .1, { x: X4 + 1080, y: 648 }, { y: 80 });
+figur('sabine6', { x: X4 + 1600, y: 420, s: 0 }); tw('sabine6', W('Ausbilder', 11) - .15, .55, { s: 1 }, 'sanft'); cue(W('Ausbilder', 11) - .15, 'pop');
+huepfen('sabine6', W('Vorgesetzten', 11), 10);
+// Amir zeigt Sabine die Hand
+const TB = W('Bescheid', 11) - .3;
+tw(['hand6', 'pflaster6'], TB, .8, { x: X4 + 1320, s: 1.05 }, 'inout');
+tw('hand6', TB, .8, { y: 540 }, 'inout'); tw('pflaster6', TB, .8, { y: 548 }, 'inout'); cue(TB, 'whoosh');
+mund('amir6', TB, 'auf'); mund('amir6', WE('Bescheid', 11) + .1, 'zu');
+HOOKS.push(t => { const d = t - W('Bescheid', 11) - .5; if (d > 0 && d < 1.6) $('#sabine6').style.transform += ` rotate(${(3 * Math.sin(d * 7) * (1 - d / 1.6)).toFixed(2)}deg)`; });
+// Auch bei kleinen Verletzungen: das Pflaster pulsiert kurz
+bump('pflaster6', W('kleinen', 12), 1.15);
+aus(['hand6', 'pflaster6'], W('Unfall', 12) - .1, .35);
+// Verbandbuch fliegt herein, klappt auf, Stift schreibt
+const TV = W('Verbandbuch', 12);
+ein('buch6', TV - .45, { x: X4 + 1320, y: 672 }, { y: 120 }, 'whoosh');
+akteur('deckel6', {}, true); akteur('links6', { sx: 0 }, true);
+tw('deckel6', TV + .15, .28, { sx: 0 }, 'in'); tw('links6', TV + .43, .32, { sx: 1 }, 'out'); cue(TV + .2, 'klick');
+set('deckel6', TV + .43, { o: 0 });
+const SCHRIFT = [['schrift6a', W('eingetragen', 12)], ['schrift6b', W('eingetragen', 12) + .85], ['schrift6c', W('eingetragen', 12) + 1.7]];
+const SCHREIB = .5;
+HOOKS.push(t => SCHRIFT.forEach(([id, t0]) => { $('#' + id).style.strokeDasharray = '1 1'; $('#' + id).style.strokeDashoffset = 1 - clamp((t - t0) / SCHREIB); }));
+SCHRIFT.forEach(([, t0]) => cue(t0, 'kritzeln'));
+akteur('stift6', { x: X4 + 1500, y: 560, o: 0 });
+tw('stift6', W('eingetragen', 12) - .5, .3, { o: 1 });
+{ // Stiftspitze folgt der Schrift
+  const zeileY = [0, 1, 2].map(i => 672 - 140 + 22 + 20 + 2 + 13 + i * 58), links = X4 + 1342;
+  const SP = (x, y) => ({ x: x + 40, y: y - 36 });
+  let t0 = W('eingetragen', 12) - .5;
+  SCHRIFT.forEach(([, ts], i) => {
+    const a = SP(links + 4, zeileY[i]), b = SP(links + 4 + [100, 190, 150][i] * .93, zeileY[i]);
+    tw('stift6', t0 + (i ? .05 : 0), ts - t0 - .05, { x: a.x, y: a.y }, 'inout');
+    tw('stift6', ts, SCHREIB, { x: b.x, y: b.y }, 'lin');
+    t0 = ts + SCHREIB;
+  });
+  tw('stift6', t0 + .1, .5, { x: X4 + 1520, y: 600, o: 0 }, 'inout');
+}
+HOOKS.push(t => { const d = t - W('eingetragen', 12); if (d > 0 && d < 2) $('#stift6').style.transform += ` translateY(${(2.5 * Math.sin(d * 38)).toFixed(2)}px)`; });
+// So ist später klar …: Kalenderblätter, dann „bei der Arbeit passiert“
+ein('kal6', W('So', 13) - .2, { x: X4 + 1648, y: 640 }, { x: 70 });
+['kb1', 'kb2', 'kb3'].forEach((id, i) => { const t0 = W('später', 13) + i * .22; akteur(id, {}, true); tw(id, t0, .25, { sy: 0, o: 0 }, 'in'); cue(t0, 'klick'); });
+pop('chipArbeit6', W('Arbeit', 13) - .1, { x: X4 + 1400, y: 770 }, 'erfolg'); akzent(W('Arbeit', 13));
+froh('sabine6', W('Arbeit', 13)); froh('amir6', W('Arbeit', 13) + .1);
+textAus('tb6', SE(13) + .25);
+
+/* ---------- 7 · Beim Arzt: Arbeitsunfall, Durchgangsarzt ---------- */
+pan2(SE(13) + .35, 5); const X5 = S(5);
+titelEin('tb7', 0, [W('Musst', 14) - .1, null, null, W('sag', 14) - .1, W('Arbeitsunfall', 14) - .1]);
+pop('nr7', W('Musst', 14), { x: X5 + 1320, y: 300 });
+figur('amir7', { x: X5 + 1030, y: 570, s: 0 }); tw('amir7', W('Musst', 14) - .3, .55, { s: 1 }, 'sanft'); cue(W('Musst', 14) - .3, 'pop');
+ein('praxis7', W('Arzt', 14) - .2, { x: X5 + 1490, y: 520 }, { y: 100 }, 'whoosh');
+ein('schild7', W('Arzt', 14) - .2, { x: X5 + 1487.5, y: 477 }, { y: 100 });
+// Sprechblase: „Das war ein Arbeitsunfall“ tippt sich
+akteur('blase7', { x: X5 + 1060, y: 380, s: 0 }); tw('blase7', W('sag', 14) - .1, .45, { s: 1 }, 'back'); cue(W('sag', 14) - .1, 'pop');
+{
+  const TXT = 'Das war ein Arbeitsunfall', a = W('sag', 14) + .2, b = WE('Arbeitsunfall', 14);
+  HOOKS.push(t => {
+    const n = Math.floor(clamp((t - a) / (b - a)) * TXT.length);
+    $('#blasetext7').innerHTML = TXT.slice(0, n) + (t > a - .1 && t < b + .5 && Math.floor(t * 3) % 2 === 0 ? '<span class="cursor"></span>' : '');
+  });
+  for (let i = 0; i < 6; i++) cue(a + i * (b - a) / 6, 'tipp');
+  // Amir spricht, solange sich die Blase füllt
+  HOOKS.push(t => { if (t > a && t < b) { const auf = Math.floor((t - a) * 7) % 2 === 0; $('#amir7 .auf').style.opacity = auf ? 1 : 0; $('#amir7 .auf').style.visibility = auf ? 'visible' : 'hidden'; $('#amir7 .zu').style.opacity = auf ? 0 : 1; } });
+}
+bump('blase7', W('Wegeunfall', 14), 1.06);
+// besonderer Arzt: Durchgangsarzt – das Schild leuchtet auf
+huepfen('praxis7', W('besonderen', 15), 10); huepfen('schild7', W('besonderen', 15), 10);
+HOOKS.push(t => $('#schild7').classList.toggle('an', t >= W('Durchgangsarzt', 15)));
+bump('schild7', W('Durchgangsarzt', 15), 1.12); cue(W('Durchgangsarzt', 15), 'ding'); akzent(W('Durchgangsarzt', 15), .045);
+akteur('glow7', { x: X5 + 1487.5, y: 477, o: 0, s: .9 }); tw('glow7', W('Durchgangsarzt', 15), .3, { o: 1 }); tw('glow7', W('Durchgangsarzt', 15), .6, { s: 1 }, 'sanft');
+tw('glow7', SE(15) + .2, .4, { o: 0 });
+// Dein Betrieb sagt dir, wo einer ist
+aus('blase7', W('Dein', 16) - .3, .3);
+froh('amir7', W('Dein', 16));
+ein('betrieb7', W('Betrieb', 16) - .15, { x: X5 + 1140, y: 752 }, { y: 70 }, 'whoosh');
+akteur('bahn7', { x: X5 + 960, y: 540, o: 0, draw: 0 }); tw('bahn7', W('sagt', 16), .1, { o: 1 }); tw('bahn7', W('sagt', 16), .7, { draw: 1 }, 'inout'); cue(W('sagt', 16), 'scan');
+akteur('marke7', { x: X5 + 1490, y: 262, o: 0, s: .6 });
+tw('marke7', W('wo', 16) - .3, .12, { o: 1 }); tw('marke7', W('wo', 16) - .3, .3, { s: 1 }, 'out'); tw('marke7', W('wo', 16) - .3, .35, { y: 355 }, 'in');
+tw('marke7', W('wo', 16) + .05, .08, { sy: .8, sx: 1.12 }, 'out'); tw('marke7', W('wo', 16) + .13, .4, { sy: 1, sx: 1 }, 'sanft');
+cue(W('wo', 16) + .05, 'plopp'); huepfen('praxis7', W('wo', 16) + .1, 8); huepfen('schild7', W('wo', 16) + .1, 8);
+cue(W('ist', 16), 'erfolg');
+textAus('tb7', SE(16) + .3);
+
+/* ---------- 8 · Helfen · Melden · Arzt informieren – Schutzkleidung ---------- */
+pan2(SE(16) + .4, 6); const X6 = S(6);
+titelEin('tb8', 0, [W('Erste', 17) - .1, null, W('Bescheid', 17) - .1, null, W('Arzt', 17) - .1, null]);
+figur('amir8', { x: X6 + 1110, y: 450, s: 0 }); tw('amir8', W('Also', 17) - .4, .6, { s: 1 }, 'sanft'); cue(W('Also', 17) - .4, 'pop');
+[['s8a', 'Erste', 390], ['s8b', 'Bescheid', 520], ['s8c', 'Arzt', 650]].forEach(([id, w, y]) => {
+  akteur(id, { x: X6 + 1740, y, o: 0 }); tw(id, W(w, 17) - .1, .15, { o: 1 }); tw(id, W(w, 17) - .1, .65, { x: X6 + 1540 }, 'sanft'); cue(W(w, 17) - .1, 'whoosh');
+  bump(id, W(w, 17) + .55, 1.06);
+});
+froh('amir8', W('Arbeitsunfall', 17));
+// gut aufpassen: Amir schaut konzentriert, Werkzeug kommt
+mund('amir8', W('gut', 18), 'zu');
+ein('hand8', W('Und', 18), { x: X6 + 1170, y: 718 }, { y: 90 });
+ein('mutter8', W('aufpassen', 18) - .1, { x: X6 + 1420, y: 735 }, { y: 60 });
+ein('schluessel8', W('aufpassen', 18), { x: X6 + 1365, y: 735 }, { y: 60 }, 'whoosh');
+// Schutzkleidung: Brille fällt auf die Augen, der Handschuh kommt über die Hand
+const TS = W('Schutzkleidung', 18);
+akteur('#amir8 .brille', { o: 0, y: -60 }, true);
+tw('#amir8 .brille', TS - .25, .15, { o: 1 }); tw('#amir8 .brille', TS - .25, .35, { y: 0 }, 'in');
+tw('#amir8 .brille', TS + .1, .08, { sy: .85 }, 'sinus'); tw('#amir8 .brille', TS + .18, .35, { sy: 1 }, 'sanft'); cue(TS + .1, 'klick');
+bump('amir8', TS + .1, 1.04);
+akteur('handschuh8', { x: X6 + 1170, y: 718, o: 0, s: 1.3 });
+tw('handschuh8', TS + .2, .3, { o: 1, s: 1 }, 'sanft'); tw('hand8', TS + .35, .15, { o: 0 }); cue(TS + .2, 'whoosh');
+// tragen: sicher weiterarbeiten – Schlüssel dreht die Mutter fest
+const TD = W('tragen', 18);
+HOOKS.push(t => {
+  const d = t - TD; if (d <= 0 || d > 3) return;
+  const w = -26 * Math.sin(Math.PI * clamp(d / .7)) * (d < 2.1 ? 1 : 0) - 26 * Math.sin(Math.PI * clamp((d - .8) / .7)) - 26 * Math.sin(Math.PI * clamp((d - 1.6) / .7));
+  $('#schluessel8').style.transform += ` rotate(${w.toFixed(2)}deg)`;
+  $('#mutter8').style.transform += ` rotate(${w.toFixed(2)}deg)`;
+  $('#handschuh8').style.transform += ` rotate(${(w * .12).toFixed(2)}deg)`;
+});
+[0, .8, 1.6].forEach(d => cue(TD + d + .35, 'klick'));
+akteur('ring8', { x: X6 + 1110, y: 450, s: .9, o: 0 }); tw('ring8', TD - .1, .3, { o: 1 }); tw('ring8', TD - .1, .6, { s: 1.08 }, 'sanft');
+welle('welle8', TD, X6 + 1110, 450, 1.2); cue(TD, 'erfolg'); akzent(TD, .05);
+froh('amir8', TD + .1); huepfen('amir8', TD + .2, 12);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + 1.8;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .7)); $('#abspann').style.clipPath = `circle(${(p * 120).toFixed(2)}% at 61% 50%)`; });
+cue(AB, 'whoosh');
+akteur('asTitel', { o: 0, y: 50 }, true); tw('asTitel', AB + .5, .7, { o: 1, y: 0 }, 'weich');
+akteur('asUnter', { o: 0, y: 36 }, true); tw('asUnter', AB + .85, .6, { o: 1, y: 0 }, 'weich');
+
+start(AB + 3.6, AB + 1.8);
+</script>
+</body></html>
