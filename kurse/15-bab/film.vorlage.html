@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 15 – Berufsausbildungsbeihilfe (BAB)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+#tb4 .titel{font-size:66px;line-height:76px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:8px 18px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.kreuz{width:84px;height:84px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:40px}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 58px/1 Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 80%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+.zettel{width:250px;padding:20px 22px;border-radius:16px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px solid var(--border)}
+.zettel small{display:block;font:700 18px/22px Inter;letter-spacing:.1em;color:var(--b600)}
+.zettel b{display:block;font:800 34px/42px Inter;color:var(--ink);margin:4px 0 10px}
+.zettel i{display:block;height:8px;border-radius:4px;background:var(--n200);margin-top:8px}
+.paragraf{width:130px;height:130px;border-radius:999px;background:var(--surface);border:8px solid var(--b300);display:flex;align-items:center;justify-content:center;
+  font:800 74px/1 Inter;color:var(--b600);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.schirm{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;padding-top:22px;text-align:center;border-radius:8px}
+.schirm small{font:700 15px/19px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--b600)}
+.feld{width:118px;height:24px;border-radius:7px;background:var(--surface);border:2px solid var(--b200);display:flex;align-items:center;padding:0 7px}
+.feld i{display:block;height:7px;border-radius:4px;background:var(--b400);width:0}
+.knopf{width:118px;padding:8px 0;border-radius:10px;background:var(--b300);color:var(--surface);font:800 16px/20px Inter;letter-spacing:.04em}
+.knopf.an{background:var(--success)}
+.lade{width:112px;height:16px;border-radius:999px;background:var(--b100);overflow:hidden}
+.lade i{display:block;height:100%;width:0;border-radius:999px;background:var(--b500)}
+.monat{width:150px;height:150px;border-radius:26px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center}
+.monat .kopf{width:100%;height:42px;background:var(--b500);flex:none}
+.monat b{font:800 34px/90px Inter;color:var(--ink)}
+.monat.grau{filter:grayscale(1);opacity:.45}
+.welle{width:90px;height:90px;border-radius:999px;border:5px solid var(--b400)}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Miete hoch, Geld knapp -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a portrait" id="mai1" style="width:250px;height:250px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a zettel" id="miete1"><small>MIETE</small><b>Monat</b><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></div>
+  <div class="a" id="beutel1" data-gruppe="g1" style="width:250px">{{geldbeutel}}</div>
+  <div class="a" id="klappe1" data-gruppe="g1" style="width:250px;transform-origin:50% 40%">{{geldbeutel-klappe}}</div>
+  <div class="a" id="m1a" style="width:90px">{{muenze}}</div>
+  <div class="a" id="m1b" style="width:90px">{{muenze}}</div>
+  <div class="a" id="m1c" style="width:90px">{{muenze}}</div>
+  <div class="a chip brand" id="hilfe1">Hilfe?</div>
+
+  <!-- 2 · BAB = Zuschuss -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="agentur2" style="width:300px">{{agentur}}</div>
+  <div class="a label" id="lblAgentur" style="color:var(--b600)">Agentur für Arbeit</div>
+  <div class="a portrait" id="mai2" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="m2a" style="width:80px">{{muenze}}</div>
+  <div class="a" id="m2b" style="width:80px">{{muenze}}</div>
+  <div class="a" id="m2c" style="width:80px">{{muenze}}</div>
+  <div class="a chip brand" id="bab2" style="font-size:44px;line-height:52px;padding:14px 34px">BAB</div>
+  <div class="a chip gruen" id="zuschuss2" data-dreht>Zuschuss</div>
+  <svg class="a" id="zurueck2" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
+    <defs><marker id="spitze2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--n300)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1500 640C1400 705 1220 705 1130 640" stroke="var(--n300)" stroke-width="8" stroke-linecap="round" fill="none" marker-end="url(#spitze2)"/>
+  </svg>
+  <div class="a kreuz" id="x2"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+
+  <!-- 3 · Ausbildung im Betrieb, nicht bei den Eltern -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a" id="vertrag3" style="width:220px">{{vertrag}}</div>
+  <div class="a label" id="lblVertrag">Ausbildung</div>
+  <div class="a" id="haken3a" style="width:84px">{{haken}}</div>
+  <div class="a" id="haus3" style="width:220px">{{haus}}</div>
+  <div class="a label" id="lblHaus">Deine Wohnung</div>
+  <div class="a" id="welt3" data-gruppe="g3" style="width:220px">{{weltkugel}}</div>
+  <div class="a" id="eltern3" data-gruppe="g3" style="width:110px">{{haus~2}}</div>
+  <div class="a label" id="lblEltern">Eltern im Ausland</div>
+  <div class="a" id="haken3b" style="width:84px">{{haken~2}}</div>
+
+  <!-- 4 · Auch mit Aufenthaltserlaubnis -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="karte4" data-dreht style="width:330px">{{ausweis}}</div>
+  <div class="a label" id="lblKarte">Aufenthaltserlaubnis</div>
+  <div class="a" id="haken4" style="width:96px">{{haken~3}}</div>
+  <div class="a paragraf" id="para4">§</div>
+  <div class="a chip gruen" id="ok4">kein Problem</div>
+  <div class="a portrait" id="mai4" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 5 · Wie viel? BAB-Rechner -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="wfuss" data-gruppe="waage" style="width:300px">{{waage-fuss}}</div>
+  <div class="a" id="wschaleL" data-gruppe="waage" style="width:180px">{{waagschale}}</div>
+  <div class="a" id="wschaleR" data-gruppe="waage" style="width:180px">{{waagschale~2}}</div>
+  <div class="a" id="wbalken" data-gruppe="waage" style="width:300px">{{waage-balken}}</div>
+  <div class="a chip klein" id="cVerg">Vergütung</div>
+  <div class="a chip klein" id="cMiete">Miete</div>
+  <div class="a chip klein" id="cEltern">Eltern</div>
+  <div class="a" id="handy5" data-gruppe="g5" style="width:340px">{{handy}}</div>
+  <div class="a schirm" id="schirm5" data-gruppe="g5" style="width:128px;height:230px">
+    <small>BAB-Rechner</small><div class="feld"><i id="f5a"></i></div><div class="feld"><i id="f5b"></i></div>
+    <div class="lade"><i id="lade5"></i></div><small id="erg5" style="opacity:0;color:var(--success-text)">Ergebnis</small></div>
+
+  <!-- 6 · Antrag online -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="handy6" data-gruppe="g6" style="width:440px">{{handy}}</div>
+  <div class="a schirm" id="schirm6" data-gruppe="g6" style="width:165px;height:297px">
+    <small>Antrag BAB</small><div class="feld"><i id="f6a"></i></div><div class="feld"><i id="f6b"></i></div><div class="feld"><i id="f6c"></i></div>
+    <div class="knopf" id="senden6">SENDEN</div></div>
+  <div class="a" id="vertrag6" style="width:200px">{{vertrag~2}}</div>
+  <div class="a label" id="lblVertrag6">Ausbildungsvertrag</div>
+  <div class="a" id="haken6" style="width:90px">{{haken~4}}</div>
+
+  <!-- 7 · Früh beantragen -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a monat" id="mo1" data-gruppe="g7a"><div class="kopf"></div><b>Sep</b></div>
+  <div class="a monat" id="mo2" data-gruppe="g7b"><div class="kopf"></div><b>Okt</b></div>
+  <div class="a monat" id="mo3" data-gruppe="g7c"><div class="kopf"></div><b>Nov</b></div>
+  <div class="a monat" id="mo4"><div class="kopf"></div><b>Dez</b></div>
+  <div class="a chip brand klein" id="antrag7" data-gruppe="g7c">Antrag</div>
+  <div class="a" id="m7a" style="width:70px">{{muenze}}</div>
+  <div class="a" id="m7b" style="width:70px">{{muenze}}</div>
+  <div class="a kreuz" id="x7a" data-gruppe="g7a" style="width:64px;height:64px"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a kreuz" id="x7b" data-gruppe="g7b" style="width:64px;height:64px"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="uhr7" data-dreht data-gruppe="g7u" style="width:200px">{{uhr}}</div>
+  <div class="a" id="zeiger7" data-dreht data-gruppe="g7u" style="width:200px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
+
+  <!-- 8 · Unsicher? Anrufen -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a portrait" id="mai8" style="width:250px;height:250px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a frage" id="frage8" data-dreht>?</div>
+  <div class="a welle" id="welle8a"></div><div class="a welle" id="welle8b"></div>
+  <div class="a" id="handy8" data-dreht data-gruppe="g8" style="width:330px">{{handy}}</div>
+  <div class="a schirm" id="schirm8" data-gruppe="g8" style="width:124px;height:222px">
+    <svg viewBox="0 0 48 48" style="width:50px;margin-top:30px"><path d="M14 6l6 10-5 5c3 6 7 10 13 13l5-5 10 6-4 8C22 44 4 26 6 10Z" fill="var(--b500)"/></svg><small>Agentur</small></div>
+  <div class="a chip" id="nummer8">0800 4 5555 00</div>
+  <div class="a chip gruen" id="kostenlos8">kostenlos</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Miete hoch, Geld knapp?</div></div>
+<div class="block" id="tb2"><div class="titel">BAB = Zuschuss</div><div class="unter">Du musst nichts zurückzahlen.</div></div>
+<div class="block" id="tb3"><div class="titel">Ausbildung im Betrieb · eigene Wohnung</div></div>
+<div class="block" id="tb4"><div class="titel">Auch mit Aufenthalts&shy;erlaubnis</div></div>
+<div class="block" id="tb5"><div class="titel">Wie viel? BAB-Rechner</div></div>
+<div class="block" id="tb6"><div class="titel">Antrag online</div><div class="unter">bei der Agentur für Arbeit</div></div>
+<div class="block" id="tb7"><div class="titel">Früh beantragen!</div><div class="unter">Geld gibt es erst ab dem Antragsmonat.</div></div>
+<div class="block" id="tb8"><div class="titel">Unsicher? Antrag trotzdem stellen</div><div class="unter">Oder kostenlos anrufen.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endBeutel" style="position:relative;width:220px">{{geldbeutel~2}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Frag nach BAB.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+// Sprache beginnt im Film bei VERSATZ = 0.6 s (werkzeug/sprache.js)
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 90 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y, r: basis.r || 0 }, 'out');
+  tw(id, t + .38, .14, { sy: .93, sx: 1.05 }, 'sanft'); tw(id, t + .52, .35, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const aus = (ids, t) => tw(ids, t, .3, { o: 0 }, 'in');
+const fuellen = (sel, t0, d = .6) => HOOKS.push(t => { $(sel).style.width = (100 * E.inout(clamp((t - t0) / d))) + '%'; });
+
+const GESICHT = {}, NICKEN = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+  GESICHT[id] = []; NICKEN[id] = [];
+}
+const gesicht = (id, a, b, art) => GESICHT[id].push([a, b, art]);
+const nicken = (id, a, b) => NICKEN[id].push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const g = (GESICHT[p.id] || []).find(([a, b]) => t >= a && t < b), art = g ? g[2] : 'zu';
+  for (const k of ['zu', 'auf', 'froh']) p.querySelector('.' + k).style.opacity = art === k ? 1 : 0;
+  const n = (NICKEN[p.id] || []).find(([a, b]) => t >= a && t < b);
+  p.querySelector('.figur').style.transform = n ? `rotate(${2 * Math.sin((t - n[0]) * 7)}deg) translateY(${4 * Math.max(0, Math.sin((t - n[0]) * 7))}px)` : '';
+}));
+const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).querySelector('svg').style.transform = `scaleX(${Math.cos((t - t0) * 6)})`; });
+
+/* ---------- 1 · Miete hoch, Geld knapp ---------- */
+{ const X = S(0);
+  figur('mai1', { x: X + 1070, y: MY - 30, o: 0 });
+  set('mai1', 0, { y: MY + 50 }); tw('mai1', Z(0) + .05, .45, { o: 1, y: MY - 30 }); cue(Z(0) + .05, 'pop');
+  ein('beutel1', W(0, 'Ausbildungsvergütung') - .4, { x: X + 1530, y: MY + 160 }, { y: 120 });
+  ein('klappe1', W(0, 'Ausbildungsvergütung') - .4, { x: X + 1530, y: MY + 160 }, { y: 120 }, null);
+  // Mietzettel flattert herein
+  akteur('miete1', { x: X + 1880, y: 230, r: 12, o: 0 });
+  tw('miete1', W(0, 'Miete') - .2, .1, { o: 1 }); tw('miete1', W(0, 'Miete') - .2, .8, { x: X + 1520, y: 250, r: -3 }, 'back'); cue(W(0, 'Miete') - .2, 'whoosh');
+  tw('miete1', W(0, 'hoch'), .2, { s: 1.08 }); tw('miete1', W(0, 'hoch') + .2, .35, { s: 1 }, 'back');
+  // Klappe auf, Münzen fliegen aus dem Beutel zum Mietzettel
+  const tk = W(0, 'reicht');
+  tw('klappe1', tk - .2, .3, { sy: -.6, y: MY + 140 }, 'out'); cue(tk - .2, 'klick');
+  [['m1a', 0], ['m1b', .18], ['m1c', .36]].forEach(([id, d]) => {
+    akteur(id, { x: X + 1530, y: MY + 160, o: 0, s: .6 });
+    tw(id, tk + d, .05, { o: 1 }); tw(id, tk + d, .7, { x: X + 1520 + (d * 120 - 20), y: 290, s: .55 }, 'inout', { bogen: 120 });
+    tw(id, tk + d + .65, .15, { o: 0 }); cue(tk + d + .6, 'muenze');
+  });
+  gesicht('mai1', W(0, 'kaum'), ZE(0) + .6, 'auf');
+  tw('mai1', W(0, 'kaum'), .2, { r: -3 }); tw('mai1', W(0, 'kaum') + .2, .4, { r: 0 }, 'out');
+  pop('hilfe1', W(1, 'Hilfe'), { x: X + 1070, y: MY + 200 });
+  gesicht('mai1', W(1, 'Hilfe'), 99, 'froh'); nicken('mai1', W(1, 'Hilfe'), W(1, 'Hilfe') + 1);
+  textAkteure('tb1'); textEin('tb1', Z(0) + .1); textAus('tb1', ZE(1) + .4);
+}
+
+/* ---------- 2 · BAB = Zuschuss ---------- */
+{ const X = S(1), T0 = ZE(1) + .5;
+  wechsel(T0, 1);
+  ein('agentur2', T0 + .4, { x: X + 1090, y: MY - 20 }, { y: 90 });
+  akteur('lblAgentur', { x: X + 1090, y: MY + 140, o: 0 }); tw('lblAgentur', W(2, 'Agentur'), .4, { o: 1 });
+  figur('mai2', { x: X + 1560, y: MY - 30, o: 0 });
+  set('mai2', 0, { y: MY + 40 }); tw('mai2', T0 + .7, .45, { o: 1, y: MY - 30 }); cue(T0 + .7, 'pop');
+  const tz = W(2, 'zahlt');
+  [['m2a', 0], ['m2b', .22], ['m2c', .44]].forEach(([id, d]) => {
+    akteur(id, { x: X + 1090, y: MY - 60, o: 0, s: .5 });
+    tw(id, tz + d, .05, { o: 1 }); tw(id, tz + d, .85, { x: X + 1560, y: MY + 80, s: 1 }, 'inout', { bogen: 160 });
+    tw(id, tz + d + .85, .2, { o: 0, s: .6 }); cue(tz + d + .8, 'muenze');
+  });
+  gesicht('mai2', tz + .9, 99, 'froh');
+  pop('bab2', W(2, 'BAB'), { x: X + 1320, y: 210 });
+  // Stempel-Chip „Zuschuss“ schlägt mit Wackler auf
+  akteur('zuschuss2', { x: X + 1360, y: MY + 140, s: 2.2, o: 0, r: -10 });
+  tw('zuschuss2', W(3, 'Zuschuss'), .25, { s: 1, o: 1, r: -3 }, 'in'); cue(W(3, 'Zuschuss') + .25, 'plopp');
+  tw('zuschuss2', W(3, 'Zuschuss') + .25, .1, { sx: 1.12, sy: .88 }); tw('zuschuss2', W(3, 'Zuschuss') + .35, .35, { sx: 1, sy: 1 }, 'back');
+  wackeln('zuschuss2', W(3, 'Zuschuss') + .4, 3, 4);
+  // Rückzahl-Pfeil wird gezeichnet und durchgestrichen
+  akteur('zurueck2', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('zurueck2', W(4, 'Geld'), .6, { o: 1, draw: 1 });
+  akteur('x2', { x: X + 1320, y: 655, s: 0 }); tw('x2', W(4, 'zurückzahlen'), .4, { s: 1 }, 'back'); cue(W(4, 'zurückzahlen'), 'plopp');
+  tw('zurueck2', W(4, 'zurückzahlen') + .3, .4, { o: .35 });
+  nicken('mai2', W(4, 'zurückzahlen'), W(4, 'zurückzahlen') + 1.2);
+  textAkteure('tb2'); textEin('tb2', W(2, 'BAB'), { unter: W(4, 'musst') }); textAus('tb2', ZE(4) + .4);
+}
+
+/* ---------- 3 · Ausbildung im Betrieb, nicht bei den Eltern ---------- */
+{ const X = S(2), T0 = ZE(4) + .5;
+  wechsel(T0, 2);
+  ein('vertrag3', W(5, 'Ausbildung') - .3, { x: X + 1060, y: MY - 40, r: -2 });
+  akteur('lblVertrag', { x: X + 1060, y: MY + 110, o: 0 }); tw('lblVertrag', W(5, 'Betrieb'), .4, { o: 1 });
+  pop('haken3a', W(5, 'Betrieb') + .2, { x: X + 1160, y: MY - 150 }, 'ding');
+  ein('haus3', W(5, 'wohnst') - .3, { x: X + 1360, y: MY - 30 });
+  akteur('lblHaus', { x: X + 1360, y: MY + 110, o: 0 }); tw('lblHaus', W(5, 'wohnst'), .4, { o: 1 });
+  ein('welt3', Z(6) - .1, { x: X + 1590, y: MY + 115 }, { y: 120 }, 'whoosh');
+  // Elternhaus springt im Bogen auf die andere Seite der Weltkugel
+  const ta = W(6, 'Ausland');
+  akteur('eltern3', { x: X + 1360, y: MY + 200, o: 0, s: .4 });
+  tw('eltern3', W(6, 'Eltern'), .3, { o: 1, s: 1 }, 'back');
+  tw('eltern3', ta - .2, .9, { x: X + 1615, y: MY + 20 }, 'inout', { bogen: 140 }); cue(ta - .2, 'whoosh');
+  tw('eltern3', ta + .7, .12, { sy: .85 }); tw('eltern3', ta + .82, .3, { sy: 1 }, 'back');
+  akteur('lblEltern', { x: X + 1590, y: 700, o: 0 }); tw('lblEltern', ta + .4, .4, { o: 1 });
+  pop('haken3b', W(6, 'passt'), { x: X + 1690, y: MY - 70 }, 'erfolg');
+  textAkteure('tb3'); textEin('tb3', Z(5) + .1); textAus('tb3', ZE(6) + .4);
+}
+
+/* ---------- 4 · Auch mit Aufenthaltserlaubnis ---------- */
+{ const X = S(3), T0 = ZE(6) + .5;
+  wechsel(T0, 3);
+  // Karte fliegt herein und dreht sich einmal
+  akteur('karte4', { x: X + 1180, y: MY - 70, o: 0, s: .6 });
+  tw('karte4', W(7, 'Aufenthaltserlaubnis') - .3, .5, { o: 1, s: 1 }, 'back'); cue(W(7, 'Aufenthaltserlaubnis') - .3, 'whoosh');
+  HOOKS.push(t => { const p = clamp((t - W(7, 'Aufenthaltserlaubnis') + .3) / .9); $('#karte4').querySelector('svg').style.transform = `scaleX(${Math.cos(p * Math.PI * 2)})`; });
+  akteur('lblKarte', { x: X + 1180, y: MY + 80, o: 0 }); tw('lblKarte', W(7, 'Ausbildung'), .4, { o: 1 });
+  pop('haken4', W(7, 'bekommen'), { x: X + 1330, y: MY - 140 }, 'ding');
+  figur('mai4', { x: X + 1590, y: MY - 50, o: 0 });
+  set('mai4', 0, { y: MY + 20 }); tw('mai4', T0 + .6, .45, { o: 1, y: MY - 50 }); cue(T0 + .6, 'pop');
+  gesicht('mai4', W(7, 'bekommen'), 99, 'froh');
+  pop('para4', W(8, 'Gesetz'), { x: X + 1180, y: 635 });
+  HOOKS.push(t => { const an = t >= W(8, 'Problem'); $('#para4').style.borderColor = an ? 'var(--success)' : ''; $('#para4').style.color = an ? 'var(--success-text)' : ''; });
+  tw('para4', W(8, 'Problem'), .15, { s: 1.12 }); tw('para4', W(8, 'Problem') + .15, .35, { s: 1 }, 'back'); cue(W(8, 'Problem'), 'ding');
+  ein('ok4', W(8, 'Problem') + .1, { x: X + 1480, y: 635 }, { x: 60 });
+  nicken('mai4', W(8, 'Problem'), W(8, 'Problem') + 1.3);
+  textAkteure('tb4'); textEin('tb4', Z(7) + .1); textAus('tb4', ZE(8) + .4);
+}
+
+/* ---------- 5 · Wie viel? BAB-Rechner ---------- */
+{ const X = S(4), T0 = ZE(8) + .5;
+  wechsel(T0, 4);
+  const WX = X + 1150, WY = MY + 40;
+  ein('wfuss', T0 + .4, { x: WX, y: WY + 20 }, { y: 80 });
+  akteur('wbalken', { x: WX, y: WY - 92, o: 0 }); tw('wbalken', T0 + .6, .3, { o: 1 });
+  akteur('wschaleL', { x: WX - 135, y: WY - 15, o: 0 }); akteur('wschaleR', { x: WX + 135, y: WY - 15, o: 0 });
+  tw(['wschaleL', 'wschaleR'], T0 + .7, .3, { o: 1 });
+  // Waage kippt je nach Wort: Vergütung links, Miete rechts, Eltern links
+  const kipp = [[W(9, 'Vergütung'), -6], [W(9, 'Miete'), 5], [W(10, 'Eltern'), -2]];
+  HOOKS.push(t => {
+    let w = 0; for (const [a, v] of kipp) w += (v - w) * E.out(clamp((t - a) / .6)) * (t >= a ? 1 : 0);
+    const r = w * Math.PI / 180, dy = Math.sin(r) * 135;
+    $('#wbalken').style.transform = `translate(${WX}px,${WY - 92}px) translate(-50%,-50%) rotate(${w}deg)`;
+    $('#wschaleL').style.transform = `translate(${WX - 135}px,${WY - 15 - dy}px) translate(-50%,-50%)`;
+    $('#wschaleR').style.transform = `translate(${WX + 135}px,${WY - 15 + dy}px) translate(-50%,-50%)`;
+  });
+  pop('cVerg', W(9, 'Vergütung'), { x: WX - 135, y: 300 });
+  pop('cMiete', W(9, 'Miete'), { x: WX + 135, y: 300 });
+  pop('cEltern', W(10, 'Eltern'), { x: WX, y: 690 });
+  ein('handy5', W(11, 'BAB-Rechner') - .5, { x: X + 1590, y: MY + 10 }, { y: 400 }, 'whoosh');
+  akteur('schirm5', { x: X + 1590, y: MY + 10, o: 0 }); tw('schirm5', W(11, 'BAB-Rechner') - .1, .3, { o: 1 });
+  fuellen('#f5a', W(11, 'Internet'), .4); fuellen('#f5b', W(11, 'Internet') + .4, .4);
+  fuellen('#lade5', W(11, 'schnell'), .9); cue(W(11, 'schnell'), 'scan');
+  HOOKS.push(t => { $('#erg5').style.opacity = t >= W(11, 'lohnt') ? 1 : 0; });
+  tw('handy5', W(11, 'lohnt'), .15, { s: 1.05 }); tw('handy5', W(11, 'lohnt') + .15, .3, { s: 1 }, 'back'); cue(W(11, 'lohnt'), 'ding');
+  textAkteure('tb5'); textEin('tb5', Z(9) + .1); textAus('tb5', ZE(11) + .4);
+}
+
+/* ---------- 6 · Antrag online ---------- */
+{ const X = S(5), T0 = ZE(11) + .5;
+  wechsel(T0, 5);
+  ein('handy6', T0 + .4, { x: X + 1180, y: MY + 20 }, { y: 400 }, 'whoosh');
+  akteur('schirm6', { x: X + 1180, y: MY + 20, o: 0 }); tw('schirm6', T0 + .9, .3, { o: 1 });
+  const tf = W(12, 'online');
+  fuellen('#f6a', tf, .5); fuellen('#f6b', tf + .5, .5);
+  for (let i = 0; i < 8; i++) cue(tf + i * .12, 'tipp');
+  // Vertrag fliegt ins Handy
+  ein('vertrag6', Z(13) - .1, { x: X + 1555, y: MY - 20, r: 2 }, { x: 200 });
+  akteur('lblVertrag6', { x: X + 1555, y: MY + 140, o: 0 }); tw('lblVertrag6', W(13, 'Ausbildungsvertrag'), .3, { o: 1 });
+  const tv = W(13, 'Ausbildungsvertrag');
+  tw('vertrag6', tv, .6, { x: X + 1180, y: MY + 20, s: .3 }, 'inout'); tw('vertrag6', tv + .5, .15, { o: 0 }); cue(tv, 'whoosh');
+  tw('lblVertrag6', tv, .3, { o: 0 });
+  fuellen('#f6c', tv + .5, .3);
+  HOOKS.push(t => $('#senden6').classList.toggle('an', t >= tv + .8));
+  pop('haken6', tv + .8, { x: X + 1340, y: MY - 180 }, 'erfolg');
+  textAkteure('tb6'); textEin('tb6', Z(12) + .1, { unter: W(12, 'Agentur') }); textAus('tb6', Math.max(ZE(13), tv + 1) + .2);
+}
+
+/* ---------- 7 · Früh beantragen ---------- */
+{ const X = S(6), T0 = Math.max(ZE(13), W(13, 'Ausbildungsvertrag') + 1) + .5;
+  wechsel(T0, 6);
+  const MO = [['mo1', 1050], ['mo2', 1230], ['mo3', 1410], ['mo4', 1590]];
+  MO.forEach(([id, x], i) => ein(id, T0 + .4 + i * .12, { x: X + x, y: MY + 140 }, { y: 70 }, i ? null : 'pop'));
+  ein('uhr7', W(14, 'früh') - .3, { x: X + 1320, y: 250 }, { y: -60 });
+  ein('zeiger7', W(14, 'früh') - .3, { x: X + 1320, y: 250 }, { y: -60 }, null);
+  wackeln('uhr7', W(14, 'früh'), 5, 5); cue(W(14, 'früh'), 'ding');
+  HOOKS.push(t => { const p = clamp((t - W(14, 'früh')) / 2); $('#zeiger7').style.transform += ` rotate(${E.inout(p) * 720}deg)`; });
+  // Antrag landet auf November
+  const ta = W(15, 'Monat');
+  akteur('antrag7', { x: X + 1410, y: 120, o: 0 });
+  tw('antrag7', ta - .5, .1, { o: 1 }); tw('antrag7', ta - .5, .55, { y: MY + 50 }, 'inout'); cue(ta, 'plopp');
+  tw('mo3', ta + .05, .12, { sy: .9 }); tw('mo3', ta + .17, .3, { sy: 1 }, 'back');
+  // Monate davor grau mit X, ab November Münzen
+  HOOKS.push(t => { for (const id of ['mo1', 'mo2']) $('#' + id).classList.toggle('grau', t >= W(15, 'stellst')); });
+  pop('x7a', W(15, 'stellst') + .1, { x: X + 1100, y: MY + 80 }, 'plopp');
+  pop('x7b', W(15, 'stellst') + .2, { x: X + 1280, y: MY + 80 }, null);
+  [['m7a', 1410], ['m7b', 1590]].forEach(([id, x], i) => {
+    akteur(id, { x: X + x, y: 160, o: 0 });
+    const t0 = W(15, 'Geld') + .3 + i * .25;
+    tw(id, t0, .05, { o: 1 }); tw(id, t0, .7, { y: 420 }, 'sinus'); cue(t0 + .3, 'muenze');
+  });
+  muenzeDreht('m7a', W(15, 'Geld') + .9); muenzeDreht('m7b', W(15, 'Geld') + 1.1);
+  textAkteure('tb7'); textEin('tb7', Math.max(Z(14) + .1, T0 + .8), { unter: Z(15) }); textAus('tb7', ZE(15) + .4);
+}
+
+/* ---------- 8 · Unsicher? Anrufen ---------- */
+{ const X = S(7), T0 = ZE(15) + .5;
+  wechsel(T0, 7);
+  figur('mai8', { x: X + 1060, y: MY - 20, o: 0 });
+  set('mai8', 0, { y: MY + 60 }); tw('mai8', T0 + .4, .45, { o: 1, y: MY - 20 }); cue(T0 + .4, 'pop');
+  pop('frage8', W(16, 'sicher'), { x: X + 1235, y: MY - 200 });
+  wackeln('frage8', W(16, 'sicher') + .5, 4, 8);
+  gesicht('mai8', W(16, 'sicher'), Z(17), 'auf');
+  tw('frage8', W(17, 'trotzdem'), .3, { s: 0 }, 'in');
+  ein('handy8', W(17, 'ruf') - .5, { x: X + 1560, y: MY - 10 }, { y: 400 }, 'whoosh');
+  akteur('schirm8', { x: X + 1560, y: MY - 10, o: 0 }); tw('schirm8', W(17, 'ruf') - .1, .3, { o: 1 });
+  const tr = W(17, 'Agentur');
+  for (let k = 0; k < 2; k++) wackeln('handy8', tr + k * .6, 4, 4);
+  cue(tr, 'ding'); cue(tr + .6, 'ding');
+  for (const [id, d] of [['welle8a', 0], ['welle8b', .5]]) {
+    akteur(id, { x: X + 1560, y: MY - 10, o: 0 });
+    HOOKS.push(t => {
+      const t0 = tr + d, el = $('#' + id);
+      if (t < t0 || t > tr + 2.4) { el.style.visibility = 'hidden'; return; }
+      const p = ((t - t0) / 1) % 1;
+      el.style.visibility = 'visible'; el.style.opacity = (1 - p) * .55;
+      el.style.transform = `translate(${X + 1560}px,${MY - 10}px) translate(-50%,-50%) scale(${1.4 + p * 1.6})`;
+    });
+  }
+  ein('nummer8', tr + .2, { x: X + 1560, y: 680 }, { y: 50 });
+  pop('kostenlos8', W(18, 'kostenlos'), { x: X + 1060, y: 680 }, 'ding');
+  gesicht('mai8', W(18, 'kostenlos'), 99, 'froh'); tw('#mai8 .daumen', W(18, 'kostenlos'), .5, { y: -30 }, 'back'); cue(W(18, 'kostenlos'), 'plopp');
+  textAkteure('tb8'); textEin('tb8', Z(16) + .1, { unter: W(17, 'ruf') });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endBeutel', { o: 0, y: 40 }, true); tw('endBeutel', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

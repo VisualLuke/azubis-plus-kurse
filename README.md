@@ -11,6 +11,18 @@ Keine Component – die fertigen `film.mp4` werden in der App eingebunden.
 | 2 | [Wohnsitz anmelden beim Bürgeramt](kurse/02-wohnsitz-anmelden/) | 1:35 | Animationsvideo mit Sprecher, Mai als Figur |
 | 3 | [Bankkonto eröffnen](kurse/03-bankkonto/) | 1:20 | Animationsvideo mit Sprecher, Mai als Figur |
 | 4 | [Rechte & Pflichten in der Ausbildung](kurse/04-rechte-pflichten/) | 2:59 | Gespräch: Sabine (Ausbilderin) und Amir (Azubi) |
+| 5 | [SIM-Karte holen und freischalten](kurse/05-sim-karte/) | 1:03 | Animationsvideo, Mai |
+| 6 | [Deine Gesundheitskarte](kurse/06-gesundheitskarte/) | 0:51 | Animationsvideo, Mai |
+| 7 | [Wäsche waschen](kurse/07-waesche-waschen/) | 1:13 | Animationsvideo, Mai |
+| 8 | [Müll richtig trennen](kurse/08-muell-trennen/) | 1:05 | Animationsvideo, Mai |
+| 9 | [Pfand zurückbringen](kurse/09-pfand/) | 0:55 | Animationsvideo, Mai |
+| 10 | [Richtig lüften und heizen](kurse/10-lueften-heizen/) | 1:03 | Animationsvideo, Mai |
+| 11 | [Miete, Nebenkosten und Strom](kurse/11-nebenkosten-strom/) | 1:42 | Podcast: Mai und Jonas |
+| 12 | [Hausordnung und Nachbarn](kurse/12-hausordnung-nachbarn/) | 1:24 | Gespräch: Vermieter und Mai |
+| 13 | [Einkaufen mit wenig Geld](kurse/13-einkaufen-budget/) | 1:11 | Animationsvideo, Mai |
+| 14 | [Einzug: Fotos und Übergabeprotokoll](kurse/14-wohnungsuebergabe/) | 1:17 | Animationsvideo, Mai |
+| 15 | [Berufsausbildungsbeihilfe (BAB)](kurse/15-bab/) | 1:17 | Animationsvideo, Mai |
+| 16 | [Deutsch weiterlernen in der Ausbildung](kurse/16-deutschkurs/) | 1:18 | Animationsvideo, Mai |
 
 ### Lernvideos
 
@@ -26,6 +38,12 @@ Kurs-ID je Lektion: [`import/lektionen.md`](import/lektionen.md).** Ab jetzt wer
 (`abzeichen/`, `abzeichen.mjs`), die Kurs-IDs und Storage-Pfade (`ids.json`) und den Datenbau (`daten.py`).
 Je Lektion liegen `fragen.json` (Stand beim Import) und `titelbild.json`/`titelbild.png` (`werkzeug/titelbild.mjs`) im Ordner.
 Ein neues Video kommt über den Kurs-Editor in die App (Video, `.vtt` mit demselben Namen daneben, Schalter „KI“).
+
+**Kurse 5–16 (10.11.2026)** sind als zwölf weitere Lektionen angelegt (14–16: neue Themen, Import `import/kurse-14-16.py`, `import/ids-14-16.json`) – zusätzlich zu den älteren Lernvideos zum selben Thema,
+direkt dahinter einsortiert (Positionen in `import/lektionen.md`). Import: `import/kurse-05-13.py` (SQL) mit
+`import/ids-05-13.json` (Kurs-IDs, Storage-Pfade). 23 Ankommen-Aufgaben der Helper-App verlinken ihre passende Lektion („Video ansehen: …“, ohne Kopie des
+Videos; `helperapp_backend`, Migration `h_ankommen_lektionen`). Aufnahme: `werkzeug/stimme.mjs`;
+die Vorlagen der Kurse 5–13 lesen die Zeiten über `werkzeug/sprache.js` (`Z(i)`, `W(i, 'wort')`, `mund(t, sprecher)`).
 
 Die Videos sind **neutral**: kein Kopftext, kein Titel-Vorspann, keine eingebrannten Untertitel (die gibt es als abschaltbare
 Spur `film.vtt` für den Player) – die Kursseite in der

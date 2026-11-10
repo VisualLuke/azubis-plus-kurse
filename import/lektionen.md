@@ -77,3 +77,20 @@ gepflegt – `fragen.json` im Ordner ist der Stand beim Import.
 | 670 | Prüfung & Zukunft | Prüfungssprache verstehen | [`lernvideos/45-pruefungssprache`](../lernvideos/45-pruefungssprache/) | 13 |  | `a039f75c-8b60-4948-b150-d81ea681c62e` |
 | 680 | Prüfung & Zukunft | Aufenthaltstitel verlängern | [`lernvideos/05-aufenthaltstitel`](../lernvideos/05-aufenthaltstitel/) | 10 |  | `ecb6a6e9-744a-4913-9fe2-bf5c2d9ca362` |
 | 690 | Prüfung & Zukunft | Nach der Ausbildung | [`lernvideos/11-nach-der-ausbildung`](../lernvideos/11-nach-der-ausbildung/) | 11 | Prüfungsfit | `c7a8f6e9-1f46-44a6-8a76-5a618a7a7323` |
+
+### Ergänzt am 10.11.2026 (Kurse 5–13)
+
+| Pos. | Abschnitt | Lektion | Ordner | Fragen | Abzeichen | Kurs-ID |
+| --- | --- | --- | --- | --- | --- | --- |
+| 55 | Ankommen & Papiere | Deine Gesundheitskarte | [`kurse/06-gesundheitskarte`](../kurse/06-gesundheitskarte/) | 10 |  | `aab7e773-e483-4721-9c6b-16346ec3db05` |
+| 65 | Ankommen & Papiere | SIM-Karte freischalten | [`kurse/05-sim-karte`](../kurse/05-sim-karte/) | 12 |  | `a430ebdf-01d4-415f-8ed4-d2112cacca26` |
+| 365 | Kultur & Miteinander | Pfand zurückbringen | [`kurse/09-pfand`](../kurse/09-pfand/) | 11 |  | `212a149f-1d37-41f5-96c1-cde451917450` |
+| 385 | Wohnen & Alltag | Müll richtig trennen | [`kurse/08-muell-trennen`](../kurse/08-muell-trennen/) | 12 |  | `0e9fdba4-8556-49a1-9301-f6a19c410a77` |
+| 395 | Wohnen & Alltag | Richtig lüften und heizen | [`kurse/10-lueften-heizen`](../kurse/10-lueften-heizen/) | 11 |  | `4d2496d6-fa2d-4bf1-954c-fce163cc9e01` |
+| 402 | Wohnen & Alltag | Hausordnung und Nachbarn | [`kurse/12-hausordnung-nachbarn`](../kurse/12-hausordnung-nachbarn/) | 11 |  | `6a974c20-a3f9-4c09-9236-0919f327af21` |
+| 405 | Wohnen & Alltag | Wäsche waschen | [`kurse/07-waesche-waschen`](../kurse/07-waesche-waschen/) | 12 |  | `be98b8ca-6fd8-4fa3-baba-31517e5e5f69` |
+| 465 | Wohnen & Alltag | Miete, Nebenkosten und Strom | [`kurse/11-nebenkosten-strom`](../kurse/11-nebenkosten-strom/) | 12 |  | `f20aa625-2272-4e13-b7da-536dc4fdb0cb` |
+| 495 | Rechte & Geld | Einkaufen mit wenig Geld | [`kurse/13-einkaufen-budget`](../kurse/13-einkaufen-budget/) | 11 |  | `3d71f314-f00e-4a65-979f-8358f56a15cd` |
+| 205 | Start im Betrieb | Deutsch weiterlernen in der Ausbildung | [`kurse/16-deutschkurs`](../kurse/16-deutschkurs/) | 12 |  | `1c15d52d-644d-4b6a-86f3-969a9b48d0eb` |
+| 461 | Wohnen & Alltag | Einzug: Fotos und Übergabeprotokoll | [`kurse/14-wohnungsuebergabe`](../kurse/14-wohnungsuebergabe/) | 12 |  | `c822a19b-dfca-4b8f-b4b0-db231f0b0666` |
+| 497 | Rechte & Geld | Berufsausbildungsbeihilfe (BAB) | [`kurse/15-bab`](../kurse/15-bab/) | 12 |  | `5dfbecae-6614-4020-993b-7374b03c9665` |

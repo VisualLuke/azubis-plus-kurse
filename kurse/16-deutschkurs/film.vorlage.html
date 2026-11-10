@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 16 – Deutsch weiterlernen in der Ausbildung</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:8px 18px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 80%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+/* Stufen A2 · B1 · B2 */
+.stufe{width:210px;border-radius:22px 22px 10px 10px;background:linear-gradient(var(--b200),var(--b300));display:flex;justify-content:center;
+  padding-top:18px;font:800 44px/52px Inter;color:var(--b700);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.stufe.ziel{background:linear-gradient(var(--b400),var(--b500));color:var(--surface)}
+/* Heft mit Fachwörtern */
+.heft{width:330px;padding:22px 26px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border-left:14px solid var(--b500)}
+.heft small{display:block;font:600 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin-bottom:10px}
+.heft .zeile{font:700 28px/44px Inter;color:var(--ink);white-space:pre;min-height:44px;border-bottom:2px solid var(--b100)}
+/* Notenkarte */
+.note{width:230px;padding:18px 22px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);text-align:center}
+.note small{display:block;font:600 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.note b{display:block;font:800 88px/96px Inter;color:var(--error-text)}
+.note b.gut{color:var(--success-text)}
+/* Handy-Bildschirm */
+.schirm{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;border-radius:8px}
+.schirm small{font:700 15px/19px Inter;letter-spacing:.04em;color:var(--b600)}
+.spur2{width:110px;height:12px;border-radius:999px;background:var(--b100);overflow:hidden}
+.spur2 i{display:block;height:100%;width:0;border-radius:999px;background:var(--success)}
+.schirm .lektion{font:700 15px/20px Inter;color:var(--ink)}
+/* Wochentage */
+.tag{width:78px;height:78px;border-radius:18px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.09);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font:700 22px/26px Inter;color:var(--n500)}
+.tag i{display:block;width:26px;height:26px;margin-top:4px;border-radius:999px;background:var(--b100)}
+.tag.an{color:var(--success-text)}
+.tag.an i{background:var(--success)}
+.markierung{width:46px;height:40px;border-radius:8px;background:var(--b500);box-shadow:0 0 0 6px rgba(90,63,230,.2)}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Viele Fachwörter -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="tafel1" style="width:380px">{{tafel}}</div>
+  <div class="a chip klein" id="fw1">das Lernfeld</div>
+  <div class="a chip klein" id="fw2">die Toleranz</div>
+  <div class="a chip klein" id="fw3">der Arbeitsschutz</div>
+  <div class="a chip klein" id="fw4">die Prüfungsordnung</div>
+  <div class="a portrait" id="mai1" data-dreht style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 2 · B1 ist der Anfang -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a stufe" id="st1" style="height:110px">A2</div>
+  <div class="a stufe" id="st2" style="height:200px">B1</div>
+  <div class="a stufe" id="st3" style="height:290px">B2</div>
+  <div class="a portrait" id="mai2" style="width:160px;height:160px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 3 · Berufssprachkurs für Azubis: kostenlos -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a" id="schule3" style="width:250px">{{schule}}</div>
+  <div class="a chip brand klein" id="bamf3">BAMF · Azubi-Kurs</div>
+  <div class="a heft" id="heft3"><small>Fachwörter</small><div class="zeile" id="z1"></div><div class="zeile" id="z2"></div><div class="zeile" id="z3"></div></div>
+  <div class="a" id="muenze3" data-dreht style="width:110px">{{muenze}}</div>
+  <div class="a chip gruen" id="null3">0 € für dich</div>
+
+  <!-- 4 · Beim Kursträger anmelden -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="ort1" style="width:180px">{{schule~2}}</div>
+  <div class="a" id="ort2" data-gruppe="g4" style="width:180px">{{agentur}}</div>
+  <div class="a" id="ort3" style="width:180px">{{laptop}}</div>
+  <div class="a label" id="lblO1">Berufsschule</div>
+  <div class="a label" id="lblO2">Kursträger</div>
+  <div class="a label" id="lblO3">online</div>
+  <div class="a" id="vertrag4" style="width:150px">{{vertrag}}</div>
+  <div class="a" id="titel4" style="width:160px">{{titel-karte}}</div>
+  <div class="a" id="haken4" data-gruppe="g4" style="width:80px">{{haken}}</div>
+  <div class="a chip gelb" id="knapp4" data-dreht>Plätze knapp: früh fragen</div>
+
+  <!-- 5 · Betrieb fragen -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a portrait" id="mai5" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="chefin5" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a label" id="lblDu">Du</div>
+  <div class="a label" id="lblBetrieb">Dein Betrieb</div>
+  <div class="a" id="kal5" data-gruppe="g5" style="width:200px">{{kalender}}</div>
+  <div class="a markierung" id="mark5" data-gruppe="g5"></div>
+  <div class="a chip klein" id="kurs5">Kurs-Termin</div>
+  <div class="a chip gruen klein" id="kosten5">Für den Betrieb: 0 €</div>
+
+  <!-- 6 · Assistierte Ausbildung -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a portrait" id="mai6" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="agentur6" style="width:210px">{{agentur~2}}</div>
+  <div class="a label" id="lblAgentur">Agentur für Arbeit</div>
+  <div class="a note" id="note6" data-dreht><small>Berufsschule</small><b id="noteWert">4</b></div>
+  <div class="a chip brand klein" id="asa6">Assistierte Ausbildung</div>
+  <div class="a chip klein" id="termin6">Termin: Berufsberatung</div>
+
+  <!-- 7 · vhs-Lernportal -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="handy7" data-gruppe="g7" style="width:360px">{{handy}}</div>
+  <div class="a schirm" id="schirm7" data-gruppe="g7" style="width:134px;height:243px">
+    <small>vhs-Lernportal</small><div class="spur2"><i id="fort7"></i></div><div class="lektion" id="lekt7">Lektion 1</div></div>
+  <div class="a chip gruen" id="frei7">kostenlos</div>
+  <div class="a chip klein" id="online7">online</div>
+  <div class="a portrait" id="mai7" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 8 · Jeden Tag ein bisschen -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="buch8" style="width:260px">{{buch}}</div>
+  <div class="a tag" id="t1">Mo<i></i></div><div class="a tag" id="t2">Di<i></i></div><div class="a tag" id="t3">Mi<i></i></div>
+  <div class="a tag" id="t4">Do<i></i></div><div class="a tag" id="t5">Fr<i></i></div>
+  <div class="a portrait" id="mai8" style="width:230px;height:230px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Viele Fachwörter?</div><div class="unter">Ganz normal.</div></div>
+<div class="block" id="tb2"><div class="titel">B1 ist der Anfang</div></div>
+<div class="block" id="tb3"><div class="titel">Berufssprachkurs für Azubis</div><div class="unter">Für dich kostenlos</div></div>
+<div class="block" id="tb4"><div class="titel">Beim Kursträger anmelden</div></div>
+<div class="block" id="tb5"><div class="titel">Betrieb fragen: Freistellung</div></div>
+<div class="block" id="tb6"><div class="titel">Assistierte Ausbildung</div><div class="unter">Nachhilfe – auch für Deutsch</div></div>
+<div class="block" id="tb7"><div class="titel">vhs-Lernportal: kostenlos online</div></div>
+<div class="block" id="tb8"><div class="titel">Jeden Tag ein bisschen</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endBuch" style="position:relative;width:220px">{{buch~2}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Schritt für Schritt besser.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+// Sprache beginnt im Film bei VERSATZ = 0.6 s (werkzeug/sprache.js)
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren in der Szene ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 90 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y, r: basis.r || 0 }, 'out');
+  tw(id, t + .38, .14, { sy: .93, sx: 1.05 }, 'sinus'); tw(id, t + .52, .35, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+
+const GESICHT = {}, NICKEN = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+  GESICHT[id] = []; NICKEN[id] = [];
+}
+const gesicht = (id, a, b, art) => GESICHT[id].push([a, b, art]);
+const nicken = (id, a, b) => NICKEN[id].push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const g = (GESICHT[p.id] || []).find(([a, b]) => t >= a && t < b), art = g ? g[2] : 'zu';
+  for (const k of ['zu', 'auf', 'froh']) p.querySelector('.' + k).style.opacity = art === k ? 1 : 0;
+  const n = (NICKEN[p.id] || []).find(([a, b]) => t >= a && t < b);
+  p.querySelector('.figur').style.transform = n ? `rotate(${2 * Math.sin((t - n[0]) * 7)}deg) translateY(${4 * Math.max(0, Math.sin((t - n[0]) * 7))}px)` : '';
+}));
+const auftritt = (id, t, x, y) => { figur(id, { x, y, o: 0 }); set(id, 0, { y: y + 70 }); tw(id, t, .45, { o: 1, y }, 'out'); cue(t, 'pop'); };
+// Text wird Zeichen für Zeichen getippt
+const tippen = (sel, text, t0, dt = .06) => {
+  HOOKS.push(t => { const n = Math.max(0, Math.min(text.length, Math.floor((t - t0) / dt))); $(sel).textContent = text.slice(0, n); });
+  for (let i = 0; i < text.length; i += 2) cue(t0 + i * dt, 'tipp');
+};
+
+/* ---------- 1 · Viele Fachwörter ---------- */
+{ const X = S(0);
+  ein('tafel1', Z(0) + .1, { x: X + 1150, y: 360 }, { y: 80 });
+  // Fachwörter fliegen von der Tafel auf Mai zu
+  const WOERTER = [['fw1', 1530, 210, W(0, 'viele')], ['fw2', 1560, 320, W(0, 'neue')], ['fw3', 1060, 640, W(0, 'Fachwörter')], ['fw4', 1330, 690, W(0, 'Fachwörter') + .35]];
+  for (const [id, x, y, t0] of WOERTER) {
+    akteur(id, { x: X + 1150, y: 350, s: .3, o: 0 });
+    tw(id, t0, .05, { o: 1 }); tw(id, t0, .6, { x: X + x, y, s: 1 }, 'back', { bogen: 60 }); cue(t0, 'whoosh');
+  }
+  auftritt('mai1', Z(0) + .4, X + 1600, 540);
+  gesicht('mai1', W(0, 'Fachwörter'), W(1, 'normal'), 'auf');
+  wackeln('mai1', W(1, 'schwer'), 3, 3);
+  gesicht('mai1', W(1, 'normal'), 99, 'froh'); nicken('mai1', W(1, 'normal'), W(1, 'normal') + 1.4);
+  for (const [id] of WOERTER) wackeln(id, W(1, 'schwer') + .1, 2, 3);
+  textAkteure('tb1'); textEin('tb1', Z(0) + .2, { unter: W(1, 'normal') }); textAus('tb1', ZE(1) + .45);
+}
+
+/* ---------- 2 · B1 ist der Anfang ---------- */
+{ const X = S(1), T0 = ZE(1) + .5;
+  wechsel(T0, 1);
+  const STUFEN = [['st1', 1080, 110], ['st2', 1310, 200], ['st3', 1540, 290]];
+  STUFEN.forEach(([id, x, h], i) => ein(id, T0 + .35 + i * .15, { x: X + x, y: 690 - h / 2 }, { y: 120 }, i ? null : 'pop'));
+  auftritt('mai2', Z(2), X + 1310, 490 - 90);
+  gesicht('mai2', W(2, 'guter'), 99, 'froh');
+  // Mai springt auf B2
+  const tj = W(3, 'mehr');
+  tw('mai2', tj - .1, .1, { sy: .88, sx: 1.08 });
+  tw('mai2', tj, .6, { x: X + 1540, y: 400 - 90, sy: 1, sx: 1 }, 'inout', { bogen: 90 }); cue(tj, 'whoosh');
+  tw('mai2', tj + .6, .1, { sy: .9, sx: 1.06 }); tw('mai2', tj + .7, .35, { sy: 1, sx: 1 }, 'sanft'); cue(tj + .6, 'plopp');
+  HOOKS.push(t => $('#st3').classList.toggle('ziel', t >= tj + .6));
+  tw('st3', tj + .6, .12, { sy: .96 }); tw('st3', tj + .72, .3, { sy: 1 }, 'sanft'); cue(tj + .65, 'ding');
+  textAkteure('tb2'); textEin('tb2', Z(2) + .1); textAus('tb2', ZE(3) + .45);
+}
+
+/* ---------- 3 · Berufssprachkurs für Azubis ---------- */
+{ const X = S(2), T0 = ZE(3) + .5;
+  wechsel(T0, 2);
+  ein('schule3', T0 + .4, { x: X + 1100, y: 330 }, { y: 80 });
+  pop('bamf3', W(4, 'Berufssprachkurse'), { x: X + 1100, y: 480 });
+  ein('heft3', W(4, 'Azubis') - .2, { x: X + 1520, y: 360 }, { x: 160 }, 'whoosh');
+  tippen('#z1', 'das Lernfeld', W(5, 'Fachwörter'));
+  tippen('#z2', 'die Toleranz', W(5, 'Berufsschule'));
+  tippen('#z3', 'die Prüfung', W(5, 'Prüfungen'));
+  akteur('muenze3', { x: X + 1150, y: 640, s: 0 }); tw('muenze3', W(6, 'kostenlos') - .3, .45, { s: 1 }, 'back'); cue(W(6, 'kostenlos') - .3, 'muenze');
+  HOOKS.push(t => { if (t > W(6, 'kostenlos') - .3) $('#muenze3 svg').style.transform = `scaleX(${Math.cos((t - W(6, 'kostenlos')) * 6)})`; });
+  pop('null3', W(6, 'kostenlos'), { x: X + 1390, y: 640 }, 'ding');
+  textAkteure('tb3'); textEin('tb3', Z(4) + .1, { unter: Z(6) }); textAus('tb3', ZE(6) + .45);
+}
+
+/* ---------- 4 · Beim Kursträger anmelden ---------- */
+{ const X = S(3), T0 = ZE(6) + .5;
+  wechsel(T0, 3);
+  const ORTE = [['ort1', 'lblO1', 1060, W(7, 'Berufsschule')], ['ort2', 'lblO2', 1320, W(7, 'Kursträger')], ['ort3', 'lblO3', 1580, W(7, 'online')]];
+  for (const [id, lbl, x, t0] of ORTE) {
+    ein(id, t0 - .2, { x: X + x, y: 300 }, { y: 80 });
+    akteur(lbl, { x: X + x, y: 420, o: 0 }); tw(lbl, t0 + .1, .35, { o: 1 });
+  }
+  // Ausbildungsvertrag und Aufenthaltstitel fliegen zum Kursträger
+  for (const [id, x, wort] of [['vertrag4', 1110, 'Ausbildungsvertrag'], ['titel4', 1530, 'Aufenthaltstitel']]) {
+    const t0 = W(8, wort);
+    ein(id, t0 - .3, { x: X + x, y: 620 }, { y: 80 }, 'whoosh');
+    tw(id, t0 + .7, .7, { x: X + 1320, y: 310, s: .35, o: 0 }, 'inout'); cue(t0 + 1.35, 'plopp');
+  }
+  pop('haken4', W(8, 'Aufenthaltstitel') + 1.45, { x: X + 1395, y: 245 }, 'ding');
+  tw('ort2', W(8, 'Aufenthaltstitel') + 1.35, .12, { s: 1.07 }); tw('ort2', W(8, 'Aufenthaltstitel') + 1.47, .3, { s: 1 }, 'sanft');
+  pop('knapp4', W(9, 'knapp'), { x: X + 1320, y: 620 });
+  wackeln('knapp4', W(9, 'früh'), 3, 3);
+  textAkteure('tb4'); textEin('tb4', W(8, 'meldest')); textAus('tb4', ZE(9) + .45);
+}
+
+/* ---------- 5 · Betrieb fragen ---------- */
+{ const X = S(4), T0 = ZE(9) + .5;
+  wechsel(T0, 4);
+  auftritt('mai5', T0 + .4, X + 1090, 320);
+  auftritt('chefin5', T0 + .6, X + 1550, 320);
+  akteur('lblDu', { x: X + 1090, y: 455, o: 0 }); tw('lblDu', T0 + .7, .4, { o: 1 });
+  akteur('lblBetrieb', { x: X + 1550, y: 455, o: 0 }); tw('lblBetrieb', T0 + .8, .4, { o: 1 });
+  gesicht('mai5', Z(10), ZE(10), 'auf');
+  ein('kal5', W(10, 'Kurs') - .3, { x: X + 1180, y: 620 }, { y: 80 });
+  // Termin wird im Kalender markiert
+  akteur('mark5', { x: X + 1188, y: 634, s: 0 }); tw('mark5', W(10, 'freibekommst'), .4, { s: 1 }, 'back'); cue(W(10, 'freibekommst'), 'klick');
+  pop('kurs5', W(10, 'freibekommst') + .3, { x: X + 1440, y: 590 });
+  nicken('chefin5', ZE(10), ZE(10) + 1.6); gesicht('chefin5', ZE(10) + .1, 99, 'froh');
+  pop('kosten5', W(11, 'nichts'), { x: X + 1480, y: 670 }, 'ding');
+  gesicht('mai5', W(11, 'nichts') + .2, 99, 'froh');
+  textAkteure('tb5'); textEin('tb5', Z(10) + .1); textAus('tb5', ZE(11) + .45);
+}
+
+/* ---------- 6 · Assistierte Ausbildung ---------- */
+{ const X = S(5), T0 = ZE(11) + .5;
+  wechsel(T0, 5);
+  auftritt('mai6', T0 + .4, X + 1080, 300);
+  ein('note6', W(12, 'schwer') - .3, { x: X + 1080, y: 590 }, { y: 80 });
+  gesicht('mai6', W(12, 'schwer'), W(13, 'Nachhilfe') + .6, 'auf');
+  wackeln('note6', W(12, 'schwer') + .3, 3, 4);
+  ein('agentur6', W(13, 'Agentur') - .2, { x: X + 1510, y: 300 }, { y: 80 });
+  akteur('lblAgentur', { x: X + 1510, y: 440, o: 0 }); tw('lblAgentur', W(13, 'Agentur') + .1, .35, { o: 1 });
+  pop('asa6', W(13, 'Assistierten'), { x: X + 1490, y: 540 });
+  // Note wird besser: Karte dreht sich, aus 4 wird 2
+  const tn = W(13, 'Nachhilfe');
+  tw('note6', tn, .25, { sx: 0 }, 'in'); tw('note6', tn + .25, .3, { sx: 1 }, 'out'); cue(tn + .25, 'erfolg');
+  HOOKS.push(t => { const gut = t >= tn + .25; $('#noteWert').textContent = gut ? '2' : '4'; $('#noteWert').classList.toggle('gut', gut); });
+  gesicht('mai6', tn + .6, 99, 'froh'); nicken('mai6', tn + .6, tn + 1.8);
+  pop('termin6', W(14, 'Termin'), { x: X + 1490, y: 640 });
+  textAkteure('tb6'); textEin('tb6', Z(12) + .1, { unter: W(13, 'Nachhilfe') }); textAus('tb6', ZE(14) + .45);
+}
+
+/* ---------- 7 · vhs-Lernportal ---------- */
+{ const X = S(6), T0 = ZE(14) + .5;
+  wechsel(T0, 6);
+  ein('handy7', T0 + .4, { x: X + 1320, y: 420 }, { y: 400 }, 'whoosh');
+  akteur('schirm7', { x: X + 1320, y: 420, o: 0 }); tw('schirm7', W(15, 'vhs'), .3, { o: 1 }); cue(W(15, 'vhs'), 'klick');
+  const tl = W(15, 'lernst');
+  HOOKS.push(t => {
+    const p = clamp((t - tl) / 2.2);
+    $('#fort7').style.width = (p * 100).toFixed(1) + '%';
+    $('#lekt7').textContent = p >= 1 ? 'Lektion 1 ✓' : 'Lektion 1';
+  });
+  cue(tl + 2.2, 'ding');
+  pop('frei7', W(15, 'kostenlos'), { x: X + 1050, y: 300 });
+  pop('online7', W(15, 'online'), { x: X + 1050, y: 400 });
+  auftritt('mai7', W(15, 'Handy') - .3, X + 1600, 560);
+  gesicht('mai7', W(15, 'Handy'), 99, 'froh');
+  textAkteure('tb7'); textEin('tb7', Z(15) + .2); textAus('tb7', ZE(15) + .45);
+}
+
+/* ---------- 8 · Jeden Tag ein bisschen ---------- */
+{ const X = S(7), T0 = ZE(15) + .5;
+  wechsel(T0, 7);
+  ein('buch8', T0 + .4, { x: X + 1150, y: 330 }, { y: 80 });
+  const TAGE = ['t1', 't2', 't3', 't4', 't5'];
+  TAGE.forEach((id, i) => {
+    ein(id, T0 + .6 + i * .1, { x: X + 990 + i * 92, y: 600 }, { y: 60 }, null);
+    const ta = W(16, 'bisschen') + i * .32;
+    HOOKS.push(t => $('#' + id).classList.toggle('an', t >= ta));
+    tw(id, ta, .1, { s: 1.12 }); tw(id, ta + .1, .3, { s: 1 }, 'sanft'); cue(ta, 'tipp');
+  });
+  auftritt('mai8', T0 + .7, X + 1580, 400);
+  gesicht('mai8', W(16, 'leichter') - .2, 99, 'froh');
+  tw('#mai8 .daumen', W(16, 'leichter'), .5, { y: -30 }, 'back'); cue(W(16, 'leichter'), 'erfolg');
+  textAkteure('tb8'); textEin('tb8', Z(16) + .1);
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endBuch', { o: 0, y: 40 }, true); tw('endBuch', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

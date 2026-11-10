@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 14 – Einzug: Fotos und Übergabeprotokoll</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 30px/38px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:8px 18px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.kreuz{width:84px;height:84px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:40px}
+.frage{width:100px;height:100px;border-radius:999px;background:var(--b500);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 58px/1 Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 80%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+/* Protokoll / Liste als Karte */
+.karte{width:360px;padding:22px 24px;border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);border:2px solid var(--border)}
+.karte .kopf{font:800 24px/30px Inter;color:var(--b600);letter-spacing:.02em;margin-bottom:12px;white-space:nowrap}
+.karte .z{display:flex;align-items:center;gap:10px;font:600 20px/26px Inter;color:var(--ink);padding:8px 0;border-top:2px solid var(--border);white-space:nowrap;min-height:44px}
+.karte .z i{width:16px;height:16px;flex:none;border-radius:5px;background:var(--b200)}
+.karte .z.mangel i{background:var(--warning)}
+.karte .unterschrift{display:flex;gap:22px;margin-top:16px}
+.karte .unterschrift div{flex:1;border-top:2px solid var(--n300);padding-top:6px;font:600 15px/18px Inter;color:var(--n500)}
+.licht{border-radius:6px;background:linear-gradient(var(--warning-bg),var(--surface))}
+.zaehlwerk{font:800 24px/28px Inter;letter-spacing:.14em;color:var(--surface);white-space:pre}
+.blitz{width:160px;height:160px;border-radius:999px;background:radial-gradient(var(--surface),rgba(255,255,255,0) 70%)}
+.foto{width:96px;height:72px;border-radius:8px;background:var(--surface);border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18);overflow:hidden}
+.foto svg{width:100%;height:auto;margin-top:-10px}
+
+/* Helper-App: Bildschirm über dem Handy */
+.schirm{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;text-align:center;border-radius:8px}
+.liste{width:154px;display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.zeile{display:flex;align-items:center;gap:7px;padding:7px 7px;border-radius:10px;background:var(--surface);font:700 12px/16px Inter;color:var(--ink);text-align:left;white-space:nowrap}
+.zeile i{width:18px;height:18px;flex:none;border-radius:6px;background:var(--b200)}
+.zeile.neu{background:var(--success-bg);color:var(--success-text)}
+.zeile.neu i{background:var(--success)}
+.kopfzeile{display:flex;align-items:center;gap:8px;font:800 17px/20px Inter;color:var(--ink);margin-top:16px}
+.kopfzeile svg{width:22px;height:22px}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Neue Wohnung -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="tuer1" data-gruppe="g1" style="width:380px">{{haustuer}}</div>
+  <div class="a licht" id="licht1" data-gruppe="g1" style="width:180px;height:275px"></div>
+  <div class="a" id="blatt1" data-gruppe="g1" style="width:380px;transform-origin:27.5% 50%">{{haustuer-blatt}}</div>
+  <div class="a" id="schluessel1" data-dreht data-gruppe="g1" style="width:120px">{{schluessel}}</div>
+  <div class="a portrait" id="mai1" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="koffer1" data-dreht style="width:190px">{{koffer}}</div>
+
+  <!-- 2 · Kaution -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="m2a" data-dreht style="width:150px">{{muenze}}</div>
+  <div class="a" id="m2b" data-dreht style="width:150px">{{muenze}}</div>
+  <div class="a" id="m2c" data-dreht style="width:150px">{{muenze}}</div>
+  <div class="a chip brand" id="lblKaution">Kaution</div>
+  <div class="a" id="tuer2" data-dreht style="width:290px">{{tuer-kratzer}}</div>
+  <div class="a chip rot" id="streit2">Streit?</div>
+
+  <!-- 3 · Übergabeprotokoll -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a portrait" id="mai3" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="verm3" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a label" id="lblDu3">Du</div>
+  <div class="a label" id="lblVerm3">Vermieter</div>
+  <div class="a karte" id="prot3"><div class="kopf">Übergabeprotokoll</div>
+    <div class="z mangel"><i></i><span id="p3a"></span></div><div class="z mangel"><i></i><span id="p3b"></span></div>
+    <div class="z"><i></i><span id="p3c"></span></div><div class="z"><i></i><span id="p3d"></span></div></div>
+
+  <!-- 4 · Fotos, Zähler, Schlüssel -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="tuer4" data-dreht style="width:250px">{{tuer-kratzer~2}}</div>
+  <div class="a" id="fleck4" style="width:290px">{{boden-fleck}}</div>
+  <div class="a" id="handy4" data-dreht data-gruppe="g4h" style="width:300px">{{handy}}</div>
+  <div class="a blitz" id="blitz4" data-frei data-dreht></div>
+  <div class="a foto" id="foto4a" data-frei>{{tuer-kratzer~3}}</div>
+  <div class="a foto" id="foto4b" data-frei>{{boden-fleck~2}}</div>
+  <div class="a" id="zaehler4" data-gruppe="g4z" style="width:250px">{{zaehler}}</div>
+  <div class="a zaehlwerk" id="stand4" data-gruppe="g4z"></div>
+  <div class="a chip klein" id="lblZaehler">Zählerstand</div>
+  <div class="a" id="sch4a" data-dreht data-gruppe="g4s" style="width:150px">{{schluessel~2}}</div>
+  <div class="a" id="sch4b" data-dreht data-gruppe="g4s" style="width:150px">{{schluessel~3}}</div>
+  <div class="a chip klein" id="lblSchl">2 Schlüssel</div>
+
+  <!-- 5 · Unterschreiben, Kopie -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a karte" id="prot5" data-gruppe="g5"><div class="kopf">Übergabeprotokoll</div>
+    <div class="z mangel"><i></i>Flur: Kratzer an der Tür</div><div class="z mangel"><i></i>Bad: Fleck am Boden</div>
+    <div class="z" id="falsch5"><i></i>Sonst alles neu?</div>
+    <div class="unterschrift" style="margin-top:46px"><div><svg viewBox="0 0 140 30" style="width:120px;display:block;margin:-38px 0 8px"><path class="zeichnen" pathLength="1" d="M4 22c10-18 18-18 20 0s14-20 22-4 14 8 22-6 16 10 26 2" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>Vermieter</div>
+      <div><svg viewBox="0 0 140 30" style="width:120px;display:block;margin:-38px 0 8px"><path class="zeichnen" pathLength="1" d="M4 20c12-14 16 4 26-6s10 12 20 2 18-10 24 4 14-8 26-4" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>Du</div></div></div>
+  <div class="a" id="sig5a" data-gruppe="g5" style="width:1px;height:1px"></div>
+  <div class="a" id="sig5b" data-gruppe="g5" style="width:1px;height:1px"></div>
+  <div class="a" id="stift5" data-dreht data-gruppe="g5" style="width:110px">{{stift}}</div>
+  <div class="a kreuz" id="x5" data-gruppe="g5"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a karte" id="kopie5" style="width:230px;padding:16px 18px"><div class="kopf" style="font-size:17px;line-height:22px;margin-bottom:8px">Übergabeprotokoll</div>
+    <div class="z" style="font-size:14px;line-height:18px;min-height:30px;padding:4px 0"><i style="width:12px;height:12px"></i>Flur: Kratzer</div>
+    <div class="z" style="font-size:14px;line-height:18px;min-height:30px;padding:4px 0"><i style="width:12px;height:12px"></i>Bad: Fleck</div></div>
+  <div class="a chip brand" id="lblKopie">Kopie für dich</div>
+
+  <!-- 6 · Kein Protokoll -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="kasten6" style="width:250px">{{briefkasten}}</div>
+  <div class="a" id="sch6" data-dreht style="width:120px">{{schluessel~4}}</div>
+  <div class="a" id="tuer6" data-gruppe="g6" style="width:320px">{{haustuer~2}}</div>
+  <div class="a" id="blatt6" data-gruppe="g6" style="width:320px;transform-origin:27.5% 50%">{{haustuer-blatt~2}}</div>
+  <div class="a portrait" id="mai6" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a frage" id="frage6" data-dreht>?</div>
+  <div class="a chip rot" id="kein6">Kein Protokoll</div>
+
+  <!-- 7 · Selbst festhalten, per E-Mail -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a portrait" id="mai7" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a karte" id="liste7" style="width:300px;padding:18px 20px"><div class="kopf" style="font-size:20px;line-height:26px">Schäden beim Einzug</div>
+    <div class="z mangel" style="font-size:17px"><i></i><span id="l7a"></span></div><div class="z mangel" style="font-size:17px"><i></i><span id="l7b"></span></div>
+    <div class="z mangel" style="font-size:17px"><i></i><span id="l7c"></span></div></div>
+  <div class="a portrait" id="verm7" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a label" id="lblVerm7">Vermieter</div>
+  <div class="a" id="betrieb7" style="width:180px">{{betrieb}}</div>
+  <div class="a label" id="lblBetr7">oder Betrieb</div>
+  <div class="a" id="mail7" style="width:130px">{{brief}}</div>
+  <div class="a" id="mail7b" style="width:130px">{{brief~2}}</div>
+  <div class="a" id="antwort7" style="width:110px">{{brief~3}}</div>
+  <div class="a" id="haken7" style="width:86px">{{haken}}</div>
+
+  <!-- 8 · Aufheben in der Helper-App -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a portrait" id="mai8" style="width:230px;height:230px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a" id="handy8" data-gruppe="g8" style="width:480px">{{handy~2}}</div>
+  <div class="a schirm" id="app8" data-gruppe="g8" style="width:172px;height:300px">
+    <div class="kopfzeile"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z" fill="var(--b500)"/></svg>Dokumente</div>
+    <div class="liste"><div class="zeile"><i></i>Mietvertrag</div>
+      <div class="zeile neu" id="neu8a"><i></i>Fotos Einzug</div>
+      <div class="zeile neu" id="neu8b"><i></i>Liste Schäden</div>
+      <div class="zeile neu" id="neu8c"><i></i>E-Mail Vermieter</div></div></div>
+  <div class="a foto" id="flug8" data-frei>{{tuer-kratzer~4}}</div>
+  <div class="a chip" id="lblApp" style="font-size:26px;line-height:32px">Azubis Plus Helper App</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Neue Wohnung!</div><div class="unter">Bevor du auspackst: alles genau anschauen.</div></div>
+<div class="block" id="tb2"><div class="titel">Schützt deine Kaution</div><div class="unter">Ohne Beweis gibt es leicht Streit.</div></div>
+<div class="block" id="tb3"><div class="titel" style="font-size:70px;line-height:80px">Übergabeprotokoll</div><div class="unter">Zusammen durch die Wohnung. Jeder Schaden steht drin.</div></div>
+<div class="block" id="tb4"><div class="titel">Fotos · Zähler · Schlüssel</div></div>
+<div class="block" id="tb5"><div class="titel">Beide unterschreiben, Kopie behalten</div><div class="unter">Unterschreib nichts, was nicht stimmt.</div></div>
+<div class="block" id="tb6"><div class="titel">Kein Protokoll?</div><div class="unter">Kommt oft vor.</div></div>
+<div class="block" id="tb7"><div class="titel">Selbst festhalten</div><div class="unter">Fotos und Liste per E-Mail schicken, um Bestätigung bitten.</div></div>
+<div class="block" id="tb8"><div class="titel">Alles aufheben</div><div class="unter">Zum Beispiel in der Helper-App unter „Dokumente“.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endSchl" style="position:relative;width:200px">{{schluessel~5}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Gut eingezogen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+// Sprache beginnt im Film bei VERSATZ = 0.6 s (werkzeug/sprache.js)
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren in der Szene ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 90 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y, r: basis.r || 0 }, 'out');
+  tw(id, t + .38, .14, { sy: .93, sx: 1.05 }, 'sanft'); tw(id, t + .52, .35, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 4) => { for (let i = 0; i < n; i++) tw(id, t + i * .1, .1, { r: i % 2 ? w : -w }, 'sinus'); tw(id, t + n * .1, .2, { r: 0 }, 'sinus'); };
+const aus = (ids, t) => tw(ids, t, .3, { o: 0 }, 'in');
+// Text Zeichen für Zeichen tippen
+const tippen = (sel, text, t0, dt = .04) => {
+  HOOKS.push(t => { const n = Math.max(0, Math.min(text.length, Math.floor((t - t0) / dt))); $(sel).textContent = text.slice(0, n); });
+  for (let i = 0; i < text.length; i += 3) cue(t0 + i * dt, 'tipp');
+};
+
+// Figuren: blinzeln, Gesicht (zu/auf/froh) über Zeitfenster, Nicken
+const GESICHT = {}, NICKEN = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+  GESICHT[id] = []; NICKEN[id] = [];
+}
+const gesicht = (id, a, b, art) => GESICHT[id].push([a, b, art]);
+const nicken = (id, a, b) => NICKEN[id].push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const g = (GESICHT[p.id] || []).find(([a, b]) => t >= a && t < b), art = g ? g[2] : 'zu';
+  for (const k of ['zu', 'auf', 'froh']) p.querySelector('.' + k).style.opacity = art === k ? 1 : 0;
+  const n = (NICKEN[p.id] || []).find(([a, b]) => t >= a && t < b);
+  p.querySelector('.figur').style.transform = n ? `rotate(${2 * Math.sin((t - n[0]) * 7)}deg) translateY(${4 * Math.max(0, Math.sin((t - n[0]) * 7))}px)` : '';
+}));
+const auftritt = (id, t, x, y, snd = 'pop') => {
+  figur(id, { x, y, o: 0 });
+  set(id, 0, { y: y + 70 }); tw(id, t, .45, { o: 1, y }, 'out');
+  tw(id, t + .4, .14, { sy: .93, sx: 1.05 }, 'sanft'); tw(id, t + .54, .35, { sy: 1, sx: 1 }, 'sanft'); if (snd) cue(t, snd);
+};
+
+/* ---------- 1 · Neue Wohnung ---------- */
+{ const X = S(0);
+  ein('tuer1', Z(0), { x: X + 1180, y: MY + 20 }, { y: 70 }, 'whoosh');
+  ein('blatt1', Z(0), { x: X + 1180, y: MY + 20 }, { y: 70 }, null);
+  auftritt('mai1', Z(0) + .3, X + 1590, MY - 110);
+  ein('koffer1', W(0, 'ziehst'), { x: X + 1590, y: MY + 170 }, { x: 300 }, 'whoosh');
+  // Schlüssel fliegt zum Schloss, dreht sich, Tür geht auf
+  const tk = W(0, 'Wohnung');
+  akteur('schluessel1', { x: X + 1590, y: MY - 110, o: 0, s: .6 });
+  tw('schluessel1', tk - .3, .1, { o: 1 }); tw('schluessel1', tk - .3, .7, { x: X + 1250, y: MY + 20, s: 1 }, 'inout'); cue(tk - .3, 'whoosh');
+  tw('schluessel1', tk + .45, .35, { r: 90 }, 'inout'); cue(tk + .6, 'klick');
+  tw('schluessel1', tk + .9, .25, { o: 0 });
+  tw('blatt1', tk + .9, .7, { sx: .18 }, 'inout'); cue(tk + .9, 'whoosh');
+  akteur('licht1', { x: X + 1180, y: MY + 25, o: 0 }); tw('licht1', tk + 1.1, .6, { o: 1 });
+  gesicht('mai1', tk + 1, 99, 'froh');
+  // Erst schauen: Koffer bleibt zu (wackelt), Mai nickt
+  wackeln('koffer1', W(1, 'auspackst'), 3, 3); cue(W(1, 'auspackst'), 'plopp');
+  nicken('mai1', W(1, 'genau'), W(1, 'genau') + 1.2);
+  textAkteure('tb1'); textEin('tb1', Z(0) + .1, { unter: Z(1) }); textAus('tb1', ZE(1) + .45);
+}
+
+/* ---------- 2 · Kaution ---------- */
+{ const X = S(1), T0 = ZE(1) + .5;
+  wechsel(T0, 1);
+  const tK = W(2, 'Kaution');
+  [['m2a', 1080], ['m2b', 1200], ['m2c', 1320]].forEach(([id, x], i) => {
+    akteur(id, { x: X + x, y: 230, o: 0 });
+    tw(id, tK - .3 + i * .15, .05, { o: 1 }); tw(id, tK - .3 + i * .15, .7, { y: MY + 40 }, 'bounce'); cue(tK + i * .15 + .2, 'muenze');
+  });
+  pop('lblKaution', tK + .5, { x: X + 1200, y: MY + 190 });
+  // Tür mit Kratzer: Streit
+  const tS = W(3, 'Streit');
+  ein('tuer2', W(3, 'Beweis'), { x: X + 1580, y: MY - 20 }, { x: 200 }, 'whoosh');
+  wackeln('m2c', tS, 4, 6); wackeln('m2a', tS + .1, 3, 4);
+  // eine Münze fliegt davon
+  tw('m2b', tS + .3, .8, { y: 200, o: 0, r: 30 }, 'in'); cue(tS + .3, 'whoosh');
+  pop('streit2', tS, { x: X + 1580, y: MY + 220 }, 'plopp');
+  wackeln('streit2', tS + .5, 3, 4);
+  textAkteure('tb2'); textEin('tb2', Z(2) + .1, { unter: Z(3) }); textAus('tb2', ZE(3) + .45);
+}
+
+/* ---------- 3 · Übergabeprotokoll ---------- */
+{ const X = S(2), T0 = ZE(3) + .5;
+  wechsel(T0, 2);
+  auftritt('mai3', T0 + .5, X + 1030, MY - 170);
+  auftritt('verm3', T0 + .7, X + 1610, MY - 170);
+  akteur('lblDu3', { x: X + 1030, y: MY - 40, o: 0 }); tw('lblDu3', T0 + .8, .4, { o: 1 });
+  akteur('lblVerm3', { x: X + 1610, y: MY - 40, o: 0 }); tw('lblVerm3', T0 + .9, .4, { o: 1 });
+  nicken('mai3', W(4, 'zusammen'), W(4, 'zusammen') + 1); nicken('verm3', W(4, 'zusammen') + .2, W(4, 'zusammen') + 1.2);
+  ein('prot3', W(4, 'Übergabeprotokoll') - .3, { x: X + MX, y: MY + 110 }, { y: 120 }, 'whoosh');
+  tippen('#p3a', 'Flur: Kratzer an der Tür', W(4, 'Übergabeprotokoll') + .4, .03);
+  tippen('#p3b', 'Bad: Fleck am Boden', W(4, 'Übergabeprotokoll') + 1.2, .03);
+  tippen('#p3c', 'Zähler: Strom 04872', W(5, 'Schaden'), .03);
+  tippen('#p3d', 'Schlüssel: 2', W(5, 'genau') - .1, .03);
+  gesicht('verm3', W(5, 'genau'), 99, 'froh'); gesicht('mai3', W(5, 'genau') + .2, 99, 'froh');
+  textAkteure('tb3'); textEin('tb3', Z(4) + .1, { unter: Z(5) }); textAus('tb3', ZE(5) + .45);
+}
+
+/* ---------- 4 · Fotos, Zähler, Schlüssel ---------- */
+{ const X = S(3), T0 = ZE(5) + .5;
+  wechsel(T0, 3);
+  ein('tuer4', T0 + .4, { x: X + 1060, y: MY - 90 }, { y: 80 });
+  ein('fleck4', T0 + .6, { x: X + 1080, y: MY + 160 }, { y: 60 }, null);
+  ein('handy4', W(6, 'Fotos'), { x: X + 1560, y: MY + 20 }, { y: 400 }, 'whoosh');
+  akteur('blitz4', { x: X + 1575, y: MY - 80, o: 0, s: .4 });
+  // Blitz + Foto fliegt in das Handy
+  const fotos = [['foto4a', W(6, 'Kratzer'), X + 1060, MY - 90], ['foto4b', W(6, 'Flecken'), X + 1080, MY + 180]];
+  for (const [id, t, x, y] of fotos) {
+    tw('blitz4', t, .08, { o: 1, s: 1.2 }); tw('blitz4', t + .08, .3, { o: 0, s: .4 }); cue(t, 'klick');
+    akteur(id, { x, y, o: 0, s: .6 });
+    tw(id, t + .1, .1, { o: 1 }); tw(id, t + .15, .7, { x: X + 1560, y: MY + 20, s: .4 }, 'inout'); tw(id, t + .8, .1, { o: 0 });
+    tw('handy4', t + .8, .1, { s: 1.04 }); tw('handy4', t + .9, .25, { s: 1 }, 'sinus');
+  }
+  wackeln('tuer4', W(6, 'Kratzer'), 2, 3);
+  { const t = W(6, 'Schimmel'); tw('blitz4', t, .08, { o: 1, s: 1.2 }); tw('blitz4', t + .08, .3, { o: 0, s: .4 }); cue(t, 'klick'); }
+  // Szenenteil B: Zähler und Schlüssel
+  const tZ = W(7, 'Zählerstände');
+  aus(['tuer4', 'fleck4', 'handy4'], Z(7));
+  ein('zaehler4', tZ - .2, { x: X + 1110, y: MY - 20 }, { y: 80 });
+  // Display des Zählers: 250 px breit, Anzeige liegt im SVG bei x 48–112, y 44–66
+  akteur('stand4', { x: X + 1110, y: MY - 20 - 125 + 55 * 250 / 160, o: 0 }); tw('stand4', tZ + .3, .2, { o: 1 });
+  tippen('#stand4', '04872', tZ + .4, .12);
+  pop('lblZaehler', tZ + .6, { x: X + 1110, y: MY + 170 });
+  const tS = W(7, 'Schlüssel');
+  ein('sch4a', tS - .2, { x: X + 1500, y: MY - 30, r: -3 }, { y: -120, r: -20 }, 'klick');
+  ein('sch4b', tS + .1, { x: X + 1610, y: MY - 10, r: 3 }, { y: -120, r: 20 }, 'klick');
+  pop('lblSchl', tS + .5, { x: X + 1555, y: MY + 170 });
+  wackeln('sch4a', tS + .9, 2, 3);
+  textAkteure('tb4'); textEin('tb4', Z(6) + .1); textAus('tb4', ZE(7) + .45);
+}
+
+/* ---------- 5 · Unterschreiben, Kopie ---------- */
+{ const X = S(4), T0 = ZE(7) + .5;
+  wechsel(T0, 4);
+  ein('prot5', T0 + .4, { x: X + 1190, y: MY + 20 }, { y: 120 }, 'whoosh');
+  // Unterschriften werden gezeichnet, der Stift fährt mit
+  const sig = [...document.querySelectorAll('#prot5 .zeichnen')], tU = W(8, 'unterschreibt');
+  sig.forEach(p => { p.style.strokeDasharray = '1 1'; });
+  HOOKS.push(t => sig.forEach((p, i) => { p.style.strokeDashoffset = 1 - E.inout(clamp((t - tU - i * .9) / .8)); }));
+  akteur('stift5', { x: X + 1080, y: MY + 140, o: 0, r: 0 });
+  tw('stift5', tU - .3, .2, { o: 1 });
+  tw('stift5', tU, .8, { x: X + 1150 }, 'inout'); tw('stift5', tU + .9, .8, { x: X + 1320 }, 'inout'); cue(tU, 'kritzeln'); cue(tU + .9, 'kritzeln');
+  tw('stift5', tU + 1.8, .3, { o: 0 });
+  // Was nicht stimmt: X
+  const tN = W(9, 'nichts');
+  pop('x5', tN, { x: X + 1320, y: MY + 50 }, 'plopp'); wackeln('x5', tN + .4, 3, 5);
+  // Kopie gleitet heraus
+  const tKo = W(9, 'Kopie');
+  akteur('kopie5', { x: X + 1190, y: MY + 20, o: 0, r: 0 });
+  tw('kopie5', tKo - .2, .1, { o: 1 }); tw('kopie5', tKo - .2, .8, { x: X + 1590, y: MY - 30, r: 3 }, 'back'); cue(tKo - .2, 'whoosh');
+  pop('lblKopie', tKo + .5, { x: X + 1590, y: MY + 160 });
+  textAkteure('tb5'); textEin('tb5', Z(8) + .1, { unter: Z(9) }); textAus('tb5', ZE(9) + .45);
+}
+
+/* ---------- 6 · Kein Protokoll ---------- */
+{ const X = S(5), T0 = ZE(9) + .5;
+  wechsel(T0, 5);
+  pop('kein6', W(10, 'kein'), { x: X + MX, y: MY + 230 }, 'plopp');
+  ein('kasten6', T0 + .4, { x: X + 1060, y: MY + 50 }, { y: 80 });
+  ein('tuer6', T0 + .6, { x: X + 1580, y: MY - 10 }, { y: 80 }, null);
+  ein('blatt6', T0 + .6, { x: X + 1580, y: MY - 10 }, { y: 80 }, null);
+  // Schlüssel springt aus dem Briefkasten
+  const tSch = W(11, 'Schlüssel');
+  akteur('sch6', { x: X + 1050, y: MY - 10, o: 0, s: .5 });
+  tw('sch6', tSch, .1, { o: 1 }); tw('sch6', tSch, .55, { y: MY - 150, s: 1, r: -3 }, 'back'); cue(tSch, 'pop');
+  wackeln('kasten6', tSch, 2, 3);
+  // Mai kommt, nimmt den Schlüssel und geht einfach hinein
+  auftritt('mai6', T0 + .8, X + 1320, MY - 90);
+  const tE = W(11, 'einfach');
+  tw('sch6', tE - .6, .5, { x: X + 1320, y: MY - 30, s: .6 }, 'inout');
+  tw('sch6', tE - .1, .2, { o: 0 });
+  tw('blatt6', tE, .6, { sx: .18 }, 'inout'); cue(tE, 'whoosh');
+  tw('mai6', tE + .2, .7, { x: X + 1560, y: MY - 20, s: .55 }, 'inout'); tw('mai6', tE + .7, .3, { o: 0 });
+  pop('frage6', W(10, 'Protokoll'), { x: X + 1150, y: MY - 210 }, 'plopp'); wackeln('frage6', W(10, 'Protokoll') + .5, 3, 8);
+  textAkteure('tb6'); textEin('tb6', Z(10) + .1, { unter: Z(11) }); textAus('tb6', ZE(11) + .45);
+}
+
+/* ---------- 7 · Selbst festhalten, per E-Mail ---------- */
+{ const X = S(6), T0 = ZE(11) + .5;
+  wechsel(T0, 6);
+  auftritt('mai7', T0 + .4, X + 1040, MY - 170);
+  ein('liste7', W(12, 'selbst'), { x: X + 1110, y: MY + 140 }, { y: 100 }, 'whoosh');
+  tippen('#l7a', 'Flur: Kratzer an der Tür', W(13, 'Liste'), .035);
+  tippen('#l7b', 'Bad: Fleck am Boden', W(13, 'Liste') + .9, .035);
+  tippen('#l7c', 'Küche: Schimmel', W(13, 'Liste') + 1.7, .035);
+  auftritt('verm7', W(13, 'Vermieter') - .8, X + 1620, MY - 170, null);
+  akteur('lblVerm7', { x: X + 1620, y: MY - 50, o: 0 }); tw('lblVerm7', W(13, 'Vermieter') - .4, .4, { o: 1 });
+  // E-Mail fliegt zum Vermieter
+  const tM = W(13, 'E-Mail');
+  akteur('mail7', { x: X + 1110, y: MY + 140, o: 0, s: .5 });
+  tw('mail7', tM, .1, { o: 1 }); tw('mail7', tM, .9, { x: X + 1420, y: MY - 170, s: 1, r: 3 }, 'inout'); cue(tM, 'whoosh');
+  tw('mail7', tM + 1, .25, { o: 0, s: .6 });
+  nicken('verm7', tM + 1, tM + 2.2);
+  // oder an den Betrieb
+  const tB = W(14, 'Betrieb', 2);
+  ein('betrieb7', W(14, 'Betrieb') - .1, { x: X + 1620, y: MY + 130 }, { y: 80 });
+  akteur('lblBetr7', { x: X + 1620, y: MY + 255, o: 0 }); tw('lblBetr7', W(14, 'Betrieb') + .2, .4, { o: 1 });
+  akteur('mail7b', { x: X + 1110, y: MY + 140, o: 0, s: .5 });
+  tw('mail7b', tB - .3, .1, { o: 1 }); tw('mail7b', tB - .3, .9, { x: X + 1480, y: MY + 140, s: 1, r: -3 }, 'inout'); cue(tB - .3, 'whoosh');
+  tw('mail7b', tB + .7, .25, { o: 0, s: .6 });
+  // Bestätigung kommt zurück
+  const tA = W(15, 'Bestätigung');
+  akteur('antwort7', { x: X + 1620, y: MY - 170, o: 0, s: .5 });
+  tw('antwort7', tA - .3, .1, { o: 1 }); tw('antwort7', tA - .3, .9, { x: X + 1180, y: MY - 210, s: 1 }, 'inout'); cue(tA - .3, 'whoosh');
+  pop('haken7', tA + .6, { x: X + 1290, y: MY - 230 }, 'erfolg');
+  gesicht('mai7', tA + .6, 99, 'froh'); nicken('mai7', tA + .7, tA + 1.8);
+  textAkteure('tb7'); textEin('tb7', Z(12) + .1, { unter: Z(13) }); textAus('tb7', ZE(15) + .45);
+}
+
+/* ---------- 8 · Alles aufheben ---------- */
+{ const X = S(7), T0 = ZE(15) + .5;
+  wechsel(T0, 7);
+  auftritt('mai8', T0 + .4, X + 1040, MY - 60);
+  ein('handy8', T0 + .5, { x: X + 1480, y: MY + 10 }, { y: 160 }, 'whoosh');
+  akteur('app8', { x: X + 1480, y: MY + 5, o: 0 }); tw('app8', T0 + .9, .3, { o: 1 });
+  const zeilen = [['neu8a', W(16, 'Fotos')], ['neu8b', W(16, 'Liste')], ['neu8c', W(16, 'E-Mail')]];
+  for (const [id, t] of zeilen) { akteur(id, { o: 0, x: 40 }, true); tw(id, t + .3, .45, { o: 1, x: 0 }, 'back'); cue(t + .3, 'pop'); }
+  // Foto fliegt ins Handy
+  akteur('flug8', { x: X + 1040, y: MY + 120, o: 0, s: .6 });
+  const tF = W(16, 'Fotos');
+  tw('flug8', tF, .1, { o: 1 }); tw('flug8', tF, .8, { x: X + 1480, y: MY + 30, s: .5 }, 'inout'); tw('flug8', tF + .8, .1, { o: 0 }); cue(tF, 'whoosh');
+  ein('lblApp', W(16, 'Helper'), { x: X + 1480, y: MY + 235 }, { y: 30 }, null);
+  gesicht('mai8', W(16, 'Dokumente'), 99, 'froh'); nicken('mai8', W(17, 'sicheren'), W(17, 'sicheren') + 1.2);
+  tw('#mai8 .daumen', W(17, 'sicheren'), .5, { y: -30 }, 'back'); cue(W(17, 'sicheren'), 'erfolg');
+  textAkteure('tb8'); textEin('tb8', Z(16) + .1, { unter: W(16, 'Beispiel') });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endSchl', { o: 0, y: 40 }, true); tw('endSchl', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

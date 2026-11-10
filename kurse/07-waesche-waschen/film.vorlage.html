@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 7 – Wäsche waschen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;font:700 30px/38px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:26px;line-height:32px;padding:10px 20px}
+.kreuz{width:84px;height:84px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:40px}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%}
+.portrait .daumen{transform-origin:80% 100%}
+
+.trommel,.knopf,.fuellung,.fluegel,.fluegel2{transform-box:fill-box;transform-origin:50% 50%}
+.fuellung{transform-origin:50% 100%}
+.fluegel{transform-origin:0% 50%} .fluegel2{transform-origin:100% 50%}
+.leer .ladung{opacity:0}
+.ladung path{opacity:0}
+
+.karte{background:var(--surface);border-radius:28px;box-shadow:0 8px 26px rgba(22,19,37,.10);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.karte svg{width:170px}
+.etikett{width:300px;height:340px;gap:18px}
+.etikett .zeilen{display:flex;flex-direction:column;gap:10px;width:200px}
+.etikett .zeilen i{display:block;height:10px;border-radius:5px;background:var(--n200)}
+.sym{width:220px;height:220px}
+.anhang{width:34px;height:44px;border-radius:6px;background:var(--surface);border:3px solid var(--n300)}
+
+.rad{width:380px;height:380px;border-radius:999px;background:var(--surface);box-shadow:0 8px 26px rgba(22,19,37,.10)}
+.rad .mitte{position:absolute;left:90px;top:90px;width:200px;height:200px;border-radius:999px;background:linear-gradient(135deg,var(--b400),var(--b600))}
+.rad .zahl{position:absolute;width:80px;margin-left:-40px;margin-top:-20px;text-align:center;font:800 34px/40px Inter;color:var(--n500)}
+.rad .zahl.an{color:var(--b600)}
+#zeiger{width:200px;height:200px;left:90px;top:90px;position:absolute}
+#zeiger i{position:absolute;left:94px;top:8px;width:12px;height:70px;border-radius:6px;background:var(--surface)}
+
+.fussel{width:18px;height:18px;border-radius:999px;background:var(--surface);border:3px solid var(--n200)}
+.korn{width:12px;height:12px;border-radius:999px;background:var(--info)}
+.blase{width:30px;height:30px;border-radius:999px;background:var(--info-bg);border:3px solid var(--info)}
+
+.plan{width:380px;padding:26px 30px;border-radius:24px;background:var(--surface);box-shadow:0 8px 26px rgba(22,19,37,.10)}
+.plan small{display:block;font:700 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600);margin-bottom:14px}
+.plan .zeile{display:flex;gap:18px;align-items:center;padding:10px 0;border-top:2px solid var(--border);font:600 28px/36px Inter;color:var(--n700)}
+.plan .zeile b{width:56px;color:var(--ink)}
+.plan .zeile span{white-space:pre;min-height:36px}
+.plan .zeile.mai{background:var(--success-bg);border-radius:12px;padding-left:10px;margin:0 -10px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Plötzlich rosa -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a leer" id="wm1" style="width:380px">{{waschmaschine}}</div>
+  <div class="a" id="sw1" data-gruppe="rosa" style="width:240px">{{shirt-weiss}}</div>
+  <div class="a" id="sr1" data-gruppe="rosa" style="width:240px">{{shirt-rosa}}</div>
+  <div class="a portrait" id="mai1" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+
+  <!-- 2 · Etikett lesen -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="sw2" data-gruppe="etikett" style="width:280px">{{shirt-weiss~2}}</div>
+  <div class="a anhang" id="anhang" data-gruppe="etikett"></div>
+  <div class="a karte etikett" id="etikett">
+    <svg viewBox="0 0 100 90"><path d="M8 26q10-8 21 0t21 0t21 0t21 0" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M12 34l9 46h58l9-46" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <text class="zahl" x="50" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="28" fill="var(--b600)">30</text></svg>
+    <div class="zeilen"><i></i><i style="width:70%"></i></div></div>
+  <div class="a chip gruen" id="max30">höchstens 30 °C</div>
+
+  <!-- 3 · Symbole -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a karte sym" id="sym1"><svg viewBox="0 0 100 90"><path d="M8 26q10-8 21 0t21 0t21 0t21 0" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M12 34l9 46h58l9-46" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <text x="50" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="28" fill="var(--b600)">30</text></svg></div>
+  <div class="a karte sym" id="sym2"><svg viewBox="0 0 100 90"><path d="M8 26q10-8 21 0t21 0t21 0t21 0" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M12 34l9 46h58l9-46" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <path class="zeichnen" pathLength="1" d="M38 74V58l-6-8a3 3 0 0 1 5-4l5 6V40a3 3 0 0 1 6 0v12V36a3 3 0 0 1 6 0v16V38a3 3 0 0 1 6 0v14-8a3 3 0 0 1 6 0v18c0 8-4 12-10 12Z" stroke="var(--b600)" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+  <div class="a karte sym" id="sym3"><svg viewBox="0 0 100 90"><path d="M8 26q10-8 21 0t21 0t21 0t21 0" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M12 34l9 46h58l9-46" stroke="var(--ink)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+      <path class="zeichnen strich" pathLength="1" d="M10 84L90 14" stroke="var(--error)" stroke-width="8" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="a chip klein" id="c30">30 °C</div>
+  <div class="a chip klein brand" id="cHand">Handwäsche</div>
+  <div class="a chip klein rot" id="cNicht">nicht waschen</div>
+
+  <!-- 4 · Trennen -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="i1" data-gruppe="hell" style="width:150px">{{shirt-weiss~3}}</div>
+  <div class="a" id="i2" data-gruppe="hell" style="width:150px">{{shirt-weiss~4}}</div>
+  <div class="a" id="i3" data-gruppe="dunkel" style="width:150px">{{shirt-dunkel}}</div>
+  <div class="a" id="i4" data-gruppe="dunkel" style="width:150px">{{shirt-bunt}}</div>
+  <div class="a" id="i5" data-gruppe="rot" style="width:150px">{{shirt-rot}}</div>
+  <div class="a" id="korbH" data-gruppe="hell" style="width:230px">{{korb-hell}}</div>
+  <div class="a" id="korbD" data-gruppe="dunkel" style="width:230px">{{korb-dunkel}}</div>
+  <div class="a" id="korbR" data-gruppe="rot" style="width:230px">{{korb-rot}}</div>
+  <div class="a chip klein" id="lH">Hell</div>
+  <div class="a chip klein" id="lD">Dunkel</div>
+  <div class="a chip klein rot" id="lR">Neues Rotes</div>
+
+  <!-- 5 · Temperatur -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a rad" id="rad"><div class="mitte"></div><div id="zeiger"><i></i></div>
+    <div class="zahl" id="z30" style="left:60px;top:115px">30</div><div class="zahl" id="z40" style="left:139px;top:49px">40</div>
+    <div class="zahl" id="z60" style="left:241px;top:49px">60</div><div class="zahl" id="z90" style="left:320px;top:115px">90</div></div>
+  <div class="a chip brand" id="c3040">30–40 °C</div>
+  <div class="a" id="tuecher" style="width:220px">{{handtuch}}</div>
+  <div class="a chip gruen" id="c60">60 °C</div>
+
+  <!-- 6 · Taschen -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="hose" style="width:280px">{{hose}}</div>
+  <div class="a" id="tuch" style="width:140px">{{taschentuch}}</div>
+  <div class="a" id="sd6" style="width:260px">{{shirt-dunkel~2}}</div>
+
+  <!-- 7 · Nicht zu voll -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="wm7" data-gruppe="trommel" style="width:420px">{{waschmaschine~2}}</div>
+  <div class="a" id="f1" style="width:120px">{{shirt-bunt~2}}</div>
+  <div class="a" id="f2" style="width:120px">{{shirt-weiss~5}}</div>
+  <div class="a" id="f3" style="width:120px">{{shirt-dunkel~3}}</div>
+  <div class="a" id="extra7" style="width:150px">{{shirt-bunt~3}}</div>
+  <div class="a kreuz" id="xVoll"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="hand7" data-gruppe="trommel" style="width:96px"><svg viewBox="0 0 48 48"><path d="M14 44V26l-6-8a3.5 3.5 0 0 1 6-4l4 5V7a3.5 3.5 0 0 1 7 0v14V5a3.5 3.5 0 0 1 7 0v16V8a3.5 3.5 0 0 1 7 0v13-7a3.5 3.5 0 0 1 7 0v18c0 9-5 14-12 14Z" fill="var(--b100)" stroke="var(--b600)" stroke-width="3" stroke-linejoin="round"/></svg></div>
+  <div class="a chip gruen" id="platz">Eine Hand Platz</div>
+  <div class="a" id="haken7" style="width:90px">{{haken}}</div>
+
+  <!-- 8 · Waschmittel -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="mittel" style="width:260px">{{waschmittel}}</div>
+  <div class="a" id="becher" style="width:260px">{{messbecher}}</div>
+  <svg class="a" id="linie8" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
+    <path class="zeichnen" pathLength="1" d="M1150 506C1220 540 1320 520 1370 488" stroke="var(--b400)" stroke-width="5" stroke-dasharray=".02 .02" stroke-linecap="round" fill="none"/></svg>
+  <div class="a chip klein" id="cPack">wie auf der Packung</div>
+  <div class="a kreuz" id="xMehr"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+
+  <!-- 9 · Aufhängen und lüften -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a" id="staender" data-gruppe="staender" style="width:380px">{{staender}}</div>
+  <div class="a" id="h1" data-gruppe="staender" style="width:110px">{{shirt-weiss~6}}</div>
+  <div class="a" id="h2" data-gruppe="staender" style="width:110px">{{shirt-bunt~4}}</div>
+  <div class="a" id="h3" data-gruppe="staender" style="width:110px">{{shirt-dunkel~4}}</div>
+  <div class="a" id="fenster" style="width:240px">{{fenster}}</div>
+  <svg class="a" id="luft" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
+    <g stroke="var(--b300)" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M1450 310C1400 290 1360 330 1300 310"/><path d="M1450 360C1390 340 1350 390 1280 365"/><path d="M1450 410C1400 395 1370 430 1310 415"/></g></svg>
+  <div class="a portrait" id="mai9" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 10 · Waschkeller -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a" id="treppe" data-gruppe="treppe" style="width:240px">{{treppe}}</div>
+  <div class="a" id="korb10" data-gruppe="treppe" style="width:90px">{{korb-hell~2}}</div>
+  <div class="a plan" id="plan"><small>Waschplan</small>
+    <div class="zeile"><b>Mo</b><span>Familie Kaya</span></div>
+    <div class="zeile"><b>Di</b><span>Herr Weber</span></div>
+    <div class="zeile" id="zeileMai"><b>Mi</b><span id="maiName"></span></div>
+    <div class="zeile"><b>Do</b><span>Frau Novak</span></div></div>
+  <div class="a chip brand" id="hoChip">Hausordnung</div>
+  <div class="a portrait" id="mai10" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a" id="haken10" style="width:80px">{{haken}}</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Plötzlich rosa?</div><div class="unter">Das muss nicht sein.</div></div>
+<div class="block" id="tb2"><div class="titel">Etikett lesen</div><div class="unter">Die Zahl zeigt, wie heiß du waschen darfst.</div></div>
+<div class="block" id="tb3"><div class="titel">Hand = Handwäsche</div><div class="unter">Durchgestrichen = nicht waschen</div></div>
+<div class="block" id="tb4"><div class="titel">Hell · Dunkel · Neues Rotes allein</div></div>
+<div class="block" id="tb5"><div class="titel">30–40 °C</div><div class="unter">Handtücher und Bettwäsche: 60 °C</div></div>
+<div class="block" id="tb6"><div class="titel">Taschen leer machen</div></div>
+<div class="block" id="tb7"><div class="titel">Eine Hand Platz</div><div class="unter">Füll die Maschine nicht zu voll.</div></div>
+<div class="block" id="tb8"><div class="titel">So viel wie auf der Packung</div><div class="unter">Mehr macht nicht sauberer.</div></div>
+<div class="block" id="tb9"><div class="titel">Aufhängen und lüften</div></div>
+<div class="block" id="tb10"><div class="titel">Waschzeiten: Hausordnung</div><div class="unter">Im Waschkeller gibt es oft einen Plan.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endWm" style="position:relative;width:260px">{{waschmaschine~9}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Saubere Wäsche – ganz einfach.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<!-- Sprache beginnt im Film bei VERSATZ = 0.6 s (werkzeug/sprache.js); untertitel.mjs liest den Wert hier -->
+<script>
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+const q = (id, sel) => document.querySelector(`#${id} ${sel}`);
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 80 }, q = 1) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
+  tw(id, t + .38, .14, { sy: 1 - .1 * q, sx: 1 + .06 * q }, 'inout'); tw(id, t + .52, .4, { sy: 1, sx: 1 }, 'sanft');
+};
+const wackeln = (id, t, n = 3, w = 2.5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const huepf = (id, t, h = 18) => { tw(id, t, .14, { sy: 1.08, sx: .95 }); tw(id, t + .14, .35, { sy: 1, sx: 1 }, 'back'); };
+// Flug auf einem Bogen (Hook): von [x0,y0] nach [x1,y1], Höhe h, Größe s0→s1
+function flug(id, t0, d, [x0, y0], [x1, y1], h = 160, s0 = 1, s1 = 1, r = 0) {
+  const el = document.getElementById(id);
+  HOOKS.push(t => {
+    if (t < t0) return;
+    const p = clamp((t - t0) / d), e = E.inout(p);
+    const x = x0 + (x1 - x0) * e, y = y0 + (y1 - y0) * e - h * Math.sin(Math.PI * e), s = s0 + (s1 - s0) * e;
+    el.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${r * Math.sin(Math.PI * e)}deg) scale(${s})`;
+  });
+}
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren ---------- */
+const PANS = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .02 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Figuren ---------- */
+const FIG = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  FIG[id] = { froh: [], auf: [] };
+  const d = q(id, '.daumen'); if (d) akteur(d, { y: 200 }, true);
+}
+const froh = (id, a, b = 999) => FIG[id].froh.push([a, b]);
+const staunen = (id, a, b) => FIG[id].auf.push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const f = FIG[p.id]; if (!f) return;
+  const fr = f.froh.some(([a, b]) => t >= a && t < b), au = f.auf.some(([a, b]) => t >= a && t < b);
+  p.querySelector('.froh').style.opacity = fr && !au ? 1 : 0;
+  p.querySelector('.auf').style.opacity = au ? 1 : 0;
+  p.querySelector('.auf').style.transform = au ? 'scaleY(1.2)' : '';
+  p.querySelector('.zu').style.opacity = fr || au ? 0 : 1;
+}));
+const nicken = (id, t) => { tw(id, t, .15, { y: wertY(id) + 8 }); tw(id, t + .15, .3, { y: wertY(id) }, 'back'); };
+const wertY = id => AKTEURE.get(document.getElementById(id)).basis.y;
+
+/* ---------- 1 · Plötzlich rosa ---------- */
+const X0 = S(0);
+ein('wm1', .1, { x: X0 + 1170, y: 450 });
+const T_ROSA = W(0, 'rosa'), T_RAUS = W(0, 'Waschen') - .1;
+HOOKS.push(t => { // Trommel dreht sich, bis das Shirt herausfliegt
+  const w = 900 * E.inout(clamp((t - .4) / (T_RAUS - .4)));
+  q('wm1', '.trommel').style.transform = `rotate(${w}deg)`;
+});
+for (let k = 0; k < 6; k++) wackeln('wm1', .7 + k * .4, 2, 1.2);
+cue(.5, 'scan');
+akteur('sw1', { o: 0 }); akteur('sr1', { o: 0 });
+set('sw1', T_RAUS, { o: 1 }); flug('sw1', T_RAUS, .8, [X0 + 1170, 483], [X0 + 1520, 360], 140, .2, 1, 3); cue(T_RAUS, 'whoosh');
+set('sr1', T_RAUS, { o: 0 }); flug('sr1', T_RAUS, .8, [X0 + 1170, 483], [X0 + 1520, 360], 140, .2, 1, 3);
+tw('sr1', T_ROSA, .5, { o: 1 }); cue(T_ROSA, 'plopp');
+figur('mai1', { x: X0 + 1560, y: 615, s: 0 }); tw('mai1', Z(0) + .3, .5, { s: 1 }, 'back'); cue(Z(0) + .3, 'pop');
+staunen('mai1', T_ROSA + .1, Z(1)); wackeln('mai1', T_ROSA + .1, 4, 1.2);
+froh('mai1', W(1, 'nicht')); nicken('mai1', W(1, 'nicht'));
+textAkteure('tb1'); textEin('tb1', Z(0), { unter: Z(1) }); textAus('tb1', ZE(1) + .1);
+
+/* ---------- 2 · Etikett lesen ---------- */
+pan2(ZE(1) + .2, 1); const X1 = S(1);
+ein('sw2', Z(2) - .2, { x: X1 + 1080, y: 440 });
+akteur('anhang', { x: X1 + 1080, y: 395, s: 0 }); tw('anhang', W(2, 'kleine'), .4, { s: 1 }, 'back'); cue(W(2, 'kleine'), 'pop');
+tw('anhang', W(2, 'kleine') + .4, .12, { r: 3 }); tw('anhang', W(2, 'kleine') + .52, .3, { r: 0 }, 'back');
+akteur('etikett', { x: X1 + 1080, y: 395, s: .1, o: 0 });
+tw('etikett', W(2, 'Etikett'), .7, { x: X1 + 1470, y: 420, s: 1, o: 1 }, 'back'); cue(W(2, 'Etikett'), 'whoosh');
+const zahl = q('etikett', '.zahl'); zahl.style.transformBox = 'fill-box'; zahl.style.transformOrigin = '50% 50%';
+HOOKS.push(t => { const p = clamp((t - W(3, 'Zahl')) / .6); zahl.style.transform = `scale(${1 + .5 * Math.sin(Math.PI * p)})`; });
+cue(W(3, 'Zahl'), 'ding');
+akteur('max30', { x: X1 + 1470, y: 660, o: 0 }); set('max30', 0, { y: 690 }); tw('max30', W(3, 'heiß'), .5, { o: 1, y: 660 }, 'back'); cue(W(3, 'heiß'), 'pop');
+textAkteure('tb2'); textEin('tb2', Z(2), { unter: Z(3) }); textAus('tb2', ZE(3) + .1);
+
+/* ---------- 3 · Symbole ---------- */
+pan2(ZE(3) + .2, 2); const X2 = S(2);
+pop('sym1', Z(4) - .2, { x: X2 + 1060, y: 410 }); pop('c30', Z(4), { x: X2 + 1060, y: 590 });
+pop('sym2', W(4, 'Hand'), { x: X2 + 1320, y: 410 });
+akteur(q('sym2', '.zeichnen'), { draw: 0 }, true); tw(q('sym2', '.zeichnen'), W(4, 'Hand') + .2, .9, { draw: 1 }); cue(W(4, 'Hand') + .2, 'kritzeln');
+pop('cHand', W(4, 'Hand', 2), { x: X2 + 1320, y: 590 });
+pop('sym3', Z(5), { x: X2 + 1580, y: 410 });
+akteur(q('sym3', '.strich'), { draw: 0 }, true); tw(q('sym3', '.strich'), W(5, 'durchgestrichen'), .4, { draw: 1 }); cue(W(5, 'durchgestrichen'), 'kritzeln');
+wackeln('sym3', W(5, 'durchgestrichen') + .45, 3, 3);
+pop('cNicht', W(5, 'Maschine'), { x: X2 + 1580, y: 590 }, 'plopp');
+tw(['sym1', 'c30'], W(4, 'Hand'), .4, { o: .4 });
+textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) + .1);
+
+/* ---------- 4 · Trennen ---------- */
+pan2(ZE(5) + .2, 3); const X3 = S(3);
+const KX = { H: X3 + 1060, D: X3 + 1320, R: X3 + 1580 }, KY = 600;
+['H', 'D', 'R'].forEach((k, i) => ein('korb' + k, Z(6) - .3 + i * .12, { x: KX[k], y: KY }));
+const SORT = [['i1', 'Helles', 1080, 'H', -28], ['i2', 'Weißes', 1240, 'H', 28], ['i3', 'Dunkles', 1400, 'D', -28], ['i4', 'Buntes', 1560, 'D', 28]];
+SORT.forEach(([id, w, x0, k, dx], i) => {
+  const t0 = W(6, w), tp = Z(6) + .1 + i * .14;
+  akteur(id, { x: X3 + x0, y: 260, s: 0 }); tw(id, tp, .45, { s: .9 }, 'back'); cue(tp, 'pop');
+  HOOKS.push(t => { if (t >= t0) document.getElementById(id).style.visibility = 'visible'; });
+  flug(id, t0, .9, [X3 + x0, 260], [KX[k] + dx, KY - 40], 90, .9, .75, 3); cue(t0, 'whoosh'); cue(t0 + .85, 'plopp');
+  huepf('korb' + k, t0 + .85);
+});
+const T_ROT = W(7, 'rote'), T_HOP = W(7, 'besten') - .1;
+akteur('i5', { x: X3 + 1320, y: 260, s: 0 }); tw('i5', T_ROT, .5, { s: .9 }, 'back'); cue(T_ROT, 'pop');
+wackeln('i5', T_ROT + .5, 3, 3);
+HOOKS.push(t => { if (t >= T_HOP) document.getElementById('i5').style.visibility = 'visible'; });
+flug('i5', T_HOP, .8, [X3 + 1320, 260], [KX.R, KY - 40], 110, .9, .75, 3); cue(T_HOP, 'whoosh');
+huepf('korbR', T_HOP + .8); cue(T_HOP + .8, 'ding');
+pop('lH', W(6, 'Helles') + .9, { x: KX.H, y: 470 }); pop('lD', W(6, 'Dunkles') + .9, { x: KX.D, y: 470 }); pop('lR', T_HOP + .8, { x: KX.R, y: 470 });
+textAkteure('tb4'); textEin('tb4', Z(6)); textAus('tb4', ZE(7) + .1);
+
+/* ---------- 5 · Temperatur ---------- */
+pan2(ZE(7) + .2, 4); const X4 = S(4);
+pop('rad', Z(8) - .2, { x: X4 + 1200, y: 420 });
+const zeiger = $('#zeiger'); const ZW = [[0, -100], [W(8, '30'), -60], [W(8, '40'), -20], [W(9, '60'), 20]];
+HOOKS.push(t => {
+  let w = ZW[0][1];
+  for (let k = 1; k < ZW.length; k++) { const p = E.back(clamp((t - ZW[k][0]) / .45)); if (t >= ZW[k][0]) w = ZW[k - 1][1] + (ZW[k][1] - ZW[k - 1][1]) * p; }
+  zeiger.style.transform = `rotate(${w}deg)`;
+  const idx = ZW.filter(([a]) => t >= a).length - 1;
+  [['z30', 1], ['z40', 2], ['z60', 3]].forEach(([id, k]) => document.getElementById(id).classList.toggle('an', idx === k));
+});
+ZW.slice(1).forEach(([t]) => cue(t, 'klick'));
+pop('c3040', W(8, '40') + .3, { x: X4 + 1200, y: 670 });
+ein('tuecher', W(9, 'Handtücher'), { x: X4 + 1580, y: 520 });
+pop('c60', W(9, '60') + .2, { x: X4 + 1580, y: 370 }, 'ding');
+textAkteure('tb5'); textEin('tb5', Z(8), { unter: Z(9) }); textAus('tb5', ZE(9) + .1);
+
+/* ---------- 6 · Taschen ---------- */
+pan2(ZE(9) + .2, 5); const X5 = S(5);
+ein('hose', Z(10) - .2, { x: X5 + 1120, y: 440 });
+wackeln('hose', W(10, 'Taschen') - .3, 4, 3);
+akteur('tuch', { x: X5 + 1078, y: 367, s: .2, o: 0 });
+tw('tuch', W(10, 'Taschen') + .1, .2, { o: 1 });
+flug('tuch', W(10, 'Taschen') + .1, .8, [X5 + 1078, 367], [X5 + 1150, 650], 120, .2, 1, 3); cue(W(10, 'Taschen') + .1, 'whoosh'); cue(W(10, 'Taschen') + .9, 'plopp');
+ein('sd6', Z(11), { x: X5 + 1530, y: 430 });
+const FUSS = [[-70, -40], [-30, -70], [20, -45], [60, -60], [-50, 10], [0, 0], [45, 20], [-20, 50], [30, 70], [-65, 80], [70, 90], [5, 110]];
+FUSS.forEach(([dx, dy], i) => {
+  const el = document.createElement('div'); el.className = 'a fussel'; document.getElementById('welt').appendChild(el);
+  const t0 = W(11, 'Fusseln') + i * .05;
+  akteur(el, { x: X5 + 1530 + dx, y: 430 + dy, s: 0 }); tw(el, t0, .3, { s: 1 }, 'back');
+  tw(el, ZE(11) + .45, .4, { s: 0, y: 430 + dy - 30 }, 'in');
+});
+cue(W(11, 'Fusseln'), 'pop');
+textAkteure('tb6'); textEin('tb6', Z(10)); textAus('tb6', ZE(11) + .8);
+
+/* ---------- 7 · Nicht zu voll ---------- */
+pan2(ZE(11) + .9, 6); const X6 = S(6);
+ein('wm7', Z(12) - .3, { x: X6 + 1250, y: 450 });
+const LADUNG = [['f1', '.l1'], ['f2', '.l2'], ['f3', '.l3']];
+LADUNG.forEach(([id, l], i) => {
+  const t0 = Z(12) + .15 + i * .45, start = [X6 + 1560, 250 + i * 10];
+  akteur(id, { o: 0 }); set(id, t0, { o: 1 });
+  HOOKS.push(t => { if (t < t0) document.getElementById(id).style.transform = 'translate(-999px,0)'; });
+  flug(id, t0, .6, start, [X6 + 1250, 487], 80, 1, .1, 3); set(id, t0 + .6, { o: 0 }); cue(t0, 'whoosh');
+  const lp = q('wm7', l); akteur(lp, { o: 0 }, true); tw(lp, t0 + .55, .2, { o: 1 }); cue(t0 + .55, 'plopp');
+});
+akteur('extra7', { x: X6 + 1570, y: 300, s: 0 }); tw('extra7', W(12, 'zu') , .45, { s: 1 }, 'back'); cue(W(12, 'zu'), 'pop');
+pop('xVoll', W(12, 'voll'), { x: X6 + 1640, y: 230 }, 'plopp'); wackeln('extra7', W(12, 'voll'), 3, 3);
+tw(['extra7', 'xVoll'], Z(13), .35, { o: 0, s: .8 }, 'in');
+akteur('hand7', { x: X6 + 1560, y: 430, o: 0 }); tw('hand7', W(13, 'Hand') - .3, .6, { x: X6 + 1250, y: 437, o: 1 }, 'back'); cue(W(13, 'Hand') - .3, 'whoosh');
+pop('platz', W(13, 'Platz'), { x: X6 + 1560, y: 600 }); pop('haken7', W(13, 'Platz') + .2, { x: X6 + 1560, y: 500 }, 'ding');
+textAkteure('tb7'); textEin('tb7', Z(12) + .2, { unter: Z(12) + .6 }); textAus('tb7', ZE(13) + .1);
+
+/* ---------- 8 · Waschmittel ---------- */
+pan2(ZE(13) + .2, 7); const X7 = S(7);
+ein('mittel', Z(14) - .3, { x: X7 + 1080, y: 430 });
+ein('becher', Z(14) - .1, { x: X7 + 1440, y: 480 });
+const fuell = q('becher', '.fuellung');
+const T_ZU = W(14, 'Waschmittel'), T_STOP = W(14, 'steht'), T_MEHR = Z(15), T_ZURUECK = W(15, 'nicht');
+HOOKS.push(t => {
+  let h = .02 + .98 * E.out(clamp((t - T_ZU) / (T_STOP - T_ZU)));
+  h += .45 * E.out(clamp((t - T_MEHR) / .8)) - .45 * E.inout(clamp((t - T_ZURUECK) / .6));
+  fuell.style.transform = `scaleY(${h})`;
+});
+for (let k = 0; k < 12; k++) {
+  const el = document.createElement('div'); el.className = 'a korn'; document.getElementById('welt').appendChild(el);
+  const t0 = T_ZU + k * (T_STOP - T_ZU - .5) / 12;
+  akteur(el, { o: 0 }); set(el, t0, { o: 1 }); set(el, t0 + .75, { o: 0 });
+  flug(el.id = 'korn' + k, t0, .75, [X7 + 1150, 340], [X7 + 1430, 450], 60, 1, .6);
+}
+cue(T_ZU, 'scan');
+akteur('linie8', { x: X7 + 960, y: 540, o: 0, draw: 0 }); tw('linie8', W(14, 'Packung'), .6, { o: 1, draw: 1 });
+wackeln('mittel', W(14, 'Packung'), 3, 2);
+pop('cPack', W(14, 'Packung') + .3, { x: X7 + 1260, y: 640 });
+tw(['linie8', 'cPack'], T_MEHR, .3, { o: 0 });
+const BL = [[-40, 0], [0, -20], [40, -5], [-15, -45], [25, -50]];
+BL.forEach(([dx, dy], i) => {
+  const el = document.createElement('div'); el.className = 'a blase'; document.getElementById('welt').appendChild(el);
+  akteur(el, { x: X7 + 1430 + dx, y: 420 + dy, s: 0 }); tw(el, T_MEHR + .4 + i * .08, .35, { s: 1 }, 'back'); tw(el, T_ZURUECK, .4, { s: 0 }, 'in');
+});
+cue(T_MEHR + .4, 'pop');
+pop('xMehr', W(15, 'nicht'), { x: X7 + 1600, y: 360 }, 'plopp');
+tw('xMehr', T_ZURUECK + .4, .3, { o: 0 });
+textAkteure('tb8'); textEin('tb8', Z(14), { unter: Z(15) }); textAus('tb8', ZE(15) + .1);
+
+/* ---------- 9 · Aufhängen und lüften ---------- */
+pan2(ZE(15) + .2, 8); const X8 = S(8);
+ein('staender', Z(16) - .2, { x: X8 + 1150, y: 500 });
+['h1', 'h2', 'h3'].forEach((id, i) => {
+  const t0 = W(16, 'hängst') + i * .3;
+  akteur(id, { o: 0 }); set(id, t0, { o: 1 });
+  HOOKS.push(t => { if (t < t0) document.getElementById(id).style.transform = 'translate(-999px,0)'; });
+  flug(id, t0, .7, [X8 + 960 + i * 20, 250], [X8 + 1060 + i * 90, 507], 100, .7, 1, 3); cue(t0 + .65, 'plopp');
+});
+cue(W(16, 'hängst'), 'whoosh');
+ein('fenster', Z(17) - .3, { x: X8 + 1560, y: 360 });
+const fl1 = q('fenster', '.fluegel'), fl2 = q('fenster', '.fluegel2');
+HOOKS.push(t => { const p = E.back(clamp((t - W(17, 'lüfte')) / .6)); fl1.style.transform = fl2.style.transform = `scaleX(${1 - .8 * p})`; });
+cue(W(17, 'lüfte'), 'klick');
+akteur('luft', { x: X8 + 960, y: 540, o: 0 }); tw('luft', W(17, 'lüfte') + .3, .5, { o: 1 });
+HOOKS.push(t => document.querySelectorAll('#luft path').forEach((p, i) => { p.style.strokeDasharray = '30 22'; p.style.strokeDashoffset = (t * 90 + i * 17) % 52; }));
+figur('mai9', { x: X8 + 1560, y: 600, s: 0 }); tw('mai9', Z(16) + .4, .5, { s: 1 }, 'back'); cue(Z(16) + .4, 'pop');
+froh('mai9', W(17, 'lüfte') + .4); nicken('mai9', W(17, 'gut'));
+textAkteure('tb9'); textEin('tb9', Z(16)); textAus('tb9', ZE(17) + .1);
+
+/* ---------- 10 · Waschkeller ---------- */
+pan2(ZE(17) + .2, 9); const X9 = S(9);
+ein('treppe', Z(18) - .3, { x: X9 + 1040, y: 330 });
+// Korb hüpft die Stufen hinunter
+const STUFEN = [[X9 + 960, 240], [X9 + 1004, 273], [X9 + 1048, 306], [X9 + 1092, 339], [X9 + 1140, 372]];
+akteur('korb10', { o: 0 });
+const T_K = W(18, 'Waschkeller') - .5;
+set('korb10', T_K, { o: 1 });
+STUFEN.slice(1).forEach((p, k) => { flug('korb10', T_K + k * .28, .28, STUFEN[k], p, 22, 1, 1); cue(T_K + k * .28 + .26, 'tipp'); });
+HOOKS.push(t => { if (t < T_K) $('#korb10').style.transform = 'translate(-999px,0)'; });
+ein('plan', W(18, 'Waschkeller'), { x: X9 + 1400, y: 390 }, { y: 80 }, .4);
+figur('mai10', { x: X9 + 1080, y: 590, s: 0 }); tw('mai10', Z(18), .5, { s: 1 }, 'back'); cue(Z(18), 'pop');
+nicken('mai10', W(19, 'Hausordnung'));
+pop('hoChip', W(19, 'Hausordnung'), { x: X9 + 1400, y: 650 });
+const NAME = 'Mai', T_NAME = W(19, 'wann');
+HOOKS.push(t => { const n = Math.floor(clamp((t - T_NAME) / .5) * NAME.length + (t >= T_NAME ? .999 : 0)); $('#maiName').textContent = NAME.slice(0, Math.min(NAME.length, n)); $('#zeileMai').classList.toggle('mai', t >= T_NAME + .5); });
+for (let k = 0; k < 3; k++) cue(T_NAME + k * .16, 'tipp');
+pop('haken10', T_NAME + .6, { x: X9 + 1650, y: 400 }, 'erfolg');
+froh('mai10', T_NAME + .6); tw('#mai10 .daumen', T_NAME + .6, .5, { y: -30 }, 'back');
+textAkteure('tb10'); textEin('tb10', Z(18), { unter: Z(18) + 1.2 });
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endWm', { o: 0, y: 40 }, true); tw('endWm', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 5 – SIM-Karte holen und freischalten</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:8px 18px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.kreuz{width:96px;height:96px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:46px}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 80%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+/* Handy-Bildschirm: liegt mittig über dem Handy, 37,5 % × 67,5 % der Handybreite */
+.schirm{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;border-radius:8px}
+.schirm small{font:600 16px/20px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--b600)}
+.balken{display:flex;align-items:flex-end;gap:7px;height:52px}
+.balken i{display:block;width:13px;border-radius:4px;border:3px solid var(--n300)}
+.balken i:nth-child(1){height:14px}.balken i:nth-child(2){height:26px}.balken i:nth-child(3){height:38px}.balken i:nth-child(4){height:50px}
+.rund{width:76px;height:76px;border-radius:999px;background:var(--b300);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.wahl{width:136px;padding:12px 6px;border-radius:14px;background:var(--surface);border:3px solid var(--b200);font:700 19px/24px Inter;color:var(--n700)}
+.wahl.an{border-color:var(--b500);background:var(--b500);color:var(--surface)}
+.finger{width:46px;height:46px;border-radius:999px;background:var(--b700);opacity:.85;box-shadow:0 0 0 10px rgba(58,37,153,.18)}
+.code{font:800 18px/28px Inter;letter-spacing:.02em;color:var(--ink);white-space:pre;min-height:28px}
+.paket{width:180px;padding:14px;border-radius:20px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:3px solid var(--b200);
+  display:flex;flex-direction:column;align-items:center;gap:2px}
+.paket svg{width:120px}
+.paket b{font:800 22px/26px Inter;color:var(--b600);letter-spacing:.04em}
+.coupon{width:230px;padding:16px 20px;border-radius:14px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px dashed var(--b300)}
+.coupon small{display:block;font:600 16px/20px Inter;letter-spacing:.08em;color:var(--b600)}
+.coupon .striche{display:flex;gap:3px;height:44px;margin:10px 0 6px}
+.coupon .striche i{display:block;background:var(--ink);height:100%}
+.coupon b{display:block;font:800 20px/24px Inter;letter-spacing:.06em;color:var(--ink)}
+.blase{padding:16px 22px;border-radius:22px 22px 22px 6px;background:var(--b500);color:var(--surface);font:700 26px/32px Inter;white-space:nowrap;
+  box-shadow:0 6px 20px rgba(90,63,230,.25)}
+.blase small{display:block;font:500 18px/22px Inter;color:var(--b100)}
+.welle{width:90px;height:90px;border-radius:999px;border:5px solid var(--b400)}
+.punktW{width:22px;height:22px;border-radius:999px;background:var(--b500);box-shadow:0 0 0 6px rgba(90,63,230,.18)}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Noch keine deutsche Nummer -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="koffer" style="width:220px">{{koffer}}</div>
+  <div class="a portrait" id="mai1" style="width:260px;height:260px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="handy1" data-dreht data-gruppe="g1" style="width:380px">{{handy}}</div>
+  <div class="a schirm" id="schirm1" data-gruppe="g1" style="width:142px;height:256px">
+    <div class="balken" id="balken1"><i></i><i></i><i></i><i></i></div><small id="keinNetz">Kein Netz</small></div>
+
+  <!-- 2 · Erreichbar -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="betrieb2" style="width:190px">{{betrieb}}</div>
+  <div class="a" id="schule2" style="width:190px">{{schule}}</div>
+  <div class="a" id="amt2" style="width:190px">{{rathaus}}</div>
+  <div class="a label" id="lblBetrieb">Betrieb</div>
+  <div class="a label" id="lblSchule">Berufsschule</div>
+  <div class="a label" id="lblAmt">Behörden</div>
+  <div class="a welle" id="welle2a"></div><div class="a welle" id="welle2b"></div>
+  <div class="a" id="handy2" data-dreht data-gruppe="g2" style="width:330px">{{handy}}</div>
+  <div class="a schirm" id="schirm2" data-gruppe="g2" style="width:124px;height:222px">
+    <svg viewBox="0 0 48 48" style="width:54px"><path d="M14 6l6 10-5 5c3 6 7 10 13 13l5-5 10 6-4 8C22 44 4 26 6 10Z" fill="var(--b500)"/></svg><small>Anruf</small></div>
+  <div class="a punktW" id="pw1"></div><div class="a punktW" id="pw2"></div><div class="a punktW" id="pw3"></div>
+
+  <!-- 3 · Prepaid-Karte: Supermarkt oder online -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a paket" id="pack1" data-gruppe="g3">{{sim}}<b>PREPAID</b></div>
+  <div class="a" id="wagen" data-gruppe="g3" style="width:280px">{{wagen}}</div>
+  <div class="a paket" id="pack2">{{sim~2}}<b>PREPAID</b></div>
+  <div class="a" id="karton3" style="width:230px">{{karton}}</div>
+  <div class="a chip klein" id="lblMarkt">Supermarkt</div>
+  <div class="a chip klein" id="lblOnline">online</div>
+
+  <!-- 4 · Erst ausweisen -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a portrait" id="mai4" style="width:250px;height:250px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="pass4" style="width:230px">{{pass}}</div>
+  <div class="a" id="sim4" data-gruppe="g4" style="width:130px">{{sim~3}}</div>
+  <div class="a" id="handy4" data-gruppe="g4" style="width:380px">{{handy}}</div>
+  <div class="a" id="schloss4" data-gruppe="g4" style="width:170px">{{schloss}}</div>
+
+  <!-- 5 · Video-Chat? Oft nicht. -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a portrait" id="mai5" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="handy5" data-gruppe="g5" style="width:400px">{{handy}}</div>
+  <div class="a schirm" id="video5" data-gruppe="g5" style="width:150px;height:270px">
+    <div class="rund"><svg viewBox="0 0 84 84" style="width:76px"><circle cx="42" cy="34" r="14" fill="var(--b100)"/><path d="M14 84c0-18 12-28 28-28s28 10 28 28Z" fill="var(--b100)"/></svg></div>
+    <small>Video-Chat</small></div>
+  <div class="a" id="pass5" data-dreht data-gruppe="g5" style="width:210px">{{pass~2}}</div>
+  <div class="a kreuz" id="x5" data-gruppe="g5"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+
+  <!-- 6 · Wähl: Postfiliale -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="handy6" data-gruppe="g6" style="width:460px">{{handy}}</div>
+  <div class="a schirm" id="wahl6" data-gruppe="g6" style="width:172px;height:310px">
+    <small>Identifizierung</small>
+    <div class="wahl" id="wVideo">Video-Chat</div>
+    <div class="wahl" id="wPost">Postfiliale</div></div>
+  <div class="a finger" id="finger6" data-gruppe="g6"></div>
+  <div class="a" id="haken6" data-gruppe="g6" style="width:100px">{{haken}}</div>
+  <div class="a chip brand" id="postident">POSTIDENT</div>
+
+  <!-- 7 · Coupon mit Code -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="handy7" data-gruppe="g7" style="width:380px">{{handy}}</div>
+  <div class="a schirm" id="schirm7" data-gruppe="g7" style="width:142px;height:256px">
+    <small>Dein Coupon</small>
+    <svg viewBox="0 0 100 40" style="width:110px"><g fill="var(--ink)"><rect x="2" width="3" height="40"/><rect x="8" width="6" height="40"/><rect x="17" width="2" height="40"/><rect x="22" width="5" height="40"/><rect x="30" width="3" height="40"/><rect x="36" width="7" height="40"/><rect x="46" width="2" height="40"/><rect x="51" width="4" height="40"/><rect x="58" width="6" height="40"/><rect x="67" width="2" height="40"/><rect x="72" width="5" height="40"/><rect x="80" width="3" height="40"/><rect x="86" width="6" height="40"/><rect x="95" width="3" height="40"/></g></svg>
+    <div class="code" id="code7"></div></div>
+  <div class="a coupon" id="papier7"><small style="white-space:nowrap">POSTIDENT-COUPON</small>
+    <div class="striche"><i style="width:4px"></i><i style="width:8px"></i><i style="width:3px"></i><i style="width:6px"></i><i style="width:4px"></i><i style="width:9px"></i><i style="width:3px"></i><i style="width:5px"></i><i style="width:7px"></i><i style="width:3px"></i><i style="width:6px"></i><i style="width:4px"></i><i style="width:8px"></i><i style="width:3px"></i></div>
+    <b>4X7K 92QM</b></div>
+  <div class="a" id="drucker7" style="width:320px">{{drucker}}</div>
+
+  <!-- 8 · Coupon + Reisepass zur Post -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="schalter8" data-dreht data-gruppe="g8" style="width:420px">{{postschalter}}</div>
+  <div class="a portrait" id="mai8" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="pass8" data-gruppe="g8" style="width:150px">{{pass~3}}</div>
+  <div class="a coupon" id="coupon8" data-gruppe="g8" style="width:170px;padding:10px 14px"><small style="font-size:12px;line-height:16px">COUPON</small>
+    <div class="striche" style="height:26px;margin:6px 0 4px"><i style="width:3px"></i><i style="width:6px"></i><i style="width:2px"></i><i style="width:5px"></i><i style="width:3px"></i><i style="width:7px"></i><i style="width:2px"></i><i style="width:4px"></i><i style="width:6px"></i></div>
+    <b style="font-size:15px;line-height:18px">4X7K 92QM</b></div>
+  <div class="a" id="stempel8" data-dreht data-gruppe="g8" style="width:150px">{{stempel}}</div>
+  <div class="a" id="haken8" style="width:90px">{{haken~2}}</div>
+  <div class="a" id="muenze8" style="width:120px">{{muenze}}</div>
+  <div class="a chip gruen" id="null8">0 €</div>
+
+  <!-- 9 · Nach ein paar Stunden: fertig -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a" id="uhr9" data-gruppe="g9u" style="width:240px">{{uhr}}</div>
+  <div class="a" id="stunde9" data-gruppe="g9u" style="width:240px;transform-origin:50% 47.5%">{{uhr-stunde}}</div>
+  <div class="a" id="minute9" data-dreht data-gruppe="g9u" style="width:240px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
+  <div class="a portrait" id="mai9" style="width:190px;height:190px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a welle" id="welle9a"></div><div class="a welle" id="welle9b"></div>
+  <div class="a" id="handy9" data-dreht data-gruppe="g9" style="width:380px">{{handy}}</div>
+  <div class="a schirm" id="schirm9" data-gruppe="g9" style="width:142px;height:256px">
+    <div class="balken" id="balken9"><i></i><i></i><i></i><i></i></div><small id="netz9">Bereit</small></div>
+  <div class="a" id="schloss9" data-gruppe="g9" style="width:130px">{{schloss~2}}</div>
+
+  <!-- 10 · Neue Nummer an den Betrieb -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a portrait" id="mai10" style="width:250px;height:250px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a portrait" id="chefin10" data-gruppe="g10" style="width:250px;height:250px"><div class="figur">
+    <div class="ebene">{{figur-chefin}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a label" id="lblDu">Du</div>
+  <div class="a label" id="lblChefin">Dein Betrieb</div>
+  <div class="a blase" id="blase10" data-dreht><small>Meine neue Nummer</small><span id="nummer10"></span></div>
+  <div class="a" id="haken10" data-gruppe="g10" style="width:90px">{{haken~3}}</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Noch keine deutsche Nummer</div></div>
+<div class="block" id="tb2"><div class="titel">Deutsche Nummer = erreichbar</div></div>
+<div class="block" id="tb3"><div class="titel">Prepaid-Karte</div><div class="unter">Im Supermarkt oder online</div></div>
+<div class="block" id="tb4"><div class="titel">Erst ausweisen</div></div>
+<div class="block" id="tb5"><div class="titel">Video-Chat? Oft nicht.</div><div class="unter">Mit einem ausländischen Reisepass klappt das oft nicht.</div></div>
+<div class="block" id="tb6"><div class="titel">Wähl: Postfiliale</div><div class="unter">Das heißt POSTIDENT.</div></div>
+<div class="block" id="tb7"><div class="titel">Coupon mit Code</div><div class="unter">Am besten ausdrucken.</div></div>
+<div class="block" id="tb8"><div class="titel">Coupon + Reisepass → Post</div><div class="unter">Kostenlos</div></div>
+<div class="block" id="tb9"><div class="titel">Nach ein paar Stunden: fertig</div></div>
+<div class="block" id="tb10"><div class="titel">Neue Nummer → an deinen Betrieb</div><div class="unter">Dann erreichen dich alle.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endSim" style="position:relative;width:220px">{{sim~4}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Deine Nummer ist startklar.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+// VERSATZ = 0.6 (Beginn der Sprache im Film, gesetzt in werkzeug/sprache.js; untertitel.mjs liest ihn hier)
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren in der Szene ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 90 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y, r: basis.r || 0 }, 'out');
+  tw(id, t + .38, .1, { sy: .9, sx: 1.07 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const aus = (ids, t) => tw(ids, t, .3, { o: 0 }, 'in');
+
+// Figuren: blinzeln, Gesicht (zu/auf/froh) über Zeitfenster, Nicken
+const GESICHT = {};          // id → [[von, bis, 'froh'|'auf'], …]
+const NICKEN = {};           // id → [[von, bis], …]
+function figur(id, basis) {
+  akteur(id, basis);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+  GESICHT[id] = []; NICKEN[id] = [];
+}
+const gesicht = (id, a, b, art) => GESICHT[id].push([a, b, art]);
+const nicken = (id, a, b) => NICKEN[id].push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const g = (GESICHT[p.id] || []).find(([a, b]) => t >= a && t < b), art = g ? g[2] : 'zu';
+  for (const k of ['zu', 'auf', 'froh']) p.querySelector('.' + k).style.opacity = art === k ? 1 : 0;
+  const n = (NICKEN[p.id] || []).find(([a, b]) => t >= a && t < b);
+  p.querySelector('.figur').style.transform = n ? `rotate(${2 * Math.sin((t - n[0]) * 7)}deg) translateY(${4 * Math.max(0, Math.sin((t - n[0]) * 7))}px)` : '';
+}));
+
+/* ---------- 1 · Noch keine deutsche Nummer ---------- */
+{ const X = S(0);
+  ein('koffer', Z(0) + .3, { x: X + 1000, y: MY + 140 }, { x: -260 }, 'whoosh');
+  figur('mai1', { x: X + 1190, y: MY - 40, o: 0, y0: 0 });
+  set('mai1', 0, { y: MY + 40 }); tw('mai1', Z(0) + .1, .45, { o: 1, y: MY - 40 }, 'out');
+  tw('mai1', Z(0) + .5, .1, { sy: .9, sx: 1.07 }); tw('mai1', Z(0) + .6, .35, { sy: 1, sx: 1 }, 'back'); cue(Z(0) + .1, 'pop');
+  ein('handy1', W(0, 'Handy'), { x: X + 1560, y: MY + 20 }, { y: 500 }, 'whoosh');
+  akteur('schirm1', { x: X + 1560, y: MY + 20, o: 0 }); tw('schirm1', W(0, 'Handy') + .4, .3, { o: 1 });
+  // Netzbalken blinken leer
+  HOOKS.push(t => {
+    const an = t > W(0, 'keine') && t < ZE(0) + 1.5 && Math.floor((t - W(0, 'keine')) * 3) % 2 === 0;
+    document.querySelectorAll('#balken1 i').forEach((b, i) => { b.style.borderColor = an ? 'var(--error)' : ''; });
+    $('#keinNetz').style.color = t > W(0, 'keine') ? 'var(--error-text)' : '';
+  });
+  gesicht('mai1', W(0, 'keine'), ZE(0) + 2, 'auf');
+  wackeln('handy1', W(0, 'Nummer'), 4, 4); cue(W(0, 'Nummer'), 'plopp');
+  textAkteure('tb1'); textEin('tb1', W(0, 'keine')); textAus('tb1', ZE(0) + .45);
+}
+
+/* ---------- 2 · Erreichbar ---------- */
+{ const X = S(1), T0 = ZE(0) + .5;
+  wechsel(T0, 1);
+  ein('handy2', T0 + .5, { x: X + MX, y: MY + 140 }, { y: 400 }, 'whoosh');
+  akteur('schirm2', { x: X + MX, y: MY + 140, o: 0 }); tw('schirm2', W(1, 'erreichen'), .3, { o: 1 });
+  const ziele = [['betrieb2', 'lblBetrieb', 1065, 'Betrieb', 'pw1'], ['schule2', 'lblSchule', 1320, 'Berufsschule', 'pw2'], ['amt2', 'lblAmt', 1575, 'Behörden', 'pw3']];
+  for (const [id, lbl, x, wort, pw] of ziele) {
+    const t0 = W(1, wort);
+    ein(id, t0 - .15, { x: X + x, y: 262 }, { y: 70 });
+    akteur(lbl, { x: X + x, y: 375, o: 0 }); tw(lbl, t0 + .1, .35, { o: 1 });
+    // Anruf-Punkt läuft vom Symbol zum Handy, Handy vibriert
+    akteur(pw, { x: X + x, y: 320, o: 0 });
+    tw(pw, t0 + .3, .05, { o: 1 }); tw(pw, t0 + .3, .7, { x: X + MX, y: MY + 60 }, 'inout'); tw(pw, t0 + .95, .1, { o: 0 });
+    wackeln('handy2', t0 + .95, 3, 4); cue(t0 + .95, 'tipp');
+  }
+  for (const [id, d] of [['welle2a', 0], ['welle2b', .55]]) {
+    akteur(id, { x: X + MX, y: MY + 140, o: 0 });
+    HOOKS.push(t => {
+      const t0 = W(1, 'Betrieb') + 1 + d, el = $('#' + id);
+      if (t < t0 || t > ZE(1) + .8) { el.style.visibility = 'hidden'; return; }
+      const p = ((t - t0) / 1.1) % 1;
+      el.style.visibility = 'visible'; el.style.opacity = (1 - p) * .7;
+      el.style.transform = `translate(${X + MX}px,${MY + 140}px) translate(-50%,-50%) scale(${1 + p * 2.2})`;
+    });
+  }
+  textAkteure('tb2'); textEin('tb2', T0 + .4); textAus('tb2', ZE(1) + .45);
+}
+
+/* ---------- 3 · Prepaid: Supermarkt oder online ---------- */
+{ const X = S(2), T0 = ZE(1) + .5;
+  wechsel(T0, 2);
+  pop('pack1', Z(2) + .4, { x: X + MX, y: 300, r: -3 });
+  ein('wagen', W(3, 'Supermarkt') - .6, { x: X + 1110, y: MY + 70 }, { x: -500 }, 'whoosh');
+  // Wagen rollt mit kleinem Ruckeln
+  tw('wagen', W(3, 'Supermarkt') - .15, .12, { r: -2 }); tw('wagen', W(3, 'Supermarkt') - .03, .3, { r: 0 }, 'back');
+  // Päckchen fällt in den Wagen
+  tw('pack1', W(3, 'Supermarkt'), .55, { x: X + 1130, y: MY + 5, r: 2, s: .7 }, 'in'); cue(W(3, 'Supermarkt') + .55, 'plopp');
+  tw('pack1', W(3, 'Supermarkt') + .55, .12, { sy: .85 }); tw('pack1', W(3, 'Supermarkt') + .67, .3, { sy: 1 }, 'back');
+  akteur('lblMarkt', { x: X + 1110, y: 680, o: 0 }); tw('lblMarkt', W(3, 'Supermarkt') + .2, .4, { o: 1 });
+  ein('karton3', W(3, 'online') - .7, { x: X + 1550, y: MY + 70 }, { y: 90 });
+  akteur('pack2', { x: X + 1550, y: MY + 80, s: .4, o: 0, r: 0 });
+  tw('pack2', W(3, 'online'), .05, { o: 1 }); tw('pack2', W(3, 'online'), .6, { y: MY - 40, s: .75, r: 3 }, 'back'); cue(W(3, 'online'), 'pop');
+  akteur('lblOnline', { x: X + 1550, y: 680, o: 0 }); tw('lblOnline', W(3, 'online') + .2, .4, { o: 1 });
+  textAkteure('tb3'); textEin('tb3', Z(2) + .2, { unter: W(3, 'Supermarkt') }); textAus('tb3', ZE(3) + .45);
+}
+
+/* ---------- 4 · Erst ausweisen ---------- */
+{ const X = S(3), T0 = ZE(3) + .5;
+  wechsel(T0, 3);
+  ein('handy4', T0 + .4, { x: X + 1520, y: MY + 30 }, { y: 400 }, 'whoosh');
+  // SIM-Karte gleitet ins Handy
+  akteur('sim4', { x: X + 1520, y: 140, o: 0, r: -3 });
+  tw('sim4', T0 + .9, .2, { o: 1 }); tw('sim4', Z(4) + .3, .7, { y: MY + 30, s: .5, r: 0 }, 'inout'); tw('sim4', Z(4) + .95, .15, { o: 0 }); cue(Z(4) + 1, 'klick');
+  pop('schloss4', W(4, 'funktioniert'), { x: X + 1520, y: MY + 30 }, 'plopp');
+  wackeln('schloss4', W(4, 'funktioniert') + .5, 3, 5);
+  figur('mai4', { x: X + 1090, y: MY - 70, o: 0 });
+  set('mai4', 0, { y: MY }); tw('mai4', T0 + .6, .45, { o: 1, y: MY - 70 }); cue(T0 + .6, 'pop');
+  // Mai hält den Pass hoch
+  akteur('pass4', { x: X + 1090, y: 790, r: 0, o: 0 });
+  tw('pass4', W(4, 'zeigen') - .1, .05, { o: 1 }); tw('pass4', W(4, 'zeigen') - .1, .6, { y: MY + 170, r: -3 }, 'back'); cue(W(4, 'zeigen'), 'whoosh');
+  tw('pass4', W(4, 'wer'), .2, { y: MY + 150 }); tw('pass4', W(4, 'wer') + .2, .35, { y: MY + 170 }, 'back');
+  nicken('mai4', W(4, 'wer'), W(4, 'wer') + 1.2); gesicht('mai4', W(4, 'wer'), 99, 'froh');
+  textAkteure('tb4'); textEin('tb4', Z(4) + .1); textAus('tb4', ZE(4) + .45);
+}
+
+/* ---------- 5 · Video-Chat? Oft nicht. ---------- */
+{ const X = S(4), T0 = ZE(4) + .5;
+  wechsel(T0, 4);
+  ein('handy5', T0 + .4, { x: X + 1530, y: MY + 20 }, { y: 400 }, 'whoosh');
+  akteur('video5', { x: X + 1530, y: MY + 20, o: 0 }); tw('video5', W(5, 'Video'), .3, { o: 1 }); cue(W(5, 'Video'), 'klick');
+  // Pass wird vor die Kamera gehalten
+  akteur('pass5', { x: X + 1250, y: MY + 300, o: 0, r: 0 });
+  tw('pass5', W(5, 'Video') + .3, .1, { o: 1 }); tw('pass5', W(5, 'Video') + .3, .6, { y: MY + 20, r: 2 }, 'back'); cue(W(5, 'Video') + .3, 'whoosh');
+  wackeln('pass5', W(6, 'Vorsicht'), 5, 6);
+  // rotes X schlägt mit Wackler auf
+  akteur('x5', { x: X + 1300, y: MY - 50, s: 2.2, o: 0, r: -12 });
+  tw('x5', W(6, 'klappt'), .25, { s: 1, o: 1, r: 0 }, 'in'); cue(W(6, 'klappt') + .25, 'plopp');
+  tw('x5', W(6, 'klappt') + .25, .1, { sx: 1.15, sy: .85 }); tw('x5', W(6, 'klappt') + .35, .35, { sx: 1, sy: 1 }, 'back');
+  wackeln('x5', W(6, 'klappt') + .4, 3, 6);
+  figur('mai5', { x: X + 1045, y: MY + 140, o: 0 });
+  set('mai5', 0, { y: MY + 210 }); tw('mai5', T0 + .8, .45, { o: 1, y: MY + 140 }); cue(T0 + .8, 'pop');
+  gesicht('mai5', W(6, 'klappt') + .2, 99, 'auf');
+  tw('mai5', W(6, 'klappt') + .2, .12, { sy: 1.08, sx: .95, y: MY + 130 }); tw('mai5', W(6, 'klappt') + .32, .35, { sy: 1, sx: 1, y: MY + 140 }, 'back');
+  textAkteure('tb5'); textEin('tb5', Z(5) + .1, { unter: W(6, 'Mit') }); textAus('tb5', ZE(6) + .45);
+}
+
+/* ---------- 6 · Wähl: Postfiliale ---------- */
+{ const X = S(5), T0 = ZE(6) + .5;
+  wechsel(T0, 5);
+  ein('handy6', T0 + .4, { x: X + 1260, y: MY + 20 }, { y: 400 }, 'whoosh');
+  akteur('wahl6', { x: X + 1260, y: MY + 20, o: 0 }); tw('wahl6', T0 + .9, .3, { o: 1 });
+  for (const [k, el] of [['wVideo', 0], ['wPost', 1]].map(([id, i]) => [id, i])) { akteur(k, { o: 0, y: 20 }, true); tw(k, T0 + 1 + el * .2, .4, { o: 1, y: 0 }, 'back'); }
+  // Finger tippt auf „Postfiliale“
+  const tap = W(7, 'Filiale');
+  akteur('finger6', { x: X + 1420, y: MY + 330, o: 0 });
+  tw('finger6', tap - .7, .2, { o: 1 }); tw('finger6', tap - .7, .65, { x: X + 1265, y: MY + 75 }, 'inout');
+  tw('finger6', tap - .05, .1, { s: .8 }); tw('finger6', tap + .05, .2, { s: 1 }); tw('finger6', tap + .5, .3, { o: 0, y: MY + 140 });
+  tw('wPost', tap, .1, { s: .92 }); tw('wPost', tap + .1, .3, { s: 1 }, 'back'); cue(tap, 'klick');
+  HOOKS.push(t => $('#wPost').classList.toggle('an', t >= tap));
+  pop('haken6', tap + .25, { x: X + 1395, y: MY - 90 }, 'ding');
+  pop('postident', Z(8) + .2, { x: X + 1590, y: MY + 20 });
+  wackeln('postident', W(8, 'Postident') + .1, 3, 4);
+  textAkteure('tb6'); textEin('tb6', Z(7) + .1, { unter: Z(8) }); textAus('tb6', ZE(8) + .45);
+}
+
+/* ---------- 7 · Coupon mit Code ---------- */
+{ const X = S(6), T0 = ZE(8) + .5;
+  wechsel(T0, 6);
+  ein('handy7', T0 + .4, { x: X + 1080, y: MY + 30 }, { y: 400 }, 'whoosh');
+  akteur('schirm7', { x: X + 1080, y: MY + 30, o: 0 }); tw('schirm7', W(9, 'Coupon'), .3, { o: 1 }); cue(W(9, 'Coupon'), 'pop');
+  // Code wird Zeichen für Zeichen getippt
+  const CODE = '4X7K 92QM', tc = W(9, 'Code');
+  HOOKS.push(t => { const n = Math.max(0, Math.min(CODE.length, Math.floor((t - tc) / .09))); $('#code7').textContent = CODE.slice(0, n); });
+  for (let i = 0; i < CODE.length; i++) if (CODE[i] !== ' ') cue(tc + i * .09, 'tipp');
+  // Drucker schiebt den Coupon oben heraus
+  ein('drucker7', Z(10) - .2, { x: X + 1550, y: MY + 140 }, { x: 300 }, 'whoosh');
+  akteur('papier7', { x: X + 1550, y: MY + 150, o: 0 });
+  tw('papier7', W(10, 'Druck') + .3, .05, { o: 1 }); tw('papier7', W(10, 'Druck') + .3, 1.1, { y: MY - 70 }, 'out'); cue(W(10, 'Druck') + .3, 'scan');
+  wackeln('drucker7', W(10, 'Druck') + .3, 5, 1.5);
+  textAkteure('tb7'); textEin('tb7', Z(9) + .1, { unter: Z(10) }); textAus('tb7', ZE(10) + .45);
+}
+
+/* ---------- 8 · Coupon + Reisepass zur Post ---------- */
+{ const X = S(7), T0 = ZE(10) + .5;
+  wechsel(T0, 7);
+  ein('schalter8', T0 + .4, { x: X + 1410, y: MY + 30 }, { y: 120 });
+  figur('mai8', { x: X + 1035, y: MY + 150, o: 0 });
+  set('mai8', 0, { x: X + 900 }); tw('mai8', W(11, 'gehst'), .6, { o: 1, x: X + 1035 }, 'out'); cue(W(11, 'gehst'), 'whoosh');
+  tw('mai8', W(11, 'gehst') + .55, .1, { sy: .92, sx: 1.06 }); tw('mai8', W(11, 'gehst') + .65, .35, { sy: 1, sx: 1 }, 'back');
+  // Coupon und Pass landen auf dem Tresen
+  akteur('coupon8', { x: X + 1035, y: MY + 150, s: .4, o: 0, r: 0 });
+  tw('coupon8', W(11, 'Coupon'), .05, { o: 1 }); tw('coupon8', W(11, 'Coupon'), .7, { x: X + 1470, y: MY + 20, s: 1, r: 2 }, 'back'); cue(W(11, 'Coupon') + .5, 'plopp');
+  akteur('pass8', { x: X + 1035, y: MY + 150, s: .4, o: 0, r: 0 });
+  tw('pass8', W(11, 'Reisepass'), .05, { o: 1 }); tw('pass8', W(11, 'Reisepass'), .7, { x: X + 1300, y: MY + 10, s: 1, r: -2 }, 'back'); cue(W(11, 'Reisepass') + .5, 'plopp');
+  // Stempel schlägt auf den Coupon, mit Wackler
+  const ts = W(11, 'Postfiliale') + .3;
+  akteur('stempel8', { x: X + 1470, y: 250, o: 0 });
+  tw('stempel8', ts - .5, .2, { o: 1 }); tw('stempel8', ts - .2, .2, { y: MY - 60 }, 'in'); cue(ts, 'plopp');
+  wackeln('coupon8', ts, 3, 4); tw('stempel8', ts + .15, .4, { y: 250, o: 0 }, 'out');
+  pop('haken8', ts + .3, { x: X + 1625, y: MY - 20 }, 'ding');
+  gesicht('mai8', ts + .3, 99, 'froh');
+  // 0 € – Münze dreht sich
+  pop('null8', Z(12), { x: X + 1110, y: 250 });
+  akteur('muenze8', { x: X + 1265, y: 250, s: 0 }); tw('muenze8', Z(12) + .1, .45, { s: 1 }, 'back'); cue(Z(12) + .1, 'muenze');
+  HOOKS.push(t => { const el = $('#muenze8'); if (t > Z(12) + .1) el.querySelector('svg').style.transform = `scaleX(${Math.cos((t - Z(12)) * 6)})`; });
+  textAkteure('tb8'); textEin('tb8', Z(11) + .1, { unter: Z(12) }); textAus('tb8', ZE(12) + .45);
+}
+
+/* ---------- 9 · Nach ein paar Stunden: fertig ---------- */
+{ const X = S(8), T0 = ZE(12) + .5;
+  wechsel(T0, 8);
+  for (const id of ['uhr9', 'stunde9', 'minute9']) ein(id, T0 + .4, { x: X + 1080, y: 290 }, { y: 80 }, id === 'uhr9' ? 'pop' : null);
+  // Zeiger drehen schnell
+  HOOKS.push(t => {
+    const p = clamp((t - W(13, 'paar')) / 2.2), m = E.inout(p) * 360 * 4, h = E.inout(p) * 120;
+    const m0 = $('#minute9'), h0 = $('#stunde9');
+    m0.style.transform += ` rotate(${m}deg)`; h0.style.transform += ` rotate(${h}deg)`;
+  });
+  figur('mai9', { x: X + 1080, y: MY + 160, o: 0 });
+  set('mai9', 0, { y: MY + 230 }); tw('mai9', T0 + .7, .45, { o: 1, y: MY + 160 }); cue(T0 + .7, 'pop');
+  ein('handy9', T0 + .5, { x: X + 1540, y: MY + 20 }, { y: 400 }, 'whoosh');
+  akteur('schirm9', { x: X + 1540, y: MY + 20, o: 0 }); tw('schirm9', T0 + .9, .3, { o: 1 });
+  const tf = W(13, 'freigeschaltet');
+  // Schloss springt auf und fliegt weg, Balken füllen sich
+  akteur('schloss9', { x: X + 1540, y: MY - 40 }); set('schloss9', 0, { o: 0 }); tw('schloss9', T0 + .9, .3, { o: 1 });
+  tw('schloss9', tf - .3, .15, { s: 1.15 }); tw('schloss9', tf - .15, .5, { y: MY - 260, o: 0, r: 3 }, 'in'); cue(tf - .3, 'klick');
+  HOOKS.push(t => {
+    document.querySelectorAll('#balken9 i').forEach((b, i) => { const an = t >= tf + i * .18; b.style.background = an ? 'var(--success)' : ''; b.style.borderColor = an ? 'var(--success)' : ''; });
+    $('#netz9').style.color = t >= tf + .7 ? 'var(--success-text)' : '';
+    $('#netz9').textContent = t >= tf + .7 ? 'Netz da' : 'Bereit';
+  });
+  for (let i = 0; i < 4; i++) cue(tf + i * .18, 'tipp');
+  // Handy klingelt
+  const tk = tf + 1;
+  for (let k = 0; k < 2; k++) wackeln('handy9', tk + k * .7, 4, 4);
+  cue(tk, 'ding'); cue(tk + .7, 'ding');
+  for (const [id, d] of [['welle9a', 0], ['welle9b', .5]]) {
+    akteur(id, { x: X + 1540, y: MY + 20, o: 0 });
+    HOOKS.push(t => {
+      const t0 = tk + d, el = $('#' + id);
+      if (t < t0 || t > tk + 2.4) { el.style.visibility = 'hidden'; return; }
+      const p = ((t - t0) / 1) % 1;
+      el.style.visibility = 'visible'; el.style.opacity = (1 - p) * .6;
+      el.style.transform = `translate(${X + 1540}px,${MY + 20}px) translate(-50%,-50%) scale(${1.4 + p * 1.8})`;
+    });
+  }
+  gesicht('mai9', tf + .4, 99, 'froh'); nicken('mai9', tf + .4, tf + 1.5);
+  textAkteure('tb9'); textEin('tb9', Z(13) + .1); textAus('tb9', ZE(13) + .45);
+}
+
+/* ---------- 10 · Neue Nummer an den Betrieb ---------- */
+{ const X = S(9), T0 = ZE(13) + .5;
+  wechsel(T0, 9);
+  figur('mai10', { x: X + 1080, y: MY - 60, o: 0 });
+  set('mai10', 0, { y: MY + 20 }); tw('mai10', T0 + .4, .45, { o: 1, y: MY - 60 }); cue(T0 + .4, 'pop');
+  figur('chefin10', { x: X + 1560, y: MY - 60, o: 0 });
+  set('chefin10', 0, { y: MY + 20 }); tw('chefin10', T0 + .6, .45, { o: 1, y: MY - 60 });
+  akteur('lblDu', { x: X + 1080, y: MY + 100, o: 0 }); tw('lblDu', T0 + .7, .4, { o: 1 });
+  akteur('lblChefin', { x: X + 1560, y: MY + 100, o: 0 }); tw('lblChefin', T0 + .8, .4, { o: 1 });
+  // Nachricht wird getippt und fliegt zur Chefin
+  const NR = '+49 1•• •••• ••••', tn = W(14, 'neue');
+  akteur('blase10', { x: X + 1150, y: MY + 210, s: 0 }); tw('blase10', tn - .3, .45, { s: 1 }, 'back'); cue(tn - .3, 'pop');
+  HOOKS.push(t => { const n = Math.max(0, Math.min(NR.length, Math.floor((t - tn) / .06))); $('#nummer10').textContent = NR.slice(0, n) || ' '; });
+  for (let i = 0; i < NR.length; i += 2) cue(tn + i * .06, 'tipp');
+  const tb = W(14, 'Betrieb');
+  tw('blase10', tb, .8, { x: X + 1490, y: MY + 210 }, 'inout'); cue(tb, 'whoosh');
+  nicken('chefin10', tb + .6, tb + 2); gesicht('chefin10', tb + .7, 99, 'froh');
+  pop('haken10', tb + .8, { x: X + 1680, y: MY - 170 }, 'erfolg');
+  gesicht('mai10', Z(15), 99, 'froh'); tw('#mai10 .daumen', Z(15), .5, { y: -30 }, 'back'); cue(Z(15), 'plopp');
+  textAkteure('tb10'); textEin('tb10', Z(14) + .1, { unter: Z(15) });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endSim', { o: 0, y: 40 }, true); tw('endSim', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

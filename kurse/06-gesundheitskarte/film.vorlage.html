@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 6 – Deine Gesundheitskarte</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#zoom{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.gross{font-size:44px;line-height:52px;padding:14px 34px}
+.frage{width:110px;height:110px;border-radius:999px;background:var(--b500);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 64px/1 Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+.schirm{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;overflow:hidden;border-radius:12px}
+.schirm small{font:700 15px/18px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--b600)}
+.sucher{position:relative;width:118px;height:150px;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300))}
+.sucher .ebene{position:absolute;left:0;top:10%;width:100%;height:100%}
+.ecken{position:absolute;inset:14px;border:4px solid var(--surface);border-radius:8px;
+  clip-path:polygon(0 0,30% 0,30% 4px,4px 4px,4px 30%,0 30%,0 70%,4px 70%,4px calc(100% - 4px),30% calc(100% - 4px),30% 100%,70% 100%,70% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 70%,100% 70%,100% 30%,calc(100% - 4px) 30%,calc(100% - 4px) 4px,70% 4px,70% 0,100% 0)}
+.ausloeser{width:34px;height:34px;border-radius:999px;border:4px solid var(--b500);background:var(--surface)}
+.blitz{border-radius:12px;background:var(--surface)}
+
+.polaroid{padding:16px 16px 52px;border-radius:10px;background:var(--surface);box-shadow:0 10px 28px rgba(22,19,37,.16)}
+.polaroid .bild{position:relative;width:100%;height:100%;border-radius:6px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300))}
+.polaroid .ebene{position:absolute;left:0;top:8%;width:100%;height:100%}
+.rahmen{border-radius:18px;border:6px solid var(--success)}
+
+.balken{width:110px;height:12px;border-radius:999px;background:var(--b100);overflow:hidden}
+.balken i{display:block;height:100%;width:100%;border-radius:999px;background:var(--b500);transform-origin:0 50%}
+.miniBild{width:76px;height:92px;border-radius:8px;overflow:hidden;position:relative;background:linear-gradient(160deg,var(--b200),var(--b300));border:4px solid var(--surface);box-shadow:0 3px 10px rgba(22,19,37,.12)}
+.miniBild .ebene{position:absolute;left:0;top:8%;width:100%;height:100%}
+.status{font:800 18px/22px Inter;color:var(--success-text);white-space:nowrap}
+.zettel{padding:16px 24px;border-radius:14px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px solid var(--border)}
+.zettel small{display:block;font:600 15px/20px Inter;letter-spacing:.04em;text-transform:uppercase;color:var(--b600)}
+.zettel b{display:block;font:700 30px/38px Inter;color:var(--ink);white-space:pre;letter-spacing:.04em;min-height:38px}
+
+.liste{width:154px;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.zeile{display:flex;align-items:center;gap:7px;padding:8px 7px;border-radius:10px;background:var(--surface);font:700 12px/16px Inter;color:var(--ink);text-align:left;white-space:nowrap}
+.zeile i{width:18px;height:18px;flex:none;border-radius:6px;background:var(--b200)}
+.zeile.neu{background:var(--success-bg);color:var(--success-text)}
+.zeile.neu i{background:var(--success)}
+.kopfzeile{display:flex;align-items:center;gap:8px;font:800 17px/20px Inter;color:var(--ink);margin-top:14px}
+.kopfzeile svg{width:22px;height:22px}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="zoom"><div id="welt">
+  <!-- 1 · Krank: Was brauchst du? -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a portrait" id="mai0" style="width:300px;height:300px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="thermo" style="width:240px">{{thermometer}}</div>
+  <div class="a frage" id="frage0">?</div>
+
+  <!-- 2 · Gesundheitskarte von der Krankenkasse -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="kasse" style="width:300px">{{kasse}}</div>
+  <div class="a chip" id="lblKasse">Krankenkasse</div>
+  <div class="a" id="karte1" data-dreht style="width:380px">{{gesundheitskarte}}</div>
+  <svg class="a" id="pfeil1" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
+    <defs><marker id="spitze" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1218 430C1250 400 1290 400 1318 425" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none" marker-end="url(#spitze)"/>
+  </svg>
+
+  <!-- 3 · Über Azubis Plus = AOK -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a portrait" id="mai2" style="width:270px;height:270px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a chip" id="lblAp">Azubis Plus</div>
+  <div class="a" id="doc2" data-gruppe="doc2" style="width:320px">{{meldung}}</div>
+  <div class="a chip brand gross" id="aok2">AOK</div>
+  <div class="a" id="haken2" data-gruppe="doc2" style="width:100px">{{haken}}</div>
+  <div class="a" id="stempel2" data-gruppe="doc2" data-dreht style="width:200px">{{stempel}}</div>
+  <div class="a chip gruen" id="lblVers">versichert</div>
+
+  <!-- 4 · Ein Foto von dir -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="handy3" data-gruppe="handy3" style="width:400px">{{handy}}</div>
+  <div class="a schirm" id="kamera3" data-gruppe="handy3" style="width:140px;height:250px">
+    <div class="sucher" style="margin-top:18px"><div class="ebene">{{figur-mai}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-froh}}</div><div class="ecken"></div></div>
+    <div class="ausloeser" id="ausloeser"></div></div>
+  <div class="a blitz" id="blitz" data-gruppe="handy3" style="width:140px;height:250px"></div>
+  <div class="a polaroid" id="foto3" data-gruppe="foto3" style="width:240px;height:290px"><div class="bild">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-froh}}</div></div></div>
+  <div class="a rahmen" id="fokus" data-gruppe="foto3" style="width:170px;height:170px"></div>
+  <div class="a" id="haken3" style="width:90px">{{haken}}</div>
+
+  <!-- 5 · Hochladen in „Meine AOK“ + SV-Nummer -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="handy4" data-gruppe="handy4" style="width:400px">{{handy}}</div>
+  <div class="a schirm" id="app4" data-gruppe="handy4" style="width:140px;height:250px">
+    <small style="margin-top:22px">Meine AOK</small>
+    <div class="miniBild" id="mini4"><div class="ebene">{{figur-mai}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-froh}}</div></div>
+    <div class="balken"><i id="ladung"></i></div>
+    <div class="status" id="status4">Hochgeladen ✓</div></div>
+  <div class="a polaroid" id="foto4" style="width:150px;height:180px;padding:10px 10px 30px"><div class="bild">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene">{{figur-augen}}</div><div class="ebene">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="brief4" style="width:260px">{{brief}}</div>
+  <div class="a zettel" id="sv4"><small>Sozialversicherungsnummer</small><b id="svNr"></b></div>
+
+  <!-- 6 · Karte kommt per Post -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="brief5" style="width:200px">{{brief}}</div>
+  <div class="a" id="karte5" data-dreht style="width:330px">{{gesundheitskarte}}</div>
+  <div class="a" id="kasten5" style="width:330px">{{briefkasten}}</div>
+  <div class="a" id="haken5" style="width:90px">{{haken}}</div>
+
+  <!-- 7 · Immer mit zum Arzt, sonst Bescheinigung -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="karte6" data-gruppe="leser" style="width:170px">{{gesundheitskarte}}</div>
+  <div class="a" id="leser" data-gruppe="leser" style="width:300px">{{kartenleser}}</div>
+  <div class="a chip" id="lblPraxis">Arztpraxis</div>
+  <div class="a frage" id="frage6">?</div>
+  <div class="a" id="besch6" style="width:300px">{{meldung}}</div>
+  <div class="a chip brand" id="lblBesch">Bescheinigung</div>
+
+  <!-- 8 · Tipp: Foto in der Helper-App -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a portrait" id="mai7" style="width:230px;height:230px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a" id="karte7" style="width:230px">{{gesundheitskarte}}</div>
+  <div class="a" id="handy7" data-gruppe="handy7" style="width:480px">{{handy}}</div>
+  <div class="a schirm" id="app7" data-gruppe="handy7" style="width:172px;height:300px">
+    <div class="kopfzeile"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z" fill="var(--b500)"/></svg>Dokumente</div>
+    <div class="liste"><div class="zeile"><i></i>Reisepass</div><div class="zeile"><i></i>Vertrag</div>
+      <div class="zeile neu" id="neu7"><i></i>Gesundheitskarte</div></div></div>
+  <div class="a" id="flug7" style="width:110px">{{gesundheitskarte}}</div>
+  <div class="a chip" id="lblApp" style="font-size:28px;line-height:34px">Azubis Plus Helper App</div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Was brauchst du beim Arzt?</div></div>
+<div class="block" id="tb2"><div class="titel">Gesundheitskarte</div><div class="unter">Du bekommst sie von deiner Krankenkasse.</div></div>
+<div class="block" id="tb3"><div class="titel">Über Azubis Plus = AOK</div><div class="unter">Du bist schon versichert.</div></div>
+<div class="block" id="tb4"><div class="titel">Ein Foto von dir</div><div class="unter">Man soll dein Gesicht gut sehen.</div></div>
+<div class="block" id="tb5"><div class="titel">Foto + SV-Nummer → „Meine AOK“</div><div class="unter">In der App oder auf der Website.</div></div>
+<div class="block" id="tb6"><div class="titel">Die Karte kommt per Post</div></div>
+<div class="block" id="tb7"><div class="titel">Immer mit zum Arzt</div><div class="unter">Noch nicht da? Die AOK gibt dir eine Bescheinigung.</div></div>
+<div class="block" id="tb8"><div class="eyebrow">Tipp</div><div class="titel">Foto in der Helper-App</div><div class="unter">Unter „Dokumente“ hast du die Karte immer dabei.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endKarte" data-dreht style="position:relative;width:280px">{{gesundheitskarte~2}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:12px">Gut versichert.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<!-- Sprache beginnt im Film bei VERSATZ = 0.6 (werkzeug/sprache.js; für untertitel.mjs) -->
+<script>
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // Bühne mittig (440 + 100)
+for (let i = 0; i < 8; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#zoom').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 80 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), sx: 1, sy: 1 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
+  tw(id, t + .38, .1, { sy: .9, sx: 1.07 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+// Karte dreht sich einmal (Breite 1 → 0 → 1, zweimal)
+const drehen = (id, t, d = .9) => { tw(id, t, d / 4, { sx: 0 }, 'in'); tw(id, t + d / 4, d / 4, { sx: 1 }, 'out'); tw(id, t + d / 2, d / 4, { sx: 0 }, 'in'); tw(id, t + 3 * d / 4, d / 4, { sx: 1 }, 'out'); cue(t, 'whoosh'); };
+const tippen = (el, t0, text, d = .08) => {
+  const ws = []; for (let i = 0; i <= text.length; i++) { ws.push(t0 + i * d); if (i && text[i - 1] !== ' ') cue(t0 + i * d, 'tipp'); }
+  HOOKS.push(t => { let n = 0; while (n < ws.length - 1 && t >= ws[n + 1]) n++; el.textContent = t < t0 ? '' : text.slice(0, n); });
+};
+
+// Figuren: blinzeln, froh, nicken, Daumen
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+}));
+const froh = (id, t) => { set(`#${id} .froh`, t, { o: 1 }); set(`#${id} .zu`, t, { o: 0 }); };
+function figur(id, basis) {
+  akteur(id, basis);
+  akteur($(`#${id} .froh`), { o: 0 }, true); akteur($(`#${id} .zu`), {}, true);
+  akteur($(`#${id} .figur`), {}, true);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+}
+const nicken = (id, t, n = 2) => { for (let i = 0; i < n; i++) { tw(`#${id} .figur`, t + i * .36, .18, { y: 12 }, 'inout'); tw(`#${id} .figur`, t + i * .36 + .18, .18, { y: 0 }, 'inout'); } };
+const daumen = (id, t) => { tw(`#${id} .daumen`, t, .5, { y: -30 }, 'back'); cue(t, 'plopp'); };
+
+/* ---------- 1 · Krank: Was brauchst du? ---------- */
+const X0 = S(0);
+figur('mai0', { x: X0 + 1190, y: MY - 10 });
+ein('mai0', A(0.05), { x: X0 + 1190, y: MY - 10 }, { y: 90 });
+// zittern: Mai fröstelt
+HOOKS.push(t => { if (t > A(.6) && t < Z(1)) $('#mai0 .figur').style.translate = `${1.6 * Math.sin(t * 38)}px 0`; else $('#mai0 .figur').style.translate = ''; });
+ein('thermo', W(0, 'krank'), { x: X0 + 1500, y: MY - 20 }, { y: 120 });
+const quecksilber = $('#thermo .steigen');
+quecksilber.style.transformBox = 'fill-box'; quecksilber.style.transformOrigin = '50% 100%';
+HOOKS.push(t => { quecksilber.style.transform = `scaleY(${.25 + .7 * E.out(clamp((t - W(0, 'krank') - .3) / 1.6))})`; });
+cue(W(0, 'krank') + .4, 'scan');
+tw('thermo', ZE(0) - .1, .15, { s: 1.06 }); tw('thermo', ZE(0) + .05, .35, { s: 1 }, 'back');
+pop('frage0', Z(1), { x: X0 + 1590, y: 240 });
+wackeln('frage0', Z(1) + .6, 3, 3);
+textAkteure('tb1'); textEin('tb1', Z(1)); textAus('tb1', ZE(1) + .45);
+
+/* ---------- 2 · Gesundheitskarte von der Krankenkasse ---------- */
+wechsel(ZE(1) + .5, 1); const X1 = S(1);
+akteur('karte1', { x: X1 + 2300, y: MY - 10, r: 3 });
+tw('karte1', Z(2) - .15, .8, { x: X1 + MX, r: 0 }, 'back');
+drehen('karte1', Z(2) + .75, 1);
+tw('karte1', Z(3) - .1, .7, { x: X1 + 1530, y: MY - 20 }, 'inout');
+ein('kasse', W(3, 'Krankenkasse'), { x: X1 + 1065, y: MY + 10 }, { y: 100 });
+ein('lblKasse', W(3, 'Krankenkasse') + .25, { x: X1 + 1065, y: MY + 215 }, { y: 30 }, null);
+akteur('pfeil1', { x: X1 + 960, y: 540, o: 0, draw: 0 }); tw('pfeil1', W(3, 'Krankenkasse') + .5, .5, { o: 1, draw: 1 });
+tw('karte1', W(3, 'Krankenkasse') + .95, .15, { s: 1.08 }); tw('karte1', W(3, 'Krankenkasse') + 1.1, .4, { s: 1 }, 'back'); cue(W(3, 'Krankenkasse') + .95, 'ding');
+textAkteure('tb2'); textEin('tb2', Z(2), { unter: Z(3) }); textAus('tb2', ZE(3) + .45);
+
+/* ---------- 3 · Über Azubis Plus = AOK ---------- */
+wechsel(ZE(3) + .5, 2); const X2 = S(2);
+figur('mai2', { x: X2 + 1110, y: MY - 30 });
+ein('mai2', Z(4), { x: X2 + 1110, y: MY - 30 }, { y: 90 });
+ein('lblAp', W(4, 'Azubis'), { x: X2 + 1110, y: MY + 175 }, { y: 30 }, null);
+nicken('mai2', ZE(4) - .3, 2);
+ein('doc2', Z(5), { x: X2 + 1530, y: MY + 30 }, { x: 160, y: 0 });
+pop('aok2', W(5, 'AOK'), { x: X2 + 1530, y: MY - 175 });
+// Stempel schlägt mit Wackler auf
+akteur('stempel2', { x: X2 + 1575, y: -200, o: 1 });
+tw('stempel2', W(5, 'versichert') - .35, .3, { y: MY + 40 }, 'in');
+cue(W(5, 'versichert') - .05, 'plopp');
+tw('doc2', W(5, 'versichert') - .05, .08, { sy: .95 }); tw('doc2', W(5, 'versichert') + .03, .3, { sy: 1 }, 'back');
+wackeln('stempel2', W(5, 'versichert'), 2, 3);
+tw('stempel2', W(5, 'versichert') + .45, .45, { y: -260 }, 'in');
+pop('haken2', W(5, 'versichert') + .55, { x: X2 + 1590, y: MY + 85 }, 'ding');
+ein('lblVers', W(5, 'versichert') + .7, { x: X2 + 1530, y: MY + 225 }, { y: 30 }, null);
+froh('mai2', W(5, 'versichert') + .7); daumen('mai2', W(5, 'versichert') + .7);
+textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) + .45);
+
+/* ---------- 4 · Ein Foto von dir ---------- */
+wechsel(ZE(5) + .5, 3); const X3 = S(3);
+ein('handy3', Z(6) - .1, { x: X3 + 1130, y: MY + 10 }, { y: 160 }, 'whoosh');
+akteur('kamera3', { x: X3 + 1130, y: MY + 5, o: 0 }); tw('kamera3', Z(6) + .35, .3, { o: 1 });
+akteur('blitz', { x: X3 + 1130, y: MY + 5, o: 0 });
+const tF = W(6, 'Foto');
+akteur($('#ausloeser'), {}, true);
+tw('#ausloeser', tF - .1, .08, { s: .8 }); tw('#ausloeser', tF, .2, { s: 1 }, 'back');
+set('blitz', tF, { o: 1 }); tw('blitz', tF + .05, .35, { o: 0 }, 'in'); cue(tF, 'klick');
+akteur('foto3', { x: X3 + 1130, y: MY + 5, s: .45, o: 0, r: 0 });
+set('foto3', tF + .2, { o: 1 });
+tw('foto3', tF + .2, .8, { x: X3 + 1520, y: MY - 15, s: 1, r: 3 }, 'back'); cue(tF + .2, 'whoosh');
+// Fokus-Rahmen zieht sich um das Gesicht zusammen
+akteur('fokus', { x: X3 + 1520, y: MY - 50, s: 1.5, o: 0, r: 3 });
+tw('fokus', W(7, 'Gesicht') - .1, .5, { s: 1, o: 1 }, 'back'); cue(W(7, 'Gesicht') - .1, 'scan');
+pop('haken3', W(7, 'gut'), { x: X3 + 1640, y: 230 }, 'ding');
+textAkteure('tb4'); textEin('tb4', Z(6), { unter: Z(7) }); textAus('tb4', ZE(7) + .45);
+
+/* ---------- 5 · Hochladen in „Meine AOK“ + SV-Nummer ---------- */
+wechsel(ZE(7) + .5, 4); const X4 = S(4);
+ein('handy4', Z(8) - .1, { x: X4 + 1190, y: MY + 10 }, { y: 160 }, 'whoosh');
+akteur('app4', { x: X4 + 1190, y: MY + 5, o: 0 }); tw('app4', Z(8) + .35, .3, { o: 1 });
+akteur($('#mini4'), { o: 0, s: .6 }, true);
+akteur($('#status4'), { o: 0, y: 10 }, true);
+// Foto fliegt ins Handy
+akteur('foto4', { x: X4 + 1010, y: 280, o: 0, r: -3 });
+tw('foto4', W(8, 'Foto') - .1, .35, { o: 1 });
+tw('foto4', W(8, 'hoch') - .3, .7, { x: X4 + 1190, y: MY - 30, s: .4, r: 0 }, 'inout'); cue(W(8, 'hoch') - .3, 'whoosh');
+set('foto4', W(8, 'hoch') + .4, { o: 0 });
+tw('#mini4', W(8, 'hoch') + .35, .4, { o: 1, s: 1 }, 'back'); cue(W(8, 'hoch') + .35, 'pop');
+// Ladebalken läuft
+const tL0 = W(8, 'hoch') + .5, tL1 = WE(9, 'Sozialversicherungsnummer');
+HOOKS.push(t => { $('#ladung').style.transform = `scaleX(${clamp((t - tL0) / (tL1 - tL0))})`; });
+tw('#status4', tL1 + .05, .4, { o: 1, y: 0 }, 'back'); cue(tL1 + .05, 'erfolg');
+tw('handy4', tL1 + .05, .15, { s: 1.05 }); tw('handy4', tL1 + .2, .4, { s: 1 }, 'back');
+// SV-Nummer: Brief kommt, Nummer wird getippt
+ein('brief4', Z(9), { x: X4 + 1560, y: MY - 110 }, { x: 200, y: 0 }, 'whoosh');
+ein('sv4', W(9, 'Sozialversicherungsnummer') - .2, { x: X4 + 1520, y: MY + 140 }, { y: 50 }, null);
+tippen($('#svNr'), W(9, 'Sozialversicherungsnummer') + .1, '12 150803 M 012', .07);
+textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'App') }); textAus('tb5', ZE(9) + .5);
+
+/* ---------- 6 · Karte kommt per Post ---------- */
+wechsel(ZE(9) + .55, 5); const X5 = S(5);
+ein('kasten5', Z(10) - .2, { x: X5 + 1130, y: MY + 30 }, { y: 120 });
+akteur('brief5', { x: X5 + 1110, y: -150, r: -3 });
+const tB = Z(10) + .1;
+tw('brief5', tB, .6, { y: MY - 40, r: 0 }, 'out'); cue(tB, 'whoosh');
+tw('brief5', tB + .6, .25, { y: MY + 10, s: .6, o: 0 }, 'in'); cue(tB + .6, 'plopp');
+tw('kasten5', tB + .62, .08, { sy: .94 }); tw('kasten5', tB + .7, .3, { sy: 1 }, 'back');
+akteur('karte5', { x: X5 + 1130, y: MY - 20, s: .3, o: 0 });
+const tK = Math.max(W(10, 'Karte'), tB + .9);
+set('karte5', tK, { o: 1 });
+tw('karte5', tK, .7, { x: X5 + 1510, y: MY - 50, s: 1 }, 'back'); cue(tK, 'whoosh');
+drehen('karte5', tK + .55, .7);
+pop('haken5', tK + 1.0, { x: X5 + 1660, y: 250 }, 'ding');
+textAkteure('tb6'); textEin('tb6', Z(10)); textAus('tb6', ZE(10) + .5);
+
+/* ---------- 7 · Immer mit zum Arzt, sonst Bescheinigung ---------- */
+wechsel(ZE(10) + .55, 6); const X6 = S(6);
+ein('leser', Z(11) - .1, { x: X6 + 1130, y: MY + 50 }, { y: 120 });
+ein('lblPraxis', Z(11) + .2, { x: X6 + 1130, y: MY + 232 }, { y: 30 }, null);
+// Karte gleitet von oben in den Leser
+akteur('karte6', { x: X6 + 1131, y: 240, o: 0 });
+tw('karte6', W(11, 'mit') - .2, .3, { o: 1 });
+tw('karte6', W(11, 'Arzt') - .3, .6, { y: MY - 40 }, 'inout'); cue(W(11, 'Arzt') + .25, 'klick');
+const led = $('#leser .led');
+HOOKS.push(t => { led.style.fill = t >= W(11, 'Arzt') + .35 ? 'var(--success)' : ''; });
+cue(W(11, 'Arzt') + .4, 'ding');
+pop('frage6', Z(12), { x: X6 + 1540, y: 260 });
+wackeln('frage6', Z(12) + .5, 3, 3);
+tw('frage6', Z(13), .3, { o: 0, s: .6 }, 'in');
+ein('besch6', W(13, 'Bescheinigung') - .3, { x: X6 + 1540, y: MY + 20 }, { y: 100 });
+ein('lblBesch', W(13, 'Bescheinigung') + .1, { x: X6 + 1540, y: MY + 225 }, { y: 30 }, 'ding');
+textAkteure('tb7'); textEin('tb7', Z(11), { unter: Z(12) }); textAus('tb7', ZE(13) + .5);
+
+/* ---------- 8 · Tipp: Foto in der Helper-App ---------- */
+wechsel(ZE(13) + .55, 7); const X7 = S(7);
+figur('mai7', { x: X7 + 1040, y: MY - 60 });
+ein('mai7', Z(14), { x: X7 + 1040, y: MY - 60 }, { y: 90 });
+ein('karte7', Z(14) + .3, { x: X7 + 1040, y: MY + 175 }, { y: 60 }, null);
+ein('handy7', Z(14) + .2, { x: X7 + 1460, y: MY + 10 }, { y: 160 }, 'whoosh');
+akteur('app7', { x: X7 + 1460, y: MY + 5, o: 0 }); tw('app7', Z(14) + .6, .3, { o: 1 });
+akteur('neu7', { o: 0, x: 40 }, true);
+// Foto der Karte fliegt in die Liste „Dokumente“
+akteur('flug7', { x: X7 + 1040, y: MY + 175, o: 0 });
+const tFl = W(14, 'Foto');
+tw('karte7', tFl - .1, .08, { s: .94 }); tw('karte7', tFl - .02, .25, { s: 1 }, 'back'); cue(tFl - .1, 'klick');
+set('flug7', tFl + .1, { o: 1 });
+tw('flug7', tFl + .1, .9, { x: X7 + 1460, y: MY + 90, s: .5 }, 'inout'); cue(tFl + .1, 'whoosh');
+set('flug7', tFl + 1.0, { o: 0 });
+tw('neu7', W(14, 'Dokumente') - .1, .45, { o: 1, x: 0 }, 'back'); cue(W(14, 'Dokumente') - .1, 'erfolg');
+ein('lblApp', W(14, 'Helper'), { x: X7 + 1460, y: MY + 250 }, { y: 30 }, null);
+froh('mai7', W(14, 'Dokumente')); daumen('mai7', W(14, 'Dokumente') + .1); nicken('mai7', W(14, 'Dokumente') + .5, 1);
+textAkteure('tb8'); textEin('tb8', Z(14), { unter: W(14, 'Helper') });
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .8;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endKarte', { o: 0, y: 40 }, true); tw('endKarte', AB + .35, .5, { o: 1, y: 0 }, 'back');
+drehen('endKarte', AB + .9, .9);
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>
