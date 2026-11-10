@@ -18,6 +18,7 @@
 .buehne{width:900px;height:660px;border-radius:44px}
 .titel{font-size:80px;line-height:90px}
 .unter{font-size:36px;line-height:52px}
+#tb4 .titel{font-size:66px;line-height:76px}
 
 .chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
   background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
@@ -102,7 +103,7 @@
   <div class="a" id="haken3a" style="width:84px">{{haken}}</div>
   <div class="a" id="haus3" style="width:220px">{{haus}}</div>
   <div class="a label" id="lblHaus">Deine Wohnung</div>
-  <div class="a" id="welt3" data-gruppe="g3" style="width:250px">{{weltkugel}}</div>
+  <div class="a" id="welt3" data-gruppe="g3" style="width:220px">{{weltkugel}}</div>
   <div class="a" id="eltern3" data-gruppe="g3" style="width:110px">{{haus~2}}</div>
   <div class="a label" id="lblEltern">Eltern im Ausland</div>
   <div class="a" id="haken3b" style="width:84px">{{haken~2}}</div>
@@ -296,15 +297,15 @@ const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).queryS
   pop('haken3a', W(5, 'Betrieb') + .2, { x: X + 1160, y: MY - 150 }, 'ding');
   ein('haus3', W(5, 'wohnst') - .3, { x: X + 1360, y: MY - 30 });
   akteur('lblHaus', { x: X + 1360, y: MY + 110, o: 0 }); tw('lblHaus', W(5, 'wohnst'), .4, { o: 1 });
-  ein('welt3', Z(6) - .1, { x: X + 1590, y: MY + 140 }, { y: 120 }, 'whoosh');
+  ein('welt3', Z(6) - .1, { x: X + 1590, y: MY + 115 }, { y: 120 }, 'whoosh');
   // Elternhaus springt im Bogen auf die andere Seite der Weltkugel
   const ta = W(6, 'Ausland');
   akteur('eltern3', { x: X + 1360, y: MY + 200, o: 0, s: .4 });
   tw('eltern3', W(6, 'Eltern'), .3, { o: 1, s: 1 }, 'back');
-  tw('eltern3', ta - .2, .9, { x: X + 1620, y: MY + 30 }, 'inout', { bogen: 140 }); cue(ta - .2, 'whoosh');
+  tw('eltern3', ta - .2, .9, { x: X + 1615, y: MY + 20 }, 'inout', { bogen: 140 }); cue(ta - .2, 'whoosh');
   tw('eltern3', ta + .7, .12, { sy: .85 }); tw('eltern3', ta + .82, .3, { sy: 1 }, 'back');
-  akteur('lblEltern', { x: X + 1590, y: 690, o: 0 }); tw('lblEltern', ta + .4, .4, { o: 1 });
-  pop('haken3b', W(6, 'passt'), { x: X + 1690, y: MY - 60 }, 'erfolg');
+  akteur('lblEltern', { x: X + 1590, y: 700, o: 0 }); tw('lblEltern', ta + .4, .4, { o: 1 });
+  pop('haken3b', W(6, 'passt'), { x: X + 1690, y: MY - 70 }, 'erfolg');
   textAkteure('tb3'); textEin('tb3', Z(5) + .1); textAus('tb3', ZE(6) + .4);
 }
 
@@ -345,8 +346,8 @@ const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).queryS
     $('#wschaleL').style.transform = `translate(${WX - 135}px,${WY - 15 - dy}px) translate(-50%,-50%)`;
     $('#wschaleR').style.transform = `translate(${WX + 135}px,${WY - 15 + dy}px) translate(-50%,-50%)`;
   });
-  pop('cVerg', W(9, 'Vergütung'), { x: WX - 135, y: 205 });
-  pop('cMiete', W(9, 'Miete'), { x: WX + 135, y: 205 });
+  pop('cVerg', W(9, 'Vergütung'), { x: WX - 135, y: 300 });
+  pop('cMiete', W(9, 'Miete'), { x: WX + 135, y: 300 });
   pop('cEltern', W(10, 'Eltern'), { x: WX, y: 690 });
   ein('handy5', W(11, 'BAB-Rechner') - .5, { x: X + 1590, y: MY + 10 }, { y: 400 }, 'whoosh');
   akteur('schirm5', { x: X + 1590, y: MY + 10, o: 0 }); tw('schirm5', W(11, 'BAB-Rechner') - .1, .3, { o: 1 });
@@ -368,17 +369,17 @@ const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).queryS
   // Vertrag fliegt ins Handy
   ein('vertrag6', Z(13) - .1, { x: X + 1555, y: MY - 20, r: 2 }, { x: 200 });
   akteur('lblVertrag6', { x: X + 1555, y: MY + 140, o: 0 }); tw('lblVertrag6', W(13, 'Ausbildungsvertrag'), .3, { o: 1 });
-  const tv = W(13, 'Ausbildungsvertrag') + .6;
-  tw('vertrag6', tv, .7, { x: X + 1180, y: MY + 20, s: .3 }, 'inout'); tw('vertrag6', tv + .6, .15, { o: 0 }); cue(tv, 'whoosh');
+  const tv = W(13, 'Ausbildungsvertrag');
+  tw('vertrag6', tv, .6, { x: X + 1180, y: MY + 20, s: .3 }, 'inout'); tw('vertrag6', tv + .5, .15, { o: 0 }); cue(tv, 'whoosh');
   tw('lblVertrag6', tv, .3, { o: 0 });
-  fuellen('#f6c', tv + .6, .4);
-  HOOKS.push(t => $('#senden6').classList.toggle('an', t >= tv + 1.1));
-  pop('haken6', tv + 1.1, { x: X + 1340, y: MY - 180 }, 'erfolg');
-  textAkteure('tb6'); textEin('tb6', Z(12) + .1, { unter: W(12, 'Agentur') }); textAus('tb6', Math.max(ZE(13), tv + 1.3) + .3);
+  fuellen('#f6c', tv + .5, .3);
+  HOOKS.push(t => $('#senden6').classList.toggle('an', t >= tv + .8));
+  pop('haken6', tv + .8, { x: X + 1340, y: MY - 180 }, 'erfolg');
+  textAkteure('tb6'); textEin('tb6', Z(12) + .1, { unter: W(12, 'Agentur') }); textAus('tb6', Math.max(ZE(13), tv + 1) + .2);
 }
 
 /* ---------- 7 · Früh beantragen ---------- */
-{ const X = S(6), T0 = Math.max(ZE(13), W(13, 'Ausbildungsvertrag') + 1.9) + .5;
+{ const X = S(6), T0 = Math.max(ZE(13), W(13, 'Ausbildungsvertrag') + 1) + .5;
   wechsel(T0, 6);
   const MO = [['mo1', 1050], ['mo2', 1230], ['mo3', 1410], ['mo4', 1590]];
   MO.forEach(([id, x], i) => ein(id, T0 + .4 + i * .12, { x: X + x, y: MY + 140 }, { y: 70 }, i ? null : 'pop'));
@@ -393,15 +394,15 @@ const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).queryS
   tw('mo3', ta + .05, .12, { sy: .9 }); tw('mo3', ta + .17, .3, { sy: 1 }, 'back');
   // Monate davor grau mit X, ab November Münzen
   HOOKS.push(t => { for (const id of ['mo1', 'mo2']) $('#' + id).classList.toggle('grau', t >= W(15, 'stellst')); });
-  pop('x7a', W(15, 'stellst') + .1, { x: X + 1050, y: MY + 140 }, 'plopp');
-  pop('x7b', W(15, 'stellst') + .2, { x: X + 1230, y: MY + 140 }, null);
+  pop('x7a', W(15, 'stellst') + .1, { x: X + 1100, y: MY + 80 }, 'plopp');
+  pop('x7b', W(15, 'stellst') + .2, { x: X + 1280, y: MY + 80 }, null);
   [['m7a', 1410], ['m7b', 1590]].forEach(([id, x], i) => {
     akteur(id, { x: X + x, y: 160, o: 0 });
     const t0 = W(15, 'Geld') + .3 + i * .25;
-    tw(id, t0, .05, { o: 1 }); tw(id, t0, .7, { y: MY + 300 }, 'sinus'); cue(t0 + .3, 'muenze');
+    tw(id, t0, .05, { o: 1 }); tw(id, t0, .7, { y: 420 }, 'sinus'); cue(t0 + .3, 'muenze');
   });
   muenzeDreht('m7a', W(15, 'Geld') + .9); muenzeDreht('m7b', W(15, 'Geld') + 1.1);
-  textAkteure('tb7'); textEin('tb7', Z(14) + .1, { unter: Z(15) }); textAus('tb7', ZE(15) + .4);
+  textAkteure('tb7'); textEin('tb7', Math.max(Z(14) + .1, T0 + .8), { unter: Z(15) }); textAus('tb7', ZE(15) + .4);
 }
 
 /* ---------- 8 · Unsicher? Anrufen ---------- */

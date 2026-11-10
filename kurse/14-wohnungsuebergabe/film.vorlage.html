@@ -47,6 +47,7 @@
 .karte .z.mangel i{background:var(--warning)}
 .karte .unterschrift{display:flex;gap:22px;margin-top:16px}
 .karte .unterschrift div{flex:1;border-top:2px solid var(--n300);padding-top:6px;font:600 15px/18px Inter;color:var(--n500)}
+.licht{border-radius:6px;background:linear-gradient(var(--warning-bg),var(--surface))}
 .zaehlwerk{font:800 24px/28px Inter;letter-spacing:.14em;color:var(--surface);white-space:pre}
 .blitz{width:160px;height:160px;border-radius:999px;background:radial-gradient(var(--surface),rgba(255,255,255,0) 70%)}
 .foto{width:96px;height:72px;border-radius:8px;background:var(--surface);border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18);overflow:hidden}
@@ -69,6 +70,7 @@
   <!-- 1 · Neue Wohnung -->
   <div class="a buehne" id="bue0"></div>
   <div class="a" id="tuer1" data-gruppe="g1" style="width:380px">{{haustuer}}</div>
+  <div class="a licht" id="licht1" data-gruppe="g1" style="width:180px;height:275px"></div>
   <div class="a" id="blatt1" data-gruppe="g1" style="width:380px;transform-origin:27.5% 50%">{{haustuer-blatt}}</div>
   <div class="a" id="schluessel1" data-dreht data-gruppe="g1" style="width:120px">{{schluessel}}</div>
   <div class="a portrait" id="mai1" style="width:220px;height:220px"><div class="figur">
@@ -119,10 +121,8 @@
   <div class="a karte" id="prot5" data-gruppe="g5"><div class="kopf">Übergabeprotokoll</div>
     <div class="z mangel"><i></i>Flur: Kratzer an der Tür</div><div class="z mangel"><i></i>Bad: Fleck am Boden</div>
     <div class="z" id="falsch5"><i></i>Sonst alles neu?</div>
-    <div class="unterschrift"><div>Vermieter
-      <svg viewBox="0 0 140 30" style="width:120px;margin-top:-26px"><path class="zeichnen" pathLength="1" d="M4 22c10-18 18-18 20 0s14-20 22-4 14 8 22-6 16 10 26 2" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
-      <div>Du
-      <svg viewBox="0 0 140 30" style="width:120px;margin-top:-26px"><path class="zeichnen" pathLength="1" d="M4 20c12-14 16 4 26-6s10 12 20 2 18-10 24 4 14-8 26-4" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div></div></div>
+    <div class="unterschrift" style="margin-top:46px"><div><svg viewBox="0 0 140 30" style="width:120px;display:block;margin:-38px 0 8px"><path class="zeichnen" pathLength="1" d="M4 22c10-18 18-18 20 0s14-20 22-4 14 8 22-6 16 10 26 2" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>Vermieter</div>
+      <div><svg viewBox="0 0 140 30" style="width:120px;display:block;margin:-38px 0 8px"><path class="zeichnen" pathLength="1" d="M4 20c12-14 16 4 26-6s10 12 20 2 18-10 24 4 14-8 26-4" stroke="var(--b600)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>Du</div></div></div>
   <div class="a" id="sig5a" data-gruppe="g5" style="width:1px;height:1px"></div>
   <div class="a" id="sig5b" data-gruppe="g5" style="width:1px;height:1px"></div>
   <div class="a" id="stift5" data-dreht data-gruppe="g5" style="width:110px">{{stift}}</div>
@@ -182,7 +182,7 @@
 
 <div class="block" id="tb1"><div class="titel">Neue Wohnung!</div><div class="unter">Bevor du auspackst: alles genau anschauen.</div></div>
 <div class="block" id="tb2"><div class="titel">Schützt deine Kaution</div><div class="unter">Ohne Beweis gibt es leicht Streit.</div></div>
-<div class="block" id="tb3"><div class="titel">Übergabeprotokoll</div><div class="unter">Zusammen durch die Wohnung. Jeder Schaden steht drin.</div></div>
+<div class="block" id="tb3"><div class="titel" style="font-size:70px;line-height:80px">Übergabeprotokoll</div><div class="unter">Zusammen durch die Wohnung. Jeder Schaden steht drin.</div></div>
 <div class="block" id="tb4"><div class="titel">Fotos · Zähler · Schlüssel</div></div>
 <div class="block" id="tb5"><div class="titel">Beide unterschreiben, Kopie behalten</div><div class="unter">Unterschreib nichts, was nicht stimmt.</div></div>
 <div class="block" id="tb6"><div class="titel">Kein Protokoll?</div><div class="unter">Kommt oft vor.</div></div>
@@ -266,6 +266,7 @@ const auftritt = (id, t, x, y, snd = 'pop') => {
   tw('schluessel1', tk + .45, .35, { r: 90 }, 'inout'); cue(tk + .6, 'klick');
   tw('schluessel1', tk + .9, .25, { o: 0 });
   tw('blatt1', tk + .9, .7, { sx: .18 }, 'inout'); cue(tk + .9, 'whoosh');
+  akteur('licht1', { x: X + 1180, y: MY + 25, o: 0 }); tw('licht1', tk + 1.1, .6, { o: 1 });
   gesicht('mai1', tk + 1, 99, 'froh');
   // Erst schauen: Koffer bleibt zu (wackelt), Mai nickt
   wackeln('koffer1', W(1, 'auspackst'), 3, 3); cue(W(1, 'auspackst'), 'plopp');
@@ -302,10 +303,10 @@ const auftritt = (id, t, x, y, snd = 'pop') => {
   akteur('lblVerm3', { x: X + 1610, y: MY - 40, o: 0 }); tw('lblVerm3', T0 + .9, .4, { o: 1 });
   nicken('mai3', W(4, 'zusammen'), W(4, 'zusammen') + 1); nicken('verm3', W(4, 'zusammen') + .2, W(4, 'zusammen') + 1.2);
   ein('prot3', W(4, 'Übergabeprotokoll') - .3, { x: X + MX, y: MY + 110 }, { y: 120 }, 'whoosh');
-  tippen('#p3a', 'Flur: Kratzer an der Tür', W(5, 'Schaden'));
-  tippen('#p3b', 'Bad: Fleck am Boden', W(5, 'Schaden') + 1.1);
-  tippen('#p3c', 'Zähler: Strom 04872', W(5, 'genau'));
-  tippen('#p3d', 'Schlüssel: 2', W(5, 'genau') + .9);
+  tippen('#p3a', 'Flur: Kratzer an der Tür', W(4, 'Übergabeprotokoll') + .4, .03);
+  tippen('#p3b', 'Bad: Fleck am Boden', W(4, 'Übergabeprotokoll') + 1.2, .03);
+  tippen('#p3c', 'Zähler: Strom 04872', W(5, 'Schaden'), .03);
+  tippen('#p3d', 'Schlüssel: 2', W(5, 'genau') - .1, .03);
   gesicht('verm3', W(5, 'genau'), 99, 'froh'); gesicht('mai3', W(5, 'genau') + .2, 99, 'froh');
   textAkteure('tb3'); textEin('tb3', Z(4) + .1, { unter: Z(5) }); textAus('tb3', ZE(5) + .45);
 }
@@ -357,7 +358,7 @@ const auftritt = (id, t, x, y, snd = 'pop') => {
   tw('stift5', tU + 1.8, .3, { o: 0 });
   // Was nicht stimmt: X
   const tN = W(9, 'nichts');
-  pop('x5', tN, { x: X + 1330, y: MY + 1 }, 'plopp'); wackeln('x5', tN + .4, 3, 5);
+  pop('x5', tN, { x: X + 1320, y: MY + 50 }, 'plopp'); wackeln('x5', tN + .4, 3, 5);
   // Kopie gleitet heraus
   const tKo = W(9, 'Kopie');
   akteur('kopie5', { x: X + 1190, y: MY + 20, o: 0, r: 0 });
