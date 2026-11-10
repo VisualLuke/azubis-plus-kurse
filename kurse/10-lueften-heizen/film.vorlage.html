@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Richtig lüften und heizen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --n200:var(--a2273fd3-5899-46bc-985c-b3c33e3c0780,#E6E3EE);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:34px;height:34px;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.blau{background:var(--info-bg);color:var(--info);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.gross{font-size:44px;line-height:52px;padding:14px 34px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.kreuz{width:84px;height:84px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:40px}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .auf{transform-origin:50% 53%;opacity:0}
+.portrait .froh{opacity:0}
+
+.fleck{border-radius:47% 53% 42% 58% / 55% 41% 59% 45%;background:var(--ink);opacity:.82}
+.puff{width:70px;height:70px;border-radius:999px;background:var(--surface);box-shadow:0 4px 14px rgba(22,19,37,.08)}
+.wolke svg{width:100%}
+.tropfen{width:22px;height:30px;border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;background:var(--info)}
+.welle path{fill:none;stroke:var(--warning);stroke-width:8;stroke-linecap:round}
+.wand{border-radius:28px;background:var(--b100);border:4px solid var(--b200)}
+.balken{border-radius:12px;background:linear-gradient(90deg,var(--b200),var(--b300))}
+.boden{height:8px;border-radius:999px;background:var(--b200)}
+.luft path{fill:none;stroke:var(--info);stroke-width:7;stroke-linecap:round;stroke-dasharray:6 18}
+
+/* Thermostat: feste Marke oben, die Scheibe dreht sich */
+.thermo{border-radius:999px;background:var(--surface);box-shadow:0 8px 26px rgba(22,19,37,.12);border:6px solid var(--b200)}
+.thermo .scheibe{position:absolute;inset:0;border-radius:999px}
+.thermo .scheibe span{position:absolute;left:50%;top:50%;font:800 1em/1 Inter;color:var(--b600);width:1.4em;text-align:center}
+.thermo .marke{position:absolute;left:50%;top:-6px;width:0;height:0;border-left:.32em solid transparent;border-right:.32em solid transparent;
+  border-top:.42em solid var(--b500);transform:translateX(-50%)}
+.thermo .mitte{position:absolute;left:30%;top:30%;width:40%;height:40%;border-radius:999px;background:linear-gradient(160deg,var(--b100),var(--b200))}
+.rohr{border-radius:999px;background:var(--surface);border:6px solid var(--b200);overflow:hidden}
+.rohr i{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--error);border-radius:999px}
+.kugel{border-radius:999px;background:var(--error);border:6px solid var(--b200)}
+.skala{font:700 24px/28px Inter;color:var(--n500)}
+.nebel{border-radius:70px;background:var(--b50)}
+.anruf path{fill:none;stroke:var(--b400);stroke-width:7;stroke-linecap:round}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Schimmel in der Ecke -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="ecke" style="width:480px">{{ecke}}</div>
+  <div class="a fleck" id="f1" style="width:58px;height:50px"></div>
+  <div class="a fleck" id="f2" style="width:40px;height:36px"></div>
+  <div class="a fleck" id="f3" style="width:30px;height:26px"></div>
+  <div class="a fleck" id="f4" style="width:46px;height:40px"></div>
+  <div class="a fleck" id="f5" style="width:24px;height:22px"></div>
+  <div class="a chip rot" id="lblSchimmel">Schimmel</div>
+  <div class="a portrait" id="mai1" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a puff" id="hust" style="width:46px;height:46px"></div>
+
+  <!-- 2 · Feuchte Luft -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="dusche" style="width:180px">{{dusche}}</div>
+  <div class="a" id="topf" style="width:180px">{{topf}}</div>
+  <div class="a" id="staender" style="width:180px">{{waeschestaender}}</div>
+  <div class="a portrait" id="mai2" style="width:160px;height:160px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a wolke" id="wolke2" style="width:420px"><svg viewBox="0 0 420 150"><path d="M70 140C30 140 10 116 14 92 18 66 44 56 66 60 70 28 100 10 134 14c22 2 38 14 46 30 12-22 38-34 66-28 30 6 46 30 46 52 30-6 60 10 66 38 6 28-14 36-40 36Z" fill="var(--surface)"/></svg></div>
+  <div class="a tropfen" id="t21"></div><div class="a tropfen" id="t22"></div><div class="a tropfen" id="t23"></div>
+  <div class="a puff" id="p1"></div><div class="a puff" id="p2"></div><div class="a puff" id="p3"></div><div class="a puff" id="p4"></div>
+
+  <!-- 3 · Stoßlüften -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a" id="rahmen3" style="width:420px">{{fenster-rahmen}}</div>
+  <div class="a" id="wolke3" style="width:260px"><svg viewBox="0 0 420 150"><path d="M70 140C30 140 10 116 14 92 18 66 44 56 66 60 70 28 100 10 134 14c22 2 38 14 46 30 12-22 38-34 66-28 30 6 46 30 46 52 30-6 60 10 66 38 6 28-14 36-40 36Z" fill="var(--b200)"/></svg></div>
+  <div class="a" id="fluegel3" style="width:420px;transform-origin:17.5% 50%">{{fenster-fluegel}}</div>
+  <div class="a" id="uhr3" style="width:200px">{{uhr}}</div>
+  <div class="a" id="zeiger3" style="width:200px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
+  <div class="a chip" id="lblMin">5–10 Min.</div>
+  <div class="a chip" id="lblMal">3–4× am Tag</div>
+  <div class="a chip brand gross" id="lblStoss">Stoßlüften</div>
+
+  <!-- 4 · Gekippt -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a wand" id="wand4" style="width:220px;height:400px"></div>
+  <div class="a chip blau" id="lblKalt"><svg viewBox="0 0 34 34"><path d="M17 3v28M5 10l24 14M29 10L5 24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>Wand kalt</div>
+  <div class="a" id="kipp4" style="width:340px">{{fenster-gekippt}}</div>
+  <div class="a" id="heiz4" style="width:280px">{{heizung}}</div>
+  <svg class="a welle" id="w41" viewBox="0 0 60 120" style="width:46px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <svg class="a welle" id="w42" viewBox="0 0 60 120" style="width:46px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <svg class="a welle" id="w43" viewBox="0 0 60 120" style="width:46px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <div class="a" id="m41" style="width:64px">{{muenze}}</div>
+  <div class="a" id="m42" style="width:64px">{{muenze}}</div>
+  <div class="a kreuz" id="x4"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+
+  <!-- 5 · Nach Duschen und Kochen -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="spiegel5" style="width:360px">{{spiegel}}</div>
+  <div class="a portrait" id="mai5" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a nebel" id="nebel5" style="width:212px;height:279px"></div>
+  <div class="a" id="rahmen5" style="width:260px">{{fenster-rahmen}}</div>
+  <div class="a" id="fluegel5" style="width:260px;transform-origin:17.5% 50%">{{fenster-fluegel}}</div>
+  <div class="a" id="topf5" style="width:150px">{{topf}}</div>
+  <div class="a puff" id="p51" style="width:50px;height:50px"></div><div class="a puff" id="p52" style="width:50px;height:50px"></div><div class="a puff" id="p53" style="width:50px;height:50px"></div>
+
+  <!-- 6 · Heizung runter beim Lüften -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="heiz6" style="width:380px">{{heizung}}</div>
+  <svg class="a welle" id="w61" viewBox="0 0 60 120" style="width:40px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <svg class="a welle" id="w62" viewBox="0 0 60 120" style="width:40px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <svg class="a welle" id="w63" viewBox="0 0 60 120" style="width:40px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <div class="a thermo" id="knopf6" style="width:200px;height:200px;font-size:32px"><div class="scheibe"></div><div class="mitte"></div><div class="marke"></div></div>
+  <div class="a" id="rahmen6" style="width:240px">{{fenster-rahmen}}</div>
+  <div class="a" id="fluegel6" style="width:240px;transform-origin:17.5% 50%">{{fenster-fluegel}}</div>
+
+  <!-- 7 · Stufe 3 ≈ 20 °C -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a thermo" id="knopf7" style="width:300px;height:300px;font-size:48px"><div class="scheibe"></div><div class="mitte"></div><div class="marke"></div></div>
+  <div class="a rohr" id="rohr7" style="width:70px;height:330px"><i></i></div>
+  <div class="a kugel" id="kugel7" style="width:110px;height:110px"></div>
+  <div class="a skala" id="sk15">15</div><div class="a skala" id="sk20">20</div><div class="a skala" id="sk25">25</div>
+  <div class="a chip gelb gross" id="lblGrad">20 °C</div>
+  <div class="a chip" id="lblWohn">Wohnzimmer</div>
+  <div class="a chip" id="lblKueche">Küche</div>
+
+  <!-- 8 · Kein Raum ganz kalt -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a wand" id="wand8" style="width:560px;height:330px"></div>
+  <div class="a tropfen" id="t81"></div><div class="a tropfen" id="t82"></div><div class="a tropfen" id="t83"></div><div class="a tropfen" id="t84"></div>
+  <div class="a chip blau" id="lblKalt8"><svg viewBox="0 0 34 34"><path d="M17 3v28M5 10l24 14M29 10L5 24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>kalt</div>
+  <div class="a chip gelb" id="lblWarm8">warm</div>
+  <div class="a" id="heiz8" style="width:260px">{{heizung}}</div>
+  <svg class="a welle" id="w81" viewBox="0 0 60 120" style="width:36px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <svg class="a welle" id="w82" viewBox="0 0 60 120" style="width:36px"><path d="M30 110c-18-14 18-26 0-40s18-26 0-40"/></svg>
+  <div class="a portrait" id="mai8" style="width:170px;height:170px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 9 · Möbel mit Abstand -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a boden" id="boden9" style="width:640px"></div>
+  <div class="a balken" id="wand9" style="width:40px;height:500px"></div>
+  <div class="a label" id="lblWand9">Wand</div>
+  <div class="a" id="schrank9" style="width:300px">{{schrank}}</div>
+  <svg class="a luft" id="luft9" viewBox="0 0 120 440" style="width:120px"><path d="M60 420V40"/><path d="M40 70L60 34 80 70" style="stroke-dasharray:none"/></svg>
+  <div class="a chip blau" id="lblLuft">Luft</div>
+  <div class="a" id="haken9" style="width:96px">{{haken}}</div>
+
+  <!-- 10 · Vermieter Bescheid sagen -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a portrait" id="mai10" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a portrait" id="verm10" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a label" id="lblDu">Du</div>
+  <div class="a label" id="lblVerm">Vermieter</div>
+  <div class="a chip gelb" id="lblFrage">Schimmel?</div>
+  <div class="a" id="handy10" style="width:150px">{{handy}}</div>
+  <svg class="a anruf" id="anruf10" viewBox="0 0 200 120" style="width:200px"><path d="M40 60a40 40 0 0 1 0-0"/><path d="M60 30q30 30 0 60"/><path d="M90 14q46 46 0 92"/><path d="M120 0q60 60 0 120" style="opacity:0"/></svg>
+  <div class="a" id="haken10" style="width:96px">{{haken}}</div>
+</div></div>
+
+
+<div class="block" id="tb1"><div class="titel">Schimmel = ungesund</div></div>
+<div class="block" id="tb2"><div class="titel">Feuchte Luft</div><div class="unter">vom Duschen, Kochen, Wäschetrocknen – und vom Atmen</div></div>
+<div class="block" id="tb3"><div class="titel">Stoßlüften</div><div class="unter">3–4× am Tag, 5–10 Minuten, Fenster ganz auf</div></div>
+<div class="block" id="tb4"><div class="titel">Kein Dauer-Kippen</div></div>
+<div class="block" id="tb5"><div class="titel">Nach Duschen &amp; Kochen: lüften</div></div>
+<div class="block" id="tb6"><div class="titel">Lüften: Heizung runter</div><div class="unter">Danach wieder hoch.</div></div>
+<div class="block" id="tb7"><div class="titel">Stufe 3 ≈ 20 °C</div></div>
+<div class="block" id="tb8"><div class="titel">Kein Raum ganz kalt</div></div>
+<div class="block" id="tb9"><div class="titel">Möbel mit Abstand</div></div>
+<div class="block" id="tb10"><div class="titel">Schimmel → Vermieter Bescheid sagen</div></div>
+
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endFenster" style="position:relative;width:240px">{{fenster-rahmen~2}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Frische Luft, warme Wohnung.</div>
+</div></div>
+
+<script src="sprache.js"></script>
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 70 }) => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), sy: 1, sx: 1 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
+  tw(id, t + .38, .1, { sy: .92, sx: 1.05 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+};
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const stempel = (id, t, basis) => { akteur(id, { s: 1.6, o: 0, ...basis }); tw(id, t, .22, { s: 1, o: 1 }, 'in'); cue(t + .2, 'plopp'); wackeln(id, t + .22, 3, 3); };
+// Wolken/Puffs: Dampf steigt von a nach b, wird größer und blasser
+const dampf = (id, t0, d, von, nach, s0 = .4, s1 = 1.1) => {
+  akteur(id, { x: von[0], y: von[1], s: s0, o: 0 });
+  tw(id, t0, .25, { o: .95 }); tw(id, t0, d, { x: nach[0], y: nach[1], s: s1 }, 'inout'); tw(id, t0 + d - .3, .3, { o: 0 });
+};
+
+/* ---------- Kamera: Zoom-Atmer bei jedem Szenenwechsel, langsames Heranfahren in der Szene ---------- */
+const PANS = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 10));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Figuren: blinzeln, lächeln, Mund ---------- */
+const FIG = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  FIG[id] = { froh: [], auf: [] };
+}
+const froh = (id, a, b = 999) => FIG[id].froh.push([a, b]);
+const mundAuf = (id, a, b) => FIG[id].auf.push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const f = FIG[p.id]; if (!f) return;
+  const auf = f.auf.some(([a, b]) => t >= a && t < b), fr = !auf && f.froh.some(([a, b]) => t >= a && t < b);
+  p.querySelector('.auf').style.opacity = auf ? 1 : 0;
+  p.querySelector('.froh').style.opacity = fr ? 1 : 0;
+  p.querySelector('.zu').style.opacity = auf || fr ? 0 : 1;
+}));
+
+/* ---------- Thermostat-Scheiben ---------- */
+const STUFEN = ['*', '1', '2', '3', '4', '5'];
+document.querySelectorAll('.thermo .scheibe').forEach(sch => {
+  STUFEN.forEach((z, i) => {
+    const s = document.createElement('span'); s.textContent = z;
+    const w = i * 45 * Math.PI / 180, r = 34;   // Prozent vom Mittelpunkt
+    s.style.transform = `translate(-50%,-50%) translate(${Math.sin(w) * r}cqw,${-Math.cos(w) * r}cqw) rotate(${i * 45}deg)`;
+    sch.appendChild(s);
+  });
+});
+// Stellung je Thermostat (Index in STUFEN) als Akteur-Wert „draw“ missbrauchen wäre unklar → eigener Wert r der Scheibe
+const scheibe = id => { const el = $(`#${id} .scheibe`); akteur(el, { r: -3 * 45 }, true); el.parentElement.style.containerType = 'size'; return el; };
+const stufe = (el, t, d, i, e = 'inout') => tw(el, t, d, { r: -i * 45 }, e);
+
+/* ---------- 1 · Schimmel in der Ecke ---------- */
+const X0 = S(0);
+ein('ecke', A(.05), { x: X0 + 1250, y: MY });
+[['f1', 1205, 330, 0], ['f2', 1262, 312, 1], ['f3', 1170, 372, 2], ['f4', 1232, 382, 3], ['f5', 1285, 352, 4]].forEach(([id, x, y, k]) => {
+  akteur(id, { x: X0 + x, y, s: 0 });
+  const t0 = W(0, 'Flecken') + k * .22;
+  tw(id, t0, .9, { s: 1 }, 'back'); if (k % 2 === 0) cue(t0, 'tipp');
+});
+pop('lblSchimmel', W(1, 'Schimmel'), { x: X0 + 1250, y: 205 });
+wackeln('lblSchimmel', W(1, 'Schimmel') + .5, 3, 3);
+figur('mai1', { x: X0 + 1600, y: 580, s: 0 }); tw('mai1', Z(2) - .1, .5, { s: 1 }, 'back'); cue(Z(2) - .1, 'pop');
+// Mai hustet zweimal bei „schlecht“
+[0, .5].forEach(d => {
+  const t0 = W(2, 'schlecht') + d;
+  mundAuf('mai1', t0, t0 + .25); wackeln('mai1', t0, 2, 3);
+});
+akteur('hust', { x: X0 + 1520, y: 560, s: 0, o: 0 });
+tw('hust', W(2, 'schlecht'), .15, { s: 1, o: .9 }); tw('hust', W(2, 'schlecht') + .15, .8, { x: X0 + 1460, y: 520, s: 1.6, o: 0 });
+textAkteure('tb1'); textEin('tb1', W(1, 'Schimmel')); textAus('tb1', ZE(2) + .2);
+
+/* ---------- 2 · Feuchte Luft ---------- */
+pan2(ZE(2) + .3, 1); const X1 = S(1);
+const Q2 = [['dusche', 1020, 'Duschen'], ['topf', 1215, 'Kochen'], ['staender', 1410, 'Wäsche'], ['mai2', 1615, 'Atmen']];
+Q2.forEach(([id, x], i) => {
+  if (id === 'mai2') figur(id, {});
+  ein(id, Z(3) + .1 + i * .15, { x: X1 + x, y: id === 'mai2' ? 585 : 570 });
+});
+cue(Z(3) + .1, 'pop');
+akteur('wolke2', { x: X1 + 1320, y: 280, s: .3, o: 0 });
+Q2.forEach(([id, x, wort], i) => {
+  const t0 = W(3, wort);
+  dampf('p' + (i + 1), t0, 1.1, [X1 + x, id === 'mai2' ? 500 : 470], [X1 + 1320 + (i - 1.5) * 60, 300], .4, 1.2);
+  tw('wolke2', t0 + 1.0, .4, { s: .55 + i * .15, o: 1 }, 'back'); cue(t0 + 1.0, 'whoosh');
+  if (id === 'mai2') { mundAuf('mai2', t0, t0 + .5); }
+});
+['t21', 't22', 't23'].forEach((id, i) => {
+  akteur(id, { x: X1 + 1230 + i * 90, y: 330, o: 0 });
+  const t0 = ZE(3) - .2 + i * .15;
+  tw(id, t0, .2, { o: 1 }); tw(id, t0, .5, { y: 390 }, 'in');
+});
+textAkteure('tb2'); textEin('tb2', Z(3), { unter: W(3, 'vom') }); textAus('tb2', ZE(3) + .3);
+
+/* ---------- 3 · Stoßlüften ---------- */
+pan2(ZE(3) + .4, 2); const X2 = S(2);
+ein('rahmen3', Z(4) + .1, { x: X2 + 1160, y: 420 });
+ein('fluegel3', Z(4) + .1, { x: X2 + 1160, y: 420 });
+akteur('wolke3', { x: X2 + 1430, y: 260, o: 0, s: .8 }); tw('wolke3', Z(4) + .4, .5, { o: 1 });
+const tAuf3 = W(4, 'Fenster');
+tw('fluegel3', tAuf3, .7, { sx: .22 }, 'back'); cue(tAuf3, 'whoosh');
+tw('wolke3', tAuf3 + .3, 1.6, { x: X2 + 1150, y: 400, s: .15, o: 0 }, 'inout');
+['uhr3', 'zeiger3'].forEach(id => ein(id, W(4, 'fünf') - .3, { x: X2 + 1590, y: 520 }));
+tw('zeiger3', W(4, 'fünf'), Math.max(.6, WE(4, 'Minuten') - W(4, 'fünf')), { r: 180 }, 'inout'); cue(W(4, 'fünf'), 'tipp');
+pop('lblMin', W(4, 'Minuten'), { x: X2 + 1590, y: 680 });
+pop('lblMal', W(4, 'viermal'), { x: X2 + 1590, y: 300 });
+stempel('lblStoss', W(5, 'Stoß'), { x: X2 + 1160, y: 690 });
+textAkteure('tb3'); textEin('tb3', W(5, 'Stoß'), { unter: W(5, 'Stoß') + .4 }); textAus('tb3', ZE(5) + .3);
+
+/* ---------- 4 · Gekippt ---------- */
+pan2(ZE(5) + .4, 3); const X3 = S(3);
+ein('kipp4', Z(6) + .1, { x: X3 + 1130, y: 330 });
+ein('heiz4', Z(6) + .25, { x: X3 + 1130, y: 600 });
+akteur('wand4', { x: X3 + 1560, y: 430, o: 0 }); tw('wand4', Z(6) + .4, .5, { o: 1 });
+['w41', 'w42', 'w43'].forEach((id, i) => {
+  akteur(id, { x: X3 + 1080 + i * 50, y: 470, o: 0, s: .6 });
+  for (let k = 0; k < 3; k++) {
+    const t0 = W(6, 'gekippt') + i * .35 + k * 1.3;
+    set(id, t0, { x: X3 + 1080 + i * 50, y: 470, s: .6 });
+    tw(id, t0, .3, { o: 1 }); tw(id, t0, 1.2, { y: 180 - i * 10, x: X3 + 1130 + (i - 1) * 30, s: 1 }, 'inout'); tw(id, t0 + .9, .3, { o: 0 });
+  }
+});
+['m41', 'm42'].forEach((id, i) => {
+  akteur(id, { x: X3 + 1130, y: 470, o: 0, s: .5 });
+  const t0 = W(7, 'draußen') - .2 + i * .3;
+  tw(id, t0, .2, { o: 1 }); tw(id, t0, 1.0, { y: 185, x: X3 + 1110 + i * 50, s: 1 }, 'inout'); tw(id, t0 + .8, .25, { o: 0 }); cue(t0 + .5, 'muenze');
+});
+HOOKS.push(t => {
+  const k = clamp((t - W(7, 'Wand')) / .6);
+  $('#wand4').style.background = k > .5 ? 'var(--info-bg)' : ''; $('#wand4').style.borderColor = k > .5 ? 'var(--info)' : '';
+});
+pop('lblKalt', W(7, 'kalt'), { x: X3 + 1560, y: 680 });
+pop('x4', W(6, 'wenig'), { x: X3 + 1370, y: 220 }, 'plopp');
+textAkteure('tb4'); textEin('tb4', W(6, 'gekippt')); textAus('tb4', ZE(7) + .3);
+
+/* ---------- 5 · Nach Duschen und Kochen ---------- */
+pan2(ZE(7) + .4, 4); const X4 = S(4);
+ein('spiegel5', Z(8) + .05, { x: X4 + 1130, y: 430 });
+figur('mai5', { x: X4 + 1128, y: 425, o: 0 }); tw('mai5', Z(8) + .2, .4, { o: 1 });
+akteur('nebel5', { x: X4 + 1127, y: 426, o: 0 }); tw('nebel5', Z(8) + .3, .5, { o: .93 });
+ein('rahmen5', Z(8) + .25, { x: X4 + 1560, y: 400 });
+ein('fluegel5', Z(8) + .25, { x: X4 + 1560, y: 400 });
+ein('topf5', Z(8) + .4, { x: X4 + 1560, y: 650 });
+const tAuf5 = W(8, 'lüftest');
+tw('fluegel5', tAuf5, .6, { sx: .22 }, 'back'); cue(tAuf5, 'whoosh');
+['p51', 'p52', 'p53'].forEach((id, i) => dampf(id, tAuf5 + .1 + i * .25, 1.0, [X4 + 1150 + i * 30, 470], [X4 + 1540, 380], .6, .9));
+tw('nebel5', W(8, 'sofort') - .2, 1.0, { o: 0 }); cue(W(8, 'sofort'), 'ding');
+froh('mai5', W(8, 'sofort') + .2);
+textAkteure('tb5'); textEin('tb5', Z(8)); textAus('tb5', ZE(8) + .3);
+
+/* ---------- 6 · Heizung runter beim Lüften ---------- */
+pan2(ZE(8) + .4, 5); const X5 = S(5);
+ein('heiz6', Z(9) + .05, { x: X5 + 1170, y: 520 });
+akteur('knopf6', { x: X5 + 1560, y: 290, s: 0 }); tw('knopf6', Z(9) + .3, .5, { s: 1 }, 'back'); cue(Z(9) + .3, 'pop');
+const sch6 = scheibe('knopf6');
+['w61', 'w62', 'w63'].forEach((id, i) => {
+  akteur(id, { x: X5 + 1080 + i * 90, y: 380, o: 0 });
+  HOOKS.push(t => {
+    const an = t < W(9, 'herunter') + .3 || t > W(10, 'hoch') + .4;
+    const p = ((t * .7 + i * .33) % 1), el = document.getElementById(id);
+    if (t < Z(9) + .4) return;
+    el.style.opacity = an ? Math.sin(Math.PI * p) : 0; el.style.visibility = an ? 'visible' : 'hidden';
+    el.style.transform = `translate(${X5 + 1080 + i * 90}px,${390 - 70 * p}px) translate(-50%,-50%)`;
+  });
+});
+ein('rahmen6', Z(9) + .4, { x: X5 + 1560, y: 600 });
+ein('fluegel6', Z(9) + .4, { x: X5 + 1560, y: 600 });
+tw('fluegel6', W(9, 'Lüften'), .6, { sx: .22 }, 'back'); cue(W(9, 'Lüften'), 'whoosh');
+stufe(sch6, W(9, 'herunter'), .7, 0); cue(W(9, 'herunter'), 'klick');
+tw('fluegel6', Z(10), .5, { sx: 1 }, 'inout'); cue(Z(10) + .4, 'klick');
+stufe(sch6, W(10, 'hoch'), .7, 3, 'back'); cue(W(10, 'hoch'), 'ding');
+textAkteure('tb6'); textEin('tb6', Z(9), { unter: Z(10) }); textAus('tb6', ZE(10) + .3);
+
+/* ---------- 7 · Stufe 3 ≈ 20 °C ---------- */
+pan2(ZE(10) + .4, 6); const X6 = S(6);
+akteur('knopf7', { x: X6 + 1090, y: 420, s: 0 }); tw('knopf7', Z(11), .55, { s: 1 }, 'back'); cue(Z(11), 'pop');
+const sch7 = scheibe('knopf7'); set(sch7, 0, { r: 0 });
+stufe(sch7, W(11, 'Stufe'), 1.0, 5); cue(W(11, 'Stufe'), 'tipp');
+stufe(sch7, W(11, 'Thermostat'), .7, 3, 'back'); cue(W(11, 'Thermostat'), 'klick');
+['rohr7', 'kugel7'].forEach(id => ein(id, Z(11) + .2, { x: X6 + 1520, y: id === 'rohr7' ? 410 : 590 }));
+[['sk15', 500], ['sk20', 410], ['sk25', 320]].forEach(([id, y]) => { akteur(id, { x: X6 + 1600, y, o: 0 }); tw(id, Z(11) + .5, .4, { o: 1 }); });
+HOOKS.push(t => { $('#rohr7 i').style.height = (8 + 42 * E.out(clamp((t - W(11, 'etwa')) / 1.0))) + '%'; });
+pop('lblGrad', W(11, '20'), { x: X6 + 1330, y: 230 });
+pop('lblWohn', W(12, 'Wohnzimmer'), { x: X6 + 1180, y: 690 });
+pop('lblKueche', W(12, 'Küche'), { x: X6 + 1500, y: 690 });
+textAkteure('tb7'); textEin('tb7', Z(11)); textAus('tb7', ZE(12) + .3);
+
+/* ---------- 8 · Kein Raum ganz kalt ---------- */
+pan2(ZE(12) + .4, 7); const X7 = S(7);
+akteur('wand8', { x: X7 + 1210, y: 345, o: 0, s: .95 }); tw('wand8', Z(13), .5, { o: 1, s: 1 }, 'back');
+ein('heiz8', Z(13) + .15, { x: X7 + 1210, y: 600 });
+figur('mai8', { x: X7 + 1610, y: 600, s: 0 }); tw('mai8', Z(13) + .3, .5, { s: 1 }, 'back'); cue(Z(13) + .3, 'pop');
+const tWarm = WE(14, 'feucht') + .1;
+HOOKS.push(t => {
+  const kalt = t >= Z(13) + .4 && t < tWarm, warm = t >= tWarm;
+  const w = $('#wand8');
+  w.style.background = kalt ? 'var(--info-bg)' : warm ? 'var(--warning-bg)' : '';
+  w.style.borderColor = kalt ? 'var(--info)' : warm ? 'var(--warning)' : '';
+});
+pop('lblKalt8', Z(13) + .4, { x: X7 + 1610, y: 300 }); tw('lblKalt8', tWarm, .3, { s: 0 }, 'in');
+// Mai fröstelt, solange es kalt ist
+for (let k = 0; k < 4; k++) wackeln('mai8', Z(13) + .8 + k * .55, 3, 2);
+[['t81', 1040], ['t82', 1150], ['t83', 1280], ['t84', 1380]].forEach(([id, x], i) => {
+  akteur(id, { x: X7 + x, y: 260 + (i % 2) * 70, s: 0 });
+  tw(id, W(14, 'Wände') + i * .12, .4, { s: 1 }, 'back');
+  tw(id, W(14, 'feucht') + i * .08, .6, { y: 330 + (i % 2) * 70 }, 'in');
+  tw(id, tWarm + i * .06, .3, { s: 0 }, 'in');
+});
+cue(W(14, 'Wände'), 'tipp');
+['w81', 'w82'].forEach((id, i) => {
+  akteur(id, { x: X7 + 1150 + i * 120, y: 470, o: 0 });
+  tw(id, tWarm - .1, .3, { o: 1 }); tw(id, tWarm - .1, .9, { y: 420 }, 'inout'); tw(id, tWarm + .7, .4, { o: 0 });
+});
+pop('lblWarm8', tWarm, { x: X7 + 1610, y: 300 }, 'ding');
+froh('mai8', tWarm + .1);
+textAkteure('tb8'); textEin('tb8', Z(13)); textAus('tb8', Z(15) - .2);
+
+/* ---------- 9 · Möbel mit Abstand ---------- */
+pan2(Z(15) - .1, 8); const X8 = S(8);
+akteur('boden9', { x: X8 + 1290, y: 690, o: 0 }); tw('boden9', Z(15), .4, { o: 1 });
+akteur('wand9', { x: X8 + 1580, y: 440, o: 0, sy: .6 }); tw('wand9', Z(15), .5, { o: 1, sy: 1 }, 'back');
+akteur('lblWand9', { x: X8 + 1580, y: 170, o: 0 }); tw('lblWand9', Z(15) + .3, .4, { o: 1 });
+ein('schrank9', Z(15) + .15, { x: X8 + 1410, y: 556 });
+const tRutsch = W(15, 'Stück');
+tw('schrank9', tRutsch, .8, { x: X8 + 1310 }, 'inout'); cue(tRutsch, 'kritzeln');
+tw('schrank9', tRutsch + .1, .12, { r: -2 }); tw('schrank9', tRutsch + .6, .3, { r: 0 }, 'back');
+akteur('luft9', { x: X8 + 1497, y: 440, o: 0 }); tw('luft9', Z(16), .4, { o: 1 }); cue(Z(16), 'whoosh');
+HOOKS.push(t => $('#luft9 path').style.strokeDashoffset = -t * 60);
+pop('lblLuft', W(16, 'Luft'), { x: X8 + 1400, y: 185 });
+pop('haken9', ZE(16) - .1, { x: X8 + 1000, y: 260 }, 'ding');
+textAkteure('tb9'); textEin('tb9', Z(15)); textAus('tb9', ZE(16) + .3);
+
+/* ---------- 10 · Vermieter Bescheid sagen ---------- */
+pan2(ZE(16) + .4, 9); const X9 = S(9);
+figur('mai10', { x: X9 + 1080, y: 420, s: 0 }); tw('mai10', Z(17) - .1, .5, { s: 1 }, 'back'); cue(Z(17) - .1, 'pop');
+akteur('lblDu', { x: X9 + 1080, y: 560, o: 0 }); tw('lblDu', Z(17) + .2, .4, { o: 1 });
+pop('lblFrage', W(17, 'Schimmel'), { x: X9 + 1080, y: 245 });
+akteur('handy10', { x: X9 + 1230, y: 900, r: 0 }); tw('handy10', Z(18), .6, { y: 560 }, 'back'); cue(Z(18), 'whoosh');
+figur('verm10', { x: X9 + 1560, y: 420, s: 0 }); tw('verm10', Z(18) + .15, .5, { s: 1 }, 'back'); cue(Z(18) + .15, 'pop');
+akteur('lblVerm', { x: X9 + 1560, y: 560, o: 0 }); tw('lblVerm', Z(18) + .4, .4, { o: 1 });
+akteur('anruf10', { x: X9 + 1350, y: 560, o: 0 });
+HOOKS.push(t => $('#anruf10').querySelectorAll('path').forEach((p, i) => {
+  if (i === 0 || i === 3) return;
+  p.style.opacity = t < W(18, 'Sag') ? 0 : .35 + .65 * Math.max(0, Math.sin(t * 6 - i * 1.2));
+}));
+tw('anruf10', W(18, 'Sag'), .3, { o: 1 }); cue(W(18, 'Sag'), 'klick');
+// Vermieter nickt, Mai lächelt
+HOOKS.push(t => {
+  const a = W(18, 'Vermieter');
+  const n = t > a && t < a + 1.0 ? 4 * Math.sin((t - a) * 2 * Math.PI * 2) : 0;
+  $('#verm10 .figur').style.transform = `rotate(${n * .5}deg) translateY(${Math.max(0, n)}px)`;
+});
+froh('verm10', W(18, 'Vermieter') + .3); froh('mai10', ZE(18));
+pop('haken10', ZE(18) + .1, { x: X9 + 1665, y: 300 }, 'erfolg');
+textAkteure('tb10'); textEin('tb10', Z(17));
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .5;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endFenster', { o: 0, y: 40 }, true); tw('endFenster', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

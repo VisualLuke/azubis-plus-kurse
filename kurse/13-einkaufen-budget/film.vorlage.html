@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 13 – Einkaufen mit wenig Geld</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip svg{width:34px;height:34px;flex:none}
+.chip.klein{font-size:26px;line-height:32px;padding:10px 22px}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.kreuz{width:76px;height:76px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:36px}
+.warn{width:70px;height:70px;border-radius:999px;background:var(--warning);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 44px/1 Inter;box-shadow:0 4px 12px rgba(22,19,37,.18)}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+/* Kalender */
+.kalender{width:230px;height:230px;border-radius:28px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center}
+.kalender .kopf{width:100%;height:58px;background:var(--b500);flex:none}
+.kalender b{font:800 116px/150px Inter;letter-spacing:-.03em;color:var(--ink)}
+.kalender .ringe{position:absolute;left:0;top:-14px;width:100%;display:flex;justify-content:center;gap:90px}
+.kalender .ringe i{width:16px;height:40px;border-radius:999px;background:var(--b700);display:block}
+
+/* Gehaltsbalken */
+.seg{height:84px}
+#segMiete{width:300px;border-radius:42px 0 0 42px;background:var(--b500)}
+#segHandy{width:90px;background:var(--b400)}
+#segTicket{width:90px;background:var(--b300)}
+#segRest{width:280px;border-radius:0 42px 42px 0;background:var(--success)}
+.woche{width:170px;height:70px;border-radius:20px;background:var(--success-bg);border:4px solid var(--success);
+  display:flex;align-items:center;justify-content:center;font:700 26px/32px Inter;color:var(--success-text);white-space:nowrap}
+
+/* Notizblock */
+.notiz{width:380px;height:470px;border-radius:24px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);padding:26px 30px}
+.notiz .tage{display:flex;gap:6px}
+.notiz .tage i{flex:1;height:30px;border-radius:8px;background:var(--b100);display:flex;align-items:center;justify-content:center;
+  font:700 15px/1 Inter;font-style:normal;color:var(--b600)}
+.notiz h4{font:800 30px/38px Inter;margin:22px 0 10px;color:var(--ink)}
+.notiz .zeile{display:flex;align-items:center;gap:16px;height:52px;font:600 28px/34px Inter;color:var(--n700);white-space:pre}
+.notiz .zeile u{width:30px;height:30px;border-radius:9px;border:4px solid var(--b200);flex:none;display:flex;align-items:center;justify-content:center}
+.notiz .zeile u svg{width:22px}
+.ware{width:46px;height:46px;border-radius:12px;box-shadow:0 3px 8px rgba(22,19,37,.15)}
+
+/* Preisschilder */
+.preis{width:340px;height:210px;border-radius:22px;background:var(--surface);box-shadow:0 8px 24px rgba(22,19,37,.12);
+  border:3px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.preis small{font:600 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500)}
+.preis b{font:800 76px/88px Inter;letter-spacing:-.02em;color:var(--ink)}
+.preis i{font:500 19px/24px Inter;font-style:normal;color:var(--n500)}
+.etikett{padding:12px 26px;border-radius:16px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);text-align:center;white-space:nowrap}
+.etikett small{display:block;font:600 18px/22px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--n500)}
+.etikett b{display:block;font:800 40px/48px Inter;color:var(--ink)}
+.etikett.gut b{color:var(--success-text)}
+.gleich{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 64px/1 Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+
+/* Wellen (Hunger, Riechen) */
+.wellen path{stroke:var(--b500);stroke-width:7;stroke-linecap:round;fill:none}
+.flocke path{stroke:var(--info);stroke-width:8;stroke-linecap:round;fill:none}
+
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Mitte des Monats -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a kalender" id="kal1"><div class="kopf"></div><b id="kal1z">1</b></div>
+  <div class="a" id="beutel1" style="width:300px">{{geldbeutel}}</div>
+  <div class="a" id="klappe1" style="width:300px">{{geldbeutel-klappe}}</div>
+  <div class="a" id="motte" style="width:110px">{{motte}}</div>
+  <div class="a portrait" id="mai1" style="width:230px;height:230px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 2 · Feste Kosten, dann pro Woche -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a chip brand" id="lblGehalt">Gehalt im Monat</div>
+  <div class="a seg" id="segMiete"></div>
+  <div class="a seg" id="segHandy"></div>
+  <div class="a seg" id="segTicket"></div>
+  <div class="a seg" id="segRest"></div>
+  <div class="a chip" id="cMiete"><svg viewBox="0 0 36 36"><path d="M4 17L18 5l14 12v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" fill="var(--b500)"/><rect x="14" y="21" width="8" height="12" rx="1.5" fill="var(--b100)"/></svg>– Miete</div>
+  <div class="a chip" id="cHandy"><svg viewBox="0 0 36 36"><rect x="9" y="2" width="18" height="32" rx="4" fill="var(--b400)"/><rect x="12" y="6" width="12" height="22" rx="2" fill="var(--b100)"/></svg>– Handy</div>
+  <div class="a chip" id="cTicket"><svg viewBox="0 0 36 36"><rect x="2" y="8" width="32" height="20" rx="4" fill="var(--b300)"/><path d="M12 8v20" stroke="var(--surface)" stroke-width="2.5" stroke-dasharray="3 3"/></svg>– Ticket</div>
+  <div class="a woche" id="wo1">Woche 1</div>
+  <div class="a woche" id="wo2">Woche 2</div>
+  <div class="a woche" id="wo3">Woche 3</div>
+  <div class="a woche" id="wo4">Woche 4</div>
+
+  <!-- 3 · Plan + Liste -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a notiz" id="notiz">
+    <div class="tage"><i>Mo</i><i>Di</i><i>Mi</i><i>Do</i><i>Fr</i><i>Sa</i><i>So</i></div>
+    <h4>Einkaufsliste</h4>
+    <div class="zeile"><u><svg viewBox="0 0 24 24"><path class="zeichnen" pathLength="1" d="M4 12l5 5 11-11" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u><span data-t="Reis"></span></div>
+    <div class="zeile"><u><svg viewBox="0 0 24 24"><path class="zeichnen" pathLength="1" d="M4 12l5 5 11-11" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u><span data-t="Gemüse"></span></div>
+    <div class="zeile"><u><svg viewBox="0 0 24 24"><path class="zeichnen" pathLength="1" d="M4 12l5 5 11-11" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u><span data-t="Eier"></span></div>
+    <div class="zeile"><u><svg viewBox="0 0 24 24"><path class="zeichnen" pathLength="1" d="M4 12l5 5 11-11" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u><span data-t="Milch"></span></div>
+    <div class="zeile"><u><svg viewBox="0 0 24 24"><path class="zeichnen" pathLength="1" d="M4 12l5 5 11-11" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></u><span data-t="Äpfel"></span></div>
+  </div>
+  <div class="a" id="wagen3" style="width:300px">{{wagen}}</div>
+  <div class="a ware" id="w3a" style="background:var(--warning)"></div>
+  <div class="a ware" id="w3b" style="background:var(--success)"></div>
+  <div class="a ware" id="w3c" style="background:var(--b300)"></div>
+  <div class="a ware" id="w3d" style="background:var(--info)"></div>
+  <div class="a ware" id="w3e" style="background:var(--error)"></div>
+  <div class="a chip gruen" id="nur5">Nur, was du brauchst</div>
+
+  <!-- 4 · Nicht hungrig -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a portrait" id="mai4" style="width:260px;height:260px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <svg class="a wellen" id="knurr" viewBox="0 0 220 60" style="width:220px"><path d="M10 30q15-20 30 0t30 0 30 0 30 0 30 0 30 0 30 0"/></svg>
+  <div class="a chip gelb" id="hunger">Hunger!</div>
+  <div class="a" id="wagen4" style="width:300px">{{wagen}}</div>
+  <div class="a chip rot" id="zaehler">Im Wagen: 0</div>
+
+  <!-- 5 · Eigenmarke -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="packM" style="width:240px">{{packung-marke}}</div>
+  <div class="a" id="packE" style="width:240px">{{packung-eigen}}</div>
+  <div class="a etikett" id="etM"><small>Marke · Beispiel</small><b>2,49 €</b></div>
+  <div class="a etikett gut" id="etE"><small>Eigenmarke · Beispiel</small><b>1,19 €</b></div>
+  <div class="a gleich" id="gleich">=</div>
+  <div class="a chip gruen klein" id="qM">Qualität gut</div>
+  <div class="a chip gruen klein" id="qE">Qualität gut</div>
+
+  <!-- 6 · Grundpreis -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a preis" id="preisA"><small>Beispiel</small><b>1,99 €</b><i>500 g · 1 kg = 3,98 €</i></div>
+  <div class="a preis" id="preisB"><small>Beispiel</small><b>2,49 €</b><i>1 kg · 1 kg = 2,49 €</i></div>
+  <div class="a chip rot" id="grundA">1 kg = 3,98 €</div>
+  <div class="a chip gruen" id="grundB">1 kg = 2,49 €</div>
+  <div class="a" id="haken6" style="width:80px">{{haken}}</div>
+  <div class="a" id="lupe" style="width:200px">{{lupe}}</div>
+
+  <!-- 7 · Mindestens haltbar / zu verbrauchen -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a" id="joghurt" style="width:220px">{{joghurt}}</div>
+  <div class="a chip klein" id="mhd">Mindestens haltbar bis</div>
+  <div class="a portrait" id="mai7" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <svg class="a wellen" id="riech" viewBox="0 0 120 90" style="width:120px"><path d="M100 15q-20 0-30 15M100 45q-25 0-40 0M100 75q-20 0-30-15"/></svg>
+  <div class="a" id="tonne" style="width:150px">{{muelleimer}}</div>
+  <div class="a" id="tonneD" style="width:150px">{{muelleimer-deckel}}</div>
+  <div class="a kreuz" id="xTonne"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="haken7" style="width:80px">{{haken}}</div>
+  <div class="a" id="hack" style="width:240px">{{hackfleisch}}</div>
+  <div class="a chip rot klein" id="zvb">Zu verbrauchen bis</div>
+  <div class="a warn" id="warn7">!</div>
+
+  <!-- 8 · Reste -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="topf" style="width:260px">{{topf}}</div>
+  <div class="a" id="frost" style="width:280px">{{gefrierfach}}</div>
+  <div class="a" id="dose" style="width:110px">{{dose}}</div>
+  <svg class="a flocke" id="flocke" viewBox="0 0 60 60" style="width:60px"><path d="M30 4v52M7 17l46 26M7 43l46-26"/></svg>
+  <div class="a chip klein" id="cMorgen"><svg viewBox="0 0 36 36"><rect x="4" y="6" width="28" height="26" rx="5" fill="var(--b100)"/><rect x="4" y="6" width="28" height="8" rx="4" fill="var(--b500)"/></svg>Morgen essen</div>
+  <div class="a chip klein" id="cFrost"><svg viewBox="0 0 36 36"><path d="M18 4v28M6 11l24 14M6 25l24-14" stroke="var(--info)" stroke-width="3.5" stroke-linecap="round"/></svg>Einfrieren</div>
+
+  <!-- 9 · Sparen -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a" id="sm1" style="width:80px">{{muenze}}</div>
+  <div class="a" id="sm2" style="width:80px">{{muenze}}</div>
+  <div class="a" id="sm3" style="width:80px">{{muenze}}</div>
+  <div class="a" id="sm4" style="width:80px">{{muenze}}</div>
+  <div class="a" id="sk1" style="width:50px">{{muenze}}</div>
+  <div class="a" id="sk2" style="width:50px">{{muenze}}</div>
+  <div class="a" id="sk3" style="width:50px">{{muenze}}</div>
+  <div class="a" id="schwein" style="width:320px">{{sparschwein}}</div>
+  <div class="a chip klein" id="jedeWoche">Jede Woche ein bisschen</div>
+
+  <!-- 10 · Monatsende -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a kalender" id="kal10"><div class="kopf"></div><b id="kal10z">15</b></div>
+  <div class="a" id="schein10" style="width:170px">{{geldschein}}</div>
+  <div class="a" id="beutel10" style="width:240px">{{geldbeutel}}</div>
+  <div class="a portrait" id="mai10" style="width:300px;height:300px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+</div></div>
+
+
+<div class="block" id="tb1"><div class="titel">Mitte des Monats, Geld weg?</div><div class="unter">So planst du besser.</div></div>
+<div class="block" id="tb2"><div class="titel">Erst feste Kosten, dann pro Woche</div></div>
+<div class="block" id="tb3"><div class="titel">Plan + Liste</div><div class="unter">Dann kaufst du nur, was du brauchst.</div></div>
+<div class="block" id="tb4"><div class="titel">Nicht hungrig einkaufen</div></div>
+<div class="block" id="tb5"><div class="titel">Eigenmarke: oft billiger</div><div class="unter">Die Qualität ist meistens gleich gut.</div></div>
+<div class="block" id="tb6"><div class="titel">Grundpreis vergleichen</div><div class="unter">Preis pro Kilo oder Liter – er steht klein auf dem Schild.</div></div>
+<div class="block" id="tb7"><div class="titel">MHD ≠ Verbrauchsdatum</div><div class="unter">Mindestens haltbar bis: schau, riech und probier.</div></div>
+<div class="block" id="tb8"><div class="titel">Reste einfrieren</div><div class="unter">Oder am nächsten Tag essen.</div></div>
+<div class="block" id="tb9"><div class="titel">Ein bisschen sparen</div><div class="unter">Auch kleine Beträge helfen.</div></div>
+<div class="block" id="tb10"><div class="titel">Geld bis zum Monatsende</div></div>
+
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endSchwein" style="position:relative;width:260px">{{sparschwein~2}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">Dein Geld reicht.</div>
+</div></div>
+
+<script src="sprache.js"></script>
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;                    // ohne Untertitel sitzt die Bühne mittig (440 + 100)
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren in der Szene */
+const PANS = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .02 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+// Szenenwechsel zwischen dem letzten Satz der alten und dem ersten der neuen Szene
+const wechsel = (alt, neu) => Math.max(ZE(alt) + .05, Z(neu) - .55);
+
+// Figuren
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+}));
+const froh = (id, t) => { set(`#${id} .froh`, t, { o: 1 }); set(`#${id} .zu`, t, { o: 0 }); };
+function figur(id, basis) {
+  akteur(id, basis);
+  akteur($(`#${id} .figur`), {}, true);
+  akteur($(`#${id} .froh`), { o: 0 }, true); akteur($(`#${id} .zu`), {}, true);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+}
+const nicken = (id, t, n = 2) => { for (let i = 0; i < n; i++) { tw(`#${id} .figur`, t + i * .32, .16, { r: 4, y: 6 }, 'inout'); tw(`#${id} .figur`, t + i * .32 + .16, .16, { r: 0, y: 0 }, 'inout'); } };
+const wackeln = (id, t, n = 3, w = 3) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+// Auftritt mit Squash & Stretch
+const ein = (id, t, basis, von = { y: 80 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
+  tw(id, t + .38, .1, { sy: .9, sx: 1.06 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+  if (snd) cue(t, snd);
+};
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .45, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const puls = (id, t, s = 1.1) => { tw(id, t, .15, { s }); tw(id, t + .15, .35, { s: 1 }, 'back'); };
+// Kalenderzahl läuft hoch
+const kalender = (id, t0, d, von, bis) => HOOKS.push(t => {
+  const n = Math.round(von + (bis - von) * E.inout(clamp((t - t0) / d)));
+  const el = document.getElementById(id); if (el.textContent !== String(n)) el.textContent = n;
+});
+// Wurf auf einer Bogenbahn
+function bogen(id, t0, d, [x0, y0], [x1, y1], h = 160) {
+  const el = document.getElementById(id);
+  HOOKS.push(t => {
+    if (t < t0) return;
+    const p = E.inout(clamp((t - t0) / d));
+    el.style.transform = `translate(${x0 + (x1 - x0) * p}px,${y0 + (y1 - y0) * p - h * Math.sin(Math.PI * p)}px) translate(-50%,-50%)`;
+  });
+}
+
+/* ---------- 1 · Mitte des Monats ---------- */
+const X0 = S(0);
+ein('kal1', A(0.05), { x: X0 + 1080, y: 330 }, { y: -90 });
+kalender('kal1z', A(0.3), Math.max(.8, W(0, 'Monats') - A(0.3) + .3), 1, 15);
+HOOKS.push(t => { const p = clamp((t - A(.3)) / Math.max(.8, W(0, 'Monats') - A(.3) + .3)); $('#kal1').style.boxShadow = `0 ${8 + 6 * Math.sin(p * 40) ** 2}px 24px rgba(22,19,37,.12)`; });
+ein('beutel1', W(0, 'Geld'), { x: X0 + 1520, y: 470 }, { x: 120 });
+ein('klappe1', W(0, 'Geld'), { x: X0 + 1520, y: 470 }, { x: 120 }, null);
+tw('klappe1', W(0, 'fast'), .35, { y: 440, r: -3 }, 'back'); cue(W(0, 'fast'), 'klick');
+akteur('motte', { x: X0 + 1515, y: 440, s: 0, o: 0 });
+{
+  const t0 = W(0, 'weg') - .05, el = document.getElementById('motte');
+  cue(t0, 'whoosh');
+  HOOKS.push(t => {
+    if (t < t0) return;
+    const p = clamp((t - t0) / 1.6);
+    const x = X0 + 1515 + 150 * p + 18 * Math.sin(p * 14), y = 440 - 200 * E.out(p);
+    el.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${Math.min(1, p * 6)},${Math.min(1, p * 6) * (.75 + .25 * Math.abs(Math.sin(t * 22)))})`;
+    el.style.opacity = p < .85 ? 1 : (1 - p) / .15; el.style.visibility = p >= 1 ? 'hidden' : 'visible';
+  });
+}
+figur('mai1', { x: X0 + 1100, y: 600, s: 0 }); tw('mai1', A(0.6), .5, { s: 1 }, 'back'); cue(A(0.6), 'pop');
+wackeln('mai1', W(0, 'weg') + .2, 4, 3);
+froh('mai1', W(1, 'planst')); nicken('mai1', W(1, 'planst'));
+textAkteure('tb1'); textEin('tb1', A(0.05), { unter: Z(1) }); textAus('tb1', ZE(1) + .1);
+
+/* ---------- 2 · Feste Kosten ab, Rest pro Woche ---------- */
+const P1 = wechsel(1, 2); pan2(P1, 1); const X1 = S(1);
+akteur('lblGehalt', { x: X1 + MX, y: 200, s: 0 }); tw('lblGehalt', P1 + .5, .45, { s: 1 }, 'back'); cue(P1 + .5, 'pop');
+[['segMiete', 1090], ['segHandy', 1285], ['segTicket', 1375], ['segRest', 1560]].forEach(([id, x], i) => {
+  akteur(id, { x: X1 + x, y: 300, sx: 0 });
+  tw(id, P1 + .7 + i * .12, .4, { sx: 1 }, 'out');
+});
+[['segMiete', 'cMiete', 'Miete', 1040], ['segHandy', 'cHandy', 'Handy', 1320], ['segTicket', 'cTicket', 'Ticket', 1600]].forEach(([seg, chip, wort, x]) => {
+  const t0 = W(2, wort);
+  tw(seg, t0, .45, { y: 470, o: 0, x: X1 + x }, 'in'); cue(t0, 'plopp');
+  pop(chip, t0 + .3, { x: X1 + x, y: 470 }, null);
+});
+tw('segRest', W(3, 'Rest'), .15, { sy: 1.15 }); tw('segRest', W(3, 'Rest') + .15, .35, { sy: 1 }, 'back'); cue(W(3, 'Rest'), 'ding');
+{
+  const t0 = W(3, 'Wochen') - .25;
+  set('segRest', t0 + .05, { o: 0 });
+  [1035, 1225, 1415, 1605].forEach((x, i) => {
+    akteur('wo' + (i + 1), { x: X1 + 1560, y: 300, o: 0 });
+    set('wo' + (i + 1), t0, { o: 1 });
+    tw('wo' + (i + 1), t0 + i * .12, .6, { x: X1 + x, y: 640 }, 'back'); cue(t0 + i * .12, 'muenze');
+  });
+}
+textAkteure('tb2'); textEin('tb2', P1 + .4); textAus('tb2', ZE(3) + .1);
+
+/* ---------- 3 · Plan + Liste ---------- */
+const P2 = wechsel(3, 4); pan2(P2, 2); const X2 = S(2);
+ein('notiz', P2 + .4, { x: X2 + 1110, y: 440 }, { y: 120 });
+document.querySelectorAll('#notiz .tage i').forEach((el, i) => {
+  akteur(el, { s: 0 }, true); tw(el, W(4, 'Mahlzeiten') + i * .08, .35, { s: 1 }, 'back'); cue(W(4, 'Mahlzeiten') + i * .08, 'tipp');
+});
+// Liste wird getippt
+{
+  const spans = [...document.querySelectorAll('#notiz .zeile span')];
+  let t0 = W(4, 'Einkaufsliste');
+  const plan = spans.map(s => { const a = t0; t0 += s.dataset.t.length * .07 + .12; return a; });
+  spans.forEach((s, i) => { for (let k = 0; k < s.dataset.t.length; k += 2) cue(plan[i] + k * .07, 'tipp'); });
+  HOOKS.push(t => spans.forEach((s, i) => {
+    const n = Math.max(0, Math.min(s.dataset.t.length, Math.floor((t - plan[i]) / .07)));
+    const txt = s.dataset.t.slice(0, n); if (s.textContent !== txt) s.textContent = txt;
+  }));
+}
+ein('wagen3', P2 + .7, { x: X2 + 1540, y: 520 }, { x: 160 }, 'whoosh');
+// Abhaken und in den Wagen
+{
+  const boxen = [...document.querySelectorAll('#notiz .zeile u')];
+  const d = Math.max(.3, (WE(5, 'brauchst') - W(5, 'Dann')) / 5);
+  ['w3a', 'w3b', 'w3c', 'w3d', 'w3e'].forEach((id, i) => {
+    const t0 = W(5, 'Dann') + i * d;
+    const ak = akteur(boxen[i], { draw: 0 }, true);
+    tw(boxen[i], t0, .3, { draw: 1 }); cue(t0, 'ding');
+    HOOKS.push(t => { const an = wert(ak, 'draw', t) > .05; boxen[i].style.borderColor = an ? 'var(--success)' : ''; boxen[i].style.background = an ? 'var(--success-bg)' : ''; });
+    akteur(id, { o: 0 });
+    set(id, t0 + .1, { o: 1 });
+    bogen(id, t0 + .1, .6, [X2 + 1040, 425 + i * 52], [X2 + 1480 + i * 30, 475 - (i % 2) * 18], 150);
+    cue(t0 + .65, 'plopp');
+  });
+  puls('wagen3', W(5, 'Dann') + 5 * d + .2, 1.05);
+}
+pop('nur5', WE(5, 'brauchst') + .1, { x: X2 + 1540, y: 290 }, 'erfolg');
+textAkteure('tb3'); textEin('tb3', P2 + .4, { unter: Z(5) }); textAus('tb3', ZE(5) + .1);
+
+/* ---------- 4 · Nicht hungrig einkaufen ---------- */
+const P3 = wechsel(5, 6); pan2(P3, 3); const X3 = S(3);
+figur('mai4', { x: X3 + 1080, y: 380, s: 0 }); tw('mai4', P3 + .4, .5, { s: 1 }, 'back'); cue(P3 + .4, 'pop');
+akteur('knurr', { x: X3 + 1080, y: 575, o: 0, sx: .3 });
+tw('knurr', W(6, 'hungrig'), .3, { o: 1, sx: 1 }, 'back'); cue(W(6, 'hungrig'), 'kritzeln');
+HOOKS.push(t => { $('#knurr path').style.strokeDasharray = '30 14'; $('#knurr path').style.strokeDashoffset = -t * 90; });
+wackeln('mai4', W(6, 'hungrig'), 5, 3);
+pop('hunger', W(6, 'hungrig') + .3, { x: X3 + 1080, y: 660 });
+ein('wagen4', P3 + .6, { x: X3 + 1540, y: 540 }, { x: 160 }, 'whoosh');
+pop('zaehler', W(7, 'landet') - .1, { x: X3 + 1520, y: 250 });
+{
+  // 12 Teile fallen in den Wagen und stapeln sich
+  const PLATZ = [];
+  [5, 4, 3].forEach((n, r) => { for (let k = 0; k < n; k++) PLATZ.push([1540 - (n - 1) * 24 + k * 48, 488 - r * 44]); });
+  const FARBEN = ['--warning', '--error', '--b300', '--success', '--info', '--b500'];
+  const t0 = W(7, 'landet'), d = Math.max(.12, (ZE(7) + .6 - t0) / 12);
+  const welt = $('#welt');
+  PLATZ.forEach(([x, y], i) => {
+    const el = document.createElement('div'); el.className = 'a ware'; el.id = 'w4' + i;
+    el.style.background = `var(${FARBEN[i % 6]})`;
+    welt.insertBefore(el, $('#zaehler'));
+    akteur(el, { x: X3 + x, y: y - 520, o: 0, r: (i % 3 - 1) * 3 });
+    set(el, t0 + i * d, { o: 1 });
+    tw(el, t0 + i * d, .45, { y }, 'bounce'); cue(t0 + i * d + .2, 'plopp');
+  });
+  HOOKS.push(t => { const n = Math.max(0, Math.min(12, Math.floor((t - t0) / d) + 1)); const txt = t < t0 ? 'Im Wagen: 0' : `Im Wagen: ${n}`;
+    const el = $('#zaehler'); if (el.textContent !== txt) el.textContent = txt; });
+  wackeln('wagen4', t0 + 12 * d, 3, 2);
+}
+textAkteure('tb4'); textEin('tb4', P3 + .4); textAus('tb4', ZE(7) + .5);
+
+/* ---------- 5 · Eigenmarke ---------- */
+const P4 = wechsel(7, 8) + .3; pan2(P4, 4); const X4 = S(4);
+ein('packM', W(8, 'Discounter'), { x: X4 + 1110, y: 410 }, { y: 120 });
+ein('packE', W(8, 'Eigenmarken'), { x: X4 + 1530, y: 410 }, { y: 120 });
+// Preisschilder drehen sich ein
+[['etM', 1110, W(8, 'Eigenmarken') + .4], ['etE', 1530, W(8, 'billiger') - .1]].forEach(([id, x, t0]) => {
+  akteur(id, { x: X4 + x, y: 630, sx: 0 }); tw(id, t0, .25, { sx: -1 }, 'in'); tw(id, t0 + .25, .3, { sx: 1 }, 'back'); cue(t0, 'klick');
+});
+tw('etE', WE(8, 'billiger'), .15, { s: 1.12 }); tw('etE', WE(8, 'billiger') + .15, .35, { s: 1 }, 'back'); cue(WE(8, 'billiger'), 'muenze');
+pop('qM', W(9, 'Qualität'), { x: X4 + 1110, y: 245 }, 'ding');
+pop('qE', W(9, 'Qualität') + .25, { x: X4 + 1530, y: 245 }, 'ding');
+pop('gleich', W(9, 'gleich'), { x: X4 + MX, y: 410 }, 'erfolg');
+textAkteure('tb5'); textEin('tb5', P4 + .4, { unter: Z(9) }); textAus('tb5', ZE(9) + .1);
+
+/* ---------- 6 · Grundpreis ---------- */
+const P5 = wechsel(9, 10); pan2(P5, 5); const X5 = S(5);
+ein('preisA', P5 + .45, { x: X5 + 1110, y: 360 }, { y: 100 });
+ein('preisB', P5 + .6, { x: X5 + 1530, y: 360 }, { y: 100 });
+puls('preisA', W(10, 'Grundpreis'), 1.05); puls('preisB', W(10, 'Grundpreis') + .15, 1.05);
+akteur('lupe', { x: X5 + 1900, y: 460, r: 0 });
+tw('lupe', W(11, 'klein') - .3, .7, { x: X5 + 1120, y: 440 }, 'back'); cue(W(11, 'klein') - .3, 'whoosh');
+pop('grundA', W(11, 'Preis'), { x: X5 + 1110, y: 590 }, 'pop');
+tw('lupe', W(11, 'Kilo'), .2, { s: 1.08 }); tw('lupe', W(11, 'Kilo') + .2, .3, { s: 1 }, 'back');
+tw('lupe', W(12, 'vergleichst') - .35, .7, { x: X5 + 1540, y: 440 }, 'inout'); cue(W(12, 'vergleichst') - .35, 'whoosh');
+pop('grundB', W(12, 'vergleichst') + .25, { x: X5 + 1530, y: 590 }, 'pop');
+pop('haken6', WE(12, 'richtig') - .1, { x: X5 + 1530, y: 205 }, 'erfolg');
+tw('lupe', WE(12, 'richtig') + .1, .5, { x: X5 + 1900, o: 0 }, 'in');
+textAkteure('tb6'); textEin('tb6', P5 + .4, { unter: Z(11) }); textAus('tb6', ZE(12) + .1);
+
+/* ---------- 7 · Mindestens haltbar / zu verbrauchen ---------- */
+const P6 = wechsel(12, 13); pan2(P6, 6); const X6 = S(6);
+ein('joghurt', P6 + .4, { x: X6 + 1130, y: 380 }, { y: 110 });
+pop('mhd', W(13, 'Mindestens'), { x: X6 + 1130, y: 580 });
+ein('tonne', W(13, 'wegwerfen') - .3, { x: X6 + 1540, y: 600 }, { y: 80 });
+ein('tonneD', W(13, 'wegwerfen') - .3, { x: X6 + 1540, y: 600 }, { y: 80 }, null);
+tw('tonneD', W(13, 'wegwerfen'), .2, { y: 570, r: -3 }, 'out'); tw('tonneD', W(13, 'wegwerfen') + .2, .3, { y: 600, r: 0 }, 'bounce');
+pop('xTonne', WE(13, 'wegwerfen'), { x: X6 + 1630, y: 545 }, 'plopp');
+figur('mai7', { x: X6 + 1540, y: 320, s: 0 }); tw('mai7', W(14, 'Schau') - .35, .5, { s: 1 }, 'back'); cue(W(14, 'Schau') - .35, 'pop');
+tw('#mai7 .figur', W(14, 'Schau'), .3, { x: -12, r: -3 }, 'out');
+akteur('riech', { x: X6 + 1345, y: 330, o: 0 });
+tw('riech', W(14, 'riech'), .25, { o: 1 });
+HOOKS.push(t => { $('#riech').querySelectorAll('path').forEach((p, i) => { p.style.strokeDasharray = '18 12'; p.style.strokeDashoffset = t * 60 + i * 9; }); });
+tw('riech', W(14, 'probier'), .3, { o: 0 });
+tw('#mai7 .figur', W(14, 'probier'), .3, { x: 0, r: 0 }, 'out');
+froh('mai7', W(14, 'probier')); nicken('mai7', W(14, 'probier') + .1);
+pop('haken7', WE(14, 'probier'), { x: X6 + 1240, y: 290 }, 'ding');
+// Wechsel zu Hackfleisch
+tw(['mai7', 'tonne', 'tonneD', 'xTonne'], Z(15) - .1, .35, { o: 0, s: .8 }, 'in');
+ein('hack', W(15, 'verbrauchen') - .2, { x: X6 + 1560, y: 380 }, { x: 140 }, 'whoosh');
+pop('zvb', W(15, 'verbrauchen') + .2, { x: X6 + 1550, y: 580 });
+pop('warn7', W(15, 'Datum'), { x: X6 + 1660, y: 300 }, 'plopp');
+wackeln('warn7', W(15, 'Datum') + .45, 4, 3);
+textAkteure('tb7'); textEin('tb7', P6 + .4, { unter: Z(14) }); textAus('tb7', ZE(15) + .1);
+
+/* ---------- 8 · Reste ---------- */
+const P7 = wechsel(15, 16); pan2(P7, 7); const X7 = S(7);
+ein('topf', P7 + .4, { x: X7 + 1090, y: 400 }, { y: 100 });
+ein('frost', P7 + .55, { x: X7 + 1550, y: 430 }, { x: 140 }, 'whoosh');
+akteur('dose', { o: 0 });
+{
+  const t0 = W(16, 'Reste'); set('dose', t0, { o: 1 }); cue(t0, 'pop');
+  bogen('dose', t0, .2, [X7 + 1090, 380], [X7 + 1090, 300], 0);
+  bogen('dose', W(16, 'einfrieren') - .3, .9, [X7 + 1090, 300], [X7 + 1550, 485], 140);
+  cue(W(16, 'einfrieren') + .55, 'plopp');
+}
+pop('flocke', W(16, 'einfrieren') + .5, { x: X7 + 1655, y: 250 }, 'ding');
+pop('cFrost', W(16, 'einfrieren') + .3, { x: X7 + 1550, y: 655 }, null);
+pop('cMorgen', W(16, 'nächsten'), { x: X7 + 1090, y: 655 });
+textAkteure('tb8'); textEin('tb8', P7 + .4, { unter: W(16, 'oder') }); textAus('tb8', ZE(16) + .1);
+
+/* ---------- 9 · Sparen ---------- */
+const P8 = wechsel(16, 17); pan2(P8, 8); const X8 = S(8);
+ein('schwein', P8 + .4, { x: X8 + MX, y: 480 }, { y: 100 });
+{
+  const muenzen = [['sm1', W(17, 'jeden')], ['sm2', W(17, 'Monat')], ['sm3', W(17, 'bisschen')], ['sm4', W(17, 'Seite')],
+    ['sk1', W(18, 'kleine')], ['sk2', W(18, 'kleine') + .3], ['sk3', W(18, 'helfen')]];
+  muenzen.forEach(([id, t0], i) => {
+    akteur(id, { x: X8 + MX + 2, y: 150, o: 0, r: 0 });
+    set(id, t0, { o: 1 });
+    tw(id, t0, .45, { y: 410 }, 'in'); set(id, t0 + .45, { o: 0 });
+    cue(t0 + .42, 'muenze');
+    tw('schwein', t0 + .42, .12, { sy: .94, sx: 1.04 + i * .006 }); tw('schwein', t0 + .54, .3, { sy: 1 + i * .012, sx: 1 + i * .012 }, 'back');
+  });
+}
+pop('jedeWoche', W(17, 'bisschen'), { x: X8 + MX, y: 690 });
+textAkteure('tb9'); textEin('tb9', P8 + .4, { unter: Z(18) }); textAus('tb9', ZE(18) + .1);
+
+/* ---------- 10 · Monatsende ---------- */
+const P9 = wechsel(18, 19); pan2(P9, 9); const X9 = S(9);
+ein('kal10', P9 + .4, { x: X9 + 1090, y: 330 }, { y: -90 });
+kalender('kal10z', W(19, 'reicht'), Math.max(.6, W(19, 'Monatsende') - W(19, 'reicht')), 15, 30);
+tw('kal10', W(19, 'Monatsende'), .15, { y: 300 }, 'out'); tw('kal10', W(19, 'Monatsende') + .15, .4, { y: 330 }, 'bounce'); cue(W(19, 'Monatsende'), 'ding');
+ein('beutel10', P9 + .55, { x: X9 + 1090, y: 610 }, { y: 80 });
+akteur('schein10', { x: X9 + 1090, y: 600, o: 0 }); tw('schein10', W(19, 'Geld'), .5, { y: 548, o: 1 }, 'back'); cue(W(19, 'Geld'), 'muenze');
+figur('mai10', { x: X9 + 1530, y: 450, s: 0 }); tw('mai10', P9 + .7, .55, { s: 1 }, 'back'); cue(P9 + .7, 'pop');
+froh('mai10', WE(19, 'Monatsende')); tw('#mai10 .daumen', WE(19, 'Monatsende'), .5, { y: -36 }, 'back'); cue(WE(19, 'Monatsende'), 'erfolg');
+textAkteure('tb10'); textEin('tb10', P9 + .4);
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .6;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endSchwein', { o: 0, y: 40 }, true); tw('endSchwein', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

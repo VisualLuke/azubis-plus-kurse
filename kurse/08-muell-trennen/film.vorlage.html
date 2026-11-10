@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 8 – Müll trennen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --info:var(--3f081c40-af4e-4425-a97f-c7528bc5ad4d,#3B82F6);
+  --info-bg:var(--f939ccd9-6c46-4062-bfe6-c36c169ccafb,#E6EFFE);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+
+.chip{display:flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;font:700 30px/38px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip i{width:22px;height:22px;border-radius:999px;display:block;flex:none}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text);box-shadow:none}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.blau{background:var(--info-bg);color:var(--info);box-shadow:none}
+.chip.rot{background:var(--error-bg);color:var(--error-text);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:9px 18px}
+.chip.gross{font-size:44px;line-height:52px;padding:14px 34px}
+.kreuz{width:84px;height:84px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:40px}
+
+.tonne{transform-origin:50% 88%}
+.tonne .koerper,.tonne .deckel{position:absolute;left:0;top:0;width:100%}
+.tonne .deckel{transform-origin:22.5% 32%}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 100%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+#tb10 .zeile{font:700 80px/92px Inter;letter-spacing:-.02em}
+#tb10 .zeile.fertig{color:var(--success-text)}
+.deckelAb{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckelAb .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+.reihe{display:flex;gap:18px}
+.reihe div{width:150px}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Trennen ist Pflicht -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a portrait" id="mai0" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="tuete0" style="width:150px">{{tuete}}</div>
+  <div class="a tonne" id="t0a" style="width:170px;height:170px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
+  <div class="a tonne" id="t0b" style="width:170px;height:170px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
+  <div class="a tonne" id="t0c" style="width:170px;height:170px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
+  <div class="a tonne" id="t0d" style="width:170px;height:170px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
+  <div class="a chip brand gross" id="pflicht">Pflicht</div>
+
+  <!-- 2 · Gelb: Verpackungen -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a tonne" id="tG" style="width:300px;height:300px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
+  <div class="a chip gelb" id="lblG">Gelbe Tonne oder Sack</div>
+  <div class="a" id="becher" style="width:130px">{{becher}}</div>
+  <div class="a" id="dose" style="width:130px">{{dose}}</div>
+  <div class="a" id="gkarton" style="width:130px">{{getraenkekarton}}</div>
+
+  <!-- 3 · Blau: Papier -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a tonne" id="tB" style="width:300px;height:300px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
+  <div class="a chip blau" id="lblB">Blaue Tonne</div>
+  <div class="a" id="zeitung" style="width:150px">{{zeitung}}</div>
+  <div class="a" id="karton" style="width:190px">{{karton}}</div>
+
+  <!-- 4 · Braun: Biomüll -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a tonne" id="tBr" style="width:300px;height:300px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
+  <div class="a chip gelb" id="lblBr">Braune Tonne</div>
+  <div class="a" id="apfel" style="width:120px">{{apfelrest}}</div>
+  <div class="a" id="banane" style="width:130px">{{banane}}</div>
+  <div class="a" id="karotte" style="width:120px">{{karotte}}</div>
+  <div class="a chip gruen gross" id="bio">Biomüll</div>
+
+  <!-- 5 · Restmüll -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a tonne" id="tGr" style="width:260px;height:260px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
+  <div class="a tonne" id="tS" style="width:260px;height:260px"><div class="koerper">{{tonne-schwarz}}</div><div class="deckel">{{deckel-schwarz}}</div></div>
+  <div class="a chip" id="lblGr">Grau</div>
+  <div class="a chip" id="lblS">oder schwarz</div>
+  <div class="a" id="scherben" style="width:150px">{{scherben}}</div>
+  <div class="a" id="beutel" style="width:130px">{{beutel}}</div>
+
+  <!-- 6 · Glas -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a" id="container" style="width:460px">{{glascontainer}}</div>
+  <div class="a chip klein" id="lblW">Weiß</div>
+  <div class="a chip klein gruen" id="lblGn">Grün</div>
+  <div class="a chip klein gelb" id="lblBn">Braun</div>
+  <div class="a" id="glasW" style="width:120px">{{glas-weiss}}</div>
+  <div class="a" id="glasG" style="width:120px">{{glas-gruen}}</div>
+  <div class="a" id="glasB" style="width:120px">{{glas-braun}}</div>
+
+  <!-- 7 · Pfand -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a tonne" id="tP" style="width:220px;height:220px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
+  <div class="a kreuz" id="xP"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="wagen" style="width:260px">{{wagen}}</div>
+  <div class="a chip klein" id="lblWagen">Supermarkt</div>
+  <div class="a" id="flasche" style="width:150px">{{pfandflasche}}</div>
+  <div class="a chip brand" id="lblPfand">Pfand</div>
+
+  <!-- 8 · Batterien -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a" id="box" style="width:280px">{{sammelbox}}</div>
+  <div class="a chip" id="lblBox">Sammelbox</div>
+  <div class="a" id="batterie" style="width:120px">{{batterie}}</div>
+  <div class="a" id="haken7" style="width:100px">{{haken}}</div>
+
+  <!-- 9 · In jeder Stadt anders -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a" id="plan" style="width:440px">{{stadtplan}}</div>
+  <div class="a tonne" id="m1" style="width:90px;height:90px"><div class="koerper">{{tonne-gelb}}</div><div class="deckel">{{deckel-gelb}}</div></div>
+  <div class="a tonne" id="m2" style="width:90px;height:90px"><div class="koerper">{{tonne-blau}}</div><div class="deckel">{{deckel-blau}}</div></div>
+  <div class="a tonne" id="m3" style="width:90px;height:90px"><div class="koerper">{{tonne-braun}}</div><div class="deckel">{{deckel-braun}}</div></div>
+  <div class="a tonne" id="m4" style="width:90px;height:90px"><div class="koerper">{{tonne-grau}}</div><div class="deckel">{{deckel-grau}}</div></div>
+  <div class="a portrait" id="vermieter" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-vermieter}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="ordnung" style="width:150px">{{vertrag}}</div>
+  <div class="a chip klein" id="lblOrdnung">Hausordnung</div>
+
+  <!-- 10 · Fertig -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a portrait" id="mai9" style="width:300px;height:300px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+  <div class="a" id="tuete9" style="width:150px">{{tuete-leer}}</div>
+  <div class="a" id="haken9" style="width:100px">{{haken}}</div>
+</div></div>
+
+
+<div class="block" id="tb1"><div class="titel">Müll trennen = Pflicht</div></div>
+<div class="block" id="tb2"><div class="titel">Gelb: Verpackungen</div><div class="unter">Plastik, Dosen und Getränkekartons</div></div>
+<div class="block" id="tb3"><div class="titel">Blau: Papier und Pappe</div><div class="unter">Kartons vorher klein falten.</div></div>
+<div class="block" id="tb4"><div class="titel">Braun: Biomüll</div><div class="unter">Essensreste, Obst und Gemüse</div></div>
+<div class="block" id="tb5"><div class="titel">Grau oder schwarz: Restmüll</div><div class="unter">Alles andere</div></div>
+<div class="block" id="tb6"><div class="titel">Glas: nach Farben</div><div class="unter">Weiß, grün und braun in verschiedene Öffnungen</div></div>
+<div class="block" id="tb7"><div class="titel">Pfandflaschen → Supermarkt</div><div class="unter">Sie gehören nicht in den Müll.</div></div>
+<div class="block" id="tb8"><div class="titel">Batterien: Sammelbox</div><div class="unter">im Supermarkt</div></div>
+<div class="block" id="tb9"><div class="titel">In deiner Stadt nachfragen</div><div class="unter">Hausordnung oder Vermieter</div></div>
+<div class="block" id="tb10"><div class="zeile a" style="position:relative">Trennen –</div><div class="zeile fertig a" style="position:relative">fertig!</div></div>
+
+
+<div class="deckelAb" id="abspann"><div class="ende">
+  <div class="reihe a" id="endReihe" style="position:relative">
+    <div>{{tonne-gelb~2}}</div><div>{{tonne-blau~2}}</div><div>{{tonne-braun~2}}</div><div>{{tonne-grau~2}}</div></div>
+  <div class="gross a" id="asTitel" style="position:relative">Gut getrennt.</div>
+</div></div>
+
+<script src="sprache.js"></script>
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+/* Sätze (sprechtext.json): 0–2 Pflicht · 3 Gelb · 4–5 Blau · 6–7 Braun · 8–9 Rest · 10–11 Glas · 12–13 Pfand · 14 Batterien · 15–16 Stadt · 17 Schluss */
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;
+for (let i = 0; i < 10; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren, Extra-Zoom ---------- */
+const PANS = [], ZOOMS = [];
+const pan2 = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .025 * E.inout(clamp((t - letzte - .9) / 10));
+  for (const [a, b, w] of ZOOMS) z *= 1 + w * Math.min(E.inout(clamp((t - a) / .8)), 1 - E.inout(clamp((t - b) / .6)));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Bausteine ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 70 }) => {          // Auftritt mit Squash & Stretch
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0) });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y }, 'out');
+  tw(id, t + .38, .1, { sy: .9, sx: 1.07 }, 'out'); tw(id, t + .48, .35, { sy: 1, sx: 1 }, 'back');
+};
+const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const stauch = (id, t) => { tw(id, t, .1, { sy: .9, sx: 1.06 }, 'out'); tw(id, t + .1, .35, { sy: 1, sx: 1 }, 'back'); };
+const stempel = (id, t, basis) => {                         // schlägt mit Wackler auf
+  akteur(id, { ...basis, s: 1.8, o: 0 }); tw(id, t, .22, { s: 1, o: 1 }, 'in'); cue(t + .2, 'plopp'); wackeln(id, t + .22, 3, 4);
+};
+const tonne = (id, basis) => { akteur(id, basis); akteur($(`#${id} .deckel`), {}, true); };
+const auf = (id, t, w = -42) => { tw(`#${id} .deckel`, t, .25, { r: w }, 'back'); cue(t, 'klick'); };
+const zu = (id, t) => { tw(`#${id} .deckel`, t, .35, { r: 0 }, 'bounce'); cue(t + .15, 'klick'); };
+// Wurf im Bogen: x linear, y hoch und runter, wird kleiner und verschwindet im Ziel; gibt die Landezeit zurück
+function wirf(id, t, x1, y1, h = 180, d = .75, dreh = 10) {
+  const a = AKTEURE.get($('#' + id)), y0 = wert(a, 'y', t);
+  tw(id, t, d, { x: x1 }, 'lin');
+  tw(id, t, d / 2, { y: Math.min(y0, y1) - h, r: dreh }, 'out');
+  tw(id, t + d / 2, d / 2, { y: y1, r: 0 }, 'in');
+  tw(id, t + d * .55, d * .45, { s: .4 }, 'in');
+  set(id, t + d, { o: 0 });
+  cue(t, 'whoosh'); cue(t + d, 'plopp');
+  return t + d;
+}
+const froh = (id, t) => { set(`#${id} .froh`, t, { o: 1 }); set(`#${id} .zu`, t, { o: 0 }); };
+function figur(id, basis) {
+  akteur(id, basis);
+  akteur($(`#${id} .froh`), { o: 0 }, true); akteur($(`#${id} .zu`), {}, true); akteur($(`#${id} .figur`), {}, true);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+}
+const nicken = (id, t) => { for (let i = 0; i < 2; i++) { tw(`#${id} .figur`, t + i * .36, .18, { r: 5 }, 'out'); tw(`#${id} .figur`, t + i * .36 + .18, .18, { r: 0 }, 'inout'); } };
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {   // blinzeln
+  const z = (t * .27 + i * .37) % 1; p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+}));
+
+/* ---------- 1 · Trennen ist Pflicht ---------- */
+const X0 = S(0);
+figur('mai0', { x: X0 + MX, y: 300, s: 0 }); tw('mai0', Z(0), .55, { s: 1 }, 'back'); cue(Z(0), 'pop');
+ein('tuete0', Z(0) + .3, { x: X0 + MX - 200, y: 330 });
+['t0a', 't0b', 't0c', 't0d'].forEach((id, i) => {
+  tonne(id, { x: X0 + MX - 300 + i * 200, y: 590, o: 0 });
+  ein(id, Z(0) + .6 + i * .15, { x: X0 + MX - 300 + i * 200, y: 590 }); cue(Z(0) + .6 + i * .15, 'pop');
+  auf(id, W(1, 'trennst') + i * .14); zu(id, W(1, 'trennst') + i * .14 + .55);
+});
+froh('mai0', W(1, 'trennst'));
+stempel('pflicht', W(2, 'Pflicht'), { x: X0 + MX + 215, y: 300 });
+textAkteure('tb1'); textEin('tb1', Z(0) + .1); textAus('tb1', ZE(2) + .05);
+
+/* ---------- 2 · Gelb: Verpackungen ---------- */
+pan2(ZE(2) + .15, 1); const X1 = S(1);
+tonne('tG', { x: X1 + 1520, y: 470, o: 0 }); ein('tG', Z(3), { x: X1 + 1520, y: 470 }); cue(Z(3), 'pop');
+pop('lblG', W(3, 'gelben'), { x: X1 + 1520, y: 665 });
+const MUND1 = [X1 + 1520, 410];
+[['becher', 270, 'Plastik', 130], ['dose', 440, 'Dosen', 170], ['gkarton', 610, 'Getränkekartons', 230]].forEach(([id, y, wort, h], i) => {
+  pop(id, W(3, 'Verpackungen') + i * .15, { x: X1 + 1020, y });
+  const t = W(3, wort) - .1; wirf(id, t, MUND1[0], MUND1[1], h); stauch('tG', t + .75);
+});
+auf('tG', W(3, 'Plastik') - .4); zu('tG', W(3, 'Getränkekartons') + .9);
+textAkteure('tb2'); textEin('tb2', Z(3), { unter: W(3, 'Plastik') }); textAus('tb2', ZE(3) + .05);
+
+/* ---------- 3 · Blau: Papier und Pappe ---------- */
+pan2(ZE(3) + .15, 2); const X2 = S(2);
+tonne('tB', { x: X2 + 1560, y: 470, o: 0 }); ein('tB', Z(4), { x: X2 + 1560, y: 470 }); cue(Z(4), 'pop');
+pop('lblB', W(4, 'blaue'), { x: X2 + 1560, y: 665 });
+pop('zeitung', Z(4) + .3, { x: X2 + 1060, y: 300 });
+auf('tB', W(4, 'Papier') - .35); wirf('zeitung', W(4, 'Papier'), X2 + 1560, 410, 140); stauch('tB', W(4, 'Papier') + .75);
+pop('karton', W(5, 'Kartons'), { x: X2 + 1110, y: 520 });
+tw('karton', W(5, 'faltest'), .45, { sy: .28, sx: 1.18, y: 575 }, 'back'); cue(W(5, 'faltest'), 'kritzeln');
+const tK = Math.max(WE(5, 'klein') - .1, W(5, 'faltest') + .55);
+wirf('karton', tK, X2 + 1560, 410, 150); stauch('tB', tK + .75); zu('tB', tK + 1.0);
+textAkteure('tb3'); textEin('tb3', Z(4), { unter: Z(5) }); textAus('tb3', ZE(5) + .05);
+
+/* ---------- 4 · Braun: Biomüll ---------- */
+pan2(ZE(5) + .15, 3); const X3 = S(3);
+tonne('tBr', { x: X3 + 1560, y: 470, o: 0 }); ein('tBr', Z(6), { x: X3 + 1560, y: 470 }); cue(Z(6), 'pop');
+pop('lblBr', W(6, 'braune'), { x: X3 + 1560, y: 665 });
+auf('tBr', W(6, 'Essensreste') - .35);
+[['apfel', 1010, 'Essensreste'], ['banane', 1150, 'Obst'], ['karotte', 1290, 'Gemüse']].forEach(([id, x, wort], i) => {
+  ein(id, Z(6) + .15 + i * .15, { x: X3 + x, y: 600 });
+  const t = W(6, wort) - .1;
+  tw(id, t - .3, .15, { y: 570, sy: 1.08, sx: .94 }, 'out'); tw(id, t - .15, .15, { y: 600, sy: .9, sx: 1.08 }, 'in');   // Anlauf-Hüpfer
+  tw(id, t, .1, { sy: 1, sx: 1 }); wirf(id, t, X3 + 1560, 410, 200 - i * 40); stauch('tBr', t + .75);
+});
+zu('tBr', W(6, 'Gemüse') + .9);
+stempel('bio', W(7, 'Biomüll'), { x: X3 + 1560, y: 255 });
+textAkteure('tb4'); textEin('tb4', Z(6), { unter: W(6, 'Essensreste') }); textAus('tb4', ZE(7) + .05);
+
+/* ---------- 5 · Restmüll ---------- */
+pan2(ZE(7) + .15, 4); const X4 = S(4);
+tonne('tGr', { x: X4 + 1380, y: 480, o: 0 }); ein('tGr', Z(8), { x: X4 + 1380, y: 480 }); cue(Z(8), 'pop');
+pop('lblGr', Z(8) + .3, { x: X4 + 1380, y: 665 });
+pop('scherben', Z(8) + .2, { x: X4 + 1040, y: 300 });
+pop('beutel', Z(8) + .35, { x: X4 + 1030, y: 540 });
+auf('tGr', W(8, 'Alles') - .3);
+wirf('scherben', W(8, 'Alles'), X4 + 1380, 430, 120); stauch('tGr', W(8, 'Alles') + .75);
+const tR = Math.max(W(8, 'Restmüll'), W(8, 'Alles') + .45);
+wirf('beutel', tR, X4 + 1380, 430, 190); stauch('tGr', tR + .75); zu('tGr', tR + 1.0);
+wackeln('tGr', W(9, 'graue'), 3, 4);
+tonne('tS', { x: X4 + 1600, y: 480, o: 0 }); ein('tS', W(9, 'schwarze') - .1, { x: X4 + 1600, y: 480 }); cue(W(9, 'schwarze') - .1, 'pop');
+pop('lblS', W(9, 'schwarze') + .2, { x: X4 + 1600, y: 665 });
+textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'Alles') }); textAus('tb5', ZE(9) + .05);
+
+/* ---------- 6 · Glas ---------- */
+pan2(ZE(9) + .15, 5); const X5 = S(5);
+ein('container', Z(10), { x: X5 + 1440, y: 470 }); cue(Z(10), 'pop');
+ZOOMS.push([W(10, 'Glascontainer'), ZE(11) + .2, .06]);
+const OEFF = [1313, 1440, 1567];
+[['lblW', 0], ['lblGn', 1], ['lblBn', 2]].forEach(([id, i]) => pop(id, W(11, 'Weißes') - .3 + i * .12, { x: X5 + OEFF[i], y: 300 }));
+[['glasW', 250, 'Weißes'], ['glasG', 420, 'grünes'], ['glasB', 590, 'braunes']].forEach(([id, y, wort], i) => {
+  pop(id, Z(10) + .4 + i * .15, { x: X5 + 1010, y });
+  const t = W(11, wort) - .15, l = wirf(id, t, X5 + OEFF[i], 493, 140 - i * 30, .7);
+  cue(l, 'ding'); stauch('container', l);
+});
+textAkteure('tb6'); textEin('tb6', Z(10), { unter: Z(11) }); textAus('tb6', ZE(11) + .05);
+
+/* ---------- 7 · Pfand ---------- */
+pan2(ZE(11) + .15, 6); const X6 = S(6);
+tonne('tP', { x: X6 + 1020, y: 500, o: 0 }); ein('tP', Z(12), { x: X6 + 1020, y: 500 }); cue(Z(12), 'pop');
+ein('wagen', Z(12) + .2, { x: X6 + 1590, y: 520 }, { x: 80 });
+pop('lblWagen', Z(12) + .5, { x: X6 + 1590, y: 665 });
+akteur('flasche', { x: X6 + 1450, y: 470, o: 0 }); tw('flasche', Z(12) + .1, .3, { o: 1 });
+tw('flasche', Z(12) + .2, Math.max(.6, W(12, 'nicht') - Z(12) - .2), { x: X6 + 1210 }, 'inout'); cue(Z(12) + .2, 'whoosh');
+for (let k = 0; k < 4; k++) tw('flasche', Z(12) + .2 + k * .2, .2, { r: k % 2 ? -3 : 3 }, 'inout');
+tw('flasche', W(12, 'nicht'), .05, { r: 0 }); stauch('flasche', W(12, 'nicht'));
+pop('lblPfand', W(12, 'Pfand'), { x: X6 + 1300, y: 235 });
+pop('xP', W(12, 'nicht') + .1, { x: X6 + 1020, y: 335 }, 'plopp');
+tw('flasche', W(12, 'Müll'), .35, { sx: -1 }, 'inout'); cue(W(12, 'Müll'), 'whoosh');   // dreht um
+const tF = W(13, 'Supermarkt') - .3, lF = wirf('flasche', tF, X6 + 1595, 470, 110, .8, -8);
+tw('wagen', lF, .12, { y: 532, sx: 1.04 }, 'out'); tw('wagen', lF + .12, .4, { y: 520, sx: 1 }, 'back'); cue(lF + .1, 'muenze');
+tw('lblPfand', tF, .8, { x: X6 + 1520 }, 'inout');
+textAkteure('tb7'); textEin('tb7', Z(12), { unter: W(12, 'gehören') }); textAus('tb7', ZE(13) + .05);
+
+/* ---------- 8 · Batterien ---------- */
+pan2(ZE(13) + .15, 7); const X7 = S(7);
+ein('box', Z(14), { x: X7 + 1480, y: 500 }); cue(Z(14), 'pop');
+pop('lblBox', W(14, 'Sammelbox'), { x: X7 + 1480, y: 665 });
+pop('batterie', Z(14) + .25, { x: X7 + 1100, y: 300 });
+wackeln('batterie', W(14, 'Batterien'), 3, 3);
+const tBa = Math.max(W(14, 'Sammelbox'), W(14, 'Batterien') + .5);
+const lB = wirf('batterie', tBa, X7 + 1477, 440, 110, .7, 3); stauch('box', lB);
+pop('haken7', lB + .15, { x: X7 + 1640, y: 360 }, 'erfolg');
+textAkteure('tb8'); textEin('tb8', Z(14), { unter: W(14, 'Supermarkt') }); textAus('tb8', ZE(14) + .05);
+
+/* ---------- 9 · In jeder Stadt anders ---------- */
+pan2(ZE(14) + .15, 8); const X8 = S(8);
+ein('plan', Z(15), { x: X8 + 1160, y: 450 }); cue(Z(15), 'pop');
+[['m1', 1035, 330, 'jeder'], ['m2', 1250, 360, 'Stadt'], ['m3', 1060, 560, 'etwas'], ['m4', 1255, 580, 'anders']].forEach(([id, x, y, wort]) => {
+  tonne(id, { x: X8 + x, y, s: 0 }); tw(id, W(15, wort), .45, { s: 1 }, 'back'); cue(W(15, wort), 'pop');
+  auf(id, W(15, wort) + .45, -30); zu(id, W(15, wort) + .8);
+});
+figur('vermieter', { x: X8 + 1590, y: 320, s: 0 }); tw('vermieter', Z(16), .5, { s: 1 }, 'back'); cue(Z(16), 'pop');
+pop('ordnung', W(16, 'Hausordnung'), { x: X8 + 1590, y: 555 });
+pop('lblOrdnung', W(16, 'Hausordnung') + .2, { x: X8 + 1590, y: 672 }, null);
+nicken('vermieter', W(16, 'Vermieter')); froh('vermieter', W(16, 'Vermieter'));
+textAkteure('tb9'); textEin('tb9', Z(15), { unter: Z(16) }); textAus('tb9', ZE(16) + .05);
+
+/* ---------- 10 · Fertig ---------- */
+pan2(ZE(16) + .15, 9); const X9 = S(9);
+figur('mai9', { x: X9 + 1220, y: 400, s: 0 }); tw('mai9', Z(17), .55, { s: 1 }, 'back'); cue(Z(17), 'pop');
+akteur('tuete9', { x: X9 + 1440, y: 560, o: 0 }); tw('tuete9', Z(17) + .1, .3, { o: 1 });
+tw('tuete9', W(17, 'einfach'), .6, { x: X9 + 1620, y: 590 }, 'inout'); stauch('tuete9', W(17, 'einfach') + .6); cue(W(17, 'einfach') + .6, 'plopp');
+froh('mai9', W(17, 'Vermieter')); tw('#mai9 .daumen', W(17, 'Vermieter'), .5, { y: -36 }, 'back'); cue(W(17, 'Vermieter'), 'erfolg');
+pop('haken9', W(17, 'freut'), { x: X9 + 1560, y: 300 }, 'ding');
+document.querySelectorAll('#tb10 .zeile').forEach((z, i) => {
+  akteur(z, { o: 0, y: 40 }, true); tw(z, i ? W(17, 'einfach') : Z(17), .55, { o: 1, y: 0 }, 'back');
+});
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .5;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endReihe', { o: 0, y: 40 }, true); tw('endReihe', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>

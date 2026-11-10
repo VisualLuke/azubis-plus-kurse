@@ -54,12 +54,12 @@
 .miniBild .ebene{position:absolute;left:0;top:8%;width:100%;height:100%}
 .status{font:800 18px/22px Inter;color:var(--success-text);white-space:nowrap}
 .zettel{padding:16px 24px;border-radius:14px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px solid var(--border)}
-.zettel small{display:block;font:600 18px/22px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--b600)}
+.zettel small{display:block;font:600 15px/20px Inter;letter-spacing:.04em;text-transform:uppercase;color:var(--b600)}
 .zettel b{display:block;font:700 30px/38px Inter;color:var(--ink);white-space:pre;letter-spacing:.04em;min-height:38px}
 
-.liste{width:136px;display:flex;flex-direction:column;gap:8px;margin-top:4px}
-.zeile{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--surface);font:700 13px/16px Inter;color:var(--ink);text-align:left;white-space:nowrap}
-.zeile i{width:22px;height:22px;flex:none;border-radius:6px;background:var(--b200)}
+.liste{width:154px;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.zeile{display:flex;align-items:center;gap:7px;padding:8px 7px;border-radius:10px;background:var(--surface);font:700 12px/16px Inter;color:var(--ink);text-align:left;white-space:nowrap}
+.zeile i{width:18px;height:18px;flex:none;border-radius:6px;background:var(--b200)}
 .zeile.neu{background:var(--success-bg);color:var(--success-text)}
 .zeile.neu i{background:var(--success)}
 .kopfzeile{display:flex;align-items:center;gap:8px;font:800 17px/20px Inter;color:var(--ink);margin-top:14px}
@@ -149,13 +149,13 @@
     <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
     <div class="ebene daumen">{{figur-daumen}}</div></div>
   <div class="a" id="karte7" style="width:230px">{{gesundheitskarte}}</div>
-  <div class="a" id="handy7" style="width:440px">{{handy}}</div>
-  <div class="a schirm" id="app7" style="width:156px;height:276px">
+  <div class="a" id="handy7" style="width:480px">{{handy}}</div>
+  <div class="a schirm" id="app7" style="width:172px;height:300px">
     <div class="kopfzeile"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z" fill="var(--b500)"/></svg>Dokumente</div>
     <div class="liste"><div class="zeile"><i></i>Reisepass</div><div class="zeile"><i></i>Vertrag</div>
       <div class="zeile neu" id="neu7"><i></i>Gesundheitskarte</div></div></div>
   <div class="a" id="flug7" style="width:110px">{{gesundheitskarte}}</div>
-  <div class="a chip" id="lblApp">Azubis Plus Helper App</div>
+  <div class="a chip" id="lblApp" style="font-size:28px;line-height:34px">Azubis Plus Helper App</div>
 </div></div>
 
 <div class="block" id="tb1"><div class="titel">Was brauchst du beim Arzt?</div></div>
@@ -309,7 +309,7 @@ tw('#status4', tL1 + .05, .4, { o: 1, y: 0 }, 'back'); cue(tL1 + .05, 'erfolg');
 tw('handy4', tL1 + .05, .15, { s: 1.05 }); tw('handy4', tL1 + .2, .4, { s: 1 }, 'back');
 // SV-Nummer: Brief kommt, Nummer wird getippt
 ein('brief4', Z(9), { x: X4 + 1560, y: MY - 110 }, { x: 200, y: 0 }, 'whoosh');
-ein('sv4', W(9, 'Sozialversicherungsnummer') - .2, { x: X4 + 1555, y: MY + 140 }, { y: 50 }, null);
+ein('sv4', W(9, 'Sozialversicherungsnummer') - .2, { x: X4 + 1520, y: MY + 140 }, { y: 50 }, null);
 tippen($('#svNr'), W(9, 'Sozialversicherungsnummer') + .1, '12 150803 M 012', .07);
 textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'App') }); textAus('tb5', ZE(9) + .5);
 
@@ -317,21 +317,22 @@ textAkteure('tb5'); textEin('tb5', Z(8), { unter: W(8, 'App') }); textAus('tb5',
 wechsel(ZE(9) + .55, 5); const X5 = S(5);
 ein('kasten5', Z(10) - .2, { x: X5 + 1130, y: MY + 30 }, { y: 120 });
 akteur('brief5', { x: X5 + 1110, y: -150, r: -3 });
-tw('brief5', W(10, 'kommt'), .6, { y: MY - 40, r: 0 }, 'in'); cue(W(10, 'kommt'), 'whoosh');
-tw('brief5', W(10, 'kommt') + .6, .25, { y: MY + 10, s: .6, o: 0 }, 'in'); cue(W(10, 'kommt') + .6, 'plopp');
-tw('kasten5', W(10, 'kommt') + .62, .08, { sy: .94 }); tw('kasten5', W(10, 'kommt') + .7, .3, { sy: 1 }, 'back');
+const tB = Z(10) + .1;
+tw('brief5', tB, .6, { y: MY - 40, r: 0 }, 'in'); cue(tB, 'whoosh');
+tw('brief5', tB + .6, .25, { y: MY + 10, s: .6, o: 0 }, 'in'); cue(tB + .6, 'plopp');
+tw('kasten5', tB + .62, .08, { sy: .94 }); tw('kasten5', tB + .7, .3, { sy: 1 }, 'back');
 akteur('karte5', { x: X5 + 1130, y: MY - 20, s: .3, o: 0 });
-const tK = W(10, 'Post');
+const tK = Math.max(W(10, 'Karte'), tB + .9);
 set('karte5', tK, { o: 1 });
-tw('karte5', tK, .8, { x: X5 + 1510, y: MY - 50, s: 1 }, 'back'); cue(tK, 'whoosh');
-drehen('karte5', tK + .8, .9);
-pop('haken5', tK + 1.7, { x: X5 + 1660, y: 250 }, 'ding');
+tw('karte5', tK, .7, { x: X5 + 1510, y: MY - 50, s: 1 }, 'back'); cue(tK, 'whoosh');
+drehen('karte5', tK + .55, .7);
+pop('haken5', tK + 1.0, { x: X5 + 1660, y: 250 }, 'ding');
 textAkteure('tb6'); textEin('tb6', Z(10)); textAus('tb6', ZE(10) + .5);
 
 /* ---------- 7 · Immer mit zum Arzt, sonst Bescheinigung ---------- */
 wechsel(ZE(10) + .55, 6); const X6 = S(6);
 ein('leser', Z(11) - .1, { x: X6 + 1130, y: MY + 50 }, { y: 120 });
-ein('lblPraxis', Z(11) + .2, { x: X6 + 1130, y: MY + 250 }, { y: 30 }, null);
+ein('lblPraxis', Z(11) + .2, { x: X6 + 1130, y: MY + 232 }, { y: 30 }, null);
 // Karte gleitet von oben in den Leser
 akteur('karte6', { x: X6 + 1131, y: 120, o: 0 });
 tw('karte6', W(11, 'mit') - .2, .3, { o: 1 });
@@ -362,7 +363,7 @@ set('flug7', tFl + .1, { o: 1 });
 tw('flug7', tFl + .1, .9, { x: X7 + 1460, y: MY + 90, s: .5 }, 'inout'); cue(tFl + .1, 'whoosh');
 set('flug7', tFl + 1.0, { o: 0 });
 tw('neu7', W(14, 'Dokumente') - .1, .45, { o: 1, x: 0 }, 'back'); cue(W(14, 'Dokumente') - .1, 'erfolg');
-ein('lblApp', W(14, 'Helper'), { x: X7 + 1460, y: MY + 240 }, { y: 30 }, null);
+ein('lblApp', W(14, 'Helper'), { x: X7 + 1460, y: MY + 250 }, { y: 30 }, null);
 froh('mai7', W(14, 'Dokumente')); daumen('mai7', W(14, 'Dokumente') + .1); nicken('mai7', W(14, 'Dokumente') + .5, 1);
 textAkteure('tb8'); textEin('tb8', Z(14), { unter: W(14, 'Helper') });
 
