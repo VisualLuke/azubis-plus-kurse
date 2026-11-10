@@ -91,3 +91,6 @@ gepflegt – `fragen.json` im Ordner ist der Stand beim Import.
 | 405 | Wohnen & Alltag | Wäsche waschen | [`kurse/07-waesche-waschen`](../kurse/07-waesche-waschen/) | 12 |  | `be98b8ca-6fd8-4fa3-baba-31517e5e5f69` |
 | 465 | Wohnen & Alltag | Miete, Nebenkosten und Strom | [`kurse/11-nebenkosten-strom`](../kurse/11-nebenkosten-strom/) | 12 |  | `f20aa625-2272-4e13-b7da-536dc4fdb0cb` |
 | 495 | Rechte & Geld | Einkaufen mit wenig Geld | [`kurse/13-einkaufen-budget`](../kurse/13-einkaufen-budget/) | 11 |  | `3d71f314-f00e-4a65-979f-8358f56a15cd` |
+| 205 | Start im Betrieb | Deutsch weiterlernen in der Ausbildung | [`kurse/16-deutschkurs`](../kurse/16-deutschkurs/) | 12 |  | `1c15d52d-644d-4b6a-86f3-969a9b48d0eb` |
+| 461 | Wohnen & Alltag | Einzug: Fotos und Übergabeprotokoll | [`kurse/14-wohnungsuebergabe`](../kurse/14-wohnungsuebergabe/) | 12 |  | `c822a19b-dfca-4b8f-b4b0-db231f0b0666` |
+| 497 | Rechte & Geld | Berufsausbildungsbeihilfe (BAB) | [`kurse/15-bab`](../kurse/15-bab/) | 12 |  | `5dfbecae-6614-4020-993b-7374b03c9665` |
