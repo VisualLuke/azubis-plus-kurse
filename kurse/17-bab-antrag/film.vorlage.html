@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Kurs 17 – BAB beantragen, Schritt für Schritt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block">
+<link rel="stylesheet" href="../../werkzeug/stil.css">
+<style>
+.auf-brand{/*AUF_BRAND*/}
+:root{
+  --border:var(--ace3a6a9-7f72-4964-bea0-331cd543a214,#EDEAF4);
+  --b400:var(--f0297ed8-06f5-4ffd-83fc-e6cd5dbaa2cd,#8163EE);
+  --n200:var(--b0a4f2b8-2d6e-4a4f-9a4b-2f6a5d3c1e10,#E4E1EC);
+  --warning:var(--c19df991-9894-4419-88fb-b2b58e36f9f7,#E0992B);
+  --warning-text:var(--71f60857-f754-4514-8386-e3f62d71441a,#9C6712);
+  --warning-bg:var(--c7c18918-fab3-46fc-af57-2ec14b380cb2,#FCF1DD);
+  --error:var(--f694e88e-bdd3-4eb1-bf33-26a20f247ed4,#E2556A);
+  --error-text:var(--d7fd93d3-1584-4a75-90a2-a9f7bacacacb,#C73E53);
+  --error-bg:var(--fb93d1a9-9399-4624-95d4-83b61d28209b,#FCE7EA);
+}
+#kamera{position:absolute;inset:0;transform-origin:1320px 540px}
+.buehne{width:900px;height:660px;border-radius:44px}
+.titel{font-size:80px;line-height:90px}
+.unter{font-size:36px;line-height:52px}
+.lang .titel{font-size:68px;line-height:78px}
+
+.chip{display:flex;align-items:center;gap:14px;padding:12px 26px;border-radius:999px;font:700 32px/40px Inter;white-space:nowrap;
+  background:var(--surface);color:var(--ink);box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.chip.brand{background:var(--b500);color:var(--surface)}
+.chip.gruen{background:var(--success-bg);color:var(--success-text)}
+.chip.gelb{background:var(--warning-bg);color:var(--warning-text);box-shadow:none}
+.chip.grau{background:var(--n200);color:var(--n500);box-shadow:none}
+.chip.klein{font-size:24px;line-height:30px;padding:8px 18px}
+.chip.mini{font-size:18px;line-height:22px;padding:6px 14px;gap:8px}
+.label{font:600 22px/28px Inter;letter-spacing:.08em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+.kreuz{width:72px;height:72px;border-radius:999px;background:var(--error);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(22,19,37,.18)}
+.kreuz svg{width:34px}
+.frage{width:96px;height:96px;border-radius:999px;background:var(--b500);color:var(--surface);display:flex;align-items:center;justify-content:center;
+  font:800 58px/1 Inter;box-shadow:0 4px 12px rgba(90,63,230,.28)}
+.punkt-nr{width:58px;height:58px;border-radius:999px;background:var(--surface);border:4px solid var(--b300);display:flex;align-items:center;justify-content:center;
+  font:800 26px/1 Inter;color:var(--b600);box-shadow:0 4px 12px rgba(22,19,37,.08)}
+
+.portrait{border-radius:999px;overflow:hidden;background:linear-gradient(160deg,var(--b200),var(--b300));border:8px solid var(--surface);
+  box-shadow:0 6px 20px rgba(22,19,37,.09)}
+.portrait .ebene{position:absolute;left:0;top:0;width:100%;height:100%}
+.portrait .figur{position:absolute;left:0;top:6%;width:100%;height:100%;transform-origin:50% 80%}
+.portrait .augen{transform-origin:50% 45%}
+.portrait .daumen{transform-origin:80% 100%}
+
+.paragraf{width:130px;height:130px;border-radius:999px;background:var(--surface);border:8px solid var(--b300);display:flex;align-items:center;justify-content:center;
+  font:800 74px/1 Inter;color:var(--b600);box-shadow:0 6px 20px rgba(22,19,37,.12)}
+.zettel{padding:18px 20px;border-radius:16px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.12);border:2px solid var(--border)}
+.zettel small{display:block;font:700 15px/19px Inter;letter-spacing:.1em;color:var(--b600);text-transform:uppercase}
+.zettel b{display:block;font:800 21px/26px Inter;color:var(--ink);margin:4px 0 8px}
+.zettel i{display:block;height:7px;border-radius:4px;background:var(--n200);margin-top:7px}
+.siegel{position:absolute;right:16px;bottom:12px;width:58px;height:58px;border-radius:999px;border:4px solid var(--b500);color:var(--b500);
+  display:flex;align-items:center;justify-content:center;font:800 15px/1 Inter;transform:rotate(-12deg);opacity:0}
+.unterschrift{display:block;width:150px;height:40px;margin-top:6px}
+
+/* Handy- und Laptop-Bildschirme */
+.bild{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:9px;padding-top:20px;text-align:center;border-radius:8px;overflow:hidden}
+.bild small{font:700 14px/18px Inter;letter-spacing:.05em;text-transform:uppercase;color:var(--b600)}
+.feld{width:112px;height:22px;border-radius:7px;background:var(--surface);border:2px solid var(--b200);display:flex;align-items:center;padding:0 7px}
+.feld i{display:block;height:7px;border-radius:4px;background:var(--b400);width:0}
+.knopf{width:112px;padding:7px 0;border-radius:10px;background:var(--b300);color:var(--surface);font:800 14px/18px Inter;letter-spacing:.04em}
+.knopf.an{background:var(--success)}
+.lade{width:108px;height:14px;border-radius:999px;background:var(--b100);overflow:hidden}
+.lade i{display:block;height:100%;width:0;border-radius:999px;background:var(--b500)}
+.uliste{width:118px;display:flex;flex-direction:column;gap:6px}
+.uzeile{display:flex;align-items:center;gap:6px;padding:6px;border-radius:9px;background:var(--surface);font:700 11px/14px Inter;color:var(--ink);text-align:left;white-space:nowrap;overflow:hidden}
+.uzeile i{width:16px;height:16px;flex:none;border-radius:5px;background:var(--b200)}
+.uzeile.neu{background:var(--success-bg);color:var(--success-text)}
+.uzeile.neu i{background:var(--success)}
+.kopfzeile{display:flex;align-items:center;gap:7px;font:800 16px/20px Inter;color:var(--ink)}
+.kopfzeile svg{width:20px;height:20px}
+.ebene2{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:9px;padding-top:20px}
+.vorschau i{display:block;width:104px;height:7px;border-radius:4px;background:var(--b100);flex:none}
+.vorschau i.k{width:70px;background:var(--b200)}
+
+/* Laptop-Bildschirm: Website der Agentur */
+.web{border-radius:6px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.web .leiste{height:34px;flex:none;background:var(--b50);display:flex;align-items:center;gap:7px;padding:0 12px;border-bottom:2px solid var(--border)}
+.web .leiste i{width:10px;height:10px;border-radius:99px;background:var(--n300);flex:none}
+.web .url{margin-left:8px;flex:1;height:22px;border-radius:99px;background:var(--surface);font:600 14px/22px Inter;color:var(--ink);padding:0 12px;white-space:nowrap;overflow:hidden}
+.web .flaeche{position:relative;flex:1}
+.web .seite{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.web .feld{width:200px;height:30px}
+.web .knopf{width:200px;font-size:15px}
+.web .titelz{font:800 20px/24px Inter;color:var(--ink)}
+.kachel{width:240px;padding:12px 14px;border-radius:12px;background:var(--b50);border:2px solid var(--b100);font:700 16px/20px Inter;color:var(--ink);display:flex;align-items:center;gap:10px}
+.kachel i{width:22px;height:22px;border-radius:7px;background:var(--b200);flex:none}
+.kachel.grau{color:var(--n500)}
+.kachel.grau b{display:block;height:8px;width:130px;border-radius:4px;background:var(--n200)}
+.kachel.an{border-color:var(--b500);background:var(--b100)}
+
+.zeiger{width:44px;height:44px}
+
+.monat{width:150px;height:150px;border-radius:26px;background:var(--surface);box-shadow:0 6px 20px rgba(22,19,37,.1);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center}
+.monat .kopf{width:100%;height:42px;background:var(--b500);flex:none}
+.monat b{font:800 34px/90px Inter;color:var(--ink)}
+.monat.grau{filter:grayscale(1);opacity:.45}
+.welle{width:90px;height:90px;border-radius:999px;border:5px solid var(--b400)}
+.blitz{width:200px;height:200px;border-radius:999px;background:radial-gradient(var(--surface),rgba(255,255,255,0) 70%)}
+.foto{width:80px;height:60px;border-radius:8px;background:var(--surface);border:4px solid var(--surface);box-shadow:0 4px 12px rgba(22,19,37,.18);overflow:hidden}
+
+/* Echtes Formular: Blatt (Ausschnitt) mit Papier, Einträgen, Kreuzen, Markierungen */
+.blatt{border-radius:28px;overflow:hidden;background:var(--surface);box-shadow:0 10px 30px rgba(22,19,37,.12)}
+.papier{position:absolute;left:0;top:0;width:1653px;transform-origin:0 0}
+.papier img{position:absolute;left:0;width:1653px;height:2339px;box-shadow:0 0 0 3px var(--border)}
+.eintrag{position:absolute;font:600 26px/26px Inter;color:var(--b600);white-space:nowrap}
+.xk{position:absolute;width:30px;height:30px}
+.xk path{stroke:var(--b600);stroke-width:4.5;stroke-linecap:round;fill:none;stroke-dasharray:1 1;stroke-dashoffset:1}
+.mark{position:absolute;border-radius:10px;border:4px solid var(--b400);transform-origin:0 50%}
+.mark::before{content:'';position:absolute;inset:0;background:var(--b100);opacity:.5;mix-blend-mode:multiply;border-radius:6px}
+.stift-b{position:absolute;left:0;top:0;width:150px}
+.mini{background:var(--surface);border-radius:8px;overflow:hidden;box-shadow:0 8px 24px rgba(22,19,37,.16)}
+.mini img{display:block;width:100%;height:100%}
+.mini .siegel{bottom:30px;right:22px}
+.notiz{padding:14px 18px;border-radius:12px;background:var(--warning-bg);box-shadow:0 6px 18px rgba(22,19,37,.12)}
+.notiz small{display:block;font:700 14px/18px Inter;letter-spacing:.1em;text-transform:uppercase;color:var(--warning-text)}
+.notiz .mass{height:0;visibility:hidden;overflow:hidden}
+.notiz span{display:block;min-height:30px;font:600 22px/30px Inter;color:var(--ink);white-space:nowrap}
+.deckel{position:absolute;inset:0;background:linear-gradient(135deg,var(--b500),var(--b700));clip-path:inset(100% 0 0 0)}
+.deckel .gross{font:800 100px/110px Inter;letter-spacing:-.03em;margin-top:16px;text-align:center}
+</style></head><body>
+
+<div id="kamera"><div id="welt">
+  <!-- 1 · Was ist BAB? -->
+  <div class="a buehne" id="bue0"></div>
+  <div class="a" id="agentur1" style="width:270px">{{agentur}}</div>
+  <div class="a label" id="lblAg1" style="color:var(--b600)">Agentur für Arbeit</div>
+  <div class="a portrait" id="mai1" style="width:220px;height:220px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a" id="m1a" style="width:80px">{{muenze}}</div>
+  <div class="a" id="m1b" style="width:80px">{{muenze}}</div>
+  <div class="a" id="m1c" style="width:80px">{{muenze}}</div>
+  <div class="a chip klein" id="miete1">Miete</div>
+  <div class="a chip klein" id="leben1">Leben</div>
+  <div class="a chip gruen" id="zuschuss1" data-dreht>Zuschuss</div>
+  <div class="a chip grau" id="zurueck1" data-gruppe="g1z">zurückzahlen</div>
+  <div class="a kreuz" id="x1" data-gruppe="g1z"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="betrieb1" style="width:230px">{{betrieb}}</div>
+  <div class="a" id="haken1a" style="width:80px">{{haken}}</div>
+  <div class="a" id="welt1" data-gruppe="g1w" style="width:200px">{{weltkugel}}</div>
+  <div class="a" id="eltern1" data-gruppe="g1w" style="width:100px">{{haus}}</div>
+  <div class="a" id="haken1b" style="width:80px">{{haken~s1}}</div>
+
+  <!-- 2 · Auch mit Aufenthaltserlaubnis -->
+  <div class="a buehne" id="bue1"></div>
+  <div class="a" id="karte2" data-dreht style="width:320px">{{ausweis}}</div>
+  <div class="a label" id="lblKarte2">Aufenthaltserlaubnis</div>
+  <div class="a" id="haken2" style="width:90px">{{haken~s2}}</div>
+  <div class="a paragraf" id="para2">§</div>
+  <div class="a chip gruen" id="ok2">kein Problem</div>
+  <div class="a portrait" id="mai2" style="width:200px;height:200px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+
+  <!-- 3 · BAB-Rechner -->
+  <div class="a buehne" id="bue2"></div>
+  <div class="a" id="handy3" data-gruppe="g3" style="width:360px">{{handy}}</div>
+  <div class="a bild" id="bild3" data-gruppe="g3" style="width:135px;height:243px">
+    <small>BAB-Rechner</small><div class="feld"><i id="f3a"></i></div><div class="feld"><i id="f3b"></i></div>
+    <div class="lade"><i id="lade3"></i></div><small id="erg3" style="opacity:0;color:var(--success-text)">Ergebnis</small></div>
+  <div class="a chip klein" id="verg3">Vergütung</div>
+  <div class="a" id="muenze3" data-dreht style="width:110px">{{muenze}}</div>
+  <div class="a chip brand" id="antrag3">Antrag stellen</div>
+  <div class="a portrait" id="mai3" style="width:180px;height:180px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div></div>
+  <div class="a punkt-nr" id="nr3_1">1</div><div class="a punkt-nr" id="nr3_2">2</div><div class="a punkt-nr" id="nr3_3">3</div><div class="a punkt-nr" id="nr3_4">4</div>
+  <div class="a punkt-nr" id="nr3_5">5</div><div class="a punkt-nr" id="nr3_6">6</div><div class="a punkt-nr" id="nr3_7">7</div><div class="a punkt-nr" id="nr3_8">8</div>
+
+  <!-- 4 · Das brauchst du -->
+  <div class="a buehne" id="bue3"></div>
+  <div class="a" id="pass4" style="width:120px">{{pass}}</div>
+  <div class="a" id="vertrag4" style="width:130px">{{vertrag}}</div>
+  <div class="a" id="karte4" style="width:140px">{{karte}}</div>
+  <div class="a" id="brief4" style="width:140px">{{brief}}</div>
+  <div class="a" id="ticket4" style="width:130px">{{fahrkarte}}</div>
+  <div class="a chip mini" id="l4a">Pass</div>
+  <div class="a chip mini" id="l4b">Vertrag</div>
+  <div class="a chip mini" id="l4c">IBAN</div>
+  <div class="a chip mini" id="l4d">Eltern</div>
+  <div class="a chip mini" id="l4e">Ticket</div>
+  <div class="a" id="mappeH4" data-gruppe="g4m" style="width:300px">{{mappe-hinten}}</div>
+  <div class="a" id="mappeV4" data-gruppe="g4m" style="width:300px;transform-origin:50% 100%">{{mappe-vorne}}</div>
+
+  <!-- 5 · Antrag online starten -->
+  <div class="a buehne" id="bue4"></div>
+  <div class="a" id="laptop5" data-gruppe="g5" style="width:640px">{{laptop}}</div>
+  <div class="a web" id="web5" data-gruppe="g5" style="width:344px;height:224px">
+    <div class="leiste"><i></i><i></i><i></i><div class="url" id="url5" data-t="arbeitsagentur.de"></div></div>
+    <div class="flaeche">
+      <div class="seite" id="s5a"><div class="titelz">Anmelden</div><div class="feld"><i id="f5a"></i></div><div class="feld"><i id="f5b"></i></div><div class="knopf" id="k5">ANMELDEN</div></div>
+      <div class="seite" id="s5b" style="opacity:0"><div class="kachel" id="kachel5"><i></i>Berufsausbildungs&shy;beihilfe</div>
+        <div class="kachel grau"><i></i><b></b></div><div class="kachel grau"><i></i><b></b></div></div>
+    </div></div>
+  <div class="a" id="schloss5" style="width:100px">{{schloss}}</div>
+  <div class="a zeiger" id="z5" data-frei><svg viewBox="0 0 40 40"><path d="M8 4l24 18-11 2 6 12-5 2-6-12-8 8Z" fill="var(--ink)" stroke="var(--surface)" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+  <div class="a chip gruen klein" id="speichern5"><svg viewBox="0 0 24 24" style="width:26px"><path d="M4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm3 0v6h9V3M7 21v-7h10v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Zwischenspeichern</div>
+  <div class="a mini" id="papier5" style="width:180px;height:255px"><img src="formular/bab01-s1.png" alt=""></div>
+  <div class="a" id="tel5" data-dreht data-gruppe="g5t" style="width:280px">{{handy~s5}}</div>
+  <div class="a bild" id="telbild5" data-gruppe="g5t" style="width:105px;height:189px">
+    <svg viewBox="0 0 48 48" style="width:44px;margin-top:26px"><path d="M14 6l6 10-5 5c3 6 7 10 13 13l5-5 10 6-4 8C22 44 4 26 6 10Z" fill="var(--b500)"/></svg><small>Agentur</small></div>
+  <div class="a welle" id="welle5a"></div><div class="a welle" id="welle5b"></div>
+  <div class="a chip" id="nummer5">0800 4 5555 00</div>
+  <div class="a chip gruen" id="kostenlos5">kostenlos</div>
+
+  <!-- 6 · Persönliche Daten (Antrag Seite 1, Fragen 2–3) -->
+  <div class="a buehne" id="bue5"></div>
+  <div class="a blatt" id="b6" style="width:760px;height:540px"><div class="papier"><div class="stift-b">{{stift~b6}}</div></div></div>
+  <div class="a" id="karte6" data-frei style="width:170px">{{karte~s6}}</div>
+
+  <!-- 7 · Asyl? Duldung? (Fragen 4–5) -->
+  <div class="a buehne" id="bue6"></div>
+  <div class="a blatt" id="b7" style="width:760px;height:540px"><div class="papier"><div class="stift-b">{{stift~b7}}</div></div></div>
+  <div class="a" id="karte7" data-frei data-dreht style="width:220px">{{ausweis~s7}}</div>
+  <div class="a" id="haken7" data-frei style="width:76px">{{haken~s7}}</div>
+
+  <!-- 8 · Ausbildung (Fragen 6 und 8) -->
+  <div class="a buehne" id="bue7"></div>
+  <div class="a blatt" id="b8" style="width:760px;height:540px"><div class="papier"><div class="stift-b">{{stift~b8}}</div></div></div>
+  <div class="a" id="vertrag8" data-frei style="width:160px">{{vertrag~s8}}</div>
+  <div class="a" id="haken8" data-frei style="width:66px">{{haken~s8}}</div>
+
+  <!-- 9 · Werdegang (Frage 9) -->
+  <div class="a buehne" id="bue8"></div>
+  <div class="a blatt" id="b9" style="width:760px;height:540px"><div class="papier"><div class="stift-b">{{stift~b9}}</div></div></div>
+  <div class="a chip klein gelb" id="heimat9" data-frei>auch im Heimatland</div>
+
+  <!-- 10 · Einkommen (Frage 13) + Bescheinigung der Ausbildungsstätte -->
+  <div class="a buehne" id="bue9"></div>
+  <div class="a blatt" id="b10" style="width:560px;height:540px"><div class="papier"><div class="stift-b">{{stift~b10}}</div></div></div>
+  <div class="a" id="betrieb10" style="width:180px">{{betrieb~s10}}</div>
+  <div class="a mini" id="besch10" data-gruppe="g10b" style="width:196px;height:277px"><img src="formular/bab02-s1.png" alt=""><div class="siegel" id="siegel10">OK</div></div>
+  <div class="a" id="stempel10" data-dreht data-gruppe="g10b" style="width:120px">{{stempel}}</div>
+  <div class="a" id="haken10" data-frei style="width:66px">{{haken~s10}}</div>
+
+  <!-- 11 · Eltern (Frage 17) -->
+  <div class="a buehne" id="bue10"></div>
+  <div class="a blatt" id="b11" style="width:560px;height:540px"><div class="papier"><div class="stift-b">{{stift~b11}}</div></div></div>
+  <div class="a" id="welt11" style="width:180px">{{weltkugel~s11}}</div>
+  <div class="a" id="brief11" style="width:150px">{{brief~s11}}</div>
+  <div class="a zettel" id="erkl11" style="width:220px"><small>Erklärung zum</small><b>Einkommen</b><i style="width:90%"></i><i style="width:65%"></i>
+    <svg class="unterschrift" viewBox="0 0 150 40"><path class="zeichnen" pathLength="1" d="M6 30c10-18 18-22 20-10s-6 14 4 4 14-18 18-8-2 14 8 6 12-12 20-6 6 10 16 4 18-8 26-6 14 4 22 2" fill="none" stroke="var(--b600)" stroke-width="3" stroke-linecap="round"/></svg></div>
+  <div class="a" id="stift11" data-frei style="width:100px">{{stift~s11}}</div>
+  <div class="a frage" id="frage11">?</div>
+  <div class="a" id="agentur11" style="width:200px">{{agentur~s11}}</div>
+  <div class="a chip gruen klein" id="hilft11">kann helfen</div>
+  <div class="a notiz" id="notiz11" data-frei><small>Ergänzung</small><span class="mass">Nachweis meiner Eltern kommt später.</span><span id="notiz11t" data-t="Nachweis meiner Eltern kommt später."></span></div>
+
+  <!-- 12 · Wohnung und Fahrt (Fragen 19 und 20) -->
+  <div class="a buehne" id="bue11"></div>
+  <div class="a blatt" id="b12" style="width:560px;height:540px"><div class="papier"><div class="stift-b">{{stift~b12}}</div></div></div>
+  <div class="a" id="haus12" style="width:190px">{{haus~s12}}</div>
+  <div class="a" id="bus12" style="width:150px">{{bus-seite}}</div>
+  <div class="a" id="ticket12" style="width:150px">{{fahrkarte~s12}}</div>
+  <div class="a chip gelb klein" id="preis12">€ im Monat</div>
+
+  <!-- 13 · Hochladen und abschicken -->
+  <div class="a buehne" id="bue12"></div>
+  <div class="a" id="vertrag13" style="width:150px">{{vertrag~s13}}</div>
+  <div class="a blitz" id="blitz13" data-frei></div>
+  <div class="a foto" id="foto13" data-frei><svg viewBox="0 0 80 60"><rect width="80" height="60" fill="var(--b50)"/><rect x="14" y="8" width="52" height="46" rx="3" fill="var(--surface)" stroke="var(--n300)" stroke-width="2"/><rect x="20" y="16" width="28" height="4" rx="2" fill="var(--b400)"/><rect x="20" y="26" width="38" height="3" rx="1.5" fill="var(--n300)"/><rect x="20" y="33" width="32" height="3" rx="1.5" fill="var(--n300)"/></svg></div>
+  <div class="a" id="handy13" data-gruppe="g13" style="width:360px">{{handy~s13}}</div>
+  <div class="a bild" id="bild13" data-gruppe="g13" style="width:135px;height:243px">
+    <div class="ebene2" id="p13a"><div class="kopfzeile">Unterlagen</div>
+      <div class="uliste"><div class="uzeile neu" id="u13a"><i></i>Vertrag.jpg</div><div class="uzeile neu" id="u13b"><i></i>Pass.jpg</div><div class="uzeile neu" id="u13c"><i></i>Bescheinigung</div></div>
+      <div class="lade"><i id="lade13"></i></div></div>
+    <div class="ebene2 vorschau" id="p13b" style="opacity:0"><div class="kopfzeile">Vorschau</div>
+      <i class="k"></i><i></i><i></i><i class="k"></i><i></i><i></i><i class="k"></i><i></i>
+      <div class="knopf" id="senden13" style="margin-top:6px">ABSENDEN</div></div>
+  </div>
+  <div class="a" id="agentur13" style="width:220px">{{agentur~s13}}</div>
+  <div class="a" id="flieger13" data-frei style="width:90px"><svg viewBox="0 0 64 48"><path d="M2 22L62 2 44 44 30 30Z" fill="var(--b400)"/><path d="M30 30L62 2 22 34Z" fill="var(--b600)"/></svg></div>
+  <div class="a" id="haken13" style="width:76px">{{haken~s13}}</div>
+  <div class="a zettel" id="nach13" style="width:150px"><small>Nachweis</small><b>fehlt noch</b><i style="width:85%"></i><i style="width:60%"></i></div>
+  <div class="a chip gelb klein" id="spaeter13">später nachreichen</div>
+
+  <!-- 14 · Nach dem Antrag -->
+  <div class="a buehne" id="bue13"></div>
+  <div class="a" id="bescheid14" style="width:170px">{{meldung}}</div>
+  <div class="a chip klein" id="lblBescheid14">Bescheid</div>
+  <div class="a" id="handy14" data-gruppe="g14" style="width:440px">{{handy~s14}}</div>
+  <div class="a bild" id="app14" data-gruppe="g14" style="width:165px;height:297px">
+    <div class="kopfzeile" style="margin-top:8px"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z" fill="var(--b500)"/></svg>Dokumente</div>
+    <div class="uliste" style="width:146px"><div class="uzeile"><i></i>Ausbildungsvertrag</div><div class="uzeile"><i></i>Meldebescheinigung</div>
+      <div class="uzeile neu" id="neu14"><i></i>BAB-Bescheid</div></div></div>
+  <div class="a chip" id="lblApp14" style="font-size:24px;line-height:30px">Azubis Plus Helper App</div>
+  <div class="a" id="radio14" style="width:160px">{{radio}}</div>
+  <div class="a chip gruen klein" id="befreit14">befreit</div>
+  <div class="a" id="karton14" style="width:150px">{{karton}}</div>
+  <div class="a" id="betrieb14" style="width:150px">{{betrieb~s14}}</div>
+  <svg class="a" id="pfeile14" viewBox="0 0 1920 1080" style="width:1920px;height:1080px">
+    <defs><marker id="spitze14" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--b400)"/></marker></defs>
+    <path class="zeichnen" pathLength="1" d="M1110 320Q1300 300 1440 400" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none" marker-end="url(#spitze14)"/>
+    <path class="zeichnen" pathLength="1" d="M1110 590Q1300 590 1440 500" stroke="var(--b400)" stroke-width="7" stroke-linecap="round" fill="none" marker-end="url(#spitze14)"/>
+  </svg>
+  <div class="a" id="agentur14" style="width:220px">{{agentur~s14}}</div>
+  <div class="a" id="kalender14" style="width:240px">{{kalender}}</div>
+  <div class="a chip brand" id="monate14">18 Monate</div>
+  <div class="a" id="brief14" data-frei style="width:110px">{{brief~s14}}</div>
+
+  <!-- 15 · Nicht warten -->
+  <div class="a buehne" id="bue14"></div>
+  <div class="a monat" id="mo1" data-gruppe="g15a"><div class="kopf"></div><b>Sep</b></div>
+  <div class="a monat" id="mo2" data-gruppe="g15b"><div class="kopf"></div><b>Okt</b></div>
+  <div class="a monat" id="mo3" data-gruppe="g15c"><div class="kopf"></div><b>Nov</b></div>
+  <div class="a monat" id="mo4"><div class="kopf"></div><b>Dez</b></div>
+  <div class="a chip brand klein" id="antrag15" data-gruppe="g15c">Antrag</div>
+  <div class="a" id="m15a" style="width:70px">{{muenze}}</div>
+  <div class="a" id="m15b" style="width:70px">{{muenze}}</div>
+  <div class="a kreuz" id="x15a" data-gruppe="g15a" style="width:60px;height:60px"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a kreuz" id="x15b" data-gruppe="g15b" style="width:60px;height:60px"><svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="var(--surface)" stroke-width="6" stroke-linecap="round"/></svg></div>
+  <div class="a" id="uhr15" data-dreht data-gruppe="g15u" style="width:180px">{{uhr}}</div>
+  <div class="a" id="zeiger15" data-dreht data-gruppe="g15u" style="width:180px;transform-origin:50% 47.5%">{{uhr-zeiger}}</div>
+  <div class="a portrait" id="mai15" style="width:210px;height:210px"><div class="figur">
+    <div class="ebene">{{figur-mai}}</div><div class="ebene augen">{{figur-augen}}</div>
+    <div class="ebene zu">{{figur-mund-zu}}</div><div class="ebene auf" style="opacity:0">{{figur-mund-auf}}</div><div class="ebene froh">{{figur-mund-froh}}</div></div>
+    <div class="ebene daumen">{{figur-daumen}}</div></div>
+</div></div>
+
+<div class="block" id="tb1"><div class="titel">Was ist BAB?</div><div class="unter">Ein Zuschuss für Miete und Leben.</div></div>
+<div class="block lang" id="tb2"><div class="titel">Auch mit Aufenthalts&shy;erlaubnis</div><div class="unter">Für deinen Aufenthalt kein Problem.</div></div>
+<div class="block" id="tb3"><div class="titel">Erst rechnen</div><div class="unter">mit dem BAB-Rechner</div></div>
+<div class="block" id="tb4"><div class="titel">Das brauchst du</div></div>
+<div class="block" id="tb5"><div class="titel">Antrag online starten</div><div class="unter">arbeitsagentur.de</div></div>
+<div class="block" id="tb6"><div class="eyebrow">Schritt 1 von 8</div><div class="titel">Persönliche Daten</div></div>
+<div class="block lang" id="tb7"><div class="eyebrow">Schritt 2 von 8</div><div class="titel">Asyl? Duldung? Nein.</div><div class="unter">mit Aufenthaltserlaubnis für die Ausbildung</div></div>
+<div class="block" id="tb8"><div class="eyebrow">Schritt 3 von 8</div><div class="titel">Deine Ausbildung</div><div class="unter">steht im Ausbildungsvertrag</div></div>
+<div class="block" id="tb9"><div class="eyebrow">Schritt 4 von 8</div><div class="titel">Dein Weg bis heute</div><div class="unter">ehrlich, auch im Heimatland</div></div>
+<div class="block" id="tb10"><div class="eyebrow">Schritt 5 von 8</div><div class="titel">Dein Einkommen</div><div class="unter">Der Betrieb bestätigt die Vergütung.</div></div>
+<div class="block" id="tb11"><div class="eyebrow">Schritt 6 von 8</div><div class="titel">Deine Eltern</div><div class="unter">Kein Nachweis? Schreib das in den Antrag.</div></div>
+<div class="block" id="tb12"><div class="eyebrow">Schritt 7 von 8</div><div class="titel">Wohnung und Fahrt</div></div>
+<div class="block lang" id="tb13"><div class="eyebrow">Schritt 8 von 8</div><div class="titel">Hochladen und abschicken</div><div class="unter">Fehlt etwas? Später nachreichen.</div></div>
+<div class="block" id="tb14"><div class="titel">Nach dem Antrag</div><div class="unter">Änderungen sofort melden.</div></div>
+<div class="block" id="tb15"><div class="titel">Nicht warten!</div><div class="unter">Geld gibt es erst ab dem Antragsmonat.</div></div>
+
+<div class="deckel" id="abspann"><div class="ende">
+  <div class="a auf-brand" id="endBeutel" style="position:relative;width:220px">{{geldbeutel}}</div>
+  <div class="gross a" id="asTitel" style="position:relative;margin-top:28px">BAB beantragen.</div>
+</div></div>
+
+<script src="../../werkzeug/motor.js"></script>
+<script src="../../werkzeug/sprache.js"></script>
+<script>
+// Sprache beginnt im Film bei VERSATZ = 0.6 s (werkzeug/sprache.js). Satz-Nummern 0-basiert wie in sprache.json.
+const MX = 1320, MY = 440;
+kamera.basis.y = 100;
+for (let i = 0; i < 15; i++) akteur('bue' + i, { x: S(i) + MX, y: MY });
+const _tw = tw; tw = (ids, ...r) => _tw([].concat(ids).map(i => typeof i === 'string' && i.startsWith('#') ? $(i) : i), ...r);
+
+/* ---------- Kamera: Zoom-Atmer beim Szenenwechsel, langsames Heranfahren ---------- */
+const PANS = [];
+const wechsel = (t0, i) => { pan(t0, i); PANS.push(t0); };
+HOOKS.push(t => {
+  let z = 1;
+  for (const p of PANS) z -= .06 * Math.sin(Math.PI * clamp((t - p) / .9));
+  const letzte = Math.max(0, ...PANS.filter(p => p <= t));
+  z *= 1 + .03 * E.inout(clamp((t - letzte - .9) / 8));
+  $('#kamera').style.transform = `scale(${z})`;
+});
+
+/* ---------- Helfer ---------- */
+const pop = (id, t, basis, snd = 'pop') => { akteur(id, { s: 0, ...basis }); tw(id, t, .5, { s: 1 }, 'back'); if (snd) cue(t, snd); };
+const ein = (id, t, basis, von = { y: 90 }, snd = 'pop') => {
+  akteur(id, { ...basis, o: 0, x: basis.x + (von.x || 0), y: basis.y + (von.y || 0), r: von.r || 0 });
+  tw(id, t, .45, { o: 1, x: basis.x, y: basis.y, r: basis.r || 0 }, 'out');
+  tw(id, t + .38, .14, { sy: .93, sx: 1.05 }, 'sanft'); tw(id, t + .52, .35, { sy: 1, sx: 1 }, 'sanft');
+  if (snd) cue(t, snd);
+};
+const wackeln = (id, t, n = 3, w = 5) => { for (let i = 0; i < n; i++) tw(id, t + i * .09, .09, { r: i % 2 ? w : -w }, 'inout'); tw(id, t + n * .09, .2, { r: 0 }, 'out'); };
+const aus = (ids, t) => tw(ids, t, .3, { o: 0 }, 'in');
+const fuellen = (sel, t0, d = .6) => HOOKS.push(t => { $(sel).style.width = (100 * E.inout(clamp((t - t0) / d))) + '%'; });
+const puls = (id, t, s = 1.1) => { tw(id, t, .15, { s }); tw(id, t + .15, .35, { s: 1 }, 'back'); };
+// Klassen ab/bis Zeitpunkt (Auswahl, Fokus, hervorgehobene Zeile)
+const KL = [];
+const klasse = (sel, k, a, b = 1e9) => KL.push([sel, k, a, b]);
+HOOKS.push(t => { for (const [sel, k, a, b] of KL) $(sel).classList.toggle(k, t >= a && t < b); });
+// Text tippen: Zeichen erscheinen nacheinander (Text aus data-t), Feld hat solange den Fokus
+function tippe(id, t0, d = .7) {
+  const el = document.getElementById(id), voll = el.dataset.t;
+  HOOKS.push(t => { el.textContent = voll.slice(0, Math.round(voll.length * clamp((t - t0) / d))); });
+  if (el.classList.contains('feing')) klasse('#' + id, 'fokus', t0 - .15, t0 + d + .35);
+  for (let k = t0; k < t0 + d; k += .12) cue(k, 'tipp');
+}
+// Mauszeiger: Spitze auf (x, y), Klick zum Zeitpunkt t
+const zeigerStart = (id, x, y) => akteur(id, { x: x + 13, y: y + 18, o: 0 });
+function klicke(id, t, p, snd = 'klick') {
+  tw(id, t - .55, .5, { x: p.x + 13, y: p.y + 18, o: 1 }, 'inout');
+  tw(id, t - .04, .08, { s: .82 }); tw(id, t + .04, .2, { s: 1 }, 'back');
+  if (snd) cue(t, snd);
+}
+const GESICHT = {}, NICKEN = {};
+function figur(id, basis) {
+  akteur(id, basis);
+  const d = $(`#${id} .daumen`); if (d) akteur(d, { y: 200 }, true);
+  GESICHT[id] = []; NICKEN[id] = [];
+}
+const gesicht = (id, a, b, art) => GESICHT[id].push([a, b, art]);
+const nicken = (id, a, b) => NICKEN[id].push([a, b]);
+HOOKS.push(t => document.querySelectorAll('.portrait').forEach((p, i) => {
+  const z = (t * .27 + i * .37) % 1;
+  p.querySelector('.augen').style.transform = `scaleY(${z < .035 ? .12 : 1})`;
+  const g = (GESICHT[p.id] || []).find(([a, b]) => t >= a && t < b), art = g ? g[2] : 'zu';
+  for (const k of ['zu', 'auf', 'froh']) p.querySelector('.' + k).style.opacity = art === k ? 1 : 0;
+  const n = (NICKEN[p.id] || []).find(([a, b]) => t >= a && t < b);
+  p.querySelector('.figur').style.transform = n ? `rotate(${2 * Math.sin((t - n[0]) * 7)}deg) translateY(${4 * Math.max(0, Math.sin((t - n[0]) * 7))}px)` : '';
+}));
+const auftritt = (id, t, x, y, snd = 'pop') => {
+  figur(id, { x, y, o: 0 });
+  set(id, 0, { y: y + 70 }); tw(id, t, .45, { o: 1, y }, 'out');
+  tw(id, t + .4, .14, { sy: .93, sx: 1.05 }, 'sanft'); tw(id, t + .54, .35, { sy: 1, sx: 1 }, 'sanft'); if (snd) cue(t, snd);
+};
+const muenzeDreht = (id, t0) => HOOKS.push(t => { if (t > t0) $('#' + id).querySelector('svg').style.transform = `scaleX(${Math.cos((t - t0) * 6)})`; });
+const flug = (id, t, von, nach, d = .8, bogen = 120, snd = 'whoosh') => {
+  akteur(id, { x: von.x, y: von.y, o: 0, s: von.s ?? 1 });
+  tw(id, t, .08, { o: 1 }); tw(id, t, d, { x: nach.x, y: nach.y, s: nach.s ?? 1 }, 'inout', { bogen });
+  if (nach.weg) tw(id, t + d - .1, .15, { o: 0 });
+  if (snd) cue(t, snd);
+};
+const wellen = (ids, x, y, t0, bis) => ids.forEach((id, k) => {
+  akteur(id, { x, y, o: 0 });
+  HOOKS.push(t => {
+    const a = t0 + k * .5, el = $('#' + id);
+    if (t < a || t > bis) { el.style.visibility = 'hidden'; return; }
+    const p = ((t - a) / 1) % 1;
+    el.style.visibility = 'visible'; el.style.opacity = (1 - p) * .55;
+    el.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) scale(${1.4 + p * 1.6})`;
+  });
+});
+const einBlatt = (id, t, x, y) => { akteur(id, { x, y: y + 100, o: 0 }); tw(id, t, .6, { o: 1, y }, 'out'); cue(t, 'whoosh'); };
+const szeneText = (id, t0, t1, opt = {}) => { textAkteure(id); textEin(id, t0, opt); if (t1) textAus(id, t1); };
+
+/* ---------- 1 · Was ist BAB? (Sätze 0–3) ---------- */
+{ const X = S(0);
+  ein('agentur1', Z(0) + .2, { x: X + 1060, y: MY - 70 }, { y: 90 });
+  akteur('lblAg1', { x: X + 1060, y: MY + 95, o: 0 }); tw('lblAg1', W(0, 'Agentur'), .4, { o: 1 });
+  auftritt('mai1', Z(0) + .5, X + 1580, MY - 70);
+  const th = W(0, 'hilft');
+  [['m1a', 0], ['m1b', .2], ['m1c', .4]].forEach(([id, d]) => {
+    akteur(id, { x: X + 1060, y: MY - 110, o: 0, s: .5 });
+    tw(id, th + d, .05, { o: 1 }); tw(id, th + d, .85, { x: X + 1580, y: MY + 40, s: 1 }, 'inout', { bogen: 160 });
+    tw(id, th + d + .85, .2, { o: 0, s: .6 }); cue(th + d + .8, 'muenze');
+  });
+  gesicht('mai1', th + .9, ZE(3) + 2, 'froh');
+  ein('miete1', W(0, 'Miete'), { x: X + 1500, y: MY + 120 }, { y: 50 });
+  ein('leben1', W(0, 'Leben'), { x: X + 1665, y: MY + 120 }, { y: 50 });
+  // Stempel-Chip „Zuschuss“ schlägt mit Wackler auf
+  akteur('zuschuss1', { x: X + 1150, y: 650, s: 2.2, o: 0, r: -10 });
+  tw('zuschuss1', W(1, 'Zuschuss'), .25, { s: 1, o: 1, r: -3 }, 'in'); cue(W(1, 'Zuschuss') + .25, 'plopp');
+  tw('zuschuss1', W(1, 'Zuschuss') + .25, .1, { sx: 1.12, sy: .88 }); tw('zuschuss1', W(1, 'Zuschuss') + .35, .35, { sx: 1, sy: 1 }, 'back');
+  wackeln('zuschuss1', W(1, 'Zuschuss') + .4, 3, 4);
+  ein('zurueck1', W(2, 'musst'), { x: X + 1500, y: 650 }, { x: 60 });
+  pop('x1', W(2, 'zurückzahlen'), { x: X + 1500, y: 650 }, 'plopp');
+  tw('zurueck1', W(2, 'zurückzahlen') + .3, .4, { o: .4 });
+  nicken('mai1', W(2, 'zurückzahlen'), W(2, 'zurückzahlen') + 1.2);
+  // Wechsel: Betrieb und Elternhaus
+  const tb = Z(3) - .15;
+  aus(['agentur1', 'lblAg1', 'miete1', 'leben1', 'zuschuss1', 'zurueck1', 'x1'], tb);
+  ein('betrieb1', W(3, 'Ausbildung'), { x: X + 1060, y: MY - 50 }, { y: 90 });
+  pop('haken1a', W(3, 'Betrieb') + .2, { x: X + 1160, y: MY - 175 }, 'ding');
+  ein('welt1', W(3, 'wenn'), { x: X + 1330, y: MY + 150 }, { y: 120 }, 'whoosh');
+  const te = W(3, 'Eltern');
+  akteur('eltern1', { x: X + 1580, y: MY + 70, o: 0, s: .4 });
+  tw('eltern1', te - .5, .3, { o: 1, s: 1 }, 'back');
+  tw('eltern1', te, .9, { x: X + 1345, y: MY + 40 }, 'inout', { bogen: 150 }); cue(te, 'whoosh');
+  tw('eltern1', te + .85, .12, { sy: .85 }); tw('eltern1', te + .97, .3, { sy: 1 }, 'back');
+  pop('haken1b', WE(3, 'wohnst') + .1, { x: X + 1440, y: MY - 175 }, 'erfolg');
+  nicken('mai1', WE(3, 'wohnst'), WE(3, 'wohnst') + 1.2);
+  szeneText('tb1', Z(0) + .1, ZE(3) + .4, { unter: W(1, 'Zuschuss') });
+}
+
+/* ---------- 2 · Auch mit Aufenthaltserlaubnis (4–5) ---------- */
+{ const X = S(1), T0 = ZE(3) + .5;
+  wechsel(T0, 1);
+  akteur('karte2', { x: X + 1160, y: MY - 80, o: 0, s: .6 });
+  const tk = W(4, 'Aufenthaltserlaubnis');
+  tw('karte2', tk - .3, .5, { o: 1, s: 1 }, 'back'); cue(tk - .3, 'whoosh');
+  HOOKS.push(t => { const p = clamp((t - tk + .3) / .9); $('#karte2').querySelector('svg').style.transform = `scaleX(${Math.cos(p * Math.PI * 2)})`; });
+  akteur('lblKarte2', { x: X + 1160, y: MY + 70, o: 0 }); tw('lblKarte2', W(4, 'Ausbildung'), .4, { o: 1 });
+  pop('haken2', W(4, 'bekommen'), { x: X + 1310, y: MY - 160 }, 'ding');
+  auftritt('mai2', T0 + .6, X + 1590, MY - 60);
+  gesicht('mai2', W(4, 'bekommen'), 99, 'froh');
+  pop('para2', W(5, 'Gesetz'), { x: X + 1160, y: 640 });
+  klasse('#para2', 'gruen', W(5, 'Problem'));
+  HOOKS.push(t => { const an = t >= W(5, 'Problem'); $('#para2').style.borderColor = an ? 'var(--success)' : ''; $('#para2').style.color = an ? 'var(--success-text)' : ''; });
+  puls('para2', W(5, 'Problem'), 1.12); cue(W(5, 'Problem'), 'ding');
+  ein('ok2', W(5, 'Problem') + .1, { x: X + 1480, y: 640 }, { x: 60 });
+  nicken('mai2', W(5, 'Problem'), W(5, 'Problem') + 1.3);
+  szeneText('tb2', Z(4) + .1, ZE(5) + .4, { unter: W(5, 'Gesetz') });
+}
+
+/* ---------- 3 · Erst rechnen: BAB-Rechner (6–9) ---------- */
+{ const X = S(2), T0 = ZE(5) + .5;
+  wechsel(T0, 2);
+  ein('handy3', T0 + .4, { x: X + 1130, y: MY - 30 }, { y: 400 }, 'whoosh');
+  akteur('bild3', { x: X + 1130, y: MY - 30, o: 0 }); tw('bild3', T0 + .8, .3, { o: 1 });
+  auftritt('mai3', T0 + .6, X + 1580, MY - 120);
+  // Vergütung fliegt als Chip ins Handy
+  const tv = W(6, 'Ausbildungsvergütung');
+  pop('verg3', tv - .2, { x: X + 1560, y: MY + 60 });
+  tw('verg3', tv + .7, .6, { x: X + 1130, y: MY - 60, s: .4 }, 'inout'); tw('verg3', tv + 1.2, .15, { o: 0 }); cue(tv + .7, 'whoosh');
+  fuellen('#f3a', tv + 1.2, .4);
+  fuellen('#f3b', W(7, 'BAB-Rechner'), .4);
+  fuellen('#lade3', W(7, 'ungefähr'), 1.1); cue(W(7, 'ungefähr'), 'scan');
+  HOOKS.push(t => { $('#erg3').style.opacity = t >= W(7, 'Geld') ? 1 : 0; });
+  puls('handy3', W(7, 'Geld'), 1.05); cue(W(7, 'Geld'), 'ding');
+  gesicht('mai3', W(7, 'Geld'), 99, 'froh');
+  // Betrag: Münze springt aus dem Handy
+  akteur('muenze3', { x: X + 1130, y: MY - 30, o: 0, s: .4 });
+  tw('muenze3', W(8, 'Betrag') - .2, .1, { o: 1 }); tw('muenze3', W(8, 'Betrag') - .2, .7, { x: X + 1400, y: MY + 40, s: 1 }, 'out', { bogen: 120 });
+  cue(W(8, 'Betrag'), 'muenze'); muenzeDreht('muenze3', W(8, 'Betrag') + .4);
+  ein('antrag3', W(8, 'Antrag'), { x: X + 1500, y: MY + 160 }, { y: 50 });
+  nicken('mai3', W(8, 'Antrag'), W(8, 'Antrag') + 1.2);
+  // Schritt für Schritt: acht Punkte ploppen nacheinander auf
+  const ts = W(9, 'Schritt');
+  for (let k = 1; k <= 8; k++) pop('nr3_' + k, ts + (k - 1) * .16, { x: X + 1005 + (k - 1) * 90, y: 685 }, k % 2 ? 'pop' : null);
+  szeneText('tb3', Z(6) + .1, ZE(9) + .4, { unter: W(7, 'BAB-Rechner') });
+}
+
+/* ---------- 4 · Das brauchst du (10–11) ---------- */
+{ const X = S(3), T0 = ZE(9) + .5;
+  wechsel(T0, 3);
+  const MX4 = X + 1320, MAPPE = { x: MX4, y: MY + 165 };
+  ein('mappeH4', T0 + .5, MAPPE, { y: 80 });
+  ein('mappeV4', T0 + .5, MAPPE, { y: 80 }, null);
+  const DINGE = [['pass4', 'l4a', W(10, 'Pass')], ['vertrag4', 'l4b', W(10, 'Ausbildungsvertrag')], ['karte4', 'l4c', W(10, 'IBAN')],
+                 ['brief4', 'l4d', W(11, 'Adresse')], ['ticket4', 'l4e', W(11, 'Tickets')]];
+  DINGE.forEach(([id, lb, t], k) => {
+    const x = X + 1000 + k * 160;
+    ein(id, t - .15, { x, y: MY - 110, r: k % 2 ? 2 : -2 }, { y: -80 });
+    akteur(lb, { x, y: MY + 30, o: 0 }); tw(lb, t + .1, .35, { o: 1 });
+    klasse('#' + lb, 'gruen', t + .35);
+  });
+  // alles springt in die Mappe
+  const tm = ZE(11) + .05;
+  DINGE.forEach(([id, lb], k) => {
+    tw(lb, tm + k * .08, .2, { o: 0 });
+    tw(id, tm + k * .1, .8, { x: MAPPE.x, y: MAPPE.y - 20, s: .35 }, 'sinus', { bogen: 40 }); tw(id, tm + k * .1 + .7, .12, { o: 0 });
+  });
+  cue(tm, 'whoosh'); cue(tm + .8, 'plopp');
+  tw('mappeV4', tm + .8, .12, { sy: .9 }); tw('mappeV4', tm + .92, .3, { sy: 1 }, 'back');
+  szeneText('tb4', Z(10) + .1, ZE(11) + .4);
+}
+
+/* ---------- 5 · Antrag online starten (12–18) ---------- */
+{ const X = S(4), T0 = ZE(11) + .5;
+  wechsel(T0, 4);
+  const LX = X + 1190, LY = MY - 20, BX = LX, BY = LY - 44;
+  ein('laptop5', T0 + .4, { x: LX, y: LY }, { y: 120 }, 'whoosh');
+  akteur('web5', { x: BX, y: BY, o: 0 }); tw('web5', T0 + .8, .3, { o: 1 });
+  tippe('url5', W(12, 'online'), .9);
+  // Anmelden: Felder füllen, Knopf, Schloss klickt zu
+  fuellen('#f5a', W(13, 'Konto'), .5); fuellen('#f5b', W(13, 'Konto') + .5, .5);
+  for (let k = 0; k < 6; k++) cue(W(13, 'Konto') + k * .15, 'tipp');
+  zeigerStart('z5', BX + 120, BY + 140);
+  const tm = W(13, 'melde');
+  klicke('z5', tm + .2, { x: BX + 10, y: BY + 82 });
+  klasse('#k5', 'an', tm + .2);
+  akteur('schloss5', { x: X + 1600, y: MY - 190, o: 0, s: .5, r: -8 });
+  tw('schloss5', tm, .45, { o: 1, s: 1, r: 0 }, 'back'); cue(tm + .35, 'klick');
+  wackeln('schloss5', tm + .5, 2, 4);
+  // Seite wechselt zur Kachel „Berufsausbildungsbeihilfe“
+  const tk = Z(14) - .1;
+  HOOKS.push(t => { const p = clamp((t - tk) / .3); $('#s5a').style.opacity = 1 - p; $('#s5b').style.opacity = p; });
+  klicke('z5', W(14, 'startest'), { x: BX - 60, y: BY - 56 });
+  klasse('#kachel5', 'an', W(14, 'startest'));
+  puls('web5', W(14, 'Berufsausbildungsbeihilfe'), 1.03); cue(W(14, 'Berufsausbildungsbeihilfe'), 'ding');
+  ein('speichern5', W(15, 'speichern') - .2, { x: LX, y: 680 }, { y: 50 });
+  // Lieber auf Papier? Dann anrufen
+  aus(['schloss5', 'z5'], Z(16) - .1);
+  ein('papier5', W(16, 'Papier') - .2, { x: X + 1600, y: MY - 40, r: 3 }, { x: 80 });
+  tw('papier5', W(17, 'ruf') - .4, .35, { o: 0, s: .6 }, 'in');
+  ein('tel5', W(17, 'ruf') - .3, { x: X + 1610, y: MY - 40 }, { y: 300 }, 'whoosh');
+  akteur('telbild5', { x: X + 1610, y: MY - 40, o: 0 }); tw('telbild5', W(17, 'ruf'), .3, { o: 1 });
+  const tr = W(17, 'Agentur');
+  for (let k = 0; k < 2; k++) wackeln('tel5', tr + k * .6, 4, 4);
+  cue(tr, 'ding'); cue(tr + .6, 'ding');
+  wellen(['welle5a', 'welle5b'], X + 1610, MY - 40, tr, tr + 2.2);
+  ein('nummer5', tr + .3, { x: X + 1555, y: 680 }, { y: 50 });
+  tw('speichern5', tr + .2, .3, { x: LX - 110 }, 'inout');
+  pop('kostenlos5', W(18, 'kostenlos'), { x: X + 1610, y: MY - 230 }, 'ding');
+  szeneText('tb5', Z(12) + .1, ZE(18) + .4, { unter: W(12, 'Website') });
+}
+
+/* ---------- Das echte Antragsformular (BAB 01, Fassung 08/2022) ---------- */
+// Seiten als Bild (formular/bab01-sN.png, 200 dpi: 1 pt = PT px), Koordinaten in pt aus dem PDF vermessen
+// (Kästchen-Mitten, Schreiblinien). Die Kamera fährt im Blatt, der Stift schreibt, Kreuze landen in Kästchen.
+const PT = 200 / 72, SEITE_H = 2339, ABST = 90;
+function blatt(id, seiten) {
+  const el = $('#' + id), pap = el.querySelector('.papier'), stift = pap.querySelector('.stift-b');
+  const VW = el.offsetWidth, VH = el.offsetHeight;
+  seiten.forEach((s, i) => { const img = document.createElement('img'); img.src = `formular/bab01-s${s}.png`; img.alt = ''; img.style.top = i * (SEITE_H + ABST) + 'px'; pap.prepend(img); });
+  const oben = s => seiten.indexOf(s) * (SEITE_H + ABST);
+  const KEYS = [], ZUEGE = [];    // Kamera; Stiftzüge [t0, t1, x0, y0, x1, y1] in Papier-px
+  const neu = (cls, html = '') => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; pap.insertBefore(d, stift); return d; };
+  const b = {
+    // Kamera: Mitte (cx, cy) in pt auf Seite s, Zoom z (Bildschirm-px je Papier-px)
+    kam(t, s, cx, cy, z) { KEYS.push({ t, x: cx * PT, y: oben(s) + cy * PT, z }); return b; },
+    ganz(t, s) { return b.kam(t, s, 297.7, 421, VH / SEITE_H * .96); },
+    // Text auf eine Schreiblinie (Grundlinie bl in pt) schreiben
+    schreibe(s, x, bl, text, t0, d, gr = 26) {
+      d ??= Math.max(.45, text.length * .055);
+      const e = neu('eintrag'); e.style.cssText = `left:${x * PT}px;top:${oben(s) + bl * PT - gr * .8}px;font-size:${gr}px;line-height:${gr}px`;
+      HOOKS.push(t => { e.textContent = text.slice(0, Math.round(text.length * clamp((t - t0) / d))); });
+      const w = text.length * gr * .56;
+      ZUEGE.push([t0, t0 + d, x * PT, oben(s) + bl * PT, x * PT + w, oben(s) + bl * PT]);
+      cue(t0, 'kritzeln');
+      return b;
+    },
+    // IBAN: ein Zeichen je Kästchen
+    zellen(s, x0, schritt, bl, text, t0, d) {
+      const n = text.length;
+      [...text].forEach((c, i) => {
+        const e = neu('eintrag'); e.textContent = c;
+        e.style.cssText = `left:${(x0 + schritt * i) * PT - 9}px;top:${oben(s) + bl * PT - 21}px;width:18px;text-align:center`;
+        const ti = t0 + d * i / n;
+        HOOKS.push(t => { e.style.opacity = t >= ti ? 1 : 0; });
+      });
+      ZUEGE.push([t0, t0 + d, x0 * PT, oben(s) + bl * PT, (x0 + schritt * (n - 1)) * PT, oben(s) + bl * PT]);
+      for (let k = 0; k < d; k += .3) cue(t0 + k, 'tipp');
+      return b;
+    },
+    // Kreuz ins Kästchen (Mitte cx, cy in pt)
+    kreuz(s, cx, cy, t) {
+      const e = neu('xk', '<svg viewBox="0 0 30 30"><path d="M5 5L25 25" pathLength="1"/><path d="M25 5L5 25" pathLength="1"/></svg>');
+      e.style.left = cx * PT - 15 + 'px'; e.style.top = oben(s) + cy * PT - 15 + 'px';
+      const p = e.querySelectorAll('path');
+      HOOKS.push(tt => { p[0].style.strokeDashoffset = 1 - clamp((tt - t) / .15); p[1].style.strokeDashoffset = 1 - clamp((tt - t - .15) / .15); });
+      ZUEGE.push([t, t + .3, cx * PT - 12, oben(s) + cy * PT - 12, cx * PT + 12, oben(s) + cy * PT + 12]);
+      cue(t + .05, 'kritzeln');
+      return b;
+    },
+    // Markierung über einer Zeile (pt), wächst von links, verschwindet bei t1
+    mark(s, x0, y0, x1, y1, t0, t1 = 1e9) {
+      const e = neu('mark'); e.style.cssText = `left:${x0 * PT}px;top:${oben(s) + y0 * PT}px;width:${(x1 - x0) * PT}px;height:${(y1 - y0) * PT}px`;
+      HOOKS.push(t => { const p = E.out(clamp((t - t0) / .4)); e.style.transform = `scaleX(${p})`; e.style.opacity = t < t0 ? 0 : t > t1 ? Math.max(0, 1 - (t - t1) / .3) : 1; });
+      return b;
+    },
+  };
+  HOOKS.push(t => {
+    // Kamera
+    const k = KEYS.sort((a, c) => a.t - c.t);
+    let x = k[0].x, y = k[0].y, z = k[0].z;
+    for (const n of k.slice(1)) {
+      if (t < n.t) break;
+      const p = E.inout(clamp((t - n.t) / .9));
+      x += (n.x - x) * p; y += (n.y - y) * p; z = Math.exp(Math.log(z) + (Math.log(n.z) - Math.log(z)) * p);
+    }
+    pap.style.transform = `translate(${VW / 2 - x * z}px,${VH / 2 - y * z}px) scale(${z})`;
+    // Stift: schreibt in den Zügen, gleitet dazwischen
+    const Zg = ZUEGE.sort((a, c) => a[0] - c[0]);
+    if (!Zg.length || t < Zg[0][0] - .6) { stift.style.opacity = 0; return; }
+    let px, py, wackel = 0;
+    const i = Zg.findIndex(z => t < z[1]);
+    if (i === -1) { const l = Zg.at(-1); px = l[4]; py = l[5]; }
+    else {
+      const z = Zg[i];
+      if (t >= z[0]) { const u = (t - z[0]) / (z[1] - z[0]); px = z[2] + (z[4] - z[2]) * u; py = z[3] + (z[5] - z[3]) * u; wackel = 1; }
+      else {
+        const v = i ? Zg[i - 1] : [0, 0, z[2] + 60, z[3] + 80, z[2] + 60, z[3] + 80];
+        const u = E.inout(clamp((t - (z[0] - .45)) / .45));
+        px = v[4] + (z[2] - v[4]) * u; py = v[5] + (z[3] - v[5]) * u - 30 * Math.sin(Math.PI * u);
+      }
+    }
+    stift.style.opacity = Math.min(1, (t - Zg[0][0] + .6) / .3);
+    stift.style.transform = `translate(${px - 21}px,${py - 122 - wackel * 6 * Math.abs(Math.sin(t * 26))}px)`;
+  });
+  return b;
+}
+
+/* ---------- 6 · Persönliche Daten (19–21) ---------- */
+{ const X = S(5), T0 = ZE(18) + .5;
+  wechsel(T0, 5);
+  einBlatt('b6', T0 + .3, X + 1320, MY);
+  const B = blatt('b6', [1]);
+  B.ganz(0, 1)
+   .kam(W(19, 'persönlichen') - .3, 1, 250, 190, .55)
+   .kam(W(19, 'Name') - .5, 1, 170, 150, .9)
+   .kam(W(19, 'Geburtsdatum') - .5, 1, 450, 255, .85)
+   .kam(W(19, 'Adresse') - .4, 1, 300, 290, .75)
+   .kam(W(20, 'Staatsangehörigkeit') - .4, 1, 220, 340, .9)
+   .kam(W(21, 'Bankverbindung') - .4, 1, 330, 425, .6);
+  B.mark(1, 40, 243, 290, 256, W(19, 'persönlichen'), W(19, 'Name') - .2)
+   .schreibe(1, 114, 136.5, 'Nguyen', W(19, 'Name') + .1, .45)
+   .schreibe(1, 156, 136.5, 'Mai', W(19, 'Name') + .6, .3)
+   .schreibe(1, 436, 254.5, '12.03.2004', W(19, 'Geburtsdatum') + .2, .6)
+   .schreibe(1, 186, 283, 'Musterstraße 12', W(19, 'Adresse') + .1, .7)
+   .schreibe(1, 186, 297, '12345 Musterstadt', W(19, 'Adresse') + .9, .7)
+   .kreuz(1, 186.1, 345.2, W(20, 'andere'))
+   .schreibe(1, 198, 348.5, 'vietnamesisch', W(20, 'Nationalität'), .8, 22)
+   .zellen(1, 113.3, 20.13, 441.5, 'DE12345678901234567890', W(21, 'IBAN') + .15, 1.6);
+  // Bankkarte fliegt herein und gibt die IBAN ab
+  const tb = W(21, 'Bankverbindung');
+  akteur('karte6', { x: X + 1700, y: MY - 230, o: 0, s: .6, r: 10 });
+  tw('karte6', tb - .2, .45, { o: 1, x: X + 1600, y: MY - 170, s: 1, r: -4 }, 'back'); cue(tb - .2, 'whoosh');
+  tw('karte6', W(21, 'IBAN') - .1, .5, { x: X + 1320, y: MY + 30, s: .3 }, 'inout'); tw('karte6', W(21, 'IBAN') + .3, .15, { o: 0 });
+  szeneText('tb6', Z(19) + .1, ZE(21) + .4);
+}
+
+/* ---------- 7 · Asyl? Duldung? Nein. (22–23) ---------- */
+{ const X = S(6), T0 = ZE(21) + .5;
+  wechsel(T0, 6);
+  einBlatt('b7', T0 + .3, X + 1320, MY);
+  const B = blatt('b7', [1]);
+  B.kam(0, 1, 330, 425, .6).kam(W(22, 'Asylverfahren') - .6, 1, 318, 478, .55);
+  B.mark(1, 60, 452, 572, 466, W(22, 'Asylverfahren'), W(23, 'Nein') + .8)
+   .mark(1, 60, 466, 572, 495, W(22, 'Duldung'), W(23, 'Nein') + .8)
+   .kreuz(1, 541.6, 458.5, W(23, 'beide'))
+   .kreuz(1, 541.6, 472.7, W(23, 'Nein'));
+  // Aufenthaltskarte fliegt herein, dreht sich, bekommt einen Haken
+  const tk = W(23, 'Aufenthaltserlaubnis');
+  akteur('karte7', { x: X + 1060, y: MY + 200, o: 0, s: .6 });
+  tw('karte7', tk - .3, .5, { o: 1, s: 1 }, 'back'); cue(tk - .3, 'whoosh');
+  HOOKS.push(t => { const p = clamp((t - tk + .3) / .9); $('#karte7').querySelector('svg').style.transform = `scaleX(${Math.cos(p * Math.PI * 2)})`; });
+  pop('haken7', W(23, 'Nein') + .35, { x: X + 1165, y: MY + 140 }, 'erfolg');
+  szeneText('tb7', Z(22) + .1, ZE(23) + .5, { unter: W(23, 'Aufenthaltserlaubnis') });
+}
+
+/* ---------- 8 · Ausbildung (24–26) ---------- */
+{ const X = S(7), T0 = ZE(23) + .6;
+  wechsel(T0, 7);
+  einBlatt('b8', T0 + .3, X + 1320, MY);
+  const B = blatt('b8', [1]);
+  B.kam(0, 1, 318, 478, .55)
+   .kam(W(24, 'Ausbildung') - .4, 1, 318, 530, .55)
+   .kam(W(24, 'Beruf') - .3, 1, 200, 540, .85)
+   .kam(W(24, 'Betrieb') - .3, 1, 430, 545, .85)
+   .kam(W(24, 'Beginn') - .3, 1, 190, 550, .85)
+   .kam(W(25, 'Ausbildungsvertrag') - .2, 1, 318, 545, .55)
+   .kam(W(26, 'Frage') - .3, 1, 318, 580, .55);
+  B.mark(1, 60, 501, 360, 514, W(24, 'Ausbildung'), W(24, 'Beruf'))
+   .schreibe(1, 68, 535, 'Hotelfachfrau', W(24, 'Beruf') + .2, .6)
+   .schreibe(1, 308, 535, 'Hotel am Park, Parkweg 5', W(24, 'Betrieb') + .1, .9)
+   .schreibe(1, 308, 555, '12345 Musterstadt', W(24, 'Adresse') + .4, .7)
+   .schreibe(1, 68, 555, '01.09.2026', W(24, 'Beginn') + .1, .55)
+   .schreibe(1, 189, 555, '31.08.2029', W(24, 'Ende') + .1, .55)
+   .mark(1, 60, 585, 572, 598, W(26, 'Frage'), W(26, 'Nein') + 1)
+   .kreuz(1, 541.6, 591.7, W(26, 'Nein'));
+  // Ausbildungsvertrag liegt daneben und wackelt, wenn er genannt wird
+  ein('vertrag8', T0 + .8, { x: X + 1630, y: MY - 175, r: 4 }, { x: 80 });
+  [W(24, 'Beruf'), W(24, 'Betrieb'), W(24, 'Beginn'), W(24, 'Ende')].forEach(t => puls('vertrag8', t - .1, 1.07));
+  wackeln('vertrag8', W(25, 'Ausbildungsvertrag'), 4, 5);
+  pop('haken8', W(25, 'Ausbildungsvertrag') + .3, { x: X + 1690, y: MY - 245 }, 'ding');
+  szeneText('tb8', Z(24) + .1, ZE(26) + .4, { unter: W(25, 'Ausbildungsvertrag') });
+}
+
+/* ---------- 9 · Dein Weg bis heute (27–28) ---------- */
+{ const X = S(8), T0 = ZE(26) + .5;
+  wechsel(T0, 8);
+  einBlatt('b9', T0 + .3, X + 1320, MY);
+  const B = blatt('b9', [1]);
+  B.kam(0, 1, 318, 580, .55)
+   .kam(W(27, 'Weg') - .4, 1, 318, 655, .55)
+   .kam(W(28, 'Schulen') - .2, 1, 318, 700, .55);
+  B.mark(1, 40, 600, 572, 700, W(27, 'Weg'), W(28, 'Schulen'))
+   .kreuz(1, 541.6, 618.3, W(28, 'ehrlich'))
+   .kreuz(1, 516.8, 645.1, W(28, 'Schulen') - .2)
+   .schreibe(1, 68, 730.5, '09/2010 – 06/2022', W(28, 'Schulen') + .3, .7, 20)
+   .schreibe(1, 251, 730.5, 'Schule in Hanoi', W(28, 'besucht'), .6, 20)
+   .schreibe(1, 432, 730.5, 'Schülerin', W(28, 'besucht') + .65, .4, 20)
+   .kreuz(1, 516.8, 662.2, W(28, 'gearbeitet') - .5)
+   .schreibe(1, 68, 742, '07/2022 – 08/2026', W(28, 'gearbeitet') - .1, .7, 20)
+   .schreibe(1, 251, 742, 'Hotel in Hanoi', W(28, 'gearbeitet') + .65, .6, 20)
+   .schreibe(1, 432, 742, 'Rezeption', W(28, 'Heimatland') - .1, .4, 20);
+  ein('heimat9', W(28, 'Heimatland'), { x: X + 1320, y: MY + 215 }, { y: 50 }, 'ding');
+  szeneText('tb9', Z(27) + .1, ZE(28) + .4, { unter: W(28, 'ehrlich') });
+}
+
+/* ---------- 10 · Einkommen (29–32) ---------- */
+{ const X = S(9), T0 = ZE(28) + .5, BX = X + 1210;
+  wechsel(T0, 9);
+  einBlatt('b10', T0 + .3, BX, MY);
+  const B = blatt('b10', [2]);
+  B.ganz(0, 2)
+   .kam(W(29, 'Einkommen') - .3, 2, 200, 335, .7)
+   .kam(W(30, 'Nebenjob') - .3, 2, 250, 455, .5)
+   .kam(W(31, 'Formular') - .3, 2, 215, 368, .62);
+  B.kreuz(2, 73.8, 328.1, W(29, 'Einkommen') + .2)
+   .kreuz(2, 87.7, 360.2, W(29, 'Ausbildungsvergütung') + .2)
+   .mark(2, 40, 440, 575, 466, W(30, 'Nebenjob'), ZE(30) + .3)
+   .mark(2, 168, 362.5, 323, 374.5, W(31, 'Bescheinigung'));
+  // Der Betrieb füllt die Bescheinigung aus, Stempel schlägt auf
+  ein('betrieb10', W(31, 'Betrieb') - .2, { x: X + 1610, y: MY - 170 }, { y: 80 });
+  const tf = W(31, 'Formular');
+  akteur('besch10', { x: X + 1610, y: MY - 150, o: 0, s: .3 });
+  tw('besch10', tf - .2, .2, { o: 1 }); tw('besch10', tf - .2, .7, { y: MY + 110, s: 1 }, 'out'); cue(tf - .2, 'whoosh');
+  const ts = WE(31, 'Ausbildungsstätte');
+  akteur('stempel10', { x: X + 1660, y: MY - 30, o: 0, r: 10 });
+  tw('stempel10', ts - .7, .3, { o: 1 });
+  tw('stempel10', ts - .2, .2, { y: MY + 150, r: 0 }, 'in'); cue(ts, 'plopp');
+  tw('stempel10', ts + .05, .35, { y: MY - 30, r: 10 }, 'out'); tw('stempel10', ts + .5, .3, { o: 0 });
+  HOOKS.push(t => { $('#siegel10').style.opacity = t >= ts ? 1 : 0; });
+  wackeln('besch10', ts + .02, 3, 3);
+  wackeln('betrieb10', W(32, 'Betrieb'), 3, 4);
+  pop('haken10', W(32, 'danach'), { x: X + 1690, y: MY + 20 }, 'erfolg');
+  szeneText('tb10', Z(29) + .1, ZE(32) + .4, { unter: W(31, 'bestätigt') });
+}
+
+/* ---------- 11 · Eltern (33–39) ---------- */
+{ const X = S(10), T0 = ZE(32) + .5, BX = X + 1210, RX = X + 1600;
+  wechsel(T0, 10);
+  einBlatt('b11', T0 + .3, BX, MY);
+  const B = blatt('b11', [4]);
+  B.ganz(0, 4)
+   .kam(W(33, 'Eltern') - .3, 4, 300, 230, .45)
+   .kam(W(33, 'Name') - .4, 4, 190, 232, .75)
+   .kam(W(33, 'Geburtsdatum') - .4, 4, 400, 232, .75)
+   .kam(W(33, 'Nationalität') - .4, 4, 470, 245, .75)
+   .kam(W(33, 'Adresse') - .4, 4, 230, 265, .6)
+   .kam(Z(34), 4, 300, 240, .4);
+  B.mark(4, 40, 193, 400, 206, W(33, 'Eltern'), W(33, 'Name'))
+   .schreibe(4, 66, 239, 'Nguyen, Lan', W(33, 'Name') + .1, .55)
+   .schreibe(4, 342, 239, '05.06.1978', W(33, 'Geburtsdatum') + .1, .55, 22)
+   .kreuz(4, 519.5, 225.4, W(33, 'Nationalität') + .05)
+   .schreibe(4, 512, 266, 'vietnamesisch', W(33, 'Nationalität') + .4, .55, 18)
+   .schreibe(4, 66, 276.5, 'Hanoi, Vietnam', W(33, 'Adresse') + .1, .7);
+  // Nachweis kommt als Brief aus dem Ausland
+  ein('welt11', W(33, 'Ausland') - .3, { x: RX, y: MY - 165 }, { y: -60 }, 'whoosh');
+  const tn = W(35, 'Nachweis');
+  flug('brief11', tn - .2, { x: RX, y: MY - 165, s: .3 }, { x: RX, y: MY + 50, s: 1 }, .8, 100);
+  tw('brief11', W(35, 'Arbeitgeber') + .2, .1, { r: -4 }); tw('brief11', W(35, 'Arbeitgeber') + .3, .3, { r: 0 }, 'back');
+  tw('brief11', Z(36) - .2, .5, { x: BX, y: MY, s: .2 }, 'inout'); tw('brief11', Z(36) + .2, .12, { o: 0 }); cue(Z(36) - .2, 'whoosh');
+  // Erklärung zum Einkommen: Eltern unterschreiben
+  const tu = W(36, 'unterschreiben');
+  akteur('erkl11', { x: RX, y: MY + 70, o: 0, draw: 0 });
+  set('erkl11', 0, { y: MY + 130 }); tw('erkl11', Z(36) + .1, .45, { o: 1, y: MY + 70 }, 'out'); cue(Z(36) + .1, 'pop');
+  tw('erkl11', tu, 1.1, { draw: 1 }, 'inout'); cue(tu, 'kritzeln');
+  akteur('stift11', { x: RX - 30, y: MY + 90, o: 0 });
+  tw('stift11', tu - .3, .3, { o: 1 });
+  for (let k = 0; k < 5; k++) tw('stift11', tu + k * .22, .22, { x: RX - 40 + k * 22, y: MY + 95 + (k % 2 ? -8 : 8) }, 'inout');
+  tw('stift11', tu + 1.2, .3, { o: 0 });
+  tw('erkl11', ZE(36) + .1, .5, { x: BX, y: MY, s: .2 }, 'inout'); tw('erkl11', ZE(36) + .5, .12, { o: 0 }); cue(ZE(36) + .1, 'whoosh');
+  // Kein Nachweis? Eine Notiz zum Antrag; die Agentur kann helfen
+  tw('welt11', Z(37) - .1, .3, { o: 0 });
+  pop('frage11', W(37, 'keinen'), { x: RX, y: MY - 10 });
+  wackeln('frage11', W(37, 'Nachweis'), 4, 8);
+  akteur('notiz11', { x: BX, y: MY + 170, o: 0, r: -2, s: .7 });
+  tw('notiz11', W(38, 'Schreib') - .2, .45, { o: 1, s: 1 }, 'back'); cue(W(38, 'Schreib') - .2, 'pop');
+  tippe('notiz11t', W(38, 'Schreib') + .2, 1.1);
+  tw('frage11', W(39, 'Agentur') - .45, .45, { o: 0 }, 'inout');
+  ein('agentur11', W(39, 'Agentur'), { x: RX, y: MY - 30 }, { y: 80 });
+  ein('hilft11', W(39, 'helfen') - .1, { x: RX, y: MY + 140 }, { y: 40 }, 'ding');
+  szeneText('tb11', Z(33) + .1, ZE(39) + .4, { unter: W(37, 'Bekommst') });
+}
+
+/* ---------- 12 · Wohnung und Fahrt (40–41) ---------- */
+{ const X = S(11), T0 = ZE(39) + .5, BX = X + 1210, RX = X + 1610;
+  wechsel(T0, 11);
+  einBlatt('b12', T0 + .3, BX, MY);
+  const B = blatt('b12', [4, 6]);
+  B.ganz(0, 4)
+   .kam(W(40, 'Wohnung') - .4, 4, 250, 425, .55)
+   .kam(W(40, 'wann') - .4, 4, 200, 462, .8)
+   .kam(W(41, 'Fahrkosten') - .5, 6, 200, 150, .55)
+   .kam(W(41, 'Berufsschule') - .3, 6, 200, 255, .55)
+   .kam(W(41, 'kostet') - .4, 6, 440, 150, .65);
+  B.schreibe(4, 68, 412.5, 'eigener Haushalt', W(40, 'Wohnung') + .1, .7)
+   .schreibe(4, 68, 446.5, 'Musterstraße 12, 12345 Musterstadt', W(40, 'wohnst') - .1, 1.1)
+   .schreibe(4, 165, 468, '01.08.2026', W(40, 'wann') + .05, .55)
+   .kreuz(6, 72.2, 105.1, W(41, 'Fahrkosten') + .3)
+   .schreibe(6, 90, 155, '5', W(41, 'Fahrkosten') + .7, .2, 22)
+   .kreuz(6, 186.7, 105.1, W(41, 'kommst') - .2)
+   .schreibe(6, 220, 127, 'Musterstraße 12', W(41, 'Betrieb') - .3, .6, 20)
+   .schreibe(6, 220, 141.5, 'Hotel am Park', W(41, 'Betrieb') + .35, .55, 20)
+   .kreuz(6, 72.2, 216.5, W(41, 'Berufsschule') + .2)
+   .kreuz(6, 86.4, 293.2, W(41, 'Berufsschule') + .6)
+   .mark(6, 452, 118, 573, 148, W(41, 'kostet') + .1);
+  ein('haus12', W(40, 'Wohnung') - .2, { x: RX, y: MY - 160 }, { y: 80 });
+  // Bus fährt unter dem Haus vorbei zum Betrieb
+  akteur('bus12', { x: RX - 120, y: MY + 20, o: 0 });
+  const tb = W(41, 'kommst') - .3;
+  tw('bus12', tb, .2, { o: 1 }); tw('bus12', tb, 1.4, { x: RX + 20 }, 'inout'); cue(tb, 'whoosh');
+  tw('bus12', tb + .45, .12, { sy: .94 }); tw('bus12', tb + .57, .2, { sy: 1 }); tw('bus12', tb + .9, .12, { sy: .94 }); tw('bus12', tb + 1.02, .2, { sy: 1 });
+  tw('bus12', W(41, 'Ticket') - .4, .3, { o: 0 });
+  ein('ticket12', W(41, 'Ticket') - .2, { x: RX, y: MY + 60, r: -3 }, { y: 80 });
+  pop('preis12', W(41, 'kostet'), { x: RX, y: MY + 205 }, 'muenze');
+  szeneText('tb12', Z(40) + .1, ZE(41) + .4);
+}
+
+/* ---------- 13 · Hochladen und abschicken (42–47) ---------- */
+{ const X = S(12), T0 = ZE(41) + .5, HX = X + 1230, HY = MY + 20;
+  wechsel(T0, 12);
+  ein('handy13', T0 + .4, { x: HX, y: HY }, { y: 400 }, 'whoosh');
+  akteur('bild13', { x: HX, y: HY, o: 0 }); tw('bild13', T0 + .8, .3, { o: 1 });
+  ein('vertrag13', T0 + .6, { x: X + 990, y: MY - 120, r: -3 }, { x: -60 });
+  ein('agentur13', Z(42) + .4, { x: X + 1600, y: MY - 80 }, { y: 80 });
+  // Foto: Blitz, Bild fliegt ins Handy, Zeilen erscheinen
+  const tf = W(43, 'Foto');
+  akteur('blitz13', { x: X + 990, y: MY - 120, o: 0 });
+  tw('blitz13', tf, .08, { o: 1 }); tw('blitz13', tf + .08, .4, { o: 0 }); cue(tf, 'klick');
+  flug('foto13', tf + .2, { x: X + 990, y: MY - 120, s: .8 }, { x: HX, y: HY - 60, s: .5, weg: true }, .7, 80);
+  [['u13a', tf + .8], ['u13b', tf + 1.1], ['u13c', tf + 1.4]].forEach(([id, t]) => { akteur(id, { o: 0, x: 30 }, true); tw(id, t, .4, { o: 1, x: 0 }, 'back'); cue(t, 'pop'); });
+  fuellen('#lade13', W(42, 'hoch'), 2.2);
+  // Vorschau, Absenden, Flieger zur Agentur
+  const tv = W(44, 'Vorschau');
+  HOOKS.push(t => { const p = clamp((t - tv + .3) / .3); $('#p13a').style.opacity = 1 - p; $('#p13b').style.opacity = p;
+    $('#p13b').style.transform = `translateY(${-24 * E.inout(clamp((t - tv) / 1.2))}px)`; });
+  const ts = W(44, 'schick');
+  HOOKS.push(t => $('#senden13').classList.toggle('an', t >= ts + .1));
+  puls('handy13', ts + .1, 1.04); cue(ts + .1, 'klick');
+  flug('flieger13', ts + .3, { x: HX, y: HY - 40, s: .5 }, { x: X + 1580, y: MY - 110, s: 1, weg: true }, 1, 160);
+  pop('haken13', W(45, 'Agentur'), { x: X + 1675, y: MY - 200 }, 'erfolg');
+  tw('agentur13', W(45, 'Agentur') - .1, .15, { sy: .92 }); tw('agentur13', W(45, 'Agentur') + .05, .35, { sy: 1 }, 'back');
+  // Fehlt noch ein Nachweis? Später nachreichen
+  tw('vertrag13', Z(46) - .2, .3, { o: 0 });
+  ein('nach13', W(46, 'Nachweis') - .2, { x: X + 1025, y: MY - 110, r: -3 }, { x: -60 });
+  wackeln('nach13', W(46, 'Nachweis') + .3, 3, 4);
+  ein('spaeter13', W(47, 'später') - .3, { x: X + 1560, y: MY + 190 }, { y: 50 });
+  tw('nach13', W(47, 'nach') - .1, .9, { x: X + 1580, y: MY - 100, s: .3 }, 'inout', { bogen: 120 }); tw('nach13', W(47, 'nach') + .7, .15, { o: 0 });
+  cue(W(47, 'nach') - .1, 'whoosh');
+  szeneText('tb13', Z(42) + .1, ZE(47) + .4, { unter: Z(46) });
+}
+
+/* ---------- 14 · Nach dem Antrag (48–53) ---------- */
+{ const X = S(13), T0 = ZE(47) + .5;
+  wechsel(T0, 13);
+  // Bescheid kommt und landet in der Helper-App
+  flug('bescheid14', Z(48) + .2, { x: X + 1700, y: 160, s: .4 }, { x: X + 1030, y: MY - 110, s: 1 }, .9, 60);
+  pop('lblBescheid14', W(48, 'Bescheid') + .1, { x: X + 1030, y: MY + 50 });
+  ein('handy14', W(49, 'Leg') - .2, { x: X + 1450, y: MY - 20 }, { y: 400 }, 'whoosh');
+  akteur('app14', { x: X + 1450, y: MY - 20, o: 0 }); tw('app14', W(49, 'Leg') + .2, .3, { o: 1 });
+  akteur('neu14', { o: 0, x: 30 }, true); tw('neu14', W(49, 'Dokumente') + .3, .4, { o: 1, x: 0 }, 'back'); cue(W(49, 'Dokumente') + .3, 'erfolg');
+  tw('lblBescheid14', W(49, 'Helper') - .2, .25, { o: 0 });
+  tw('bescheid14', W(49, 'Helper'), .7, { x: X + 1450, y: MY - 20, s: .3 }, 'inout'); tw('bescheid14', W(49, 'Helper') + .6, .15, { o: 0 }); cue(W(49, 'Helper'), 'whoosh');
+  ein('lblApp14', W(49, 'Helper') + .2, { x: X + 1450, y: 690 }, { y: 30 }, null);
+  // Rundfunkbeitrag: befreit
+  ein('radio14', W(50, 'Rundfunkbeitrag') - .3, { x: X + 1030, y: MY - 90 }, { y: 80 });
+  ein('befreit14', W(50, 'befreien'), { x: X + 1030, y: MY + 70 }, { y: 40 }, 'ding');
+  wackeln('radio14', W(50, 'befreien') + .1, 3, 4);
+  // Änderungen sofort melden
+  const tc = Z(51) - .2;
+  aus(['radio14', 'befreit14', 'handy14', 'app14', 'lblApp14'], tc);
+  ein('karton14', W(51, 'Adresse') - .2, { x: X + 1030, y: MY - 120 }, { y: 80 });
+  ein('betrieb14', W(51, 'Betrieb') - .2, { x: X + 1030, y: MY + 150 }, { y: 80 });
+  ein('agentur14', Z(51) + .3, { x: X + 1580, y: MY + 10 }, { y: 80 });
+  akteur('pfeile14', { x: X + 960, y: 540, o: 0, draw: 0 }); tw('pfeile14', W(51, 'sag'), .7, { o: 1, draw: 1 }, 'inout'); cue(W(51, 'sofort'), 'ding');
+  puls('agentur14', W(51, 'sofort'), 1.06);
+  // 18 Monate, dann meldet sich die Agentur
+  const tm = Z(52) - .2;
+  aus(['karton14', 'betrieb14', 'pfeile14'], tm);
+  ein('kalender14', W(52, 'BAB'), { x: X + 1110, y: MY - 50 }, { y: 80 });
+  pop('monate14', W(52, 'achtzehn'), { x: X + 1110, y: MY + 170 }, 'ding');
+  flug('brief14', W(53, 'meldet') - .2, { x: X + 1580, y: MY + 10, s: .4 }, { x: X + 1190, y: MY - 110, s: 1 }, .9, 140);
+  wackeln('kalender14', W(53, 'meldet') + .7, 3, 3); cue(W(53, 'meldet') + .7, 'plopp');
+  szeneText('tb14', Z(48) + .1, ZE(53) + .4, { unter: Z(51) });
+}
+
+/* ---------- 15 · Nicht warten (54–56) ---------- */
+{ const X = S(14), T0 = ZE(53) + .5;
+  wechsel(T0, 14);
+  const MO = [['mo1', 1050], ['mo2', 1230], ['mo3', 1410], ['mo4', 1590]];
+  MO.forEach(([id, x], i) => ein(id, T0 + .4 + i * .12, { x: X + x, y: MY + 150 }, { y: 70 }, i ? null : 'pop'));
+  // Antrag landet auf November
+  const ta = W(54, 'Monat');
+  akteur('antrag15', { x: X + 1410, y: 180, o: 0 });
+  tw('antrag15', ta - .5, .1, { o: 1 }); tw('antrag15', ta - .5, .55, { y: MY + 60 }, 'inout'); cue(ta, 'plopp');
+  tw('mo3', ta + .05, .12, { sy: .9 }); tw('mo3', ta + .17, .3, { sy: 1 }, 'back');
+  HOOKS.push(t => { for (const id of ['mo1', 'mo2']) $('#' + id).classList.toggle('grau', t >= W(54, 'stellst')); });
+  pop('x15a', W(54, 'stellst') + .1, { x: X + 1100, y: MY + 95 }, 'plopp');
+  pop('x15b', W(54, 'stellst') + .2, { x: X + 1280, y: MY + 95 }, null);
+  [['m15a', 1410], ['m15b', 1590]].forEach(([id, x], i) => {
+    akteur(id, { x: X + x, y: 200, o: 0 });
+    const t0 = W(54, 'Antrag') + .3 + i * .25;
+    tw(id, t0, .05, { o: 1 }); tw(id, t0, .7, { y: MY - 10 }, 'sinus'); cue(t0 + .3, 'muenze');
+  });
+  muenzeDreht('m15a', W(54, 'Antrag') + .9); muenzeDreht('m15b', W(54, 'Antrag') + 1.1);
+  // Uhr mahnt, Mai: Daumen hoch
+  ein('uhr15', Z(55) - .1, { x: X + 1100, y: MY - 160 }, { y: -60 });
+  ein('zeiger15', Z(55) - .1, { x: X + 1100, y: MY - 160 }, { y: -60 }, null);
+  wackeln('uhr15', W(55, 'warten'), 5, 5); cue(W(55, 'warten'), 'ding');
+  HOOKS.push(t => { const p = clamp((t - W(55, 'warten')) / 2); $('#zeiger15').style.transform += ` rotate(${E.inout(p) * 720}deg)`; });
+  auftritt('mai15', Z(55), X + 1560, MY - 160);
+  gesicht('mai15', W(56, 'heute'), 99, 'froh'); tw('#mai15 .daumen', W(56, 'heute'), .5, { y: -30 }, 'back'); cue(W(56, 'heute'), 'erfolg');
+  nicken('mai15', W(56, 'heute') + .2, W(56, 'heute') + 1.4);
+  szeneText('tb15', Z(54) + .1, null, { unter: W(54, 'erst') });
+}
+
+/* ---------- Abspann ---------- */
+const AB = ENDE_SPRACHE + .8;
+HOOKS.push(t => { const p = E.inout(clamp((t - AB) / .6)); $('#abspann').style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; });
+cue(AB, 'whoosh');
+akteur('endBeutel', { o: 0, y: 40 }, true); tw('endBeutel', AB + .35, .5, { o: 1, y: 0 }, 'back');
+akteur('asTitel', { o: 0, y: 40 }, true); tw('asTitel', AB + .6, .6, { o: 1, y: 0 }, 'back');
+
+start(AB + 3.4, AB + 1.6);
+</script>
+</body></html>
